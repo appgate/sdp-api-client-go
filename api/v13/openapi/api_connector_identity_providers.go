@@ -28,7 +28,7 @@ var (
 type ConnectorIdentityProviderList struct {
 	ResultList
 	// List of Identity Providers.
-	Data *[]IoTConnectorProvider `json:"data,omitempty"`
+	Data *[]ConnectorProvider `json:"data,omitempty"`
 }
 
 // NewConnectorIdentityProviderList instantiates a new ConnectorIdentityProviderList object
@@ -49,9 +49,9 @@ func NewConnectorIdentityProviderListWithDefaults() *ConnectorIdentityProviderLi
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ConnectorIdentityProviderList) GetData() []IoTConnectorProvider {
+func (o *ConnectorIdentityProviderList) GetData() []ConnectorProvider {
 	if o == nil || o.Data == nil {
-		var ret []IoTConnectorProvider
+		var ret []ConnectorProvider
 		return ret
 	}
 	return *o.Data
@@ -59,7 +59,7 @@ func (o *ConnectorIdentityProviderList) GetData() []IoTConnectorProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorIdentityProviderList) GetDataOk() (*[]IoTConnectorProvider, bool) {
+func (o *ConnectorIdentityProviderList) GetDataOk() (*[]ConnectorProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -76,7 +76,7 @@ func (o *ConnectorIdentityProviderList) HasData() bool {
 }
 
 // SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *ConnectorIdentityProviderList) SetData(v []IoTConnectorProvider) {
+func (o *ConnectorIdentityProviderList) SetData(v []ConnectorProvider) {
 	o.Data = &v
 }
 
@@ -640,14 +640,14 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGet(ctx _conte
 Execute executes the request
  @return IdentityProvider
 */
-func (r apiConnectorIdentityProvidersIdGetRequest) Execute() (IoTConnectorProvider, *_nethttp.Response, error) {
+func (r apiConnectorIdentityProvidersIdGetRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IoTConnectorProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := r.apiService.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -774,7 +774,7 @@ type apiConnectorIdentityProvidersIdPutRequest struct {
 	apiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
 	id               string
-	identityProvider *IoTConnectorProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r apiConnectorIdentityProvidersIdPutRequest) Authorization(authorization string) apiConnectorIdentityProvidersIdPutRequest {
@@ -782,7 +782,7 @@ func (r apiConnectorIdentityProvidersIdPutRequest) Authorization(authorization s
 	return r
 }
 
-func (r apiConnectorIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IoTConnectorProvider) apiConnectorIdentityProvidersIdPutRequest {
+func (r apiConnectorIdentityProvidersIdPutRequest) IdentityProvider(identityProvider ConnectorProvider) apiConnectorIdentityProvidersIdPutRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
@@ -804,16 +804,16 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPut(ctx _conte
 
 /*
 Execute executes the request
- @return IoTConnectorProvider
+ @return ConnectorProvider
 */
-func (r apiConnectorIdentityProvidersIdPutRequest) Execute() (IoTConnectorProvider, *_nethttp.Response, error) {
+func (r apiConnectorIdentityProvidersIdPutRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IoTConnectorProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := r.apiService.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -965,7 +965,7 @@ type apiConnectorIdentityProvidersPostRequest struct {
 	ctx              _context.Context
 	apiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IoTConnectorProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r apiConnectorIdentityProvidersPostRequest) Authorization(authorization string) apiConnectorIdentityProvidersPostRequest {
@@ -973,7 +973,7 @@ func (r apiConnectorIdentityProvidersPostRequest) Authorization(authorization st
 	return r
 }
 
-func (r apiConnectorIdentityProvidersPostRequest) IdentityProvider(identityProvider IoTConnectorProvider) apiConnectorIdentityProvidersPostRequest {
+func (r apiConnectorIdentityProvidersPostRequest) IdentityProvider(identityProvider ConnectorProvider) apiConnectorIdentityProvidersPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
@@ -993,16 +993,16 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPost(ctx _contex
 
 /*
 Execute executes the request
- @return IoTConnectorProvider
+ @return ConnectorProvider
 */
-func (r apiConnectorIdentityProvidersPostRequest) Execute() (IoTConnectorProvider, *_nethttp.Response, error) {
+func (r apiConnectorIdentityProvidersPostRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IoTConnectorProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := r.apiService.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersPost")
@@ -1066,7 +1066,7 @@ func (r apiConnectorIdentityProvidersPostRequest) Execute() (IoTConnectorProvide
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v IoTConnectorProvider
+			var v ConnectorProvider
 			err = r.apiService.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1153,7 +1153,7 @@ type apiConnectorIdentityProvidersTestPostRequest struct {
 	ctx              _context.Context
 	apiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IoTConnectorProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r apiConnectorIdentityProvidersTestPostRequest) Authorization(authorization string) apiConnectorIdentityProvidersTestPostRequest {
@@ -1161,7 +1161,7 @@ func (r apiConnectorIdentityProvidersTestPostRequest) Authorization(authorizatio
 	return r
 }
 
-func (r apiConnectorIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IoTConnectorProvider) apiConnectorIdentityProvidersTestPostRequest {
+func (r apiConnectorIdentityProvidersTestPostRequest) IdentityProvider(identityProvider ConnectorProvider) apiConnectorIdentityProvidersTestPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
