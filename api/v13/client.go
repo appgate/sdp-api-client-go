@@ -129,6 +129,18 @@ type APIClient struct {
 	TrustedCertificatesApi *TrustedCertificatesApiService
 
 	UserLoginsPerHourApi *UserLoginsPerHourApiService
+
+	LdapIdentityProvidersApi *LdapIdentityProvidersApiService
+
+	RadiusIdentityProvidersApi *RadiusIdentityProvidersApiService
+
+	SamlIdentityProvidersApi *SamlIdentityProvidersApiService
+
+	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
+
+	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
+
+	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
 }
 
 type service struct {
@@ -188,6 +200,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.TopEntitlementsApi = (*TopEntitlementsApiService)(&c.common)
 	c.TrustedCertificatesApi = (*TrustedCertificatesApiService)(&c.common)
 	c.UserLoginsPerHourApi = (*UserLoginsPerHourApiService)(&c.common)
+
+	// PATCH manually added to replace IdentityProvidersApiService
+	// since openapi.generator does not play well with discriminator from the open api spec.
+	c.LdapIdentityProvidersApi = (*LdapIdentityProvidersApiService)(&c.common)
+	c.RadiusIdentityProvidersApi = (*RadiusIdentityProvidersApiService)(&c.common)
+	c.SamlIdentityProvidersApi = (*SamlIdentityProvidersApiService)(&c.common)
+	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
+	c.LdapCertificateIdentityProvidersApi = (*LdapCertificateIdentityProvidersApiService)(&c.common)
+	c.ConnectorIdentityProvidersApi = (*ConnectorIdentityProvidersApiService)(&c.common)
 
 	return c
 }
