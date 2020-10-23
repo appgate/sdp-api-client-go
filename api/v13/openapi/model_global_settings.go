@@ -311,7 +311,7 @@ func (o *GlobalSettings) GetBackupPassphraseOk() (*string, bool) {
 }
 
 // HasBackupPassphrase returns a boolean if a field has been set.
-func (o *GlobalSettings) HasBackupPassphrase() bool {
+func (o *GlobalSettings) HasBackupPassphraseEnabled() bool {
 	if o != nil && o.BackupPassphrase != nil {
 		return true
 	}
