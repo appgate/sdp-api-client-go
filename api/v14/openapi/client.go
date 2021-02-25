@@ -145,6 +145,8 @@ type APIClient struct {
 	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
 
 	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
+
+	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
 }
 
 type service struct {
@@ -215,6 +217,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SamlIdentityProvidersApi = (*SamlIdentityProvidersApiService)(&c.common)
 	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
 	c.LdapCertificateIdentityProvidersApi = (*LdapCertificateIdentityProvidersApiService)(&c.common)
+	c.ConnectorIdentityProvidersApi = (*ConnectorIdentityProvidersApiService)(&c.common)
 
 	return c
 }
