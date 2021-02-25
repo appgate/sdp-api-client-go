@@ -135,6 +135,8 @@ type APIClient struct {
 	UserClaimScriptsApi *UserClaimScriptsApiService
 
 	UserLoginsPerHourApi *UserLoginsPerHourApiService
+
+	LdapIdentityProvidersApi *LdapIdentityProvidersApiService
 }
 
 type service struct {
@@ -198,6 +200,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.UserClaimScriptsApi = (*UserClaimScriptsApiService)(&c.common)
 	c.UserLoginsPerHourApi = (*UserLoginsPerHourApiService)(&c.common)
 
+	// PATCH manually added to replace IdentityProvidersApiService
+	// since openapi.generator does not play well with discriminator from the open api spec.
+	c.LdapIdentityProvidersApi = (*LdapIdentityProvidersApiService)(&c.common)
 	return c
 }
 
