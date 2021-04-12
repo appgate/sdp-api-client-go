@@ -17,6 +17,8 @@ import (
 // EntitlementAllOfActions IP Access action.
 type EntitlementAllOfActions struct {
 	// Type of the IP Access action.
+	ID string `json:"id"`
+	// Type of the IP Access action.
 	Subtype string `json:"subtype"`
 	// Applied action to the traffic.
 	Action string `json:"action"`
@@ -47,6 +49,30 @@ func NewEntitlementAllOfActions(subtype string, action string, hosts []string) *
 func NewEntitlementAllOfActionsWithDefaults() *EntitlementAllOfActions {
 	this := EntitlementAllOfActions{}
 	return &this
+}
+
+// GetID returns the ID field value
+func (o *EntitlementAllOfActions) GetID() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ID
+}
+
+// GetIDOk returns a tuple with the ID field value
+// and a boolean to check if the value has been set.
+func (o *EntitlementAllOfActions) GetIDOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ID, true
+}
+
+// SetID sets field value
+func (o *EntitlementAllOfActions) SetID(v string) {
+	o.ID = v
 }
 
 // GetSubtype returns the Subtype field value
