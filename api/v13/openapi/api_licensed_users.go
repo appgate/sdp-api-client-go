@@ -72,7 +72,7 @@ func (r apiLicenseUsersDistinguishedNameDeleteRequest) Execute() (*_nethttp.Resp
 	}
 
 	localVarPath := localBasePath + "/license/users/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", _neturl.QueryEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", _neturl.PathEscape(parameterToString(r.distinguishedName, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
