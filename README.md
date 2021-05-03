@@ -5,12 +5,12 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 
 
 
-|                         	|  client version 12 	| client version 13 	| client version 14 	|
-|-------------------------	|--------------------	|-------------------	|-------------------	|
-| Appliance version 5.1.* 	| Full support       	|                   	|                   	|
-| Appliance version 5.2.* 	| Partial support    	| Full support      	|                   	|
-| Appliance version 5.3.* 	| Partial support   	| Partial support   	| Full support      	|
-
+|                         	|  client version 12 	| client version 13 	| client version 14 	| client version 15 	|
+|-------------------------	|--------------------	|-------------------	|-------------------	|-------------------	|
+| Appliance version 5.1.* 	| Full support       	|                   	|                   	|                   	|
+| Appliance version 5.2.* 	| Partial support    	| Full support      	| Partial support      	|                   	|
+| Appliance version 5.3.* 	| Partial support   	| Partial support   	| Full support      	| Partial support      	|
+| Appliance version 5.4.* 	| Partial support   	| Partial support   	| Partial support      	| Full support      	|
 
 ## Getting started
 
