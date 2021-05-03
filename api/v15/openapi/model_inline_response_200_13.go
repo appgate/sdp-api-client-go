@@ -15,15 +15,11 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse20013 Appliance Change information
+// InlineResponse20013 Upgrade details.
 type InlineResponse20013 struct {
-	// Id for this change
-	Id string `json:"id"`
-	// Result of the requested change
-	Result *string `json:"result,omitempty"`
-	// Status of the requested change
-	Status string `json:"status"`
-	// Description of the requested change
+	// Current status of the Appliance Upgrade.
+	Status *string `json:"status,omitempty"`
+	// Optional details for the current status.
 	Details *string `json:"details,omitempty"`
 }
 
@@ -31,10 +27,8 @@ type InlineResponse20013 struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse20013(id string, status string) *InlineResponse20013 {
+func NewInlineResponse20013() *InlineResponse20013 {
 	this := InlineResponse20013{}
-	this.Id = id
-	this.Status = status
 	return &this
 }
 
@@ -46,84 +40,36 @@ func NewInlineResponse20013WithDefaults() *InlineResponse20013 {
 	return &this
 }
 
-// GetId returns the Id field value
-func (o *InlineResponse20013) GetId() string {
-	if o == nil {
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *InlineResponse20013) GetStatus() string {
+	if o == nil || o.Status == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Status
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20013) GetIdOk() (*string, bool) {
-	if o == nil {
+func (o *InlineResponse20013) GetStatusOk() (*string, bool) {
+	if o == nil || o.Status == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Status, true
 }
 
-// SetId sets field value
-func (o *InlineResponse20013) SetId(v string) {
-	o.Id = v
-}
-
-// GetResult returns the Result field value if set, zero value otherwise.
-func (o *InlineResponse20013) GetResult() string {
-	if o == nil || o.Result == nil {
-		var ret string
-		return ret
-	}
-	return *o.Result
-}
-
-// GetResultOk returns a tuple with the Result field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InlineResponse20013) GetResultOk() (*string, bool) {
-	if o == nil || o.Result == nil {
-		return nil, false
-	}
-	return o.Result, true
-}
-
-// HasResult returns a boolean if a field has been set.
-func (o *InlineResponse20013) HasResult() bool {
-	if o != nil && o.Result != nil {
+// HasStatus returns a boolean if a field has been set.
+func (o *InlineResponse20013) HasStatus() bool {
+	if o != nil && o.Status != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetResult gets a reference to the given string and assigns it to the Result field.
-func (o *InlineResponse20013) SetResult(v string) {
-	o.Result = &v
-}
-
-// GetStatus returns the Status field value
-func (o *InlineResponse20013) GetStatus() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-func (o *InlineResponse20013) GetStatusOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Status, true
-}
-
-// SetStatus sets field value
+// SetStatus gets a reference to the given string and assigns it to the Status field.
 func (o *InlineResponse20013) SetStatus(v string) {
-	o.Status = v
+	o.Status = &v
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise.
@@ -160,13 +106,7 @@ func (o *InlineResponse20013) SetDetails(v string) {
 
 func (o InlineResponse20013) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if true {
+	if o.Status != nil {
 		toSerialize["status"] = o.Status
 	}
 	if o.Details != nil {

@@ -17,8 +17,8 @@ import (
 
 // InlineResponse20011 struct for InlineResponse20011
 type InlineResponse20011 struct {
-	// Connection URL for the profile.
-	Url *string `json:"url,omitempty"`
+	// The QR code image in JPG format, in base64 format.
+	Barcode *string `json:"barcode,omitempty"`
 }
 
 // NewInlineResponse20011 instantiates a new InlineResponse20011 object
@@ -38,42 +38,42 @@ func NewInlineResponse20011WithDefaults() *InlineResponse20011 {
 	return &this
 }
 
-// GetUrl returns the Url field value if set, zero value otherwise.
-func (o *InlineResponse20011) GetUrl() string {
-	if o == nil || o.Url == nil {
+// GetBarcode returns the Barcode field value if set, zero value otherwise.
+func (o *InlineResponse20011) GetBarcode() string {
+	if o == nil || o.Barcode == nil {
 		var ret string
 		return ret
 	}
-	return *o.Url
+	return *o.Barcode
 }
 
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20011) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+func (o *InlineResponse20011) GetBarcodeOk() (*string, bool) {
+	if o == nil || o.Barcode == nil {
 		return nil, false
 	}
-	return o.Url, true
+	return o.Barcode, true
 }
 
-// HasUrl returns a boolean if a field has been set.
-func (o *InlineResponse20011) HasUrl() bool {
-	if o != nil && o.Url != nil {
+// HasBarcode returns a boolean if a field has been set.
+func (o *InlineResponse20011) HasBarcode() bool {
+	if o != nil && o.Barcode != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUrl gets a reference to the given string and assigns it to the Url field.
-func (o *InlineResponse20011) SetUrl(v string) {
-	o.Url = &v
+// SetBarcode gets a reference to the given string and assigns it to the Barcode field.
+func (o *InlineResponse20011) SetBarcode(v string) {
+	o.Barcode = &v
 }
 
 func (o InlineResponse20011) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
+	if o.Barcode != nil {
+		toSerialize["barcode"] = o.Barcode
 	}
 	return json.Marshal(toSerialize)
 }

@@ -41,7 +41,7 @@ func (r ApiAppliancesIdChangeChangeIdGetRequest) Authorization(authorization str
 	return r
 }
 
-func (r ApiAppliancesIdChangeChangeIdGetRequest) Execute() (InlineResponse20013, *_nethttp.Response, error) {
+func (r ApiAppliancesIdChangeChangeIdGetRequest) Execute() (InlineResponse20012, *_nethttp.Response, error) {
 	return r.ApiService.AppliancesIdChangeChangeIdGetExecute(r)
 }
 
@@ -64,16 +64,16 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGet(ctx _context.C
 
 /*
  * Execute executes the request
- * @return InlineResponse20013
+ * @return InlineResponse20012
  */
-func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAppliancesIdChangeChangeIdGetRequest) (InlineResponse20013, *_nethttp.Response, error) {
+func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAppliancesIdChangeChangeIdGetRequest) (InlineResponse20012, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20013
+		localVarReturnValue  InlineResponse20012
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceChangeApiService.AppliancesIdChangeChangeIdGet")

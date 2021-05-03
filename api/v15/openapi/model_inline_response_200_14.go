@@ -15,12 +15,10 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse20014 Upgrade details.
+// InlineResponse20014 struct for InlineResponse20014
 type InlineResponse20014 struct {
-	// Current status of the Appliance Upgrade.
-	Status *string `json:"status,omitempty"`
-	// Optional details for the current status.
-	Details *string `json:"details,omitempty"`
+	// Appliance Backup ID to  be used as path parameter {backupId} to follow the progress.
+	Id *string `json:"id,omitempty"`
 }
 
 // NewInlineResponse20014 instantiates a new InlineResponse20014 object
@@ -40,77 +38,42 @@ func NewInlineResponse20014WithDefaults() *InlineResponse20014 {
 	return &this
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
-func (o *InlineResponse20014) GetStatus() string {
-	if o == nil || o.Status == nil {
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *InlineResponse20014) GetId() string {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-	return *o.Status
+	return *o.Id
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20014) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+func (o *InlineResponse20014) GetIdOk() (*string, bool) {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return o.Id, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *InlineResponse20014) HasStatus() bool {
-	if o != nil && o.Status != nil {
+// HasId returns a boolean if a field has been set.
+func (o *InlineResponse20014) HasId() bool {
+	if o != nil && o.Id != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetStatus gets a reference to the given string and assigns it to the Status field.
-func (o *InlineResponse20014) SetStatus(v string) {
-	o.Status = &v
-}
-
-// GetDetails returns the Details field value if set, zero value otherwise.
-func (o *InlineResponse20014) GetDetails() string {
-	if o == nil || o.Details == nil {
-		var ret string
-		return ret
-	}
-	return *o.Details
-}
-
-// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *InlineResponse20014) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
-		return nil, false
-	}
-	return o.Details, true
-}
-
-// HasDetails returns a boolean if a field has been set.
-func (o *InlineResponse20014) HasDetails() bool {
-	if o != nil && o.Details != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDetails gets a reference to the given string and assigns it to the Details field.
-func (o *InlineResponse20014) SetDetails(v string) {
-	o.Details = &v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *InlineResponse20014) SetId(v string) {
+	o.Id = &v
 }
 
 func (o InlineResponse20014) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	if o.Id != nil {
+		toSerialize["id"] = o.Id
 	}
 	return json.Marshal(toSerialize)
 }

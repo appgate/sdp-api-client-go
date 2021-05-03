@@ -17,8 +17,8 @@ import (
 
 // InlineResponse20010 struct for InlineResponse20010
 type InlineResponse20010 struct {
-	// List of reevaluated Distinguished Names.
-	ReevaluatedDistinguishedNames *[]string `json:"reevaluatedDistinguishedNames,omitempty"`
+	// Connection URL for the profile.
+	Url *string `json:"url,omitempty"`
 }
 
 // NewInlineResponse20010 instantiates a new InlineResponse20010 object
@@ -38,42 +38,42 @@ func NewInlineResponse20010WithDefaults() *InlineResponse20010 {
 	return &this
 }
 
-// GetReevaluatedDistinguishedNames returns the ReevaluatedDistinguishedNames field value if set, zero value otherwise.
-func (o *InlineResponse20010) GetReevaluatedDistinguishedNames() []string {
-	if o == nil || o.ReevaluatedDistinguishedNames == nil {
-		var ret []string
+// GetUrl returns the Url field value if set, zero value otherwise.
+func (o *InlineResponse20010) GetUrl() string {
+	if o == nil || o.Url == nil {
+		var ret string
 		return ret
 	}
-	return *o.ReevaluatedDistinguishedNames
+	return *o.Url
 }
 
-// GetReevaluatedDistinguishedNamesOk returns a tuple with the ReevaluatedDistinguishedNames field value if set, nil otherwise
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20010) GetReevaluatedDistinguishedNamesOk() (*[]string, bool) {
-	if o == nil || o.ReevaluatedDistinguishedNames == nil {
+func (o *InlineResponse20010) GetUrlOk() (*string, bool) {
+	if o == nil || o.Url == nil {
 		return nil, false
 	}
-	return o.ReevaluatedDistinguishedNames, true
+	return o.Url, true
 }
 
-// HasReevaluatedDistinguishedNames returns a boolean if a field has been set.
-func (o *InlineResponse20010) HasReevaluatedDistinguishedNames() bool {
-	if o != nil && o.ReevaluatedDistinguishedNames != nil {
+// HasUrl returns a boolean if a field has been set.
+func (o *InlineResponse20010) HasUrl() bool {
+	if o != nil && o.Url != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetReevaluatedDistinguishedNames gets a reference to the given []string and assigns it to the ReevaluatedDistinguishedNames field.
-func (o *InlineResponse20010) SetReevaluatedDistinguishedNames(v []string) {
-	o.ReevaluatedDistinguishedNames = &v
+// SetUrl gets a reference to the given string and assigns it to the Url field.
+func (o *InlineResponse20010) SetUrl(v string) {
+	o.Url = &v
 }
 
 func (o InlineResponse20010) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.ReevaluatedDistinguishedNames != nil {
-		toSerialize["reevaluatedDistinguishedNames"] = o.ReevaluatedDistinguishedNames
+	if o.Url != nil {
+		toSerialize["url"] = o.Url
 	}
 	return json.Marshal(toSerialize)
 }

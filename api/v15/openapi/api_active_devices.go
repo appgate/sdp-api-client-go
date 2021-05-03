@@ -220,7 +220,7 @@ func (r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) Authorization(aut
 	return r
 }
 
-func (r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) Execute() (InlineResponse20010, *_nethttp.Response, error) {
+func (r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) Execute() (InlineResponse2009, *_nethttp.Response, error) {
 	return r.ApiService.TokenRecordsReevalByDnDistinguishedNamePostExecute(r)
 }
 
@@ -241,16 +241,16 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ct
 
 /*
  * Execute executes the request
- * @return InlineResponse20010
+ * @return InlineResponse2009
  */
-func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (InlineResponse20010, *_nethttp.Response, error) {
+func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (InlineResponse2009, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20010
+		localVarReturnValue  InlineResponse2009
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesApiService.TokenRecordsReevalByDnDistinguishedNamePost")

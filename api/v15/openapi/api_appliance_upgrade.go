@@ -355,7 +355,7 @@ func (r ApiAppliancesIdUpgradeGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeGetRequest) Execute() (InlineResponse20014, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradeGetRequest) Execute() (InlineResponse20013, *_nethttp.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeGetExecute(r)
 }
 
@@ -376,16 +376,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx _context.Context
 
 /*
  * Execute executes the request
- * @return InlineResponse20014
+ * @return InlineResponse20013
  */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (InlineResponse20014, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (InlineResponse20013, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20014
+		localVarReturnValue  InlineResponse20013
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeGet")

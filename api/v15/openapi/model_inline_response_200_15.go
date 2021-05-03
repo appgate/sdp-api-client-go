@@ -15,10 +15,14 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse20015 struct for InlineResponse20015
+// InlineResponse20015 Backups status.
 type InlineResponse20015 struct {
-	// Appliance Backup ID to  be used as path parameter {backupId} to follow the progress.
-	Id *string `json:"id,omitempty"`
+	// Encoding used for the output field
+	Encoding *string `json:"encoding,omitempty"`
+	// The output of the command
+	Output *string `json:"output,omitempty"`
+	// Current status of the Appliance Backup.
+	Status *string `json:"status,omitempty"`
 }
 
 // NewInlineResponse20015 instantiates a new InlineResponse20015 object
@@ -38,42 +42,112 @@ func NewInlineResponse20015WithDefaults() *InlineResponse20015 {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *InlineResponse20015) GetId() string {
-	if o == nil || o.Id == nil {
+// GetEncoding returns the Encoding field value if set, zero value otherwise.
+func (o *InlineResponse20015) GetEncoding() string {
+	if o == nil || o.Encoding == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+	return *o.Encoding
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetEncodingOk returns a tuple with the Encoding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20015) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+func (o *InlineResponse20015) GetEncodingOk() (*string, bool) {
+	if o == nil || o.Encoding == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return o.Encoding, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *InlineResponse20015) HasId() bool {
-	if o != nil && o.Id != nil {
+// HasEncoding returns a boolean if a field has been set.
+func (o *InlineResponse20015) HasEncoding() bool {
+	if o != nil && o.Encoding != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *InlineResponse20015) SetId(v string) {
-	o.Id = &v
+// SetEncoding gets a reference to the given string and assigns it to the Encoding field.
+func (o *InlineResponse20015) SetEncoding(v string) {
+	o.Encoding = &v
+}
+
+// GetOutput returns the Output field value if set, zero value otherwise.
+func (o *InlineResponse20015) GetOutput() string {
+	if o == nil || o.Output == nil {
+		var ret string
+		return ret
+	}
+	return *o.Output
+}
+
+// GetOutputOk returns a tuple with the Output field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20015) GetOutputOk() (*string, bool) {
+	if o == nil || o.Output == nil {
+		return nil, false
+	}
+	return o.Output, true
+}
+
+// HasOutput returns a boolean if a field has been set.
+func (o *InlineResponse20015) HasOutput() bool {
+	if o != nil && o.Output != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOutput gets a reference to the given string and assigns it to the Output field.
+func (o *InlineResponse20015) SetOutput(v string) {
+	o.Output = &v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *InlineResponse20015) GetStatus() string {
+	if o == nil || o.Status == nil {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20015) GetStatusOk() (*string, bool) {
+	if o == nil || o.Status == nil {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *InlineResponse20015) HasStatus() bool {
+	if o != nil && o.Status != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *InlineResponse20015) SetStatus(v string) {
+	o.Status = &v
 }
 
 func (o InlineResponse20015) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	if o.Encoding != nil {
+		toSerialize["encoding"] = o.Encoding
+	}
+	if o.Output != nil {
+		toSerialize["output"] = o.Output
+	}
+	if o.Status != nil {
+		toSerialize["status"] = o.Status
 	}
 	return json.Marshal(toSerialize)
 }

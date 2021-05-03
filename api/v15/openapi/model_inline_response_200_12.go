@@ -15,18 +15,26 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse20012 struct for InlineResponse20012
+// InlineResponse20012 Appliance Change information
 type InlineResponse20012 struct {
-	// The QR code image in JPG format, in base64 format.
-	Barcode *string `json:"barcode,omitempty"`
+	// Id for this change
+	Id string `json:"id"`
+	// Result of the requested change
+	Result *string `json:"result,omitempty"`
+	// Status of the requested change
+	Status string `json:"status"`
+	// Description of the requested change
+	Details *string `json:"details,omitempty"`
 }
 
 // NewInlineResponse20012 instantiates a new InlineResponse20012 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse20012() *InlineResponse20012 {
+func NewInlineResponse20012(id string, status string) *InlineResponse20012 {
 	this := InlineResponse20012{}
+	this.Id = id
+	this.Status = status
 	return &this
 }
 
@@ -38,42 +46,131 @@ func NewInlineResponse20012WithDefaults() *InlineResponse20012 {
 	return &this
 }
 
-// GetBarcode returns the Barcode field value if set, zero value otherwise.
-func (o *InlineResponse20012) GetBarcode() string {
-	if o == nil || o.Barcode == nil {
+// GetId returns the Id field value
+func (o *InlineResponse20012) GetId() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Barcode
+
+	return o.Id
 }
 
-// GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20012) GetBarcodeOk() (*string, bool) {
-	if o == nil || o.Barcode == nil {
+func (o *InlineResponse20012) GetIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Barcode, true
+	return &o.Id, true
 }
 
-// HasBarcode returns a boolean if a field has been set.
-func (o *InlineResponse20012) HasBarcode() bool {
-	if o != nil && o.Barcode != nil {
+// SetId sets field value
+func (o *InlineResponse20012) SetId(v string) {
+	o.Id = v
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetResult() string {
+	if o == nil || o.Result == nil {
+		var ret string
+		return ret
+	}
+	return *o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20012) GetResultOk() (*string, bool) {
+	if o == nil || o.Result == nil {
+		return nil, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasResult() bool {
+	if o != nil && o.Result != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetBarcode gets a reference to the given string and assigns it to the Barcode field.
-func (o *InlineResponse20012) SetBarcode(v string) {
-	o.Barcode = &v
+// SetResult gets a reference to the given string and assigns it to the Result field.
+func (o *InlineResponse20012) SetResult(v string) {
+	o.Result = &v
+}
+
+// GetStatus returns the Status field value
+func (o *InlineResponse20012) GetStatus() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20012) GetStatusOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *InlineResponse20012) SetStatus(v string) {
+	o.Status = v
+}
+
+// GetDetails returns the Details field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetDetails() string {
+	if o == nil || o.Details == nil {
+		var ret string
+		return ret
+	}
+	return *o.Details
+}
+
+// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20012) GetDetailsOk() (*string, bool) {
+	if o == nil || o.Details == nil {
+		return nil, false
+	}
+	return o.Details, true
+}
+
+// HasDetails returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasDetails() bool {
+	if o != nil && o.Details != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDetails gets a reference to the given string and assigns it to the Details field.
+func (o *InlineResponse20012) SetDetails(v string) {
+	o.Details = &v
 }
 
 func (o InlineResponse20012) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Barcode != nil {
-		toSerialize["barcode"] = o.Barcode
+	if true {
+		toSerialize["id"] = o.Id
+	}
+	if o.Result != nil {
+		toSerialize["result"] = o.Result
+	}
+	if true {
+		toSerialize["status"] = o.Status
+	}
+	if o.Details != nil {
+		toSerialize["details"] = o.Details
 	}
 	return json.Marshal(toSerialize)
 }

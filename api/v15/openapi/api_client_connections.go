@@ -309,7 +309,7 @@ func (r ApiClientConnectionsProfileNameBarcodeGetRequest) Authorization(authoriz
 	return r
 }
 
-func (r ApiClientConnectionsProfileNameBarcodeGetRequest) Execute() (InlineResponse20012, *_nethttp.Response, error) {
+func (r ApiClientConnectionsProfileNameBarcodeGetRequest) Execute() (InlineResponse20011, *_nethttp.Response, error) {
 	return r.ApiService.ClientConnectionsProfileNameBarcodeGetExecute(r)
 }
 
@@ -330,16 +330,16 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGet(ctx
 
 /*
  * Execute executes the request
- * @return InlineResponse20012
+ * @return InlineResponse20011
  */
-func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGetExecute(r ApiClientConnectionsProfileNameBarcodeGetRequest) (InlineResponse20012, *_nethttp.Response, error) {
+func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGetExecute(r ApiClientConnectionsProfileNameBarcodeGetRequest) (InlineResponse20011, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20012
+		localVarReturnValue  InlineResponse20011
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientConnectionsApiService.ClientConnectionsProfileNameBarcodeGet")
@@ -463,7 +463,7 @@ func (r ApiClientConnectionsProfileNameUrlGetRequest) Authorization(authorizatio
 	return r
 }
 
-func (r ApiClientConnectionsProfileNameUrlGetRequest) Execute() (InlineResponse20011, *_nethttp.Response, error) {
+func (r ApiClientConnectionsProfileNameUrlGetRequest) Execute() (InlineResponse20010, *_nethttp.Response, error) {
 	return r.ApiService.ClientConnectionsProfileNameUrlGetExecute(r)
 }
 
@@ -484,16 +484,16 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGet(ctx _co
 
 /*
  * Execute executes the request
- * @return InlineResponse20011
+ * @return InlineResponse20010
  */
-func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGetExecute(r ApiClientConnectionsProfileNameUrlGetRequest) (InlineResponse20011, *_nethttp.Response, error) {
+func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGetExecute(r ApiClientConnectionsProfileNameUrlGetRequest) (InlineResponse20010, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20011
+		localVarReturnValue  InlineResponse20010
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientConnectionsApiService.ClientConnectionsProfileNameUrlGet")

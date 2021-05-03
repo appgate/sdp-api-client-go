@@ -347,7 +347,7 @@ func (r ApiAppliancesIdBackupBackupIdStatusGetRequest) Authorization(authorizati
 	return r
 }
 
-func (r ApiAppliancesIdBackupBackupIdStatusGetRequest) Execute() (InlineResponse20016, *_nethttp.Response, error) {
+func (r ApiAppliancesIdBackupBackupIdStatusGetRequest) Execute() (InlineResponse20015, *_nethttp.Response, error) {
 	return r.ApiService.AppliancesIdBackupBackupIdStatusGetExecute(r)
 }
 
@@ -370,16 +370,16 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGet(ctx _con
 
 /*
  * Execute executes the request
- * @return InlineResponse20016
+ * @return InlineResponse20015
  */
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r ApiAppliancesIdBackupBackupIdStatusGetRequest) (InlineResponse20016, *_nethttp.Response, error) {
+func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r ApiAppliancesIdBackupBackupIdStatusGetRequest) (InlineResponse20015, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20016
+		localVarReturnValue  InlineResponse20015
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupBackupIdStatusGet")
@@ -509,7 +509,7 @@ func (r ApiAppliancesIdBackupPostRequest) InlineObject10(inlineObject10 InlineOb
 	return r
 }
 
-func (r ApiAppliancesIdBackupPostRequest) Execute() (InlineResponse20015, *_nethttp.Response, error) {
+func (r ApiAppliancesIdBackupPostRequest) Execute() (InlineResponse20014, *_nethttp.Response, error) {
 	return r.ApiService.AppliancesIdBackupPostExecute(r)
 }
 
@@ -530,16 +530,16 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPost(ctx _context.Context,
 
 /*
  * Execute executes the request
- * @return InlineResponse20015
+ * @return InlineResponse20014
  */
-func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliancesIdBackupPostRequest) (InlineResponse20015, *_nethttp.Response, error) {
+func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliancesIdBackupPostRequest) (InlineResponse20014, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20015
+		localVarReturnValue  InlineResponse20014
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupPost")
