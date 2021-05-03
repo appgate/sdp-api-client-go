@@ -556,9 +556,6 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.uNKNOWNBASETYPE == nil {
-		return localVarReturnValue, nil, reportError("uNKNOWNBASETYPE is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -579,7 +576,6 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.uNKNOWNBASETYPE
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -725,9 +721,6 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.uNKNOWNBASETYPE == nil {
-		return localVarReturnValue, nil, reportError("uNKNOWNBASETYPE is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -748,7 +741,6 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.uNKNOWNBASETYPE
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
