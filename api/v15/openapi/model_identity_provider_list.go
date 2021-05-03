@@ -1434,3 +1434,287 @@ func (v *NullableLocalDatabaseIdentityProviderList) UnmarshalJSON(src []byte) er
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+// LdapCertificateIdentityProviderList struct for LdapCertificateIdentityProviderList
+type LdapCertificateIdentityProviderList struct {
+	// The query applied to the list.
+	Query *string `json:"query,omitempty"`
+	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
+	Range *string `json:"range,omitempty"`
+	// The field name used to sort the list.
+	OrderBy *string `json:"orderBy,omitempty"`
+	// Whether the sorting is applied descending or ascending.
+	Descending *bool `json:"descending,omitempty"`
+	// The filters applied to the list.
+	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
+	// List of Identity Providers.
+	Data *[]IdentityProvider `json:"data,omitempty"`
+}
+
+// NewLdapCertificateIdentityProviderList instantiates a new LdapCertificateIdentityProviderList object
+// This constructor will assign default values to properties that have it defined,
+// and makes sure properties required by API are set, but the set of arguments
+// will change when the set of required properties is changed
+func NewLdapCertificateIdentityProviderList() *LdapCertificateIdentityProviderList {
+	this := LdapCertificateIdentityProviderList{}
+	return &this
+}
+
+// NewLdapCertificateIdentityProviderListWithDefaults instantiates a new LdapCertificateIdentityProviderList object
+// This constructor will only assign default values to properties that have it defined,
+// but it doesn't guarantee that properties required by API are set
+func NewLdapCertificateIdentityProviderListWithDefaults() *LdapCertificateIdentityProviderList {
+	this := LdapCertificateIdentityProviderList{}
+	return &this
+}
+
+// GetQuery returns the Query field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
+		return ret
+	}
+	return *o.Query
+}
+
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
+		return nil, false
+	}
+	return o.Query, true
+}
+
+// HasQuery returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+func (o *LdapCertificateIdentityProviderList) SetQuery(v string) {
+	o.Query = &v
+}
+
+// GetRange returns the Range field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetRange() string {
+	if o == nil || o.Range == nil {
+		var ret string
+		return ret
+	}
+	return *o.Range
+}
+
+// GetRangeOk returns a tuple with the Range field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetRangeOk() (*string, bool) {
+	if o == nil || o.Range == nil {
+		return nil, false
+	}
+	return o.Range, true
+}
+
+// HasRange returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasRange() bool {
+	if o != nil && o.Range != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRange gets a reference to the given string and assigns it to the Range field.
+func (o *LdapCertificateIdentityProviderList) SetRange(v string) {
+	o.Range = &v
+}
+
+// GetOrderBy returns the OrderBy field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetOrderBy() string {
+	if o == nil || o.OrderBy == nil {
+		var ret string
+		return ret
+	}
+	return *o.OrderBy
+}
+
+// GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetOrderByOk() (*string, bool) {
+	if o == nil || o.OrderBy == nil {
+		return nil, false
+	}
+	return o.OrderBy, true
+}
+
+// HasOrderBy returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasOrderBy() bool {
+	if o != nil && o.OrderBy != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderBy gets a reference to the given string and assigns it to the OrderBy field.
+func (o *LdapCertificateIdentityProviderList) SetOrderBy(v string) {
+	o.OrderBy = &v
+}
+
+// GetDescending returns the Descending field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetDescending() bool {
+	if o == nil || o.Descending == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Descending
+}
+
+// GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetDescendingOk() (*bool, bool) {
+	if o == nil || o.Descending == nil {
+		return nil, false
+	}
+	return o.Descending, true
+}
+
+// HasDescending returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasDescending() bool {
+	if o != nil && o.Descending != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDescending gets a reference to the given bool and assigns it to the Descending field.
+func (o *LdapCertificateIdentityProviderList) SetDescending(v bool) {
+	o.Descending = &v
+}
+
+// GetFilterBy returns the FilterBy field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetFilterBy() []FilterBy {
+	if o == nil || o.FilterBy == nil {
+		var ret []FilterBy
+		return ret
+	}
+	return *o.FilterBy
+}
+
+// GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetFilterByOk() (*[]FilterBy, bool) {
+	if o == nil || o.FilterBy == nil {
+		return nil, false
+	}
+	return o.FilterBy, true
+}
+
+// HasFilterBy returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasFilterBy() bool {
+	if o != nil && o.FilterBy != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFilterBy gets a reference to the given []FilterBy and assigns it to the FilterBy field.
+func (o *LdapCertificateIdentityProviderList) SetFilterBy(v []FilterBy) {
+	o.FilterBy = &v
+}
+
+// GetData returns the Data field value if set, zero value otherwise.
+func (o *LdapCertificateIdentityProviderList) GetData() []IdentityProvider {
+	if o == nil || o.Data == nil {
+		var ret []IdentityProvider
+		return ret
+	}
+	return *o.Data
+}
+
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+	if o == nil || o.Data == nil {
+		return nil, false
+	}
+	return o.Data, true
+}
+
+// HasData returns a boolean if a field has been set.
+func (o *LdapCertificateIdentityProviderList) HasData() bool {
+	if o != nil && o.Data != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
+func (o *LdapCertificateIdentityProviderList) SetData(v []IdentityProvider) {
+	o.Data = &v
+}
+
+func (o LdapCertificateIdentityProviderList) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
+	}
+	if o.Range != nil {
+		toSerialize["range"] = o.Range
+	}
+	if o.OrderBy != nil {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if o.Descending != nil {
+		toSerialize["descending"] = o.Descending
+	}
+	if o.FilterBy != nil {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if o.Data != nil {
+		toSerialize["data"] = o.Data
+	}
+	return json.Marshal(toSerialize)
+}
+
+type NullableLdapCertificateIdentityProviderList struct {
+	value *LdapCertificateIdentityProviderList
+	isSet bool
+}
+
+func (v NullableLdapCertificateIdentityProviderList) Get() *LdapCertificateIdentityProviderList {
+	return v.value
+}
+
+func (v *NullableLdapCertificateIdentityProviderList) Set(val *LdapCertificateIdentityProviderList) {
+	v.value = val
+	v.isSet = true
+}
+
+func (v NullableLdapCertificateIdentityProviderList) IsSet() bool {
+	return v.isSet
+}
+
+func (v *NullableLdapCertificateIdentityProviderList) Unset() {
+	v.value = nil
+	v.isSet = false
+}
+
+func NewNullableLdapCertificateIdentityProviderList(val *LdapCertificateIdentityProviderList) *NullableLdapCertificateIdentityProviderList {
+	return &NullableLdapCertificateIdentityProviderList{value: val, isSet: true}
+}
+
+func (v NullableLdapCertificateIdentityProviderList) MarshalJSON() ([]byte, error) {
+	return json.Marshal(v.value)
+}
+
+func (v *NullableLdapCertificateIdentityProviderList) UnmarshalJSON(src []byte) error {
+	v.isSet = true
+	return json.Unmarshal(src, &v.value)
+}
