@@ -128,6 +128,8 @@ type APIClient struct {
 	RadiusIdentityProvidersApi *RadiusIdentityProvidersApiService
 
 	SamlIdentityProvidersApi *SamlIdentityProvidersApiService
+
+	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
 }
 
 type service struct {
@@ -188,6 +190,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LdapIdentityProvidersApi = (*LdapIdentityProvidersApiService)(&c.common)
 	c.RadiusIdentityProvidersApi = (*RadiusIdentityProvidersApiService)(&c.common)
 	c.SamlIdentityProvidersApi = (*SamlIdentityProvidersApiService)(&c.common)
+	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
 
 	return c
 }
