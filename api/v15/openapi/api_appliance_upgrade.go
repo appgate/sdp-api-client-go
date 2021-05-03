@@ -498,19 +498,14 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 }
 
 type ApiAppliancesIdUpgradePostRequest struct {
-	ctx             _context.Context
-	ApiService      *ApplianceUpgradeApiService
-	authorization   *string
-	id              string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
+	ctx           _context.Context
+	ApiService    *ApplianceUpgradeApiService
+	authorization *string
+	id            string
 }
 
 func (r ApiAppliancesIdUpgradePostRequest) Authorization(authorization string) ApiAppliancesIdUpgradePostRequest {
 	r.authorization = &authorization
-	return r
-}
-func (r ApiAppliancesIdUpgradePostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiAppliancesIdUpgradePostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
 	return r
 }
 
@@ -672,19 +667,14 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 }
 
 type ApiAppliancesIdUpgradePreparePostRequest struct {
-	ctx             _context.Context
-	ApiService      *ApplianceUpgradeApiService
-	authorization   *string
-	id              string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
+	ctx           _context.Context
+	ApiService    *ApplianceUpgradeApiService
+	authorization *string
+	id            string
 }
 
 func (r ApiAppliancesIdUpgradePreparePostRequest) Authorization(authorization string) ApiAppliancesIdUpgradePreparePostRequest {
 	r.authorization = &authorization
-	return r
-}
-func (r ApiAppliancesIdUpgradePreparePostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiAppliancesIdUpgradePreparePostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
 	return r
 }
 

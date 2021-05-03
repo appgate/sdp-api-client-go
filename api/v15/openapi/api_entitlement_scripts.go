@@ -870,18 +870,13 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 }
 
 type ApiEntitlementScriptsTestPostRequest struct {
-	ctx             _context.Context
-	ApiService      *EntitlementScriptsApiService
-	authorization   *string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
+	ctx           _context.Context
+	ApiService    *EntitlementScriptsApiService
+	authorization *string
 }
 
 func (r ApiEntitlementScriptsTestPostRequest) Authorization(authorization string) ApiEntitlementScriptsTestPostRequest {
 	r.authorization = &authorization
-	return r
-}
-func (r ApiEntitlementScriptsTestPostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiEntitlementScriptsTestPostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
 	return r
 }
 

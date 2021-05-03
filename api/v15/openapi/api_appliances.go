@@ -209,19 +209,14 @@ func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (
 }
 
 type ApiAppliancesIdAdminInterfaceP12PostRequest struct {
-	ctx             _context.Context
-	ApiService      *AppliancesApiService
-	authorization   *string
-	id              string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
+	ctx           _context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
 }
 
 func (r ApiAppliancesIdAdminInterfaceP12PostRequest) Authorization(authorization string) ApiAppliancesIdAdminInterfaceP12PostRequest {
 	r.authorization = &authorization
-	return r
-}
-func (r ApiAppliancesIdAdminInterfaceP12PostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiAppliancesIdAdminInterfaceP12PostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
 	return r
 }
 
@@ -686,23 +681,19 @@ func (a *AppliancesApiService) AppliancesIdDeleteExecute(r ApiAppliancesIdDelete
 }
 
 type ApiAppliancesIdExportIsoPostRequest struct {
-	ctx             _context.Context
-	ApiService      *AppliancesApiService
-	authorization   *string
-	id              string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
-	latestVersion   *bool
-	version         *float32
+	ctx           _context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	latestVersion *bool
+	version       *float32
 }
 
 func (r ApiAppliancesIdExportIsoPostRequest) Authorization(authorization string) ApiAppliancesIdExportIsoPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdExportIsoPostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiAppliancesIdExportIsoPostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
-	return r
-}
+
 func (r ApiAppliancesIdExportIsoPostRequest) LatestVersion(latestVersion bool) ApiAppliancesIdExportIsoPostRequest {
 	r.latestVersion = &latestVersion
 	return r
@@ -886,23 +877,19 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 }
 
 type ApiAppliancesIdExportPostRequest struct {
-	ctx             _context.Context
-	ApiService      *AppliancesApiService
-	authorization   *string
-	id              string
-	uNKNOWNBASETYPE *UNKNOWN_BASE_TYPE
-	latestVersion   *bool
-	version         *float32
+	ctx           _context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	latestVersion *bool
+	version       *float32
 }
 
 func (r ApiAppliancesIdExportPostRequest) Authorization(authorization string) ApiAppliancesIdExportPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdExportPostRequest) UNKNOWNBASETYPE(uNKNOWNBASETYPE UNKNOWN_BASE_TYPE) ApiAppliancesIdExportPostRequest {
-	r.uNKNOWNBASETYPE = &uNKNOWNBASETYPE
-	return r
-}
+
 func (r ApiAppliancesIdExportPostRequest) LatestVersion(latestVersion bool) ApiAppliancesIdExportPostRequest {
 	r.latestVersion = &latestVersion
 	return r
