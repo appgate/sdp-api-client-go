@@ -544,7 +544,7 @@ func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Authorization(authoriza
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Execute() (LdapCertificateProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -565,16 +565,16 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGet(ctx 
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return LdapCertificateProvider
  */
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLdapCertificateIdentityProvidersIdGetRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLdapCertificateIdentityProvidersIdGetRequest) (LdapCertificateProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -691,19 +691,19 @@ type ApiLdapCertificateIdentityProvidersIdPutRequest struct {
 	ApiService       *LdapCertificateIdentityProvidersApiService
 	authorization    *string
 	id               string
-	identityProvider *IdentityProvider
+	identityProvider *LdapCertificateProvider
 }
 
 func (r ApiLdapCertificateIdentityProvidersIdPutRequest) Authorization(authorization string) ApiLdapCertificateIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapCertificateIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapCertificateIdentityProvidersIdPutRequest {
+func (r ApiLdapCertificateIdentityProvidersIdPutRequest) IdentityProvider(identityProvider LdapCertificateProvider) ApiLdapCertificateIdentityProvidersIdPutRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersIdPutRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersIdPutRequest) Execute() (LdapCertificateProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -724,16 +724,16 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPut(ctx 
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return LdapCertificateProvider
  */
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapCertificateIdentityProvidersIdPutRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapCertificateIdentityProvidersIdPutRequest) (LdapCertificateProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -874,19 +874,19 @@ type ApiLdapCertificateIdentityProvidersPostRequest struct {
 	ctx              _context.Context
 	ApiService       *LdapCertificateIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *LdapCertificateProvider
 }
 
 func (r ApiLdapCertificateIdentityProvidersPostRequest) Authorization(authorization string) ApiLdapCertificateIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapCertificateIdentityProvidersPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapCertificateIdentityProvidersPostRequest {
+func (r ApiLdapCertificateIdentityProvidersPostRequest) IdentityProvider(identityProvider LdapCertificateProvider) ApiLdapCertificateIdentityProvidersPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersPostRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersPostRequest) Execute() (LdapCertificateProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -907,14 +907,14 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPost(ctx _
  * Execute executes the request
  * @return IdentityProvider
  */
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapCertificateIdentityProvidersPostRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapCertificateIdentityProvidersPostRequest) (LdapCertificateProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersPost")
@@ -1054,14 +1054,14 @@ type ApiLdapCertificateIdentityProvidersTestPostRequest struct {
 	ctx              _context.Context
 	ApiService       *LdapCertificateIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *LdapCertificateProvider
 }
 
 func (r ApiLdapCertificateIdentityProvidersTestPostRequest) Authorization(authorization string) ApiLdapCertificateIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapCertificateIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapCertificateIdentityProvidersTestPostRequest {
+func (r ApiLdapCertificateIdentityProvidersTestPostRequest) IdentityProvider(identityProvider LdapCertificateProvider) ApiLdapCertificateIdentityProvidersTestPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }

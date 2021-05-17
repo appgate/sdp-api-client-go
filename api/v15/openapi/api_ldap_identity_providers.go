@@ -544,7 +544,7 @@ func (r ApLdapiIdentityProvidersIdGetRequest) Authorization(authorization string
 	return r
 }
 
-func (r ApLdapiIdentityProvidersIdGetRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApLdapiIdentityProvidersIdGetRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -565,16 +565,16 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Co
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return LdapProvider
  */
-func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApLdapiIdentityProvidersIdGetRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApLdapiIdentityProvidersIdGetRequest) (LdapProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -691,19 +691,19 @@ type ApiLdapIdentityProvidersIdPutRequest struct {
 	ApiService       *LdapIdentityProvidersApiService
 	authorization    *string
 	id               string
-	identityProvider *IdentityProvider
+	identityProvider *LdapProvider
 }
 
 func (r ApiLdapIdentityProvidersIdPutRequest) Authorization(authorization string) ApiLdapIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapIdentityProvidersIdPutRequest {
+func (r ApiLdapIdentityProvidersIdPutRequest) IdentityProvider(identityProvider LdapProvider) ApiLdapIdentityProvidersIdPutRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiLdapIdentityProvidersIdPutRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiLdapIdentityProvidersIdPutRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -724,16 +724,16 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Co
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return LdapProvider
  */
-func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapIdentityProvidersIdPutRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapIdentityProvidersIdPutRequest) (LdapProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -874,19 +874,19 @@ type ApiLdapIdentityProvidersPostRequest struct {
 	ctx              _context.Context
 	ApiService       *LdapIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *LdapProvider
 }
 
 func (r ApiLdapIdentityProvidersPostRequest) Authorization(authorization string) ApiLdapIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapIdentityProvidersPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapIdentityProvidersPostRequest {
+func (r ApiLdapIdentityProvidersPostRequest) IdentityProvider(identityProvider LdapProvider) ApiLdapIdentityProvidersPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiLdapIdentityProvidersPostRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiLdapIdentityProvidersPostRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -907,14 +907,14 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Con
  * Execute executes the request
  * @return IdentityProvider
  */
-func (a *LdapIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapIdentityProvidersPostRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *LdapIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapIdentityProvidersPostRequest) (LdapProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  LdapProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapIdentityProvidersApiService.IdentityProvidersPost")
@@ -1054,14 +1054,14 @@ type ApiLdapIdentityProvidersTestPostRequest struct {
 	ctx              _context.Context
 	ApiService       *LdapIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *LdapProvider
 }
 
 func (r ApiLdapIdentityProvidersTestPostRequest) Authorization(authorization string) ApiLdapIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiLdapIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiLdapIdentityProvidersTestPostRequest {
+func (r ApiLdapIdentityProvidersTestPostRequest) IdentityProvider(identityProvider LdapProvider) ApiLdapIdentityProvidersTestPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }

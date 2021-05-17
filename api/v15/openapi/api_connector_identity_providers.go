@@ -544,7 +544,7 @@ func (r ApiConnectorIdentityProvidersIdGetRequest) Authorization(authorization s
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersIdGetRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiConnectorIdentityProvidersIdGetRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -565,16 +565,16 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGet(ctx _conte
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return ConnectorProvider
  */
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiConnectorIdentityProvidersIdGetRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiConnectorIdentityProvidersIdGetRequest) (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -691,19 +691,19 @@ type ApiConnectorIdentityProvidersIdPutRequest struct {
 	ApiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
 	id               string
-	identityProvider *IdentityProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r ApiConnectorIdentityProvidersIdPutRequest) Authorization(authorization string) ApiConnectorIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiConnectorIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IdentityProvider) ApiConnectorIdentityProvidersIdPutRequest {
+func (r ApiConnectorIdentityProvidersIdPutRequest) IdentityProvider(identityProvider ConnectorProvider) ApiConnectorIdentityProvidersIdPutRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersIdPutRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiConnectorIdentityProvidersIdPutRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -726,14 +726,14 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPut(ctx _conte
  * Execute executes the request
  * @return IdentityProvider
  */
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiConnectorIdentityProvidersIdPutRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiConnectorIdentityProvidersIdPutRequest) (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -874,19 +874,19 @@ type ApiConnectorIdentityProvidersPostRequest struct {
 	ctx              _context.Context
 	ApiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r ApiConnectorIdentityProvidersPostRequest) Authorization(authorization string) ApiConnectorIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiConnectorIdentityProvidersPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiConnectorIdentityProvidersPostRequest {
+func (r ApiConnectorIdentityProvidersPostRequest) IdentityProvider(identityProvider ConnectorProvider) ApiConnectorIdentityProvidersPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersPostRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiConnectorIdentityProvidersPostRequest) Execute() (ConnectorProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -907,14 +907,14 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPost(ctx _contex
  * Execute executes the request
  * @return IdentityProvider
  */
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiConnectorIdentityProvidersPostRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiConnectorIdentityProvidersPostRequest) (ConnectorProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersPost")
@@ -1054,14 +1054,14 @@ type ApiConnectorIdentityProvidersTestPostRequest struct {
 	ctx              _context.Context
 	ApiService       *ConnectorIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *ConnectorProvider
 }
 
 func (r ApiConnectorIdentityProvidersTestPostRequest) Authorization(authorization string) ApiConnectorIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiConnectorIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiConnectorIdentityProvidersTestPostRequest {
+func (r ApiConnectorIdentityProvidersTestPostRequest) IdentityProvider(identityProvider ConnectorProvider) ApiConnectorIdentityProvidersTestPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }

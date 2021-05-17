@@ -544,7 +544,7 @@ func (r ApiRadiusIdentityProvidersIdGetRequest) Authorization(authorization stri
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -565,16 +565,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return RadiusProvider
  */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (RadiusProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -691,19 +691,19 @@ type ApiRadiusIdentityProvidersIdPutRequest struct {
 	ApiService       *RadiusIdentityProvidersApiService
 	authorization    *string
 	id               string
-	identityProvider *IdentityProvider
+	identityProvider *RadiusProvider
 }
 
 func (r ApiRadiusIdentityProvidersIdPutRequest) Authorization(authorization string) ApiRadiusIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IdentityProvider) ApiRadiusIdentityProvidersIdPutRequest {
+func (r ApiRadiusIdentityProvidersIdPutRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersIdPutRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -724,16 +724,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.
 
 /*
  * Execute executes the request
- * @return IdentityProvider
+ * @return RadiusProvider
  */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (RadiusProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -874,19 +874,19 @@ type ApiRadiusIdentityProvidersPostRequest struct {
 	ctx              _context.Context
 	ApiService       *RadiusIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *RadiusProvider
 }
 
 func (r ApiRadiusIdentityProvidersPostRequest) Authorization(authorization string) ApiRadiusIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiRadiusIdentityProvidersPostRequest {
+func (r ApiRadiusIdentityProvidersPostRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersPostRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersPostRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -907,14 +907,14 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx _context.C
  * Execute executes the request
  * @return IdentityProvider
  */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (IdentityProvider, *_nethttp.Response, error) {
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (RadiusProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersPost")
@@ -1054,14 +1054,14 @@ type ApiRadiusIdentityProvidersTestPostRequest struct {
 	ctx              _context.Context
 	ApiService       *RadiusIdentityProvidersApiService
 	authorization    *string
-	identityProvider *IdentityProvider
+	identityProvider *RadiusProvider
 }
 
 func (r ApiRadiusIdentityProvidersTestPostRequest) Authorization(authorization string) ApiRadiusIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiRadiusIdentityProvidersTestPostRequest {
+func (r ApiRadiusIdentityProvidersTestPostRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersTestPostRequest {
 	r.identityProvider = &identityProvider
 	return r
 }
