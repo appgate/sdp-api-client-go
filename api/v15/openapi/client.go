@@ -79,6 +79,8 @@ type APIClient struct {
 
 	ConditionsApi *ConditionsApiService
 
+	CriteriaScriptsApi *CriteriaScriptsApiService
+
 	DNSClassificationsApi *DNSClassificationsApiService
 
 	DNSRulesApi *DNSRulesApiService
@@ -167,6 +169,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ClientAutoUpdateApi = (*ClientAutoUpdateApiService)(&c.common)
 	c.ClientConnectionsApi = (*ClientConnectionsApiService)(&c.common)
 	c.ConditionsApi = (*ConditionsApiService)(&c.common)
+	c.CriteriaScriptsApi = (*CriteriaScriptsApiService)(&c.common)
 	c.DNSClassificationsApi = (*DNSClassificationsApiService)(&c.common)
 	c.DNSRulesApi = (*DNSRulesApiService)(&c.common)
 	c.DefaultTimeBasedOTPProviderSeedsApi = (*DefaultTimeBasedOTPProviderSeedsApiService)(&c.common)
