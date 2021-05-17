@@ -681,6 +681,7 @@ type ApiAppliancesIdExportIsoPostRequest struct {
 	ApiService    *AppliancesApiService
 	authorization *string
 	id            string
+	sSHConfig     *SSHConfig
 	latestVersion *bool
 	version       *float32
 }
@@ -689,7 +690,10 @@ func (r ApiAppliancesIdExportIsoPostRequest) Authorization(authorization string)
 	r.authorization = &authorization
 	return r
 }
-
+func (r ApiAppliancesIdExportIsoPostRequest) SSHConfig(sSHConfig SSHConfig) ApiAppliancesIdExportIsoPostRequest {
+	r.sSHConfig = &sSHConfig
+	return r
+}
 func (r ApiAppliancesIdExportIsoPostRequest) LatestVersion(latestVersion bool) ApiAppliancesIdExportIsoPostRequest {
 	r.latestVersion = &latestVersion
 	return r
@@ -746,6 +750,9 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
+	if r.sSHConfig == nil {
+		return localVarReturnValue, nil, reportError("sSHConfig is required and must be specified")
+	}
 
 	if r.latestVersion != nil {
 		localVarQueryParams.Add("latestVersion", parameterToString(*r.latestVersion, ""))
@@ -772,6 +779,7 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
+	localVarPostBody = r.sSHConfig
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -873,6 +881,7 @@ type ApiAppliancesIdExportPostRequest struct {
 	ApiService    *AppliancesApiService
 	authorization *string
 	id            string
+	sSHConfig     *SSHConfig
 	latestVersion *bool
 	version       *float32
 }
@@ -881,7 +890,10 @@ func (r ApiAppliancesIdExportPostRequest) Authorization(authorization string) Ap
 	r.authorization = &authorization
 	return r
 }
-
+func (r ApiAppliancesIdExportPostRequest) SSHConfig(sSHConfig SSHConfig) ApiAppliancesIdExportPostRequest {
+	r.sSHConfig = &sSHConfig
+	return r
+}
 func (r ApiAppliancesIdExportPostRequest) LatestVersion(latestVersion bool) ApiAppliancesIdExportPostRequest {
 	r.latestVersion = &latestVersion
 	return r
@@ -938,6 +950,9 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
+	if r.sSHConfig == nil {
+		return localVarReturnValue, nil, reportError("sSHConfig is required and must be specified")
+	}
 
 	if r.latestVersion != nil {
 		localVarQueryParams.Add("latestVersion", parameterToString(*r.latestVersion, ""))
@@ -964,6 +979,7 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
+	localVarPostBody = r.sSHConfig
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
