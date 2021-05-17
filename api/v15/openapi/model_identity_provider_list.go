@@ -312,7 +312,7 @@ type LdapIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]LdapProvider `json:"data,omitempty"`
 }
 
 // NewLdapIdentityProviderList instantiates a new LdapIdentityProviderList object
@@ -493,9 +493,9 @@ func (o *LdapIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *LdapIdentityProviderList) GetData() []IdentityProvider {
+func (o *LdapIdentityProviderList) GetData() []LdapProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []LdapProvider
 		return ret
 	}
 	return *o.Data
@@ -503,7 +503,7 @@ func (o *LdapIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LdapIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *LdapIdentityProviderList) GetDataOk() (*[]LdapProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -519,8 +519,8 @@ func (o *LdapIdentityProviderList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *LdapIdentityProviderList) SetData(v []IdentityProvider) {
+// SetData gets a reference to the given []LdapProvider and assigns it to the Data field.
+func (o *LdapIdentityProviderList) SetData(v []LdapProvider) {
 	o.Data = &v
 }
 
@@ -596,7 +596,7 @@ type RadiusIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]RadiusProvider `json:"data,omitempty"`
 }
 
 // NewRadiusIdentityProviderList instantiates a new RadiusIdentityProviderList object
@@ -777,9 +777,9 @@ func (o *RadiusIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *RadiusIdentityProviderList) GetData() []IdentityProvider {
+func (o *RadiusIdentityProviderList) GetData() []RadiusProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []RadiusProvider
 		return ret
 	}
 	return *o.Data
@@ -787,7 +787,7 @@ func (o *RadiusIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RadiusIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *RadiusIdentityProviderList) GetDataOk() (*[]RadiusProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -804,7 +804,7 @@ func (o *RadiusIdentityProviderList) HasData() bool {
 }
 
 // SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *RadiusIdentityProviderList) SetData(v []IdentityProvider) {
+func (o *RadiusIdentityProviderList) SetData(v []RadiusProvider) {
 	o.Data = &v
 }
 
@@ -880,7 +880,7 @@ type SamlIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]SamlProvider `json:"data,omitempty"`
 }
 
 // NewSamlIdentityProviderList instantiates a new SamlIdentityProviderList object
@@ -1061,9 +1061,9 @@ func (o *SamlIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *SamlIdentityProviderList) GetData() []IdentityProvider {
+func (o *SamlIdentityProviderList) GetData() []SamlProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []SamlProvider
 		return ret
 	}
 	return *o.Data
@@ -1071,7 +1071,7 @@ func (o *SamlIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SamlIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *SamlIdentityProviderList) GetDataOk() (*[]SamlProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -1087,8 +1087,8 @@ func (o *SamlIdentityProviderList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *SamlIdentityProviderList) SetData(v []IdentityProvider) {
+// SetData gets a reference to the given []SamlProvider and assigns it to the Data field.
+func (o *SamlIdentityProviderList) SetData(v []SamlProvider) {
 	o.Data = &v
 }
 
@@ -1164,7 +1164,7 @@ type LocalDatabaseIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]LocalDatabaseProvider `json:"data,omitempty"`
 }
 
 // NewLocalDatabaseIdentityProviderList instantiates a new LocalDatabaseIdentityProviderList object
@@ -1345,9 +1345,9 @@ func (o *LocalDatabaseIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *LocalDatabaseIdentityProviderList) GetData() []IdentityProvider {
+func (o *LocalDatabaseIdentityProviderList) GetData() []LocalDatabaseProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []LocalDatabaseProvider
 		return ret
 	}
 	return *o.Data
@@ -1355,7 +1355,7 @@ func (o *LocalDatabaseIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LocalDatabaseIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *LocalDatabaseIdentityProviderList) GetDataOk() (*[]LocalDatabaseProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -1372,7 +1372,7 @@ func (o *LocalDatabaseIdentityProviderList) HasData() bool {
 }
 
 // SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *LocalDatabaseIdentityProviderList) SetData(v []IdentityProvider) {
+func (o *LocalDatabaseIdentityProviderList) SetData(v []LocalDatabaseProvider) {
 	o.Data = &v
 }
 
@@ -1448,7 +1448,7 @@ type LdapCertificateIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]LdapCertificateProvider `json:"data,omitempty"`
 }
 
 // NewLdapCertificateIdentityProviderList instantiates a new LdapCertificateIdentityProviderList object
@@ -1629,9 +1629,9 @@ func (o *LdapCertificateIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *LdapCertificateIdentityProviderList) GetData() []IdentityProvider {
+func (o *LdapCertificateIdentityProviderList) GetData() []LdapCertificateProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []LdapCertificateProvider
 		return ret
 	}
 	return *o.Data
@@ -1639,7 +1639,7 @@ func (o *LdapCertificateIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LdapCertificateIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *LdapCertificateIdentityProviderList) GetDataOk() (*[]LdapCertificateProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -1655,8 +1655,8 @@ func (o *LdapCertificateIdentityProviderList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *LdapCertificateIdentityProviderList) SetData(v []IdentityProvider) {
+// SetData gets a reference to the given []LdapCertificateProvider and assigns it to the Data field.
+func (o *LdapCertificateIdentityProviderList) SetData(v []LdapCertificateProvider) {
 	o.Data = &v
 }
 
@@ -1732,7 +1732,7 @@ type ConnectorIdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy *[]FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data *[]IdentityProvider `json:"data,omitempty"`
+	Data *[]ConnectorProvider `json:"data,omitempty"`
 }
 
 // NewConnectorIdentityProviderList instantiates a new ConnectorIdentityProviderList object
@@ -1913,9 +1913,9 @@ func (o *ConnectorIdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ConnectorIdentityProviderList) GetData() []IdentityProvider {
+func (o *ConnectorIdentityProviderList) GetData() []ConnectorProvider {
 	if o == nil || o.Data == nil {
-		var ret []IdentityProvider
+		var ret []ConnectorProvider
 		return ret
 	}
 	return *o.Data
@@ -1923,7 +1923,7 @@ func (o *ConnectorIdentityProviderList) GetData() []IdentityProvider {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorIdentityProviderList) GetDataOk() (*[]IdentityProvider, bool) {
+func (o *ConnectorIdentityProviderList) GetDataOk() (*[]ConnectorProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -1939,8 +1939,8 @@ func (o *ConnectorIdentityProviderList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []IdentityProvider and assigns it to the Data field.
-func (o *ConnectorIdentityProviderList) SetData(v []IdentityProvider) {
+// SetData gets a reference to the given []ConnectorProvider and assigns it to the Data field.
+func (o *ConnectorIdentityProviderList) SetData(v []ConnectorProvider) {
 	o.Data = &v
 }
 
