@@ -17,12 +17,87 @@ import (
 
 // BaseStats struct for BaseStats
 type BaseStats struct {
-	// User-friendly name for the stats.
-	Name *string `json:"name,omitempty"`
-	// The time the stats was generated.
-	CreationDate *time.Time `json:"creationDate,omitempty"`
-	// Recommended refresh interval in minutes.
-	RefreshInterval *float32 `json:"refreshInterval,omitempty"`
+	Name              *string     `json:"name"`
+	CreationDate      *time.Time  `json:"creationDate"`
+	RefreshInterval   *float32    `json:"refreshInterval"`
+	ControllerCount   int         `json:"controllerCount"`
+	GatewayCount      int         `json:"gatewayCount"`
+	ApplianceCount    int         `json:"applianceCount"`
+	LogServerCount    int         `json:"logServerCount"`
+	LogForwarderCount int         `json:"logForwarderCount"`
+	ConnectorCount    int         `json:"connectorCount"`
+	Data              []DataStats `json:"data"`
+}
+
+type StatsController struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+
+type StatsLogServer struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+
+type StatsLogForwarder struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+
+type StatsGateway struct {
+	Status           string `json:"status"`
+	Details          string `json:"details"`
+	NumberOfSessions int    `json:"numberOfSessions"`
+}
+
+type StatsConnector struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+
+type StatsAppliance struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+type StatsIps struct {
+	Eth0 []string `json:"eth0"`
+	Eth1 []string `json:"eth1"`
+}
+
+type StatsNetwork struct {
+	BusiestNic string   `json:"busiestNic"`
+	Dropin     int      `json:"dropin"`
+	Dropout    int      `json:"dropout"`
+	RxSpeed    string   `json:"rxSpeed"`
+	TxSpeed    string   `json:"txSpeed"`
+	Ips        StatsIps `json:"ips"`
+}
+
+type StatsUpgrade struct {
+	Status  string `json:"status"`
+	Details string `json:"details"`
+}
+
+type DataStats struct {
+	ID                string            `json:"id"`
+	Name              string            `json:"name"`
+	Online            bool              `json:"online"`
+	Version           string            `json:"version"`
+	State             string            `json:"state"`
+	VolumeNumber      int               `json:"volumeNumber"`
+	Status            string            `json:"status"`
+	Controller        StatsController   `json:"controller"`
+	LogServer         StatsLogServer    `json:"logServer"`
+	LogForwarder      StatsLogForwarder `json:"logForwarder"`
+	Gateway           StatsGateway      `json:"gateway"`
+	Connector         StatsConnector    `json:"connector"`
+	Appliance         StatsAppliance    `json:"appliance"`
+	CPU               float64           `json:"cpu"`
+	Memory            float64           `json:"memory"`
+	Disk              float64           `json:"disk"`
+	Network           StatsNetwork      `json:"network"`
+	Upgrade           StatsUpgrade      `json:"upgrade"`
+	CustomizationName string            `json:"customizationName"`
 }
 
 // NewBaseStats instantiates a new BaseStats object
