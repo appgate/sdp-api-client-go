@@ -65,6 +65,8 @@ type APIClient struct {
 
 	ApplianceMetricsApi *ApplianceMetricsApiService
 
+	ApplianceStatsApi *ApplianceStatsApiService
+
 	ApplianceUpgradeApi *ApplianceUpgradeApiService
 
 	AppliancesApi *AppliancesApiService
@@ -162,6 +164,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ApplianceCustomizationsApi = (*ApplianceCustomizationsApiService)(&c.common)
 	c.ApplianceMaintenanceApi = (*ApplianceMaintenanceApiService)(&c.common)
 	c.ApplianceMetricsApi = (*ApplianceMetricsApiService)(&c.common)
+	c.ApplianceStatsApi = (*ApplianceStatsApiService)(&c.common)
 	c.ApplianceUpgradeApi = (*ApplianceUpgradeApiService)(&c.common)
 	c.AppliancesApi = (*AppliancesApiService)(&c.common)
 	c.BlacklistedUsersApi = (*BlacklistedUsersApiService)(&c.common)
