@@ -61,7 +61,7 @@ type Appliance struct {
 	Gateway                              *ApplianceAllOfGateway            `json:"gateway,omitempty"`
 	LogForwarder                         *ApplianceAllOfLogForwarder       `json:"logForwarder,omitempty"`
 	Connector                            *ApplianceAllOfConnector          `json:"connector,omitempty"`
-	Portal                               *ApplianceAllOfPortal             `json:"portal,omitempty"`
+	Portal                               *Portal                           `json:"portal,omitempty"`
 	// Rsyslog destination settings to forward appliance logs.
 	RsyslogDestinations *[]ApplianceAllOfRsyslogDestinations `json:"rsyslogDestinations,omitempty"`
 	// Hostname aliases. They are added to the Appliance certificate as Subject Alternative Names so it is trusted using different IPs or hostnames. Requires manual certificate renewal to apply changes to the certificate.
@@ -983,9 +983,9 @@ func (o *Appliance) SetConnector(v ApplianceAllOfConnector) {
 }
 
 // GetPortal returns the Portal field value if set, zero value otherwise.
-func (o *Appliance) GetPortal() ApplianceAllOfPortal {
+func (o *Appliance) GetPortal() Portal {
 	if o == nil || o.Portal == nil {
-		var ret ApplianceAllOfPortal
+		var ret Portal
 		return ret
 	}
 	return *o.Portal
@@ -993,7 +993,7 @@ func (o *Appliance) GetPortal() ApplianceAllOfPortal {
 
 // GetPortalOk returns a tuple with the Portal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Appliance) GetPortalOk() (*ApplianceAllOfPortal, bool) {
+func (o *Appliance) GetPortalOk() (*Portal, bool) {
 	if o == nil || o.Portal == nil {
 		return nil, false
 	}
@@ -1009,8 +1009,8 @@ func (o *Appliance) HasPortal() bool {
 	return false
 }
 
-// SetPortal gets a reference to the given ApplianceAllOfPortal and assigns it to the Portal field.
-func (o *Appliance) SetPortal(v ApplianceAllOfPortal) {
+// SetPortal gets a reference to the given Portal and assigns it to the Portal field.
+func (o *Appliance) SetPortal(v Portal) {
 	o.Portal = &v
 }
 

@@ -48,7 +48,7 @@ type ApplianceAllOf struct {
 	Gateway                              *ApplianceAllOfGateway            `json:"gateway,omitempty"`
 	LogForwarder                         *ApplianceAllOfLogForwarder       `json:"logForwarder,omitempty"`
 	Connector                            *ApplianceAllOfConnector          `json:"connector,omitempty"`
-	Portal                               *ApplianceAllOfPortal             `json:"portal,omitempty"`
+	Portal                               *Portal                           `json:"portal,omitempty"`
 	// Rsyslog destination settings to forward appliance logs.
 	RsyslogDestinations *[]ApplianceAllOfRsyslogDestinations `json:"rsyslogDestinations,omitempty"`
 	// Hostname aliases. They are added to the Appliance certificate as Subject Alternative Names so it is trusted using different IPs or hostnames. Requires manual certificate renewal to apply changes to the certificate.
@@ -792,9 +792,9 @@ func (o *ApplianceAllOf) SetConnector(v ApplianceAllOfConnector) {
 }
 
 // GetPortal returns the Portal field value if set, zero value otherwise.
-func (o *ApplianceAllOf) GetPortal() ApplianceAllOfPortal {
+func (o *ApplianceAllOf) GetPortal() Portal {
 	if o == nil || o.Portal == nil {
-		var ret ApplianceAllOfPortal
+		var ret Portal
 		return ret
 	}
 	return *o.Portal
@@ -802,7 +802,7 @@ func (o *ApplianceAllOf) GetPortal() ApplianceAllOfPortal {
 
 // GetPortalOk returns a tuple with the Portal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOf) GetPortalOk() (*ApplianceAllOfPortal, bool) {
+func (o *ApplianceAllOf) GetPortalOk() (*Portal, bool) {
 	if o == nil || o.Portal == nil {
 		return nil, false
 	}
@@ -818,8 +818,8 @@ func (o *ApplianceAllOf) HasPortal() bool {
 	return false
 }
 
-// SetPortal gets a reference to the given ApplianceAllOfPortal and assigns it to the Portal field.
-func (o *ApplianceAllOf) SetPortal(v ApplianceAllOfPortal) {
+// SetPortal gets a reference to the given Portal and assigns it to the Portal field.
+func (o *ApplianceAllOf) SetPortal(v Portal) {
 	o.Portal = &v
 }
 
