@@ -4,6 +4,12 @@ container_opts:
 languages:
   go:
     downstream_templates:
+      # the templates for identity_providers is because of how the openapi-generator treat discriminator objects.
+      # The default baviour within openapi-generator is to create 1 api service for all, but that does not really work well
+      # in practice because we need a way in the code to have seperate models for each type of identity providers,
+      # that is why we create a copy for each type in the discriminator object based on the default api_identity_providers.go
+      # the only diffrence is the service name and the models used in the arguments, the patch template-patches/go/identity_providers.patch
+      # will append the extra services to the client.
       downstream_templates/go/api_connector_identity_providers.go: openapi/api_connector_identity_providers.go
       downstream_templates/go/api_local_database_identity_providers.go: openapi/api_local_database_identity_providers.go
       downstream_templates/go/api_ldap_certificate_identity_providers.go: openapi/api_ldap_certificate_identity_providers.go
