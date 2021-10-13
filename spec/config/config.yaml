@@ -73,7 +73,7 @@ languages:
     github_org_name: appgate
     library_version: "0.0.1"
     spec_versions: ["v16"]
-    version_path_template: openapi #"myapi_{{spec_version}}"
+    version_path_template: openapi
 spec_sections:
   v16:
   - api_specs.yml
