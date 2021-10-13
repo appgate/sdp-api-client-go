@@ -21,7 +21,7 @@ for version in "${supportedVersions[@]}"; do
 done
 
 for version in "${supportedVersions[@]}"; do
-    git clone git@github.com:appgate/sdp-api-specification.git --single-branch --branch "version-$version" "spec/spec/v$version"
+    git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "version-$version" "spec/spec/v$version"
     cd spec
     apigentools generate
     cd ..
