@@ -5,3 +5,4 @@ spec/*/full_spec.yaml
 !spec/templates
 spec/templates/*
 spec/templates/
+spec/spec/*
