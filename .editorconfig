@@ -16,9 +16,8 @@ insert_final_newline = true
 charset = utf-8
 indent_style = tab
 
-[*.sh]
+[*.{bash,sh}]
 indent_style = space
-
 
 
 [*.{yml,yaml}]
