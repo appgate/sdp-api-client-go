@@ -4,7 +4,6 @@ container_opts:
 languages:
   go:
     downstream_templates:
-      downstream_templates/go/README.md: README.md
       downstream_templates/go/api_connector_identity_providers.go: openapi/api_connector_identity_providers.go
       downstream_templates/go/api_local_database_identity_providers.go: openapi/api_local_database_identity_providers.go
       downstream_templates/go/api_ldap_certificate_identity_providers.go: openapi/api_ldap_certificate_identity_providers.go
