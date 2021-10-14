@@ -1,5 +1,6 @@
 config_version: '1.6'
 container_opts:
+  # image: openapitools/openapi-generator-cli:v5.1.1
   image: openapitools/openapi-generator-cli:v5.2.1
 languages:
   go:
@@ -42,12 +43,10 @@ languages:
             - '{{full_spec_path}}'
             - -o
             - '{{version_output_dir}}'
-            - --additional-properties
-            - apigentoolsStamp='{{stamp}}'
+            # - --additional-properties
+            # - apigentoolsStamp='{{stamp}}'
             - -t
             - "{{templates_dir}}"
-            - --type-mappings
-            - "object=interface{}"
             description: Generate code using openapi-generator
           - commandline:
             - rm
