@@ -1,0 +1,97 @@
+diff --git a/appliance.yml b/appliance.yml
+index 6629b8bb7..30901aaf6 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -594,6 +594,46 @@ requestBodies:
+     required: true
+
+ definitions:
++  Elasticsearch:
++    allOf:
++      - $ref: '#/definitions/AwsBase'
++      - type: object
++        description: Elasticsearch endpoint configuration on AWS.
++        required:
++          - url
++        properties:
++          url:
++            type: string
++            description: The URL of the elasticsearch server.
++            example: 'https://aws.com/elasticsearch/instance/asdaxllkmda64'
++          retentionDays:
++            type: integer
++            description: Optional field to enable log retention on the configured AWS elasticsearch. Defines how many days the audit logs will be kept.
++            example: 30
++          compatibilityMode:
++            type: integer
++            description: Which version of Elasticsearch that logs are forwarded to.
++            default: 6
++          authentication:
++            type: object
++            description: Optional authentication settings used when sending logs to an elasticsearch instance.
++            required:
++              - type
++              - token
++            properties:
++              type:
++                type: string
++                description: The type of authentication to use.
++                enum:
++                  - Basic
++                  - ServiceAccounts
++                  - TokenService
++                  - ApiKeyService
++              token:
++                type: string
++                description: The token to be used for authentication.
++                writeOnly: true
++                example: 'user:password'
+   SSHConfig:
+     type: object
+     description: SSH configuration during seeding.
+@@ -1201,44 +1241,7 @@ definitions:
+                 default: false
+               elasticsearch:
+                 allOf:
+-                  - $ref: '#/definitions/AwsBase'
+-                  - type: object
+-                    description: Elasticsearch endpoint configuration on AWS.
+-                    required:
+-                      - url
+-                    properties:
+-                      url:
+-                        type: string
+-                        description: The URL of the elasticsearch server.
+-                        example: 'https://aws.com/elasticsearch/instance/asdaxllkmda64'
+-                      retentionDays:
+-                        type: integer
+-                        description: Optional field to enable log retention on the configured AWS elasticsearch. Defines how many days the audit logs will be kept.
+-                        example: 30
+-                      compatibilityMode:
+-                        type: integer
+-                        description: Which version of Elasticsearch that logs are forwarded to.
+-                        default: 6
+-                      authentication:
+-                        type: object
+-                        description: Optional authentication settings used when sending logs to an elasticsearch instance.
+-                        required:
+-                          - type
+-                          - token
+-                        properties:
+-                          type:
+-                            type: string
+-                            description: The type of authentication to use.
+-                            enum:
+-                              - Basic
+-                              - ServiceAccounts
+-                              - TokenService
+-                              - ApiKeyService
+-                          token:
+-                            type: string
+-                            description: The token to be used for authentication.
+-                            writeOnly: true
+-                            example: 'user:password'
++                  - $ref: '#/definitions/Elasticsearch'
+               tcpClients:
+                 type: array
+                 description: TCP endpoints to connect and send the audit logs with the given format.

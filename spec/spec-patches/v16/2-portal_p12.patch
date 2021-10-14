@@ -1,0 +1,38 @@
+diff --git a/appliance.yml b/appliance.yml
+index 30901aaf6..346d261ee 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -594,6 +594,17 @@ requestBodies:
+     required: true
+
+ definitions:
++
++  portal12:
++    allOf:
++      - $ref: '#/definitions/P12'
++      - type: object
++        properties:
++          verifyUpstream:
++            type: boolean
++            description: Portal will verify upstream certificate of the endpoints.
++            default: true
++
+   Elasticsearch:
+     allOf:
+       - $ref: '#/definitions/AwsBase'
+@@ -682,14 +693,7 @@ definitions:
+         type: array
+         description: P12 files for proxying traffic to HTTPS endpoints.
+         items:
+-          allOf:
+-            - $ref: '#/definitions/P12'
+-            - type: object
+-              properties:
+-                verifyUpstream:
+-                  type: boolean
+-                  description: Portal will verify upstream certificate of the endpoints.
+-                  default: true
++          $ref: '#/definitions/portal12'
+       profiles:
+         type: array
+         description: Names of the profiles in this Collective to use in the Portal.

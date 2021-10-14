@@ -22,10 +22,17 @@ done
 
 for version in "${supportedVersions[@]}"; do
     git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "version-$version" "spec/spec/v$version"
+
+    echo "Apply custom patches for openapi v$version"
+    find "$PWD/spec/spec-patches/v$version" -name "*.patch" -print0 | while read -r -d $'\0' patch; do
+        echo "Applying $patch"
+        patch --fuzz 0 --no-backup-if-mismatch -p1 -i "$patch" -d "$PWD/spec/spec/v$version"
+    done
+
+
     cd spec
     apigentools generate
     cd ..
     mkdir -p "api/v$version/openapi"
     mv spec/generated/sdp-api-client-go/openapi/*.go "api/v$version/openapi"
 done
-
