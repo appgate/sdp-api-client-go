@@ -18,8 +18,8 @@ import (
 // ApplianceAllOfLogForwarder LogForwarder settings. LogForwarder collects audit logs from the appliances in the given sites and sends them to the given endpoints.
 type ApplianceAllOfLogForwarder struct {
 	// Whether the LogForwarder is enabled on this appliance or not.
-	Enabled       *bool    `json:"enabled,omitempty"`
-	Elasticsearch *AwsBase `json:"elasticsearch,omitempty"`
+	Enabled       *bool          `json:"enabled,omitempty"`
+	Elasticsearch *Elasticsearch `json:"elasticsearch,omitempty"`
 	// TCP endpoints to connect and send the audit logs with the given format.
 	TcpClients *[]TcpClient `json:"tcpClients,omitempty"`
 	// AWS Kinesis endpoints to connect and send the audit logs with the given format.
@@ -82,9 +82,9 @@ func (o *ApplianceAllOfLogForwarder) SetEnabled(v bool) {
 }
 
 // GetElasticsearch returns the Elasticsearch field value if set, zero value otherwise.
-func (o *ApplianceAllOfLogForwarder) GetElasticsearch() AwsBase {
+func (o *ApplianceAllOfLogForwarder) GetElasticsearch() Elasticsearch {
 	if o == nil || o.Elasticsearch == nil {
-		var ret AwsBase
+		var ret Elasticsearch
 		return ret
 	}
 	return *o.Elasticsearch
@@ -92,7 +92,7 @@ func (o *ApplianceAllOfLogForwarder) GetElasticsearch() AwsBase {
 
 // GetElasticsearchOk returns a tuple with the Elasticsearch field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetElasticsearchOk() (*AwsBase, bool) {
+func (o *ApplianceAllOfLogForwarder) GetElasticsearchOk() (*Elasticsearch, bool) {
 	if o == nil || o.Elasticsearch == nil {
 		return nil, false
 	}
@@ -108,8 +108,8 @@ func (o *ApplianceAllOfLogForwarder) HasElasticsearch() bool {
 	return false
 }
 
-// SetElasticsearch gets a reference to the given AwsBase and assigns it to the Elasticsearch field.
-func (o *ApplianceAllOfLogForwarder) SetElasticsearch(v AwsBase) {
+// SetElasticsearch gets a reference to the given Elasticsearch and assigns it to the Elasticsearch field.
+func (o *ApplianceAllOfLogForwarder) SetElasticsearch(v Elasticsearch) {
 	o.Elasticsearch = &v
 }
 
