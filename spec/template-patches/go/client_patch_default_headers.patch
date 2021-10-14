@@ -1,0 +1,30 @@
+diff --git a/go/client.mustache b/go/client.mustache
+index a9b82e3ff7d..94005e318bb 100644
+--- a/go/client.mustache
++++ b/go/client.mustache
+@@ -383,7 +383,24 @@ func (c *APIClient) prepareRequest(
+ 	}
+
+ 	for header, value := range c.cfg.DefaultHeader {
+-		localVarRequest.Header.Add(header, value)
++		// For the sake of convenience how appgate SDP Accept header works,
++		// We will replace the default apppend (Add()) with Set()
++		// so that we can configure the client as:
++		//
++		// clientCfg := &openapi.Configuration{
++		//     DefaultHeader: map[string]string{
++		//         "Accept": fmt.Sprintf("application/vnd.appgate.peer-v%d+json", version),
++		//     },
++		//     Debug: true,
++		//     Servers: []openapi.ServerConfiguration{
++		//         {
++		//             URL: address,
++		//         },
++		//     },
++		//     HTTPClient: httpclient,
++		// }
++		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
++		localVarRequest.Header.Set(header, value)
+ 	}
+ {{#withCustomMiddlewareFunction}}
+
