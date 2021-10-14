@@ -31,13 +31,13 @@ type ConnectorProvider struct {
 	// Array of tags.
 	Tags *[]string `json:"tags,omitempty"`
 	// The mapping of Identity Provider attributes to claims.
-	ClaimMappings *[]interface{} `json:"claimMappings,omitempty"`
+	ClaimMappings *[]map[string]interface{} `json:"claimMappings,omitempty"`
 	// The IPv4 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
 	IpPoolV4 *string `json:"ipPoolV4,omitempty"`
 	// The IPv6 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
 	IpPoolV6 *string `json:"ipPoolV6,omitempty"`
 	// The mapping of Identity Provider on demand attributes to claims.
-	OnDemandClaimMappings *[]interface{} `json:"onDemandClaimMappings,omitempty"`
+	OnDemandClaimMappings *[]map[string]interface{} `json:"onDemandClaimMappings,omitempty"`
 	// The type of the Identity Provider.
 	Type string `json:"type"`
 }
@@ -239,9 +239,9 @@ func (o *ConnectorProvider) SetTags(v []string) {
 }
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
-func (o *ConnectorProvider) GetClaimMappings() []interface{} {
+func (o *ConnectorProvider) GetClaimMappings() []map[string]interface{} {
 	if o == nil || o.ClaimMappings == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.ClaimMappings
@@ -249,7 +249,7 @@ func (o *ConnectorProvider) GetClaimMappings() []interface{} {
 
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorProvider) GetClaimMappingsOk() (*[]interface{}, bool) {
+func (o *ConnectorProvider) GetClaimMappingsOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.ClaimMappings == nil {
 		return nil, false
 	}
@@ -265,8 +265,8 @@ func (o *ConnectorProvider) HasClaimMappings() bool {
 	return false
 }
 
-// SetClaimMappings gets a reference to the given []interface{} and assigns it to the ClaimMappings field.
-func (o *ConnectorProvider) SetClaimMappings(v []interface{}) {
+// SetClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the ClaimMappings field.
+func (o *ConnectorProvider) SetClaimMappings(v []map[string]interface{}) {
 	o.ClaimMappings = &v
 }
 
@@ -335,9 +335,9 @@ func (o *ConnectorProvider) SetIpPoolV6(v string) {
 }
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
-func (o *ConnectorProvider) GetOnDemandClaimMappings() []interface{} {
+func (o *ConnectorProvider) GetOnDemandClaimMappings() []map[string]interface{} {
 	if o == nil || o.OnDemandClaimMappings == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.OnDemandClaimMappings
@@ -345,7 +345,7 @@ func (o *ConnectorProvider) GetOnDemandClaimMappings() []interface{} {
 
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorProvider) GetOnDemandClaimMappingsOk() (*[]interface{}, bool) {
+func (o *ConnectorProvider) GetOnDemandClaimMappingsOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.OnDemandClaimMappings == nil {
 		return nil, false
 	}
@@ -361,8 +361,8 @@ func (o *ConnectorProvider) HasOnDemandClaimMappings() bool {
 	return false
 }
 
-// SetOnDemandClaimMappings gets a reference to the given []interface{} and assigns it to the OnDemandClaimMappings field.
-func (o *ConnectorProvider) SetOnDemandClaimMappings(v []interface{}) {
+// SetOnDemandClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the OnDemandClaimMappings field.
+func (o *ConnectorProvider) SetOnDemandClaimMappings(v []map[string]interface{}) {
 	o.OnDemandClaimMappings = &v
 }
 

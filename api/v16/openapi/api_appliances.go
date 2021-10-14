@@ -1293,7 +1293,7 @@ func (r ApiAppliancesIdExportPostRequest) Version(version float32) ApiAppliances
 	return r
 }
 
-func (r ApiAppliancesIdExportPostRequest) Execute() (interface{}, *_nethttp.Response, error) {
+func (r ApiAppliancesIdExportPostRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.AppliancesIdExportPostExecute(r)
 }
 
@@ -1315,15 +1315,15 @@ func (a *AppliancesApiService) AppliancesIdExportPost(ctx _context.Context, id s
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdExportPostRequest) (interface{}, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdExportPostRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  interface{}
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdExportPost")

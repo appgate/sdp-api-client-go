@@ -26,7 +26,7 @@ type ApplianceAllOfSnmpServer struct {
 	// Raw SNMP configuration.
 	SnmpdConf *string `json:"snmpd.conf,omitempty"`
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
 }
 
 // NewApplianceAllOfSnmpServer instantiates a new ApplianceAllOfSnmpServer object
@@ -179,9 +179,9 @@ func (o *ApplianceAllOfSnmpServer) SetSnmpdConf(v string) {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfSnmpServer) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfSnmpServer) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -189,7 +189,7 @@ func (o *ApplianceAllOfSnmpServer) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfSnmpServer) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfSnmpServer) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -205,8 +205,8 @@ func (o *ApplianceAllOfSnmpServer) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfSnmpServer) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfSnmpServer) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

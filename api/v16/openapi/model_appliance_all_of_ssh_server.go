@@ -22,7 +22,7 @@ type ApplianceAllOfSshServer struct {
 	// SSH port.
 	Port *int32 `json:"port,omitempty"`
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
 	// Whether SSH allows password authentication or not.
 	PasswordAuthentication *bool `json:"passwordAuthentication,omitempty"`
 }
@@ -121,9 +121,9 @@ func (o *ApplianceAllOfSshServer) SetPort(v int32) {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfSshServer) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfSshServer) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -131,7 +131,7 @@ func (o *ApplianceAllOfSshServer) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfSshServer) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfSshServer) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -147,8 +147,8 @@ func (o *ApplianceAllOfSshServer) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfSshServer) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfSshServer) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

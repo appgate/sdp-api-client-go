@@ -26,7 +26,7 @@ type ApplianceAllOfClientInterface struct {
 	// Port to connect for the Clients that connects to vpnd on DTLS if enabled.
 	DtlsPort *int32 `json:"dtlsPort,omitempty"`
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
 	// Override SPA mode for this appliance.
 	OverrideSpaMode *string `json:"overrideSpaMode,omitempty"`
 }
@@ -182,9 +182,9 @@ func (o *ApplianceAllOfClientInterface) SetDtlsPort(v int32) {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfClientInterface) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfClientInterface) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -192,7 +192,7 @@ func (o *ApplianceAllOfClientInterface) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfClientInterface) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfClientInterface) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -208,8 +208,8 @@ func (o *ApplianceAllOfClientInterface) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfClientInterface) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfClientInterface) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

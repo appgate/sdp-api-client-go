@@ -17,15 +17,15 @@ import (
 
 // SessionInfoDistinguishedNameData Session Details reported by the Gateway.
 type SessionInfoDistinguishedNameData struct {
-	UserClaims   *map[string]interface{} `json:"userClaims,omitempty"`
-	DeviceClaims *map[string]interface{} `json:"deviceClaims,omitempty"`
-	SystemClaims *map[string]interface{} `json:"systemClaims,omitempty"`
+	UserClaims   *map[string]map[string]interface{} `json:"userClaims,omitempty"`
+	DeviceClaims *map[string]map[string]interface{} `json:"deviceClaims,omitempty"`
+	SystemClaims *map[string]map[string]interface{} `json:"systemClaims,omitempty"`
 	// Entitlement information reported by the Gateway. The key is the Entitlement name.
 	EntitlementInfos *map[string]SessionInfoDistinguishedNameEntitlementInfos `json:"entitlementInfos,omitempty"`
 	// The Discovered Apps by this Gateway. Note that this API does not filter out the existing Entitlements like the App Discovery API does.
 	DiscoveredApps *[]string `json:"discoveredApps,omitempty"`
 	// VPN details of the session
-	Vpn *map[string]interface{} `json:"vpn,omitempty"`
+	Vpn *map[string]map[string]interface{} `json:"vpn,omitempty"`
 	// The Site name for the Gateway.
 	Site *string `json:"site,omitempty"`
 }
@@ -48,9 +48,9 @@ func NewSessionInfoDistinguishedNameDataWithDefaults() *SessionInfoDistinguished
 }
 
 // GetUserClaims returns the UserClaims field value if set, zero value otherwise.
-func (o *SessionInfoDistinguishedNameData) GetUserClaims() map[string]interface{} {
+func (o *SessionInfoDistinguishedNameData) GetUserClaims() map[string]map[string]interface{} {
 	if o == nil || o.UserClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.UserClaims
@@ -58,7 +58,7 @@ func (o *SessionInfoDistinguishedNameData) GetUserClaims() map[string]interface{
 
 // GetUserClaimsOk returns a tuple with the UserClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SessionInfoDistinguishedNameData) GetUserClaimsOk() (*map[string]interface{}, bool) {
+func (o *SessionInfoDistinguishedNameData) GetUserClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.UserClaims == nil {
 		return nil, false
 	}
@@ -74,15 +74,15 @@ func (o *SessionInfoDistinguishedNameData) HasUserClaims() bool {
 	return false
 }
 
-// SetUserClaims gets a reference to the given map[string]interface{} and assigns it to the UserClaims field.
-func (o *SessionInfoDistinguishedNameData) SetUserClaims(v map[string]interface{}) {
+// SetUserClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the UserClaims field.
+func (o *SessionInfoDistinguishedNameData) SetUserClaims(v map[string]map[string]interface{}) {
 	o.UserClaims = &v
 }
 
 // GetDeviceClaims returns the DeviceClaims field value if set, zero value otherwise.
-func (o *SessionInfoDistinguishedNameData) GetDeviceClaims() map[string]interface{} {
+func (o *SessionInfoDistinguishedNameData) GetDeviceClaims() map[string]map[string]interface{} {
 	if o == nil || o.DeviceClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.DeviceClaims
@@ -90,7 +90,7 @@ func (o *SessionInfoDistinguishedNameData) GetDeviceClaims() map[string]interfac
 
 // GetDeviceClaimsOk returns a tuple with the DeviceClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SessionInfoDistinguishedNameData) GetDeviceClaimsOk() (*map[string]interface{}, bool) {
+func (o *SessionInfoDistinguishedNameData) GetDeviceClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.DeviceClaims == nil {
 		return nil, false
 	}
@@ -106,15 +106,15 @@ func (o *SessionInfoDistinguishedNameData) HasDeviceClaims() bool {
 	return false
 }
 
-// SetDeviceClaims gets a reference to the given map[string]interface{} and assigns it to the DeviceClaims field.
-func (o *SessionInfoDistinguishedNameData) SetDeviceClaims(v map[string]interface{}) {
+// SetDeviceClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the DeviceClaims field.
+func (o *SessionInfoDistinguishedNameData) SetDeviceClaims(v map[string]map[string]interface{}) {
 	o.DeviceClaims = &v
 }
 
 // GetSystemClaims returns the SystemClaims field value if set, zero value otherwise.
-func (o *SessionInfoDistinguishedNameData) GetSystemClaims() map[string]interface{} {
+func (o *SessionInfoDistinguishedNameData) GetSystemClaims() map[string]map[string]interface{} {
 	if o == nil || o.SystemClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.SystemClaims
@@ -122,7 +122,7 @@ func (o *SessionInfoDistinguishedNameData) GetSystemClaims() map[string]interfac
 
 // GetSystemClaimsOk returns a tuple with the SystemClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SessionInfoDistinguishedNameData) GetSystemClaimsOk() (*map[string]interface{}, bool) {
+func (o *SessionInfoDistinguishedNameData) GetSystemClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.SystemClaims == nil {
 		return nil, false
 	}
@@ -138,8 +138,8 @@ func (o *SessionInfoDistinguishedNameData) HasSystemClaims() bool {
 	return false
 }
 
-// SetSystemClaims gets a reference to the given map[string]interface{} and assigns it to the SystemClaims field.
-func (o *SessionInfoDistinguishedNameData) SetSystemClaims(v map[string]interface{}) {
+// SetSystemClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the SystemClaims field.
+func (o *SessionInfoDistinguishedNameData) SetSystemClaims(v map[string]map[string]interface{}) {
 	o.SystemClaims = &v
 }
 
@@ -208,9 +208,9 @@ func (o *SessionInfoDistinguishedNameData) SetDiscoveredApps(v []string) {
 }
 
 // GetVpn returns the Vpn field value if set, zero value otherwise.
-func (o *SessionInfoDistinguishedNameData) GetVpn() map[string]interface{} {
+func (o *SessionInfoDistinguishedNameData) GetVpn() map[string]map[string]interface{} {
 	if o == nil || o.Vpn == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.Vpn
@@ -218,7 +218,7 @@ func (o *SessionInfoDistinguishedNameData) GetVpn() map[string]interface{} {
 
 // GetVpnOk returns a tuple with the Vpn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SessionInfoDistinguishedNameData) GetVpnOk() (*map[string]interface{}, bool) {
+func (o *SessionInfoDistinguishedNameData) GetVpnOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.Vpn == nil {
 		return nil, false
 	}
@@ -234,8 +234,8 @@ func (o *SessionInfoDistinguishedNameData) HasVpn() bool {
 	return false
 }
 
-// SetVpn gets a reference to the given map[string]interface{} and assigns it to the Vpn field.
-func (o *SessionInfoDistinguishedNameData) SetVpn(v map[string]interface{}) {
+// SetVpn gets a reference to the given map[string]map[string]interface{} and assigns it to the Vpn field.
+func (o *SessionInfoDistinguishedNameData) SetVpn(v map[string]map[string]interface{}) {
 	o.Vpn = &v
 }
 

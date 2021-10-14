@@ -24,8 +24,8 @@ type ApplianceAllOfAdminInterface struct {
 	// The type of TLS ciphers to allow. See: https://www.openssl.org/docs/man1.0.2/apps/ciphers.html for all supported ciphers.
 	HttpsCiphers []string `json:"httpsCiphers"`
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
-	HttpsP12     *P12           `json:"httpsP12,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
+	HttpsP12     *P12                      `json:"httpsP12,omitempty"`
 }
 
 // NewApplianceAllOfAdminInterface instantiates a new ApplianceAllOfAdminInterface object
@@ -132,9 +132,9 @@ func (o *ApplianceAllOfAdminInterface) SetHttpsCiphers(v []string) {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfAdminInterface) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfAdminInterface) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -142,7 +142,7 @@ func (o *ApplianceAllOfAdminInterface) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -158,8 +158,8 @@ func (o *ApplianceAllOfAdminInterface) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfAdminInterface) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfAdminInterface) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

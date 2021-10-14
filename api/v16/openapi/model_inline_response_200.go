@@ -18,7 +18,7 @@ import (
 // InlineResponse200 struct for InlineResponse200
 type InlineResponse200 struct {
 	// Administrative Privileges action matrix. It is a static dictionary object that may change between Controller versions.
-	ActionMatrixMap *map[string]interface{} `json:"actionMatrixMap,omitempty"`
+	ActionMatrixMap *map[string]map[string]interface{} `json:"actionMatrixMap,omitempty"`
 }
 
 // NewInlineResponse200 instantiates a new InlineResponse200 object
@@ -39,9 +39,9 @@ func NewInlineResponse200WithDefaults() *InlineResponse200 {
 }
 
 // GetActionMatrixMap returns the ActionMatrixMap field value if set, zero value otherwise.
-func (o *InlineResponse200) GetActionMatrixMap() map[string]interface{} {
+func (o *InlineResponse200) GetActionMatrixMap() map[string]map[string]interface{} {
 	if o == nil || o.ActionMatrixMap == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.ActionMatrixMap
@@ -49,7 +49,7 @@ func (o *InlineResponse200) GetActionMatrixMap() map[string]interface{} {
 
 // GetActionMatrixMapOk returns a tuple with the ActionMatrixMap field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse200) GetActionMatrixMapOk() (*map[string]interface{}, bool) {
+func (o *InlineResponse200) GetActionMatrixMapOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.ActionMatrixMap == nil {
 		return nil, false
 	}
@@ -65,8 +65,8 @@ func (o *InlineResponse200) HasActionMatrixMap() bool {
 	return false
 }
 
-// SetActionMatrixMap gets a reference to the given map[string]interface{} and assigns it to the ActionMatrixMap field.
-func (o *InlineResponse200) SetActionMatrixMap(v map[string]interface{}) {
+// SetActionMatrixMap gets a reference to the given map[string]map[string]interface{} and assigns it to the ActionMatrixMap field.
+func (o *InlineResponse200) SetActionMatrixMap(v map[string]map[string]interface{}) {
 	o.ActionMatrixMap = &v
 }
 

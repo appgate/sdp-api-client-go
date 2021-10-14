@@ -24,14 +24,14 @@ type SiteAllOfNameResolutionDnsForwarding struct {
 	// DNS Servers to use for resolving endpoints.
 	DnsServers []string `json:"dnsServers"`
 	// A list of subnets to allow access.
-	AllowDestinations []interface{} `json:"allowDestinations"`
+	AllowDestinations []map[string]interface{} `json:"allowDestinations"`
 }
 
 // NewSiteAllOfNameResolutionDnsForwarding instantiates a new SiteAllOfNameResolutionDnsForwarding object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfNameResolutionDnsForwarding(dnsServers []string, allowDestinations []interface{}) *SiteAllOfNameResolutionDnsForwarding {
+func NewSiteAllOfNameResolutionDnsForwarding(dnsServers []string, allowDestinations []map[string]interface{}) *SiteAllOfNameResolutionDnsForwarding {
 	this := SiteAllOfNameResolutionDnsForwarding{}
 	this.DnsServers = dnsServers
 	this.AllowDestinations = allowDestinations
@@ -135,9 +135,9 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetDnsServers(v []string) {
 }
 
 // GetAllowDestinations returns the AllowDestinations field value
-func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinations() []interface{} {
+func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinations() []map[string]interface{} {
 	if o == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 
@@ -146,7 +146,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinations() []interfac
 
 // GetAllowDestinationsOk returns a tuple with the AllowDestinations field value
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinationsOk() (*[]interface{}, bool) {
+func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinationsOk() (*[]map[string]interface{}, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -154,7 +154,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAllowDestinationsOk() (*[]inte
 }
 
 // SetAllowDestinations sets field value
-func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []interface{}) {
+func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []map[string]interface{}) {
 	o.AllowDestinations = v
 }
 

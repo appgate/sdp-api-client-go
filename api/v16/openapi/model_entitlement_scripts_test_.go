@@ -19,11 +19,11 @@ import (
 // EntitlementScriptsTest struct for EntitlementScriptsTest
 type EntitlementScriptsTest struct {
 	// The javascript expression to evaluate.
-	Expression   string                  `json:"expression"`
-	UserClaims   *map[string]interface{} `json:"userClaims,omitempty"`
-	DeviceClaims *map[string]interface{} `json:"deviceClaims,omitempty"`
-	SystemClaims *map[string]interface{} `json:"systemClaims,omitempty"`
-	Time         *time.Time              `json:"time,omitempty"`
+	Expression   string                             `json:"expression"`
+	UserClaims   *map[string]map[string]interface{} `json:"userClaims,omitempty"`
+	DeviceClaims *map[string]map[string]interface{} `json:"deviceClaims,omitempty"`
+	SystemClaims *map[string]map[string]interface{} `json:"systemClaims,omitempty"`
+	Time         *time.Time                         `json:"time,omitempty"`
 	// The type of the Entitlement Script.
 	Type string `json:"type"`
 }
@@ -72,9 +72,9 @@ func (o *EntitlementScriptsTest) SetExpression(v string) {
 }
 
 // GetUserClaims returns the UserClaims field value if set, zero value otherwise.
-func (o *EntitlementScriptsTest) GetUserClaims() map[string]interface{} {
+func (o *EntitlementScriptsTest) GetUserClaims() map[string]map[string]interface{} {
 	if o == nil || o.UserClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.UserClaims
@@ -82,7 +82,7 @@ func (o *EntitlementScriptsTest) GetUserClaims() map[string]interface{} {
 
 // GetUserClaimsOk returns a tuple with the UserClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EntitlementScriptsTest) GetUserClaimsOk() (*map[string]interface{}, bool) {
+func (o *EntitlementScriptsTest) GetUserClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.UserClaims == nil {
 		return nil, false
 	}
@@ -98,15 +98,15 @@ func (o *EntitlementScriptsTest) HasUserClaims() bool {
 	return false
 }
 
-// SetUserClaims gets a reference to the given map[string]interface{} and assigns it to the UserClaims field.
-func (o *EntitlementScriptsTest) SetUserClaims(v map[string]interface{}) {
+// SetUserClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the UserClaims field.
+func (o *EntitlementScriptsTest) SetUserClaims(v map[string]map[string]interface{}) {
 	o.UserClaims = &v
 }
 
 // GetDeviceClaims returns the DeviceClaims field value if set, zero value otherwise.
-func (o *EntitlementScriptsTest) GetDeviceClaims() map[string]interface{} {
+func (o *EntitlementScriptsTest) GetDeviceClaims() map[string]map[string]interface{} {
 	if o == nil || o.DeviceClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.DeviceClaims
@@ -114,7 +114,7 @@ func (o *EntitlementScriptsTest) GetDeviceClaims() map[string]interface{} {
 
 // GetDeviceClaimsOk returns a tuple with the DeviceClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EntitlementScriptsTest) GetDeviceClaimsOk() (*map[string]interface{}, bool) {
+func (o *EntitlementScriptsTest) GetDeviceClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.DeviceClaims == nil {
 		return nil, false
 	}
@@ -130,15 +130,15 @@ func (o *EntitlementScriptsTest) HasDeviceClaims() bool {
 	return false
 }
 
-// SetDeviceClaims gets a reference to the given map[string]interface{} and assigns it to the DeviceClaims field.
-func (o *EntitlementScriptsTest) SetDeviceClaims(v map[string]interface{}) {
+// SetDeviceClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the DeviceClaims field.
+func (o *EntitlementScriptsTest) SetDeviceClaims(v map[string]map[string]interface{}) {
 	o.DeviceClaims = &v
 }
 
 // GetSystemClaims returns the SystemClaims field value if set, zero value otherwise.
-func (o *EntitlementScriptsTest) GetSystemClaims() map[string]interface{} {
+func (o *EntitlementScriptsTest) GetSystemClaims() map[string]map[string]interface{} {
 	if o == nil || o.SystemClaims == nil {
-		var ret map[string]interface{}
+		var ret map[string]map[string]interface{}
 		return ret
 	}
 	return *o.SystemClaims
@@ -146,7 +146,7 @@ func (o *EntitlementScriptsTest) GetSystemClaims() map[string]interface{} {
 
 // GetSystemClaimsOk returns a tuple with the SystemClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EntitlementScriptsTest) GetSystemClaimsOk() (*map[string]interface{}, bool) {
+func (o *EntitlementScriptsTest) GetSystemClaimsOk() (*map[string]map[string]interface{}, bool) {
 	if o == nil || o.SystemClaims == nil {
 		return nil, false
 	}
@@ -162,8 +162,8 @@ func (o *EntitlementScriptsTest) HasSystemClaims() bool {
 	return false
 }
 
-// SetSystemClaims gets a reference to the given map[string]interface{} and assigns it to the SystemClaims field.
-func (o *EntitlementScriptsTest) SetSystemClaims(v map[string]interface{}) {
+// SetSystemClaims gets a reference to the given map[string]map[string]interface{} and assigns it to the SystemClaims field.
+func (o *EntitlementScriptsTest) SetSystemClaims(v map[string]map[string]interface{}) {
 	o.SystemClaims = &v
 }
 

@@ -18,7 +18,7 @@ import (
 // ApplianceAllOfPing Rules for allowing ping.
 type ApplianceAllOfPing struct {
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
 }
 
 // NewApplianceAllOfPing instantiates a new ApplianceAllOfPing object
@@ -39,9 +39,9 @@ func NewApplianceAllOfPingWithDefaults() *ApplianceAllOfPing {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfPing) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfPing) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -49,7 +49,7 @@ func (o *ApplianceAllOfPing) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfPing) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfPing) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -65,8 +65,8 @@ func (o *ApplianceAllOfPing) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfPing) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfPing) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

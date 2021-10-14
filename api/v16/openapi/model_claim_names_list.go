@@ -17,10 +17,10 @@ import (
 
 // ClaimNamesList struct for ClaimNamesList
 type ClaimNamesList struct {
-	User     *[]interface{} `json:"user,omitempty"`
-	Device   *[]interface{} `json:"device,omitempty"`
-	System   *[]interface{} `json:"system,omitempty"`
-	OnDemand *[]interface{} `json:"onDemand,omitempty"`
+	User     *[]map[string]interface{} `json:"user,omitempty"`
+	Device   *[]map[string]interface{} `json:"device,omitempty"`
+	System   *[]map[string]interface{} `json:"system,omitempty"`
+	OnDemand *[]map[string]interface{} `json:"onDemand,omitempty"`
 }
 
 // NewClaimNamesList instantiates a new ClaimNamesList object
@@ -41,9 +41,9 @@ func NewClaimNamesListWithDefaults() *ClaimNamesList {
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetUser() []interface{} {
+func (o *ClaimNamesList) GetUser() []map[string]interface{} {
 	if o == nil || o.User == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.User
@@ -51,7 +51,7 @@ func (o *ClaimNamesList) GetUser() []interface{} {
 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetUserOk() (*[]interface{}, bool) {
+func (o *ClaimNamesList) GetUserOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.User == nil {
 		return nil, false
 	}
@@ -67,15 +67,15 @@ func (o *ClaimNamesList) HasUser() bool {
 	return false
 }
 
-// SetUser gets a reference to the given []interface{} and assigns it to the User field.
-func (o *ClaimNamesList) SetUser(v []interface{}) {
+// SetUser gets a reference to the given []map[string]interface{} and assigns it to the User field.
+func (o *ClaimNamesList) SetUser(v []map[string]interface{}) {
 	o.User = &v
 }
 
 // GetDevice returns the Device field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetDevice() []interface{} {
+func (o *ClaimNamesList) GetDevice() []map[string]interface{} {
 	if o == nil || o.Device == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.Device
@@ -83,7 +83,7 @@ func (o *ClaimNamesList) GetDevice() []interface{} {
 
 // GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetDeviceOk() (*[]interface{}, bool) {
+func (o *ClaimNamesList) GetDeviceOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.Device == nil {
 		return nil, false
 	}
@@ -99,15 +99,15 @@ func (o *ClaimNamesList) HasDevice() bool {
 	return false
 }
 
-// SetDevice gets a reference to the given []interface{} and assigns it to the Device field.
-func (o *ClaimNamesList) SetDevice(v []interface{}) {
+// SetDevice gets a reference to the given []map[string]interface{} and assigns it to the Device field.
+func (o *ClaimNamesList) SetDevice(v []map[string]interface{}) {
 	o.Device = &v
 }
 
 // GetSystem returns the System field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetSystem() []interface{} {
+func (o *ClaimNamesList) GetSystem() []map[string]interface{} {
 	if o == nil || o.System == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.System
@@ -115,7 +115,7 @@ func (o *ClaimNamesList) GetSystem() []interface{} {
 
 // GetSystemOk returns a tuple with the System field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetSystemOk() (*[]interface{}, bool) {
+func (o *ClaimNamesList) GetSystemOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.System == nil {
 		return nil, false
 	}
@@ -131,15 +131,15 @@ func (o *ClaimNamesList) HasSystem() bool {
 	return false
 }
 
-// SetSystem gets a reference to the given []interface{} and assigns it to the System field.
-func (o *ClaimNamesList) SetSystem(v []interface{}) {
+// SetSystem gets a reference to the given []map[string]interface{} and assigns it to the System field.
+func (o *ClaimNamesList) SetSystem(v []map[string]interface{}) {
 	o.System = &v
 }
 
 // GetOnDemand returns the OnDemand field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetOnDemand() []interface{} {
+func (o *ClaimNamesList) GetOnDemand() []map[string]interface{} {
 	if o == nil || o.OnDemand == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.OnDemand
@@ -147,7 +147,7 @@ func (o *ClaimNamesList) GetOnDemand() []interface{} {
 
 // GetOnDemandOk returns a tuple with the OnDemand field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetOnDemandOk() (*[]interface{}, bool) {
+func (o *ClaimNamesList) GetOnDemandOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.OnDemand == nil {
 		return nil, false
 	}
@@ -163,8 +163,8 @@ func (o *ClaimNamesList) HasOnDemand() bool {
 	return false
 }
 
-// SetOnDemand gets a reference to the given []interface{} and assigns it to the OnDemand field.
-func (o *ClaimNamesList) SetOnDemand(v []interface{}) {
+// SetOnDemand gets a reference to the given []map[string]interface{} and assigns it to the OnDemand field.
+func (o *ClaimNamesList) SetOnDemand(v []map[string]interface{}) {
 	o.OnDemand = &v
 }
 

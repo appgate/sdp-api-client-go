@@ -310,7 +310,7 @@ func (r ApiAdminMessagesSummarizeGetRequest) Authorization(authorization string)
 	return r
 }
 
-func (r ApiAdminMessagesSummarizeGetRequest) Execute() ([]interface{}, *_nethttp.Response, error) {
+func (r ApiAdminMessagesSummarizeGetRequest) Execute() ([]map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.AdminMessagesSummarizeGetExecute(r)
 }
 
@@ -330,15 +330,15 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGet(ctx _context.Context
 }
 
 // Execute executes the request
-//  @return []interface{}
-func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) ([]interface{}, *_nethttp.Response, error) {
+//  @return []map[string]interface{}
+func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) ([]map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []interface{}
+		localVarReturnValue  []map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesSummarizeGet")

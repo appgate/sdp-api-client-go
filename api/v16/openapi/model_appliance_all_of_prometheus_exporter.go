@@ -22,7 +22,7 @@ type ApplianceAllOfPrometheusExporter struct {
 	// Port to connect for Prometheus Exporter.
 	Port *int32 `json:"port,omitempty"`
 	// Source configuration to allow via iptables.
-	AllowSources *[]interface{} `json:"allowSources,omitempty"`
+	AllowSources *[]map[string]interface{} `json:"allowSources,omitempty"`
 }
 
 // NewApplianceAllOfPrometheusExporter instantiates a new ApplianceAllOfPrometheusExporter object
@@ -115,9 +115,9 @@ func (o *ApplianceAllOfPrometheusExporter) SetPort(v int32) {
 }
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
-func (o *ApplianceAllOfPrometheusExporter) GetAllowSources() []interface{} {
+func (o *ApplianceAllOfPrometheusExporter) GetAllowSources() []map[string]interface{} {
 	if o == nil || o.AllowSources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowSources
@@ -125,7 +125,7 @@ func (o *ApplianceAllOfPrometheusExporter) GetAllowSources() []interface{} {
 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfPrometheusExporter) GetAllowSourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfPrometheusExporter) GetAllowSourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowSources == nil {
 		return nil, false
 	}
@@ -141,8 +141,8 @@ func (o *ApplianceAllOfPrometheusExporter) HasAllowSources() bool {
 	return false
 }
 
-// SetAllowSources gets a reference to the given []interface{} and assigns it to the AllowSources field.
-func (o *ApplianceAllOfPrometheusExporter) SetAllowSources(v []interface{}) {
+// SetAllowSources gets a reference to the given []map[string]interface{} and assigns it to the AllowSources field.
+func (o *ApplianceAllOfPrometheusExporter) SetAllowSources(v []map[string]interface{}) {
 	o.AllowSources = &v
 }
 

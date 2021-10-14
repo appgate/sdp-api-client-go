@@ -22,7 +22,7 @@ type ApplianceAllOfConnectorAdvancedClients struct {
 	// The device ID to assign to this Client. It will be used to generate device distinguished name.
 	DeviceId *string `json:"deviceId,omitempty"`
 	// Source configuration to allow via iptables.
-	AllowResources *[]interface{} `json:"allowResources,omitempty"`
+	AllowResources *[]map[string]interface{} `json:"allowResources,omitempty"`
 	// Use Source NAT for the Client tunnel.
 	SnatToTunnel *bool `json:"snatToTunnel,omitempty"`
 	// Use SNAT for outgoing traffic from the Express Connector, endpoints will see traffic as coming from the Connector itself
@@ -124,9 +124,9 @@ func (o *ApplianceAllOfConnectorAdvancedClients) SetDeviceId(v string) {
 }
 
 // GetAllowResources returns the AllowResources field value if set, zero value otherwise.
-func (o *ApplianceAllOfConnectorAdvancedClients) GetAllowResources() []interface{} {
+func (o *ApplianceAllOfConnectorAdvancedClients) GetAllowResources() []map[string]interface{} {
 	if o == nil || o.AllowResources == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.AllowResources
@@ -134,7 +134,7 @@ func (o *ApplianceAllOfConnectorAdvancedClients) GetAllowResources() []interface
 
 // GetAllowResourcesOk returns a tuple with the AllowResources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfConnectorAdvancedClients) GetAllowResourcesOk() (*[]interface{}, bool) {
+func (o *ApplianceAllOfConnectorAdvancedClients) GetAllowResourcesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.AllowResources == nil {
 		return nil, false
 	}
@@ -150,8 +150,8 @@ func (o *ApplianceAllOfConnectorAdvancedClients) HasAllowResources() bool {
 	return false
 }
 
-// SetAllowResources gets a reference to the given []interface{} and assigns it to the AllowResources field.
-func (o *ApplianceAllOfConnectorAdvancedClients) SetAllowResources(v []interface{}) {
+// SetAllowResources gets a reference to the given []map[string]interface{} and assigns it to the AllowResources field.
+func (o *ApplianceAllOfConnectorAdvancedClients) SetAllowResources(v []map[string]interface{}) {
 	o.AllowResources = &v
 }
 

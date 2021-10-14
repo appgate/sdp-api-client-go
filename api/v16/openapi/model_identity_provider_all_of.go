@@ -39,9 +39,9 @@ type IdentityProviderAllOf struct {
 	// Whether the Windows Client will block local DNS requests or not.
 	BlockLocalDnsRequests *bool `json:"blockLocalDnsRequests,omitempty"`
 	// The mapping of Identity Provider attributes to claims.
-	ClaimMappings *[]interface{} `json:"claimMappings,omitempty"`
+	ClaimMappings *[]map[string]interface{} `json:"claimMappings,omitempty"`
 	// The mapping of Identity Provider on demand attributes to claims.
-	OnDemandClaimMappings *[]interface{} `json:"onDemandClaimMappings,omitempty"`
+	OnDemandClaimMappings *[]map[string]interface{} `json:"onDemandClaimMappings,omitempty"`
 	// ID of the User Claim Scripts to run during authorization.
 	UserScripts *[]string `json:"userScripts,omitempty"`
 }
@@ -425,9 +425,9 @@ func (o *IdentityProviderAllOf) SetBlockLocalDnsRequests(v bool) {
 }
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
-func (o *IdentityProviderAllOf) GetClaimMappings() []interface{} {
+func (o *IdentityProviderAllOf) GetClaimMappings() []map[string]interface{} {
 	if o == nil || o.ClaimMappings == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.ClaimMappings
@@ -435,7 +435,7 @@ func (o *IdentityProviderAllOf) GetClaimMappings() []interface{} {
 
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentityProviderAllOf) GetClaimMappingsOk() (*[]interface{}, bool) {
+func (o *IdentityProviderAllOf) GetClaimMappingsOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.ClaimMappings == nil {
 		return nil, false
 	}
@@ -451,15 +451,15 @@ func (o *IdentityProviderAllOf) HasClaimMappings() bool {
 	return false
 }
 
-// SetClaimMappings gets a reference to the given []interface{} and assigns it to the ClaimMappings field.
-func (o *IdentityProviderAllOf) SetClaimMappings(v []interface{}) {
+// SetClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the ClaimMappings field.
+func (o *IdentityProviderAllOf) SetClaimMappings(v []map[string]interface{}) {
 	o.ClaimMappings = &v
 }
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
-func (o *IdentityProviderAllOf) GetOnDemandClaimMappings() []interface{} {
+func (o *IdentityProviderAllOf) GetOnDemandClaimMappings() []map[string]interface{} {
 	if o == nil || o.OnDemandClaimMappings == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.OnDemandClaimMappings
@@ -467,7 +467,7 @@ func (o *IdentityProviderAllOf) GetOnDemandClaimMappings() []interface{} {
 
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentityProviderAllOf) GetOnDemandClaimMappingsOk() (*[]interface{}, bool) {
+func (o *IdentityProviderAllOf) GetOnDemandClaimMappingsOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.OnDemandClaimMappings == nil {
 		return nil, false
 	}
@@ -483,8 +483,8 @@ func (o *IdentityProviderAllOf) HasOnDemandClaimMappings() bool {
 	return false
 }
 
-// SetOnDemandClaimMappings gets a reference to the given []interface{} and assigns it to the OnDemandClaimMappings field.
-func (o *IdentityProviderAllOf) SetOnDemandClaimMappings(v []interface{}) {
+// SetOnDemandClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the OnDemandClaimMappings field.
+func (o *IdentityProviderAllOf) SetOnDemandClaimMappings(v []map[string]interface{}) {
 	o.OnDemandClaimMappings = &v
 }
 

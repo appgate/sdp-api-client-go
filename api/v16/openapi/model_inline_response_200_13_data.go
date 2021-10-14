@@ -24,7 +24,7 @@ type InlineResponse20013Data struct {
 	// The SAML login URL.
 	RedirectUrl *string `json:"redirectUrl,omitempty"`
 	// The prioritization of which client certificate to use.
-	CertificatePriorities *[]interface{} `json:"certificatePriorities,omitempty"`
+	CertificatePriorities *[]map[string]interface{} `json:"certificatePriorities,omitempty"`
 }
 
 // NewInlineResponse20013Data instantiates a new InlineResponse20013Data object
@@ -141,9 +141,9 @@ func (o *InlineResponse20013Data) SetRedirectUrl(v string) {
 }
 
 // GetCertificatePriorities returns the CertificatePriorities field value if set, zero value otherwise.
-func (o *InlineResponse20013Data) GetCertificatePriorities() []interface{} {
+func (o *InlineResponse20013Data) GetCertificatePriorities() []map[string]interface{} {
 	if o == nil || o.CertificatePriorities == nil {
-		var ret []interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return *o.CertificatePriorities
@@ -151,7 +151,7 @@ func (o *InlineResponse20013Data) GetCertificatePriorities() []interface{} {
 
 // GetCertificatePrioritiesOk returns a tuple with the CertificatePriorities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20013Data) GetCertificatePrioritiesOk() (*[]interface{}, bool) {
+func (o *InlineResponse20013Data) GetCertificatePrioritiesOk() (*[]map[string]interface{}, bool) {
 	if o == nil || o.CertificatePriorities == nil {
 		return nil, false
 	}
@@ -167,8 +167,8 @@ func (o *InlineResponse20013Data) HasCertificatePriorities() bool {
 	return false
 }
 
-// SetCertificatePriorities gets a reference to the given []interface{} and assigns it to the CertificatePriorities field.
-func (o *InlineResponse20013Data) SetCertificatePriorities(v []interface{}) {
+// SetCertificatePriorities gets a reference to the given []map[string]interface{} and assigns it to the CertificatePriorities field.
+func (o *InlineResponse20013Data) SetCertificatePriorities(v []map[string]interface{}) {
 	o.CertificatePriorities = &v
 }
 
