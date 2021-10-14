@@ -25,7 +25,7 @@ type Portal struct {
 	// Ports that can be proxied via Portal.
 	ProxyPorts *[]int32 `json:"proxyPorts,omitempty"`
 	// P12 files for proxying traffic to HTTPS endpoints.
-	ProxyP12s *[]P12 `json:"proxyP12s,omitempty"`
+	ProxyP12s *[]Portal12 `json:"proxyP12s,omitempty"`
 	// Names of the profiles in this Collective to use in the Portal.
 	Profiles *[]string `json:"profiles,omitempty"`
 	// Profiles from other Collectives to use in the Portal.
@@ -187,9 +187,9 @@ func (o *Portal) SetProxyPorts(v []int32) {
 }
 
 // GetProxyP12s returns the ProxyP12s field value if set, zero value otherwise.
-func (o *Portal) GetProxyP12s() []P12 {
+func (o *Portal) GetProxyP12s() []Portal12 {
 	if o == nil || o.ProxyP12s == nil {
-		var ret []P12
+		var ret []Portal12
 		return ret
 	}
 	return *o.ProxyP12s
@@ -197,7 +197,7 @@ func (o *Portal) GetProxyP12s() []P12 {
 
 // GetProxyP12sOk returns a tuple with the ProxyP12s field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Portal) GetProxyP12sOk() (*[]P12, bool) {
+func (o *Portal) GetProxyP12sOk() (*[]Portal12, bool) {
 	if o == nil || o.ProxyP12s == nil {
 		return nil, false
 	}
@@ -213,8 +213,8 @@ func (o *Portal) HasProxyP12s() bool {
 	return false
 }
 
-// SetProxyP12s gets a reference to the given []P12 and assigns it to the ProxyP12s field.
-func (o *Portal) SetProxyP12s(v []P12) {
+// SetProxyP12s gets a reference to the given []Portal12 and assigns it to the ProxyP12s field.
+func (o *Portal) SetProxyP12s(v []Portal12) {
 	o.ProxyP12s = &v
 }
 
