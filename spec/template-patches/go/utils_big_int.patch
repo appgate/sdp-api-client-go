@@ -1,0 +1,42 @@
+diff --git a/go/utils.mustache b/go/utils.mustache
+index 5ae789a996c..4766b5eb3fe 100644
+--- a/go/utils.mustache
++++ b/go/utils.mustache
+@@ -4,6 +4,8 @@ package {{packageName}}
+ import (
+ 	"encoding/json"
+ 	"time"
++	"fmt"
++	"math/big"
+ )
+
+ // PtrBool is a helper routine that returns a pointer to given boolean value.
+@@ -317,3 +319,28 @@ func (v *NullableTime) UnmarshalJSON(src []byte) error {
+ 	v.isSet = true
+ 	return json.Unmarshal(src, &v.value)
+ }
++
++type BigInt struct {
++	big.Int
++}
++
++func (b BigInt) MarshalJSON() ([]byte, error) {
++	return []byte(b.String()), nil
++}
++
++func (b BigInt) String() string {
++	return b.Text(10)
++}
++
++func (b *BigInt) UnmarshalJSON(p []byte) error {
++	if string(p) == "null" {
++		return nil
++	}
++	var z big.Int
++	_, ok := z.SetString(string(p), 10)
++	if !ok {
++		return fmt.Errorf("not a valid big integer: %s", p)
++	}
++	b.Int = z
++	return nil
++}

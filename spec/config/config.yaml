@@ -28,6 +28,7 @@ languages:
           patches:
             - template-patches/go/client_patch_default_headers.patch
             - template-patches/go/identity_providers.patch
+            - template-patches/go/utils_big_int.patch
         commands:
           - commandline:
             - docker-entrypoint.sh
