@@ -1,0 +1,12 @@
+diff --git a/ip_pool.yml b/ip_pool.yml
+index ef7ca06eb..4d0dc80be 100644
+--- a/ip_pool.yml
++++ b/ip_pool.yml
+@@ -226,6 +226,7 @@ definitions:
+             default: 30
+           total:
+             type: integer
++            format: int64
+             readOnly: true
+             description: The total size of the IP Pool.
+             example: 254
