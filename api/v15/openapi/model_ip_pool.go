@@ -39,9 +39,9 @@ type IpPool struct {
 	// The total size of the IP Pool.
 	Total *int64 `json:"total,omitempty"`
 	// Number of IPs in the pool are currently in use by device&users.
-	CurrentlyUsed *int32 `json:"currentlyUsed,omitempty"`
+	CurrentlyUsed *int64 `json:"currentlyUsed,omitempty"`
 	// Number of IPs in the pool are not currently in use but reserved for device&users according to the \"leaseTimeDays\" setting.
-	Reserved *int32 `json:"reserved,omitempty"`
+	Reserved *int64 `json:"reserved,omitempty"`
 }
 
 // NewIpPool instantiates a new IpPool object
@@ -376,9 +376,9 @@ func (o *IpPool) SetTotal(v int64) {
 }
 
 // GetCurrentlyUsed returns the CurrentlyUsed field value if set, zero value otherwise.
-func (o *IpPool) GetCurrentlyUsed() int32 {
+func (o *IpPool) GetCurrentlyUsed() int64 {
 	if o == nil || o.CurrentlyUsed == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.CurrentlyUsed
@@ -386,7 +386,7 @@ func (o *IpPool) GetCurrentlyUsed() int32 {
 
 // GetCurrentlyUsedOk returns a tuple with the CurrentlyUsed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IpPool) GetCurrentlyUsedOk() (*int32, bool) {
+func (o *IpPool) GetCurrentlyUsedOk() (*int64, bool) {
 	if o == nil || o.CurrentlyUsed == nil {
 		return nil, false
 	}
@@ -402,15 +402,15 @@ func (o *IpPool) HasCurrentlyUsed() bool {
 	return false
 }
 
-// SetCurrentlyUsed gets a reference to the given int32 and assigns it to the CurrentlyUsed field.
-func (o *IpPool) SetCurrentlyUsed(v int32) {
+// SetCurrentlyUsed gets a reference to the given int64 and assigns it to the CurrentlyUsed field.
+func (o *IpPool) SetCurrentlyUsed(v int64) {
 	o.CurrentlyUsed = &v
 }
 
 // GetReserved returns the Reserved field value if set, zero value otherwise.
-func (o *IpPool) GetReserved() int32 {
+func (o *IpPool) GetReserved() int64 {
 	if o == nil || o.Reserved == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Reserved
@@ -418,7 +418,7 @@ func (o *IpPool) GetReserved() int32 {
 
 // GetReservedOk returns a tuple with the Reserved field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IpPool) GetReservedOk() (*int32, bool) {
+func (o *IpPool) GetReservedOk() (*int64, bool) {
 	if o == nil || o.Reserved == nil {
 		return nil, false
 	}
@@ -434,8 +434,8 @@ func (o *IpPool) HasReserved() bool {
 	return false
 }
 
-// SetReserved gets a reference to the given int32 and assigns it to the Reserved field.
-func (o *IpPool) SetReserved(v int32) {
+// SetReserved gets a reference to the given int64 and assigns it to the Reserved field.
+func (o *IpPool) SetReserved(v int64) {
 	o.Reserved = &v
 }
 
