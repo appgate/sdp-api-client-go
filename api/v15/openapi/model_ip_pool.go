@@ -37,7 +37,7 @@ type IpPool struct {
 	// Number of days Allocated IPs will be reserved for device&users before they are reclaimable by others.
 	LeaseTimeDays *int32 `json:"leaseTimeDays,omitempty"`
 	// The total size of the IP Pool.
-	Total *int32 `json:"total,omitempty"`
+	Total *int64 `json:"total,omitempty"`
 	// Number of IPs in the pool are currently in use by device&users.
 	CurrentlyUsed *int32 `json:"currentlyUsed,omitempty"`
 	// Number of IPs in the pool are not currently in use but reserved for device&users according to the \"leaseTimeDays\" setting.
@@ -344,9 +344,9 @@ func (o *IpPool) SetLeaseTimeDays(v int32) {
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
-func (o *IpPool) GetTotal() int32 {
+func (o *IpPool) GetTotal() int64 {
 	if o == nil || o.Total == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Total
@@ -354,7 +354,7 @@ func (o *IpPool) GetTotal() int32 {
 
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IpPool) GetTotalOk() (*int32, bool) {
+func (o *IpPool) GetTotalOk() (*int64, bool) {
 	if o == nil || o.Total == nil {
 		return nil, false
 	}
@@ -370,8 +370,8 @@ func (o *IpPool) HasTotal() bool {
 	return false
 }
 
-// SetTotal gets a reference to the given int32 and assigns it to the Total field.
-func (o *IpPool) SetTotal(v int32) {
+// SetTotal gets a reference to the given int64 and assigns it to the Total field.
+func (o *IpPool) SetTotal(v int64) {
 	o.Total = &v
 }
 
