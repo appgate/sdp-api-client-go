@@ -4,6 +4,11 @@ container_opts:
 languages:
   go:
     downstream_templates:
+      # bigInt issues
+      # modified the orignal generated code and replaced IpPool.Total from int64 to bigInt
+      # workaround for https://github.com/OpenAPITools/openapi-generator/issues/10620
+      downstream_templates/go/model_ip_pool.go: openapi/model_ip_pool.go
+      downstream_templates/go/model_ip_pool_all_of.go: openapi/model_ip_pool_all_of.go
       # the templates for identity_providers is because of how the openapi-generator treat discriminator objects.
       # The default baviour within openapi-generator is to create 1 api service for all, but that does not really work well
       # in practice because we need a way in the code to have seperate models for each type of identity providers,
