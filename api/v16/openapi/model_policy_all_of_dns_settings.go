@@ -18,16 +18,18 @@ import (
 // PolicyAllOfDnsSettings A domain name and a list of DNS servers.
 type PolicyAllOfDnsSettings struct {
 	// The domain for which the DNS servers should be used by the client.
-	Domain  *string   `json:"domain,omitempty"`
-	Servers *[]string `json:"servers,omitempty"`
+	Domain  string   `json:"domain"`
+	Servers []string `json:"servers"`
 }
 
 // NewPolicyAllOfDnsSettings instantiates a new PolicyAllOfDnsSettings object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPolicyAllOfDnsSettings() *PolicyAllOfDnsSettings {
+func NewPolicyAllOfDnsSettings(domain string, servers []string) *PolicyAllOfDnsSettings {
 	this := PolicyAllOfDnsSettings{}
+	this.Domain = domain
+	this.Servers = servers
 	return &this
 }
 
@@ -39,76 +41,60 @@ func NewPolicyAllOfDnsSettingsWithDefaults() *PolicyAllOfDnsSettings {
 	return &this
 }
 
-// GetDomain returns the Domain field value if set, zero value otherwise.
+// GetDomain returns the Domain field value
 func (o *PolicyAllOfDnsSettings) GetDomain() string {
-	if o == nil || o.Domain == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Domain
+
+	return o.Domain
 }
 
-// GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
+// GetDomainOk returns a tuple with the Domain field value
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfDnsSettings) GetDomainOk() (*string, bool) {
-	if o == nil || o.Domain == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Domain, true
+	return &o.Domain, true
 }
 
-// HasDomain returns a boolean if a field has been set.
-func (o *PolicyAllOfDnsSettings) HasDomain() bool {
-	if o != nil && o.Domain != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDomain gets a reference to the given string and assigns it to the Domain field.
+// SetDomain sets field value
 func (o *PolicyAllOfDnsSettings) SetDomain(v string) {
-	o.Domain = &v
+	o.Domain = v
 }
 
-// GetServers returns the Servers field value if set, zero value otherwise.
+// GetServers returns the Servers field value
 func (o *PolicyAllOfDnsSettings) GetServers() []string {
-	if o == nil || o.Servers == nil {
+	if o == nil {
 		var ret []string
 		return ret
 	}
-	return *o.Servers
+
+	return o.Servers
 }
 
-// GetServersOk returns a tuple with the Servers field value if set, nil otherwise
+// GetServersOk returns a tuple with the Servers field value
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfDnsSettings) GetServersOk() (*[]string, bool) {
-	if o == nil || o.Servers == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Servers, true
+	return &o.Servers, true
 }
 
-// HasServers returns a boolean if a field has been set.
-func (o *PolicyAllOfDnsSettings) HasServers() bool {
-	if o != nil && o.Servers != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetServers gets a reference to the given []string and assigns it to the Servers field.
+// SetServers sets field value
 func (o *PolicyAllOfDnsSettings) SetServers(v []string) {
-	o.Servers = &v
+	o.Servers = v
 }
 
 func (o PolicyAllOfDnsSettings) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Domain != nil {
+	if true {
 		toSerialize["domain"] = o.Domain
 	}
-	if o.Servers != nil {
+	if true {
 		toSerialize["servers"] = o.Servers
 	}
 	return json.Marshal(toSerialize)
