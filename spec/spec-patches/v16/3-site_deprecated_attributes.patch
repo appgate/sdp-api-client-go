@@ -1,0 +1,31 @@
+diff --git a/site.yml b/site.yml
+index b5723fb92..e2166c954 100644
+--- a/site.yml
++++ b/site.yml
+@@ -260,6 +260,26 @@ definitions:
+               urlAccessEnabled:
+                 type: boolean
+                 description: Whether to enable URL Access feature or not.
++              webProxyEnabled:
++                type: boolean
++                description: Flag for manipulating web proxy p12 file. Setting this false will delete the existing p12 file from database.
++                deprecated: true
++              webProxyKeyStore:
++                type: string
++                format: byte
++                writeOnly: true
++                description: The PKCS12 package to be used for web proxy. The file must be with no password and must include the full certificate chain and a private key. In Base64 format.
++                deprecated: true
++              webProxyVerifyUpstreamCertificate:
++                type: boolean
++                description: Gateway will verify the certificate of the endpoints.
++                default: true
++                deprecated: true
++              webProxyCertificateSubjectName:
++                type: string
++                readOnly: true
++                description: The subject name of the certificate with private key in the PKCS12 file for web proxy assigned to this site.
++                deprecated: true
+               urlAccessP12s:
+                 type: array
+                 description: P12 files for proxying traffic for URL Access feature.
