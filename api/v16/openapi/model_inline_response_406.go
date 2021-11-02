@@ -15,31 +15,37 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse2001 struct for InlineResponse2001
-type InlineResponse2001 struct {
-	// Appliance Backup ID to  be used as path parameter {backupId} to follow the progress.
+// InlineResponse406 struct for InlineResponse406
+type InlineResponse406 struct {
+	// N/A
 	Id *string `json:"id,omitempty"`
+	// Human readable error details.
+	Message *string `json:"message,omitempty"`
+	// Minimum supported version.
+	MinSupportedVersion *int32 `json:"minSupportedVersion,omitempty"`
+	// Maximum supported version.
+	MaxSupportedVersion *int32 `json:"maxSupportedVersion,omitempty"`
 }
 
-// NewInlineResponse2001 instantiates a new InlineResponse2001 object
+// NewInlineResponse406 instantiates a new InlineResponse406 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineResponse2001() *InlineResponse2001 {
-	this := InlineResponse2001{}
+func NewInlineResponse406() *InlineResponse406 {
+	this := InlineResponse406{}
 	return &this
 }
 
-// NewInlineResponse2001WithDefaults instantiates a new InlineResponse2001 object
+// NewInlineResponse406WithDefaults instantiates a new InlineResponse406 object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewInlineResponse2001WithDefaults() *InlineResponse2001 {
-	this := InlineResponse2001{}
+func NewInlineResponse406WithDefaults() *InlineResponse406 {
+	this := InlineResponse406{}
 	return &this
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *InlineResponse2001) GetId() string {
+func (o *InlineResponse406) GetId() string {
 	if o == nil || o.Id == nil {
 		var ret string
 		return ret
@@ -49,7 +55,7 @@ func (o *InlineResponse2001) GetId() string {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2001) GetIdOk() (*string, bool) {
+func (o *InlineResponse406) GetIdOk() (*string, bool) {
 	if o == nil || o.Id == nil {
 		return nil, false
 	}
@@ -57,7 +63,7 @@ func (o *InlineResponse2001) GetIdOk() (*string, bool) {
 }
 
 // HasId returns a boolean if a field has been set.
-func (o *InlineResponse2001) HasId() bool {
+func (o *InlineResponse406) HasId() bool {
 	if o != nil && o.Id != nil {
 		return true
 	}
@@ -66,50 +72,155 @@ func (o *InlineResponse2001) HasId() bool {
 }
 
 // SetId gets a reference to the given string and assigns it to the Id field.
-func (o *InlineResponse2001) SetId(v string) {
+func (o *InlineResponse406) SetId(v string) {
 	o.Id = &v
 }
 
-func (o InlineResponse2001) MarshalJSON() ([]byte, error) {
+// GetMessage returns the Message field value if set, zero value otherwise.
+func (o *InlineResponse406) GetMessage() string {
+	if o == nil || o.Message == nil {
+		var ret string
+		return ret
+	}
+	return *o.Message
+}
+
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse406) GetMessageOk() (*string, bool) {
+	if o == nil || o.Message == nil {
+		return nil, false
+	}
+	return o.Message, true
+}
+
+// HasMessage returns a boolean if a field has been set.
+func (o *InlineResponse406) HasMessage() bool {
+	if o != nil && o.Message != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
+func (o *InlineResponse406) SetMessage(v string) {
+	o.Message = &v
+}
+
+// GetMinSupportedVersion returns the MinSupportedVersion field value if set, zero value otherwise.
+func (o *InlineResponse406) GetMinSupportedVersion() int32 {
+	if o == nil || o.MinSupportedVersion == nil {
+		var ret int32
+		return ret
+	}
+	return *o.MinSupportedVersion
+}
+
+// GetMinSupportedVersionOk returns a tuple with the MinSupportedVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse406) GetMinSupportedVersionOk() (*int32, bool) {
+	if o == nil || o.MinSupportedVersion == nil {
+		return nil, false
+	}
+	return o.MinSupportedVersion, true
+}
+
+// HasMinSupportedVersion returns a boolean if a field has been set.
+func (o *InlineResponse406) HasMinSupportedVersion() bool {
+	if o != nil && o.MinSupportedVersion != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMinSupportedVersion gets a reference to the given int32 and assigns it to the MinSupportedVersion field.
+func (o *InlineResponse406) SetMinSupportedVersion(v int32) {
+	o.MinSupportedVersion = &v
+}
+
+// GetMaxSupportedVersion returns the MaxSupportedVersion field value if set, zero value otherwise.
+func (o *InlineResponse406) GetMaxSupportedVersion() int32 {
+	if o == nil || o.MaxSupportedVersion == nil {
+		var ret int32
+		return ret
+	}
+	return *o.MaxSupportedVersion
+}
+
+// GetMaxSupportedVersionOk returns a tuple with the MaxSupportedVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse406) GetMaxSupportedVersionOk() (*int32, bool) {
+	if o == nil || o.MaxSupportedVersion == nil {
+		return nil, false
+	}
+	return o.MaxSupportedVersion, true
+}
+
+// HasMaxSupportedVersion returns a boolean if a field has been set.
+func (o *InlineResponse406) HasMaxSupportedVersion() bool {
+	if o != nil && o.MaxSupportedVersion != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxSupportedVersion gets a reference to the given int32 and assigns it to the MaxSupportedVersion field.
+func (o *InlineResponse406) SetMaxSupportedVersion(v int32) {
+	o.MaxSupportedVersion = &v
+}
+
+func (o InlineResponse406) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
+	if o.Message != nil {
+		toSerialize["message"] = o.Message
+	}
+	if o.MinSupportedVersion != nil {
+		toSerialize["minSupportedVersion"] = o.MinSupportedVersion
+	}
+	if o.MaxSupportedVersion != nil {
+		toSerialize["maxSupportedVersion"] = o.MaxSupportedVersion
+	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableInlineResponse2001 struct {
-	value *InlineResponse2001
+type NullableInlineResponse406 struct {
+	value *InlineResponse406
 	isSet bool
 }
 
-func (v NullableInlineResponse2001) Get() *InlineResponse2001 {
+func (v NullableInlineResponse406) Get() *InlineResponse406 {
 	return v.value
 }
 
-func (v *NullableInlineResponse2001) Set(val *InlineResponse2001) {
+func (v *NullableInlineResponse406) Set(val *InlineResponse406) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableInlineResponse2001) IsSet() bool {
+func (v NullableInlineResponse406) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableInlineResponse2001) Unset() {
+func (v *NullableInlineResponse406) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableInlineResponse2001(val *InlineResponse2001) *NullableInlineResponse2001 {
-	return &NullableInlineResponse2001{value: val, isSet: true}
+func NewNullableInlineResponse406(val *InlineResponse406) *NullableInlineResponse406 {
+	return &NullableInlineResponse406{value: val, isSet: true}
 }
 
-func (v NullableInlineResponse2001) MarshalJSON() ([]byte, error) {
+func (v NullableInlineResponse406) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableInlineResponse2001) UnmarshalJSON(src []byte) error {
+func (v *NullableInlineResponse406) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
