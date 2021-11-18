@@ -1,0 +1,14 @@
+diff --git a/appliance_upgrade.yml b/appliance_upgrade.yml
+index 25e7a86..a9652f4 100644
+--- a/appliance_upgrade.yml
++++ b/appliance_upgrade.yml
+@@ -263,6 +263,9 @@ definitions:
+           "controller://\<controller-peer-hostname:port\>/{filename}".
+           The Appliance will authenticate itself to the Controller and download the file.
+         example: 'https://s3.eu-central-1.amazonaws.com/appgate/appgate-appliance.img.zip'
++      devKeyring:
++        type: boolean
++        description: Use the development keyring to verify the upgrade image.
+
+   ApplianceUpgradeInternal:
+     type: object
