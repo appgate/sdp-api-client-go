@@ -19,6 +19,8 @@ import (
 type ApplianceUpgrade struct {
 	// The URL for the Appliance the download the Upgrade image from. The URL may be a public HTTP URL or it could be a file uploaded to the Controller. See \"files\" APIs for uploading to Controller. In order to use a Controller based file, set this field to \"controller://\\<controller-peer-hostname:port\\>/{filename}\". The Appliance will authenticate itself to the Controller and download the file.
 	ImageUrl string `json:"imageUrl"`
+	// Use the development keyring to verify the upgrade image.
+	DevKeyring *bool `json:"devKeyring,omitempty"`
 }
 
 // NewApplianceUpgrade instantiates a new ApplianceUpgrade object
@@ -63,10 +65,45 @@ func (o *ApplianceUpgrade) SetImageUrl(v string) {
 	o.ImageUrl = v
 }
 
+// GetDevKeyring returns the DevKeyring field value if set, zero value otherwise.
+func (o *ApplianceUpgrade) GetDevKeyring() bool {
+	if o == nil || o.DevKeyring == nil {
+		var ret bool
+		return ret
+	}
+	return *o.DevKeyring
+}
+
+// GetDevKeyringOk returns a tuple with the DevKeyring field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApplianceUpgrade) GetDevKeyringOk() (*bool, bool) {
+	if o == nil || o.DevKeyring == nil {
+		return nil, false
+	}
+	return o.DevKeyring, true
+}
+
+// HasDevKeyring returns a boolean if a field has been set.
+func (o *ApplianceUpgrade) HasDevKeyring() bool {
+	if o != nil && o.DevKeyring != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDevKeyring gets a reference to the given bool and assigns it to the DevKeyring field.
+func (o *ApplianceUpgrade) SetDevKeyring(v bool) {
+	o.DevKeyring = &v
+}
+
 func (o ApplianceUpgrade) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
 		toSerialize["imageUrl"] = o.ImageUrl
+	}
+	if o.DevKeyring != nil {
+		toSerialize["devKeyring"] = o.DevKeyring
 	}
 	return json.Marshal(toSerialize)
 }
