@@ -1,0 +1,14 @@
+diff --git a/go/configuration.mustache b/go/configuration.mustache
+index 610f9edc5d2..db5ad3d6c84 100644
+--- a/go/configuration.mustache
++++ b/go/configuration.mustache
+@@ -28,6 +28,9 @@ var (
+ 	// ContextAccessToken takes a string oauth2 access token as authentication for the request.
+ 	ContextAccessToken = contextKey("accesstoken")
+
++	// ContextAcceptHeader takes a string and use it as Accept value
++	ContextAcceptHeader = contextKey("acceptheader")
++
+ 	// ContextAPIKeys takes a string apikey as authentication for the request
+ 	ContextAPIKeys = contextKey("apiKeys")
+

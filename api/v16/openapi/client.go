@@ -472,7 +472,26 @@ func (c *APIClient) prepareRequest(
 
 	// Add the user agent to the request.
 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
-
+	for header, value := range c.cfg.DefaultHeader {
+		// For the sake of convenience how appgate SDP Accept header works,
+		// We will replace the default apppend (Add()) with Set()
+		// so that we can configure the client as:
+		//
+		// clientCfg := &openapi.Configuration{
+		//     DefaultHeader: map[string]string{
+		//         "Accept": fmt.Sprintf("application/vnd.appgate.peer-v%d+json", version),
+		//     },
+		//     Debug: true,
+		//     Servers: []openapi.ServerConfiguration{
+		//         {
+		//             URL: address,
+		//         },
+		//     },
+		//     HTTPClient: httpclient,
+		// }
+		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
+		localVarRequest.Header.Set(header, value)
+	}
 	if ctx != nil {
 		// add context to the request
 		localVarRequest = localVarRequest.WithContext(ctx)
@@ -499,29 +518,13 @@ func (c *APIClient) prepareRequest(
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
 		}
+		// Accept Header, Overwrites any existing Accept headers
+		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
+			localVarRequest.Header.Set("Accept", accept)
+		}
 
 	}
 
-	for header, value := range c.cfg.DefaultHeader {
-		// For the sake of convenience how appgate SDP Accept header works,
-		// We will replace the default apppend (Add()) with Set()
-		// so that we can configure the client as:
-		//
-		// clientCfg := &openapi.Configuration{
-		//     DefaultHeader: map[string]string{
-		//         "Accept": fmt.Sprintf("application/vnd.appgate.peer-v%d+json", version),
-		//     },
-		//     Debug: true,
-		//     Servers: []openapi.ServerConfiguration{
-		//         {
-		//             URL: address,
-		//         },
-		//     },
-		//     HTTPClient: httpclient,
-		// }
-		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
-		localVarRequest.Header.Set(header, value)
-	}
 	return localVarRequest, nil
 }
 
