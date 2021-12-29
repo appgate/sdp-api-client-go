@@ -1,12 +1,13 @@
 diff --git a/go/client.mustache b/go/client.mustache
-index a9b82e3ff7d..94005e318bb 100644
+index a9b82e3ff7d..f6471eea6ae 100644
 --- a/go/client.mustache
 +++ b/go/client.mustache
-@@ -383,7 +383,24 @@ func (c *APIClient) prepareRequest(
- 	}
+@@ -323,7 +323,26 @@ func (c *APIClient) prepareRequest(
 
- 	for header, value := range c.cfg.DefaultHeader {
--		localVarRequest.Header.Add(header, value)
+ 	// Add the user agent to the request.
+ 	localVarRequest.Header.Add("User-Agent", c.cfg.UserAgent)
+-
++	for header, value := range c.cfg.DefaultHeader {
 +		// For the sake of convenience how appgate SDP Accept header works,
 +		// We will replace the default apppend (Add()) with Set()
 +		// so that we can configure the client as:
@@ -25,6 +26,18 @@ index a9b82e3ff7d..94005e318bb 100644
 +		// }
 +		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
 +		localVarRequest.Header.Set(header, value)
- 	}
- {{#withCustomMiddlewareFunction}}
++	}
+ 	if ctx != nil {
+ 		// add context to the request
+ 		localVarRequest = localVarRequest.WithContext(ctx)
+@@ -350,6 +369,10 @@ func (c *APIClient) prepareRequest(
+ 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
+ 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
+ 		}
++		// Accept Header, Overwrites any existing Accept headers
++		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
++			localVarRequest.Header.Set("Accept", accept)
++		}
 
+ 		{{#withAWSV4Signature}}
+ 		// AWS Signature v4 Authentication

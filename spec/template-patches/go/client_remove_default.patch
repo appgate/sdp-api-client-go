@@ -1,0 +1,14 @@
+diff --git a/go/client.mustache b/go/client.mustache
+index a9b82e3ff7d..47a582faf4e 100644
+--- a/go/client.mustache
++++ b/go/client.mustache
+@@ -382,9 +382,6 @@ func (c *APIClient) prepareRequest(
+ 		{{/withAWSV4Signature}}
+ 	}
+
+-	for header, value := range c.cfg.DefaultHeader {
+-		localVarRequest.Header.Add(header, value)
+-	}
+ {{#withCustomMiddlewareFunction}}
+
+ 	if c.cfg.Middleware != nil {
