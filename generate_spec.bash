@@ -11,7 +11,7 @@ fi
 
 # Starting from v16 we will use apigentools to generate the sdk with openapi-generator,
 # older versions are not supported by apigentools.
-supportedVersions=(16)
+supportedVersions=(16 17)
 
 
 
@@ -23,12 +23,14 @@ done
 for version in "${supportedVersions[@]}"; do
     git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "version-$version" "spec/spec/v$version"
 
-    echo "Apply custom patches for openapi v$version"
-    find "$PWD/spec/spec-patches/v$version" -name "*.patch" -print0 | while read -r -d $'\0' patch; do
-        echo "Applying $patch"
-        patch --fuzz 0 --no-backup-if-mismatch -p1 -i "$patch" -d "$PWD/spec/spec/v$version"
-    done
-
+    # apply patches if there are any
+    if [ -d "$PWD/spec/spec-patches/v$version" ]; then
+        echo "Apply custom patches for openapi v$version"
+        find "$PWD/spec/spec-patches/v$version" -name "*.patch" -print0 | while read -r -d $'\0' patch; do
+            echo "Applying $patch"
+            patch --fuzz 0 --no-backup-if-mismatch -p1 -i "$patch" -d "$PWD/spec/spec/v$version"
+        done
+    fi
 
     cd spec
     apigentools generate
