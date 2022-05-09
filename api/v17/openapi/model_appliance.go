@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -36,21 +36,15 @@ type Appliance struct {
 	PendingCertificateRenewal *bool `json:"pendingCertificateRenewal,omitempty"`
 	// Peer version of the Appliance.
 	Version *int32 `json:"version,omitempty"`
-	// Generic hostname of the appliance. Used as linux hostname and to identify within logs. If peerInterface.hostname is changed, this field's value is cleared. When empty, peerInterface.hostname will be used to generate it.
-	// Deprecated
-	Hostname *string `json:"hostname,omitempty"`
+	// Hostname of the Appliance. It's used by other Appliances to communicate with and identify this Appliances.
+	Hostname string `json:"hostname"`
 	// Site served by the Appliance. Entitlements on this Site will be included in the Entitlement Token for this Appliance. Not useful if Gateway role is not enabled.
 	Site *string `json:"site,omitempty"`
 	// Name of the Site for this Appliance. For convenience only.
 	SiteName *string `json:"siteName,omitempty"`
 	// Customization assigned to this Appliance.
-	Customization *string `json:"customization,omitempty"`
-	// Makes the Appliance to connect to Controller/LogServer/LogForwarders using their clientInterface.httpsPort instead of peerInterface.httpsPort. The Appliance uses SPA to connect. This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
-	// Deprecated
-	ConnectToPeersUsingClientPortWithSpa *bool                         `json:"connectToPeersUsingClientPortWithSpa,omitempty"`
-	ClientInterface                      ApplianceAllOfClientInterface `json:"clientInterface"`
-	// Deprecated
-	PeerInterface      ApplianceAllOfPeerInterface       `json:"peerInterface"`
+	Customization      *string                           `json:"customization,omitempty"`
+	ClientInterface    ApplianceAllOfClientInterface     `json:"clientInterface"`
 	AdminInterface     *ApplianceAllOfAdminInterface     `json:"adminInterface,omitempty"`
 	Networking         ApplianceAllOfNetworking          `json:"networking"`
 	Ntp                *ApplianceAllOfNtp                `json:"ntp,omitempty"`
@@ -75,14 +69,12 @@ type Appliance struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAppliance(id string, name string, clientInterface ApplianceAllOfClientInterface, peerInterface ApplianceAllOfPeerInterface, networking ApplianceAllOfNetworking) *Appliance {
+func NewAppliance(id string, name string, hostname string, clientInterface ApplianceAllOfClientInterface, networking ApplianceAllOfNetworking) *Appliance {
 	this := Appliance{}
 	this.Id = id
 	this.Name = name
-	var connectToPeersUsingClientPortWithSpa bool = true
-	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
+	this.Hostname = hostname
 	this.ClientInterface = clientInterface
-	this.PeerInterface = peerInterface
 	this.Networking = networking
 	return &this
 }
@@ -92,8 +84,6 @@ func NewAppliance(id string, name string, clientInterface ApplianceAllOfClientIn
 // but it doesn't guarantee that properties required by API are set
 func NewApplianceWithDefaults() *Appliance {
 	this := Appliance{}
-	var connectToPeersUsingClientPortWithSpa bool = true
-	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	return &this
 }
 
@@ -369,39 +359,28 @@ func (o *Appliance) SetVersion(v int32) {
 	o.Version = &v
 }
 
-// GetHostname returns the Hostname field value if set, zero value otherwise.
-// Deprecated
+// GetHostname returns the Hostname field value
 func (o *Appliance) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Hostname
+
+	return o.Hostname
 }
 
-// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
+// GetHostnameOk returns a tuple with the Hostname field value
 // and a boolean to check if the value has been set.
-// Deprecated
 func (o *Appliance) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Hostname, true
+	return &o.Hostname, true
 }
 
-// HasHostname returns a boolean if a field has been set.
-func (o *Appliance) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetHostname gets a reference to the given string and assigns it to the Hostname field.
-// Deprecated
+// SetHostname sets field value
 func (o *Appliance) SetHostname(v string) {
-	o.Hostname = &v
+	o.Hostname = v
 }
 
 // GetSite returns the Site field value if set, zero value otherwise.
@@ -500,41 +479,6 @@ func (o *Appliance) SetCustomization(v string) {
 	o.Customization = &v
 }
 
-// GetConnectToPeersUsingClientPortWithSpa returns the ConnectToPeersUsingClientPortWithSpa field value if set, zero value otherwise.
-// Deprecated
-func (o *Appliance) GetConnectToPeersUsingClientPortWithSpa() bool {
-	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
-		var ret bool
-		return ret
-	}
-	return *o.ConnectToPeersUsingClientPortWithSpa
-}
-
-// GetConnectToPeersUsingClientPortWithSpaOk returns a tuple with the ConnectToPeersUsingClientPortWithSpa field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *Appliance) GetConnectToPeersUsingClientPortWithSpaOk() (*bool, bool) {
-	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
-		return nil, false
-	}
-	return o.ConnectToPeersUsingClientPortWithSpa, true
-}
-
-// HasConnectToPeersUsingClientPortWithSpa returns a boolean if a field has been set.
-func (o *Appliance) HasConnectToPeersUsingClientPortWithSpa() bool {
-	if o != nil && o.ConnectToPeersUsingClientPortWithSpa != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetConnectToPeersUsingClientPortWithSpa gets a reference to the given bool and assigns it to the ConnectToPeersUsingClientPortWithSpa field.
-// Deprecated
-func (o *Appliance) SetConnectToPeersUsingClientPortWithSpa(v bool) {
-	o.ConnectToPeersUsingClientPortWithSpa = &v
-}
-
 // GetClientInterface returns the ClientInterface field value
 func (o *Appliance) GetClientInterface() ApplianceAllOfClientInterface {
 	if o == nil {
@@ -557,33 +501,6 @@ func (o *Appliance) GetClientInterfaceOk() (*ApplianceAllOfClientInterface, bool
 // SetClientInterface sets field value
 func (o *Appliance) SetClientInterface(v ApplianceAllOfClientInterface) {
 	o.ClientInterface = v
-}
-
-// GetPeerInterface returns the PeerInterface field value
-// Deprecated
-func (o *Appliance) GetPeerInterface() ApplianceAllOfPeerInterface {
-	if o == nil {
-		var ret ApplianceAllOfPeerInterface
-		return ret
-	}
-
-	return o.PeerInterface
-}
-
-// GetPeerInterfaceOk returns a tuple with the PeerInterface field value
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *Appliance) GetPeerInterfaceOk() (*ApplianceAllOfPeerInterface, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PeerInterface, true
-}
-
-// SetPeerInterface sets field value
-// Deprecated
-func (o *Appliance) SetPeerInterface(v ApplianceAllOfPeerInterface) {
-	o.PeerInterface = v
 }
 
 // GetAdminInterface returns the AdminInterface field value if set, zero value otherwise.
@@ -1119,7 +1036,7 @@ func (o Appliance) MarshalJSON() ([]byte, error) {
 	if o.Version != nil {
 		toSerialize["version"] = o.Version
 	}
-	if o.Hostname != nil {
+	if true {
 		toSerialize["hostname"] = o.Hostname
 	}
 	if o.Site != nil {
@@ -1131,14 +1048,8 @@ func (o Appliance) MarshalJSON() ([]byte, error) {
 	if o.Customization != nil {
 		toSerialize["customization"] = o.Customization
 	}
-	if o.ConnectToPeersUsingClientPortWithSpa != nil {
-		toSerialize["connectToPeersUsingClientPortWithSpa"] = o.ConnectToPeersUsingClientPortWithSpa
-	}
 	if true {
 		toSerialize["clientInterface"] = o.ClientInterface
-	}
-	if true {
-		toSerialize["peerInterface"] = o.PeerInterface
 	}
 	if o.AdminInterface != nil {
 		toSerialize["adminInterface"] = o.AdminInterface

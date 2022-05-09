@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,46 +17,46 @@ import (
 
 // LdapProviderAllOf Represents an LDAP Identity Provider.
 type LdapProviderAllOf struct {
+	// Hostnames/IP addresses to connect.
+	Hostnames []string `json:"hostnames"`
+	// Port to connect.
+	Port int32 `json:"port"`
+	// Whether to use LDAPS protocol or not.
+	SslEnabled *bool `json:"sslEnabled,omitempty"`
 	// The Distinguished Name to login to LDAP and query users with.
 	AdminDistinguishedName string `json:"adminDistinguishedName"`
 	// The password to login to LDAP and query users with. Required on creation.
 	AdminPassword *string `json:"adminPassword,omitempty"`
 	// The subset of the LDAP server to search users from. If not set, root of the server is used.
 	BaseDn *string `json:"baseDn,omitempty"`
-	// Hostnames/IP addresses to connect.
-	Hostnames []string `json:"hostnames"`
-	// The subset of the LDAP server to search groups from. If not set, \"baseDn\" is used.
-	MembershipBaseDn *string `json:"membershipBaseDn,omitempty"`
-	// The filter to use while querying users' nested groups.
-	MembershipFilter *string `json:"membershipFilter,omitempty"`
 	// The object class of the users to be authenticated and queried.
-	ObjectClass     *string                           `json:"objectClass,omitempty"`
-	PasswordWarning *LdapProviderAllOfPasswordWarning `json:"passwordWarning,omitempty"`
-	// Port to connect.
-	Port int32 `json:"port"`
-	// Whether to use LDAPS protocol or not.
-	SslEnabled *bool `json:"sslEnabled,omitempty"`
+	ObjectClass *string `json:"objectClass,omitempty"`
 	// The name of the attribute to get the exact username from the LDAP server.
 	UsernameAttribute *string `json:"usernameAttribute,omitempty"`
+	// The filter to use while querying users' nested groups.
+	MembershipFilter *string `json:"membershipFilter,omitempty"`
+	// The subset of the LDAP server to search groups from. If not set, \"baseDn\" is used.
+	MembershipBaseDn *string                           `json:"membershipBaseDn,omitempty"`
+	PasswordWarning  *LdapProviderAllOfPasswordWarning `json:"passwordWarning,omitempty"`
 }
 
 // NewLdapProviderAllOf instantiates a new LdapProviderAllOf object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLdapProviderAllOf(adminDistinguishedName string, hostnames []string, port int32) *LdapProviderAllOf {
+func NewLdapProviderAllOf(hostnames []string, port int32, adminDistinguishedName string) *LdapProviderAllOf {
 	this := LdapProviderAllOf{}
-	this.AdminDistinguishedName = adminDistinguishedName
 	this.Hostnames = hostnames
-	var membershipFilter string = "(objectCategory=group)"
-	this.MembershipFilter = &membershipFilter
-	var objectClass string = "user"
-	this.ObjectClass = &objectClass
 	this.Port = port
 	var sslEnabled bool = false
 	this.SslEnabled = &sslEnabled
+	this.AdminDistinguishedName = adminDistinguishedName
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
 	var usernameAttribute string = "sAMAccountName"
 	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	return &this
 }
 
@@ -65,15 +65,95 @@ func NewLdapProviderAllOf(adminDistinguishedName string, hostnames []string, por
 // but it doesn't guarantee that properties required by API are set
 func NewLdapProviderAllOfWithDefaults() *LdapProviderAllOf {
 	this := LdapProviderAllOf{}
-	var membershipFilter string = "(objectCategory=group)"
-	this.MembershipFilter = &membershipFilter
-	var objectClass string = "user"
-	this.ObjectClass = &objectClass
 	var sslEnabled bool = false
 	this.SslEnabled = &sslEnabled
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
 	var usernameAttribute string = "sAMAccountName"
 	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	return &this
+}
+
+// GetHostnames returns the Hostnames field value
+func (o *LdapProviderAllOf) GetHostnames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Hostnames
+}
+
+// GetHostnamesOk returns a tuple with the Hostnames field value
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetHostnamesOk() (*[]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Hostnames, true
+}
+
+// SetHostnames sets field value
+func (o *LdapProviderAllOf) SetHostnames(v []string) {
+	o.Hostnames = v
+}
+
+// GetPort returns the Port field value
+func (o *LdapProviderAllOf) GetPort() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetPortOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Port, true
+}
+
+// SetPort sets field value
+func (o *LdapProviderAllOf) SetPort(v int32) {
+	o.Port = v
+}
+
+// GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
+func (o *LdapProviderAllOf) GetSslEnabled() bool {
+	if o == nil || o.SslEnabled == nil {
+		var ret bool
+		return ret
+	}
+	return *o.SslEnabled
+}
+
+// GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetSslEnabledOk() (*bool, bool) {
+	if o == nil || o.SslEnabled == nil {
+		return nil, false
+	}
+	return o.SslEnabled, true
+}
+
+// HasSslEnabled returns a boolean if a field has been set.
+func (o *LdapProviderAllOf) HasSslEnabled() bool {
+	if o != nil && o.SslEnabled != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSslEnabled gets a reference to the given bool and assigns it to the SslEnabled field.
+func (o *LdapProviderAllOf) SetSslEnabled(v bool) {
+	o.SslEnabled = &v
 }
 
 // GetAdminDistinguishedName returns the AdminDistinguishedName field value
@@ -164,94 +244,6 @@ func (o *LdapProviderAllOf) SetBaseDn(v string) {
 	o.BaseDn = &v
 }
 
-// GetHostnames returns the Hostnames field value
-func (o *LdapProviderAllOf) GetHostnames() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-
-	return o.Hostnames
-}
-
-// GetHostnamesOk returns a tuple with the Hostnames field value
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetHostnamesOk() (*[]string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Hostnames, true
-}
-
-// SetHostnames sets field value
-func (o *LdapProviderAllOf) SetHostnames(v []string) {
-	o.Hostnames = v
-}
-
-// GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
-func (o *LdapProviderAllOf) GetMembershipBaseDn() string {
-	if o == nil || o.MembershipBaseDn == nil {
-		var ret string
-		return ret
-	}
-	return *o.MembershipBaseDn
-}
-
-// GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetMembershipBaseDnOk() (*string, bool) {
-	if o == nil || o.MembershipBaseDn == nil {
-		return nil, false
-	}
-	return o.MembershipBaseDn, true
-}
-
-// HasMembershipBaseDn returns a boolean if a field has been set.
-func (o *LdapProviderAllOf) HasMembershipBaseDn() bool {
-	if o != nil && o.MembershipBaseDn != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMembershipBaseDn gets a reference to the given string and assigns it to the MembershipBaseDn field.
-func (o *LdapProviderAllOf) SetMembershipBaseDn(v string) {
-	o.MembershipBaseDn = &v
-}
-
-// GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
-func (o *LdapProviderAllOf) GetMembershipFilter() string {
-	if o == nil || o.MembershipFilter == nil {
-		var ret string
-		return ret
-	}
-	return *o.MembershipFilter
-}
-
-// GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetMembershipFilterOk() (*string, bool) {
-	if o == nil || o.MembershipFilter == nil {
-		return nil, false
-	}
-	return o.MembershipFilter, true
-}
-
-// HasMembershipFilter returns a boolean if a field has been set.
-func (o *LdapProviderAllOf) HasMembershipFilter() bool {
-	if o != nil && o.MembershipFilter != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMembershipFilter gets a reference to the given string and assigns it to the MembershipFilter field.
-func (o *LdapProviderAllOf) SetMembershipFilter(v string) {
-	o.MembershipFilter = &v
-}
-
 // GetObjectClass returns the ObjectClass field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetObjectClass() string {
 	if o == nil || o.ObjectClass == nil {
@@ -282,94 +274,6 @@ func (o *LdapProviderAllOf) HasObjectClass() bool {
 // SetObjectClass gets a reference to the given string and assigns it to the ObjectClass field.
 func (o *LdapProviderAllOf) SetObjectClass(v string) {
 	o.ObjectClass = &v
-}
-
-// GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
-func (o *LdapProviderAllOf) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
-	if o == nil || o.PasswordWarning == nil {
-		var ret LdapProviderAllOfPasswordWarning
-		return ret
-	}
-	return *o.PasswordWarning
-}
-
-// GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
-	if o == nil || o.PasswordWarning == nil {
-		return nil, false
-	}
-	return o.PasswordWarning, true
-}
-
-// HasPasswordWarning returns a boolean if a field has been set.
-func (o *LdapProviderAllOf) HasPasswordWarning() bool {
-	if o != nil && o.PasswordWarning != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPasswordWarning gets a reference to the given LdapProviderAllOfPasswordWarning and assigns it to the PasswordWarning field.
-func (o *LdapProviderAllOf) SetPasswordWarning(v LdapProviderAllOfPasswordWarning) {
-	o.PasswordWarning = &v
-}
-
-// GetPort returns the Port field value
-func (o *LdapProviderAllOf) GetPort() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Port
-}
-
-// GetPortOk returns a tuple with the Port field value
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetPortOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Port, true
-}
-
-// SetPort sets field value
-func (o *LdapProviderAllOf) SetPort(v int32) {
-	o.Port = v
-}
-
-// GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
-func (o *LdapProviderAllOf) GetSslEnabled() bool {
-	if o == nil || o.SslEnabled == nil {
-		var ret bool
-		return ret
-	}
-	return *o.SslEnabled
-}
-
-// GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProviderAllOf) GetSslEnabledOk() (*bool, bool) {
-	if o == nil || o.SslEnabled == nil {
-		return nil, false
-	}
-	return o.SslEnabled, true
-}
-
-// HasSslEnabled returns a boolean if a field has been set.
-func (o *LdapProviderAllOf) HasSslEnabled() bool {
-	if o != nil && o.SslEnabled != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSslEnabled gets a reference to the given bool and assigns it to the SslEnabled field.
-func (o *LdapProviderAllOf) SetSslEnabled(v bool) {
-	o.SslEnabled = &v
 }
 
 // GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
@@ -404,8 +308,113 @@ func (o *LdapProviderAllOf) SetUsernameAttribute(v string) {
 	o.UsernameAttribute = &v
 }
 
+// GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
+func (o *LdapProviderAllOf) GetMembershipFilter() string {
+	if o == nil || o.MembershipFilter == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipFilter
+}
+
+// GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetMembershipFilterOk() (*string, bool) {
+	if o == nil || o.MembershipFilter == nil {
+		return nil, false
+	}
+	return o.MembershipFilter, true
+}
+
+// HasMembershipFilter returns a boolean if a field has been set.
+func (o *LdapProviderAllOf) HasMembershipFilter() bool {
+	if o != nil && o.MembershipFilter != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipFilter gets a reference to the given string and assigns it to the MembershipFilter field.
+func (o *LdapProviderAllOf) SetMembershipFilter(v string) {
+	o.MembershipFilter = &v
+}
+
+// GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
+func (o *LdapProviderAllOf) GetMembershipBaseDn() string {
+	if o == nil || o.MembershipBaseDn == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipBaseDn
+}
+
+// GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetMembershipBaseDnOk() (*string, bool) {
+	if o == nil || o.MembershipBaseDn == nil {
+		return nil, false
+	}
+	return o.MembershipBaseDn, true
+}
+
+// HasMembershipBaseDn returns a boolean if a field has been set.
+func (o *LdapProviderAllOf) HasMembershipBaseDn() bool {
+	if o != nil && o.MembershipBaseDn != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipBaseDn gets a reference to the given string and assigns it to the MembershipBaseDn field.
+func (o *LdapProviderAllOf) SetMembershipBaseDn(v string) {
+	o.MembershipBaseDn = &v
+}
+
+// GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
+func (o *LdapProviderAllOf) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
+	if o == nil || o.PasswordWarning == nil {
+		var ret LdapProviderAllOfPasswordWarning
+		return ret
+	}
+	return *o.PasswordWarning
+}
+
+// GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProviderAllOf) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
+	if o == nil || o.PasswordWarning == nil {
+		return nil, false
+	}
+	return o.PasswordWarning, true
+}
+
+// HasPasswordWarning returns a boolean if a field has been set.
+func (o *LdapProviderAllOf) HasPasswordWarning() bool {
+	if o != nil && o.PasswordWarning != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPasswordWarning gets a reference to the given LdapProviderAllOfPasswordWarning and assigns it to the PasswordWarning field.
+func (o *LdapProviderAllOf) SetPasswordWarning(v LdapProviderAllOfPasswordWarning) {
+	o.PasswordWarning = &v
+}
+
 func (o LdapProviderAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if true {
+		toSerialize["hostnames"] = o.Hostnames
+	}
+	if true {
+		toSerialize["port"] = o.Port
+	}
+	if o.SslEnabled != nil {
+		toSerialize["sslEnabled"] = o.SslEnabled
+	}
 	if true {
 		toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
 	}
@@ -415,29 +424,20 @@ func (o LdapProviderAllOf) MarshalJSON() ([]byte, error) {
 	if o.BaseDn != nil {
 		toSerialize["baseDn"] = o.BaseDn
 	}
-	if true {
-		toSerialize["hostnames"] = o.Hostnames
+	if o.ObjectClass != nil {
+		toSerialize["objectClass"] = o.ObjectClass
 	}
-	if o.MembershipBaseDn != nil {
-		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
+	if o.UsernameAttribute != nil {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
 	}
 	if o.MembershipFilter != nil {
 		toSerialize["membershipFilter"] = o.MembershipFilter
 	}
-	if o.ObjectClass != nil {
-		toSerialize["objectClass"] = o.ObjectClass
+	if o.MembershipBaseDn != nil {
+		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
 	}
 	if o.PasswordWarning != nil {
 		toSerialize["passwordWarning"] = o.PasswordWarning
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SslEnabled != nil {
-		toSerialize["sslEnabled"] = o.SslEnabled
-	}
-	if o.UsernameAttribute != nil {
-		toSerialize["usernameAttribute"] = o.UsernameAttribute
 	}
 	return json.Marshal(toSerialize)
 }
