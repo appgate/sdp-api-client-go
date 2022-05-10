@@ -1,11 +1,11 @@
 /*
- * Appgate SDP Controller REST API
- *
- * # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the Integration chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-functions-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v15+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
- *
- * API version: API version 15
- * Contact: appgatesdp.support@appgate.com
- */
+Appgate SDP Controller REST API
+
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+
+API version: API version 17.0
+Contact: appgatesdp.support@appgate.com
+*/
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
 
@@ -39,41 +39,54 @@ type RadiusApiIdentityProvidersGetRequest struct {
 	filterBy      *map[string]string
 }
 
+// The Token from the LoginResponse.
 func (r RadiusApiIdentityProvidersGetRequest) Authorization(authorization string) RadiusApiIdentityProvidersGetRequest {
 	r.authorization = &authorization
 	return r
 }
+
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r RadiusApiIdentityProvidersGetRequest) Query(query string) RadiusApiIdentityProvidersGetRequest {
 	r.query = &query
 	return r
 }
+
+// &#39;Range string to limit the result list. Format: -. 3-10 means he items between the (including) 3rd and the 10th  will be returned. Defaults to all objects.&#39;
 func (r RadiusApiIdentityProvidersGetRequest) Range_(range_ string) RadiusApiIdentityProvidersGetRequest {
 	r.range_ = &range_
 	return r
 }
+
+// The field name to sort the result list. Supported fields vary from object to object. Defaults to certain field depending on the object type.
 func (r RadiusApiIdentityProvidersGetRequest) OrderBy(orderBy string) RadiusApiIdentityProvidersGetRequest {
 	r.orderBy = &orderBy
 	return r
 }
+
+// Whether the sorting is applied descending or ascending. Defaults to certain field depending on the object type.
 func (r RadiusApiIdentityProvidersGetRequest) Descending(descending string) RadiusApiIdentityProvidersGetRequest {
 	r.descending = &descending
 	return r
 }
+
+// Filters the result list by the given field and value. Supported fields vary from object to object. The filters can be combined with each other as well as the generic query field. The given value is checked for inclusion. The representation of the dynamic query parameters is not correct at the moment. See the example for getting a better idea.
 func (r RadiusApiIdentityProvidersGetRequest) FilterBy(filterBy map[string]string) RadiusApiIdentityProvidersGetRequest {
 	r.filterBy = &filterBy
 	return r
 }
 
-func (r RadiusApiIdentityProvidersGetRequest) Execute() (RadiusIdentityProviderList, *_nethttp.Response, error) {
+func (r RadiusApiIdentityProvidersGetRequest) Execute() (IdentityProviderList, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersGetExecute(r)
 }
 
 /*
- * IdentityProvidersGet List all Identity Providers.
- * List all Identity Providers visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return RadiusApiIdentityProvidersGetRequest
- */
+IdentityProvidersGet List all Identity Providers.
+
+List all Identity Providers visible to current user.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return RadiusApiIdentityProvidersGetRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Context) RadiusApiIdentityProvidersGetRequest {
 	return RadiusApiIdentityProvidersGetRequest{
 		ApiService: a,
@@ -81,18 +94,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Co
 	}
 }
 
-/*
- * Execute executes the request
- * @return RadiusIdentityProviderList
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r RadiusApiIdentityProvidersGetRequest) (RadiusIdentityProviderList, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return IdentityProviderList
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r RadiusApiIdentityProvidersGetRequest) (IdentityProviderList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  RadiusIdentityProviderList
+		localVarReturnValue  IdentityProviderList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersGet")
@@ -184,6 +195,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r Radius
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -209,33 +230,36 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r Radius
 }
 
 type ApiRadiusIdentityProvidersIdAttributesPostRequest struct {
-	ctx           _context.Context
-	ApiService    *RadiusIdentityProvidersApiService
-	authorization *string
-	id            string
-	inlineObject3 *InlineObject3
+	ctx            _context.Context
+	ApiService     *RadiusIdentityProvidersApiService
+	authorization  *string
+	id             string
+	inlineObject14 *InlineObject14
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiRadiusIdentityProvidersIdAttributesPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersIdAttributesPostRequest) InlineObject3(inlineObject3 InlineObject3) ApiRadiusIdentityProvidersIdAttributesPostRequest {
-	r.inlineObject3 = &inlineObject3
+func (r ApiRadiusIdentityProvidersIdAttributesPostRequest) InlineObject14(inlineObject14 InlineObject14) ApiRadiusIdentityProvidersIdAttributesPostRequest {
+	r.inlineObject14 = &inlineObject14
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse2006, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse20016, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdAttributesPostExecute(r)
 }
 
 /*
- * IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
- * Get raw attributes and mapped claims for a user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiRadiusIdentityProvidersIdAttributesPostRequest
- */
+IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
+
+Get raw attributes and mapped claims for a user.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdAttributesPostRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx _context.Context, id string) ApiRadiusIdentityProvidersIdAttributesPostRequest {
 	return ApiRadiusIdentityProvidersIdAttributesPostRequest{
 		ApiService: a,
@@ -244,18 +268,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ct
 	}
 }
 
-/*
- * Execute executes the request
- * @return InlineResponse2006
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiRadiusIdentityProvidersIdAttributesPostRequest) (InlineResponse2006, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return InlineResponse20016
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiRadiusIdentityProvidersIdAttributesPostRequest) (InlineResponse20016, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse2006
+		localVarReturnValue  InlineResponse20016
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdAttributesPost")
@@ -292,7 +314,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPostExe
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.inlineObject3
+	localVarPostBody = r.inlineObject14
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -355,6 +377,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPostExe
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -396,6 +428,7 @@ type ApiRadiusIdentityProvidersIdDeleteRequest struct {
 	id            string
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiRadiusIdentityProvidersIdDeleteRequest {
 	r.authorization = &authorization
 	return r
@@ -406,12 +439,14 @@ func (r ApiRadiusIdentityProvidersIdDeleteRequest) Execute() (*_nethttp.Response
 }
 
 /*
- * IdentityProvidersIdDelete Delete a specific Identity Provider.
- * Delete a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiRadiusIdentityProvidersIdDeleteRequest
- */
+IdentityProvidersIdDelete Delete a specific Identity Provider.
+
+Delete a specific Identity Provider.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdDeleteRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context.Context, id string) ApiRadiusIdentityProvidersIdDeleteRequest {
 	return ApiRadiusIdentityProvidersIdDeleteRequest{
 		ApiService: a,
@@ -420,9 +455,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _conte
 	}
 }
 
-/*
- * Execute executes the request
- */
+// Execute executes the request
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiRadiusIdentityProvidersIdDeleteRequest) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
@@ -517,6 +550,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r A
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -539,22 +582,25 @@ type ApiRadiusIdentityProvidersIdGetRequest struct {
 	id            string
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersIdGetRequest) Authorization(authorization string) ApiRadiusIdentityProvidersIdGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
 /*
- * IdentityProvidersIdGet Get a specific Identity Provider.
- * Get a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiRadiusIdentityProvidersIdGetRequest
- */
+IdentityProvidersIdGet Get a specific Identity Provider.
+
+Get a specific Identity Provider.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdGetRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Context, id string) ApiRadiusIdentityProvidersIdGetRequest {
 	return ApiRadiusIdentityProvidersIdGetRequest{
 		ApiService: a,
@@ -563,18 +609,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.
 	}
 }
 
-/*
- * Execute executes the request
- * @return RadiusProvider
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (RadiusProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  RadiusProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -662,6 +706,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiR
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -687,33 +741,38 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiR
 }
 
 type ApiRadiusIdentityProvidersIdPutRequest struct {
-	ctx              _context.Context
-	ApiService       *RadiusIdentityProvidersApiService
-	authorization    *string
-	id               string
-	identityProvider *RadiusProvider
+	ctx           _context.Context
+	ApiService    *RadiusIdentityProvidersApiService
+	authorization *string
+	id            string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersIdPutRequest) Authorization(authorization string) ApiRadiusIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersIdPutRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersIdPutRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiRadiusIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiRadiusIdentityProvidersIdPutRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
 /*
- * IdentityProvidersIdPut Update an existing Identity Provider.
- * Update an existing Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiRadiusIdentityProvidersIdPutRequest
- */
+IdentityProvidersIdPut Update an existing Identity Provider.
+
+Update an existing Identity Provider.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdPutRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Context, id string) ApiRadiusIdentityProvidersIdPutRequest {
 	return ApiRadiusIdentityProvidersIdPutRequest{
 		ApiService: a,
@@ -722,18 +781,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.
 	}
 }
 
-/*
- * Execute executes the request
- * @return RadiusProvider
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (RadiusProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  RadiusProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -750,8 +807,8 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiR
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -773,7 +830,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiR
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -836,6 +893,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiR
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -871,31 +938,36 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiR
 }
 
 type ApiRadiusIdentityProvidersPostRequest struct {
-	ctx              _context.Context
-	ApiService       *RadiusIdentityProvidersApiService
-	authorization    *string
-	identityProvider *RadiusProvider
+	ctx           _context.Context
+	ApiService    *RadiusIdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersPostRequest) Authorization(authorization string) ApiRadiusIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersPostRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersPostRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiRadiusIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiRadiusIdentityProvidersPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersPostRequest) Execute() (RadiusProvider, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersPostRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
 /*
- * IdentityProvidersPost Create a new Identity Provider.
- * Create a new Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiRadiusIdentityProvidersPostRequest
- */
+IdentityProvidersPost Create a new Identity Provider.
+
+Create a new Identity Provider.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRadiusIdentityProvidersPostRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context) ApiRadiusIdentityProvidersPostRequest {
 	return ApiRadiusIdentityProvidersPostRequest{
 		ApiService: a,
@@ -903,18 +975,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx _context.C
 	}
 }
 
-/*
- * Execute executes the request
- * @return IdentityProvider
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (RadiusProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  RadiusProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersPost")
@@ -930,8 +1000,8 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRa
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -953,7 +1023,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRa
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -997,6 +1067,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRa
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1051,31 +1131,36 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRa
 }
 
 type ApiRadiusIdentityProvidersTestPostRequest struct {
-	ctx              _context.Context
-	ApiService       *RadiusIdentityProvidersApiService
-	authorization    *string
-	identityProvider *RadiusProvider
+	ctx           _context.Context
+	ApiService    *RadiusIdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiRadiusIdentityProvidersTestPostRequest) Authorization(authorization string) ApiRadiusIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiRadiusIdentityProvidersTestPostRequest) IdentityProvider(identityProvider RadiusProvider) ApiRadiusIdentityProvidersTestPostRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiRadiusIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiRadiusIdentityProvidersTestPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersTestPostRequest) Execute() (InlineResponse2005, *_nethttp.Response, error) {
+func (r ApiRadiusIdentityProvidersTestPostRequest) Execute() (InlineResponse20015, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersTestPostExecute(r)
 }
 
 /*
- * IdentityProvidersTestPost Test an Identity Provider connection.
- * Test connection for the given Identity Provider JSON.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiRadiusIdentityProvidersTestPostRequest
- */
+IdentityProvidersTestPost Test an Identity Provider connection.
+
+Test connection for the given Identity Provider JSON.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRadiusIdentityProvidersTestPostRequest
+*/
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context.Context) ApiRadiusIdentityProvidersTestPostRequest {
 	return ApiRadiusIdentityProvidersTestPostRequest{
 		ApiService: a,
@@ -1083,18 +1168,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPost(ctx _conte
 	}
 }
 
-/*
- * Execute executes the request
- * @return InlineResponse2005
- */
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiRadiusIdentityProvidersTestPostRequest) (InlineResponse2005, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return InlineResponse20015
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiRadiusIdentityProvidersTestPostRequest) (InlineResponse20015, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse2005
+		localVarReturnValue  InlineResponse20015
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersTestPost")
@@ -1110,8 +1193,8 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r A
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1133,7 +1216,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r A
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1177,6 +1260,16 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r A
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

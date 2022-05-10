@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,8 +17,8 @@ import (
 
 // EntitlementAllOfActions IP Access action.
 type EntitlementAllOfActions struct {
-	// Type of the IP Access action.
-	Subtype string `json:"subtype"`
+	// Type of the IP Access action. Required the action is exclude.
+	Subtype *string `json:"subtype,omitempty"`
 	// Applied action to the traffic.
 	Action string `json:"action"`
 	// Hosts to apply the action to. See admin manual for possible values.
@@ -34,9 +34,8 @@ type EntitlementAllOfActions struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEntitlementAllOfActions(subtype string, action string, hosts []string) *EntitlementAllOfActions {
+func NewEntitlementAllOfActions(action string, hosts []string) *EntitlementAllOfActions {
 	this := EntitlementAllOfActions{}
-	this.Subtype = subtype
 	this.Action = action
 	this.Hosts = hosts
 	return &this
@@ -50,28 +49,36 @@ func NewEntitlementAllOfActionsWithDefaults() *EntitlementAllOfActions {
 	return &this
 }
 
-// GetSubtype returns the Subtype field value
+// GetSubtype returns the Subtype field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetSubtype() string {
-	if o == nil {
+	if o == nil || o.Subtype == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Subtype
+	return *o.Subtype
 }
 
-// GetSubtypeOk returns a tuple with the Subtype field value
+// GetSubtypeOk returns a tuple with the Subtype field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetSubtypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Subtype == nil {
 		return nil, false
 	}
-	return &o.Subtype, true
+	return o.Subtype, true
 }
 
-// SetSubtype sets field value
+// HasSubtype returns a boolean if a field has been set.
+func (o *EntitlementAllOfActions) HasSubtype() bool {
+	if o != nil && o.Subtype != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSubtype gets a reference to the given string and assigns it to the Subtype field.
 func (o *EntitlementAllOfActions) SetSubtype(v string) {
-	o.Subtype = v
+	o.Subtype = &v
 }
 
 // GetAction returns the Action field value
@@ -220,7 +227,7 @@ func (o *EntitlementAllOfActions) SetMonitor(v EntitlementAllOfMonitor) {
 
 func (o EntitlementAllOfActions) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Subtype != nil {
 		toSerialize["subtype"] = o.Subtype
 	}
 	if true {

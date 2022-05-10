@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -25,12 +25,12 @@ var (
 	_ _context.Context
 )
 
-// DNSRulesApiService DNSRulesApi service
-type DNSRulesApiService service
+// ServiceUsersApiService ServiceUsersApi service
+type ServiceUsersApiService service
 
-type ApiDnsRulesGetRequest struct {
+type ApiServiceUsersGetRequest struct {
 	ctx           _context.Context
-	ApiService    *DNSRulesApiService
+	ApiService    *ServiceUsersApiService
 	authorization *string
 	query         *string
 	range_        *string
@@ -40,78 +40,78 @@ type ApiDnsRulesGetRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiDnsRulesGetRequest) Authorization(authorization string) ApiDnsRulesGetRequest {
+func (r ApiServiceUsersGetRequest) Authorization(authorization string) ApiServiceUsersGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
-func (r ApiDnsRulesGetRequest) Query(query string) ApiDnsRulesGetRequest {
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
+func (r ApiServiceUsersGetRequest) Query(query string) ApiServiceUsersGetRequest {
 	r.query = &query
 	return r
 }
 
 // &#39;Range string to limit the result list. Format: -. 3-10 means he items between the (including) 3rd and the 10th  will be returned. Defaults to all objects.&#39;
-func (r ApiDnsRulesGetRequest) Range_(range_ string) ApiDnsRulesGetRequest {
+func (r ApiServiceUsersGetRequest) Range_(range_ string) ApiServiceUsersGetRequest {
 	r.range_ = &range_
 	return r
 }
 
 // The field name to sort the result list. Supported fields vary from object to object. Defaults to certain field depending on the object type.
-func (r ApiDnsRulesGetRequest) OrderBy(orderBy string) ApiDnsRulesGetRequest {
+func (r ApiServiceUsersGetRequest) OrderBy(orderBy string) ApiServiceUsersGetRequest {
 	r.orderBy = &orderBy
 	return r
 }
 
 // Whether the sorting is applied descending or ascending. Defaults to certain field depending on the object type.
-func (r ApiDnsRulesGetRequest) Descending(descending string) ApiDnsRulesGetRequest {
+func (r ApiServiceUsersGetRequest) Descending(descending string) ApiServiceUsersGetRequest {
 	r.descending = &descending
 	return r
 }
 
 // Filters the result list by the given field and value. Supported fields vary from object to object. The filters can be combined with each other as well as the generic query field. The given value is checked for inclusion. The representation of the dynamic query parameters is not correct at the moment. See the example for getting a better idea.
-func (r ApiDnsRulesGetRequest) FilterBy(filterBy map[string]string) ApiDnsRulesGetRequest {
+func (r ApiServiceUsersGetRequest) FilterBy(filterBy map[string]string) ApiServiceUsersGetRequest {
 	r.filterBy = &filterBy
 	return r
 }
 
-func (r ApiDnsRulesGetRequest) Execute() (DnsRuleList, *_nethttp.Response, error) {
-	return r.ApiService.DnsRulesGetExecute(r)
+func (r ApiServiceUsersGetRequest) Execute() (ServiceUserList, *_nethttp.Response, error) {
+	return r.ApiService.ServiceUsersGetExecute(r)
 }
 
 /*
-DnsRulesGet List all DNS Rules.
+ServiceUsersGet List all Service Users.
 
-List all DNS Rules visible to current user.
+List all Service Users visible to current user.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDnsRulesGetRequest
+ @return ApiServiceUsersGetRequest
 */
-func (a *DNSRulesApiService) DnsRulesGet(ctx _context.Context) ApiDnsRulesGetRequest {
-	return ApiDnsRulesGetRequest{
+func (a *ServiceUsersApiService) ServiceUsersGet(ctx _context.Context) ApiServiceUsersGetRequest {
+	return ApiServiceUsersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DnsRuleList
-func (a *DNSRulesApiService) DnsRulesGetExecute(r ApiDnsRulesGetRequest) (DnsRuleList, *_nethttp.Response, error) {
+//  @return ServiceUserList
+func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequest) (ServiceUserList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  DnsRuleList
+		localVarReturnValue  ServiceUserList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DNSRulesApiService.DnsRulesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersGet")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dns-rules"
+	localVarPath := localBasePath + "/service-users"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -195,6 +195,16 @@ func (a *DNSRulesApiService) DnsRulesGetExecute(r ApiDnsRulesGetRequest) (DnsRul
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -219,34 +229,34 @@ func (a *DNSRulesApiService) DnsRulesGetExecute(r ApiDnsRulesGetRequest) (DnsRul
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDnsRulesIdDeleteRequest struct {
+type ApiServiceUsersIdDeleteRequest struct {
 	ctx           _context.Context
-	ApiService    *DNSRulesApiService
+	ApiService    *ServiceUsersApiService
 	authorization *string
 	id            string
 }
 
 // The Token from the LoginResponse.
-func (r ApiDnsRulesIdDeleteRequest) Authorization(authorization string) ApiDnsRulesIdDeleteRequest {
+func (r ApiServiceUsersIdDeleteRequest) Authorization(authorization string) ApiServiceUsersIdDeleteRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiDnsRulesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
-	return r.ApiService.DnsRulesIdDeleteExecute(r)
+func (r ApiServiceUsersIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+	return r.ApiService.ServiceUsersIdDeleteExecute(r)
 }
 
 /*
-DnsRulesIdDelete Delete a specific DNS Rule.
+ServiceUsersIdDelete Delete a specific Service User.
 
-Delete a specific DNS Rule.
+Delete a specific Service User.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiDnsRulesIdDeleteRequest
+ @return ApiServiceUsersIdDeleteRequest
 */
-func (a *DNSRulesApiService) DnsRulesIdDelete(ctx _context.Context, id string) ApiDnsRulesIdDeleteRequest {
-	return ApiDnsRulesIdDeleteRequest{
+func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx _context.Context, id string) ApiServiceUsersIdDeleteRequest {
+	return ApiServiceUsersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -254,7 +264,7 @@ func (a *DNSRulesApiService) DnsRulesIdDelete(ctx _context.Context, id string) A
 }
 
 // Execute executes the request
-func (a *DNSRulesApiService) DnsRulesIdDeleteExecute(r ApiDnsRulesIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersIdDeleteRequest) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
 		localVarPostBody     interface{}
@@ -263,12 +273,12 @@ func (a *DNSRulesApiService) DnsRulesIdDeleteExecute(r ApiDnsRulesIdDeleteReques
 		localVarFileBytes    []byte
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DNSRulesApiService.DnsRulesIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdDelete")
 	if err != nil {
 		return nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dns-rules/{id}"
+	localVarPath := localBasePath + "/service-users/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -348,6 +358,16 @@ func (a *DNSRulesApiService) DnsRulesIdDeleteExecute(r ApiDnsRulesIdDeleteReques
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -363,34 +383,34 @@ func (a *DNSRulesApiService) DnsRulesIdDeleteExecute(r ApiDnsRulesIdDeleteReques
 	return localVarHTTPResponse, nil
 }
 
-type ApiDnsRulesIdGetRequest struct {
+type ApiServiceUsersIdGetRequest struct {
 	ctx           _context.Context
-	ApiService    *DNSRulesApiService
+	ApiService    *ServiceUsersApiService
 	authorization *string
 	id            string
 }
 
 // The Token from the LoginResponse.
-func (r ApiDnsRulesIdGetRequest) Authorization(authorization string) ApiDnsRulesIdGetRequest {
+func (r ApiServiceUsersIdGetRequest) Authorization(authorization string) ApiServiceUsersIdGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiDnsRulesIdGetRequest) Execute() (DnsRule, *_nethttp.Response, error) {
-	return r.ApiService.DnsRulesIdGetExecute(r)
+func (r ApiServiceUsersIdGetRequest) Execute() (ServiceUser, *_nethttp.Response, error) {
+	return r.ApiService.ServiceUsersIdGetExecute(r)
 }
 
 /*
-DnsRulesIdGet Get a specific DNS Rule.
+ServiceUsersIdGet Get a specific Service User.
 
-Get a specific DNS Rule.
+Get a specific Service User.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiDnsRulesIdGetRequest
+ @return ApiServiceUsersIdGetRequest
 */
-func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) ApiDnsRulesIdGetRequest {
-	return ApiDnsRulesIdGetRequest{
+func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx _context.Context, id string) ApiServiceUsersIdGetRequest {
+	return ApiServiceUsersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -398,23 +418,23 @@ func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) ApiD
 }
 
 // Execute executes the request
-//  @return DnsRule
-func (a *DNSRulesApiService) DnsRulesIdGetExecute(r ApiDnsRulesIdGetRequest) (DnsRule, *_nethttp.Response, error) {
+//  @return ServiceUser
+func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGetRequest) (ServiceUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  DnsRule
+		localVarReturnValue  ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DNSRulesApiService.DnsRulesIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dns-rules/{id}"
+	localVarPath := localBasePath + "/service-users/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -494,6 +514,16 @@ func (a *DNSRulesApiService) DnsRulesIdGetExecute(r ApiDnsRulesIdGetRequest) (Dn
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -518,41 +548,41 @@ func (a *DNSRulesApiService) DnsRulesIdGetExecute(r ApiDnsRulesIdGetRequest) (Dn
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDnsRulesIdPutRequest struct {
+type ApiServiceUsersIdPutRequest struct {
 	ctx           _context.Context
-	ApiService    *DNSRulesApiService
+	ApiService    *ServiceUsersApiService
 	authorization *string
 	id            string
-	dnsRule       *DnsRule
+	serviceUser   *ServiceUser
 }
 
 // The Token from the LoginResponse.
-func (r ApiDnsRulesIdPutRequest) Authorization(authorization string) ApiDnsRulesIdPutRequest {
+func (r ApiServiceUsersIdPutRequest) Authorization(authorization string) ApiServiceUsersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// DNS Rule object.
-func (r ApiDnsRulesIdPutRequest) DnsRule(dnsRule DnsRule) ApiDnsRulesIdPutRequest {
-	r.dnsRule = &dnsRule
+// Service User object.
+func (r ApiServiceUsersIdPutRequest) ServiceUser(serviceUser ServiceUser) ApiServiceUsersIdPutRequest {
+	r.serviceUser = &serviceUser
 	return r
 }
 
-func (r ApiDnsRulesIdPutRequest) Execute() (DnsRule, *_nethttp.Response, error) {
-	return r.ApiService.DnsRulesIdPutExecute(r)
+func (r ApiServiceUsersIdPutRequest) Execute() (ServiceUser, *_nethttp.Response, error) {
+	return r.ApiService.ServiceUsersIdPutExecute(r)
 }
 
 /*
-DnsRulesIdPut Update an existing DNS Rule.
+ServiceUsersIdPut Update an existing Service User.
 
-Update an existing DNS Rule.
+Update an existing Service User.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiDnsRulesIdPutRequest
+ @return ApiServiceUsersIdPutRequest
 */
-func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) ApiDnsRulesIdPutRequest {
-	return ApiDnsRulesIdPutRequest{
+func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx _context.Context, id string) ApiServiceUsersIdPutRequest {
+	return ApiServiceUsersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -560,23 +590,23 @@ func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) ApiD
 }
 
 // Execute executes the request
-//  @return DnsRule
-func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (DnsRule, *_nethttp.Response, error) {
+//  @return ServiceUser
+func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPutRequest) (ServiceUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  DnsRule
+		localVarReturnValue  ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DNSRulesApiService.DnsRulesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dns-rules/{id}"
+	localVarPath := localBasePath + "/service-users/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -585,8 +615,8 @@ func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (Dn
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.dnsRule == nil {
-		return localVarReturnValue, nil, reportError("dnsRule is required and must be specified")
+	if r.serviceUser == nil {
+		return localVarReturnValue, nil, reportError("serviceUser is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -608,7 +638,7 @@ func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (Dn
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.dnsRule
+	localVarPostBody = r.serviceUser
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -671,6 +701,16 @@ func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (Dn
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -705,62 +745,62 @@ func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (Dn
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDnsRulesPostRequest struct {
+type ApiServiceUsersPostRequest struct {
 	ctx           _context.Context
-	ApiService    *DNSRulesApiService
+	ApiService    *ServiceUsersApiService
 	authorization *string
-	dnsRule       *DnsRule
+	serviceUser   *ServiceUser
 }
 
 // The Token from the LoginResponse.
-func (r ApiDnsRulesPostRequest) Authorization(authorization string) ApiDnsRulesPostRequest {
+func (r ApiServiceUsersPostRequest) Authorization(authorization string) ApiServiceUsersPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// DNS Rule object.
-func (r ApiDnsRulesPostRequest) DnsRule(dnsRule DnsRule) ApiDnsRulesPostRequest {
-	r.dnsRule = &dnsRule
+// Service User object.
+func (r ApiServiceUsersPostRequest) ServiceUser(serviceUser ServiceUser) ApiServiceUsersPostRequest {
+	r.serviceUser = &serviceUser
 	return r
 }
 
-func (r ApiDnsRulesPostRequest) Execute() (DnsRule, *_nethttp.Response, error) {
-	return r.ApiService.DnsRulesPostExecute(r)
+func (r ApiServiceUsersPostRequest) Execute() (ServiceUser, *_nethttp.Response, error) {
+	return r.ApiService.ServiceUsersPostExecute(r)
 }
 
 /*
-DnsRulesPost Create a new DNS Rule.
+ServiceUsersPost Create a new Service User.
 
-Create a new DNS Rule.
+Create a new Service User.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDnsRulesPostRequest
+ @return ApiServiceUsersPostRequest
 */
-func (a *DNSRulesApiService) DnsRulesPost(ctx _context.Context) ApiDnsRulesPostRequest {
-	return ApiDnsRulesPostRequest{
+func (a *ServiceUsersApiService) ServiceUsersPost(ctx _context.Context) ApiServiceUsersPostRequest {
+	return ApiServiceUsersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DnsRule
-func (a *DNSRulesApiService) DnsRulesPostExecute(r ApiDnsRulesPostRequest) (DnsRule, *_nethttp.Response, error) {
+//  @return ServiceUser
+func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRequest) (ServiceUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  DnsRule
+		localVarReturnValue  ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DNSRulesApiService.DnsRulesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersPost")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/dns-rules"
+	localVarPath := localBasePath + "/service-users"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -768,8 +808,8 @@ func (a *DNSRulesApiService) DnsRulesPostExecute(r ApiDnsRulesPostRequest) (DnsR
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.dnsRule == nil {
-		return localVarReturnValue, nil, reportError("dnsRule is required and must be specified")
+	if r.serviceUser == nil {
+		return localVarReturnValue, nil, reportError("serviceUser is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -791,7 +831,7 @@ func (a *DNSRulesApiService) DnsRulesPostExecute(r ApiDnsRulesPostRequest) (DnsR
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.dnsRule
+	localVarPostBody = r.serviceUser
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -835,6 +875,16 @@ func (a *DNSRulesApiService) DnsRulesPostExecute(r ApiDnsRulesPostRequest) (DnsR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

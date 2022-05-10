@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -25,12 +25,12 @@ var (
 	_ _context.Context
 )
 
-// AdministrativeRolesApiService AdministrativeRolesApi service
-type AdministrativeRolesApiService service
+// OidcIdentityProvidersApiService IdentityProvidersApi service
+type OidcIdentityProvidersApiService service
 
-type ApiAdministrativeRolesGetRequest struct {
+type ApiOidcIdentityProvidersGetRequest struct {
 	ctx           _context.Context
-	ApiService    *AdministrativeRolesApiService
+	ApiService    *OidcIdentityProvidersApiService
 	authorization *string
 	query         *string
 	range_        *string
@@ -40,78 +40,78 @@ type ApiAdministrativeRolesGetRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesGetRequest) Authorization(authorization string) ApiAdministrativeRolesGetRequest {
+func (r ApiOidcIdentityProvidersGetRequest) Authorization(authorization string) ApiOidcIdentityProvidersGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
-func (r ApiAdministrativeRolesGetRequest) Query(query string) ApiAdministrativeRolesGetRequest {
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
+func (r ApiOidcIdentityProvidersGetRequest) Query(query string) ApiOidcIdentityProvidersGetRequest {
 	r.query = &query
 	return r
 }
 
 // &#39;Range string to limit the result list. Format: -. 3-10 means he items between the (including) 3rd and the 10th  will be returned. Defaults to all objects.&#39;
-func (r ApiAdministrativeRolesGetRequest) Range_(range_ string) ApiAdministrativeRolesGetRequest {
+func (r ApiOidcIdentityProvidersGetRequest) Range_(range_ string) ApiOidcIdentityProvidersGetRequest {
 	r.range_ = &range_
 	return r
 }
 
 // The field name to sort the result list. Supported fields vary from object to object. Defaults to certain field depending on the object type.
-func (r ApiAdministrativeRolesGetRequest) OrderBy(orderBy string) ApiAdministrativeRolesGetRequest {
+func (r ApiOidcIdentityProvidersGetRequest) OrderBy(orderBy string) ApiOidcIdentityProvidersGetRequest {
 	r.orderBy = &orderBy
 	return r
 }
 
 // Whether the sorting is applied descending or ascending. Defaults to certain field depending on the object type.
-func (r ApiAdministrativeRolesGetRequest) Descending(descending string) ApiAdministrativeRolesGetRequest {
+func (r ApiOidcIdentityProvidersGetRequest) Descending(descending string) ApiOidcIdentityProvidersGetRequest {
 	r.descending = &descending
 	return r
 }
 
 // Filters the result list by the given field and value. Supported fields vary from object to object. The filters can be combined with each other as well as the generic query field. The given value is checked for inclusion. The representation of the dynamic query parameters is not correct at the moment. See the example for getting a better idea.
-func (r ApiAdministrativeRolesGetRequest) FilterBy(filterBy map[string]string) ApiAdministrativeRolesGetRequest {
+func (r ApiOidcIdentityProvidersGetRequest) FilterBy(filterBy map[string]string) ApiOidcIdentityProvidersGetRequest {
 	r.filterBy = &filterBy
 	return r
 }
 
-func (r ApiAdministrativeRolesGetRequest) Execute() (AdministrativeRoleList, *_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesGetExecute(r)
+func (r ApiOidcIdentityProvidersGetRequest) Execute() (IdentityProviderList, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersGetExecute(r)
 }
 
 /*
-AdministrativeRolesGet List all Administrative Roles.
+IdentityProvidersGet List all Identity Providers.
 
-List all Administrative Roles visible to current user.
+List all Identity Providers visible to current user.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesGetRequest
+ @return ApiOidcIdentityProvidersGetRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesGet(ctx _context.Context) ApiAdministrativeRolesGetRequest {
-	return ApiAdministrativeRolesGetRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Context) ApiOidcIdentityProvidersGetRequest {
+	return ApiOidcIdentityProvidersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AdministrativeRoleList
-func (a *AdministrativeRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrativeRolesGetRequest) (AdministrativeRoleList, *_nethttp.Response, error) {
+//  @return IdentityProviderList
+func (a *OidcIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiOidcIdentityProvidersGetRequest) (IdentityProviderList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  AdministrativeRoleList
+		localVarReturnValue  IdentityProviderList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersGet")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles"
+	localVarPath := localBasePath + "/identity-providers"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -195,6 +195,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesGetExecute(r ApiAdmin
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -219,34 +229,39 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesGetExecute(r ApiAdmin
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAdministrativeRolesIdDeleteRequest struct {
-	ctx           _context.Context
-	ApiService    *AdministrativeRolesApiService
-	authorization *string
-	id            string
+type ApiOidcIdentityProvidersIdAttributesPostRequest struct {
+	ctx            _context.Context
+	ApiService     *OidcIdentityProvidersApiService
+	authorization  *string
+	id             string
+	inlineObject14 *InlineObject14
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesIdDeleteRequest) Authorization(authorization string) ApiAdministrativeRolesIdDeleteRequest {
+func (r ApiOidcIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdAttributesPostRequest {
 	r.authorization = &authorization
 	return r
 }
+func (r ApiOidcIdentityProvidersIdAttributesPostRequest) InlineObject14(inlineObject14 InlineObject14) ApiOidcIdentityProvidersIdAttributesPostRequest {
+	r.inlineObject14 = &inlineObject14
+	return r
+}
 
-func (r ApiAdministrativeRolesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesIdDeleteExecute(r)
+func (r ApiOidcIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse20016, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersIdAttributesPostExecute(r)
 }
 
 /*
-AdministrativeRolesIdDelete Delete a specific Administrative Role.
+IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
 
-Delete a specific Administrative Role.
+Get raw attributes and mapped claims for a user.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiAdministrativeRolesIdDeleteRequest
+ @return ApiOidcIdentityProvidersIdAttributesPostRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdDelete(ctx _context.Context, id string) ApiAdministrativeRolesIdDeleteRequest {
-	return ApiAdministrativeRolesIdDeleteRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx _context.Context, id string) ApiOidcIdentityProvidersIdAttributesPostRequest {
+	return ApiOidcIdentityProvidersIdAttributesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -254,7 +269,194 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdDelete(ctx _context
 }
 
 // Execute executes the request
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministrativeRolesIdDeleteRequest) (*_nethttp.Response, error) {
+//  @return InlineResponse20016
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiOidcIdentityProvidersIdAttributesPostRequest) (InlineResponse20016, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodPost
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  InlineResponse20016
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersIdAttributesPost")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/identity-providers/{id}/attributes"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	// body params
+	localVarPostBody = r.inlineObject14
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiOidcIdentityProvidersIdDeleteRequest struct {
+	ctx           _context.Context
+	ApiService    *OidcIdentityProvidersApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiOidcIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdDeleteRequest {
+	r.authorization = &authorization
+	return r
+}
+
+func (r ApiOidcIdentityProvidersIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersIdDeleteExecute(r)
+}
+
+/*
+IdentityProvidersIdDelete Delete a specific Identity Provider.
+
+Delete a specific Identity Provider.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiOidcIdentityProvidersIdDeleteRequest
+*/
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context.Context, id string) ApiOidcIdentityProvidersIdDeleteRequest {
+	return ApiOidcIdentityProvidersIdDeleteRequest{
+		ApiService: a,
+		ctx:        ctx,
+		id:         id,
+	}
+}
+
+// Execute executes the request
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiOidcIdentityProvidersIdDeleteRequest) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
 		localVarPostBody     interface{}
@@ -263,12 +465,12 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdDeleteExecute(r Api
 		localVarFileBytes    []byte
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersIdDelete")
 	if err != nil {
 		return nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles/{id}"
+	localVarPath := localBasePath + "/identity-providers/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -348,6 +550,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdDeleteExecute(r Api
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -363,34 +575,34 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdDeleteExecute(r Api
 	return localVarHTTPResponse, nil
 }
 
-type ApiAdministrativeRolesIdGetRequest struct {
+type ApiOidcIdentityProvidersIdGetRequest struct {
 	ctx           _context.Context
-	ApiService    *AdministrativeRolesApiService
+	ApiService    *OidcIdentityProvidersApiService
 	authorization *string
 	id            string
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesIdGetRequest) Authorization(authorization string) ApiAdministrativeRolesIdGetRequest {
+func (r ApiOidcIdentityProvidersIdGetRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiAdministrativeRolesIdGetRequest) Execute() (AdministrativeRole, *_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesIdGetExecute(r)
+func (r ApiOidcIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
 /*
-AdministrativeRolesIdGet Get a specific Administrative Role.
+IdentityProvidersIdGet Get a specific Identity Provider.
 
-Get a specific Administrative Role.
+Get a specific Identity Provider.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiAdministrativeRolesIdGetRequest
+ @return ApiOidcIdentityProvidersIdGetRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdGet(ctx _context.Context, id string) ApiAdministrativeRolesIdGetRequest {
-	return ApiAdministrativeRolesIdGetRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Context, id string) ApiOidcIdentityProvidersIdGetRequest {
+	return ApiOidcIdentityProvidersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -398,23 +610,23 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdGet(ctx _context.Co
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrativeRolesIdGetRequest) (AdministrativeRole, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiOidcIdentityProvidersIdGetRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  AdministrativeRole
+		localVarReturnValue  map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles/{id}"
+	localVarPath := localBasePath + "/identity-providers/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -494,6 +706,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdm
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -518,41 +740,41 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdm
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAdministrativeRolesIdPutRequest struct {
-	ctx                _context.Context
-	ApiService         *AdministrativeRolesApiService
-	authorization      *string
-	id                 string
-	administrativeRole *AdministrativeRole
+type ApiOidcIdentityProvidersIdPutRequest struct {
+	ctx           _context.Context
+	ApiService    *OidcIdentityProvidersApiService
+	authorization *string
+	id            string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesIdPutRequest) Authorization(authorization string) ApiAdministrativeRolesIdPutRequest {
+func (r ApiOidcIdentityProvidersIdPutRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// Administrative Role object.
-func (r ApiAdministrativeRolesIdPutRequest) AdministrativeRole(administrativeRole AdministrativeRole) ApiAdministrativeRolesIdPutRequest {
-	r.administrativeRole = &administrativeRole
+// Identity Provider object.
+func (r ApiOidcIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiOidcIdentityProvidersIdPutRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiAdministrativeRolesIdPutRequest) Execute() (AdministrativeRole, *_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesIdPutExecute(r)
+func (r ApiOidcIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
 /*
-AdministrativeRolesIdPut Update an existing Administrative Role.
+IdentityProvidersIdPut Update an existing Identity Provider.
 
-Update an existing Administrative Role.
+Update an existing Identity Provider.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiAdministrativeRolesIdPutRequest
+ @return ApiOidcIdentityProvidersIdPutRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdPut(ctx _context.Context, id string) ApiAdministrativeRolesIdPutRequest {
-	return ApiAdministrativeRolesIdPutRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Context, id string) ApiOidcIdentityProvidersIdPutRequest {
+	return ApiOidcIdentityProvidersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -560,23 +782,23 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdPut(ctx _context.Co
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
-func (a *AdministrativeRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrativeRolesIdPutRequest) (AdministrativeRole, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *OidcIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiOidcIdentityProvidersIdPutRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  AdministrativeRole
+		localVarReturnValue  map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles/{id}"
+	localVarPath := localBasePath + "/identity-providers/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -585,8 +807,8 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdm
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.administrativeRole == nil {
-		return localVarReturnValue, nil, reportError("administrativeRole is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -608,7 +830,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdm
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.administrativeRole
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -671,6 +893,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdm
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -705,62 +937,62 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdm
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAdministrativeRolesPostRequest struct {
-	ctx                _context.Context
-	ApiService         *AdministrativeRolesApiService
-	authorization      *string
-	administrativeRole *AdministrativeRole
+type ApiOidcIdentityProvidersPostRequest struct {
+	ctx           _context.Context
+	ApiService    *OidcIdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesPostRequest) Authorization(authorization string) ApiAdministrativeRolesPostRequest {
+func (r ApiOidcIdentityProvidersPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
-// Administrative Role object.
-func (r ApiAdministrativeRolesPostRequest) AdministrativeRole(administrativeRole AdministrativeRole) ApiAdministrativeRolesPostRequest {
-	r.administrativeRole = &administrativeRole
+// Identity Provider object.
+func (r ApiOidcIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiOidcIdentityProvidersPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiAdministrativeRolesPostRequest) Execute() (AdministrativeRole, *_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesPostExecute(r)
+func (r ApiOidcIdentityProvidersPostRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
 /*
-AdministrativeRolesPost Create a new Administrative Role.
+IdentityProvidersPost Create a new Identity Provider.
 
-Create a new Administrative Role.
+Create a new Identity Provider.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesPostRequest
+ @return ApiOidcIdentityProvidersPostRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesPost(ctx _context.Context) ApiAdministrativeRolesPostRequest {
-	return ApiAdministrativeRolesPostRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context) ApiOidcIdentityProvidersPostRequest {
+	return ApiOidcIdentityProvidersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
-func (a *AdministrativeRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativeRolesPostRequest) (AdministrativeRole, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *OidcIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiOidcIdentityProvidersPostRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  AdministrativeRole
+		localVarReturnValue  map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersPost")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles"
+	localVarPath := localBasePath + "/identity-providers"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -768,8 +1000,8 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesPostExecute(r ApiAdmi
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.administrativeRole == nil {
-		return localVarReturnValue, nil, reportError("administrativeRole is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -791,7 +1023,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesPostExecute(r ApiAdmi
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.administrativeRole
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -835,6 +1067,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesPostExecute(r ApiAdmi
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -888,55 +1130,62 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesPostExecute(r ApiAdmi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAdministrativeRolesTypeTargetMapGetRequest struct {
+type ApiOidcIdentityProvidersTestPostRequest struct {
 	ctx           _context.Context
-	ApiService    *AdministrativeRolesApiService
+	ApiService    *OidcIdentityProvidersApiService
 	authorization *string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
-func (r ApiAdministrativeRolesTypeTargetMapGetRequest) Authorization(authorization string) ApiAdministrativeRolesTypeTargetMapGetRequest {
+func (r ApiOidcIdentityProvidersTestPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiAdministrativeRolesTypeTargetMapGetRequest) Execute() (InlineResponse200, *_nethttp.Response, error) {
-	return r.ApiService.AdministrativeRolesTypeTargetMapGetExecute(r)
+// Identity Provider object.
+func (r ApiOidcIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiOidcIdentityProvidersTestPostRequest {
+	r.body = &body
+	return r
+}
+
+func (r ApiOidcIdentityProvidersTestPostRequest) Execute() (InlineResponse20015, *_nethttp.Response, error) {
+	return r.ApiService.IdentityProvidersTestPostExecute(r)
 }
 
 /*
-AdministrativeRolesTypeTargetMapGet Get Administrative Privilege type target map. For internal use.
+IdentityProvidersTestPost Test an Identity Provider connection.
 
-The type target map summarizes what kind of Privileges one can create.
+Test connection for the given Identity Provider JSON.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesTypeTargetMapGetRequest
+ @return ApiOidcIdentityProvidersTestPostRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGet(ctx _context.Context) ApiAdministrativeRolesTypeTargetMapGetRequest {
-	return ApiAdministrativeRolesTypeTargetMapGetRequest{
+func (a *OidcIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context.Context) ApiOidcIdentityProvidersTestPostRequest {
+	return ApiOidcIdentityProvidersTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return InlineResponse200
-func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiAdministrativeRolesTypeTargetMapGetRequest) (InlineResponse200, *_nethttp.Response, error) {
+//  @return InlineResponse20015
+func (a *OidcIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiOidcIdentityProvidersTestPostRequest) (InlineResponse20015, *_nethttp.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse200
+		localVarReturnValue  InlineResponse20015
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesTypeTargetMapGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OidcIdentityProvidersApiService.IdentityProvidersTestPost")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/administrative-roles/type-target-map"
+	localVarPath := localBasePath + "/identity-providers/test"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -944,9 +1193,12 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGetExecu
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -963,6 +1215,8 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGetExecu
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	// body params
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -985,6 +1239,16 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGetExecu
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1005,8 +1269,18 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesTypeTargetMapGetExecu
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 500 {
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

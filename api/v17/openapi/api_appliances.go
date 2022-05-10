@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -45,7 +45,7 @@ func (r ApiAppliancesGetRequest) Authorization(authorization string) ApiApplianc
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiAppliancesGetRequest) Query(query string) ApiAppliancesGetRequest {
 	r.query = &query
 	return r
@@ -186,6 +186,16 @@ func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -371,6 +381,16 @@ func (a *AppliancesApiService) AppliancesIdAdminInterfaceP12PostExecute(r ApiApp
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -396,7 +416,7 @@ func (a *AppliancesApiService) AppliancesIdAdminInterfaceP12PostExecute(r ApiApp
 	return localVarHTTPResponse, nil
 }
 
-type ApiAppliancesIdCommandPingPostRequest struct {
+type ApiAppliancesIdCommandNetcatPostRequest struct {
 	ctx           _context.Context
 	ApiService    *AppliancesApiService
 	authorization *string
@@ -405,30 +425,30 @@ type ApiAppliancesIdCommandPingPostRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiAppliancesIdCommandPingPostRequest) Authorization(authorization string) ApiAppliancesIdCommandPingPostRequest {
+func (r ApiAppliancesIdCommandNetcatPostRequest) Authorization(authorization string) ApiAppliancesIdCommandNetcatPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdCommandPingPostRequest) InlineObject1(inlineObject1 InlineObject1) ApiAppliancesIdCommandPingPostRequest {
+func (r ApiAppliancesIdCommandNetcatPostRequest) InlineObject1(inlineObject1 InlineObject1) ApiAppliancesIdCommandNetcatPostRequest {
 	r.inlineObject1 = &inlineObject1
 	return r
 }
 
-func (r ApiAppliancesIdCommandPingPostRequest) Execute() (string, *_nethttp.Response, error) {
-	return r.ApiService.AppliancesIdCommandPingPostExecute(r)
+func (r ApiAppliancesIdCommandNetcatPostRequest) Execute() (string, *_nethttp.Response, error) {
+	return r.ApiService.AppliancesIdCommandNetcatPostExecute(r)
 }
 
 /*
-AppliancesIdCommandPingPost Runs ICMP ping command on an Appliance.
+AppliancesIdCommandNetcatPost Runs netcat command on an Appliance
 
-Runs ICMP ping command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v16+text** as it returns plain text instead of JSON.
+Run netcat command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.com.peer-v17+text** as it returns plain text instead of JSON
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiAppliancesIdCommandPingPostRequest
+ @return ApiAppliancesIdCommandNetcatPostRequest
 */
-func (a *AppliancesApiService) AppliancesIdCommandPingPost(ctx _context.Context, id string) ApiAppliancesIdCommandPingPostRequest {
-	return ApiAppliancesIdCommandPingPostRequest{
+func (a *AppliancesApiService) AppliancesIdCommandNetcatPost(ctx _context.Context, id string) ApiAppliancesIdCommandNetcatPostRequest {
+	return ApiAppliancesIdCommandNetcatPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -437,7 +457,7 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPost(ctx _context.Context,
 
 // Execute executes the request
 //  @return string
-func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliancesIdCommandPingPostRequest) (string, *_nethttp.Response, error) {
+func (a *AppliancesApiService) AppliancesIdCommandNetcatPostExecute(r ApiAppliancesIdCommandNetcatPostRequest) (string, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
@@ -447,12 +467,12 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 		localVarReturnValue  string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdCommandPingPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdCommandNetcatPost")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/appliances/{id}/command/ping"
+	localVarPath := localBasePath + "/appliances/{id}/command/netcat"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -534,6 +554,16 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -568,7 +598,7 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAppliancesIdCommandTcpdumpPostRequest struct {
+type ApiAppliancesIdCommandPingPostRequest struct {
 	ctx           _context.Context
 	ApiService    *AppliancesApiService
 	authorization *string
@@ -577,30 +607,30 @@ type ApiAppliancesIdCommandTcpdumpPostRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiAppliancesIdCommandTcpdumpPostRequest) Authorization(authorization string) ApiAppliancesIdCommandTcpdumpPostRequest {
+func (r ApiAppliancesIdCommandPingPostRequest) Authorization(authorization string) ApiAppliancesIdCommandPingPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdCommandTcpdumpPostRequest) InlineObject2(inlineObject2 InlineObject2) ApiAppliancesIdCommandTcpdumpPostRequest {
+func (r ApiAppliancesIdCommandPingPostRequest) InlineObject2(inlineObject2 InlineObject2) ApiAppliancesIdCommandPingPostRequest {
 	r.inlineObject2 = &inlineObject2
 	return r
 }
 
-func (r ApiAppliancesIdCommandTcpdumpPostRequest) Execute() (string, *_nethttp.Response, error) {
-	return r.ApiService.AppliancesIdCommandTcpdumpPostExecute(r)
+func (r ApiAppliancesIdCommandPingPostRequest) Execute() (string, *_nethttp.Response, error) {
+	return r.ApiService.AppliancesIdCommandPingPostExecute(r)
 }
 
 /*
-AppliancesIdCommandTcpdumpPost Runs tcpdump command on an Appliance.
+AppliancesIdCommandPingPost Runs ICMP ping command on an Appliance.
 
-Runs tcpdump command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v16+text** as it returns plain text instead of JSON.
+Runs ICMP ping command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v17+text** as it returns plain text instead of JSON.
 
  @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
- @return ApiAppliancesIdCommandTcpdumpPostRequest
+ @return ApiAppliancesIdCommandPingPostRequest
 */
-func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPost(ctx _context.Context, id string) ApiAppliancesIdCommandTcpdumpPostRequest {
-	return ApiAppliancesIdCommandTcpdumpPostRequest{
+func (a *AppliancesApiService) AppliancesIdCommandPingPost(ctx _context.Context, id string) ApiAppliancesIdCommandPingPostRequest {
+	return ApiAppliancesIdCommandPingPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -609,7 +639,7 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPost(ctx _context.Conte
 
 // Execute executes the request
 //  @return string
-func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiAppliancesIdCommandTcpdumpPostRequest) (string, *_nethttp.Response, error) {
+func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliancesIdCommandPingPostRequest) (string, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
@@ -619,12 +649,12 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiApplia
 		localVarReturnValue  string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdCommandTcpdumpPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdCommandPingPost")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/appliances/{id}/command/tcpdump"
+	localVarPath := localBasePath + "/appliances/{id}/command/ping"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -697,6 +727,198 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiApplia
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAppliancesIdCommandTcpdumpPostRequest struct {
+	ctx           _context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	inlineObject3 *InlineObject3
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandTcpdumpPostRequest) Authorization(authorization string) ApiAppliancesIdCommandTcpdumpPostRequest {
+	r.authorization = &authorization
+	return r
+}
+func (r ApiAppliancesIdCommandTcpdumpPostRequest) InlineObject3(inlineObject3 InlineObject3) ApiAppliancesIdCommandTcpdumpPostRequest {
+	r.inlineObject3 = &inlineObject3
+	return r
+}
+
+func (r ApiAppliancesIdCommandTcpdumpPostRequest) Execute() (string, *_nethttp.Response, error) {
+	return r.ApiService.AppliancesIdCommandTcpdumpPostExecute(r)
+}
+
+/*
+AppliancesIdCommandTcpdumpPost Runs tcpdump command on an Appliance.
+
+Runs tcpdump command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v17+text** as it returns plain text instead of JSON.
+
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdCommandTcpdumpPostRequest
+*/
+func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPost(ctx _context.Context, id string) ApiAppliancesIdCommandTcpdumpPostRequest {
+	return ApiAppliancesIdCommandTcpdumpPostRequest{
+		ApiService: a,
+		ctx:        ctx,
+		id:         id,
+	}
+}
+
+// Execute executes the request
+//  @return string
+func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiAppliancesIdCommandTcpdumpPostRequest) (string, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodPost
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  string
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppliancesApiService.AppliancesIdCommandTcpdumpPost")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/appliances/{id}/command/tcpdump"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"text/plain", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	// body params
+	localVarPostBody = r.inlineObject3
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -889,6 +1111,16 @@ func (a *AppliancesApiService) AppliancesIdDeactivatePostExecute(r ApiAppliances
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1024,6 +1256,16 @@ func (a *AppliancesApiService) AppliancesIdDeleteExecute(r ApiAppliancesIdDelete
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1214,6 +1456,16 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1432,6 +1684,16 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1597,6 +1859,16 @@ func (a *AppliancesApiService) AppliancesIdGetExecute(r ApiAppliancesIdGetReques
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1743,6 +2015,16 @@ func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGetExecute(r ApiA
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1939,6 +2221,16 @@ func (a *AppliancesApiService) AppliancesIdPutExecute(r ApiAppliancesIdPutReques
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -2112,6 +2404,16 @@ func (a *AppliancesApiService) AppliancesIdRebootPostExecute(r ApiAppliancesIdRe
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -2266,6 +2568,16 @@ func (a *AppliancesApiService) AppliancesIdRenewCertificatePostExecute(r ApiAppl
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -2286,7 +2598,7 @@ type ApiAppliancesIdTestResolverNamePostRequest struct {
 	ApiService    *AppliancesApiService
 	authorization *string
 	id            string
-	inlineObject4 *InlineObject4
+	inlineObject5 *InlineObject5
 }
 
 // The Token from the LoginResponse.
@@ -2294,8 +2606,8 @@ func (r ApiAppliancesIdTestResolverNamePostRequest) Authorization(authorization 
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdTestResolverNamePostRequest) InlineObject4(inlineObject4 InlineObject4) ApiAppliancesIdTestResolverNamePostRequest {
-	r.inlineObject4 = &inlineObject4
+func (r ApiAppliancesIdTestResolverNamePostRequest) InlineObject5(inlineObject5 InlineObject5) ApiAppliancesIdTestResolverNamePostRequest {
+	r.inlineObject5 = &inlineObject5
 	return r
 }
 
@@ -2366,7 +2678,7 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppl
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.inlineObject4
+	localVarPostBody = r.inlineObject5
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2410,6 +2722,16 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppl
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -2593,6 +2915,16 @@ func (a *AppliancesApiService) AppliancesPostExecute(r ApiAppliancesPostRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

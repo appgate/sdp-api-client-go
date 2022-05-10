@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,12 +17,14 @@ import (
 
 // InlineResponse20012 struct for InlineResponse20012
 type InlineResponse20012 struct {
-	// Name of the Device Claim Script object.
-	Name *string `json:"name,omitempty"`
-	// The name of the file to be downloaded as to the client devices.
-	Filename *string `json:"filename,omitempty"`
-	// The Device Claim Script binary in Base64 format.
-	File *string `json:"file,omitempty"`
+	// Whether the evaluation succeeded or not.
+	Result *bool `json:"result,omitempty"`
+	// The output logs from the evaluation. Generated by \"console.log\" and \"print\" functions.
+	Output *string `json:"output,omitempty"`
+	// The error text. Available if the evaluation has an error.
+	Error *string `json:"error,omitempty"`
+	// How long it took to evaluate the expression.
+	ExecutionMs *float32 `json:"executionMs,omitempty"`
 }
 
 // NewInlineResponse20012 instantiates a new InlineResponse20012 object
@@ -42,112 +44,147 @@ func NewInlineResponse20012WithDefaults() *InlineResponse20012 {
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *InlineResponse20012) GetName() string {
-	if o == nil || o.Name == nil {
-		var ret string
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetResult() bool {
+	if o == nil || o.Result == nil {
+		var ret bool
 		return ret
 	}
-	return *o.Name
+	return *o.Result
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20012) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+func (o *InlineResponse20012) GetResultOk() (*bool, bool) {
+	if o == nil || o.Result == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return o.Result, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *InlineResponse20012) HasName() bool {
-	if o != nil && o.Name != nil {
+// HasResult returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasResult() bool {
+	if o != nil && o.Result != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *InlineResponse20012) SetName(v string) {
-	o.Name = &v
+// SetResult gets a reference to the given bool and assigns it to the Result field.
+func (o *InlineResponse20012) SetResult(v bool) {
+	o.Result = &v
 }
 
-// GetFilename returns the Filename field value if set, zero value otherwise.
-func (o *InlineResponse20012) GetFilename() string {
-	if o == nil || o.Filename == nil {
+// GetOutput returns the Output field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetOutput() string {
+	if o == nil || o.Output == nil {
 		var ret string
 		return ret
 	}
-	return *o.Filename
+	return *o.Output
 }
 
-// GetFilenameOk returns a tuple with the Filename field value if set, nil otherwise
+// GetOutputOk returns a tuple with the Output field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20012) GetFilenameOk() (*string, bool) {
-	if o == nil || o.Filename == nil {
+func (o *InlineResponse20012) GetOutputOk() (*string, bool) {
+	if o == nil || o.Output == nil {
 		return nil, false
 	}
-	return o.Filename, true
+	return o.Output, true
 }
 
-// HasFilename returns a boolean if a field has been set.
-func (o *InlineResponse20012) HasFilename() bool {
-	if o != nil && o.Filename != nil {
+// HasOutput returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasOutput() bool {
+	if o != nil && o.Output != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetFilename gets a reference to the given string and assigns it to the Filename field.
-func (o *InlineResponse20012) SetFilename(v string) {
-	o.Filename = &v
+// SetOutput gets a reference to the given string and assigns it to the Output field.
+func (o *InlineResponse20012) SetOutput(v string) {
+	o.Output = &v
 }
 
-// GetFile returns the File field value if set, zero value otherwise.
-func (o *InlineResponse20012) GetFile() string {
-	if o == nil || o.File == nil {
+// GetError returns the Error field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetError() string {
+	if o == nil || o.Error == nil {
 		var ret string
 		return ret
 	}
-	return *o.File
+	return *o.Error
 }
 
-// GetFileOk returns a tuple with the File field value if set, nil otherwise
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20012) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+func (o *InlineResponse20012) GetErrorOk() (*string, bool) {
+	if o == nil || o.Error == nil {
 		return nil, false
 	}
-	return o.File, true
+	return o.Error, true
 }
 
-// HasFile returns a boolean if a field has been set.
-func (o *InlineResponse20012) HasFile() bool {
-	if o != nil && o.File != nil {
+// HasError returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasError() bool {
+	if o != nil && o.Error != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetFile gets a reference to the given string and assigns it to the File field.
-func (o *InlineResponse20012) SetFile(v string) {
-	o.File = &v
+// SetError gets a reference to the given string and assigns it to the Error field.
+func (o *InlineResponse20012) SetError(v string) {
+	o.Error = &v
+}
+
+// GetExecutionMs returns the ExecutionMs field value if set, zero value otherwise.
+func (o *InlineResponse20012) GetExecutionMs() float32 {
+	if o == nil || o.ExecutionMs == nil {
+		var ret float32
+		return ret
+	}
+	return *o.ExecutionMs
+}
+
+// GetExecutionMsOk returns a tuple with the ExecutionMs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineResponse20012) GetExecutionMsOk() (*float32, bool) {
+	if o == nil || o.ExecutionMs == nil {
+		return nil, false
+	}
+	return o.ExecutionMs, true
+}
+
+// HasExecutionMs returns a boolean if a field has been set.
+func (o *InlineResponse20012) HasExecutionMs() bool {
+	if o != nil && o.ExecutionMs != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionMs gets a reference to the given float32 and assigns it to the ExecutionMs field.
+func (o *InlineResponse20012) SetExecutionMs(v float32) {
+	o.ExecutionMs = &v
 }
 
 func (o InlineResponse20012) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
+	if o.Result != nil {
+		toSerialize["result"] = o.Result
 	}
-	if o.Filename != nil {
-		toSerialize["filename"] = o.Filename
+	if o.Output != nil {
+		toSerialize["output"] = o.Output
 	}
-	if o.File != nil {
-		toSerialize["file"] = o.File
+	if o.Error != nil {
+		toSerialize["error"] = o.Error
+	}
+	if o.ExecutionMs != nil {
+		toSerialize["executionMs"] = o.ExecutionMs
 	}
 	return json.Marshal(toSerialize)
 }

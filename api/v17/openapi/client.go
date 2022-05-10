@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -42,7 +42,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 16.3
+// APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 17.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -50,13 +50,15 @@ type APIClient struct {
 
 	// API Services
 
+	ASCApi *ASCApiService
+
 	ActiveDevicesApi *ActiveDevicesApiService
 
 	ActiveSessionsApi *ActiveSessionsApiService
 
 	AdminMessagesApi *AdminMessagesApiService
 
-	AdministrativeRolesApi *AdministrativeRolesApiService
+	AdminRolesApi *AdminRolesApiService
 
 	ApplianceApi *ApplianceApiService
 
@@ -78,19 +80,15 @@ type APIClient struct {
 
 	BlacklistedUsersApi *BlacklistedUsersApiService
 
-	CAApi *CAApiService
+	CertificateAuthorityApi *CertificateAuthorityApiService
 
 	ClientAutoUpdateApi *ClientAutoUpdateApiService
 
-	ClientConnectionsApi *ClientConnectionsApiService
+	ClientProfilesApi *ClientProfilesApiService
 
 	ConditionsApi *ConditionsApiService
 
 	CriteriaScriptsApi *CriteriaScriptsApiService
-
-	DNSClassificationsApi *DNSClassificationsApiService
-
-	DNSRulesApi *DNSRulesApiService
 
 	DefaultTimeBasedOTPProviderSeedsApi *DefaultTimeBasedOTPProviderSeedsApiService
 
@@ -114,6 +112,8 @@ type APIClient struct {
 
 	IdentityProvidersApi *IdentityProvidersApiService
 
+	IssuedCertificatesApi *IssuedCertificatesApiService
+
 	LicenseApi *LicenseApiService
 
 	LicensedUsersApi *LicensedUsersApiService
@@ -126,11 +126,15 @@ type APIClient struct {
 
 	MFAProvidersApi *MFAProvidersApiService
 
-	OnBoardedDevicesApi *OnBoardedDevicesApiService
-
 	PoliciesApi *PoliciesApiService
 
+	RegisteredDevicesApi *RegisteredDevicesApiService
+
 	RingfenceRulesApi *RingfenceRulesApiService
+
+	RiskModelApi *RiskModelApiService
+
+	ServiceUsersApi *ServiceUsersApiService
 
 	SitesApi *SitesApiService
 
@@ -153,6 +157,8 @@ type APIClient struct {
 	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
 
 	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
+
+	OidcIdentityProvidersApi *OidcIdentityProvidersApiService
 }
 
 type service struct {
@@ -171,10 +177,11 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.ASCApi = (*ASCApiService)(&c.common)
 	c.ActiveDevicesApi = (*ActiveDevicesApiService)(&c.common)
 	c.ActiveSessionsApi = (*ActiveSessionsApiService)(&c.common)
 	c.AdminMessagesApi = (*AdminMessagesApiService)(&c.common)
-	c.AdministrativeRolesApi = (*AdministrativeRolesApiService)(&c.common)
+	c.AdminRolesApi = (*AdminRolesApiService)(&c.common)
 	c.ApplianceApi = (*ApplianceApiService)(&c.common)
 	c.ApplianceBackupApi = (*ApplianceBackupApiService)(&c.common)
 	c.ApplianceChangeApi = (*ApplianceChangeApiService)(&c.common)
@@ -185,13 +192,11 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ApplianceUpgradeApi = (*ApplianceUpgradeApiService)(&c.common)
 	c.AppliancesApi = (*AppliancesApiService)(&c.common)
 	c.BlacklistedUsersApi = (*BlacklistedUsersApiService)(&c.common)
-	c.CAApi = (*CAApiService)(&c.common)
+	c.CertificateAuthorityApi = (*CertificateAuthorityApiService)(&c.common)
 	c.ClientAutoUpdateApi = (*ClientAutoUpdateApiService)(&c.common)
-	c.ClientConnectionsApi = (*ClientConnectionsApiService)(&c.common)
+	c.ClientProfilesApi = (*ClientProfilesApiService)(&c.common)
 	c.ConditionsApi = (*ConditionsApiService)(&c.common)
 	c.CriteriaScriptsApi = (*CriteriaScriptsApiService)(&c.common)
-	c.DNSClassificationsApi = (*DNSClassificationsApiService)(&c.common)
-	c.DNSRulesApi = (*DNSRulesApiService)(&c.common)
 	c.DefaultTimeBasedOTPProviderSeedsApi = (*DefaultTimeBasedOTPProviderSeedsApiService)(&c.common)
 	c.DeviceClaimScriptsApi = (*DeviceClaimScriptsApiService)(&c.common)
 	c.DevicesOnBoardedPerHourApi = (*DevicesOnBoardedPerHourApiService)(&c.common)
@@ -203,15 +208,18 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.GlobalSettingsApi = (*GlobalSettingsApiService)(&c.common)
 	c.IPPoolsApi = (*IPPoolsApiService)(&c.common)
 	c.IdentityProvidersApi = (*IdentityProvidersApiService)(&c.common)
+	c.IssuedCertificatesApi = (*IssuedCertificatesApiService)(&c.common)
 	c.LicenseApi = (*LicenseApiService)(&c.common)
 	c.LicensedUsersApi = (*LicensedUsersApiService)(&c.common)
 	c.LocalUsersApi = (*LocalUsersApiService)(&c.common)
 	c.LoginApi = (*LoginApiService)(&c.common)
 	c.MFAForAdminsApi = (*MFAForAdminsApiService)(&c.common)
 	c.MFAProvidersApi = (*MFAProvidersApiService)(&c.common)
-	c.OnBoardedDevicesApi = (*OnBoardedDevicesApiService)(&c.common)
 	c.PoliciesApi = (*PoliciesApiService)(&c.common)
+	c.RegisteredDevicesApi = (*RegisteredDevicesApiService)(&c.common)
 	c.RingfenceRulesApi = (*RingfenceRulesApiService)(&c.common)
+	c.RiskModelApi = (*RiskModelApiService)(&c.common)
+	c.ServiceUsersApi = (*ServiceUsersApiService)(&c.common)
 	c.SitesApi = (*SitesApiService)(&c.common)
 	c.TopEntitlementsApi = (*TopEntitlementsApiService)(&c.common)
 	c.TrustedCertificatesApi = (*TrustedCertificatesApiService)(&c.common)
@@ -225,6 +233,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
 	c.LdapCertificateIdentityProvidersApi = (*LdapCertificateIdentityProvidersApiService)(&c.common)
 	c.ConnectorIdentityProvidersApi = (*ConnectorIdentityProvidersApiService)(&c.common)
+	c.OidcIdentityProvidersApi = (*OidcIdentityProvidersApiService)(&c.common)
 
 	return c
 }

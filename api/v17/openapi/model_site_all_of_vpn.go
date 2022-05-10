@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.0
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -26,18 +26,6 @@ type SiteAllOfVpn struct {
 	RouteVia *SiteAllOfVpnRouteVia `json:"routeVia,omitempty"`
 	// Whether to enable URL Access feature or not.
 	UrlAccessEnabled *bool `json:"urlAccessEnabled,omitempty"`
-	// Flag for manipulating web proxy p12 file. Setting this false will delete the existing p12 file from database.
-	// Deprecated
-	WebProxyEnabled *bool `json:"webProxyEnabled,omitempty"`
-	// The PKCS12 package to be used for web proxy. The file must be with no password and must include the full certificate chain and a private key. In Base64 format.
-	// Deprecated
-	WebProxyKeyStore *string `json:"webProxyKeyStore,omitempty"`
-	// Gateway will verify the certificate of the endpoints.
-	// Deprecated
-	WebProxyVerifyUpstreamCertificate *bool `json:"webProxyVerifyUpstreamCertificate,omitempty"`
-	// The subject name of the certificate with private key in the PKCS12 file for web proxy assigned to this site.
-	// Deprecated
-	WebProxyCertificateSubjectName *string `json:"webProxyCertificateSubjectName,omitempty"`
 	// P12 files for proxying traffic for URL Access feature.
 	UrlAccessP12s *[]P12 `json:"urlAccessP12s,omitempty"`
 	// Frequency configuration for generating IP Access audit logs for a connection.
@@ -54,8 +42,6 @@ func NewSiteAllOfVpn() *SiteAllOfVpn {
 	this.StateSharing = &stateSharing
 	var snat bool = false
 	this.Snat = &snat
-	var webProxyVerifyUpstreamCertificate bool = true
-	this.WebProxyVerifyUpstreamCertificate = &webProxyVerifyUpstreamCertificate
 	var ipAccessLogIntervalSeconds float32 = 120
 	this.IpAccessLogIntervalSeconds = &ipAccessLogIntervalSeconds
 	return &this
@@ -70,8 +56,6 @@ func NewSiteAllOfVpnWithDefaults() *SiteAllOfVpn {
 	this.StateSharing = &stateSharing
 	var snat bool = false
 	this.Snat = &snat
-	var webProxyVerifyUpstreamCertificate bool = true
-	this.WebProxyVerifyUpstreamCertificate = &webProxyVerifyUpstreamCertificate
 	var ipAccessLogIntervalSeconds float32 = 120
 	this.IpAccessLogIntervalSeconds = &ipAccessLogIntervalSeconds
 	return &this
@@ -269,146 +253,6 @@ func (o *SiteAllOfVpn) SetUrlAccessEnabled(v bool) {
 	o.UrlAccessEnabled = &v
 }
 
-// GetWebProxyEnabled returns the WebProxyEnabled field value if set, zero value otherwise.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyEnabled() bool {
-	if o == nil || o.WebProxyEnabled == nil {
-		var ret bool
-		return ret
-	}
-	return *o.WebProxyEnabled
-}
-
-// GetWebProxyEnabledOk returns a tuple with the WebProxyEnabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyEnabledOk() (*bool, bool) {
-	if o == nil || o.WebProxyEnabled == nil {
-		return nil, false
-	}
-	return o.WebProxyEnabled, true
-}
-
-// HasWebProxyEnabled returns a boolean if a field has been set.
-func (o *SiteAllOfVpn) HasWebProxyEnabled() bool {
-	if o != nil && o.WebProxyEnabled != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetWebProxyEnabled gets a reference to the given bool and assigns it to the WebProxyEnabled field.
-// Deprecated
-func (o *SiteAllOfVpn) SetWebProxyEnabled(v bool) {
-	o.WebProxyEnabled = &v
-}
-
-// GetWebProxyKeyStore returns the WebProxyKeyStore field value if set, zero value otherwise.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyKeyStore() string {
-	if o == nil || o.WebProxyKeyStore == nil {
-		var ret string
-		return ret
-	}
-	return *o.WebProxyKeyStore
-}
-
-// GetWebProxyKeyStoreOk returns a tuple with the WebProxyKeyStore field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyKeyStoreOk() (*string, bool) {
-	if o == nil || o.WebProxyKeyStore == nil {
-		return nil, false
-	}
-	return o.WebProxyKeyStore, true
-}
-
-// HasWebProxyKeyStore returns a boolean if a field has been set.
-func (o *SiteAllOfVpn) HasWebProxyKeyStore() bool {
-	if o != nil && o.WebProxyKeyStore != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetWebProxyKeyStore gets a reference to the given string and assigns it to the WebProxyKeyStore field.
-// Deprecated
-func (o *SiteAllOfVpn) SetWebProxyKeyStore(v string) {
-	o.WebProxyKeyStore = &v
-}
-
-// GetWebProxyVerifyUpstreamCertificate returns the WebProxyVerifyUpstreamCertificate field value if set, zero value otherwise.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyVerifyUpstreamCertificate() bool {
-	if o == nil || o.WebProxyVerifyUpstreamCertificate == nil {
-		var ret bool
-		return ret
-	}
-	return *o.WebProxyVerifyUpstreamCertificate
-}
-
-// GetWebProxyVerifyUpstreamCertificateOk returns a tuple with the WebProxyVerifyUpstreamCertificate field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyVerifyUpstreamCertificateOk() (*bool, bool) {
-	if o == nil || o.WebProxyVerifyUpstreamCertificate == nil {
-		return nil, false
-	}
-	return o.WebProxyVerifyUpstreamCertificate, true
-}
-
-// HasWebProxyVerifyUpstreamCertificate returns a boolean if a field has been set.
-func (o *SiteAllOfVpn) HasWebProxyVerifyUpstreamCertificate() bool {
-	if o != nil && o.WebProxyVerifyUpstreamCertificate != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetWebProxyVerifyUpstreamCertificate gets a reference to the given bool and assigns it to the WebProxyVerifyUpstreamCertificate field.
-// Deprecated
-func (o *SiteAllOfVpn) SetWebProxyVerifyUpstreamCertificate(v bool) {
-	o.WebProxyVerifyUpstreamCertificate = &v
-}
-
-// GetWebProxyCertificateSubjectName returns the WebProxyCertificateSubjectName field value if set, zero value otherwise.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyCertificateSubjectName() string {
-	if o == nil || o.WebProxyCertificateSubjectName == nil {
-		var ret string
-		return ret
-	}
-	return *o.WebProxyCertificateSubjectName
-}
-
-// GetWebProxyCertificateSubjectNameOk returns a tuple with the WebProxyCertificateSubjectName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *SiteAllOfVpn) GetWebProxyCertificateSubjectNameOk() (*string, bool) {
-	if o == nil || o.WebProxyCertificateSubjectName == nil {
-		return nil, false
-	}
-	return o.WebProxyCertificateSubjectName, true
-}
-
-// HasWebProxyCertificateSubjectName returns a boolean if a field has been set.
-func (o *SiteAllOfVpn) HasWebProxyCertificateSubjectName() bool {
-	if o != nil && o.WebProxyCertificateSubjectName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetWebProxyCertificateSubjectName gets a reference to the given string and assigns it to the WebProxyCertificateSubjectName field.
-// Deprecated
-func (o *SiteAllOfVpn) SetWebProxyCertificateSubjectName(v string) {
-	o.WebProxyCertificateSubjectName = &v
-}
-
 // GetUrlAccessP12s returns the UrlAccessP12s field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetUrlAccessP12s() []P12 {
 	if o == nil || o.UrlAccessP12s == nil {
@@ -492,18 +336,6 @@ func (o SiteAllOfVpn) MarshalJSON() ([]byte, error) {
 	}
 	if o.UrlAccessEnabled != nil {
 		toSerialize["urlAccessEnabled"] = o.UrlAccessEnabled
-	}
-	if o.WebProxyEnabled != nil {
-		toSerialize["webProxyEnabled"] = o.WebProxyEnabled
-	}
-	if o.WebProxyKeyStore != nil {
-		toSerialize["webProxyKeyStore"] = o.WebProxyKeyStore
-	}
-	if o.WebProxyVerifyUpstreamCertificate != nil {
-		toSerialize["webProxyVerifyUpstreamCertificate"] = o.WebProxyVerifyUpstreamCertificate
-	}
-	if o.WebProxyCertificateSubjectName != nil {
-		toSerialize["webProxyCertificateSubjectName"] = o.WebProxyCertificateSubjectName
 	}
 	if o.UrlAccessP12s != nil {
 		toSerialize["urlAccessP12s"] = o.UrlAccessP12s
