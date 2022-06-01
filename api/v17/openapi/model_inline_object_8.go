@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 17.0
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,8 +17,10 @@ import (
 
 // InlineObject8 struct for InlineObject8
 type InlineObject8 struct {
-	// Some MFA configurations require user password in order to authenticate the user along with the multi-factor. Otherwise not required.
-	UserPassword *string `json:"userPassword,omitempty"`
+	// X509 subject name for the CA certificate.
+	Subject *string `json:"subject,omitempty"`
+	// How long the new CA certificate will be valid.
+	ValidityYears *float32 `json:"validityYears,omitempty"`
 }
 
 // NewInlineObject8 instantiates a new InlineObject8 object
@@ -27,6 +29,10 @@ type InlineObject8 struct {
 // will change when the set of required properties is changed
 func NewInlineObject8() *InlineObject8 {
 	this := InlineObject8{}
+	var subject string = "CN=Appgate SDP CA"
+	this.Subject = &subject
+	var validityYears float32 = 10
+	this.ValidityYears = &validityYears
 	return &this
 }
 
@@ -35,45 +41,84 @@ func NewInlineObject8() *InlineObject8 {
 // but it doesn't guarantee that properties required by API are set
 func NewInlineObject8WithDefaults() *InlineObject8 {
 	this := InlineObject8{}
+	var subject string = "CN=Appgate SDP CA"
+	this.Subject = &subject
+	var validityYears float32 = 10
+	this.ValidityYears = &validityYears
 	return &this
 }
 
-// GetUserPassword returns the UserPassword field value if set, zero value otherwise.
-func (o *InlineObject8) GetUserPassword() string {
-	if o == nil || o.UserPassword == nil {
+// GetSubject returns the Subject field value if set, zero value otherwise.
+func (o *InlineObject8) GetSubject() string {
+	if o == nil || o.Subject == nil {
 		var ret string
 		return ret
 	}
-	return *o.UserPassword
+	return *o.Subject
 }
 
-// GetUserPasswordOk returns a tuple with the UserPassword field value if set, nil otherwise
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject8) GetUserPasswordOk() (*string, bool) {
-	if o == nil || o.UserPassword == nil {
+func (o *InlineObject8) GetSubjectOk() (*string, bool) {
+	if o == nil || o.Subject == nil {
 		return nil, false
 	}
-	return o.UserPassword, true
+	return o.Subject, true
 }
 
-// HasUserPassword returns a boolean if a field has been set.
-func (o *InlineObject8) HasUserPassword() bool {
-	if o != nil && o.UserPassword != nil {
+// HasSubject returns a boolean if a field has been set.
+func (o *InlineObject8) HasSubject() bool {
+	if o != nil && o.Subject != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUserPassword gets a reference to the given string and assigns it to the UserPassword field.
-func (o *InlineObject8) SetUserPassword(v string) {
-	o.UserPassword = &v
+// SetSubject gets a reference to the given string and assigns it to the Subject field.
+func (o *InlineObject8) SetSubject(v string) {
+	o.Subject = &v
+}
+
+// GetValidityYears returns the ValidityYears field value if set, zero value otherwise.
+func (o *InlineObject8) GetValidityYears() float32 {
+	if o == nil || o.ValidityYears == nil {
+		var ret float32
+		return ret
+	}
+	return *o.ValidityYears
+}
+
+// GetValidityYearsOk returns a tuple with the ValidityYears field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *InlineObject8) GetValidityYearsOk() (*float32, bool) {
+	if o == nil || o.ValidityYears == nil {
+		return nil, false
+	}
+	return o.ValidityYears, true
+}
+
+// HasValidityYears returns a boolean if a field has been set.
+func (o *InlineObject8) HasValidityYears() bool {
+	if o != nil && o.ValidityYears != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetValidityYears gets a reference to the given float32 and assigns it to the ValidityYears field.
+func (o *InlineObject8) SetValidityYears(v float32) {
+	o.ValidityYears = &v
 }
 
 func (o InlineObject8) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.UserPassword != nil {
-		toSerialize["userPassword"] = o.UserPassword
+	if o.Subject != nil {
+		toSerialize["subject"] = o.Subject
+	}
+	if o.ValidityYears != nil {
+		toSerialize["validityYears"] = o.ValidityYears
 	}
 	return json.Marshal(toSerialize)
 }

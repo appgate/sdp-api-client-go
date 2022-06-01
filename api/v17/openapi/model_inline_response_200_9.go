@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 17.0
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,8 +17,8 @@ import (
 
 // InlineResponse2009 struct for InlineResponse2009
 type InlineResponse2009 struct {
-	// The QR code image in JPG format, in base64 format.
-	Barcode *string `json:"barcode,omitempty"`
+	// List of reevaluated Distinguished Names.
+	ReevaluatedDistinguishedNames *[]string `json:"reevaluatedDistinguishedNames,omitempty"`
 }
 
 // NewInlineResponse2009 instantiates a new InlineResponse2009 object
@@ -38,42 +38,42 @@ func NewInlineResponse2009WithDefaults() *InlineResponse2009 {
 	return &this
 }
 
-// GetBarcode returns the Barcode field value if set, zero value otherwise.
-func (o *InlineResponse2009) GetBarcode() string {
-	if o == nil || o.Barcode == nil {
-		var ret string
+// GetReevaluatedDistinguishedNames returns the ReevaluatedDistinguishedNames field value if set, zero value otherwise.
+func (o *InlineResponse2009) GetReevaluatedDistinguishedNames() []string {
+	if o == nil || o.ReevaluatedDistinguishedNames == nil {
+		var ret []string
 		return ret
 	}
-	return *o.Barcode
+	return *o.ReevaluatedDistinguishedNames
 }
 
-// GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
+// GetReevaluatedDistinguishedNamesOk returns a tuple with the ReevaluatedDistinguishedNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse2009) GetBarcodeOk() (*string, bool) {
-	if o == nil || o.Barcode == nil {
+func (o *InlineResponse2009) GetReevaluatedDistinguishedNamesOk() (*[]string, bool) {
+	if o == nil || o.ReevaluatedDistinguishedNames == nil {
 		return nil, false
 	}
-	return o.Barcode, true
+	return o.ReevaluatedDistinguishedNames, true
 }
 
-// HasBarcode returns a boolean if a field has been set.
-func (o *InlineResponse2009) HasBarcode() bool {
-	if o != nil && o.Barcode != nil {
+// HasReevaluatedDistinguishedNames returns a boolean if a field has been set.
+func (o *InlineResponse2009) HasReevaluatedDistinguishedNames() bool {
+	if o != nil && o.ReevaluatedDistinguishedNames != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetBarcode gets a reference to the given string and assigns it to the Barcode field.
-func (o *InlineResponse2009) SetBarcode(v string) {
-	o.Barcode = &v
+// SetReevaluatedDistinguishedNames gets a reference to the given []string and assigns it to the ReevaluatedDistinguishedNames field.
+func (o *InlineResponse2009) SetReevaluatedDistinguishedNames(v []string) {
+	o.ReevaluatedDistinguishedNames = &v
 }
 
 func (o InlineResponse2009) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Barcode != nil {
-		toSerialize["barcode"] = o.Barcode
+	if o.ReevaluatedDistinguishedNames != nil {
+		toSerialize["reevaluatedDistinguishedNames"] = o.ReevaluatedDistinguishedNames
 	}
 	return json.Marshal(toSerialize)
 }

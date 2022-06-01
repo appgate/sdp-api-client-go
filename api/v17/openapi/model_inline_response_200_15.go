@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 17.0
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,12 +15,12 @@ import (
 	"encoding/json"
 )
 
-// InlineResponse20015 struct for InlineResponse20015
+// InlineResponse20015 Upgrade details.
 type InlineResponse20015 struct {
-	// Whether the connection succeeded or not.
-	Success *bool `json:"success,omitempty"`
-	// The error text if the connection fails.
-	Error *bool `json:"error,omitempty"`
+	// Current status of the Appliance Upgrade.
+	Status *string `json:"status,omitempty"`
+	// Optional details for the current status.
+	Details *string `json:"details,omitempty"`
 }
 
 // NewInlineResponse20015 instantiates a new InlineResponse20015 object
@@ -40,77 +40,77 @@ func NewInlineResponse20015WithDefaults() *InlineResponse20015 {
 	return &this
 }
 
-// GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *InlineResponse20015) GetSuccess() bool {
-	if o == nil || o.Success == nil {
-		var ret bool
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *InlineResponse20015) GetStatus() string {
+	if o == nil || o.Status == nil {
+		var ret string
 		return ret
 	}
-	return *o.Success
+	return *o.Status
 }
 
-// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20015) GetSuccessOk() (*bool, bool) {
-	if o == nil || o.Success == nil {
+func (o *InlineResponse20015) GetStatusOk() (*string, bool) {
+	if o == nil || o.Status == nil {
 		return nil, false
 	}
-	return o.Success, true
+	return o.Status, true
 }
 
-// HasSuccess returns a boolean if a field has been set.
-func (o *InlineResponse20015) HasSuccess() bool {
-	if o != nil && o.Success != nil {
+// HasStatus returns a boolean if a field has been set.
+func (o *InlineResponse20015) HasStatus() bool {
+	if o != nil && o.Status != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *InlineResponse20015) SetSuccess(v bool) {
-	o.Success = &v
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *InlineResponse20015) SetStatus(v string) {
+	o.Status = &v
 }
 
-// GetError returns the Error field value if set, zero value otherwise.
-func (o *InlineResponse20015) GetError() bool {
-	if o == nil || o.Error == nil {
-		var ret bool
+// GetDetails returns the Details field value if set, zero value otherwise.
+func (o *InlineResponse20015) GetDetails() string {
+	if o == nil || o.Details == nil {
+		var ret string
 		return ret
 	}
-	return *o.Error
+	return *o.Details
 }
 
-// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
+// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineResponse20015) GetErrorOk() (*bool, bool) {
-	if o == nil || o.Error == nil {
+func (o *InlineResponse20015) GetDetailsOk() (*string, bool) {
+	if o == nil || o.Details == nil {
 		return nil, false
 	}
-	return o.Error, true
+	return o.Details, true
 }
 
-// HasError returns a boolean if a field has been set.
-func (o *InlineResponse20015) HasError() bool {
-	if o != nil && o.Error != nil {
+// HasDetails returns a boolean if a field has been set.
+func (o *InlineResponse20015) HasDetails() bool {
+	if o != nil && o.Details != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetError gets a reference to the given bool and assigns it to the Error field.
-func (o *InlineResponse20015) SetError(v bool) {
-	o.Error = &v
+// SetDetails gets a reference to the given string and assigns it to the Details field.
+func (o *InlineResponse20015) SetDetails(v string) {
+	o.Details = &v
 }
 
 func (o InlineResponse20015) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Success != nil {
-		toSerialize["success"] = o.Success
+	if o.Status != nil {
+		toSerialize["status"] = o.Status
 	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	if o.Details != nil {
+		toSerialize["details"] = o.Details
 	}
 	return json.Marshal(toSerialize)
 }

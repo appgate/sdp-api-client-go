@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 17.0
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,12 +17,12 @@ import (
 
 // InlineObject14 struct for InlineObject14
 type InlineObject14 struct {
-	// Required for Ldap, Radius and LocalDatabase providers.
-	Username *string `json:"username,omitempty"`
-	// Required for Radius provider.
-	Password *string `json:"password,omitempty"`
-	// A sample SAML token to extract attributes from. Required for SAML provider.
-	SamlResponse *string `json:"samlResponse,omitempty"`
+	// Whether the Appliance Backup should include syslog or not.
+	Logs *bool `json:"logs,omitempty"`
+	// Whether the Appliance Backup should include the audit logs or not.
+	Audit *bool `json:"audit,omitempty"`
+	// URL to send a POST request to notify about the completion of the backup, that it can now be downloaded and deleted.
+	NotifyUrl *string `json:"notifyUrl,omitempty"`
 }
 
 // NewInlineObject14 instantiates a new InlineObject14 object
@@ -42,112 +42,112 @@ func NewInlineObject14WithDefaults() *InlineObject14 {
 	return &this
 }
 
-// GetUsername returns the Username field value if set, zero value otherwise.
-func (o *InlineObject14) GetUsername() string {
-	if o == nil || o.Username == nil {
-		var ret string
+// GetLogs returns the Logs field value if set, zero value otherwise.
+func (o *InlineObject14) GetLogs() bool {
+	if o == nil || o.Logs == nil {
+		var ret bool
 		return ret
 	}
-	return *o.Username
+	return *o.Logs
 }
 
-// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
+// GetLogsOk returns a tuple with the Logs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject14) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+func (o *InlineObject14) GetLogsOk() (*bool, bool) {
+	if o == nil || o.Logs == nil {
 		return nil, false
 	}
-	return o.Username, true
+	return o.Logs, true
 }
 
-// HasUsername returns a boolean if a field has been set.
-func (o *InlineObject14) HasUsername() bool {
-	if o != nil && o.Username != nil {
+// HasLogs returns a boolean if a field has been set.
+func (o *InlineObject14) HasLogs() bool {
+	if o != nil && o.Logs != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUsername gets a reference to the given string and assigns it to the Username field.
-func (o *InlineObject14) SetUsername(v string) {
-	o.Username = &v
+// SetLogs gets a reference to the given bool and assigns it to the Logs field.
+func (o *InlineObject14) SetLogs(v bool) {
+	o.Logs = &v
 }
 
-// GetPassword returns the Password field value if set, zero value otherwise.
-func (o *InlineObject14) GetPassword() string {
-	if o == nil || o.Password == nil {
-		var ret string
+// GetAudit returns the Audit field value if set, zero value otherwise.
+func (o *InlineObject14) GetAudit() bool {
+	if o == nil || o.Audit == nil {
+		var ret bool
 		return ret
 	}
-	return *o.Password
+	return *o.Audit
 }
 
-// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
+// GetAuditOk returns a tuple with the Audit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject14) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+func (o *InlineObject14) GetAuditOk() (*bool, bool) {
+	if o == nil || o.Audit == nil {
 		return nil, false
 	}
-	return o.Password, true
+	return o.Audit, true
 }
 
-// HasPassword returns a boolean if a field has been set.
-func (o *InlineObject14) HasPassword() bool {
-	if o != nil && o.Password != nil {
+// HasAudit returns a boolean if a field has been set.
+func (o *InlineObject14) HasAudit() bool {
+	if o != nil && o.Audit != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetPassword gets a reference to the given string and assigns it to the Password field.
-func (o *InlineObject14) SetPassword(v string) {
-	o.Password = &v
+// SetAudit gets a reference to the given bool and assigns it to the Audit field.
+func (o *InlineObject14) SetAudit(v bool) {
+	o.Audit = &v
 }
 
-// GetSamlResponse returns the SamlResponse field value if set, zero value otherwise.
-func (o *InlineObject14) GetSamlResponse() string {
-	if o == nil || o.SamlResponse == nil {
+// GetNotifyUrl returns the NotifyUrl field value if set, zero value otherwise.
+func (o *InlineObject14) GetNotifyUrl() string {
+	if o == nil || o.NotifyUrl == nil {
 		var ret string
 		return ret
 	}
-	return *o.SamlResponse
+	return *o.NotifyUrl
 }
 
-// GetSamlResponseOk returns a tuple with the SamlResponse field value if set, nil otherwise
+// GetNotifyUrlOk returns a tuple with the NotifyUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InlineObject14) GetSamlResponseOk() (*string, bool) {
-	if o == nil || o.SamlResponse == nil {
+func (o *InlineObject14) GetNotifyUrlOk() (*string, bool) {
+	if o == nil || o.NotifyUrl == nil {
 		return nil, false
 	}
-	return o.SamlResponse, true
+	return o.NotifyUrl, true
 }
 
-// HasSamlResponse returns a boolean if a field has been set.
-func (o *InlineObject14) HasSamlResponse() bool {
-	if o != nil && o.SamlResponse != nil {
+// HasNotifyUrl returns a boolean if a field has been set.
+func (o *InlineObject14) HasNotifyUrl() bool {
+	if o != nil && o.NotifyUrl != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetSamlResponse gets a reference to the given string and assigns it to the SamlResponse field.
-func (o *InlineObject14) SetSamlResponse(v string) {
-	o.SamlResponse = &v
+// SetNotifyUrl gets a reference to the given string and assigns it to the NotifyUrl field.
+func (o *InlineObject14) SetNotifyUrl(v string) {
+	o.NotifyUrl = &v
 }
 
 func (o InlineObject14) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
+	if o.Logs != nil {
+		toSerialize["logs"] = o.Logs
 	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	if o.Audit != nil {
+		toSerialize["audit"] = o.Audit
 	}
-	if o.SamlResponse != nil {
-		toSerialize["samlResponse"] = o.SamlResponse
+	if o.NotifyUrl != nil {
+		toSerialize["notifyUrl"] = o.NotifyUrl
 	}
 	return json.Marshal(toSerialize)
 }
