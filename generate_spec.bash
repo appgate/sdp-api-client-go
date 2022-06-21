@@ -21,8 +21,11 @@ for version in "${supportedVersions[@]}"; do
 done
 
 for version in "${supportedVersions[@]}"; do
+    echo "Cloning $version to spec/spec/v$version"
     git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "version-$version" "spec/spec/v$version"
+done
 
+for version in "${supportedVersions[@]}"; do
     # apply patches if there are any
     if [ -d "$PWD/spec/spec-patches/v$version" ]; then
         echo "Apply custom patches for openapi v$version"
@@ -32,9 +35,13 @@ for version in "${supportedVersions[@]}"; do
         done
     fi
 
-    cd spec
-    apigentools generate
-    cd ..
-    mkdir -p "api/v$version/openapi"
-    mv spec/generated/sdp-api-client-go/openapi/*.go "api/v$version/openapi"
+done
+
+cd spec
+apigentools validate
+apigentools generate
+
+for version in "${supportedVersions[@]}"; do
+    mkdir -p "../api/v${version}/openapi/"
+    find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' -exec cp {} "../api/v$version/openapi/" \;
 done
