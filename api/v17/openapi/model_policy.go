@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -19,7 +19,7 @@ import (
 // Policy struct for Policy
 type Policy struct {
 	// ID of the object.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Name of the object.
 	Name string `json:"name"`
 	// Notes for the object. Used for documentation purposes.
@@ -29,21 +29,21 @@ type Policy struct {
 	// Last update date.
 	Updated *time.Time `json:"updated,omitempty"`
 	// Array of tags.
-	Tags *[]string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitempty"`
 	// If true, the Policy will be disregarded during authorization.
 	Disabled *bool `json:"disabled,omitempty"`
 	// A JavaScript expression that returns boolean. Criteria Scripts may be used by calling them as functions.
 	Expression string `json:"expression"`
-	// Type of the Policy. It is informational and not enforced.
+	// Type of the Policy. The assigned type will be enforced by not allowing enabling other types of features on the Policy.
 	Type *string `json:"type,omitempty"`
 	// List of Entitlement IDs in this Policy.
-	Entitlements *[]string `json:"entitlements,omitempty"`
+	Entitlements []string `json:"entitlements,omitempty"`
 	// List of Entitlement tags in this Policy.
-	EntitlementLinks *[]string `json:"entitlementLinks,omitempty"`
+	EntitlementLinks []string `json:"entitlementLinks,omitempty"`
 	// List of Ringfence Rule IDs in this Policy.
-	RingfenceRules *[]string `json:"ringfenceRules,omitempty"`
+	RingfenceRules []string `json:"ringfenceRules,omitempty"`
 	// List of Ringfence Rule tags in this Policy.
-	RingfenceRuleLinks *[]string `json:"ringfenceRuleLinks,omitempty"`
+	RingfenceRuleLinks []string `json:"ringfenceRuleLinks,omitempty"`
 	// Will enable Tamper Proofing on desktop clients which will make sure the routes and ringfence configurations are not changed.
 	TamperProofing *bool `json:"tamperProofing,omitempty"`
 	// Site ID where all the Entitlements of this Policy must be deployed. This overrides Entitlement's own Site and to be used only in specific network layouts. Otherwise the assigned site on individual Entitlements will be used.
@@ -53,19 +53,18 @@ type Policy struct {
 	ProxyAutoConfig     *PolicyAllOfProxyAutoConfig     `json:"proxyAutoConfig,omitempty"`
 	TrustedNetworkCheck *PolicyAllOfTrustedNetworkCheck `json:"trustedNetworkCheck,omitempty"`
 	// List of domain names with DNS server IPs that the Client should be using.
-	DnsSettings    *[]PolicyAllOfDnsSettings  `json:"dnsSettings,omitempty"`
+	DnsSettings    []PolicyAllOfDnsSettings   `json:"dnsSettings,omitempty"`
 	ClientSettings *PolicyAllOfClientSettings `json:"clientSettings,omitempty"`
 	// List of Administrative Role IDs in this Policy.
-	AdministrativeRoles *[]string `json:"administrativeRoles,omitempty"`
+	AdministrativeRoles []string `json:"administrativeRoles,omitempty"`
 }
 
 // NewPolicy instantiates a new Policy object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPolicy(id string, name string, expression string) *Policy {
+func NewPolicy(name string, expression string) *Policy {
 	this := Policy{}
-	this.Id = id
 	this.Name = name
 	var disabled bool = false
 	this.Disabled = &disabled
@@ -91,28 +90,36 @@ func NewPolicyWithDefaults() *Policy {
 	return &this
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Policy) GetId() string {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Policy) HasId() bool {
+	if o != nil && o.Id != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Policy) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
 // GetName returns the Name field value
@@ -241,12 +248,12 @@ func (o *Policy) GetTags() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Tags
+	return o.Tags
 }
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetTagsOk() (*[]string, bool) {
+func (o *Policy) GetTagsOk() ([]string, bool) {
 	if o == nil || o.Tags == nil {
 		return nil, false
 	}
@@ -264,7 +271,7 @@ func (o *Policy) HasTags() bool {
 
 // SetTags gets a reference to the given []string and assigns it to the Tags field.
 func (o *Policy) SetTags(v []string) {
-	o.Tags = &v
+	o.Tags = v
 }
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
@@ -361,12 +368,12 @@ func (o *Policy) GetEntitlements() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Entitlements
+	return o.Entitlements
 }
 
 // GetEntitlementsOk returns a tuple with the Entitlements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetEntitlementsOk() (*[]string, bool) {
+func (o *Policy) GetEntitlementsOk() ([]string, bool) {
 	if o == nil || o.Entitlements == nil {
 		return nil, false
 	}
@@ -384,7 +391,7 @@ func (o *Policy) HasEntitlements() bool {
 
 // SetEntitlements gets a reference to the given []string and assigns it to the Entitlements field.
 func (o *Policy) SetEntitlements(v []string) {
-	o.Entitlements = &v
+	o.Entitlements = v
 }
 
 // GetEntitlementLinks returns the EntitlementLinks field value if set, zero value otherwise.
@@ -393,12 +400,12 @@ func (o *Policy) GetEntitlementLinks() []string {
 		var ret []string
 		return ret
 	}
-	return *o.EntitlementLinks
+	return o.EntitlementLinks
 }
 
 // GetEntitlementLinksOk returns a tuple with the EntitlementLinks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetEntitlementLinksOk() (*[]string, bool) {
+func (o *Policy) GetEntitlementLinksOk() ([]string, bool) {
 	if o == nil || o.EntitlementLinks == nil {
 		return nil, false
 	}
@@ -416,7 +423,7 @@ func (o *Policy) HasEntitlementLinks() bool {
 
 // SetEntitlementLinks gets a reference to the given []string and assigns it to the EntitlementLinks field.
 func (o *Policy) SetEntitlementLinks(v []string) {
-	o.EntitlementLinks = &v
+	o.EntitlementLinks = v
 }
 
 // GetRingfenceRules returns the RingfenceRules field value if set, zero value otherwise.
@@ -425,12 +432,12 @@ func (o *Policy) GetRingfenceRules() []string {
 		var ret []string
 		return ret
 	}
-	return *o.RingfenceRules
+	return o.RingfenceRules
 }
 
 // GetRingfenceRulesOk returns a tuple with the RingfenceRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetRingfenceRulesOk() (*[]string, bool) {
+func (o *Policy) GetRingfenceRulesOk() ([]string, bool) {
 	if o == nil || o.RingfenceRules == nil {
 		return nil, false
 	}
@@ -448,7 +455,7 @@ func (o *Policy) HasRingfenceRules() bool {
 
 // SetRingfenceRules gets a reference to the given []string and assigns it to the RingfenceRules field.
 func (o *Policy) SetRingfenceRules(v []string) {
-	o.RingfenceRules = &v
+	o.RingfenceRules = v
 }
 
 // GetRingfenceRuleLinks returns the RingfenceRuleLinks field value if set, zero value otherwise.
@@ -457,12 +464,12 @@ func (o *Policy) GetRingfenceRuleLinks() []string {
 		var ret []string
 		return ret
 	}
-	return *o.RingfenceRuleLinks
+	return o.RingfenceRuleLinks
 }
 
 // GetRingfenceRuleLinksOk returns a tuple with the RingfenceRuleLinks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetRingfenceRuleLinksOk() (*[]string, bool) {
+func (o *Policy) GetRingfenceRuleLinksOk() ([]string, bool) {
 	if o == nil || o.RingfenceRuleLinks == nil {
 		return nil, false
 	}
@@ -480,7 +487,7 @@ func (o *Policy) HasRingfenceRuleLinks() bool {
 
 // SetRingfenceRuleLinks gets a reference to the given []string and assigns it to the RingfenceRuleLinks field.
 func (o *Policy) SetRingfenceRuleLinks(v []string) {
-	o.RingfenceRuleLinks = &v
+	o.RingfenceRuleLinks = v
 }
 
 // GetTamperProofing returns the TamperProofing field value if set, zero value otherwise.
@@ -649,12 +656,12 @@ func (o *Policy) GetDnsSettings() []PolicyAllOfDnsSettings {
 		var ret []PolicyAllOfDnsSettings
 		return ret
 	}
-	return *o.DnsSettings
+	return o.DnsSettings
 }
 
 // GetDnsSettingsOk returns a tuple with the DnsSettings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetDnsSettingsOk() (*[]PolicyAllOfDnsSettings, bool) {
+func (o *Policy) GetDnsSettingsOk() ([]PolicyAllOfDnsSettings, bool) {
 	if o == nil || o.DnsSettings == nil {
 		return nil, false
 	}
@@ -672,7 +679,7 @@ func (o *Policy) HasDnsSettings() bool {
 
 // SetDnsSettings gets a reference to the given []PolicyAllOfDnsSettings and assigns it to the DnsSettings field.
 func (o *Policy) SetDnsSettings(v []PolicyAllOfDnsSettings) {
-	o.DnsSettings = &v
+	o.DnsSettings = v
 }
 
 // GetClientSettings returns the ClientSettings field value if set, zero value otherwise.
@@ -713,12 +720,12 @@ func (o *Policy) GetAdministrativeRoles() []string {
 		var ret []string
 		return ret
 	}
-	return *o.AdministrativeRoles
+	return o.AdministrativeRoles
 }
 
 // GetAdministrativeRolesOk returns a tuple with the AdministrativeRoles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Policy) GetAdministrativeRolesOk() (*[]string, bool) {
+func (o *Policy) GetAdministrativeRolesOk() ([]string, bool) {
 	if o == nil || o.AdministrativeRoles == nil {
 		return nil, false
 	}
@@ -736,12 +743,12 @@ func (o *Policy) HasAdministrativeRoles() bool {
 
 // SetAdministrativeRoles gets a reference to the given []string and assigns it to the AdministrativeRoles field.
 func (o *Policy) SetAdministrativeRoles(v []string) {
-	o.AdministrativeRoles = &v
+	o.AdministrativeRoles = v
 }
 
 func (o Policy) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
 	if true {

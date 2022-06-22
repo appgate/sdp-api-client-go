@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -27,7 +27,9 @@ type GlobalSettings struct {
 	VpnCertificateExpiration float32 `json:"vpnCertificateExpiration"`
 	// SPA mode.
 	SpaMode *string `json:"spaMode,omitempty"`
-	// The configured message will be displayed on the login UI.
+	// Number of seconds the time skew SPA will allow.
+	SpaTimeWindowSeconds *float32 `json:"spaTimeWindowSeconds,omitempty"`
+	// The configured message will be displayed on the sign-in UI.
 	LoginBannerMessage *string `json:"loginBannerMessage,omitempty"`
 	// The configured message will be displayed after a successful login.
 	MessageOfTheDay *string `json:"messageOfTheDay,omitempty"`
@@ -42,8 +44,12 @@ type GlobalSettings struct {
 	GeoIpUpdates *bool `json:"geoIpUpdates,omitempty"`
 	// Audit Log persistence mode.
 	AuditLogPersistenceMode string `json:"auditLogPersistenceMode"`
-	// Domains to monitor for for App Discovery feature.
-	AppDiscoveryDomains *[]string `json:"appDiscoveryDomains,omitempty"`
+	// Domains to monitor for the App Discovery feature.
+	AppDiscoveryDomains []string `json:"appDiscoveryDomains,omitempty"`
+	// The hostname to use for generating profile URLs.
+	ProfileHostname *string `json:"profileHostname,omitempty"`
+	// Friendly name for the Collective.
+	CollectiveName *string `json:"collectiveName,omitempty"`
 	// A randomly generated ID during first installation to identify the Collective.
 	CollectiveId *string `json:"collectiveId,omitempty"`
 }
@@ -58,6 +64,8 @@ func NewGlobalSettings(claimsTokenExpiration float32, entitlementTokenExpiration
 	this.EntitlementTokenExpiration = entitlementTokenExpiration
 	this.AdministrationTokenExpiration = administrationTokenExpiration
 	this.VpnCertificateExpiration = vpnCertificateExpiration
+	var spaTimeWindowSeconds float32 = 600
+	this.SpaTimeWindowSeconds = &spaTimeWindowSeconds
 	this.AuditLogPersistenceMode = auditLogPersistenceMode
 	return &this
 }
@@ -67,6 +75,8 @@ func NewGlobalSettings(claimsTokenExpiration float32, entitlementTokenExpiration
 // but it doesn't guarantee that properties required by API are set
 func NewGlobalSettingsWithDefaults() *GlobalSettings {
 	this := GlobalSettings{}
+	var spaTimeWindowSeconds float32 = 600
+	this.SpaTimeWindowSeconds = &spaTimeWindowSeconds
 	return &this
 }
 
@@ -196,6 +206,38 @@ func (o *GlobalSettings) HasSpaMode() bool {
 // SetSpaMode gets a reference to the given string and assigns it to the SpaMode field.
 func (o *GlobalSettings) SetSpaMode(v string) {
 	o.SpaMode = &v
+}
+
+// GetSpaTimeWindowSeconds returns the SpaTimeWindowSeconds field value if set, zero value otherwise.
+func (o *GlobalSettings) GetSpaTimeWindowSeconds() float32 {
+	if o == nil || o.SpaTimeWindowSeconds == nil {
+		var ret float32
+		return ret
+	}
+	return *o.SpaTimeWindowSeconds
+}
+
+// GetSpaTimeWindowSecondsOk returns a tuple with the SpaTimeWindowSeconds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalSettings) GetSpaTimeWindowSecondsOk() (*float32, bool) {
+	if o == nil || o.SpaTimeWindowSeconds == nil {
+		return nil, false
+	}
+	return o.SpaTimeWindowSeconds, true
+}
+
+// HasSpaTimeWindowSeconds returns a boolean if a field has been set.
+func (o *GlobalSettings) HasSpaTimeWindowSeconds() bool {
+	if o != nil && o.SpaTimeWindowSeconds != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSpaTimeWindowSeconds gets a reference to the given float32 and assigns it to the SpaTimeWindowSeconds field.
+func (o *GlobalSettings) SetSpaTimeWindowSeconds(v float32) {
+	o.SpaTimeWindowSeconds = &v
 }
 
 // GetLoginBannerMessage returns the LoginBannerMessage field value if set, zero value otherwise.
@@ -423,12 +465,12 @@ func (o *GlobalSettings) GetAppDiscoveryDomains() []string {
 		var ret []string
 		return ret
 	}
-	return *o.AppDiscoveryDomains
+	return o.AppDiscoveryDomains
 }
 
 // GetAppDiscoveryDomainsOk returns a tuple with the AppDiscoveryDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GlobalSettings) GetAppDiscoveryDomainsOk() (*[]string, bool) {
+func (o *GlobalSettings) GetAppDiscoveryDomainsOk() ([]string, bool) {
 	if o == nil || o.AppDiscoveryDomains == nil {
 		return nil, false
 	}
@@ -446,7 +488,71 @@ func (o *GlobalSettings) HasAppDiscoveryDomains() bool {
 
 // SetAppDiscoveryDomains gets a reference to the given []string and assigns it to the AppDiscoveryDomains field.
 func (o *GlobalSettings) SetAppDiscoveryDomains(v []string) {
-	o.AppDiscoveryDomains = &v
+	o.AppDiscoveryDomains = v
+}
+
+// GetProfileHostname returns the ProfileHostname field value if set, zero value otherwise.
+func (o *GlobalSettings) GetProfileHostname() string {
+	if o == nil || o.ProfileHostname == nil {
+		var ret string
+		return ret
+	}
+	return *o.ProfileHostname
+}
+
+// GetProfileHostnameOk returns a tuple with the ProfileHostname field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalSettings) GetProfileHostnameOk() (*string, bool) {
+	if o == nil || o.ProfileHostname == nil {
+		return nil, false
+	}
+	return o.ProfileHostname, true
+}
+
+// HasProfileHostname returns a boolean if a field has been set.
+func (o *GlobalSettings) HasProfileHostname() bool {
+	if o != nil && o.ProfileHostname != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetProfileHostname gets a reference to the given string and assigns it to the ProfileHostname field.
+func (o *GlobalSettings) SetProfileHostname(v string) {
+	o.ProfileHostname = &v
+}
+
+// GetCollectiveName returns the CollectiveName field value if set, zero value otherwise.
+func (o *GlobalSettings) GetCollectiveName() string {
+	if o == nil || o.CollectiveName == nil {
+		var ret string
+		return ret
+	}
+	return *o.CollectiveName
+}
+
+// GetCollectiveNameOk returns a tuple with the CollectiveName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalSettings) GetCollectiveNameOk() (*string, bool) {
+	if o == nil || o.CollectiveName == nil {
+		return nil, false
+	}
+	return o.CollectiveName, true
+}
+
+// HasCollectiveName returns a boolean if a field has been set.
+func (o *GlobalSettings) HasCollectiveName() bool {
+	if o != nil && o.CollectiveName != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectiveName gets a reference to the given string and assigns it to the CollectiveName field.
+func (o *GlobalSettings) SetCollectiveName(v string) {
+	o.CollectiveName = &v
 }
 
 // GetCollectiveId returns the CollectiveId field value if set, zero value otherwise.
@@ -498,6 +604,9 @@ func (o GlobalSettings) MarshalJSON() ([]byte, error) {
 	if o.SpaMode != nil {
 		toSerialize["spaMode"] = o.SpaMode
 	}
+	if o.SpaTimeWindowSeconds != nil {
+		toSerialize["spaTimeWindowSeconds"] = o.SpaTimeWindowSeconds
+	}
 	if o.LoginBannerMessage != nil {
 		toSerialize["loginBannerMessage"] = o.LoginBannerMessage
 	}
@@ -521,6 +630,12 @@ func (o GlobalSettings) MarshalJSON() ([]byte, error) {
 	}
 	if o.AppDiscoveryDomains != nil {
 		toSerialize["appDiscoveryDomains"] = o.AppDiscoveryDomains
+	}
+	if o.ProfileHostname != nil {
+		toSerialize["profileHostname"] = o.ProfileHostname
+	}
+	if o.CollectiveName != nil {
+		toSerialize["collectiveName"] = o.CollectiveName
 	}
 	if o.CollectiveId != nil {
 		toSerialize["collectiveId"] = o.CollectiveId

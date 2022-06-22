@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -19,7 +19,7 @@ import (
 // Site struct for Site
 type Site struct {
 	// ID of the object.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Name of the object.
 	Name string `json:"name"`
 	// Notes for the object. Used for documentation purposes.
@@ -29,16 +29,16 @@ type Site struct {
 	// Last update date.
 	Updated *time.Time `json:"updated,omitempty"`
 	// Array of tags.
-	Tags *[]string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitempty"`
 	// A short 4 letter name for the Site to be displayed on the Client.
 	ShortName *string `json:"shortName,omitempty"`
 	// Description of the Site to be displayed on the Client.
 	Description *string `json:"description,omitempty"`
 	// Network subnets in CIDR format to define the Site's boundaries. They are added as routes by the Client.
-	NetworkSubnets *[]string `json:"networkSubnets,omitempty"`
+	NetworkSubnets []string `json:"networkSubnets,omitempty"`
 	// List of IP Pool mappings for this specific Site. When IPs are allocated this Site, they will be mapped to a new one using this setting.
-	IpPoolMappings *[]SiteAllOfIpPoolMappings `json:"ipPoolMappings,omitempty"`
-	DefaultGateway *SiteAllOfDefaultGateway   `json:"defaultGateway,omitempty"`
+	IpPoolMappings []SiteAllOfIpPoolMappings `json:"ipPoolMappings,omitempty"`
+	DefaultGateway *SiteAllOfDefaultGateway  `json:"defaultGateway,omitempty"`
 	// When enabled, the routes are sent to the Client by the Gateways according to the user's Entitlements \"networkSubnets\" should be left be empty if it's enabled.
 	EntitlementBasedRouting *bool                    `json:"entitlementBasedRouting,omitempty"`
 	Vpn                     *SiteAllOfVpn            `json:"vpn,omitempty"`
@@ -49,9 +49,8 @@ type Site struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSite(id string, name string) *Site {
+func NewSite(name string) *Site {
 	this := Site{}
-	this.Id = id
 	this.Name = name
 	var entitlementBasedRouting bool = false
 	this.EntitlementBasedRouting = &entitlementBasedRouting
@@ -68,28 +67,36 @@ func NewSiteWithDefaults() *Site {
 	return &this
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Site) GetId() string {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Site) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.Id == nil {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Site) HasId() bool {
+	if o != nil && o.Id != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Site) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
 // GetName returns the Name field value
@@ -218,12 +225,12 @@ func (o *Site) GetTags() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Tags
+	return o.Tags
 }
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Site) GetTagsOk() (*[]string, bool) {
+func (o *Site) GetTagsOk() ([]string, bool) {
 	if o == nil || o.Tags == nil {
 		return nil, false
 	}
@@ -241,7 +248,7 @@ func (o *Site) HasTags() bool {
 
 // SetTags gets a reference to the given []string and assigns it to the Tags field.
 func (o *Site) SetTags(v []string) {
-	o.Tags = &v
+	o.Tags = v
 }
 
 // GetShortName returns the ShortName field value if set, zero value otherwise.
@@ -314,12 +321,12 @@ func (o *Site) GetNetworkSubnets() []string {
 		var ret []string
 		return ret
 	}
-	return *o.NetworkSubnets
+	return o.NetworkSubnets
 }
 
 // GetNetworkSubnetsOk returns a tuple with the NetworkSubnets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Site) GetNetworkSubnetsOk() (*[]string, bool) {
+func (o *Site) GetNetworkSubnetsOk() ([]string, bool) {
 	if o == nil || o.NetworkSubnets == nil {
 		return nil, false
 	}
@@ -337,7 +344,7 @@ func (o *Site) HasNetworkSubnets() bool {
 
 // SetNetworkSubnets gets a reference to the given []string and assigns it to the NetworkSubnets field.
 func (o *Site) SetNetworkSubnets(v []string) {
-	o.NetworkSubnets = &v
+	o.NetworkSubnets = v
 }
 
 // GetIpPoolMappings returns the IpPoolMappings field value if set, zero value otherwise.
@@ -346,12 +353,12 @@ func (o *Site) GetIpPoolMappings() []SiteAllOfIpPoolMappings {
 		var ret []SiteAllOfIpPoolMappings
 		return ret
 	}
-	return *o.IpPoolMappings
+	return o.IpPoolMappings
 }
 
 // GetIpPoolMappingsOk returns a tuple with the IpPoolMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Site) GetIpPoolMappingsOk() (*[]SiteAllOfIpPoolMappings, bool) {
+func (o *Site) GetIpPoolMappingsOk() ([]SiteAllOfIpPoolMappings, bool) {
 	if o == nil || o.IpPoolMappings == nil {
 		return nil, false
 	}
@@ -369,7 +376,7 @@ func (o *Site) HasIpPoolMappings() bool {
 
 // SetIpPoolMappings gets a reference to the given []SiteAllOfIpPoolMappings and assigns it to the IpPoolMappings field.
 func (o *Site) SetIpPoolMappings(v []SiteAllOfIpPoolMappings) {
-	o.IpPoolMappings = &v
+	o.IpPoolMappings = v
 }
 
 // GetDefaultGateway returns the DefaultGateway field value if set, zero value otherwise.
@@ -502,7 +509,7 @@ func (o *Site) SetNameResolution(v SiteAllOfNameResolution) {
 
 func (o Site) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
+	if o.Id != nil {
 		toSerialize["id"] = o.Id
 	}
 	if true {

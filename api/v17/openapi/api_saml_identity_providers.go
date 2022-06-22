@@ -1,11 +1,11 @@
 /*
- * Appgate SDP Controller REST API
- *
- * # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the Integration chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-functions-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v15+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
- *
- * API version: API version 15
- * Contact: appgatesdp.support@appgate.com
- */
+Appgate SDP Controller REST API
+
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        Saml. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+
+API version: API version 17.1
+Contact: appgatesdp.support@appgate.com
+*/
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // SamlIdentityProvidersApiService IdentityProvidersApi service
 type SamlIdentityProvidersApiService service
 
 type ApiSamlIdentityProvidersGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *SamlIdentityProvidersApiService
 	authorization *string
 	query         *string
@@ -39,72 +34,81 @@ type ApiSamlIdentityProvidersGetRequest struct {
 	filterBy      *map[string]string
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersGetRequest) Authorization(authorization string) ApiSamlIdentityProvidersGetRequest {
 	r.authorization = &authorization
 	return r
 }
+
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiSamlIdentityProvidersGetRequest) Query(query string) ApiSamlIdentityProvidersGetRequest {
 	r.query = &query
 	return r
 }
+
+// &#39;Range string to limit the result list. Format: -. 3-10 means he items between the (including) 3rd and the 10th  will be returned. Defaults to all objects.&#39;
 func (r ApiSamlIdentityProvidersGetRequest) Range_(range_ string) ApiSamlIdentityProvidersGetRequest {
 	r.range_ = &range_
 	return r
 }
+
+// The field name to sort the result list. Supported fields vary from object to object. Defaults to certain field depending on the object type.
 func (r ApiSamlIdentityProvidersGetRequest) OrderBy(orderBy string) ApiSamlIdentityProvidersGetRequest {
 	r.orderBy = &orderBy
 	return r
 }
+
+// Whether the sorting is applied descending or ascending. Defaults to certain field depending on the object type.
 func (r ApiSamlIdentityProvidersGetRequest) Descending(descending string) ApiSamlIdentityProvidersGetRequest {
 	r.descending = &descending
 	return r
 }
+
+// Filters the result list by the given field and value. Supported fields vary from object to object. The filters can be combined with each other as well as the generic query field. The given value is checked for inclusion. The representation of the dynamic query parameters is not correct at the moment. See the example for getting a better idea.
 func (r ApiSamlIdentityProvidersGetRequest) FilterBy(filterBy map[string]string) ApiSamlIdentityProvidersGetRequest {
 	r.filterBy = &filterBy
 	return r
 }
 
-func (r ApiSamlIdentityProvidersGetRequest) Execute() (SamlIdentityProviderList, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersGetRequest) Execute() (*IdentityProviderList, *http.Response, error) {
 	return r.ApiService.IdentityProvidersGetExecute(r)
 }
 
 /*
- * IdentityProvidersGet List all Identity Providers.
- * List all Identity Providers visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiSamlIdentityProvidersGetRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Context) ApiSamlIdentityProvidersGetRequest {
+IdentityProvidersGet List all Identity Providers.
+
+List all Identity Providers visible to current user.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSamlIdentityProvidersGetRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) ApiSamlIdentityProvidersGetRequest {
 	return ApiSamlIdentityProvidersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
-/*
- * Execute executes the request
- * @return SamlIdentityProviderList
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlIdentityProvidersGetRequest) (SamlIdentityProviderList, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return IdentityProviderList
+func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  SamlIdentityProviderList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IdentityProviderList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -142,7 +146,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -152,15 +156,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -184,6 +188,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -198,7 +212,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -209,34 +223,39 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 }
 
 type ApiSamlIdentityProvidersIdAttributesPostRequest struct {
-	ctx           _context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	id            string
-	inlineObject3 *InlineObject3
+	ctx                                      context.Context
+	ApiService                               *SamlIdentityProvidersApiService
+	authorization                            *string
+	id                                       string
+	identityProvidersIdAttributesPostRequest *IdentityProvidersIdAttributesPostRequest
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdAttributesPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiSamlIdentityProvidersIdAttributesPostRequest) InlineObject3(inlineObject3 InlineObject3) ApiSamlIdentityProvidersIdAttributesPostRequest {
-	r.inlineObject3 = &inlineObject3
+
+// User details to get attributes for.
+func (r ApiSamlIdentityProvidersIdAttributesPostRequest) IdentityProvidersIdAttributesPostRequest(identityProvidersIdAttributesPostRequest IdentityProvidersIdAttributesPostRequest) ApiSamlIdentityProvidersIdAttributesPostRequest {
+	r.identityProvidersIdAttributesPostRequest = &identityProvidersIdAttributesPostRequest
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse2006, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersIdAttributesPostRequest) Execute() (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdAttributesPostExecute(r)
 }
 
 /*
- * IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
- * Get raw attributes and mapped claims for a user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiSamlIdentityProvidersIdAttributesPostRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx _context.Context, id string) ApiSamlIdentityProvidersIdAttributesPostRequest {
+IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
+
+Get raw attributes and mapped claims for a user.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiSamlIdentityProvidersIdAttributesPostRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiSamlIdentityProvidersIdAttributesPostRequest {
 	return ApiSamlIdentityProvidersIdAttributesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -244,31 +263,27 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx 
 	}
 }
 
-/*
- * Execute executes the request
- * @return InlineResponse2006
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiSamlIdentityProvidersIdAttributesPostRequest) (InlineResponse2006, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return IdentityProvidersIdAttributesPost200Response
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiSamlIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse2006
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IdentityProvidersIdAttributesPost200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdAttributesPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}/attributes"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -292,8 +307,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.inlineObject3
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.identityProvidersIdAttributesPostRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -303,15 +318,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -355,6 +370,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -379,7 +404,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -390,29 +415,32 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 }
 
 type ApiSamlIdentityProvidersIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *SamlIdentityProvidersApiService
 	authorization *string
 	id            string
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdDeleteRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.IdentityProvidersIdDeleteExecute(r)
 }
 
 /*
- * IdentityProvidersIdDelete Delete a specific Identity Provider.
- * Delete a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiSamlIdentityProvidersIdDeleteRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context.Context, id string) ApiSamlIdentityProvidersIdDeleteRequest {
+IdentityProvidersIdDelete Delete a specific Identity Provider.
+
+Delete a specific Identity Provider.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiSamlIdentityProvidersIdDeleteRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiSamlIdentityProvidersIdDeleteRequest {
 	return ApiSamlIdentityProvidersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -420,29 +448,25 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context
 	}
 }
 
-/*
- * Execute executes the request
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiSamlIdentityProvidersIdDeleteRequest) (*_nethttp.Response, error) {
+// Execute executes the request
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiSamlIdentityProvidersIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -465,7 +489,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -475,15 +499,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -508,6 +532,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -533,29 +567,32 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 }
 
 type ApiSamlIdentityProvidersIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *SamlIdentityProvidersApiService
 	authorization *string
 	id            string
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersIdGetRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdGetRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
 /*
- * IdentityProvidersIdGet Get a specific Identity Provider.
- * Get a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiSamlIdentityProvidersIdGetRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Context, id string) ApiSamlIdentityProvidersIdGetRequest {
+IdentityProvidersIdGet Get a specific Identity Provider.
+
+Get a specific Identity Provider.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiSamlIdentityProvidersIdGetRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiSamlIdentityProvidersIdGetRequest {
 	return ApiSamlIdentityProvidersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -563,31 +600,27 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Co
 	}
 }
 
-/*
- * Execute executes the request
- * @return SamlProvider
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSamlIdentityProvidersIdGetRequest) (SamlProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSamlIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  SamlProvider
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -610,7 +643,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -620,15 +653,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -662,6 +695,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -676,7 +719,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -687,34 +730,39 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 }
 
 type ApiSamlIdentityProvidersIdPutRequest struct {
-	ctx              _context.Context
-	ApiService       *SamlIdentityProvidersApiService
-	authorization    *string
-	id               string
-	identityProvider *SamlProvider
+	ctx           context.Context
+	ApiService    *SamlIdentityProvidersApiService
+	authorization *string
+	id            string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersIdPutRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiSamlIdentityProvidersIdPutRequest) IdentityProvider(identityProvider SamlProvider) ApiSamlIdentityProvidersIdPutRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiSamlIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiSamlIdentityProvidersIdPutRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdPutRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
 /*
- * IdentityProvidersIdPut Update an existing Identity Provider.
- * Update an existing Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @return ApiSamlIdentityProvidersIdPutRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Context, id string) ApiSamlIdentityProvidersIdPutRequest {
+IdentityProvidersIdPut Update an existing Identity Provider.
+
+Update an existing Identity Provider.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiSamlIdentityProvidersIdPutRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiSamlIdentityProvidersIdPutRequest {
 	return ApiSamlIdentityProvidersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -722,36 +770,32 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Co
 	}
 }
 
-/*
- * Execute executes the request
- * @return SamlProvider
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSamlIdentityProvidersIdPutRequest) (SamlProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSamlIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  SamlProvider
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -773,8 +817,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.body
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -784,15 +828,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -827,6 +871,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -860,7 +914,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -871,67 +925,68 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 }
 
 type ApiSamlIdentityProvidersPostRequest struct {
-	ctx              _context.Context
-	ApiService       *SamlIdentityProvidersApiService
-	authorization    *string
-	identityProvider *SamlProvider
+	ctx           context.Context
+	ApiService    *SamlIdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiSamlIdentityProvidersPostRequest) IdentityProvider(identityProvider SamlProvider) ApiSamlIdentityProvidersPostRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiSamlIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiSamlIdentityProvidersPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiSamlIdentityProvidersPostRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
 /*
- * IdentityProvidersPost Create a new Identity Provider.
- * Create a new Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiSamlIdentityProvidersPostRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context) ApiSamlIdentityProvidersPostRequest {
+IdentityProvidersPost Create a new Identity Provider.
+
+Create a new Identity Provider.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSamlIdentityProvidersPostRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiSamlIdentityProvidersPostRequest {
 	return ApiSamlIdentityProvidersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
-/*
- * Execute executes the request
- * @return IdentityProvider
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSamlIdentityProvidersPostRequest) (SamlProvider, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSamlIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  SamlProvider
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -953,8 +1008,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.body
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -964,15 +1019,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -997,6 +1052,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1040,7 +1105,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -1051,67 +1116,68 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 }
 
 type ApiSamlIdentityProvidersTestPostRequest struct {
-	ctx              _context.Context
-	ApiService       *SamlIdentityProvidersApiService
-	authorization    *string
-	identityProvider *SamlProvider
+	ctx           context.Context
+	ApiService    *SamlIdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
+// The Token from the LoginResponse.
 func (r ApiSamlIdentityProvidersTestPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
-func (r ApiSamlIdentityProvidersTestPostRequest) IdentityProvider(identityProvider SamlProvider) ApiSamlIdentityProvidersTestPostRequest {
-	r.identityProvider = &identityProvider
+
+// Identity Provider object.
+func (r ApiSamlIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiSamlIdentityProvidersTestPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiSamlIdentityProvidersTestPostRequest) Execute() (InlineResponse2005, *_nethttp.Response, error) {
+func (r ApiSamlIdentityProvidersTestPostRequest) Execute() (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	return r.ApiService.IdentityProvidersTestPostExecute(r)
 }
 
 /*
- * IdentityProvidersTestPost Test an Identity Provider connection.
- * Test connection for the given Identity Provider JSON.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiSamlIdentityProvidersTestPostRequest
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context.Context) ApiSamlIdentityProvidersTestPostRequest {
+IdentityProvidersTestPost Test an Identity Provider connection.
+
+Test connection for the given Identity Provider JSON.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSamlIdentityProvidersTestPostRequest
+*/
+func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiSamlIdentityProvidersTestPostRequest {
 	return ApiSamlIdentityProvidersTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
-/*
- * Execute executes the request
- * @return InlineResponse2005
- */
-func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiSamlIdentityProvidersTestPostRequest) (InlineResponse2005, *_nethttp.Response, error) {
+// Execute executes the request
+//  @return IdentityProvidersTestPost200Response
+func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiSamlIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse2005
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IdentityProvidersTestPost200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersTestPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/test"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1133,8 +1199,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.body
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -1144,15 +1210,15 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1186,6 +1252,16 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1200,7 +1276,7 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

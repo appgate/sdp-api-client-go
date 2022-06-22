@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -22,11 +22,11 @@ type SiteAllOfNameResolutionAwsResolvers struct {
 	// How often will the resolver poll the server. In seconds.
 	UpdateInterval *int32 `json:"updateInterval,omitempty"`
 	// VPC IDs to resolve names.
-	Vpcs *[]string `json:"vpcs,omitempty"`
+	Vpcs []string `json:"vpcs,omitempty"`
 	// Use VPC auto discovery.
 	VpcAutoDiscovery *bool `json:"vpcAutoDiscovery,omitempty"`
 	// Amazon regions.
-	Regions *[]string `json:"regions,omitempty"`
+	Regions []string `json:"regions,omitempty"`
 	// Uses the built-in IAM role in AWS instances to authenticate against the API.
 	UseIAMRole *bool `json:"useIAMRole,omitempty"`
 	// ID of the access key.
@@ -38,7 +38,7 @@ type SiteAllOfNameResolutionAwsResolvers struct {
 	// Use master credentials to resolve names in addition to any assumed roles.
 	ResolveWithMasterCredentials *bool `json:"resolveWithMasterCredentials,omitempty"`
 	// Roles to be assumed to perform AWS name resolution.
-	AssumedRoles *[]SiteAllOfNameResolutionAssumedRoles `json:"assumedRoles,omitempty"`
+	AssumedRoles []SiteAllOfNameResolutionAssumedRoles `json:"assumedRoles,omitempty"`
 }
 
 // NewSiteAllOfNameResolutionAwsResolvers instantiates a new SiteAllOfNameResolutionAwsResolvers object
@@ -125,12 +125,12 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcs() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Vpcs
+	return o.Vpcs
 }
 
 // GetVpcsOk returns a tuple with the Vpcs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcsOk() (*[]string, bool) {
+func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcsOk() ([]string, bool) {
 	if o == nil || o.Vpcs == nil {
 		return nil, false
 	}
@@ -148,7 +148,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) HasVpcs() bool {
 
 // SetVpcs gets a reference to the given []string and assigns it to the Vpcs field.
 func (o *SiteAllOfNameResolutionAwsResolvers) SetVpcs(v []string) {
-	o.Vpcs = &v
+	o.Vpcs = v
 }
 
 // GetVpcAutoDiscovery returns the VpcAutoDiscovery field value if set, zero value otherwise.
@@ -189,12 +189,12 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetRegions() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Regions
+	return o.Regions
 }
 
 // GetRegionsOk returns a tuple with the Regions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolutionAwsResolvers) GetRegionsOk() (*[]string, bool) {
+func (o *SiteAllOfNameResolutionAwsResolvers) GetRegionsOk() ([]string, bool) {
 	if o == nil || o.Regions == nil {
 		return nil, false
 	}
@@ -212,7 +212,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) HasRegions() bool {
 
 // SetRegions gets a reference to the given []string and assigns it to the Regions field.
 func (o *SiteAllOfNameResolutionAwsResolvers) SetRegions(v []string) {
-	o.Regions = &v
+	o.Regions = v
 }
 
 // GetUseIAMRole returns the UseIAMRole field value if set, zero value otherwise.
@@ -381,12 +381,12 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRoles() []SiteAllOfNameR
 		var ret []SiteAllOfNameResolutionAssumedRoles
 		return ret
 	}
-	return *o.AssumedRoles
+	return o.AssumedRoles
 }
 
 // GetAssumedRolesOk returns a tuple with the AssumedRoles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRolesOk() (*[]SiteAllOfNameResolutionAssumedRoles, bool) {
+func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRolesOk() ([]SiteAllOfNameResolutionAssumedRoles, bool) {
 	if o == nil || o.AssumedRoles == nil {
 		return nil, false
 	}
@@ -404,7 +404,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) HasAssumedRoles() bool {
 
 // SetAssumedRoles gets a reference to the given []SiteAllOfNameResolutionAssumedRoles and assigns it to the AssumedRoles field.
 func (o *SiteAllOfNameResolutionAwsResolvers) SetAssumedRoles(v []SiteAllOfNameResolutionAssumedRoles) {
-	o.AssumedRoles = &v
+	o.AssumedRoles = v
 }
 
 func (o SiteAllOfNameResolutionAwsResolvers) MarshalJSON() ([]byte, error) {

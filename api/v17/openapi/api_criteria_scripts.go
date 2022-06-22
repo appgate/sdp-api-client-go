@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // CriteriaScriptsApiService CriteriaScriptsApi service
 type CriteriaScriptsApiService service
 
 type ApiCriteriaScriptsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *CriteriaScriptsApiService
 	authorization *string
 	query         *string
@@ -45,7 +40,7 @@ func (r ApiCriteriaScriptsGetRequest) Authorization(authorization string) ApiCri
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiCriteriaScriptsGetRequest) Query(query string) ApiCriteriaScriptsGetRequest {
 	r.query = &query
 	return r
@@ -75,7 +70,7 @@ func (r ApiCriteriaScriptsGetRequest) FilterBy(filterBy map[string]string) ApiCr
 	return r
 }
 
-func (r ApiCriteriaScriptsGetRequest) Execute() (CriteriaScriptList, *_nethttp.Response, error) {
+func (r ApiCriteriaScriptsGetRequest) Execute() (*CriteriaScriptList, *http.Response, error) {
 	return r.ApiService.CriteriaScriptsGetExecute(r)
 }
 
@@ -84,10 +79,10 @@ CriteriaScriptsGet List all Criteria Scripts.
 
 List all Criteria Scripts visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCriteriaScriptsGetRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx _context.Context) ApiCriteriaScriptsGetRequest {
+func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx context.Context) ApiCriteriaScriptsGetRequest {
 	return ApiCriteriaScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -96,26 +91,24 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx _context.Context) Api
 
 // Execute executes the request
 //  @return CriteriaScriptList
-func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScriptsGetRequest) (CriteriaScriptList, *_nethttp.Response, error) {
+func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScriptsGetRequest) (*CriteriaScriptList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  CriteriaScriptList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CriteriaScriptList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -153,7 +146,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -163,15 +156,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -195,6 +188,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -209,7 +212,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -220,7 +223,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 }
 
 type ApiCriteriaScriptsIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *CriteriaScriptsApiService
 	authorization *string
 	id            string
@@ -232,7 +235,7 @@ func (r ApiCriteriaScriptsIdDeleteRequest) Authorization(authorization string) A
 	return r
 }
 
-func (r ApiCriteriaScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiCriteriaScriptsIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.CriteriaScriptsIdDeleteExecute(r)
 }
 
@@ -241,11 +244,11 @@ CriteriaScriptsIdDelete Delete a specific Criteria Script.
 
 Delete a specific Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiCriteriaScriptsIdDeleteRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx _context.Context, id string) ApiCriteriaScriptsIdDeleteRequest {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx context.Context, id string) ApiCriteriaScriptsIdDeleteRequest {
 	return ApiCriteriaScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -254,26 +257,24 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx _context.Context
 }
 
 // Execute executes the request
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteriaScriptsIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteriaScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -296,7 +297,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -306,15 +307,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -339,6 +340,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -364,7 +375,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 }
 
 type ApiCriteriaScriptsIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *CriteriaScriptsApiService
 	authorization *string
 	id            string
@@ -376,7 +387,7 @@ func (r ApiCriteriaScriptsIdGetRequest) Authorization(authorization string) ApiC
 	return r
 }
 
-func (r ApiCriteriaScriptsIdGetRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
+func (r ApiCriteriaScriptsIdGetRequest) Execute() (*CriteriaScript, *http.Response, error) {
 	return r.ApiService.CriteriaScriptsIdGetExecute(r)
 }
 
@@ -385,11 +396,11 @@ CriteriaScriptsIdGet Get a specific Criteria Script.
 
 Get a specific Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiCriteriaScriptsIdGetRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx _context.Context, id string) ApiCriteriaScriptsIdGetRequest {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx context.Context, id string) ApiCriteriaScriptsIdGetRequest {
 	return ApiCriteriaScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -399,27 +410,25 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx _context.Context, i
 
 // Execute executes the request
 //  @return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScriptsIdGetRequest) (CriteriaScript, *_nethttp.Response, error) {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScriptsIdGetRequest) (*CriteriaScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  CriteriaScript
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CriteriaScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -442,7 +451,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -452,15 +461,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -494,6 +503,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -508,7 +527,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -519,7 +538,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 }
 
 type ApiCriteriaScriptsIdPutRequest struct {
-	ctx            _context.Context
+	ctx            context.Context
 	ApiService     *CriteriaScriptsApiService
 	authorization  *string
 	id             string
@@ -538,7 +557,7 @@ func (r ApiCriteriaScriptsIdPutRequest) CriteriaScript(criteriaScript CriteriaSc
 	return r
 }
 
-func (r ApiCriteriaScriptsIdPutRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
+func (r ApiCriteriaScriptsIdPutRequest) Execute() (*CriteriaScript, *http.Response, error) {
 	return r.ApiService.CriteriaScriptsIdPutExecute(r)
 }
 
@@ -547,11 +566,11 @@ CriteriaScriptsIdPut Update an existing Criteria Script.
 
 Update an existing Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiCriteriaScriptsIdPutRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx _context.Context, id string) ApiCriteriaScriptsIdPutRequest {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx context.Context, id string) ApiCriteriaScriptsIdPutRequest {
 	return ApiCriteriaScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -561,27 +580,25 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx _context.Context, i
 
 // Execute executes the request
 //  @return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScriptsIdPutRequest) (CriteriaScript, *_nethttp.Response, error) {
+func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScriptsIdPutRequest) (*CriteriaScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  CriteriaScript
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CriteriaScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -609,7 +626,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.criteriaScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -619,15 +636,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -662,6 +679,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -695,7 +722,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -706,7 +733,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 }
 
 type ApiCriteriaScriptsPostRequest struct {
-	ctx            _context.Context
+	ctx            context.Context
 	ApiService     *CriteriaScriptsApiService
 	authorization  *string
 	criteriaScript *CriteriaScript
@@ -724,7 +751,7 @@ func (r ApiCriteriaScriptsPostRequest) CriteriaScript(criteriaScript CriteriaScr
 	return r
 }
 
-func (r ApiCriteriaScriptsPostRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
+func (r ApiCriteriaScriptsPostRequest) Execute() (*CriteriaScript, *http.Response, error) {
 	return r.ApiService.CriteriaScriptsPostExecute(r)
 }
 
@@ -733,10 +760,10 @@ CriteriaScriptsPost Create a new Criteria Script.
 
 Create a new Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCriteriaScriptsPostRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx _context.Context) ApiCriteriaScriptsPostRequest {
+func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx context.Context) ApiCriteriaScriptsPostRequest {
 	return ApiCriteriaScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -745,26 +772,24 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx _context.Context) Ap
 
 // Execute executes the request
 //  @return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScriptsPostRequest) (CriteriaScript, *_nethttp.Response, error) {
+func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScriptsPostRequest) (*CriteriaScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  CriteriaScript
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CriteriaScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -792,7 +817,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.criteriaScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -802,15 +827,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -835,6 +860,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -878,7 +913,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

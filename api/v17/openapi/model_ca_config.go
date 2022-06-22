@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -37,9 +37,9 @@ type CaConfig struct {
 	// Base64 encoded public key of the certificate.
 	SubjectPublicKey *string `json:"subjectPublicKey,omitempty"`
 	// Name constraints extension details for permitted hostnames or IPs.
-	NameConstraintsPermitted *[]string `json:"nameConstraintsPermitted,omitempty"`
+	NameConstraintsPermitted []string `json:"nameConstraintsPermitted,omitempty"`
 	// Name constraints extension details for excluded hostnames or IPs.
-	NameConstraintsExcluded *[]string `json:"nameConstraintsExcluded,omitempty"`
+	NameConstraintsExcluded []string `json:"nameConstraintsExcluded,omitempty"`
 	// The URL where the CRL is hosted.
 	CrlUrl *string `json:"crlUrl,omitempty"`
 }
@@ -355,12 +355,12 @@ func (o *CaConfig) GetNameConstraintsPermitted() []string {
 		var ret []string
 		return ret
 	}
-	return *o.NameConstraintsPermitted
+	return o.NameConstraintsPermitted
 }
 
 // GetNameConstraintsPermittedOk returns a tuple with the NameConstraintsPermitted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CaConfig) GetNameConstraintsPermittedOk() (*[]string, bool) {
+func (o *CaConfig) GetNameConstraintsPermittedOk() ([]string, bool) {
 	if o == nil || o.NameConstraintsPermitted == nil {
 		return nil, false
 	}
@@ -378,7 +378,7 @@ func (o *CaConfig) HasNameConstraintsPermitted() bool {
 
 // SetNameConstraintsPermitted gets a reference to the given []string and assigns it to the NameConstraintsPermitted field.
 func (o *CaConfig) SetNameConstraintsPermitted(v []string) {
-	o.NameConstraintsPermitted = &v
+	o.NameConstraintsPermitted = v
 }
 
 // GetNameConstraintsExcluded returns the NameConstraintsExcluded field value if set, zero value otherwise.
@@ -387,12 +387,12 @@ func (o *CaConfig) GetNameConstraintsExcluded() []string {
 		var ret []string
 		return ret
 	}
-	return *o.NameConstraintsExcluded
+	return o.NameConstraintsExcluded
 }
 
 // GetNameConstraintsExcludedOk returns a tuple with the NameConstraintsExcluded field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CaConfig) GetNameConstraintsExcludedOk() (*[]string, bool) {
+func (o *CaConfig) GetNameConstraintsExcludedOk() ([]string, bool) {
 	if o == nil || o.NameConstraintsExcluded == nil {
 		return nil, false
 	}
@@ -410,7 +410,7 @@ func (o *CaConfig) HasNameConstraintsExcluded() bool {
 
 // SetNameConstraintsExcluded gets a reference to the given []string and assigns it to the NameConstraintsExcluded field.
 func (o *CaConfig) SetNameConstraintsExcluded(v []string) {
-	o.NameConstraintsExcluded = &v
+	o.NameConstraintsExcluded = v
 }
 
 // GetCrlUrl returns the CrlUrl field value if set, zero value otherwise.

@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -17,10 +17,10 @@ import (
 
 // ClaimNamesList struct for ClaimNamesList
 type ClaimNamesList struct {
-	User     *[]map[string]interface{} `json:"user,omitempty"`
-	Device   *[]map[string]interface{} `json:"device,omitempty"`
-	System   *[]map[string]interface{} `json:"system,omitempty"`
-	OnDemand *[]map[string]interface{} `json:"onDemand,omitempty"`
+	User     []ClaimNamesInner `json:"user,omitempty"`
+	Device   []ClaimNamesInner `json:"device,omitempty"`
+	System   []ClaimNamesInner `json:"system,omitempty"`
+	OnDemand []ClaimNamesInner `json:"onDemand,omitempty"`
 }
 
 // NewClaimNamesList instantiates a new ClaimNamesList object
@@ -41,17 +41,17 @@ func NewClaimNamesListWithDefaults() *ClaimNamesList {
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetUser() []map[string]interface{} {
+func (o *ClaimNamesList) GetUser() []ClaimNamesInner {
 	if o == nil || o.User == nil {
-		var ret []map[string]interface{}
+		var ret []ClaimNamesInner
 		return ret
 	}
-	return *o.User
+	return o.User
 }
 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetUserOk() (*[]map[string]interface{}, bool) {
+func (o *ClaimNamesList) GetUserOk() ([]ClaimNamesInner, bool) {
 	if o == nil || o.User == nil {
 		return nil, false
 	}
@@ -67,23 +67,23 @@ func (o *ClaimNamesList) HasUser() bool {
 	return false
 }
 
-// SetUser gets a reference to the given []map[string]interface{} and assigns it to the User field.
-func (o *ClaimNamesList) SetUser(v []map[string]interface{}) {
-	o.User = &v
+// SetUser gets a reference to the given []ClaimNamesInner and assigns it to the User field.
+func (o *ClaimNamesList) SetUser(v []ClaimNamesInner) {
+	o.User = v
 }
 
 // GetDevice returns the Device field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetDevice() []map[string]interface{} {
+func (o *ClaimNamesList) GetDevice() []ClaimNamesInner {
 	if o == nil || o.Device == nil {
-		var ret []map[string]interface{}
+		var ret []ClaimNamesInner
 		return ret
 	}
-	return *o.Device
+	return o.Device
 }
 
 // GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetDeviceOk() (*[]map[string]interface{}, bool) {
+func (o *ClaimNamesList) GetDeviceOk() ([]ClaimNamesInner, bool) {
 	if o == nil || o.Device == nil {
 		return nil, false
 	}
@@ -99,23 +99,23 @@ func (o *ClaimNamesList) HasDevice() bool {
 	return false
 }
 
-// SetDevice gets a reference to the given []map[string]interface{} and assigns it to the Device field.
-func (o *ClaimNamesList) SetDevice(v []map[string]interface{}) {
-	o.Device = &v
+// SetDevice gets a reference to the given []ClaimNamesInner and assigns it to the Device field.
+func (o *ClaimNamesList) SetDevice(v []ClaimNamesInner) {
+	o.Device = v
 }
 
 // GetSystem returns the System field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetSystem() []map[string]interface{} {
+func (o *ClaimNamesList) GetSystem() []ClaimNamesInner {
 	if o == nil || o.System == nil {
-		var ret []map[string]interface{}
+		var ret []ClaimNamesInner
 		return ret
 	}
-	return *o.System
+	return o.System
 }
 
 // GetSystemOk returns a tuple with the System field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetSystemOk() (*[]map[string]interface{}, bool) {
+func (o *ClaimNamesList) GetSystemOk() ([]ClaimNamesInner, bool) {
 	if o == nil || o.System == nil {
 		return nil, false
 	}
@@ -131,23 +131,23 @@ func (o *ClaimNamesList) HasSystem() bool {
 	return false
 }
 
-// SetSystem gets a reference to the given []map[string]interface{} and assigns it to the System field.
-func (o *ClaimNamesList) SetSystem(v []map[string]interface{}) {
-	o.System = &v
+// SetSystem gets a reference to the given []ClaimNamesInner and assigns it to the System field.
+func (o *ClaimNamesList) SetSystem(v []ClaimNamesInner) {
+	o.System = v
 }
 
 // GetOnDemand returns the OnDemand field value if set, zero value otherwise.
-func (o *ClaimNamesList) GetOnDemand() []map[string]interface{} {
+func (o *ClaimNamesList) GetOnDemand() []ClaimNamesInner {
 	if o == nil || o.OnDemand == nil {
-		var ret []map[string]interface{}
+		var ret []ClaimNamesInner
 		return ret
 	}
-	return *o.OnDemand
+	return o.OnDemand
 }
 
 // GetOnDemandOk returns a tuple with the OnDemand field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClaimNamesList) GetOnDemandOk() (*[]map[string]interface{}, bool) {
+func (o *ClaimNamesList) GetOnDemandOk() ([]ClaimNamesInner, bool) {
 	if o == nil || o.OnDemand == nil {
 		return nil, false
 	}
@@ -163,9 +163,9 @@ func (o *ClaimNamesList) HasOnDemand() bool {
 	return false
 }
 
-// SetOnDemand gets a reference to the given []map[string]interface{} and assigns it to the OnDemand field.
-func (o *ClaimNamesList) SetOnDemand(v []map[string]interface{}) {
-	o.OnDemand = &v
+// SetOnDemand gets a reference to the given []ClaimNamesInner and assigns it to the OnDemand field.
+func (o *ClaimNamesList) SetOnDemand(v []ClaimNamesInner) {
+	o.OnDemand = v
 }
 
 func (o ClaimNamesList) MarshalJSON() ([]byte, error) {

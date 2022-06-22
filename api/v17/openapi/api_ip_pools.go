@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // IPPoolsApiService IPPoolsApi service
 type IPPoolsApiService service
 
 type ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest struct {
-	ctx               _context.Context
+	ctx               context.Context
 	ApiService        *IPPoolsApiService
 	authorization     *string
 	distinguishedName string
@@ -41,7 +36,7 @@ func (r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) Authorization(aut
 	return r
 }
 
-func (r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) Execute() (AllocatedIpList, *_nethttp.Response, error) {
+func (r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) Execute() (*AllocatedIpList, *http.Response, error) {
 	return r.ApiService.IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r)
 }
 
@@ -50,11 +45,11 @@ IpPoolsAllocatedIpsByDnDistinguishedNameGet List all Allocated IPs by Distinguis
 
 List all Allocated IPs by Distinguished Name.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
  @return ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx _context.Context, distinguishedName string) ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest {
+func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest {
 	return ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -64,27 +59,25 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx _con
 
 // Execute executes the request
 //  @return AllocatedIpList
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) (AllocatedIpList, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) (*AllocatedIpList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  AllocatedIpList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocatedIpList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsAllocatedIpsByDnDistinguishedNameGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/allocated-ips/by-dn/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", _neturl.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -107,7 +100,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -117,15 +110,15 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -149,6 +142,16 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -163,7 +166,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -174,7 +177,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r
 }
 
 type ApiIpPoolsAllocatedIpsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 }
@@ -185,7 +188,7 @@ func (r ApiIpPoolsAllocatedIpsGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiIpPoolsAllocatedIpsGetRequest) Execute() (AllocatedIpList, *_nethttp.Response, error) {
+func (r ApiIpPoolsAllocatedIpsGetRequest) Execute() (*AllocatedIpList, *http.Response, error) {
 	return r.ApiService.IpPoolsAllocatedIpsGetExecute(r)
 }
 
@@ -194,10 +197,10 @@ IpPoolsAllocatedIpsGet List all Allocated IPs in the system.
 
 List all Allocated IPs in the system
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiIpPoolsAllocatedIpsGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx _context.Context) ApiIpPoolsAllocatedIpsGetRequest {
+func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoolsAllocatedIpsGetRequest {
 	return ApiIpPoolsAllocatedIpsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -206,26 +209,24 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx _context.Context) ApiIpPo
 
 // Execute executes the request
 //  @return AllocatedIpList
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedIpsGetRequest) (AllocatedIpList, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedIpsGetRequest) (*AllocatedIpList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  AllocatedIpList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AllocatedIpList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsAllocatedIpsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/allocated-ips"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -248,7 +249,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -258,15 +259,15 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -290,6 +291,16 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -304,7 +315,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -315,7 +326,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 }
 
 type ApiIpPoolsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 	query         *string
@@ -331,7 +342,7 @@ func (r ApiIpPoolsGetRequest) Authorization(authorization string) ApiIpPoolsGetR
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiIpPoolsGetRequest) Query(query string) ApiIpPoolsGetRequest {
 	r.query = &query
 	return r
@@ -361,7 +372,7 @@ func (r ApiIpPoolsGetRequest) FilterBy(filterBy map[string]string) ApiIpPoolsGet
 	return r
 }
 
-func (r ApiIpPoolsGetRequest) Execute() (IpPoolList, *_nethttp.Response, error) {
+func (r ApiIpPoolsGetRequest) Execute() (*IpPoolList, *http.Response, error) {
 	return r.ApiService.IpPoolsGetExecute(r)
 }
 
@@ -370,10 +381,10 @@ IpPoolsGet List all IP Pools.
 
 List all IP Pools visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiIpPoolsGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsGet(ctx _context.Context) ApiIpPoolsGetRequest {
+func (a *IPPoolsApiService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest {
 	return ApiIpPoolsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -382,26 +393,24 @@ func (a *IPPoolsApiService) IpPoolsGet(ctx _context.Context) ApiIpPoolsGetReques
 
 // Execute executes the request
 //  @return IpPoolList
-func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolList, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  IpPoolList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IpPoolList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -439,7 +448,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolLis
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -449,15 +458,15 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolLis
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -481,6 +490,16 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolLis
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -495,7 +514,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolLis
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -506,7 +525,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (IpPoolLis
 }
 
 type ApiIpPoolsIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 	id            string
@@ -518,7 +537,7 @@ func (r ApiIpPoolsIdDeleteRequest) Authorization(authorization string) ApiIpPool
 	return r
 }
 
-func (r ApiIpPoolsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiIpPoolsIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.IpPoolsIdDeleteExecute(r)
 }
 
@@ -527,11 +546,11 @@ IpPoolsIdDelete Delete a specific IP Pool.
 
 Delete a specific IP Pool.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiIpPoolsIdDeleteRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdDelete(ctx _context.Context, id string) ApiIpPoolsIdDeleteRequest {
+func (a *IPPoolsApiService) IpPoolsIdDelete(ctx context.Context, id string) ApiIpPoolsIdDeleteRequest {
 	return ApiIpPoolsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -540,26 +559,24 @@ func (a *IPPoolsApiService) IpPoolsIdDelete(ctx _context.Context, id string) Api
 }
 
 // Execute executes the request
-func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -582,7 +599,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -592,15 +609,15 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -625,6 +642,16 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -650,7 +677,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 }
 
 type ApiIpPoolsIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 	id            string
@@ -662,7 +689,7 @@ func (r ApiIpPoolsIdGetRequest) Authorization(authorization string) ApiIpPoolsId
 	return r
 }
 
-func (r ApiIpPoolsIdGetRequest) Execute() (IpPool, *_nethttp.Response, error) {
+func (r ApiIpPoolsIdGetRequest) Execute() (*IpPool, *http.Response, error) {
 	return r.ApiService.IpPoolsIdGetExecute(r)
 }
 
@@ -671,11 +698,11 @@ IpPoolsIdGet Get a specific IP Pool.
 
 Get a specific IP Pool.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiIpPoolsIdGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdGet(ctx _context.Context, id string) ApiIpPoolsIdGetRequest {
+func (a *IPPoolsApiService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPoolsIdGetRequest {
 	return ApiIpPoolsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -685,27 +712,25 @@ func (a *IPPoolsApiService) IpPoolsIdGet(ctx _context.Context, id string) ApiIpP
 
 // Execute executes the request
 //  @return IpPool
-func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPool, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPool, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  IpPool
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IpPool
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -728,7 +753,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPoo
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -738,15 +763,15 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPoo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -780,6 +805,16 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPoo
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -794,7 +829,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPoo
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -805,7 +840,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (IpPoo
 }
 
 type ApiIpPoolsIdPutRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 	id            string
@@ -824,7 +859,7 @@ func (r ApiIpPoolsIdPutRequest) IpPool(ipPool IpPool) ApiIpPoolsIdPutRequest {
 	return r
 }
 
-func (r ApiIpPoolsIdPutRequest) Execute() (IpPool, *_nethttp.Response, error) {
+func (r ApiIpPoolsIdPutRequest) Execute() (*IpPool, *http.Response, error) {
 	return r.ApiService.IpPoolsIdPutExecute(r)
 }
 
@@ -833,11 +868,11 @@ IpPoolsIdPut Update an existing IP Pool.
 
 Update an existing IP Pool.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiIpPoolsIdPutRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdPut(ctx _context.Context, id string) ApiIpPoolsIdPutRequest {
+func (a *IPPoolsApiService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPoolsIdPutRequest {
 	return ApiIpPoolsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -847,27 +882,25 @@ func (a *IPPoolsApiService) IpPoolsIdPut(ctx _context.Context, id string) ApiIpP
 
 // Execute executes the request
 //  @return IpPool
-func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPool, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPool, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  IpPool
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IpPool
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -895,7 +928,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPoo
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ipPool
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -905,15 +938,15 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPoo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -948,6 +981,16 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPoo
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -981,7 +1024,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPoo
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -992,7 +1035,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (IpPoo
 }
 
 type ApiIpPoolsPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *IPPoolsApiService
 	authorization *string
 	ipPool        *IpPool
@@ -1010,7 +1053,7 @@ func (r ApiIpPoolsPostRequest) IpPool(ipPool IpPool) ApiIpPoolsPostRequest {
 	return r
 }
 
-func (r ApiIpPoolsPostRequest) Execute() (IpPool, *_nethttp.Response, error) {
+func (r ApiIpPoolsPostRequest) Execute() (*IpPool, *http.Response, error) {
 	return r.ApiService.IpPoolsPostExecute(r)
 }
 
@@ -1019,10 +1062,10 @@ IpPoolsPost Create a new IP Pool.
 
 Create a new IP Pool.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiIpPoolsPostRequest
 */
-func (a *IPPoolsApiService) IpPoolsPost(ctx _context.Context) ApiIpPoolsPostRequest {
+func (a *IPPoolsApiService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostRequest {
 	return ApiIpPoolsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1031,26 +1074,24 @@ func (a *IPPoolsApiService) IpPoolsPost(ctx _context.Context) ApiIpPoolsPostRequ
 
 // Execute executes the request
 //  @return IpPool
-func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (IpPool, *_nethttp.Response, error) {
+func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  IpPool
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IpPool
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -1078,7 +1119,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (IpPool,
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ipPool
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -1088,15 +1129,15 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (IpPool,
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1121,6 +1162,16 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (IpPool,
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1164,7 +1215,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (IpPool,
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

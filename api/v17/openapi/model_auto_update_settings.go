@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -20,13 +20,13 @@ type AutoUpdateSettings struct {
 	// Whether the Client Auto-Update is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
 	// The Criteria Script to evaluate the Client claims during authorization in order to decide whether the Client Auto-Update will be applied or not.
-	CriteriaScript *string `json:"criteriaScript,omitempty"`
-	Windows        *Client `json:"windows,omitempty"`
-	MacOS          *Client `json:"macOS,omitempty"`
-	Ubuntu         *Client `json:"ubuntu,omitempty"`
-	Fedora         *Client `json:"fedora,omitempty"`
-	RedHat8        *Client `json:"redHat8,omitempty"`
-	RedHat7        *Client `json:"redHat7,omitempty"`
+	CriteriaScript *string                    `json:"criteriaScript,omitempty"`
+	Windows        *Client                    `json:"windows,omitempty"`
+	MacOS          *Client                    `json:"macOS,omitempty"`
+	Ubuntu         *Client                    `json:"ubuntu,omitempty"`
+	Fedora         *Client                    `json:"fedora,omitempty"`
+	RedHat8        *Client                    `json:"redHat8,omitempty"`
+	RedHat7        *AutoUpdateSettingsRedHat7 `json:"redHat7,omitempty"`
 }
 
 // NewAutoUpdateSettings instantiates a new AutoUpdateSettings object
@@ -271,9 +271,9 @@ func (o *AutoUpdateSettings) SetRedHat8(v Client) {
 }
 
 // GetRedHat7 returns the RedHat7 field value if set, zero value otherwise.
-func (o *AutoUpdateSettings) GetRedHat7() Client {
+func (o *AutoUpdateSettings) GetRedHat7() AutoUpdateSettingsRedHat7 {
 	if o == nil || o.RedHat7 == nil {
-		var ret Client
+		var ret AutoUpdateSettingsRedHat7
 		return ret
 	}
 	return *o.RedHat7
@@ -281,7 +281,7 @@ func (o *AutoUpdateSettings) GetRedHat7() Client {
 
 // GetRedHat7Ok returns a tuple with the RedHat7 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AutoUpdateSettings) GetRedHat7Ok() (*Client, bool) {
+func (o *AutoUpdateSettings) GetRedHat7Ok() (*AutoUpdateSettingsRedHat7, bool) {
 	if o == nil || o.RedHat7 == nil {
 		return nil, false
 	}
@@ -297,8 +297,8 @@ func (o *AutoUpdateSettings) HasRedHat7() bool {
 	return false
 }
 
-// SetRedHat7 gets a reference to the given Client and assigns it to the RedHat7 field.
-func (o *AutoUpdateSettings) SetRedHat7(v Client) {
+// SetRedHat7 gets a reference to the given AutoUpdateSettingsRedHat7 and assigns it to the RedHat7 field.
+func (o *AutoUpdateSettings) SetRedHat7(v AutoUpdateSettingsRedHat7) {
 	o.RedHat7 = &v
 }
 

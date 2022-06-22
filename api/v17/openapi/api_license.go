@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // LicenseApiService LicenseApi service
 type LicenseApiService service
 
 type ApiLicenseDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 }
@@ -40,7 +35,7 @@ func (r ApiLicenseDeleteRequest) Authorization(authorization string) ApiLicenseD
 	return r
 }
 
-func (r ApiLicenseDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiLicenseDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.LicenseDeleteExecute(r)
 }
 
@@ -49,12 +44,12 @@ LicenseDelete Delete all Licenses.
 
 Delete all Licenses to revert to the Built-in License.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicenseDeleteRequest
 
 Deprecated
 */
-func (a *LicenseApiService) LicenseDelete(ctx _context.Context) ApiLicenseDeleteRequest {
+func (a *LicenseApiService) LicenseDelete(ctx context.Context) ApiLicenseDeleteRequest {
 	return ApiLicenseDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -63,25 +58,23 @@ func (a *LicenseApiService) LicenseDelete(ctx _context.Context) ApiLicenseDelete
 
 // Execute executes the request
 // Deprecated
-func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -104,7 +97,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*_n
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -114,15 +107,15 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*_n
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -137,6 +130,16 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*_n
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -162,7 +165,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*_n
 }
 
 type ApiLicenseGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 }
@@ -173,7 +176,7 @@ func (r ApiLicenseGetRequest) Authorization(authorization string) ApiLicenseGetR
 	return r
 }
 
-func (r ApiLicenseGetRequest) Execute() (LicenseDetails, *_nethttp.Response, error) {
+func (r ApiLicenseGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
 	return r.ApiService.LicenseGetExecute(r)
 }
 
@@ -182,10 +185,10 @@ LicenseGet Get the current License.
 
 Get the current License.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicenseGetRequest
 */
-func (a *LicenseApiService) LicenseGet(ctx _context.Context) ApiLicenseGetRequest {
+func (a *LicenseApiService) LicenseGet(ctx context.Context) ApiLicenseGetRequest {
 	return ApiLicenseGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -194,26 +197,24 @@ func (a *LicenseApiService) LicenseGet(ctx _context.Context) ApiLicenseGetReques
 
 // Execute executes the request
 //  @return LicenseDetails
-func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDetails, *_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseDetails, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  LicenseDetails
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LicenseDetails
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -236,7 +237,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -246,15 +247,15 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -278,6 +279,16 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDe
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -292,7 +303,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDe
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -303,7 +314,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (LicenseDe
 }
 
 type ApiLicenseIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 	id            string
@@ -315,7 +326,7 @@ func (r ApiLicenseIdDeleteRequest) Authorization(authorization string) ApiLicens
 	return r
 }
 
-func (r ApiLicenseIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiLicenseIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.LicenseIdDeleteExecute(r)
 }
 
@@ -324,11 +335,11 @@ LicenseIdDelete Delete a specific License.
 
 Delete a specific License from list of Licenses.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiLicenseIdDeleteRequest
 */
-func (a *LicenseApiService) LicenseIdDelete(ctx _context.Context, id string) ApiLicenseIdDeleteRequest {
+func (a *LicenseApiService) LicenseIdDelete(ctx context.Context, id string) ApiLicenseIdDeleteRequest {
 	return ApiLicenseIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -337,26 +348,24 @@ func (a *LicenseApiService) LicenseIdDelete(ctx _context.Context, id string) Api
 }
 
 // Execute executes the request
-func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -379,7 +388,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -389,15 +398,15 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -431,6 +440,16 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -447,7 +466,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 }
 
 type ApiLicenseNextDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 }
@@ -458,7 +477,7 @@ func (r ApiLicenseNextDeleteRequest) Authorization(authorization string) ApiLice
 	return r
 }
 
-func (r ApiLicenseNextDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiLicenseNextDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.LicenseNextDeleteExecute(r)
 }
 
@@ -467,10 +486,10 @@ LicenseNextDelete Delete the next License.
 
 Delete the next License.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicenseNextDeleteRequest
 */
-func (a *LicenseApiService) LicenseNextDelete(ctx _context.Context) ApiLicenseNextDeleteRequest {
+func (a *LicenseApiService) LicenseNextDelete(ctx context.Context) ApiLicenseNextDeleteRequest {
 	return ApiLicenseNextDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -478,25 +497,23 @@ func (a *LicenseApiService) LicenseNextDelete(ctx _context.Context) ApiLicenseNe
 }
 
 // Execute executes the request
-func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteRequest) (*_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license/next"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -519,7 +536,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -529,15 +546,15 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -552,6 +569,16 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -577,7 +604,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 }
 
 type ApiLicenseNextGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 }
@@ -588,7 +615,7 @@ func (r ApiLicenseNextGetRequest) Authorization(authorization string) ApiLicense
 	return r
 }
 
-func (r ApiLicenseNextGetRequest) Execute() (LicenseDetails, *_nethttp.Response, error) {
+func (r ApiLicenseNextGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
 	return r.ApiService.LicenseNextGetExecute(r)
 }
 
@@ -597,10 +624,10 @@ LicenseNextGet Get the next License.
 
 Get the next License which will be activated when CA certificate switch occurs. Licenses are bound to the CA Certificate.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicenseNextGetRequest
 */
-func (a *LicenseApiService) LicenseNextGet(ctx _context.Context) ApiLicenseNextGetRequest {
+func (a *LicenseApiService) LicenseNextGet(ctx context.Context) ApiLicenseNextGetRequest {
 	return ApiLicenseNextGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -609,26 +636,24 @@ func (a *LicenseApiService) LicenseNextGet(ctx _context.Context) ApiLicenseNextG
 
 // Execute executes the request
 //  @return LicenseDetails
-func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (LicenseDetails, *_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*LicenseDetails, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  LicenseDetails
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LicenseDetails
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license/next"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -651,7 +676,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (L
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -661,15 +686,15 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (L
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -684,6 +709,16 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (L
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -717,7 +752,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (L
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -728,7 +763,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (L
 }
 
 type ApiLicenseNextPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 	licenseImport *LicenseImport
@@ -746,7 +781,7 @@ func (r ApiLicenseNextPostRequest) LicenseImport(licenseImport LicenseImport) Ap
 	return r
 }
 
-func (r ApiLicenseNextPostRequest) Execute() (License, *_nethttp.Response, error) {
+func (r ApiLicenseNextPostRequest) Execute() (*License, *http.Response, error) {
 	return r.ApiService.LicenseNextPostExecute(r)
 }
 
@@ -755,10 +790,10 @@ LicenseNextPost Upload a new next License.
 
 Upload a new next License to be switched when CA certificate is switched.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicenseNextPostRequest
 */
-func (a *LicenseApiService) LicenseNextPost(ctx _context.Context) ApiLicenseNextPostRequest {
+func (a *LicenseApiService) LicenseNextPost(ctx context.Context) ApiLicenseNextPostRequest {
 	return ApiLicenseNextPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -767,26 +802,24 @@ func (a *LicenseApiService) LicenseNextPost(ctx _context.Context) ApiLicenseNext
 
 // Execute executes the request
 //  @return License
-func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) (License, *_nethttp.Response, error) {
+func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) (*License, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  License
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *License
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license/next"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -814,7 +847,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.licenseImport
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -824,15 +857,15 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -866,6 +899,16 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -890,7 +933,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -901,7 +944,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 }
 
 type ApiLicensePostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *LicenseApiService
 	authorization *string
 	licenseImport *LicenseImport
@@ -919,7 +962,7 @@ func (r ApiLicensePostRequest) LicenseImport(licenseImport LicenseImport) ApiLic
 	return r
 }
 
-func (r ApiLicensePostRequest) Execute() (License, *_nethttp.Response, error) {
+func (r ApiLicensePostRequest) Execute() (*License, *http.Response, error) {
 	return r.ApiService.LicensePostExecute(r)
 }
 
@@ -928,10 +971,10 @@ LicensePost Upload a new License.
 
 Upload a new License and override the existing one.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiLicensePostRequest
 */
-func (a *LicenseApiService) LicensePost(ctx _context.Context) ApiLicensePostRequest {
+func (a *LicenseApiService) LicensePost(ctx context.Context) ApiLicensePostRequest {
 	return ApiLicensePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -940,26 +983,24 @@ func (a *LicenseApiService) LicensePost(ctx _context.Context) ApiLicensePostRequ
 
 // Execute executes the request
 //  @return License
-func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (License, *_nethttp.Response, error) {
+func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*License, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  License
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *License
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicensePost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -987,7 +1028,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (License
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.licenseImport
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -997,15 +1038,15 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (License
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1039,6 +1080,16 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (License
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1063,7 +1114,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (License
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

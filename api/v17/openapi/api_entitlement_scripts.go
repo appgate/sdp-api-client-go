@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // EntitlementScriptsApiService EntitlementScriptsApi service
 type EntitlementScriptsApiService service
 
 type ApiEntitlementScriptsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *EntitlementScriptsApiService
 	authorization *string
 	query         *string
@@ -45,7 +40,7 @@ func (r ApiEntitlementScriptsGetRequest) Authorization(authorization string) Api
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiEntitlementScriptsGetRequest) Query(query string) ApiEntitlementScriptsGetRequest {
 	r.query = &query
 	return r
@@ -75,7 +70,7 @@ func (r ApiEntitlementScriptsGetRequest) FilterBy(filterBy map[string]string) Ap
 	return r
 }
 
-func (r ApiEntitlementScriptsGetRequest) Execute() (EntitlementScriptList, *_nethttp.Response, error) {
+func (r ApiEntitlementScriptsGetRequest) Execute() (*EntitlementScriptList, *http.Response, error) {
 	return r.ApiService.EntitlementScriptsGetExecute(r)
 }
 
@@ -84,10 +79,10 @@ EntitlementScriptsGet List all Entitlement Scripts.
 
 List all Entitlement Scripts visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEntitlementScriptsGetRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx _context.Context) ApiEntitlementScriptsGetRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context) ApiEntitlementScriptsGetRequest {
 	return ApiEntitlementScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -96,26 +91,24 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx _context.Contex
 
 // Execute executes the request
 //  @return EntitlementScriptList
-func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (EntitlementScriptList, *_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (*EntitlementScriptList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  EntitlementScriptList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *EntitlementScriptList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -153,7 +146,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -163,15 +156,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -195,6 +188,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -209,7 +212,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -220,7 +223,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 }
 
 type ApiEntitlementScriptsIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *EntitlementScriptsApiService
 	authorization *string
 	id            string
@@ -232,7 +235,7 @@ func (r ApiEntitlementScriptsIdDeleteRequest) Authorization(authorization string
 	return r
 }
 
-func (r ApiEntitlementScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiEntitlementScriptsIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.EntitlementScriptsIdDeleteExecute(r)
 }
 
@@ -241,11 +244,11 @@ EntitlementScriptsIdDelete Delete a specific Entitlement Script.
 
 Delete a specific Entitlement Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiEntitlementScriptsIdDeleteRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx _context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
 	return ApiEntitlementScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -254,26 +257,24 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx _context.C
 }
 
 // Execute executes the request
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEntitlementScriptsIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEntitlementScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -296,7 +297,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -306,15 +307,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -339,6 +340,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -364,7 +375,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 }
 
 type ApiEntitlementScriptsIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *EntitlementScriptsApiService
 	authorization *string
 	id            string
@@ -376,7 +387,7 @@ func (r ApiEntitlementScriptsIdGetRequest) Authorization(authorization string) A
 	return r
 }
 
-func (r ApiEntitlementScriptsIdGetRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
+func (r ApiEntitlementScriptsIdGetRequest) Execute() (*EntitlementScript, *http.Response, error) {
 	return r.ApiService.EntitlementScriptsIdGetExecute(r)
 }
 
@@ -385,11 +396,11 @@ EntitlementScriptsIdGet Get a specific Entitlement Script.
 
 Get a specific Entitlement Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiEntitlementScriptsIdGetRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx _context.Context, id string) ApiEntitlementScriptsIdGetRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Context, id string) ApiEntitlementScriptsIdGetRequest {
 	return ApiEntitlementScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -399,27 +410,25 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx _context.Cont
 
 // Execute executes the request
 //  @return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (EntitlementScript, *_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (*EntitlementScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  EntitlementScript
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *EntitlementScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -442,7 +451,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -452,15 +461,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -494,6 +503,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -508,7 +527,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -519,7 +538,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 }
 
 type ApiEntitlementScriptsIdPutRequest struct {
-	ctx               _context.Context
+	ctx               context.Context
 	ApiService        *EntitlementScriptsApiService
 	authorization     *string
 	id                string
@@ -538,7 +557,7 @@ func (r ApiEntitlementScriptsIdPutRequest) EntitlementScript(entitlementScript E
 	return r
 }
 
-func (r ApiEntitlementScriptsIdPutRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
+func (r ApiEntitlementScriptsIdPutRequest) Execute() (*EntitlementScript, *http.Response, error) {
 	return r.ApiService.EntitlementScriptsIdPutExecute(r)
 }
 
@@ -547,11 +566,11 @@ EntitlementScriptsIdPut Update an existing Entitlement Script.
 
 Update an existing Entitlement Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiEntitlementScriptsIdPutRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx _context.Context, id string) ApiEntitlementScriptsIdPutRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Context, id string) ApiEntitlementScriptsIdPutRequest {
 	return ApiEntitlementScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -561,27 +580,25 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx _context.Cont
 
 // Execute executes the request
 //  @return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (EntitlementScript, *_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (*EntitlementScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  EntitlementScript
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *EntitlementScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -609,7 +626,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -619,15 +636,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -662,6 +679,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -695,7 +722,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -706,7 +733,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 }
 
 type ApiEntitlementScriptsPostRequest struct {
-	ctx               _context.Context
+	ctx               context.Context
 	ApiService        *EntitlementScriptsApiService
 	authorization     *string
 	entitlementScript *EntitlementScript
@@ -724,7 +751,7 @@ func (r ApiEntitlementScriptsPostRequest) EntitlementScript(entitlementScript En
 	return r
 }
 
-func (r ApiEntitlementScriptsPostRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
+func (r ApiEntitlementScriptsPostRequest) Execute() (*EntitlementScript, *http.Response, error) {
 	return r.ApiService.EntitlementScriptsPostExecute(r)
 }
 
@@ -733,10 +760,10 @@ EntitlementScriptsPost Create a new Entitlement Script.
 
 Create a new Entitlement Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEntitlementScriptsPostRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx _context.Context) ApiEntitlementScriptsPostRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Context) ApiEntitlementScriptsPostRequest {
 	return ApiEntitlementScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -745,26 +772,24 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx _context.Conte
 
 // Execute executes the request
 //  @return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (EntitlementScript, *_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (*EntitlementScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  EntitlementScript
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *EntitlementScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -792,7 +817,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -802,15 +827,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -835,6 +860,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -878,7 +913,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -889,7 +924,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 }
 
 type ApiEntitlementScriptsTestPostRequest struct {
-	ctx                    _context.Context
+	ctx                    context.Context
 	ApiService             *EntitlementScriptsApiService
 	authorization          *string
 	entitlementScriptsTest *EntitlementScriptsTest
@@ -907,7 +942,7 @@ func (r ApiEntitlementScriptsTestPostRequest) EntitlementScriptsTest(entitlement
 	return r
 }
 
-func (r ApiEntitlementScriptsTestPostRequest) Execute() (EntitlementScriptTestResult, *_nethttp.Response, error) {
+func (r ApiEntitlementScriptsTestPostRequest) Execute() (*EntitlementScriptTestResult, *http.Response, error) {
 	return r.ApiService.EntitlementScriptsTestPostExecute(r)
 }
 
@@ -916,10 +951,10 @@ EntitlementScriptsTestPost Simulate a given expression for an Entitlement Script
 
 Simulate a given expression for an Entitlement Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEntitlementScriptsTestPostRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx _context.Context) ApiEntitlementScriptsTestPostRequest {
+func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Context) ApiEntitlementScriptsTestPostRequest {
 	return ApiEntitlementScriptsTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -928,26 +963,24 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx _context.C
 
 // Execute executes the request
 //  @return EntitlementScriptTestResult
-func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (EntitlementScriptTestResult, *_nethttp.Response, error) {
+func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (*EntitlementScriptTestResult, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  EntitlementScriptTestResult
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *EntitlementScriptTestResult
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsTestPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/test"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -975,7 +1008,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScriptsTest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -985,15 +1018,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1027,6 +1060,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1051,7 +1094,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

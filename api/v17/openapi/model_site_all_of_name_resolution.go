@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -20,16 +20,16 @@ type SiteAllOfNameResolution struct {
 	// Name resolution to use Appliance's /etc/hosts file.
 	UseHostsFile *bool `json:"useHostsFile,omitempty"`
 	// Resolver to resolve hostnames using DNS servers.
-	DnsResolvers *[]SiteAllOfNameResolutionDnsResolvers `json:"dnsResolvers,omitempty"`
+	DnsResolvers []SiteAllOfNameResolutionDnsResolvers `json:"dnsResolvers,omitempty"`
 	// Resolvers to resolve Amazon machines by querying Amazon Web Services.
-	AwsResolvers *[]SiteAllOfNameResolutionAwsResolvers `json:"awsResolvers,omitempty"`
+	AwsResolvers []SiteAllOfNameResolutionAwsResolvers `json:"awsResolvers,omitempty"`
 	// Resolvers to resolve Azure machines by querying Azure App Service.
-	AzureResolvers *[]SiteAllOfNameResolutionAzureResolvers `json:"azureResolvers,omitempty"`
+	AzureResolvers []SiteAllOfNameResolutionAzureResolvers `json:"azureResolvers,omitempty"`
 	// Resolvers to resolve VMware vSphere machines by querying the vCenter.
-	EsxResolvers *[]SiteAllOfNameResolutionEsxResolvers `json:"esxResolvers,omitempty"`
+	EsxResolvers []SiteAllOfNameResolutionEsxResolvers `json:"esxResolvers,omitempty"`
 	// Resolvers to resolve GCP machine by querying Google web services.
-	GcpResolvers  *[]SiteAllOfNameResolutionGcpResolvers `json:"gcpResolvers,omitempty"`
-	DnsForwarding *SiteAllOfNameResolutionDnsForwarding  `json:"dnsForwarding,omitempty"`
+	GcpResolvers  []SiteAllOfNameResolutionGcpResolvers `json:"gcpResolvers,omitempty"`
+	DnsForwarding *SiteAllOfNameResolutionDnsForwarding `json:"dnsForwarding,omitempty"`
 }
 
 // NewSiteAllOfNameResolution instantiates a new SiteAllOfNameResolution object
@@ -91,12 +91,12 @@ func (o *SiteAllOfNameResolution) GetDnsResolvers() []SiteAllOfNameResolutionDns
 		var ret []SiteAllOfNameResolutionDnsResolvers
 		return ret
 	}
-	return *o.DnsResolvers
+	return o.DnsResolvers
 }
 
 // GetDnsResolversOk returns a tuple with the DnsResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolution) GetDnsResolversOk() (*[]SiteAllOfNameResolutionDnsResolvers, bool) {
+func (o *SiteAllOfNameResolution) GetDnsResolversOk() ([]SiteAllOfNameResolutionDnsResolvers, bool) {
 	if o == nil || o.DnsResolvers == nil {
 		return nil, false
 	}
@@ -114,7 +114,7 @@ func (o *SiteAllOfNameResolution) HasDnsResolvers() bool {
 
 // SetDnsResolvers gets a reference to the given []SiteAllOfNameResolutionDnsResolvers and assigns it to the DnsResolvers field.
 func (o *SiteAllOfNameResolution) SetDnsResolvers(v []SiteAllOfNameResolutionDnsResolvers) {
-	o.DnsResolvers = &v
+	o.DnsResolvers = v
 }
 
 // GetAwsResolvers returns the AwsResolvers field value if set, zero value otherwise.
@@ -123,12 +123,12 @@ func (o *SiteAllOfNameResolution) GetAwsResolvers() []SiteAllOfNameResolutionAws
 		var ret []SiteAllOfNameResolutionAwsResolvers
 		return ret
 	}
-	return *o.AwsResolvers
+	return o.AwsResolvers
 }
 
 // GetAwsResolversOk returns a tuple with the AwsResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolution) GetAwsResolversOk() (*[]SiteAllOfNameResolutionAwsResolvers, bool) {
+func (o *SiteAllOfNameResolution) GetAwsResolversOk() ([]SiteAllOfNameResolutionAwsResolvers, bool) {
 	if o == nil || o.AwsResolvers == nil {
 		return nil, false
 	}
@@ -146,7 +146,7 @@ func (o *SiteAllOfNameResolution) HasAwsResolvers() bool {
 
 // SetAwsResolvers gets a reference to the given []SiteAllOfNameResolutionAwsResolvers and assigns it to the AwsResolvers field.
 func (o *SiteAllOfNameResolution) SetAwsResolvers(v []SiteAllOfNameResolutionAwsResolvers) {
-	o.AwsResolvers = &v
+	o.AwsResolvers = v
 }
 
 // GetAzureResolvers returns the AzureResolvers field value if set, zero value otherwise.
@@ -155,12 +155,12 @@ func (o *SiteAllOfNameResolution) GetAzureResolvers() []SiteAllOfNameResolutionA
 		var ret []SiteAllOfNameResolutionAzureResolvers
 		return ret
 	}
-	return *o.AzureResolvers
+	return o.AzureResolvers
 }
 
 // GetAzureResolversOk returns a tuple with the AzureResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolution) GetAzureResolversOk() (*[]SiteAllOfNameResolutionAzureResolvers, bool) {
+func (o *SiteAllOfNameResolution) GetAzureResolversOk() ([]SiteAllOfNameResolutionAzureResolvers, bool) {
 	if o == nil || o.AzureResolvers == nil {
 		return nil, false
 	}
@@ -178,7 +178,7 @@ func (o *SiteAllOfNameResolution) HasAzureResolvers() bool {
 
 // SetAzureResolvers gets a reference to the given []SiteAllOfNameResolutionAzureResolvers and assigns it to the AzureResolvers field.
 func (o *SiteAllOfNameResolution) SetAzureResolvers(v []SiteAllOfNameResolutionAzureResolvers) {
-	o.AzureResolvers = &v
+	o.AzureResolvers = v
 }
 
 // GetEsxResolvers returns the EsxResolvers field value if set, zero value otherwise.
@@ -187,12 +187,12 @@ func (o *SiteAllOfNameResolution) GetEsxResolvers() []SiteAllOfNameResolutionEsx
 		var ret []SiteAllOfNameResolutionEsxResolvers
 		return ret
 	}
-	return *o.EsxResolvers
+	return o.EsxResolvers
 }
 
 // GetEsxResolversOk returns a tuple with the EsxResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolution) GetEsxResolversOk() (*[]SiteAllOfNameResolutionEsxResolvers, bool) {
+func (o *SiteAllOfNameResolution) GetEsxResolversOk() ([]SiteAllOfNameResolutionEsxResolvers, bool) {
 	if o == nil || o.EsxResolvers == nil {
 		return nil, false
 	}
@@ -210,7 +210,7 @@ func (o *SiteAllOfNameResolution) HasEsxResolvers() bool {
 
 // SetEsxResolvers gets a reference to the given []SiteAllOfNameResolutionEsxResolvers and assigns it to the EsxResolvers field.
 func (o *SiteAllOfNameResolution) SetEsxResolvers(v []SiteAllOfNameResolutionEsxResolvers) {
-	o.EsxResolvers = &v
+	o.EsxResolvers = v
 }
 
 // GetGcpResolvers returns the GcpResolvers field value if set, zero value otherwise.
@@ -219,12 +219,12 @@ func (o *SiteAllOfNameResolution) GetGcpResolvers() []SiteAllOfNameResolutionGcp
 		var ret []SiteAllOfNameResolutionGcpResolvers
 		return ret
 	}
-	return *o.GcpResolvers
+	return o.GcpResolvers
 }
 
 // GetGcpResolversOk returns a tuple with the GcpResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfNameResolution) GetGcpResolversOk() (*[]SiteAllOfNameResolutionGcpResolvers, bool) {
+func (o *SiteAllOfNameResolution) GetGcpResolversOk() ([]SiteAllOfNameResolutionGcpResolvers, bool) {
 	if o == nil || o.GcpResolvers == nil {
 		return nil, false
 	}
@@ -242,7 +242,7 @@ func (o *SiteAllOfNameResolution) HasGcpResolvers() bool {
 
 // SetGcpResolvers gets a reference to the given []SiteAllOfNameResolutionGcpResolvers and assigns it to the GcpResolvers field.
 func (o *SiteAllOfNameResolution) SetGcpResolvers(v []SiteAllOfNameResolutionGcpResolvers) {
-	o.GcpResolvers = &v
+	o.GcpResolvers = v
 }
 
 // GetDnsForwarding returns the DnsForwarding field value if set, zero value otherwise.

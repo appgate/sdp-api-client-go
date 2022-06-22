@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,41 +13,79 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // LdapProvider struct for LdapProvider
 type LdapProvider struct {
-	IdentityProvider
+	// ID of the object.
+	Id *string `json:"id,omitempty"`
+	// Name of the object.
+	Name string `json:"name"`
+	// Notes for the object. Used for documentation purposes.
+	Notes *string `json:"notes,omitempty"`
+	// Create date.
+	Created *time.Time `json:"created,omitempty"`
+	// Last update date.
+	Updated *time.Time `json:"updated,omitempty"`
+	// Array of tags.
+	Tags []string `json:"tags,omitempty"`
+	// The type of the Identity Provider.
+	Type string `json:"type"`
+	// The IPv4 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
+	IpPoolV4 *string `json:"ipPoolV4,omitempty"`
+	// The IPv6 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
+	IpPoolV6 *string `json:"ipPoolV6,omitempty"`
+	// The mapping of Identity Provider attributes to claims.
+	ClaimMappings []ClaimMappingsInner `json:"claimMappings,omitempty"`
+	// ID of the User Claim Scripts to run during authorization.
+	UserScripts []string `json:"userScripts,omitempty"`
+	// The DNS servers to be assigned to the Clients of the users in this Identity Provider.
+	DnsServers []string `json:"dnsServers,omitempty"`
+	// The DNS search domains to be assigned to Clients of the users in this Identity Provider.
+	DnsSearchDomains []string `json:"dnsSearchDomains,omitempty"`
+	// Whether the provider will be listed in the Admin UI or not.
+	AdminProvider *bool `json:"adminProvider,omitempty"`
+	// The device limit per user. The existing on-boarded devices will still be able to sign in even if the limit is exceeded.
+	DeviceLimitPerUser *int32                                          `json:"deviceLimitPerUser,omitempty"`
+	OnBoarding2FA      *ConfigurableIdentityProviderAllOfOnBoarding2FA `json:"onBoarding2FA,omitempty"`
+	// (Desktop) clients will sign out automatically after the user has been inactive on the device for the configured duration. Set it to 0 to disable.
+	InactivityTimeoutMinutes *int32 `json:"inactivityTimeoutMinutes,omitempty"`
+	// If enabled, Windows Client will configure the network profile as \"DomainAuthenticated\".
+	EnforceWindowsNetworkProfileAsDomain *bool `json:"enforceWindowsNetworkProfileAsDomain,omitempty"`
+	// Whether the Windows Client will block local DNS requests or not.
+	BlockLocalDnsRequests *bool `json:"blockLocalDnsRequests,omitempty"`
+	// The mapping of Identity Provider on demand attributes to claims.
+	OnDemandClaimMappings []OnDemandClaimMappingsInner `json:"onDemandClaimMappings,omitempty"`
+	// Hostnames/IP addresses to connect.
+	Hostnames []string `json:"hostnames"`
+	// Port to connect.
+	Port int32 `json:"port"`
+	// Whether to use LDAPS protocol or not.
+	SslEnabled *bool `json:"sslEnabled,omitempty"`
 	// The Distinguished Name to login to LDAP and query users with.
 	AdminDistinguishedName string `json:"adminDistinguishedName"`
 	// The password to login to LDAP and query users with. Required on creation.
 	AdminPassword *string `json:"adminPassword,omitempty"`
 	// The subset of the LDAP server to search users from. If not set, root of the server is used.
 	BaseDn *string `json:"baseDn,omitempty"`
-	// Hostnames/IP addresses to connect.
-	Hostnames []string `json:"hostnames"`
-	// The subset of the LDAP server to search groups from. If not set, \"baseDn\" is used.
-	MembershipBaseDn *string `json:"membershipBaseDn,omitempty"`
-	// The filter to use while querying users' nested groups.
-	MembershipFilter *string `json:"membershipFilter,omitempty"`
 	// The object class of the users to be authenticated and queried.
-	ObjectClass     *string                           `json:"objectClass,omitempty"`
-	PasswordWarning *LdapProviderAllOfPasswordWarning `json:"passwordWarning,omitempty"`
-	// Port to connect.
-	Port int32 `json:"port"`
-	// Whether to use LDAPS protocol or not.
-	SslEnabled *bool `json:"sslEnabled,omitempty"`
+	ObjectClass *string `json:"objectClass,omitempty"`
 	// The name of the attribute to get the exact username from the LDAP server.
 	UsernameAttribute *string `json:"usernameAttribute,omitempty"`
+	// The filter to use while querying users' nested groups.
+	MembershipFilter *string `json:"membershipFilter,omitempty"`
+	// The subset of the LDAP server to search groups from. If not set, \"baseDn\" is used.
+	MembershipBaseDn *string                           `json:"membershipBaseDn,omitempty"`
+	PasswordWarning  *LdapProviderAllOfPasswordWarning `json:"passwordWarning,omitempty"`
 }
 
 // NewLdapProvider instantiates a new LdapProvider object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLdapProvider(adminDistinguishedName string, hostnames []string, port int32, id string, name string, type_ string) *LdapProvider {
+func NewLdapProvider(name string, type_ string, hostnames []string, port int32, adminDistinguishedName string) *LdapProvider {
 	this := LdapProvider{}
-	this.Id = id
 	this.Name = name
 	this.Type = type_
 	var adminProvider bool = false
@@ -58,17 +96,17 @@ func NewLdapProvider(adminDistinguishedName string, hostnames []string, port int
 	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
 	var blockLocalDnsRequests bool = false
 	this.BlockLocalDnsRequests = &blockLocalDnsRequests
-	this.AdminDistinguishedName = adminDistinguishedName
 	this.Hostnames = hostnames
-	var membershipFilter string = "(objectCategory=group)"
-	this.MembershipFilter = &membershipFilter
-	var objectClass string = "user"
-	this.ObjectClass = &objectClass
 	this.Port = port
 	var sslEnabled bool = false
 	this.SslEnabled = &sslEnabled
+	this.AdminDistinguishedName = adminDistinguishedName
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
 	var usernameAttribute string = "sAMAccountName"
 	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	return &this
 }
 
@@ -77,15 +115,727 @@ func NewLdapProvider(adminDistinguishedName string, hostnames []string, port int
 // but it doesn't guarantee that properties required by API are set
 func NewLdapProviderWithDefaults() *LdapProvider {
 	this := LdapProvider{}
-	var membershipFilter string = "(objectCategory=group)"
-	this.MembershipFilter = &membershipFilter
-	var objectClass string = "user"
-	this.ObjectClass = &objectClass
+	var adminProvider bool = false
+	this.AdminProvider = &adminProvider
+	var deviceLimitPerUser int32 = 100
+	this.DeviceLimitPerUser = &deviceLimitPerUser
+	var inactivityTimeoutMinutes int32 = 0
+	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
+	var blockLocalDnsRequests bool = false
+	this.BlockLocalDnsRequests = &blockLocalDnsRequests
 	var sslEnabled bool = false
 	this.SslEnabled = &sslEnabled
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
 	var usernameAttribute string = "sAMAccountName"
 	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *LdapProvider) GetId() string {
+	if o == nil || o.Id == nil {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetIdOk() (*string, bool) {
+	if o == nil || o.Id == nil {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *LdapProvider) HasId() bool {
+	if o != nil && o.Id != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *LdapProvider) SetId(v string) {
+	o.Id = &v
+}
+
+// GetName returns the Name field value
+func (o *LdapProvider) GetName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// SetName sets field value
+func (o *LdapProvider) SetName(v string) {
+	o.Name = v
+}
+
+// GetNotes returns the Notes field value if set, zero value otherwise.
+func (o *LdapProvider) GetNotes() string {
+	if o == nil || o.Notes == nil {
+		var ret string
+		return ret
+	}
+	return *o.Notes
+}
+
+// GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetNotesOk() (*string, bool) {
+	if o == nil || o.Notes == nil {
+		return nil, false
+	}
+	return o.Notes, true
+}
+
+// HasNotes returns a boolean if a field has been set.
+func (o *LdapProvider) HasNotes() bool {
+	if o != nil && o.Notes != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNotes gets a reference to the given string and assigns it to the Notes field.
+func (o *LdapProvider) SetNotes(v string) {
+	o.Notes = &v
+}
+
+// GetCreated returns the Created field value if set, zero value otherwise.
+func (o *LdapProvider) GetCreated() time.Time {
+	if o == nil || o.Created == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.Created
+}
+
+// GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetCreatedOk() (*time.Time, bool) {
+	if o == nil || o.Created == nil {
+		return nil, false
+	}
+	return o.Created, true
+}
+
+// HasCreated returns a boolean if a field has been set.
+func (o *LdapProvider) HasCreated() bool {
+	if o != nil && o.Created != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCreated gets a reference to the given time.Time and assigns it to the Created field.
+func (o *LdapProvider) SetCreated(v time.Time) {
+	o.Created = &v
+}
+
+// GetUpdated returns the Updated field value if set, zero value otherwise.
+func (o *LdapProvider) GetUpdated() time.Time {
+	if o == nil || o.Updated == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.Updated
+}
+
+// GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetUpdatedOk() (*time.Time, bool) {
+	if o == nil || o.Updated == nil {
+		return nil, false
+	}
+	return o.Updated, true
+}
+
+// HasUpdated returns a boolean if a field has been set.
+func (o *LdapProvider) HasUpdated() bool {
+	if o != nil && o.Updated != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdated gets a reference to the given time.Time and assigns it to the Updated field.
+func (o *LdapProvider) SetUpdated(v time.Time) {
+	o.Updated = &v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *LdapProvider) GetTags() []string {
+	if o == nil || o.Tags == nil {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetTagsOk() ([]string, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *LdapProvider) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *LdapProvider) SetTags(v []string) {
+	o.Tags = v
+}
+
+// GetType returns the Type field value
+func (o *LdapProvider) GetType() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Type
+}
+
+// GetTypeOk returns a tuple with the Type field value
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Type, true
+}
+
+// SetType sets field value
+func (o *LdapProvider) SetType(v string) {
+	o.Type = v
+}
+
+// GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
+func (o *LdapProvider) GetIpPoolV4() string {
+	if o == nil || o.IpPoolV4 == nil {
+		var ret string
+		return ret
+	}
+	return *o.IpPoolV4
+}
+
+// GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetIpPoolV4Ok() (*string, bool) {
+	if o == nil || o.IpPoolV4 == nil {
+		return nil, false
+	}
+	return o.IpPoolV4, true
+}
+
+// HasIpPoolV4 returns a boolean if a field has been set.
+func (o *LdapProvider) HasIpPoolV4() bool {
+	if o != nil && o.IpPoolV4 != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIpPoolV4 gets a reference to the given string and assigns it to the IpPoolV4 field.
+func (o *LdapProvider) SetIpPoolV4(v string) {
+	o.IpPoolV4 = &v
+}
+
+// GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
+func (o *LdapProvider) GetIpPoolV6() string {
+	if o == nil || o.IpPoolV6 == nil {
+		var ret string
+		return ret
+	}
+	return *o.IpPoolV6
+}
+
+// GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetIpPoolV6Ok() (*string, bool) {
+	if o == nil || o.IpPoolV6 == nil {
+		return nil, false
+	}
+	return o.IpPoolV6, true
+}
+
+// HasIpPoolV6 returns a boolean if a field has been set.
+func (o *LdapProvider) HasIpPoolV6() bool {
+	if o != nil && o.IpPoolV6 != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIpPoolV6 gets a reference to the given string and assigns it to the IpPoolV6 field.
+func (o *LdapProvider) SetIpPoolV6(v string) {
+	o.IpPoolV6 = &v
+}
+
+// GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
+func (o *LdapProvider) GetClaimMappings() []ClaimMappingsInner {
+	if o == nil || o.ClaimMappings == nil {
+		var ret []ClaimMappingsInner
+		return ret
+	}
+	return o.ClaimMappings
+}
+
+// GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
+	if o == nil || o.ClaimMappings == nil {
+		return nil, false
+	}
+	return o.ClaimMappings, true
+}
+
+// HasClaimMappings returns a boolean if a field has been set.
+func (o *LdapProvider) HasClaimMappings() bool {
+	if o != nil && o.ClaimMappings != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetClaimMappings gets a reference to the given []ClaimMappingsInner and assigns it to the ClaimMappings field.
+func (o *LdapProvider) SetClaimMappings(v []ClaimMappingsInner) {
+	o.ClaimMappings = v
+}
+
+// GetUserScripts returns the UserScripts field value if set, zero value otherwise.
+func (o *LdapProvider) GetUserScripts() []string {
+	if o == nil || o.UserScripts == nil {
+		var ret []string
+		return ret
+	}
+	return o.UserScripts
+}
+
+// GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetUserScriptsOk() ([]string, bool) {
+	if o == nil || o.UserScripts == nil {
+		return nil, false
+	}
+	return o.UserScripts, true
+}
+
+// HasUserScripts returns a boolean if a field has been set.
+func (o *LdapProvider) HasUserScripts() bool {
+	if o != nil && o.UserScripts != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUserScripts gets a reference to the given []string and assigns it to the UserScripts field.
+func (o *LdapProvider) SetUserScripts(v []string) {
+	o.UserScripts = v
+}
+
+// GetDnsServers returns the DnsServers field value if set, zero value otherwise.
+func (o *LdapProvider) GetDnsServers() []string {
+	if o == nil || o.DnsServers == nil {
+		var ret []string
+		return ret
+	}
+	return o.DnsServers
+}
+
+// GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetDnsServersOk() ([]string, bool) {
+	if o == nil || o.DnsServers == nil {
+		return nil, false
+	}
+	return o.DnsServers, true
+}
+
+// HasDnsServers returns a boolean if a field has been set.
+func (o *LdapProvider) HasDnsServers() bool {
+	if o != nil && o.DnsServers != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDnsServers gets a reference to the given []string and assigns it to the DnsServers field.
+func (o *LdapProvider) SetDnsServers(v []string) {
+	o.DnsServers = v
+}
+
+// GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
+func (o *LdapProvider) GetDnsSearchDomains() []string {
+	if o == nil || o.DnsSearchDomains == nil {
+		var ret []string
+		return ret
+	}
+	return o.DnsSearchDomains
+}
+
+// GetDnsSearchDomainsOk returns a tuple with the DnsSearchDomains field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetDnsSearchDomainsOk() ([]string, bool) {
+	if o == nil || o.DnsSearchDomains == nil {
+		return nil, false
+	}
+	return o.DnsSearchDomains, true
+}
+
+// HasDnsSearchDomains returns a boolean if a field has been set.
+func (o *LdapProvider) HasDnsSearchDomains() bool {
+	if o != nil && o.DnsSearchDomains != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDnsSearchDomains gets a reference to the given []string and assigns it to the DnsSearchDomains field.
+func (o *LdapProvider) SetDnsSearchDomains(v []string) {
+	o.DnsSearchDomains = v
+}
+
+// GetAdminProvider returns the AdminProvider field value if set, zero value otherwise.
+func (o *LdapProvider) GetAdminProvider() bool {
+	if o == nil || o.AdminProvider == nil {
+		var ret bool
+		return ret
+	}
+	return *o.AdminProvider
+}
+
+// GetAdminProviderOk returns a tuple with the AdminProvider field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetAdminProviderOk() (*bool, bool) {
+	if o == nil || o.AdminProvider == nil {
+		return nil, false
+	}
+	return o.AdminProvider, true
+}
+
+// HasAdminProvider returns a boolean if a field has been set.
+func (o *LdapProvider) HasAdminProvider() bool {
+	if o != nil && o.AdminProvider != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAdminProvider gets a reference to the given bool and assigns it to the AdminProvider field.
+func (o *LdapProvider) SetAdminProvider(v bool) {
+	o.AdminProvider = &v
+}
+
+// GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
+func (o *LdapProvider) GetDeviceLimitPerUser() int32 {
+	if o == nil || o.DeviceLimitPerUser == nil {
+		var ret int32
+		return ret
+	}
+	return *o.DeviceLimitPerUser
+}
+
+// GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
+	if o == nil || o.DeviceLimitPerUser == nil {
+		return nil, false
+	}
+	return o.DeviceLimitPerUser, true
+}
+
+// HasDeviceLimitPerUser returns a boolean if a field has been set.
+func (o *LdapProvider) HasDeviceLimitPerUser() bool {
+	if o != nil && o.DeviceLimitPerUser != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDeviceLimitPerUser gets a reference to the given int32 and assigns it to the DeviceLimitPerUser field.
+func (o *LdapProvider) SetDeviceLimitPerUser(v int32) {
+	o.DeviceLimitPerUser = &v
+}
+
+// GetOnBoarding2FA returns the OnBoarding2FA field value if set, zero value otherwise.
+func (o *LdapProvider) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoarding2FA {
+	if o == nil || o.OnBoarding2FA == nil {
+		var ret ConfigurableIdentityProviderAllOfOnBoarding2FA
+		return ret
+	}
+	return *o.OnBoarding2FA
+}
+
+// GetOnBoarding2FAOk returns a tuple with the OnBoarding2FA field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfOnBoarding2FA, bool) {
+	if o == nil || o.OnBoarding2FA == nil {
+		return nil, false
+	}
+	return o.OnBoarding2FA, true
+}
+
+// HasOnBoarding2FA returns a boolean if a field has been set.
+func (o *LdapProvider) HasOnBoarding2FA() bool {
+	if o != nil && o.OnBoarding2FA != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOnBoarding2FA gets a reference to the given ConfigurableIdentityProviderAllOfOnBoarding2FA and assigns it to the OnBoarding2FA field.
+func (o *LdapProvider) SetOnBoarding2FA(v ConfigurableIdentityProviderAllOfOnBoarding2FA) {
+	o.OnBoarding2FA = &v
+}
+
+// GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
+func (o *LdapProvider) GetInactivityTimeoutMinutes() int32 {
+	if o == nil || o.InactivityTimeoutMinutes == nil {
+		var ret int32
+		return ret
+	}
+	return *o.InactivityTimeoutMinutes
+}
+
+// GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
+	if o == nil || o.InactivityTimeoutMinutes == nil {
+		return nil, false
+	}
+	return o.InactivityTimeoutMinutes, true
+}
+
+// HasInactivityTimeoutMinutes returns a boolean if a field has been set.
+func (o *LdapProvider) HasInactivityTimeoutMinutes() bool {
+	if o != nil && o.InactivityTimeoutMinutes != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetInactivityTimeoutMinutes gets a reference to the given int32 and assigns it to the InactivityTimeoutMinutes field.
+func (o *LdapProvider) SetInactivityTimeoutMinutes(v int32) {
+	o.InactivityTimeoutMinutes = &v
+}
+
+// GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
+func (o *LdapProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
+	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+		var ret bool
+		return ret
+	}
+	return *o.EnforceWindowsNetworkProfileAsDomain
+}
+
+// GetEnforceWindowsNetworkProfileAsDomainOk returns a tuple with the EnforceWindowsNetworkProfileAsDomain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool) {
+	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+		return nil, false
+	}
+	return o.EnforceWindowsNetworkProfileAsDomain, true
+}
+
+// HasEnforceWindowsNetworkProfileAsDomain returns a boolean if a field has been set.
+func (o *LdapProvider) HasEnforceWindowsNetworkProfileAsDomain() bool {
+	if o != nil && o.EnforceWindowsNetworkProfileAsDomain != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEnforceWindowsNetworkProfileAsDomain gets a reference to the given bool and assigns it to the EnforceWindowsNetworkProfileAsDomain field.
+func (o *LdapProvider) SetEnforceWindowsNetworkProfileAsDomain(v bool) {
+	o.EnforceWindowsNetworkProfileAsDomain = &v
+}
+
+// GetBlockLocalDnsRequests returns the BlockLocalDnsRequests field value if set, zero value otherwise.
+func (o *LdapProvider) GetBlockLocalDnsRequests() bool {
+	if o == nil || o.BlockLocalDnsRequests == nil {
+		var ret bool
+		return ret
+	}
+	return *o.BlockLocalDnsRequests
+}
+
+// GetBlockLocalDnsRequestsOk returns a tuple with the BlockLocalDnsRequests field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
+	if o == nil || o.BlockLocalDnsRequests == nil {
+		return nil, false
+	}
+	return o.BlockLocalDnsRequests, true
+}
+
+// HasBlockLocalDnsRequests returns a boolean if a field has been set.
+func (o *LdapProvider) HasBlockLocalDnsRequests() bool {
+	if o != nil && o.BlockLocalDnsRequests != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetBlockLocalDnsRequests gets a reference to the given bool and assigns it to the BlockLocalDnsRequests field.
+func (o *LdapProvider) SetBlockLocalDnsRequests(v bool) {
+	o.BlockLocalDnsRequests = &v
+}
+
+// GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
+func (o *LdapProvider) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
+	if o == nil || o.OnDemandClaimMappings == nil {
+		var ret []OnDemandClaimMappingsInner
+		return ret
+	}
+	return o.OnDemandClaimMappings
+}
+
+// GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInner, bool) {
+	if o == nil || o.OnDemandClaimMappings == nil {
+		return nil, false
+	}
+	return o.OnDemandClaimMappings, true
+}
+
+// HasOnDemandClaimMappings returns a boolean if a field has been set.
+func (o *LdapProvider) HasOnDemandClaimMappings() bool {
+	if o != nil && o.OnDemandClaimMappings != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOnDemandClaimMappings gets a reference to the given []OnDemandClaimMappingsInner and assigns it to the OnDemandClaimMappings field.
+func (o *LdapProvider) SetOnDemandClaimMappings(v []OnDemandClaimMappingsInner) {
+	o.OnDemandClaimMappings = v
+}
+
+// GetHostnames returns the Hostnames field value
+func (o *LdapProvider) GetHostnames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Hostnames
+}
+
+// GetHostnamesOk returns a tuple with the Hostnames field value
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetHostnamesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Hostnames, true
+}
+
+// SetHostnames sets field value
+func (o *LdapProvider) SetHostnames(v []string) {
+	o.Hostnames = v
+}
+
+// GetPort returns the Port field value
+func (o *LdapProvider) GetPort() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetPortOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Port, true
+}
+
+// SetPort sets field value
+func (o *LdapProvider) SetPort(v int32) {
+	o.Port = v
+}
+
+// GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
+func (o *LdapProvider) GetSslEnabled() bool {
+	if o == nil || o.SslEnabled == nil {
+		var ret bool
+		return ret
+	}
+	return *o.SslEnabled
+}
+
+// GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetSslEnabledOk() (*bool, bool) {
+	if o == nil || o.SslEnabled == nil {
+		return nil, false
+	}
+	return o.SslEnabled, true
+}
+
+// HasSslEnabled returns a boolean if a field has been set.
+func (o *LdapProvider) HasSslEnabled() bool {
+	if o != nil && o.SslEnabled != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSslEnabled gets a reference to the given bool and assigns it to the SslEnabled field.
+func (o *LdapProvider) SetSslEnabled(v bool) {
+	o.SslEnabled = &v
 }
 
 // GetAdminDistinguishedName returns the AdminDistinguishedName field value
@@ -176,94 +926,6 @@ func (o *LdapProvider) SetBaseDn(v string) {
 	o.BaseDn = &v
 }
 
-// GetHostnames returns the Hostnames field value
-func (o *LdapProvider) GetHostnames() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-
-	return o.Hostnames
-}
-
-// GetHostnamesOk returns a tuple with the Hostnames field value
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetHostnamesOk() (*[]string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Hostnames, true
-}
-
-// SetHostnames sets field value
-func (o *LdapProvider) SetHostnames(v []string) {
-	o.Hostnames = v
-}
-
-// GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
-func (o *LdapProvider) GetMembershipBaseDn() string {
-	if o == nil || o.MembershipBaseDn == nil {
-		var ret string
-		return ret
-	}
-	return *o.MembershipBaseDn
-}
-
-// GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetMembershipBaseDnOk() (*string, bool) {
-	if o == nil || o.MembershipBaseDn == nil {
-		return nil, false
-	}
-	return o.MembershipBaseDn, true
-}
-
-// HasMembershipBaseDn returns a boolean if a field has been set.
-func (o *LdapProvider) HasMembershipBaseDn() bool {
-	if o != nil && o.MembershipBaseDn != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMembershipBaseDn gets a reference to the given string and assigns it to the MembershipBaseDn field.
-func (o *LdapProvider) SetMembershipBaseDn(v string) {
-	o.MembershipBaseDn = &v
-}
-
-// GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
-func (o *LdapProvider) GetMembershipFilter() string {
-	if o == nil || o.MembershipFilter == nil {
-		var ret string
-		return ret
-	}
-	return *o.MembershipFilter
-}
-
-// GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetMembershipFilterOk() (*string, bool) {
-	if o == nil || o.MembershipFilter == nil {
-		return nil, false
-	}
-	return o.MembershipFilter, true
-}
-
-// HasMembershipFilter returns a boolean if a field has been set.
-func (o *LdapProvider) HasMembershipFilter() bool {
-	if o != nil && o.MembershipFilter != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMembershipFilter gets a reference to the given string and assigns it to the MembershipFilter field.
-func (o *LdapProvider) SetMembershipFilter(v string) {
-	o.MembershipFilter = &v
-}
-
 // GetObjectClass returns the ObjectClass field value if set, zero value otherwise.
 func (o *LdapProvider) GetObjectClass() string {
 	if o == nil || o.ObjectClass == nil {
@@ -294,94 +956,6 @@ func (o *LdapProvider) HasObjectClass() bool {
 // SetObjectClass gets a reference to the given string and assigns it to the ObjectClass field.
 func (o *LdapProvider) SetObjectClass(v string) {
 	o.ObjectClass = &v
-}
-
-// GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
-func (o *LdapProvider) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
-	if o == nil || o.PasswordWarning == nil {
-		var ret LdapProviderAllOfPasswordWarning
-		return ret
-	}
-	return *o.PasswordWarning
-}
-
-// GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
-	if o == nil || o.PasswordWarning == nil {
-		return nil, false
-	}
-	return o.PasswordWarning, true
-}
-
-// HasPasswordWarning returns a boolean if a field has been set.
-func (o *LdapProvider) HasPasswordWarning() bool {
-	if o != nil && o.PasswordWarning != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPasswordWarning gets a reference to the given LdapProviderAllOfPasswordWarning and assigns it to the PasswordWarning field.
-func (o *LdapProvider) SetPasswordWarning(v LdapProviderAllOfPasswordWarning) {
-	o.PasswordWarning = &v
-}
-
-// GetPort returns the Port field value
-func (o *LdapProvider) GetPort() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Port
-}
-
-// GetPortOk returns a tuple with the Port field value
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetPortOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Port, true
-}
-
-// SetPort sets field value
-func (o *LdapProvider) SetPort(v int32) {
-	o.Port = v
-}
-
-// GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
-func (o *LdapProvider) GetSslEnabled() bool {
-	if o == nil || o.SslEnabled == nil {
-		var ret bool
-		return ret
-	}
-	return *o.SslEnabled
-}
-
-// GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LdapProvider) GetSslEnabledOk() (*bool, bool) {
-	if o == nil || o.SslEnabled == nil {
-		return nil, false
-	}
-	return o.SslEnabled, true
-}
-
-// HasSslEnabled returns a boolean if a field has been set.
-func (o *LdapProvider) HasSslEnabled() bool {
-	if o != nil && o.SslEnabled != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSslEnabled gets a reference to the given bool and assigns it to the SslEnabled field.
-func (o *LdapProvider) SetSslEnabled(v bool) {
-	o.SslEnabled = &v
 }
 
 // GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
@@ -416,15 +990,172 @@ func (o *LdapProvider) SetUsernameAttribute(v string) {
 	o.UsernameAttribute = &v
 }
 
+// GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
+func (o *LdapProvider) GetMembershipFilter() string {
+	if o == nil || o.MembershipFilter == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipFilter
+}
+
+// GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetMembershipFilterOk() (*string, bool) {
+	if o == nil || o.MembershipFilter == nil {
+		return nil, false
+	}
+	return o.MembershipFilter, true
+}
+
+// HasMembershipFilter returns a boolean if a field has been set.
+func (o *LdapProvider) HasMembershipFilter() bool {
+	if o != nil && o.MembershipFilter != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipFilter gets a reference to the given string and assigns it to the MembershipFilter field.
+func (o *LdapProvider) SetMembershipFilter(v string) {
+	o.MembershipFilter = &v
+}
+
+// GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
+func (o *LdapProvider) GetMembershipBaseDn() string {
+	if o == nil || o.MembershipBaseDn == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipBaseDn
+}
+
+// GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetMembershipBaseDnOk() (*string, bool) {
+	if o == nil || o.MembershipBaseDn == nil {
+		return nil, false
+	}
+	return o.MembershipBaseDn, true
+}
+
+// HasMembershipBaseDn returns a boolean if a field has been set.
+func (o *LdapProvider) HasMembershipBaseDn() bool {
+	if o != nil && o.MembershipBaseDn != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipBaseDn gets a reference to the given string and assigns it to the MembershipBaseDn field.
+func (o *LdapProvider) SetMembershipBaseDn(v string) {
+	o.MembershipBaseDn = &v
+}
+
+// GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
+func (o *LdapProvider) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
+	if o == nil || o.PasswordWarning == nil {
+		var ret LdapProviderAllOfPasswordWarning
+		return ret
+	}
+	return *o.PasswordWarning
+}
+
+// GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapProvider) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
+	if o == nil || o.PasswordWarning == nil {
+		return nil, false
+	}
+	return o.PasswordWarning, true
+}
+
+// HasPasswordWarning returns a boolean if a field has been set.
+func (o *LdapProvider) HasPasswordWarning() bool {
+	if o != nil && o.PasswordWarning != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPasswordWarning gets a reference to the given LdapProviderAllOfPasswordWarning and assigns it to the PasswordWarning field.
+func (o *LdapProvider) SetPasswordWarning(v LdapProviderAllOfPasswordWarning) {
+	o.PasswordWarning = &v
+}
+
 func (o LdapProvider) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	serializedIdentityProvider, errIdentityProvider := json.Marshal(o.IdentityProvider)
-	if errIdentityProvider != nil {
-		return []byte{}, errIdentityProvider
+	if o.Id != nil {
+		toSerialize["id"] = o.Id
 	}
-	errIdentityProvider = json.Unmarshal([]byte(serializedIdentityProvider), &toSerialize)
-	if errIdentityProvider != nil {
-		return []byte{}, errIdentityProvider
+	if true {
+		toSerialize["name"] = o.Name
+	}
+	if o.Notes != nil {
+		toSerialize["notes"] = o.Notes
+	}
+	if o.Created != nil {
+		toSerialize["created"] = o.Created
+	}
+	if o.Updated != nil {
+		toSerialize["updated"] = o.Updated
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
+	}
+	if true {
+		toSerialize["type"] = o.Type
+	}
+	if o.IpPoolV4 != nil {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if o.IpPoolV6 != nil {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if o.ClaimMappings != nil {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if o.UserScripts != nil {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if o.DnsServers != nil {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if o.DnsSearchDomains != nil {
+		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	}
+	if o.AdminProvider != nil {
+		toSerialize["adminProvider"] = o.AdminProvider
+	}
+	if o.DeviceLimitPerUser != nil {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
+	}
+	if o.OnBoarding2FA != nil {
+		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
+	}
+	if o.InactivityTimeoutMinutes != nil {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	if o.EnforceWindowsNetworkProfileAsDomain != nil {
+		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
+	}
+	if o.BlockLocalDnsRequests != nil {
+		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
+	}
+	if o.OnDemandClaimMappings != nil {
+		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	if true {
+		toSerialize["hostnames"] = o.Hostnames
+	}
+	if true {
+		toSerialize["port"] = o.Port
+	}
+	if o.SslEnabled != nil {
+		toSerialize["sslEnabled"] = o.SslEnabled
 	}
 	if true {
 		toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
@@ -435,29 +1166,20 @@ func (o LdapProvider) MarshalJSON() ([]byte, error) {
 	if o.BaseDn != nil {
 		toSerialize["baseDn"] = o.BaseDn
 	}
-	if true {
-		toSerialize["hostnames"] = o.Hostnames
+	if o.ObjectClass != nil {
+		toSerialize["objectClass"] = o.ObjectClass
 	}
-	if o.MembershipBaseDn != nil {
-		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
+	if o.UsernameAttribute != nil {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
 	}
 	if o.MembershipFilter != nil {
 		toSerialize["membershipFilter"] = o.MembershipFilter
 	}
-	if o.ObjectClass != nil {
-		toSerialize["objectClass"] = o.ObjectClass
+	if o.MembershipBaseDn != nil {
+		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
 	}
 	if o.PasswordWarning != nil {
 		toSerialize["passwordWarning"] = o.PasswordWarning
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SslEnabled != nil {
-		toSerialize["sslEnabled"] = o.SslEnabled
-	}
-	if o.UsernameAttribute != nil {
-		toSerialize["usernameAttribute"] = o.UsernameAttribute
 	}
 	return json.Marshal(toSerialize)
 }
