@@ -37,11 +37,16 @@ for version in "${supportedVersions[@]}"; do
 
 done
 
-cd spec
-apigentools validate
-apigentools generate
-
 for version in "${supportedVersions[@]}"; do
+    cd spec
+    if [[ $version == 16 ]]; then
+        sed 's/${IMAGE}/openapitools\/openapi-generator-cli:v5.2.1/g' config/config_template.yaml | tee config/config.yaml 1> /dev/null
+    else
+        sed 's/${IMAGE}/openapitools\/openapi-generator-cli:v6.0.0/g' config/config_template.yaml | tee config/config.yaml 1> /dev/null
+    fi
+    apigentools --api-versions "v${version}" validate
+    apigentools --api-versions "v${version}" generate
     mkdir -p "../api/v${version}/openapi/"
     find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' -exec cp {} "../api/v$version/openapi/" \;
+    cd ..
 done
