@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 16.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -558,7 +558,7 @@ func (r ApiIdentityProvidersIdGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiIdentityProvidersIdGetRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -580,15 +580,15 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Contex
 }
 
 // Execute executes the request
-//  @return IdentityProvider
-func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (IdentityProvider, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdGet")
@@ -701,11 +701,11 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 }
 
 type ApiIdentityProvidersIdPutRequest struct {
-	ctx              _context.Context
-	ApiService       *IdentityProvidersApiService
-	authorization    *string
-	id               string
-	identityProvider *IdentityProvider
+	ctx           _context.Context
+	ApiService    *IdentityProvidersApiService
+	authorization *string
+	id            string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
@@ -715,12 +715,12 @@ func (r ApiIdentityProvidersIdPutRequest) Authorization(authorization string) Ap
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersIdPutRequest) IdentityProvider(identityProvider IdentityProvider) ApiIdentityProvidersIdPutRequest {
-	r.identityProvider = &identityProvider
+func (r ApiIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiIdentityProvidersIdPutRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiIdentityProvidersIdPutRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -742,15 +742,15 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Contex
 }
 
 // Execute executes the request
-//  @return IdentityProvider
-func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (IdentityProvider, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdPut")
@@ -767,8 +767,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -790,7 +790,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -888,10 +888,10 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 }
 
 type ApiIdentityProvidersPostRequest struct {
-	ctx              _context.Context
-	ApiService       *IdentityProvidersApiService
-	authorization    *string
-	identityProvider *IdentityProvider
+	ctx           _context.Context
+	ApiService    *IdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
@@ -901,12 +901,12 @@ func (r ApiIdentityProvidersPostRequest) Authorization(authorization string) Api
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiIdentityProvidersPostRequest {
-	r.identityProvider = &identityProvider
+func (r ApiIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiIdentityProvidersPostRequest {
+	r.body = &body
 	return r
 }
 
-func (r ApiIdentityProvidersPostRequest) Execute() (IdentityProvider, *_nethttp.Response, error) {
+func (r ApiIdentityProvidersPostRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -926,15 +926,15 @@ func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context
 }
 
 // Execute executes the request
-//  @return IdentityProvider
-func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (IdentityProvider, *_nethttp.Response, error) {
+//  @return map[string]interface{}
+func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (map[string]interface{}, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  IdentityProvider
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersPost")
@@ -950,8 +950,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -973,7 +973,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1071,10 +1071,10 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 }
 
 type ApiIdentityProvidersTestPostRequest struct {
-	ctx              _context.Context
-	ApiService       *IdentityProvidersApiService
-	authorization    *string
-	identityProvider *IdentityProvider
+	ctx           _context.Context
+	ApiService    *IdentityProvidersApiService
+	authorization *string
+	body          *map[string]interface{}
 }
 
 // The Token from the LoginResponse.
@@ -1084,8 +1084,8 @@ func (r ApiIdentityProvidersTestPostRequest) Authorization(authorization string)
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersTestPostRequest) IdentityProvider(identityProvider IdentityProvider) ApiIdentityProvidersTestPostRequest {
-	r.identityProvider = &identityProvider
+func (r ApiIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiIdentityProvidersTestPostRequest {
+	r.body = &body
 	return r
 }
 
@@ -1133,8 +1133,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.identityProvider == nil {
-		return localVarReturnValue, nil, reportError("identityProvider is required and must be specified")
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1156,7 +1156,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.identityProvider
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

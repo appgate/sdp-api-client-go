@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 16.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -30,16 +30,16 @@ type ConnectorProvider struct {
 	Updated *time.Time `json:"updated,omitempty"`
 	// Array of tags.
 	Tags *[]string `json:"tags,omitempty"`
-	// The mapping of Identity Provider attributes to claims.
-	ClaimMappings *[]map[string]interface{} `json:"claimMappings,omitempty"`
+	// The type of the Identity Provider.
+	Type string `json:"type"`
 	// The IPv4 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
 	IpPoolV4 *string `json:"ipPoolV4,omitempty"`
 	// The IPv6 Pool ID the users in this Identity Provider are going to use to allocate IP addresses for the tunnels.
 	IpPoolV6 *string `json:"ipPoolV6,omitempty"`
-	// The mapping of Identity Provider on demand attributes to claims.
-	OnDemandClaimMappings *[]map[string]interface{} `json:"onDemandClaimMappings,omitempty"`
-	// The type of the Identity Provider.
-	Type string `json:"type"`
+	// The mapping of Identity Provider attributes to claims.
+	ClaimMappings *[]map[string]interface{} `json:"claimMappings,omitempty"`
+	// ID of the User Claim Scripts to run during authorization.
+	UserScripts *[]string `json:"userScripts,omitempty"`
 }
 
 // NewConnectorProvider instantiates a new ConnectorProvider object
@@ -238,36 +238,28 @@ func (o *ConnectorProvider) SetTags(v []string) {
 	o.Tags = &v
 }
 
-// GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
-func (o *ConnectorProvider) GetClaimMappings() []map[string]interface{} {
-	if o == nil || o.ClaimMappings == nil {
-		var ret []map[string]interface{}
+// GetType returns the Type field value
+func (o *ConnectorProvider) GetType() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.ClaimMappings
+
+	return o.Type
 }
 
-// GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
+// GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *ConnectorProvider) GetClaimMappingsOk() (*[]map[string]interface{}, bool) {
-	if o == nil || o.ClaimMappings == nil {
+func (o *ConnectorProvider) GetTypeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ClaimMappings, true
+	return &o.Type, true
 }
 
-// HasClaimMappings returns a boolean if a field has been set.
-func (o *ConnectorProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the ClaimMappings field.
-func (o *ConnectorProvider) SetClaimMappings(v []map[string]interface{}) {
-	o.ClaimMappings = &v
+// SetType sets field value
+func (o *ConnectorProvider) SetType(v string) {
+	o.Type = v
 }
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
@@ -334,60 +326,68 @@ func (o *ConnectorProvider) SetIpPoolV6(v string) {
 	o.IpPoolV6 = &v
 }
 
-// GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
-func (o *ConnectorProvider) GetOnDemandClaimMappings() []map[string]interface{} {
-	if o == nil || o.OnDemandClaimMappings == nil {
+// GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
+func (o *ConnectorProvider) GetClaimMappings() []map[string]interface{} {
+	if o == nil || o.ClaimMappings == nil {
 		var ret []map[string]interface{}
 		return ret
 	}
-	return *o.OnDemandClaimMappings
+	return *o.ClaimMappings
 }
 
-// GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
+// GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorProvider) GetOnDemandClaimMappingsOk() (*[]map[string]interface{}, bool) {
-	if o == nil || o.OnDemandClaimMappings == nil {
+func (o *ConnectorProvider) GetClaimMappingsOk() (*[]map[string]interface{}, bool) {
+	if o == nil || o.ClaimMappings == nil {
 		return nil, false
 	}
-	return o.OnDemandClaimMappings, true
+	return o.ClaimMappings, true
 }
 
-// HasOnDemandClaimMappings returns a boolean if a field has been set.
-func (o *ConnectorProvider) HasOnDemandClaimMappings() bool {
-	if o != nil && o.OnDemandClaimMappings != nil {
+// HasClaimMappings returns a boolean if a field has been set.
+func (o *ConnectorProvider) HasClaimMappings() bool {
+	if o != nil && o.ClaimMappings != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetOnDemandClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the OnDemandClaimMappings field.
-func (o *ConnectorProvider) SetOnDemandClaimMappings(v []map[string]interface{}) {
-	o.OnDemandClaimMappings = &v
+// SetClaimMappings gets a reference to the given []map[string]interface{} and assigns it to the ClaimMappings field.
+func (o *ConnectorProvider) SetClaimMappings(v []map[string]interface{}) {
+	o.ClaimMappings = &v
 }
 
-// GetType returns the Type field value
-func (o *ConnectorProvider) GetType() string {
-	if o == nil {
-		var ret string
+// GetUserScripts returns the UserScripts field value if set, zero value otherwise.
+func (o *ConnectorProvider) GetUserScripts() []string {
+	if o == nil || o.UserScripts == nil {
+		var ret []string
 		return ret
 	}
-
-	return o.Type
+	return *o.UserScripts
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConnectorProvider) GetTypeOk() (*string, bool) {
-	if o == nil {
+func (o *ConnectorProvider) GetUserScriptsOk() (*[]string, bool) {
+	if o == nil || o.UserScripts == nil {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.UserScripts, true
 }
 
-// SetType sets field value
-func (o *ConnectorProvider) SetType(v string) {
-	o.Type = v
+// HasUserScripts returns a boolean if a field has been set.
+func (o *ConnectorProvider) HasUserScripts() bool {
+	if o != nil && o.UserScripts != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUserScripts gets a reference to the given []string and assigns it to the UserScripts field.
+func (o *ConnectorProvider) SetUserScripts(v []string) {
+	o.UserScripts = &v
 }
 
 func (o ConnectorProvider) MarshalJSON() ([]byte, error) {
@@ -410,8 +410,8 @@ func (o ConnectorProvider) MarshalJSON() ([]byte, error) {
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
 	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
+	if true {
+		toSerialize["type"] = o.Type
 	}
 	if o.IpPoolV4 != nil {
 		toSerialize["ipPoolV4"] = o.IpPoolV4
@@ -419,11 +419,11 @@ func (o ConnectorProvider) MarshalJSON() ([]byte, error) {
 	if o.IpPoolV6 != nil {
 		toSerialize["ipPoolV6"] = o.IpPoolV6
 	}
-	if o.OnDemandClaimMappings != nil {
-		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	if o.ClaimMappings != nil {
+		toSerialize["claimMappings"] = o.ClaimMappings
 	}
-	if true {
-		toSerialize["type"] = o.Type
+	if o.UserScripts != nil {
+		toSerialize["userScripts"] = o.UserScripts
 	}
 	return json.Marshal(toSerialize)
 }
