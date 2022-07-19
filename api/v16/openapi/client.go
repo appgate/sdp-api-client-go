@@ -545,6 +545,21 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		_, err = (*f).Seek(0, io.SeekStart)
 		return
 	}
+	// https://github.com/OpenAPITools/openapi-generator/issues/11965
+	if file, ok := v.(***os.File); ok {
+		var tmp *os.File
+		tmp, err = ioutil.TempFile("", "HttpClientFile")
+		if err != nil {
+			return
+		}
+		_, err = tmp.Write(b)
+		if err != nil {
+			return
+		}
+		_, err = tmp.Seek(0, io.SeekStart)
+		*file = &tmp
+		return
+	}
 	if xmlCheck.MatchString(contentType) {
 		if err = xml.Unmarshal(b, v); err != nil {
 			return err
