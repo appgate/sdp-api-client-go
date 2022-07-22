@@ -579,7 +579,7 @@ func (r ApiIdentityProvidersIdGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiIdentityProvidersIdGetRequest) Execute() (*BaseIdentityProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return BaseIdentityProvider
+func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (*BaseIdentityProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *BaseIdentityProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdGet")
@@ -730,11 +730,11 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 }
 
 type ApiIdentityProvidersIdPutRequest struct {
-	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
-	authorization *string
-	id            string
-	body          *map[string]interface{}
+	ctx                  context.Context
+	ApiService           *IdentityProvidersApiService
+	authorization        *string
+	id                   string
+	baseIdentityProvider *BaseIdentityProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiIdentityProvidersIdPutRequest) Authorization(authorization string) Ap
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiIdentityProvidersIdPutRequest {
-	r.body = &body
+func (r ApiIdentityProvidersIdPutRequest) BaseIdentityProvider(baseIdentityProvider BaseIdentityProvider) ApiIdentityProvidersIdPutRequest {
+	r.baseIdentityProvider = &baseIdentityProvider
 	return r
 }
 
-func (r ApiIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiIdentityProvidersIdPutRequest) Execute() (*BaseIdentityProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return BaseIdentityProvider
+func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (*BaseIdentityProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *BaseIdentityProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdPut")
@@ -794,8 +794,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.baseIdentityProvider == nil {
+		return localVarReturnValue, nil, reportError("baseIdentityProvider is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -817,7 +817,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.baseIdentityProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -925,10 +925,10 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 }
 
 type ApiIdentityProvidersPostRequest struct {
-	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
-	authorization *string
-	body          *map[string]interface{}
+	ctx                  context.Context
+	ApiService           *IdentityProvidersApiService
+	authorization        *string
+	baseIdentityProvider *BaseIdentityProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiIdentityProvidersPostRequest) Authorization(authorization string) Api
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiIdentityProvidersPostRequest {
-	r.body = &body
+func (r ApiIdentityProvidersPostRequest) BaseIdentityProvider(baseIdentityProvider BaseIdentityProvider) ApiIdentityProvidersPostRequest {
+	r.baseIdentityProvider = &baseIdentityProvider
 	return r
 }
 
-func (r ApiIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiIdentityProvidersPostRequest) Execute() (*BaseIdentityProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx context.Context)
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return BaseIdentityProvider
+func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (*BaseIdentityProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *BaseIdentityProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersPost")
@@ -985,8 +985,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.baseIdentityProvider == nil {
+		return localVarReturnValue, nil, reportError("baseIdentityProvider is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1008,7 +1008,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.baseIdentityProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1116,10 +1116,10 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 }
 
 type ApiIdentityProvidersTestPostRequest struct {
-	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
-	authorization *string
-	body          *map[string]interface{}
+	ctx                  context.Context
+	ApiService           *IdentityProvidersApiService
+	authorization        *string
+	baseIdentityProvider *BaseIdentityProvider
 }
 
 // The Token from the LoginResponse.
@@ -1129,8 +1129,8 @@ func (r ApiIdentityProvidersTestPostRequest) Authorization(authorization string)
 }
 
 // Identity Provider object.
-func (r ApiIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiIdentityProvidersTestPostRequest {
-	r.body = &body
+func (r ApiIdentityProvidersTestPostRequest) BaseIdentityProvider(baseIdentityProvider BaseIdentityProvider) ApiIdentityProvidersTestPostRequest {
+	r.baseIdentityProvider = &baseIdentityProvider
 	return r
 }
 
@@ -1176,8 +1176,8 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.baseIdentityProvider == nil {
+		return localVarReturnValue, nil, reportError("baseIdentityProvider is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1199,7 +1199,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.baseIdentityProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
