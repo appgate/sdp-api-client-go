@@ -1,0 +1,31 @@
+diff --git a/identity_provider.yml b/identity_provider.yml
+index 1793f6bb0..16050c974 100644
+--- a/identity_provider.yml
++++ b/identity_provider.yml
+@@ -229,7 +229,7 @@ responses:
+     content:
+       application/json:
+         schema:
+-          $ref: '#/definitions/IdentityProvider'
++          $ref: '#/definitions/BaseIdentityProvider'
+     description: Identity Provider object.
+
+ requestBodies:
+@@ -237,7 +237,7 @@ requestBodies:
+     content:
+       application/json:
+         schema:
+-          $ref: '#/definitions/IdentityProvider'
++          $ref: '#/definitions/BaseIdentityProvider'
+     description: Identity Provider object.
+     required: true
+
+@@ -252,7 +252,7 @@ definitions:
+             type: array
+             description: List of Identity Providers.
+             items:
+-              $ref: '#/definitions/IdentityProvider'
++              $ref: '#/definitions/BaseIdentityProvider'
+   IdentityProvider:
+     type: object
+     discriminator:
