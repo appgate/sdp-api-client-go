@@ -18,7 +18,7 @@ import (
 // IdentityProviderListAllOf Represents a list of Identity Providers.
 type IdentityProviderListAllOf struct {
 	// List of Identity Providers.
-	Data []map[string]interface{} `json:"data,omitempty"`
+	Data []BaseIdentityProvider `json:"data,omitempty"`
 }
 
 // NewIdentityProviderListAllOf instantiates a new IdentityProviderListAllOf object
@@ -39,9 +39,9 @@ func NewIdentityProviderListAllOfWithDefaults() *IdentityProviderListAllOf {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *IdentityProviderListAllOf) GetData() []map[string]interface{} {
+func (o *IdentityProviderListAllOf) GetData() []BaseIdentityProvider {
 	if o == nil || o.Data == nil {
-		var ret []map[string]interface{}
+		var ret []BaseIdentityProvider
 		return ret
 	}
 	return o.Data
@@ -49,7 +49,7 @@ func (o *IdentityProviderListAllOf) GetData() []map[string]interface{} {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentityProviderListAllOf) GetDataOk() ([]map[string]interface{}, bool) {
+func (o *IdentityProviderListAllOf) GetDataOk() ([]BaseIdentityProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -65,8 +65,8 @@ func (o *IdentityProviderListAllOf) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []map[string]interface{} and assigns it to the Data field.
-func (o *IdentityProviderListAllOf) SetData(v []map[string]interface{}) {
+// SetData gets a reference to the given []BaseIdentityProvider and assigns it to the Data field.
+func (o *IdentityProviderListAllOf) SetData(v []BaseIdentityProvider) {
 	o.Data = v
 }
 

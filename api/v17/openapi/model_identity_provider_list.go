@@ -31,7 +31,7 @@ type IdentityProviderList struct {
 	// The filters applied to the list.
 	FilterBy []FilterBy `json:"filterBy,omitempty"`
 	// List of Identity Providers.
-	Data []map[string]interface{} `json:"data,omitempty"`
+	Data []BaseIdentityProvider `json:"data,omitempty"`
 }
 
 // NewIdentityProviderList instantiates a new IdentityProviderList object
@@ -247,9 +247,9 @@ func (o *IdentityProviderList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *IdentityProviderList) GetData() []map[string]interface{} {
+func (o *IdentityProviderList) GetData() []BaseIdentityProvider {
 	if o == nil || o.Data == nil {
-		var ret []map[string]interface{}
+		var ret []BaseIdentityProvider
 		return ret
 	}
 	return o.Data
@@ -257,7 +257,7 @@ func (o *IdentityProviderList) GetData() []map[string]interface{} {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IdentityProviderList) GetDataOk() ([]map[string]interface{}, bool) {
+func (o *IdentityProviderList) GetDataOk() ([]BaseIdentityProvider, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -273,8 +273,8 @@ func (o *IdentityProviderList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []map[string]interface{} and assigns it to the Data field.
-func (o *IdentityProviderList) SetData(v []map[string]interface{}) {
+// SetData gets a reference to the given []BaseIdentityProvider and assigns it to the Data field.
+func (o *IdentityProviderList) SetData(v []BaseIdentityProvider) {
 	o.Data = v
 }
 
