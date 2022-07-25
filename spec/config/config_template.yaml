@@ -39,6 +39,9 @@ languages:
       downstream_templates/go/v17/model_connector_identity_provider_list.go: openapi_v17/model_connector_identity_provider_list.go
 
       downstream_templates/go/v17/api_local_database_identity_providers.go: openapi_v17/api_local_database_identity_providers.go
+      downstream_templates/go/v17/model_local_database_identity_provider_list.go: openapi_v17/model_local_database_identity_provider_list.go
+
+
       downstream_templates/go/v17/api_ldap_certificate_identity_providers.go: openapi_v17/api_ldap_certificate_identity_providers.go
       downstream_templates/go/v17/api_saml_identity_providers.go: openapi_v17/api_saml_identity_providers.go
       downstream_templates/go/v17/api_radius_identity_providers.go: openapi_v17/api_radius_identity_providers.go
