@@ -579,7 +579,7 @@ func (r ApiConnectorIdentityProvidersIdGetRequest) Authorization(authorization s
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiConnectorIdentityProvidersIdGetRequest) Execute() (*ConnectorProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGet(ctx contex
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiConnectorIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return ConnectorProvider
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiConnectorIdentityProvidersIdGetRequest) (*ConnectorProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -734,7 +734,7 @@ type ApiConnectorIdentityProvidersIdPutRequest struct {
 	ApiService    *ConnectorIdentityProvidersApiService
 	authorization *string
 	id            string
-	body          *map[string]interface{}
+	body          *ConnectorProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiConnectorIdentityProvidersIdPutRequest) Authorization(authorization s
 }
 
 // Identity Provider object.
-func (r ApiConnectorIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiConnectorIdentityProvidersIdPutRequest {
+func (r ApiConnectorIdentityProvidersIdPutRequest) Body(body ConnectorProvider) ApiConnectorIdentityProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiConnectorIdentityProvidersIdPutRequest) Execute() (*ConnectorProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPut(ctx contex
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiConnectorIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return ConnectorProvider
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiConnectorIdentityProvidersIdPutRequest) (*ConnectorProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -928,7 +928,7 @@ type ApiConnectorIdentityProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *ConnectorIdentityProvidersApiService
 	authorization *string
-	body          *map[string]interface{}
+	body          *ConnectorProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiConnectorIdentityProvidersPostRequest) Authorization(authorization st
 }
 
 // Identity Provider object.
-func (r ApiConnectorIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiConnectorIdentityProvidersPostRequest {
+func (r ApiConnectorIdentityProvidersPostRequest) Body(body ConnectorProvider) ApiConnectorIdentityProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiConnectorIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiConnectorIdentityProvidersPostRequest) Execute() (*ConnectorProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPost(ctx context
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiConnectorIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return ConnectorProvider
+func (a *ConnectorIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiConnectorIdentityProvidersPostRequest) (*ConnectorProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *ConnectorProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConnectorIdentityProvidersApiService.IdentityProvidersPost")

@@ -579,7 +579,7 @@ func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Authorization(authoriza
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersIdGetRequest) Execute() (*LdapCertificateProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGet(ctx 
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLdapCertificateIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LdapCertificateProvider
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLdapCertificateIdentityProvidersIdGetRequest) (*LdapCertificateProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -734,7 +734,7 @@ type ApiLdapIdentityCertificateProvidersIdPutRequest struct {
 	ApiService    *LdapCertificateIdentityProvidersApiService
 	authorization *string
 	id            string
-	body          *map[string]interface{}
+	body          *LdapCertificateProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiLdapIdentityCertificateProvidersIdPutRequest) Authorization(authoriza
 }
 
 // Identity Provider object.
-func (r ApiLdapIdentityCertificateProvidersIdPutRequest) Body(body map[string]interface{}) ApiLdapIdentityCertificateProvidersIdPutRequest {
+func (r ApiLdapIdentityCertificateProvidersIdPutRequest) Body(body LdapCertificateProvider) ApiLdapIdentityCertificateProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLdapIdentityCertificateProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLdapIdentityCertificateProvidersIdPutRequest) Execute() (*LdapCertificateProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPut(ctx 
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapIdentityCertificateProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LdapCertificateProvider
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLdapIdentityCertificateProvidersIdPutRequest) (*LdapCertificateProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -928,7 +928,7 @@ type ApiLdapCertificateIdentityProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *LdapCertificateIdentityProvidersApiService
 	authorization *string
-	body          *map[string]interface{}
+	body          *LdapCertificateProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiLdapCertificateIdentityProvidersPostRequest) Authorization(authorizat
 }
 
 // Identity Provider object.
-func (r ApiLdapCertificateIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiLdapCertificateIdentityProvidersPostRequest {
+func (r ApiLdapCertificateIdentityProvidersPostRequest) Body(body LdapCertificateProvider) ApiLdapCertificateIdentityProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersPostRequest) Execute() (*LdapCertificateProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPost(ctx c
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapCertificateIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LdapCertificateProvider
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLdapCertificateIdentityProvidersPostRequest) (*LdapCertificateProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LdapCertificateProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersPost")

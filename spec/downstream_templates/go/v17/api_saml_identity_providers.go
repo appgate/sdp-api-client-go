@@ -579,7 +579,7 @@ func (r ApiSamlIdentityProvidersIdGetRequest) Authorization(authorization string
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiSamlIdentityProvidersIdGetRequest) Execute() (*SamlProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Con
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSamlIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return SamlProvider
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSamlIdentityProvidersIdGetRequest) (*SamlProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *SamlProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -734,7 +734,7 @@ type ApiSamlIdentityProvidersIdPutRequest struct {
 	ApiService    *SamlIdentityProvidersApiService
 	authorization *string
 	id            string
-	body          *map[string]interface{}
+	body          *SamlProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiSamlIdentityProvidersIdPutRequest) Authorization(authorization string
 }
 
 // Identity Provider object.
-func (r ApiSamlIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiSamlIdentityProvidersIdPutRequest {
+func (r ApiSamlIdentityProvidersIdPutRequest) Body(body SamlProvider) ApiSamlIdentityProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiSamlIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiSamlIdentityProvidersIdPutRequest) Execute() (*SamlProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Con
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSamlIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return SamlProvider
+func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSamlIdentityProvidersIdPutRequest) (*SamlProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *SamlProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -928,7 +928,7 @@ type ApiSamlIdentityProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *SamlIdentityProvidersApiService
 	authorization *string
-	body          *map[string]interface{}
+	body          *SamlProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiSamlIdentityProvidersPostRequest) Authorization(authorization string)
 }
 
 // Identity Provider object.
-func (r ApiSamlIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiSamlIdentityProvidersPostRequest {
+func (r ApiSamlIdentityProvidersPostRequest) Body(body SamlProvider) ApiSamlIdentityProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiSamlIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiSamlIdentityProvidersPostRequest) Execute() (*SamlProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPost(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSamlIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return SamlProvider
+func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSamlIdentityProvidersPostRequest) (*SamlProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *SamlProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SamlIdentityProvidersApiService.IdentityProvidersPost")

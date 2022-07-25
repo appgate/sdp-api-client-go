@@ -579,7 +579,7 @@ func (r ApiLocalDatabaseProvidersIdGetRequest) Authorization(authorization strin
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLocalDatabaseProvidersIdGetRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGet(ctx co
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLocalDatabaseProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LocalDatabaseProvider
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLocalDatabaseProvidersIdGetRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LocalDatabaseProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LocalDatabaseIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -734,7 +734,7 @@ type ApiLocalDatabaseProvidersIdPutRequest struct {
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
 	id            string
-	body          *map[string]interface{}
+	body          *LocalDatabaseProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiLocalDatabaseProvidersIdPutRequest) Authorization(authorization strin
 }
 
 // Identity Provider object.
-func (r ApiLocalDatabaseProvidersIdPutRequest) Body(body map[string]interface{}) ApiLocalDatabaseProvidersIdPutRequest {
+func (r ApiLocalDatabaseProvidersIdPutRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLocalDatabaseProvidersIdPutRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPut(ctx co
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLocalDatabaseProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LocalDatabaseProvider
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLocalDatabaseProvidersIdPutRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LocalDatabaseProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LocalDatabaseIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -928,7 +928,7 @@ type ApiLocalDatabaseProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
-	body          *map[string]interface{}
+	body          *LocalDatabaseProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiLocalDatabaseProvidersPostRequest) Authorization(authorization string
 }
 
 // Identity Provider object.
-func (r ApiLocalDatabaseProvidersPostRequest) Body(body map[string]interface{}) ApiLocalDatabaseProvidersPostRequest {
+func (r ApiLocalDatabaseProvidersPostRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiLocalDatabaseProvidersPostRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPost(ctx con
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLocalDatabaseProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return LocalDatabaseProvider
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLocalDatabaseProvidersPostRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *LocalDatabaseProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LocalDatabaseIdentityProvidersApiService.IdentityProvidersPost")

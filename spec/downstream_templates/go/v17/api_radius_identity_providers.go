@@ -579,7 +579,7 @@ func (r ApiRadiusIdentityProvidersIdGetRequest) Authorization(authorization stri
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiRadiusIdentityProvidersIdGetRequest) Execute() (*RadiusProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -601,13 +601,13 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.C
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+//  @return RadiusProvider
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdGet")
@@ -734,7 +734,7 @@ type ApiRadiusIdentityProvidersIdPutRequest struct {
 	ApiService    *RadiusIdentityProvidersApiService
 	authorization *string
 	id            string
-	body          *map[string]interface{}
+	body          *RadiusProvider
 }
 
 // The Token from the LoginResponse.
@@ -744,12 +744,12 @@ func (r ApiRadiusIdentityProvidersIdPutRequest) Authorization(authorization stri
 }
 
 // Identity Provider object.
-func (r ApiRadiusIdentityProvidersIdPutRequest) Body(body map[string]interface{}) ApiRadiusIdentityProvidersIdPutRequest {
+func (r ApiRadiusIdentityProvidersIdPutRequest) Body(body RadiusProvider) ApiRadiusIdentityProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiRadiusIdentityProvidersIdPutRequest) Execute() (*RadiusProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.C
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+//  @return RadiusProvider
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersIdPut")
@@ -928,7 +928,7 @@ type ApiRadiusIdentityProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *RadiusIdentityProvidersApiService
 	authorization *string
-	body          *map[string]interface{}
+	body          *RadiusProvider
 }
 
 // The Token from the LoginResponse.
@@ -938,12 +938,12 @@ func (r ApiRadiusIdentityProvidersPostRequest) Authorization(authorization strin
 }
 
 // Identity Provider object.
-func (r ApiRadiusIdentityProvidersPostRequest) Body(body map[string]interface{}) ApiRadiusIdentityProvidersPostRequest {
+func (r ApiRadiusIdentityProvidersPostRequest) Body(body RadiusProvider) ApiRadiusIdentityProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersPostRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiRadiusIdentityProvidersPostRequest) Execute() (*RadiusProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -963,13 +963,13 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx context.Co
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+//  @return RadiusProvider
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *RadiusProvider
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersPost")
