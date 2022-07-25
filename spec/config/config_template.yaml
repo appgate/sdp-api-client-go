@@ -36,6 +36,8 @@ languages:
       # # the only difference is the service name and the models used in the arguments, the patch template-patches/go/identity_providers.patch
       # # will append the extra services to the client.
       downstream_templates/go/v17/api_connector_identity_providers.go: openapi_v17/api_connector_identity_providers.go
+      downstream_templates/go/v17/model_connector_identity_provider_list.go: openapi_v17/model_connector_identity_provider_list.go
+
       downstream_templates/go/v17/api_local_database_identity_providers.go: openapi_v17/api_local_database_identity_providers.go
       downstream_templates/go/v17/api_ldap_certificate_identity_providers.go: openapi_v17/api_ldap_certificate_identity_providers.go
       downstream_templates/go/v17/api_saml_identity_providers.go: openapi_v17/api_saml_identity_providers.go
