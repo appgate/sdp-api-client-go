@@ -70,7 +70,7 @@ func (r ApiLdapCertificateIdentityProvidersGetRequest) FilterBy(filterBy map[str
 	return r
 }
 
-func (r ApiLdapCertificateIdentityProvidersGetRequest) Execute() (*IdentityProviderList, *http.Response, error) {
+func (r ApiLdapCertificateIdentityProvidersGetRequest) Execute() (*LdapCertificateIdentityProviderList, *http.Response, error) {
 	return r.ApiService.IdentityProvidersGetExecute(r)
 }
 
@@ -90,13 +90,13 @@ func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersGet(ctx co
 }
 
 // Execute executes the request
-//  @return IdentityProviderList
-func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiLdapCertificateIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
+//  @return LdapCertificateIdentityProviderList
+func (a *LdapCertificateIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiLdapCertificateIdentityProvidersGetRequest) (*LdapCertificateIdentityProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *IdentityProviderList
+		localVarReturnValue *LdapCertificateIdentityProviderList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LdapCertificateIdentityProvidersApiService.IdentityProvidersGet")
