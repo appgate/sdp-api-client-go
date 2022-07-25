@@ -29,7 +29,7 @@ for version in "${supportedVersions[@]}"; do
     # apply patches if there are any
     if [ -d "$PWD/spec/spec-patches/v$version" ]; then
         echo "Apply custom patches for openapi v$version"
-        find "$PWD/spec/spec-patches/v$version" -name "*.patch" -print0 | while read -r -d $'\0' patch; do
+        find "$PWD/spec/spec-patches/v$version" -name "*.patch" -print0 | sort -z | while read -r -d $'\0' patch; do
             echo "Applying $patch"
             patch --fuzz 0 --no-backup-if-mismatch -p1 -i "$patch" -d "$PWD/spec/spec/v$version"
         done

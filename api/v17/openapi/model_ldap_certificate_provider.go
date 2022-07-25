@@ -57,6 +57,27 @@ type LdapCertificateProvider struct {
 	BlockLocalDnsRequests *bool `json:"blockLocalDnsRequests,omitempty"`
 	// The mapping of Identity Provider on demand attributes to claims.
 	OnDemandClaimMappings []OnDemandClaimMappingsInner `json:"onDemandClaimMappings,omitempty"`
+	// Hostnames/IP addresses to connect.
+	Hostnames []string `json:"hostnames"`
+	// Port to connect.
+	Port int32 `json:"port"`
+	// Whether to use LDAPS protocol or not.
+	SslEnabled *bool `json:"sslEnabled,omitempty"`
+	// The Distinguished Name to login to LDAP and query users with.
+	AdminDistinguishedName string `json:"adminDistinguishedName"`
+	// The password to login to LDAP and query users with. Required on creation.
+	AdminPassword *string `json:"adminPassword,omitempty"`
+	// The subset of the LDAP server to search users from. If not set, root of the server is used.
+	BaseDn *string `json:"baseDn,omitempty"`
+	// The object class of the users to be authenticated and queried.
+	ObjectClass *string `json:"objectClass,omitempty"`
+	// The name of the attribute to get the exact username from the LDAP server.
+	UsernameAttribute *string `json:"usernameAttribute,omitempty"`
+	// The filter to use while querying users' nested groups.
+	MembershipFilter *string `json:"membershipFilter,omitempty"`
+	// The subset of the LDAP server to search groups from. If not set, \"baseDn\" is used.
+	MembershipBaseDn *string                           `json:"membershipBaseDn,omitempty"`
+	PasswordWarning  *LdapProviderAllOfPasswordWarning `json:"passwordWarning,omitempty"`
 	// CA certificates to verify the Client certificates. In PEM format.
 	CaCertificates []string `json:"caCertificates"`
 	// The LDAP attribute to compare the Client certificate's Subject Alternative Name.
@@ -73,7 +94,7 @@ type LdapCertificateProvider struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLdapCertificateProvider(name string, type_ string, caCertificates []string) *LdapCertificateProvider {
+func NewLdapCertificateProvider(name string, type_ string, hostnames []string, port int32, adminDistinguishedName string, caCertificates []string) *LdapCertificateProvider {
 	this := LdapCertificateProvider{}
 	this.Name = name
 	this.Type = type_
@@ -85,6 +106,17 @@ func NewLdapCertificateProvider(name string, type_ string, caCertificates []stri
 	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
 	var blockLocalDnsRequests bool = false
 	this.BlockLocalDnsRequests = &blockLocalDnsRequests
+	this.Hostnames = hostnames
+	this.Port = port
+	var sslEnabled bool = false
+	this.SslEnabled = &sslEnabled
+	this.AdminDistinguishedName = adminDistinguishedName
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
+	var usernameAttribute string = "sAMAccountName"
+	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	this.CaCertificates = caCertificates
 	var certificateUserAttribute string = "userPrincipalName"
 	this.CertificateUserAttribute = &certificateUserAttribute
@@ -104,6 +136,14 @@ func NewLdapCertificateProviderWithDefaults() *LdapCertificateProvider {
 	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
 	var blockLocalDnsRequests bool = false
 	this.BlockLocalDnsRequests = &blockLocalDnsRequests
+	var sslEnabled bool = false
+	this.SslEnabled = &sslEnabled
+	var objectClass string = "user"
+	this.ObjectClass = &objectClass
+	var usernameAttribute string = "sAMAccountName"
+	this.UsernameAttribute = &usernameAttribute
+	var membershipFilter string = "(objectCategory=group)"
+	this.MembershipFilter = &membershipFilter
 	var certificateUserAttribute string = "userPrincipalName"
 	this.CertificateUserAttribute = &certificateUserAttribute
 	return &this
@@ -733,6 +773,334 @@ func (o *LdapCertificateProvider) SetOnDemandClaimMappings(v []OnDemandClaimMapp
 	o.OnDemandClaimMappings = v
 }
 
+// GetHostnames returns the Hostnames field value
+func (o *LdapCertificateProvider) GetHostnames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.Hostnames
+}
+
+// GetHostnamesOk returns a tuple with the Hostnames field value
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetHostnamesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Hostnames, true
+}
+
+// SetHostnames sets field value
+func (o *LdapCertificateProvider) SetHostnames(v []string) {
+	o.Hostnames = v
+}
+
+// GetPort returns the Port field value
+func (o *LdapCertificateProvider) GetPort() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetPortOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Port, true
+}
+
+// SetPort sets field value
+func (o *LdapCertificateProvider) SetPort(v int32) {
+	o.Port = v
+}
+
+// GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetSslEnabled() bool {
+	if o == nil || o.SslEnabled == nil {
+		var ret bool
+		return ret
+	}
+	return *o.SslEnabled
+}
+
+// GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetSslEnabledOk() (*bool, bool) {
+	if o == nil || o.SslEnabled == nil {
+		return nil, false
+	}
+	return o.SslEnabled, true
+}
+
+// HasSslEnabled returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasSslEnabled() bool {
+	if o != nil && o.SslEnabled != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSslEnabled gets a reference to the given bool and assigns it to the SslEnabled field.
+func (o *LdapCertificateProvider) SetSslEnabled(v bool) {
+	o.SslEnabled = &v
+}
+
+// GetAdminDistinguishedName returns the AdminDistinguishedName field value
+func (o *LdapCertificateProvider) GetAdminDistinguishedName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.AdminDistinguishedName
+}
+
+// GetAdminDistinguishedNameOk returns a tuple with the AdminDistinguishedName field value
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetAdminDistinguishedNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AdminDistinguishedName, true
+}
+
+// SetAdminDistinguishedName sets field value
+func (o *LdapCertificateProvider) SetAdminDistinguishedName(v string) {
+	o.AdminDistinguishedName = v
+}
+
+// GetAdminPassword returns the AdminPassword field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetAdminPassword() string {
+	if o == nil || o.AdminPassword == nil {
+		var ret string
+		return ret
+	}
+	return *o.AdminPassword
+}
+
+// GetAdminPasswordOk returns a tuple with the AdminPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetAdminPasswordOk() (*string, bool) {
+	if o == nil || o.AdminPassword == nil {
+		return nil, false
+	}
+	return o.AdminPassword, true
+}
+
+// HasAdminPassword returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasAdminPassword() bool {
+	if o != nil && o.AdminPassword != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAdminPassword gets a reference to the given string and assigns it to the AdminPassword field.
+func (o *LdapCertificateProvider) SetAdminPassword(v string) {
+	o.AdminPassword = &v
+}
+
+// GetBaseDn returns the BaseDn field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetBaseDn() string {
+	if o == nil || o.BaseDn == nil {
+		var ret string
+		return ret
+	}
+	return *o.BaseDn
+}
+
+// GetBaseDnOk returns a tuple with the BaseDn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetBaseDnOk() (*string, bool) {
+	if o == nil || o.BaseDn == nil {
+		return nil, false
+	}
+	return o.BaseDn, true
+}
+
+// HasBaseDn returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasBaseDn() bool {
+	if o != nil && o.BaseDn != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetBaseDn gets a reference to the given string and assigns it to the BaseDn field.
+func (o *LdapCertificateProvider) SetBaseDn(v string) {
+	o.BaseDn = &v
+}
+
+// GetObjectClass returns the ObjectClass field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetObjectClass() string {
+	if o == nil || o.ObjectClass == nil {
+		var ret string
+		return ret
+	}
+	return *o.ObjectClass
+}
+
+// GetObjectClassOk returns a tuple with the ObjectClass field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetObjectClassOk() (*string, bool) {
+	if o == nil || o.ObjectClass == nil {
+		return nil, false
+	}
+	return o.ObjectClass, true
+}
+
+// HasObjectClass returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasObjectClass() bool {
+	if o != nil && o.ObjectClass != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectClass gets a reference to the given string and assigns it to the ObjectClass field.
+func (o *LdapCertificateProvider) SetObjectClass(v string) {
+	o.ObjectClass = &v
+}
+
+// GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetUsernameAttribute() string {
+	if o == nil || o.UsernameAttribute == nil {
+		var ret string
+		return ret
+	}
+	return *o.UsernameAttribute
+}
+
+// GetUsernameAttributeOk returns a tuple with the UsernameAttribute field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetUsernameAttributeOk() (*string, bool) {
+	if o == nil || o.UsernameAttribute == nil {
+		return nil, false
+	}
+	return o.UsernameAttribute, true
+}
+
+// HasUsernameAttribute returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasUsernameAttribute() bool {
+	if o != nil && o.UsernameAttribute != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUsernameAttribute gets a reference to the given string and assigns it to the UsernameAttribute field.
+func (o *LdapCertificateProvider) SetUsernameAttribute(v string) {
+	o.UsernameAttribute = &v
+}
+
+// GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetMembershipFilter() string {
+	if o == nil || o.MembershipFilter == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipFilter
+}
+
+// GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetMembershipFilterOk() (*string, bool) {
+	if o == nil || o.MembershipFilter == nil {
+		return nil, false
+	}
+	return o.MembershipFilter, true
+}
+
+// HasMembershipFilter returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasMembershipFilter() bool {
+	if o != nil && o.MembershipFilter != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipFilter gets a reference to the given string and assigns it to the MembershipFilter field.
+func (o *LdapCertificateProvider) SetMembershipFilter(v string) {
+	o.MembershipFilter = &v
+}
+
+// GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetMembershipBaseDn() string {
+	if o == nil || o.MembershipBaseDn == nil {
+		var ret string
+		return ret
+	}
+	return *o.MembershipBaseDn
+}
+
+// GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetMembershipBaseDnOk() (*string, bool) {
+	if o == nil || o.MembershipBaseDn == nil {
+		return nil, false
+	}
+	return o.MembershipBaseDn, true
+}
+
+// HasMembershipBaseDn returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasMembershipBaseDn() bool {
+	if o != nil && o.MembershipBaseDn != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMembershipBaseDn gets a reference to the given string and assigns it to the MembershipBaseDn field.
+func (o *LdapCertificateProvider) SetMembershipBaseDn(v string) {
+	o.MembershipBaseDn = &v
+}
+
+// GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
+	if o == nil || o.PasswordWarning == nil {
+		var ret LdapProviderAllOfPasswordWarning
+		return ret
+	}
+	return *o.PasswordWarning
+}
+
+// GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
+	if o == nil || o.PasswordWarning == nil {
+		return nil, false
+	}
+	return o.PasswordWarning, true
+}
+
+// HasPasswordWarning returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasPasswordWarning() bool {
+	if o != nil && o.PasswordWarning != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPasswordWarning gets a reference to the given LdapProviderAllOfPasswordWarning and assigns it to the PasswordWarning field.
+func (o *LdapCertificateProvider) SetPasswordWarning(v LdapProviderAllOfPasswordWarning) {
+	o.PasswordWarning = &v
+}
+
 // GetCaCertificates returns the CaCertificates field value
 func (o *LdapCertificateProvider) GetCaCertificates() []string {
 	if o == nil {
@@ -946,6 +1314,39 @@ func (o LdapCertificateProvider) MarshalJSON() ([]byte, error) {
 	}
 	if o.OnDemandClaimMappings != nil {
 		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	if true {
+		toSerialize["hostnames"] = o.Hostnames
+	}
+	if true {
+		toSerialize["port"] = o.Port
+	}
+	if o.SslEnabled != nil {
+		toSerialize["sslEnabled"] = o.SslEnabled
+	}
+	if true {
+		toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
+	}
+	if o.AdminPassword != nil {
+		toSerialize["adminPassword"] = o.AdminPassword
+	}
+	if o.BaseDn != nil {
+		toSerialize["baseDn"] = o.BaseDn
+	}
+	if o.ObjectClass != nil {
+		toSerialize["objectClass"] = o.ObjectClass
+	}
+	if o.UsernameAttribute != nil {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
+	}
+	if o.MembershipFilter != nil {
+		toSerialize["membershipFilter"] = o.MembershipFilter
+	}
+	if o.MembershipBaseDn != nil {
+		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
+	}
+	if o.PasswordWarning != nil {
+		toSerialize["passwordWarning"] = o.PasswordWarning
 	}
 	if true {
 		toSerialize["caCertificates"] = o.CaCertificates
