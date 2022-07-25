@@ -48,6 +48,8 @@ languages:
       downstream_templates/go/v17/model_saml_identity_provider_list.go: openapi_v17/model_saml_identity_provider_list.go
 
       downstream_templates/go/v17/api_radius_identity_providers.go: openapi_v17/api_radius_identity_providers.go
+      downstream_templates/go/v17/model_radius_identity_provider_list.go: openapi_v17/model_radius_identity_provider_list.go
+
       downstream_templates/go/v17/api_ldap_identity_providers.go: openapi_v17/api_ldap_identity_providers.go
 
     generation:

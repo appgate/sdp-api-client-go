@@ -70,7 +70,7 @@ func (r ApiRadiusIdentityProvidersGetRequest) FilterBy(filterBy map[string]strin
 	return r
 }
 
-func (r ApiRadiusIdentityProvidersGetRequest) Execute() (*IdentityProviderList, *http.Response, error) {
+func (r ApiRadiusIdentityProvidersGetRequest) Execute() (*RadiusIdentityProviderList, *http.Response, error) {
 	return r.ApiService.IdentityProvidersGetExecute(r)
 }
 
@@ -90,13 +90,13 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersGet(ctx context.Con
 }
 
 // Execute executes the request
-//  @return IdentityProviderList
-func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiRadiusIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
+//  @return RadiusIdentityProviderList
+func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiRadiusIdentityProvidersGetRequest) (*RadiusIdentityProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *IdentityProviderList
+		localVarReturnValue *RadiusIdentityProviderList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RadiusIdentityProvidersApiService.IdentityProvidersGet")
