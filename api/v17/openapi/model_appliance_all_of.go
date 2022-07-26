@@ -30,8 +30,11 @@ type ApplianceAllOf struct {
 	// Name of the Site for this Appliance. For convenience only.
 	SiteName *string `json:"siteName,omitempty"`
 	// Customization assigned to this Appliance.
-	Customization   *string                       `json:"customization,omitempty"`
-	ClientInterface ApplianceAllOfClientInterface `json:"clientInterface"`
+	Customization *string `json:"customization,omitempty"`
+	// Makes the Appliance to connect to Controller/LogServer/LogForwarders using their clientInterface.httpsPort instead of peerInterface.httpsPort. The Appliance uses SPA to connect. This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
+	// Deprecated
+	ConnectToPeersUsingClientPortWithSpa *bool                         `json:"connectToPeersUsingClientPortWithSpa,omitempty"`
+	ClientInterface                      ApplianceAllOfClientInterface `json:"clientInterface"`
 	// Deprecated
 	PeerInterface      *ApplianceAllOfPeerInterface      `json:"peerInterface,omitempty"`
 	AdminInterface     *ApplianceAllOfAdminInterface     `json:"adminInterface,omitempty"`
@@ -61,6 +64,8 @@ type ApplianceAllOf struct {
 func NewApplianceAllOf(hostname string, clientInterface ApplianceAllOfClientInterface, networking ApplianceAllOfNetworking) *ApplianceAllOf {
 	this := ApplianceAllOf{}
 	this.Hostname = hostname
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	this.ClientInterface = clientInterface
 	this.Networking = networking
 	return &this
@@ -71,6 +76,8 @@ func NewApplianceAllOf(hostname string, clientInterface ApplianceAllOfClientInte
 // but it doesn't guarantee that properties required by API are set
 func NewApplianceAllOfWithDefaults() *ApplianceAllOf {
 	this := ApplianceAllOf{}
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	return &this
 }
 
@@ -288,6 +295,41 @@ func (o *ApplianceAllOf) HasCustomization() bool {
 // SetCustomization gets a reference to the given string and assigns it to the Customization field.
 func (o *ApplianceAllOf) SetCustomization(v string) {
 	o.Customization = &v
+}
+
+// GetConnectToPeersUsingClientPortWithSpa returns the ConnectToPeersUsingClientPortWithSpa field value if set, zero value otherwise.
+// Deprecated
+func (o *ApplianceAllOf) GetConnectToPeersUsingClientPortWithSpa() bool {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		var ret bool
+		return ret
+	}
+	return *o.ConnectToPeersUsingClientPortWithSpa
+}
+
+// GetConnectToPeersUsingClientPortWithSpaOk returns a tuple with the ConnectToPeersUsingClientPortWithSpa field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *ApplianceAllOf) GetConnectToPeersUsingClientPortWithSpaOk() (*bool, bool) {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		return nil, false
+	}
+	return o.ConnectToPeersUsingClientPortWithSpa, true
+}
+
+// HasConnectToPeersUsingClientPortWithSpa returns a boolean if a field has been set.
+func (o *ApplianceAllOf) HasConnectToPeersUsingClientPortWithSpa() bool {
+	if o != nil && o.ConnectToPeersUsingClientPortWithSpa != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectToPeersUsingClientPortWithSpa gets a reference to the given bool and assigns it to the ConnectToPeersUsingClientPortWithSpa field.
+// Deprecated
+func (o *ApplianceAllOf) SetConnectToPeersUsingClientPortWithSpa(v bool) {
+	o.ConnectToPeersUsingClientPortWithSpa = &v
 }
 
 // GetClientInterface returns the ClientInterface field value
@@ -875,6 +917,9 @@ func (o ApplianceAllOf) MarshalJSON() ([]byte, error) {
 	}
 	if o.Customization != nil {
 		toSerialize["customization"] = o.Customization
+	}
+	if o.ConnectToPeersUsingClientPortWithSpa != nil {
+		toSerialize["connectToPeersUsingClientPortWithSpa"] = o.ConnectToPeersUsingClientPortWithSpa
 	}
 	if true {
 		toSerialize["clientInterface"] = o.ClientInterface
