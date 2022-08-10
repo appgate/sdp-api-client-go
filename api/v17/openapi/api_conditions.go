@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // ConditionsApiService ConditionsApi service
 type ConditionsApiService service
 
 type ApiClaimsNamesGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 }
@@ -40,7 +35,7 @@ func (r ApiClaimsNamesGetRequest) Authorization(authorization string) ApiClaimsN
 	return r
 }
 
-func (r ApiClaimsNamesGetRequest) Execute() (ClaimNamesList, *_nethttp.Response, error) {
+func (r ApiClaimsNamesGetRequest) Execute() (*ClaimNamesList, *http.Response, error) {
 	return r.ApiService.ClaimsNamesGetExecute(r)
 }
 
@@ -49,10 +44,10 @@ ClaimsNamesGet List all Claim Names.
 
 Claim Names list includes available User, Device and System claims. Some of these claims are static and some change according to the Identity Provider configurations.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiClaimsNamesGetRequest
 */
-func (a *ConditionsApiService) ClaimsNamesGet(ctx _context.Context) ApiClaimsNamesGetRequest {
+func (a *ConditionsApiService) ClaimsNamesGet(ctx context.Context) ApiClaimsNamesGetRequest {
 	return ApiClaimsNamesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -61,26 +56,24 @@ func (a *ConditionsApiService) ClaimsNamesGet(ctx _context.Context) ApiClaimsNam
 
 // Execute executes the request
 //  @return ClaimNamesList
-func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest) (ClaimNamesList, *_nethttp.Response, error) {
+func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest) (*ClaimNamesList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ClaimNamesList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ClaimNamesList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ClaimsNamesGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/claims/names"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -103,7 +96,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -113,15 +106,15 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -145,6 +138,16 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -159,7 +162,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -170,7 +173,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 }
 
 type ApiConditionsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	query         *string
@@ -186,7 +189,7 @@ func (r ApiConditionsGetRequest) Authorization(authorization string) ApiConditio
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiConditionsGetRequest) Query(query string) ApiConditionsGetRequest {
 	r.query = &query
 	return r
@@ -216,7 +219,7 @@ func (r ApiConditionsGetRequest) FilterBy(filterBy map[string]string) ApiConditi
 	return r
 }
 
-func (r ApiConditionsGetRequest) Execute() (ConditionList, *_nethttp.Response, error) {
+func (r ApiConditionsGetRequest) Execute() (*ConditionList, *http.Response, error) {
 	return r.ApiService.ConditionsGetExecute(r)
 }
 
@@ -225,10 +228,10 @@ ConditionsGet List all Conditions.
 
 List all Conditions visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConditionsGetRequest
 */
-func (a *ConditionsApiService) ConditionsGet(ctx _context.Context) ApiConditionsGetRequest {
+func (a *ConditionsApiService) ConditionsGet(ctx context.Context) ApiConditionsGetRequest {
 	return ApiConditionsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -237,26 +240,24 @@ func (a *ConditionsApiService) ConditionsGet(ctx _context.Context) ApiConditions
 
 // Execute executes the request
 //  @return ConditionList
-func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (ConditionList, *_nethttp.Response, error) {
+func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (*ConditionList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ConditionList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConditionList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -294,7 +295,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -304,15 +305,15 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -336,6 +337,16 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -350,7 +361,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -361,7 +372,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 }
 
 type ApiConditionsIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	id            string
@@ -373,7 +384,7 @@ func (r ApiConditionsIdDeleteRequest) Authorization(authorization string) ApiCon
 	return r
 }
 
-func (r ApiConditionsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiConditionsIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.ConditionsIdDeleteExecute(r)
 }
 
@@ -382,11 +393,11 @@ ConditionsIdDelete Delete a specific Condition.
 
 Delete a specific Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiConditionsIdDeleteRequest
 */
-func (a *ConditionsApiService) ConditionsIdDelete(ctx _context.Context, id string) ApiConditionsIdDeleteRequest {
+func (a *ConditionsApiService) ConditionsIdDelete(ctx context.Context, id string) ApiConditionsIdDeleteRequest {
 	return ApiConditionsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -395,26 +406,24 @@ func (a *ConditionsApiService) ConditionsIdDelete(ctx _context.Context, id strin
 }
 
 // Execute executes the request
-func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -437,7 +446,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -447,15 +456,15 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -480,6 +489,16 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -505,7 +524,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 }
 
 type ApiConditionsIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	id            string
@@ -517,7 +536,7 @@ func (r ApiConditionsIdGetRequest) Authorization(authorization string) ApiCondit
 	return r
 }
 
-func (r ApiConditionsIdGetRequest) Execute() (Condition, *_nethttp.Response, error) {
+func (r ApiConditionsIdGetRequest) Execute() (*Condition, *http.Response, error) {
 	return r.ApiService.ConditionsIdGetExecute(r)
 }
 
@@ -526,11 +545,11 @@ ConditionsIdGet Get a specific Condition.
 
 Get a specific Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiConditionsIdGetRequest
 */
-func (a *ConditionsApiService) ConditionsIdGet(ctx _context.Context, id string) ApiConditionsIdGetRequest {
+func (a *ConditionsApiService) ConditionsIdGet(ctx context.Context, id string) ApiConditionsIdGetRequest {
 	return ApiConditionsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -540,27 +559,25 @@ func (a *ConditionsApiService) ConditionsIdGet(ctx _context.Context, id string) 
 
 // Execute executes the request
 //  @return Condition
-func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetRequest) (Condition, *_nethttp.Response, error) {
+func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetRequest) (*Condition, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  Condition
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Condition
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -583,7 +600,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -593,15 +610,15 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -635,6 +652,16 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -649,7 +676,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -660,7 +687,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 }
 
 type ApiConditionsIdPutRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	id            string
@@ -679,7 +706,7 @@ func (r ApiConditionsIdPutRequest) Condition(condition Condition) ApiConditionsI
 	return r
 }
 
-func (r ApiConditionsIdPutRequest) Execute() (Condition, *_nethttp.Response, error) {
+func (r ApiConditionsIdPutRequest) Execute() (*Condition, *http.Response, error) {
 	return r.ApiService.ConditionsIdPutExecute(r)
 }
 
@@ -688,11 +715,11 @@ ConditionsIdPut Update an existing Condition.
 
 Update an existing Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiConditionsIdPutRequest
 */
-func (a *ConditionsApiService) ConditionsIdPut(ctx _context.Context, id string) ApiConditionsIdPutRequest {
+func (a *ConditionsApiService) ConditionsIdPut(ctx context.Context, id string) ApiConditionsIdPutRequest {
 	return ApiConditionsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -702,27 +729,25 @@ func (a *ConditionsApiService) ConditionsIdPut(ctx _context.Context, id string) 
 
 // Execute executes the request
 //  @return Condition
-func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutRequest) (Condition, *_nethttp.Response, error) {
+func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutRequest) (*Condition, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  Condition
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Condition
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -750,7 +775,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.condition
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -760,15 +785,15 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -803,6 +828,16 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -836,7 +871,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -847,7 +882,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 }
 
 type ApiConditionsPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	condition     *Condition
@@ -865,7 +900,7 @@ func (r ApiConditionsPostRequest) Condition(condition Condition) ApiConditionsPo
 	return r
 }
 
-func (r ApiConditionsPostRequest) Execute() (Condition, *_nethttp.Response, error) {
+func (r ApiConditionsPostRequest) Execute() (*Condition, *http.Response, error) {
 	return r.ApiService.ConditionsPostExecute(r)
 }
 
@@ -874,10 +909,10 @@ ConditionsPost Create a new Condition.
 
 Create a new Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConditionsPostRequest
 */
-func (a *ConditionsApiService) ConditionsPost(ctx _context.Context) ApiConditionsPostRequest {
+func (a *ConditionsApiService) ConditionsPost(ctx context.Context) ApiConditionsPostRequest {
 	return ApiConditionsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -886,26 +921,24 @@ func (a *ConditionsApiService) ConditionsPost(ctx _context.Context) ApiCondition
 
 // Execute executes the request
 //  @return Condition
-func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest) (Condition, *_nethttp.Response, error) {
+func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest) (*Condition, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  Condition
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Condition
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -933,7 +966,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.condition
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -943,15 +976,15 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -976,6 +1009,16 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1019,7 +1062,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -1030,7 +1073,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 }
 
 type ApiConditionsTestPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ConditionsApiService
 	authorization *string
 	testRequest   *TestRequest
@@ -1048,7 +1091,7 @@ func (r ApiConditionsTestPostRequest) TestRequest(testRequest TestRequest) ApiCo
 	return r
 }
 
-func (r ApiConditionsTestPostRequest) Execute() (InlineResponse20011, *_nethttp.Response, error) {
+func (r ApiConditionsTestPostRequest) Execute() (*ConditionsTestPost200Response, *http.Response, error) {
 	return r.ApiService.ConditionsTestPostExecute(r)
 }
 
@@ -1057,10 +1100,10 @@ ConditionsTestPost Simulate a given expression for a Condition, Policy or Criter
 
 Simulate a given expression for a Condition, Policy or Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConditionsTestPostRequest
 */
-func (a *ConditionsApiService) ConditionsTestPost(ctx _context.Context) ApiConditionsTestPostRequest {
+func (a *ConditionsApiService) ConditionsTestPost(ctx context.Context) ApiConditionsTestPostRequest {
 	return ApiConditionsTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1068,27 +1111,25 @@ func (a *ConditionsApiService) ConditionsTestPost(ctx _context.Context) ApiCondi
 }
 
 // Execute executes the request
-//  @return InlineResponse20011
-func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPostRequest) (InlineResponse20011, *_nethttp.Response, error) {
+//  @return ConditionsTestPost200Response
+func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPostRequest) (*ConditionsTestPost200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20011
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ConditionsTestPost200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsTestPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/test"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -1116,7 +1157,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.testRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -1126,15 +1167,15 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1168,6 +1209,16 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v ValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1192,7 +1243,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -18,15 +18,15 @@ import (
 // ApplianceAllOfNetworking Networking configuration of the system.
 type ApplianceAllOfNetworking struct {
 	// /etc/hosts configuration
-	Hosts *[]ApplianceAllOfNetworkingHosts `json:"hosts,omitempty"`
+	Hosts []ApplianceAllOfNetworkingHosts `json:"hosts,omitempty"`
 	// System NIC configuration
-	Nics *[]ApplianceAllOfNetworkingNics `json:"nics,omitempty"`
+	Nics []ApplianceAllOfNetworkingNics `json:"nics,omitempty"`
 	// DNS Server addresses.
-	DnsServers *[]string `json:"dnsServers,omitempty"`
+	DnsServers []string `json:"dnsServers,omitempty"`
 	// DNS Search domains.
-	DnsDomains *[]string `json:"dnsDomains,omitempty"`
+	DnsDomains []string `json:"dnsDomains,omitempty"`
 	// System route settings.
-	Routes *[]ApplianceAllOfNetworkingRoutes `json:"routes,omitempty"`
+	Routes []ApplianceAllOfNetworkingRoutes `json:"routes,omitempty"`
 }
 
 // NewApplianceAllOfNetworking instantiates a new ApplianceAllOfNetworking object
@@ -52,12 +52,12 @@ func (o *ApplianceAllOfNetworking) GetHosts() []ApplianceAllOfNetworkingHosts {
 		var ret []ApplianceAllOfNetworkingHosts
 		return ret
 	}
-	return *o.Hosts
+	return o.Hosts
 }
 
 // GetHostsOk returns a tuple with the Hosts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfNetworking) GetHostsOk() (*[]ApplianceAllOfNetworkingHosts, bool) {
+func (o *ApplianceAllOfNetworking) GetHostsOk() ([]ApplianceAllOfNetworkingHosts, bool) {
 	if o == nil || o.Hosts == nil {
 		return nil, false
 	}
@@ -75,7 +75,7 @@ func (o *ApplianceAllOfNetworking) HasHosts() bool {
 
 // SetHosts gets a reference to the given []ApplianceAllOfNetworkingHosts and assigns it to the Hosts field.
 func (o *ApplianceAllOfNetworking) SetHosts(v []ApplianceAllOfNetworkingHosts) {
-	o.Hosts = &v
+	o.Hosts = v
 }
 
 // GetNics returns the Nics field value if set, zero value otherwise.
@@ -84,12 +84,12 @@ func (o *ApplianceAllOfNetworking) GetNics() []ApplianceAllOfNetworkingNics {
 		var ret []ApplianceAllOfNetworkingNics
 		return ret
 	}
-	return *o.Nics
+	return o.Nics
 }
 
 // GetNicsOk returns a tuple with the Nics field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfNetworking) GetNicsOk() (*[]ApplianceAllOfNetworkingNics, bool) {
+func (o *ApplianceAllOfNetworking) GetNicsOk() ([]ApplianceAllOfNetworkingNics, bool) {
 	if o == nil || o.Nics == nil {
 		return nil, false
 	}
@@ -107,7 +107,7 @@ func (o *ApplianceAllOfNetworking) HasNics() bool {
 
 // SetNics gets a reference to the given []ApplianceAllOfNetworkingNics and assigns it to the Nics field.
 func (o *ApplianceAllOfNetworking) SetNics(v []ApplianceAllOfNetworkingNics) {
-	o.Nics = &v
+	o.Nics = v
 }
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
@@ -116,12 +116,12 @@ func (o *ApplianceAllOfNetworking) GetDnsServers() []string {
 		var ret []string
 		return ret
 	}
-	return *o.DnsServers
+	return o.DnsServers
 }
 
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfNetworking) GetDnsServersOk() (*[]string, bool) {
+func (o *ApplianceAllOfNetworking) GetDnsServersOk() ([]string, bool) {
 	if o == nil || o.DnsServers == nil {
 		return nil, false
 	}
@@ -139,7 +139,7 @@ func (o *ApplianceAllOfNetworking) HasDnsServers() bool {
 
 // SetDnsServers gets a reference to the given []string and assigns it to the DnsServers field.
 func (o *ApplianceAllOfNetworking) SetDnsServers(v []string) {
-	o.DnsServers = &v
+	o.DnsServers = v
 }
 
 // GetDnsDomains returns the DnsDomains field value if set, zero value otherwise.
@@ -148,12 +148,12 @@ func (o *ApplianceAllOfNetworking) GetDnsDomains() []string {
 		var ret []string
 		return ret
 	}
-	return *o.DnsDomains
+	return o.DnsDomains
 }
 
 // GetDnsDomainsOk returns a tuple with the DnsDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfNetworking) GetDnsDomainsOk() (*[]string, bool) {
+func (o *ApplianceAllOfNetworking) GetDnsDomainsOk() ([]string, bool) {
 	if o == nil || o.DnsDomains == nil {
 		return nil, false
 	}
@@ -171,7 +171,7 @@ func (o *ApplianceAllOfNetworking) HasDnsDomains() bool {
 
 // SetDnsDomains gets a reference to the given []string and assigns it to the DnsDomains field.
 func (o *ApplianceAllOfNetworking) SetDnsDomains(v []string) {
-	o.DnsDomains = &v
+	o.DnsDomains = v
 }
 
 // GetRoutes returns the Routes field value if set, zero value otherwise.
@@ -180,12 +180,12 @@ func (o *ApplianceAllOfNetworking) GetRoutes() []ApplianceAllOfNetworkingRoutes 
 		var ret []ApplianceAllOfNetworkingRoutes
 		return ret
 	}
-	return *o.Routes
+	return o.Routes
 }
 
 // GetRoutesOk returns a tuple with the Routes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfNetworking) GetRoutesOk() (*[]ApplianceAllOfNetworkingRoutes, bool) {
+func (o *ApplianceAllOfNetworking) GetRoutesOk() ([]ApplianceAllOfNetworkingRoutes, bool) {
 	if o == nil || o.Routes == nil {
 		return nil, false
 	}
@@ -203,7 +203,7 @@ func (o *ApplianceAllOfNetworking) HasRoutes() bool {
 
 // SetRoutes gets a reference to the given []ApplianceAllOfNetworkingRoutes and assigns it to the Routes field.
 func (o *ApplianceAllOfNetworking) SetRoutes(v []ApplianceAllOfNetworkingRoutes) {
-	o.Routes = &v
+	o.Routes = v
 }
 
 func (o ApplianceAllOfNetworking) MarshalJSON() ([]byte, error) {

@@ -1,0 +1,140 @@
+diff --git a/identity_provider.yml b/identity_provider.yml
+index 1793f6bb0..9255e951b 100644
+--- a/identity_provider.yml
++++ b/identity_provider.yml
+@@ -229,7 +229,7 @@ responses:
+     content:
+       application/json:
+         schema:
+-          $ref: '#/definitions/IdentityProvider'
++          $ref: '#/definitions/BaseIdentityProvider'
+     description: Identity Provider object.
+
+ requestBodies:
+@@ -237,7 +237,7 @@ requestBodies:
+     content:
+       application/json:
+         schema:
+-          $ref: '#/definitions/IdentityProvider'
++          $ref: '#/definitions/BaseIdentityProvider'
+     description: Identity Provider object.
+     required: true
+
+@@ -252,7 +252,7 @@ definitions:
+             type: array
+             description: List of Identity Providers.
+             items:
+-              $ref: '#/definitions/IdentityProvider'
++              $ref: '#/definitions/BaseIdentityProvider'
+   IdentityProvider:
+     type: object
+     discriminator:
+@@ -600,55 +600,6 @@ definitions:
+               - PAP
+               - CHAP
+             default: CHAP
+-  LdapCertificateProvider:
+-    allOf:
+-      - $ref: '#/definitions/ConfigurableIdentityProvider'
+-      - type: object
+-        description: Represents an LDAP Certificate Identity Provider.
+-        required:
+-          - caCertificates
+-        properties:
+-          caCertificates:
+-            type: array
+-            description: CA certificates to verify the Client certificates. In PEM format.
+-            items:
+-              type: string
+-            example:
+-              - >-
+-                -----BEGIN CERTIFICATE-----
+-                ....
+-                -----END CERTIFICATE-----
+-          certificateUserAttribute:
+-            type: string
+-            description: The LDAP attribute to compare the Client certificate's Subject Alternative Name.
+-            default: userPrincipalName
+-          certificateAttribute:
+-            type: string
+-            description: The LDAP attribute to compare the Client certificate binary. Leave it null to skip this comparison.
+-          skipX509ExternalChecks:
+-            type: boolean
+-            description: >-
+-              By default, Controller contacts the endpoints on the certificate extensions in order to verify revocation status and pull the intermediate CA certificates.
+-              Set this flag in order to skip them.
+-          certificatePriorities:
+-            type: array
+-            description: Client will order the available certificates according to the given priority list.
+-            items:
+-              type: object
+-              required:
+-                - value
+-              properties:
+-                type:
+-                  type: string
+-                  description: Which attribute to compare.
+-                  enum:
+-                    - Template
+-                    - Issuer
+-                  default: Template
+-                value:
+-                  type: string
+-                  description: The value to compare to the certificate attribute.
+-                  example: 1.3.6.1.4.1.311.21.8.3025710.4393146.2181807.13924342.9568199.8
+   LdapProvider:
+     allOf:
+       - $ref: '#/definitions/ConfigurableIdentityProvider'
+@@ -721,3 +672,52 @@ definitions:
+                   Use this field to guide the users on how to change their passwords.
+                   The expiration time will displayed on the client on a separate section.
+                 example: Your password is about to expire. Please change it.
++  LdapCertificateProvider:
++    allOf:
++      - $ref: '#/definitions/LdapProvider'
++      - type: object
++        description: Represents an LDAP Certificate Identity Provider.
++        required:
++          - caCertificates
++        properties:
++          caCertificates:
++            type: array
++            description: CA certificates to verify the Client certificates. In PEM format.
++            items:
++              type: string
++            example:
++              - >-
++                -----BEGIN CERTIFICATE-----
++                ....
++                -----END CERTIFICATE-----
++          certificateUserAttribute:
++            type: string
++            description: The LDAP attribute to compare the Client certificate's Subject Alternative Name.
++            default: userPrincipalName
++          certificateAttribute:
++            type: string
++            description: The LDAP attribute to compare the Client certificate binary. Leave it null to skip this comparison.
++          skipX509ExternalChecks:
++            type: boolean
++            description: >-
++              By default, Controller contacts the endpoints on the certificate extensions in order to verify revocation status and pull the intermediate CA certificates.
++              Set this flag in order to skip them.
++          certificatePriorities:
++            type: array
++            description: Client will order the available certificates according to the given priority list.
++            items:
++              type: object
++              required:
++                - value
++              properties:
++                type:
++                  type: string
++                  description: Which attribute to compare.
++                  enum:
++                    - Template
++                    - Issuer
++                  default: Template
++                value:
++                  type: string
++                  description: The value to compare to the certificate attribute.
++                  example: 1.3.6.1.4.1.311.21.8.3025710.4393146.2181807.13924342.9568199.8

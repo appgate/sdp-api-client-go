@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,28 +13,23 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"os"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // ApplianceUpgradeApiService ApplianceUpgradeApi service
 type ApplianceUpgradeApiService service
 
 type ApiAppliancesIdUpgradeCompletePostRequest struct {
-	ctx           _context.Context
-	ApiService    *ApplianceUpgradeApiService
-	authorization *string
-	id            string
-	inlineObject5 *InlineObject5
+	ctx                                    context.Context
+	ApiService                             *ApplianceUpgradeApiService
+	authorization                          *string
+	id                                     string
+	appliancesIdUpgradeCompletePostRequest *AppliancesIdUpgradeCompletePostRequest
 }
 
 // The Token from the LoginResponse.
@@ -42,12 +37,13 @@ func (r ApiAppliancesIdUpgradeCompletePostRequest) Authorization(authorization s
 	r.authorization = &authorization
 	return r
 }
-func (r ApiAppliancesIdUpgradeCompletePostRequest) InlineObject5(inlineObject5 InlineObject5) ApiAppliancesIdUpgradeCompletePostRequest {
-	r.inlineObject5 = &inlineObject5
+
+func (r ApiAppliancesIdUpgradeCompletePostRequest) AppliancesIdUpgradeCompletePostRequest(appliancesIdUpgradeCompletePostRequest AppliancesIdUpgradeCompletePostRequest) ApiAppliancesIdUpgradeCompletePostRequest {
+	r.appliancesIdUpgradeCompletePostRequest = &appliancesIdUpgradeCompletePostRequest
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeCompletePostRequest) Execute() (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradeCompletePostRequest) Execute() (*ApplianceUpgradeInternal, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeCompletePostExecute(r)
 }
 
@@ -56,11 +52,11 @@ AppliancesIdUpgradeCompletePost Install the prepared Appliance Upgrade.
 
 Install the downloaded to Upgrade image to the other partition. This will stop the Controller and other services which may be affected by the Upgrade. "GET appliances/{id}/upgrade" must return "status":"ready" before accepting the complete command. The progress can be followed by polling the appliance via "GET appliances/{id}/upgrade". Unless "switchPartition" field is sent as true, the appliance will stay in the same partition, waiting for the "POST appliances/{id}/switch-partition" request to finalize the Upgrade.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradeCompletePostRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePost(ctx _context.Context, id string) ApiAppliancesIdUpgradeCompletePostRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePost(ctx context.Context, id string) ApiAppliancesIdUpgradeCompletePostRequest {
 	return ApiAppliancesIdUpgradeCompletePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -70,27 +66,25 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePost(ctx _contex
 
 // Execute executes the request
 //  @return ApplianceUpgradeInternal
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r ApiAppliancesIdUpgradeCompletePostRequest) (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r ApiAppliancesIdUpgradeCompletePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ApplianceUpgradeInternal
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ApplianceUpgradeInternal
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeCompletePost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/complete"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -114,8 +108,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.inlineObject5
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.appliancesIdUpgradeCompletePostRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -125,15 +119,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -177,6 +171,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -191,7 +195,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -202,7 +206,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 }
 
 type ApiAppliancesIdUpgradeDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	id            string
@@ -214,7 +218,7 @@ func (r ApiAppliancesIdUpgradeDeleteRequest) Authorization(authorization string)
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradeDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeDeleteExecute(r)
 }
 
@@ -223,11 +227,11 @@ AppliancesIdUpgradeDelete Cancel an Appliance Upgrade.
 
 Cancel an Appliance Upgrade. The request is rejected if 'GET appliances/{id}/upgrade' returns '"status":"installing"'.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradeDeleteRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDelete(ctx _context.Context, id string) ApiAppliancesIdUpgradeDeleteRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDelete(ctx context.Context, id string) ApiAppliancesIdUpgradeDeleteRequest {
 	return ApiAppliancesIdUpgradeDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -236,26 +240,24 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDelete(ctx _context.Cont
 }
 
 // Execute executes the request
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppliancesIdUpgradeDeleteRequest) (*_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppliancesIdUpgradeDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -278,7 +280,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -288,15 +290,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -321,6 +323,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -346,7 +358,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 }
 
 type ApiAppliancesIdUpgradeGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	id            string
@@ -358,7 +370,7 @@ func (r ApiAppliancesIdUpgradeGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeGetRequest) Execute() (InlineResponse2006, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradeGetRequest) Execute() (*AppliancesIdUpgradeDelete200Response, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeGetExecute(r)
 }
 
@@ -367,11 +379,11 @@ AppliancesIdUpgradeGet Get the status of an Appliance Upgrade.
 
 Get the status of an Appliance Upgrade.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradeGetRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx _context.Context, id string) ApiAppliancesIdUpgradeGetRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx context.Context, id string) ApiAppliancesIdUpgradeGetRequest {
 	return ApiAppliancesIdUpgradeGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -380,28 +392,26 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx _context.Context
 }
 
 // Execute executes the request
-//  @return InlineResponse2006
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (InlineResponse2006, *_nethttp.Response, error) {
+//  @return AppliancesIdUpgradeDelete200Response
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (*AppliancesIdUpgradeDelete200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse2006
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AppliancesIdUpgradeDelete200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -424,7 +434,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -434,15 +444,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -476,6 +486,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -490,7 +510,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -501,7 +521,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 }
 
 type ApiAppliancesIdUpgradePostRequest struct {
-	ctx              _context.Context
+	ctx              context.Context
 	ApiService       *ApplianceUpgradeApiService
 	authorization    *string
 	id               string
@@ -513,12 +533,13 @@ func (r ApiAppliancesIdUpgradePostRequest) Authorization(authorization string) A
 	r.authorization = &authorization
 	return r
 }
+
 func (r ApiAppliancesIdUpgradePostRequest) ApplianceUpgrade(applianceUpgrade ApplianceUpgrade) ApiAppliancesIdUpgradePostRequest {
 	r.applianceUpgrade = &applianceUpgrade
 	return r
 }
 
-func (r ApiAppliancesIdUpgradePostRequest) Execute() (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradePostRequest) Execute() (*ApplianceUpgradeInternal, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradePostExecute(r)
 }
 
@@ -527,11 +548,11 @@ AppliancesIdUpgradePost Initiate an Appliance Upgrade.
 
 Initiate an Appliance Upgrade. This API call does what "prepare", "complete" and "switchPartition" API calls do all at once. "GET appliances/{id}/upgrade" must return "status":"idle|failed" before accepting the complete command. The progress can be followed by by polling the appliance via "GET appliances/{id}/upgrade".
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradePostRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePost(ctx _context.Context, id string) ApiAppliancesIdUpgradePostRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePost(ctx context.Context, id string) ApiAppliancesIdUpgradePostRequest {
 	return ApiAppliancesIdUpgradePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -541,27 +562,25 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePost(ctx _context.Contex
 
 // Execute executes the request
 //  @return ApplianceUpgradeInternal
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiAppliancesIdUpgradePostRequest) (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiAppliancesIdUpgradePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ApplianceUpgradeInternal
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ApplianceUpgradeInternal
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradePost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -589,7 +608,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.applianceUpgrade
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -599,15 +618,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -651,6 +670,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -665,7 +694,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -676,7 +705,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 }
 
 type ApiAppliancesIdUpgradePreparePostRequest struct {
-	ctx              _context.Context
+	ctx              context.Context
 	ApiService       *ApplianceUpgradeApiService
 	authorization    *string
 	id               string
@@ -688,12 +717,13 @@ func (r ApiAppliancesIdUpgradePreparePostRequest) Authorization(authorization st
 	r.authorization = &authorization
 	return r
 }
+
 func (r ApiAppliancesIdUpgradePreparePostRequest) ApplianceUpgrade(applianceUpgrade ApplianceUpgrade) ApiAppliancesIdUpgradePreparePostRequest {
 	r.applianceUpgrade = &applianceUpgrade
 	return r
 }
 
-func (r ApiAppliancesIdUpgradePreparePostRequest) Execute() (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradePreparePostRequest) Execute() (*ApplianceUpgradeInternal, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradePreparePostExecute(r)
 }
 
@@ -702,11 +732,11 @@ AppliancesIdUpgradePreparePost Prepare an Appliance Upgrade.
 
 Prepare an Appliance Upgrade. Appliance will download the Upgrade image and wait for the "complete" call before starting the Upgrade. The appliance will be functional until the "complete" call is made. "GET appliances/{id}/upgrade" must return "status":"idle|failed" before accepting the complete command. The progress can be followed by polling the appliance via "GET appliances/{id}/upgrade".
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradePreparePostRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePost(ctx _context.Context, id string) ApiAppliancesIdUpgradePreparePostRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePost(ctx context.Context, id string) ApiAppliancesIdUpgradePreparePostRequest {
 	return ApiAppliancesIdUpgradePreparePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -716,27 +746,25 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePost(ctx _context
 
 // Execute executes the request
 //  @return ApplianceUpgradeInternal
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r ApiAppliancesIdUpgradePreparePostRequest) (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r ApiAppliancesIdUpgradePreparePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ApplianceUpgradeInternal
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ApplianceUpgradeInternal
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradePreparePost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/prepare"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -764,7 +792,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.applianceUpgrade
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -774,15 +802,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -826,6 +854,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -840,7 +878,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -851,7 +889,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 }
 
 type ApiAppliancesIdUpgradeSwitchPartitionPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	id            string
@@ -863,7 +901,7 @@ func (r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) Authorization(authoriz
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) Execute() (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) Execute() (*ApplianceUpgradeInternal, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeSwitchPartitionPostExecute(r)
 }
 
@@ -872,11 +910,11 @@ AppliancesIdUpgradeSwitchPartitionPost Switch partition on the Appliance for com
 
 Reboot and switch partition on the appliance to finalize the Upgrade. "GET appliances/{id}/upgrade" must return "status":"success" before accepting the complete command. Since the appliance will be rebooted, the status cannot be queried directly. The Upgrade Script utilizes the Appliance Status dashboard APIs to verify the status after this.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiAppliancesIdUpgradeSwitchPartitionPostRequest
 */
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPost(ctx _context.Context, id string) ApiAppliancesIdUpgradeSwitchPartitionPostRequest {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPost(ctx context.Context, id string) ApiAppliancesIdUpgradeSwitchPartitionPostRequest {
 	return ApiAppliancesIdUpgradeSwitchPartitionPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -886,27 +924,25 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPost(ctx 
 
 // Execute executes the request
 //  @return ApplianceUpgradeInternal
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecute(r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) (ApplianceUpgradeInternal, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecute(r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  ApplianceUpgradeInternal
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ApplianceUpgradeInternal
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeSwitchPartitionPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/switch-partition"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -929,7 +965,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -939,15 +975,15 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -991,6 +1027,16 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1005,7 +1051,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -1016,7 +1062,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 }
 
 type ApiFilesFilenameDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	filename      string
@@ -1035,7 +1081,7 @@ func (r ApiFilesFilenameDeleteRequest) Checksum(checksum bool) ApiFilesFilenameD
 	return r
 }
 
-func (r ApiFilesFilenameDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiFilesFilenameDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.FilesFilenameDeleteExecute(r)
 }
 
@@ -1044,11 +1090,11 @@ FilesFilenameDelete Delete a File.
 
 Delete a File from the current Controller.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param filename The filename as it's uploaded to the Controller.
  @return ApiFilesFilenameDeleteRequest
 */
-func (a *ApplianceUpgradeApiService) FilesFilenameDelete(ctx _context.Context, filename string) ApiFilesFilenameDeleteRequest {
+func (a *ApplianceUpgradeApiService) FilesFilenameDelete(ctx context.Context, filename string) ApiFilesFilenameDeleteRequest {
 	return ApiFilesFilenameDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1057,26 +1103,24 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDelete(ctx _context.Context, f
 }
 
 // Execute executes the request
-func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilenameDeleteRequest) (*_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilenameDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.FilesFilenameDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/files/{filename}"
-	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", _neturl.PathEscape(parameterToString(r.filename, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterToString(r.filename, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -1102,7 +1146,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -1112,15 +1156,15 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1145,6 +1189,16 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1180,7 +1234,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 }
 
 type ApiFilesFilenameGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	filename      string
@@ -1199,7 +1253,7 @@ func (r ApiFilesFilenameGetRequest) Checksum(checksum bool) ApiFilesFilenameGetR
 	return r
 }
 
-func (r ApiFilesFilenameGetRequest) Execute() (File, *_nethttp.Response, error) {
+func (r ApiFilesFilenameGetRequest) Execute() (*File, *http.Response, error) {
 	return r.ApiService.FilesFilenameGetExecute(r)
 }
 
@@ -1208,11 +1262,11 @@ FilesFilenameGet Get the status of a File.
 
 Get the status of a File uploaded to the current Controller.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param filename The filename as it's uploaded to the Controller.
  @return ApiFilesFilenameGetRequest
 */
-func (a *ApplianceUpgradeApiService) FilesFilenameGet(ctx _context.Context, filename string) ApiFilesFilenameGetRequest {
+func (a *ApplianceUpgradeApiService) FilesFilenameGet(ctx context.Context, filename string) ApiFilesFilenameGetRequest {
 	return ApiFilesFilenameGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1222,27 +1276,25 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGet(ctx _context.Context, file
 
 // Execute executes the request
 //  @return File
-func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameGetRequest) (File, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameGetRequest) (*File, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  File
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.FilesFilenameGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/files/{filename}"
-	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", _neturl.PathEscape(parameterToString(r.filename, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterToString(r.filename, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -1268,7 +1320,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -1278,15 +1330,15 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1320,6 +1372,16 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1344,7 +1406,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -1355,7 +1417,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 }
 
 type ApiFilesGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	checksum      *bool
@@ -1373,7 +1435,7 @@ func (r ApiFilesGetRequest) Checksum(checksum bool) ApiFilesGetRequest {
 	return r
 }
 
-func (r ApiFilesGetRequest) Execute() (FileList, *_nethttp.Response, error) {
+func (r ApiFilesGetRequest) Execute() (*FileList, *http.Response, error) {
 	return r.ApiService.FilesGetExecute(r)
 }
 
@@ -1382,10 +1444,10 @@ FilesGet List all Files.
 
 List all Files uploaded to the current Controller and their details.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiFilesGetRequest
 */
-func (a *ApplianceUpgradeApiService) FilesGet(ctx _context.Context) ApiFilesGetRequest {
+func (a *ApplianceUpgradeApiService) FilesGet(ctx context.Context) ApiFilesGetRequest {
 	return ApiFilesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1394,26 +1456,24 @@ func (a *ApplianceUpgradeApiService) FilesGet(ctx _context.Context) ApiFilesGetR
 
 // Execute executes the request
 //  @return FileList
-func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (FileList, *_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*FileList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  FileList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FileList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.FilesGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/files"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -1439,7 +1499,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (File
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -1449,15 +1509,15 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (File
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1481,6 +1541,16 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (File
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1495,7 +1565,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (File
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -1506,10 +1576,10 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (File
 }
 
 type ApiFilesPostRequest struct {
-	ctx            _context.Context
-	ApiService     *ApplianceUpgradeApiService
-	authorization  *string
-	inlineObject12 *InlineObject12
+	ctx              context.Context
+	ApiService       *ApplianceUpgradeApiService
+	authorization    *string
+	filesGetRequest1 *FilesGetRequest1
 }
 
 // The Token from the LoginResponse.
@@ -1517,12 +1587,13 @@ func (r ApiFilesPostRequest) Authorization(authorization string) ApiFilesPostReq
 	r.authorization = &authorization
 	return r
 }
-func (r ApiFilesPostRequest) InlineObject12(inlineObject12 InlineObject12) ApiFilesPostRequest {
-	r.inlineObject12 = &inlineObject12
+
+func (r ApiFilesPostRequest) FilesGetRequest1(filesGetRequest1 FilesGetRequest1) ApiFilesPostRequest {
+	r.filesGetRequest1 = &filesGetRequest1
 	return r
 }
 
-func (r ApiFilesPostRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiFilesPostRequest) Execute() (*http.Response, error) {
 	return r.ApiService.FilesPostExecute(r)
 }
 
@@ -1531,10 +1602,10 @@ FilesPost Make Controller download a File from a given URL.
 
 Make the current Controller download a File from a given URL. Note that the File is downloaded and stored only on the current Controller, not synced between Controllers.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiFilesPostRequest
 */
-func (a *ApplianceUpgradeApiService) FilesPost(ctx _context.Context) ApiFilesPostRequest {
+func (a *ApplianceUpgradeApiService) FilesPost(ctx context.Context) ApiFilesPostRequest {
 	return ApiFilesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1542,25 +1613,23 @@ func (a *ApplianceUpgradeApiService) FilesPost(ctx _context.Context) ApiFilesPos
 }
 
 // Execute executes the request
-func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.FilesPost")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/files"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -1584,8 +1653,8 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*_
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
-	localVarPostBody = r.inlineObject12
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	localVarPostBody = r.filesGetRequest1
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -1595,15 +1664,15 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*_
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1628,6 +1697,16 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*_
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1673,7 +1752,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*_
 }
 
 type ApiFilesPutRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
 	file          **os.File
@@ -1691,7 +1770,7 @@ func (r ApiFilesPutRequest) File(file *os.File) ApiFilesPutRequest {
 	return r
 }
 
-func (r ApiFilesPutRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiFilesPutRequest) Execute() (*http.Response, error) {
 	return r.ApiService.FilesPutExecute(r)
 }
 
@@ -1700,10 +1779,10 @@ FilesPut Upload a File directly to the Controller.
 
 Upload a File directly to the current Controller. Note that the File is stored only on the current Controller, not synced between Controllers.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiFilesPutRequest
 */
-func (a *ApplianceUpgradeApiService) FilesPut(ctx _context.Context) ApiFilesPutRequest {
+func (a *ApplianceUpgradeApiService) FilesPut(ctx context.Context) ApiFilesPutRequest {
 	return ApiFilesPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1711,25 +1790,23 @@ func (a *ApplianceUpgradeApiService) FilesPut(ctx _context.Context) ApiFilesPutR
 }
 
 // Execute executes the request
-func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*_nethttp.Response, error) {
+func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.FilesPut")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/files"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -1752,18 +1829,24 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*_ne
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	localVarFormFileName = "file"
-	var localVarFile *os.File
+	var fileLocalVarFormFileName string
+	var fileLocalVarFileName string
+	var fileLocalVarFileBytes []byte
+
+	fileLocalVarFormFileName = "file"
+
+	var fileLocalVarFile *os.File
 	if r.file != nil {
-		localVarFile = *r.file
+		fileLocalVarFile = *r.file
 	}
-	if localVarFile != nil {
-		fbs, _ := _ioutil.ReadAll(localVarFile)
-		localVarFileBytes = fbs
-		localVarFileName = localVarFile.Name()
-		localVarFile.Close()
+	if fileLocalVarFile != nil {
+		fbs, _ := ioutil.ReadAll(fileLocalVarFile)
+		fileLocalVarFileBytes = fbs
+		fileLocalVarFileName = fileLocalVarFile.Name()
+		fileLocalVarFile.Close()
 	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -1773,15 +1856,15 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*_ne
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -1796,6 +1879,16 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*_ne
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

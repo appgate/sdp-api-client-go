@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -13,23 +13,18 @@ package openapi
 
 import (
 	"bytes"
-	_context "context"
-	_ioutil "io/ioutil"
-	_nethttp "net/http"
-	_neturl "net/url"
+	"context"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"strings"
-)
-
-// Linger please
-var (
-	_ _context.Context
 )
 
 // DeviceClaimScriptsApiService DeviceClaimScriptsApi service
 type DeviceClaimScriptsApiService service
 
 type ApiDeviceScriptsDownloadIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	id            string
@@ -41,7 +36,7 @@ func (r ApiDeviceScriptsDownloadIdGetRequest) Authorization(authorization string
 	return r
 }
 
-func (r ApiDeviceScriptsDownloadIdGetRequest) Execute() (InlineResponse20012, *_nethttp.Response, error) {
+func (r ApiDeviceScriptsDownloadIdGetRequest) Execute() (*DeviceScriptsDownloadIdGet200Response, *http.Response, error) {
 	return r.ApiService.DeviceScriptsDownloadIdGetExecute(r)
 }
 
@@ -50,11 +45,11 @@ DeviceScriptsDownloadIdGet Download a Device Claim Script.
 
 Download the raw script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiDeviceScriptsDownloadIdGetRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.Context, id string) ApiDeviceScriptsDownloadIdGetRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx context.Context, id string) ApiDeviceScriptsDownloadIdGetRequest {
 	return ApiDeviceScriptsDownloadIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -63,28 +58,26 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.C
 }
 
 // Execute executes the request
-//  @return InlineResponse20012
-func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDeviceScriptsDownloadIdGetRequest) (InlineResponse20012, *_nethttp.Response, error) {
+//  @return DeviceScriptsDownloadIdGet200Response
+func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDeviceScriptsDownloadIdGetRequest) (*DeviceScriptsDownloadIdGet200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  InlineResponse20012
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceScriptsDownloadIdGet200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsDownloadIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts/download/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -107,7 +100,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -117,15 +110,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -159,6 +152,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -173,7 +176,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -184,7 +187,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 }
 
 type ApiDeviceScriptsGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	query         *string
@@ -200,7 +203,7 @@ func (r ApiDeviceScriptsGetRequest) Authorization(authorization string) ApiDevic
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
 func (r ApiDeviceScriptsGetRequest) Query(query string) ApiDeviceScriptsGetRequest {
 	r.query = &query
 	return r
@@ -230,7 +233,7 @@ func (r ApiDeviceScriptsGetRequest) FilterBy(filterBy map[string]string) ApiDevi
 	return r
 }
 
-func (r ApiDeviceScriptsGetRequest) Execute() (DeviceScriptList, *_nethttp.Response, error) {
+func (r ApiDeviceScriptsGetRequest) Execute() (*DeviceScriptList, *http.Response, error) {
 	return r.ApiService.DeviceScriptsGetExecute(r)
 }
 
@@ -239,10 +242,10 @@ DeviceScriptsGet List all Device Claim Scripts.
 
 List all Device Claim Scripts visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeviceScriptsGetRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx _context.Context) ApiDeviceScriptsGetRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx context.Context) ApiDeviceScriptsGetRequest {
 	return ApiDeviceScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -251,26 +254,24 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx _context.Context) Ap
 
 // Execute executes the request
 //  @return DeviceScriptList
-func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScriptsGetRequest) (DeviceScriptList, *_nethttp.Response, error) {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScriptsGetRequest) (*DeviceScriptList, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  DeviceScriptList
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceScriptList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -308,7 +309,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -318,15 +319,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -350,6 +351,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -364,7 +375,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -375,7 +386,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 }
 
 type ApiDeviceScriptsIdDeleteRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	id            string
@@ -387,7 +398,7 @@ func (r ApiDeviceScriptsIdDeleteRequest) Authorization(authorization string) Api
 	return r
 }
 
-func (r ApiDeviceScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
+func (r ApiDeviceScriptsIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeviceScriptsIdDeleteExecute(r)
 }
 
@@ -396,11 +407,11 @@ DeviceScriptsIdDelete Delete a specific Device Claim Script.
 
 Delete a specific Device Claim Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiDeviceScriptsIdDeleteRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDelete(ctx _context.Context, id string) ApiDeviceScriptsIdDeleteRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDelete(ctx context.Context, id string) ApiDeviceScriptsIdDeleteRequest {
 	return ApiDeviceScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -409,26 +420,24 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDelete(ctx _context.Contex
 }
 
 // Execute executes the request
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceScriptsIdDeleteRequest) (*_nethttp.Response, error) {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodDelete
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsIdDelete")
 	if err != nil {
-		return nil, GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return nil, reportError("authorization is required and must be specified")
 	}
@@ -451,7 +460,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
 	}
@@ -461,15 +470,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -494,6 +503,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -519,7 +538,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 }
 
 type ApiDeviceScriptsIdGetRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	id            string
@@ -531,7 +550,7 @@ func (r ApiDeviceScriptsIdGetRequest) Authorization(authorization string) ApiDev
 	return r
 }
 
-func (r ApiDeviceScriptsIdGetRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
+func (r ApiDeviceScriptsIdGetRequest) Execute() (*DeviceScript, *http.Response, error) {
 	return r.ApiService.DeviceScriptsIdGetExecute(r)
 }
 
@@ -540,11 +559,11 @@ DeviceScriptsIdGet Get a specific Device Claim Script.
 
 Get a specific Device Claim Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiDeviceScriptsIdGetRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, id string) ApiDeviceScriptsIdGetRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx context.Context, id string) ApiDeviceScriptsIdGetRequest {
 	return ApiDeviceScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -554,27 +573,25 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, 
 
 // Execute executes the request
 //  @return DeviceScript
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScriptsIdGetRequest) (DeviceScript, *_nethttp.Response, error) {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScriptsIdGetRequest) (*DeviceScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  DeviceScript
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsIdGet")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -597,7 +614,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -607,15 +624,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -649,6 +666,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 406 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -663,7 +690,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -674,7 +701,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 }
 
 type ApiDeviceScriptsIdPutRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	id            string
@@ -693,7 +720,7 @@ func (r ApiDeviceScriptsIdPutRequest) DeviceScript(deviceScript DeviceScript) Ap
 	return r
 }
 
-func (r ApiDeviceScriptsIdPutRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
+func (r ApiDeviceScriptsIdPutRequest) Execute() (*DeviceScript, *http.Response, error) {
 	return r.ApiService.DeviceScriptsIdPutExecute(r)
 }
 
@@ -702,11 +729,11 @@ DeviceScriptsIdPut Update an existing Device Claim Script.
 
 Update an existing Device Claim Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id ID of the object.
  @return ApiDeviceScriptsIdPutRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, id string) ApiDeviceScriptsIdPutRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx context.Context, id string) ApiDeviceScriptsIdPutRequest {
 	return ApiDeviceScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -716,27 +743,25 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, 
 
 // Execute executes the request
 //  @return DeviceScript
-func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScriptsIdPutRequest) (DeviceScript, *_nethttp.Response, error) {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScriptsIdPutRequest) (*DeviceScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPut
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  DeviceScript
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsIdPut")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -764,7 +789,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.deviceScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -774,15 +799,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -817,6 +842,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -850,7 +885,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}
@@ -861,7 +896,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 }
 
 type ApiDeviceScriptsPostRequest struct {
-	ctx           _context.Context
+	ctx           context.Context
 	ApiService    *DeviceClaimScriptsApiService
 	authorization *string
 	deviceScript  *DeviceScript
@@ -879,7 +914,7 @@ func (r ApiDeviceScriptsPostRequest) DeviceScript(deviceScript DeviceScript) Api
 	return r
 }
 
-func (r ApiDeviceScriptsPostRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
+func (r ApiDeviceScriptsPostRequest) Execute() (*DeviceScript, *http.Response, error) {
 	return r.ApiService.DeviceScriptsPostExecute(r)
 }
 
@@ -888,10 +923,10 @@ DeviceScriptsPost Create a new Device Claim Script.
 
 Create a new Device Claim Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeviceScriptsPostRequest
 */
-func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx _context.Context) ApiDeviceScriptsPostRequest {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx context.Context) ApiDeviceScriptsPostRequest {
 	return ApiDeviceScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -900,26 +935,24 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx _context.Context) A
 
 // Execute executes the request
 //  @return DeviceScript
-func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScriptsPostRequest) (DeviceScript, *_nethttp.Response, error) {
+func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScriptsPostRequest) (*DeviceScript, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  DeviceScript
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeviceScript
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceClaimScriptsApiService.DeviceScriptsPost")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/device-scripts"
 
 	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
 	if r.authorization == nil {
 		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
 	}
@@ -947,7 +980,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.deviceScript
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
@@ -957,15 +990,15 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
@@ -990,6 +1023,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 406 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1033,7 +1076,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 
 	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 	if err != nil {
-		newErr := GenericOpenAPIError{
+		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: err.Error(),
 		}

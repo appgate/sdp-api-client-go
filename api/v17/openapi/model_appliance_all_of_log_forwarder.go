@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -18,14 +18,14 @@ import (
 // ApplianceAllOfLogForwarder LogForwarder settings. LogForwarder collects audit logs from the appliances in the given sites and sends them to the given endpoints.
 type ApplianceAllOfLogForwarder struct {
 	// Whether the LogForwarder is enabled on this appliance or not.
-	Enabled       *bool          `json:"enabled,omitempty"`
-	Elasticsearch *Elasticsearch `json:"elasticsearch,omitempty"`
+	Enabled       *bool                 `json:"enabled,omitempty"`
+	Elasticsearch NullableElasticsearch `json:"elasticsearch,omitempty"`
 	// TCP endpoints to connect and send the audit logs with the given format.
-	TcpClients *[]TcpClient `json:"tcpClients,omitempty"`
+	TcpClients []TcpClient `json:"tcpClients,omitempty"`
 	// AWS Kinesis endpoints to connect and send the audit logs with the given format.
-	AwsKineses *[]AwsKinesis `json:"awsKineses,omitempty"`
+	AwsKineses []AwsKinesis `json:"awsKineses,omitempty"`
 	// The sites to collect logs from and forward.
-	Sites *[]string `json:"sites,omitempty"`
+	Sites []string `json:"sites,omitempty"`
 }
 
 // NewApplianceAllOfLogForwarder instantiates a new ApplianceAllOfLogForwarder object
@@ -81,36 +81,47 @@ func (o *ApplianceAllOfLogForwarder) SetEnabled(v bool) {
 	o.Enabled = &v
 }
 
-// GetElasticsearch returns the Elasticsearch field value if set, zero value otherwise.
+// GetElasticsearch returns the Elasticsearch field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ApplianceAllOfLogForwarder) GetElasticsearch() Elasticsearch {
-	if o == nil || o.Elasticsearch == nil {
+	if o == nil || o.Elasticsearch.Get() == nil {
 		var ret Elasticsearch
 		return ret
 	}
-	return *o.Elasticsearch
+	return *o.Elasticsearch.Get()
 }
 
 // GetElasticsearchOk returns a tuple with the Elasticsearch field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ApplianceAllOfLogForwarder) GetElasticsearchOk() (*Elasticsearch, bool) {
-	if o == nil || o.Elasticsearch == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Elasticsearch, true
+	return o.Elasticsearch.Get(), o.Elasticsearch.IsSet()
 }
 
 // HasElasticsearch returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasElasticsearch() bool {
-	if o != nil && o.Elasticsearch != nil {
+	if o != nil && o.Elasticsearch.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetElasticsearch gets a reference to the given Elasticsearch and assigns it to the Elasticsearch field.
+// SetElasticsearch gets a reference to the given NullableElasticsearch and assigns it to the Elasticsearch field.
 func (o *ApplianceAllOfLogForwarder) SetElasticsearch(v Elasticsearch) {
-	o.Elasticsearch = &v
+	o.Elasticsearch.Set(&v)
+}
+
+// SetElasticsearchNil sets the value for Elasticsearch to be an explicit nil
+func (o *ApplianceAllOfLogForwarder) SetElasticsearchNil() {
+	o.Elasticsearch.Set(nil)
+}
+
+// UnsetElasticsearch ensures that no value is present for Elasticsearch, not even an explicit nil
+func (o *ApplianceAllOfLogForwarder) UnsetElasticsearch() {
+	o.Elasticsearch.Unset()
 }
 
 // GetTcpClients returns the TcpClients field value if set, zero value otherwise.
@@ -119,12 +130,12 @@ func (o *ApplianceAllOfLogForwarder) GetTcpClients() []TcpClient {
 		var ret []TcpClient
 		return ret
 	}
-	return *o.TcpClients
+	return o.TcpClients
 }
 
 // GetTcpClientsOk returns a tuple with the TcpClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetTcpClientsOk() (*[]TcpClient, bool) {
+func (o *ApplianceAllOfLogForwarder) GetTcpClientsOk() ([]TcpClient, bool) {
 	if o == nil || o.TcpClients == nil {
 		return nil, false
 	}
@@ -142,7 +153,7 @@ func (o *ApplianceAllOfLogForwarder) HasTcpClients() bool {
 
 // SetTcpClients gets a reference to the given []TcpClient and assigns it to the TcpClients field.
 func (o *ApplianceAllOfLogForwarder) SetTcpClients(v []TcpClient) {
-	o.TcpClients = &v
+	o.TcpClients = v
 }
 
 // GetAwsKineses returns the AwsKineses field value if set, zero value otherwise.
@@ -151,12 +162,12 @@ func (o *ApplianceAllOfLogForwarder) GetAwsKineses() []AwsKinesis {
 		var ret []AwsKinesis
 		return ret
 	}
-	return *o.AwsKineses
+	return o.AwsKineses
 }
 
 // GetAwsKinesesOk returns a tuple with the AwsKineses field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetAwsKinesesOk() (*[]AwsKinesis, bool) {
+func (o *ApplianceAllOfLogForwarder) GetAwsKinesesOk() ([]AwsKinesis, bool) {
 	if o == nil || o.AwsKineses == nil {
 		return nil, false
 	}
@@ -174,7 +185,7 @@ func (o *ApplianceAllOfLogForwarder) HasAwsKineses() bool {
 
 // SetAwsKineses gets a reference to the given []AwsKinesis and assigns it to the AwsKineses field.
 func (o *ApplianceAllOfLogForwarder) SetAwsKineses(v []AwsKinesis) {
-	o.AwsKineses = &v
+	o.AwsKineses = v
 }
 
 // GetSites returns the Sites field value if set, zero value otherwise.
@@ -183,12 +194,12 @@ func (o *ApplianceAllOfLogForwarder) GetSites() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Sites
+	return o.Sites
 }
 
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetSitesOk() (*[]string, bool) {
+func (o *ApplianceAllOfLogForwarder) GetSitesOk() ([]string, bool) {
 	if o == nil || o.Sites == nil {
 		return nil, false
 	}
@@ -206,7 +217,7 @@ func (o *ApplianceAllOfLogForwarder) HasSites() bool {
 
 // SetSites gets a reference to the given []string and assigns it to the Sites field.
 func (o *ApplianceAllOfLogForwarder) SetSites(v []string) {
-	o.Sites = &v
+	o.Sites = v
 }
 
 func (o ApplianceAllOfLogForwarder) MarshalJSON() ([]byte, error) {
@@ -214,8 +225,8 @@ func (o ApplianceAllOfLogForwarder) MarshalJSON() ([]byte, error) {
 	if o.Enabled != nil {
 		toSerialize["enabled"] = o.Enabled
 	}
-	if o.Elasticsearch != nil {
-		toSerialize["elasticsearch"] = o.Elasticsearch
+	if o.Elasticsearch.IsSet() {
+		toSerialize["elasticsearch"] = o.Elasticsearch.Get()
 	}
 	if o.TcpClients != nil {
 		toSerialize["tcpClients"] = o.TcpClients

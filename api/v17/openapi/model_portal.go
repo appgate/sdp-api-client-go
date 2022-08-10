@@ -1,9 +1,9 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v16+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommend if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 16.3
+API version: API version 17.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -23,14 +23,14 @@ type Portal struct {
 	// Automatic 80->443 redirection for Portal.
 	HttpRedirect *bool `json:"httpRedirect,omitempty"`
 	// Ports that can be proxied via Portal.
-	ProxyPorts *[]int32 `json:"proxyPorts,omitempty"`
+	ProxyPorts []int32 `json:"proxyPorts,omitempty"`
 	// P12 files for proxying traffic to HTTPS endpoints.
-	ProxyP12s *[]Portal12 `json:"proxyP12s,omitempty"`
+	ProxyP12s []Portal12 `json:"proxyP12s,omitempty"`
 	// Names of the profiles in this Collective to use in the Portal.
-	Profiles *[]string `json:"profiles,omitempty"`
+	Profiles []string `json:"profiles,omitempty"`
 	// Profiles from other Collectives to use in the Portal.
-	ExternalProfiles    *[]PortalExternalProfiles  `json:"externalProfiles,omitempty"`
-	SignInCustomization *PortalSignInCustomization `json:"signInCustomization,omitempty"`
+	ExternalProfiles    []PortalExternalProfilesInner `json:"externalProfiles,omitempty"`
+	SignInCustomization *PortalSignInCustomization    `json:"signInCustomization,omitempty"`
 }
 
 // NewPortal instantiates a new Portal object
@@ -160,12 +160,12 @@ func (o *Portal) GetProxyPorts() []int32 {
 		var ret []int32
 		return ret
 	}
-	return *o.ProxyPorts
+	return o.ProxyPorts
 }
 
 // GetProxyPortsOk returns a tuple with the ProxyPorts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Portal) GetProxyPortsOk() (*[]int32, bool) {
+func (o *Portal) GetProxyPortsOk() ([]int32, bool) {
 	if o == nil || o.ProxyPorts == nil {
 		return nil, false
 	}
@@ -183,7 +183,7 @@ func (o *Portal) HasProxyPorts() bool {
 
 // SetProxyPorts gets a reference to the given []int32 and assigns it to the ProxyPorts field.
 func (o *Portal) SetProxyPorts(v []int32) {
-	o.ProxyPorts = &v
+	o.ProxyPorts = v
 }
 
 // GetProxyP12s returns the ProxyP12s field value if set, zero value otherwise.
@@ -192,12 +192,12 @@ func (o *Portal) GetProxyP12s() []Portal12 {
 		var ret []Portal12
 		return ret
 	}
-	return *o.ProxyP12s
+	return o.ProxyP12s
 }
 
 // GetProxyP12sOk returns a tuple with the ProxyP12s field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Portal) GetProxyP12sOk() (*[]Portal12, bool) {
+func (o *Portal) GetProxyP12sOk() ([]Portal12, bool) {
 	if o == nil || o.ProxyP12s == nil {
 		return nil, false
 	}
@@ -215,7 +215,7 @@ func (o *Portal) HasProxyP12s() bool {
 
 // SetProxyP12s gets a reference to the given []Portal12 and assigns it to the ProxyP12s field.
 func (o *Portal) SetProxyP12s(v []Portal12) {
-	o.ProxyP12s = &v
+	o.ProxyP12s = v
 }
 
 // GetProfiles returns the Profiles field value if set, zero value otherwise.
@@ -224,12 +224,12 @@ func (o *Portal) GetProfiles() []string {
 		var ret []string
 		return ret
 	}
-	return *o.Profiles
+	return o.Profiles
 }
 
 // GetProfilesOk returns a tuple with the Profiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Portal) GetProfilesOk() (*[]string, bool) {
+func (o *Portal) GetProfilesOk() ([]string, bool) {
 	if o == nil || o.Profiles == nil {
 		return nil, false
 	}
@@ -247,21 +247,21 @@ func (o *Portal) HasProfiles() bool {
 
 // SetProfiles gets a reference to the given []string and assigns it to the Profiles field.
 func (o *Portal) SetProfiles(v []string) {
-	o.Profiles = &v
+	o.Profiles = v
 }
 
 // GetExternalProfiles returns the ExternalProfiles field value if set, zero value otherwise.
-func (o *Portal) GetExternalProfiles() []PortalExternalProfiles {
+func (o *Portal) GetExternalProfiles() []PortalExternalProfilesInner {
 	if o == nil || o.ExternalProfiles == nil {
-		var ret []PortalExternalProfiles
+		var ret []PortalExternalProfilesInner
 		return ret
 	}
-	return *o.ExternalProfiles
+	return o.ExternalProfiles
 }
 
 // GetExternalProfilesOk returns a tuple with the ExternalProfiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Portal) GetExternalProfilesOk() (*[]PortalExternalProfiles, bool) {
+func (o *Portal) GetExternalProfilesOk() ([]PortalExternalProfilesInner, bool) {
 	if o == nil || o.ExternalProfiles == nil {
 		return nil, false
 	}
@@ -277,9 +277,9 @@ func (o *Portal) HasExternalProfiles() bool {
 	return false
 }
 
-// SetExternalProfiles gets a reference to the given []PortalExternalProfiles and assigns it to the ExternalProfiles field.
-func (o *Portal) SetExternalProfiles(v []PortalExternalProfiles) {
-	o.ExternalProfiles = &v
+// SetExternalProfiles gets a reference to the given []PortalExternalProfilesInner and assigns it to the ExternalProfiles field.
+func (o *Portal) SetExternalProfiles(v []PortalExternalProfilesInner) {
+	o.ExternalProfiles = v
 }
 
 // GetSignInCustomization returns the SignInCustomization field value if set, zero value otherwise.
