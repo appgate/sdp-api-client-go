@@ -1,0 +1,30 @@
+diff --git a/go/client.mustache b/go/client.mustache
+index 8b9e173fe01..75aa59bc3d2 100644
+--- a/go/client.mustache
++++ b/go/client.mustache
+@@ -34,6 +34,7 @@ import (
+ var (
+ 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
+ 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
++	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
+ )
+
+ // APIClient manages communication with the {{appName}} API v{{version}}
+@@ -172,7 +173,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		log.Printf("\n%s\n", string(dump))
++		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
+ 	}
+
+ 	resp, err := c.cfg.HTTPClient.Do(request)
+@@ -185,7 +186,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+ 		if err != nil {
+ 			return resp, err
+ 		}
+-		log.Printf("\n%s\n", string(dump))
++		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
+ 	}
+ 	return resp, err
+ }
