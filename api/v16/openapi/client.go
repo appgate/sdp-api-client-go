@@ -40,6 +40,7 @@ import (
 var (
 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
 )
 
 // APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 16.5
@@ -321,7 +322,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
 	}
 
 	resp, err := c.cfg.HTTPClient.Do(request)
@@ -334,7 +335,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return resp, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
 	}
 	return resp, err
 }

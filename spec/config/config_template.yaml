@@ -68,6 +68,7 @@ languages:
             - template-patches/go/identity_providers.patch
             - template-patches/go/utils_big_int.patch
             - template-patches/go/download_file.patch
+            - template-patches/go/redact_http_auth.patch
         commands:
           - commandline:
             - docker-entrypoint.sh
