@@ -23,6 +23,8 @@ type AppliancesIdBackupBackupIdStatusGet200Response struct {
 	Output *string `json:"output,omitempty"`
 	// Only set when status is done.
 	Result *string `json:"result,omitempty"`
+	// A free text field that shows what internally the backup is doing.
+	Message *string `json:"message,omitempty"`
 	// Current status of the Appliance Backup.
 	Status *string `json:"status,omitempty"`
 }
@@ -140,6 +142,38 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetResult(v string) {
 	o.Result = &v
 }
 
+// GetMessage returns the Message field value if set, zero value otherwise.
+func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessage() string {
+	if o == nil || o.Message == nil {
+		var ret string
+		return ret
+	}
+	return *o.Message
+}
+
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessageOk() (*string, bool) {
+	if o == nil || o.Message == nil {
+		return nil, false
+	}
+	return o.Message, true
+}
+
+// HasMessage returns a boolean if a field has been set.
+func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasMessage() bool {
+	if o != nil && o.Message != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
+func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetMessage(v string) {
+	o.Message = &v
+}
+
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetStatus() string {
 	if o == nil || o.Status == nil {
@@ -182,6 +216,9 @@ func (o AppliancesIdBackupBackupIdStatusGet200Response) MarshalJSON() ([]byte, e
 	}
 	if o.Result != nil {
 		toSerialize["result"] = o.Result
+	}
+	if o.Message != nil {
+		toSerialize["message"] = o.Message
 	}
 	if o.Status != nil {
 		toSerialize["status"] = o.Status
