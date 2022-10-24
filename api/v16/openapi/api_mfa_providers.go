@@ -84,8 +84,8 @@ MfaProvidersGet List all MFA Providers.
 
 List all MFA Providers visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiMfaProvidersGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiMfaProvidersGetRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersGet(ctx _context.Context) ApiMfaProvidersGetRequest {
 	return ApiMfaProvidersGetRequest{
@@ -95,7 +95,8 @@ func (a *MFAProvidersApiService) MfaProvidersGet(ctx _context.Context) ApiMfaPro
 }
 
 // Execute executes the request
-//  @return MfaProviderList
+//
+//	@return MfaProviderList
 func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequest) (MfaProviderList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -241,9 +242,9 @@ MfaProvidersIdDelete Delete a specific MFA Provider.
 
 Delete a specific MFA Provider.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiMfaProvidersIdDeleteRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiMfaProvidersIdDeleteRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersIdDelete(ctx _context.Context, id string) ApiMfaProvidersIdDeleteRequest {
 	return ApiMfaProvidersIdDeleteRequest{
@@ -385,9 +386,9 @@ MfaProvidersIdGet Get a specific MFA Provider.
 
 Get a specific MFA Provider.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiMfaProvidersIdGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiMfaProvidersIdGetRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersIdGet(ctx _context.Context, id string) ApiMfaProvidersIdGetRequest {
 	return ApiMfaProvidersIdGetRequest{
@@ -398,7 +399,8 @@ func (a *MFAProvidersApiService) MfaProvidersIdGet(ctx _context.Context, id stri
 }
 
 // Execute executes the request
-//  @return MfaProvider
+//
+//	@return MfaProvider
 func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGetRequest) (MfaProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -547,9 +549,9 @@ MfaProvidersIdPut Update an existing MFA Provider.
 
 Update an existing MFA Provider.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiMfaProvidersIdPutRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiMfaProvidersIdPutRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersIdPut(ctx _context.Context, id string) ApiMfaProvidersIdPutRequest {
 	return ApiMfaProvidersIdPutRequest{
@@ -560,7 +562,8 @@ func (a *MFAProvidersApiService) MfaProvidersIdPut(ctx _context.Context, id stri
 }
 
 // Execute executes the request
-//  @return MfaProvider
+//
+//	@return MfaProvider
 func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPutRequest) (MfaProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -733,8 +736,8 @@ MfaProvidersPost Create a new MFA Provider.
 
 Create a new MFA Provider.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiMfaProvidersPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiMfaProvidersPostRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersPost(ctx _context.Context) ApiMfaProvidersPostRequest {
 	return ApiMfaProvidersPostRequest{
@@ -744,7 +747,8 @@ func (a *MFAProvidersApiService) MfaProvidersPost(ctx _context.Context) ApiMfaPr
 }
 
 // Execute executes the request
-//  @return MfaProvider
+//
+//	@return MfaProvider
 func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRequest) (MfaProvider, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
@@ -916,8 +920,8 @@ MfaProvidersTestPost Test a MFA Provider connection.
 
 Test connection for the given MFA Provider JSON.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiMfaProvidersTestPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiMfaProvidersTestPostRequest
 */
 func (a *MFAProvidersApiService) MfaProvidersTestPost(ctx _context.Context) ApiMfaProvidersTestPostRequest {
 	return ApiMfaProvidersTestPostRequest{
@@ -927,7 +931,8 @@ func (a *MFAProvidersApiService) MfaProvidersTestPost(ctx _context.Context) ApiM
 }
 
 // Execute executes the request
-//  @return InlineResponse20014
+//
+//	@return InlineResponse20014
 func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTestPostRequest) (InlineResponse20014, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

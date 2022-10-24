@@ -49,8 +49,8 @@ ClaimsNamesGet List all Claim Names.
 
 Claim Names list includes available User, Device and System claims. Some of these claims are static and some change according to the Identity Provider configurations.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClaimsNamesGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClaimsNamesGetRequest
 */
 func (a *ConditionsApiService) ClaimsNamesGet(ctx _context.Context) ApiClaimsNamesGetRequest {
 	return ApiClaimsNamesGetRequest{
@@ -60,7 +60,8 @@ func (a *ConditionsApiService) ClaimsNamesGet(ctx _context.Context) ApiClaimsNam
 }
 
 // Execute executes the request
-//  @return ClaimNamesList
+//
+//	@return ClaimNamesList
 func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest) (ClaimNamesList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -225,8 +226,8 @@ ConditionsGet List all Conditions.
 
 List all Conditions visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiConditionsGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiConditionsGetRequest
 */
 func (a *ConditionsApiService) ConditionsGet(ctx _context.Context) ApiConditionsGetRequest {
 	return ApiConditionsGetRequest{
@@ -236,7 +237,8 @@ func (a *ConditionsApiService) ConditionsGet(ctx _context.Context) ApiConditions
 }
 
 // Execute executes the request
-//  @return ConditionList
+//
+//	@return ConditionList
 func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (ConditionList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -382,9 +384,9 @@ ConditionsIdDelete Delete a specific Condition.
 
 Delete a specific Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiConditionsIdDeleteRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiConditionsIdDeleteRequest
 */
 func (a *ConditionsApiService) ConditionsIdDelete(ctx _context.Context, id string) ApiConditionsIdDeleteRequest {
 	return ApiConditionsIdDeleteRequest{
@@ -526,9 +528,9 @@ ConditionsIdGet Get a specific Condition.
 
 Get a specific Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiConditionsIdGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiConditionsIdGetRequest
 */
 func (a *ConditionsApiService) ConditionsIdGet(ctx _context.Context, id string) ApiConditionsIdGetRequest {
 	return ApiConditionsIdGetRequest{
@@ -539,7 +541,8 @@ func (a *ConditionsApiService) ConditionsIdGet(ctx _context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return Condition
+//
+//	@return Condition
 func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetRequest) (Condition, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -688,9 +691,9 @@ ConditionsIdPut Update an existing Condition.
 
 Update an existing Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiConditionsIdPutRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiConditionsIdPutRequest
 */
 func (a *ConditionsApiService) ConditionsIdPut(ctx _context.Context, id string) ApiConditionsIdPutRequest {
 	return ApiConditionsIdPutRequest{
@@ -701,7 +704,8 @@ func (a *ConditionsApiService) ConditionsIdPut(ctx _context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return Condition
+//
+//	@return Condition
 func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutRequest) (Condition, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -874,8 +878,8 @@ ConditionsPost Create a new Condition.
 
 Create a new Condition.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiConditionsPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiConditionsPostRequest
 */
 func (a *ConditionsApiService) ConditionsPost(ctx _context.Context) ApiConditionsPostRequest {
 	return ApiConditionsPostRequest{
@@ -885,7 +889,8 @@ func (a *ConditionsApiService) ConditionsPost(ctx _context.Context) ApiCondition
 }
 
 // Execute executes the request
-//  @return Condition
+//
+//	@return Condition
 func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest) (Condition, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
@@ -1057,8 +1062,8 @@ ConditionsTestPost Simulate a given expression for a Condition, Policy or Criter
 
 Simulate a given expression for a Condition, Policy or Criteria Script.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiConditionsTestPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiConditionsTestPostRequest
 */
 func (a *ConditionsApiService) ConditionsTestPost(ctx _context.Context) ApiConditionsTestPostRequest {
 	return ApiConditionsTestPostRequest{
@@ -1068,7 +1073,8 @@ func (a *ConditionsApiService) ConditionsTestPost(ctx _context.Context) ApiCondi
 }
 
 // Execute executes the request
-//  @return InlineResponse20011
+//
+//	@return InlineResponse20011
 func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPostRequest) (InlineResponse20011, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

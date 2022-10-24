@@ -84,8 +84,8 @@ DnsRulesGet List all DNS Rules.
 
 List all DNS Rules visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDnsRulesGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDnsRulesGetRequest
 */
 func (a *DNSRulesApiService) DnsRulesGet(ctx _context.Context) ApiDnsRulesGetRequest {
 	return ApiDnsRulesGetRequest{
@@ -95,7 +95,8 @@ func (a *DNSRulesApiService) DnsRulesGet(ctx _context.Context) ApiDnsRulesGetReq
 }
 
 // Execute executes the request
-//  @return DnsRuleList
+//
+//	@return DnsRuleList
 func (a *DNSRulesApiService) DnsRulesGetExecute(r ApiDnsRulesGetRequest) (DnsRuleList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -241,9 +242,9 @@ DnsRulesIdDelete Delete a specific DNS Rule.
 
 Delete a specific DNS Rule.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiDnsRulesIdDeleteRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiDnsRulesIdDeleteRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdDelete(ctx _context.Context, id string) ApiDnsRulesIdDeleteRequest {
 	return ApiDnsRulesIdDeleteRequest{
@@ -385,9 +386,9 @@ DnsRulesIdGet Get a specific DNS Rule.
 
 Get a specific DNS Rule.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiDnsRulesIdGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiDnsRulesIdGetRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) ApiDnsRulesIdGetRequest {
 	return ApiDnsRulesIdGetRequest{
@@ -398,7 +399,8 @@ func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) ApiD
 }
 
 // Execute executes the request
-//  @return DnsRule
+//
+//	@return DnsRule
 func (a *DNSRulesApiService) DnsRulesIdGetExecute(r ApiDnsRulesIdGetRequest) (DnsRule, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -547,9 +549,9 @@ DnsRulesIdPut Update an existing DNS Rule.
 
 Update an existing DNS Rule.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiDnsRulesIdPutRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiDnsRulesIdPutRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) ApiDnsRulesIdPutRequest {
 	return ApiDnsRulesIdPutRequest{
@@ -560,7 +562,8 @@ func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) ApiD
 }
 
 // Execute executes the request
-//  @return DnsRule
+//
+//	@return DnsRule
 func (a *DNSRulesApiService) DnsRulesIdPutExecute(r ApiDnsRulesIdPutRequest) (DnsRule, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -733,8 +736,8 @@ DnsRulesPost Create a new DNS Rule.
 
 Create a new DNS Rule.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDnsRulesPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDnsRulesPostRequest
 */
 func (a *DNSRulesApiService) DnsRulesPost(ctx _context.Context) ApiDnsRulesPostRequest {
 	return ApiDnsRulesPostRequest{
@@ -744,7 +747,8 @@ func (a *DNSRulesApiService) DnsRulesPost(ctx _context.Context) ApiDnsRulesPostR
 }
 
 // Execute executes the request
-//  @return DnsRule
+//
+//	@return DnsRule
 func (a *DNSRulesApiService) DnsRulesPostExecute(r ApiDnsRulesPostRequest) (DnsRule, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
