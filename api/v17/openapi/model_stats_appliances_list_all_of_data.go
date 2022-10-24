@@ -38,7 +38,7 @@ type StatsAppliancesListAllOfData struct {
 	Status *string `json:"status,omitempty"`
 	// Comma-separated list of functions enabled on this Appliance in short format.
 	Function     *string                    `json:"function,omitempty"`
-	Controller   *ApplianceRole             `json:"controller,omitempty"`
+	Controller   *ControllerRole            `json:"controller,omitempty"`
 	LogServer    *ApplianceRole             `json:"logServer,omitempty"`
 	LogForwarder *ApplianceRole             `json:"logForwarder,omitempty"`
 	Gateway      *ApplianceWithSessionsRole `json:"gateway,omitempty"`
@@ -400,9 +400,9 @@ func (o *StatsAppliancesListAllOfData) SetFunction(v string) {
 }
 
 // GetController returns the Controller field value if set, zero value otherwise.
-func (o *StatsAppliancesListAllOfData) GetController() ApplianceRole {
+func (o *StatsAppliancesListAllOfData) GetController() ControllerRole {
 	if o == nil || o.Controller == nil {
-		var ret ApplianceRole
+		var ret ControllerRole
 		return ret
 	}
 	return *o.Controller
@@ -410,7 +410,7 @@ func (o *StatsAppliancesListAllOfData) GetController() ApplianceRole {
 
 // GetControllerOk returns a tuple with the Controller field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StatsAppliancesListAllOfData) GetControllerOk() (*ApplianceRole, bool) {
+func (o *StatsAppliancesListAllOfData) GetControllerOk() (*ControllerRole, bool) {
 	if o == nil || o.Controller == nil {
 		return nil, false
 	}
@@ -426,8 +426,8 @@ func (o *StatsAppliancesListAllOfData) HasController() bool {
 	return false
 }
 
-// SetController gets a reference to the given ApplianceRole and assigns it to the Controller field.
-func (o *StatsAppliancesListAllOfData) SetController(v ApplianceRole) {
+// SetController gets a reference to the given ControllerRole and assigns it to the Controller field.
+func (o *StatsAppliancesListAllOfData) SetController(v ControllerRole) {
 	o.Controller = &v
 }
 
