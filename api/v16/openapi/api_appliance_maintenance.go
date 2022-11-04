@@ -55,9 +55,9 @@ AppliancesIdMaintenancePost Enable or disable maintenance mode on Appliance
 
 Enable or disable maintenance mode on Appliance An appliance in maintenance mode won't allow to perform POST, PUT, PATCH or DELETE methods.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdMaintenancePostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdMaintenancePostRequest
 */
 func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePost(ctx _context.Context, id string) ApiAppliancesIdMaintenancePostRequest {
 	return ApiAppliancesIdMaintenancePostRequest{
@@ -68,7 +68,8 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePost(ctx _contex
 }
 
 // Execute executes the request
-//  @return InlineResponse202
+//
+//	@return InlineResponse202
 func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r ApiAppliancesIdMaintenancePostRequest) (InlineResponse202, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

@@ -50,9 +50,9 @@ OnBoardedDevicesDistinguishedNameDelete Remove an On-Boarded Device for the give
 
 Remove an On-Boarded Device for the given Distinguished Name. The device will need to on-board again.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiOnBoardedDevicesDistinguishedNameDeleteRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiOnBoardedDevicesDistinguishedNameDeleteRequest
 */
 func (a *OnBoardedDevicesApiService) OnBoardedDevicesDistinguishedNameDelete(ctx _context.Context, distinguishedName string) ApiOnBoardedDevicesDistinguishedNameDeleteRequest {
 	return ApiOnBoardedDevicesDistinguishedNameDeleteRequest{
@@ -228,8 +228,8 @@ OnBoardedDevicesGet List all On-Boarded Devices.
 
 List all On-Boarded Devices.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiOnBoardedDevicesGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiOnBoardedDevicesGetRequest
 */
 func (a *OnBoardedDevicesApiService) OnBoardedDevicesGet(ctx _context.Context) ApiOnBoardedDevicesGetRequest {
 	return ApiOnBoardedDevicesGetRequest{
@@ -239,7 +239,8 @@ func (a *OnBoardedDevicesApiService) OnBoardedDevicesGet(ctx _context.Context) A
 }
 
 // Execute executes the request
-//  @return OnBoardedDeviceList
+//
+//	@return OnBoardedDeviceList
 func (a *OnBoardedDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedDevicesGetRequest) (OnBoardedDeviceList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
