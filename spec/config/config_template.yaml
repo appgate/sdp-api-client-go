@@ -53,6 +53,35 @@ languages:
       downstream_templates/go/v17/api_ldap_identity_providers.go: openapi_v17/api_ldap_identity_providers.go
       downstream_templates/go/v17/model_ldap_identity_provider_list.go: openapi_v17/model_ldap_identity_provider_list.go
 
+      # bigInt issues
+      # modified the original generated code and replaced IpPool.Total from int64 to bigInt
+      # workaround for https://github.com/OpenAPITools/openapi-generator/issues/10620
+      downstream_templates/go/v18/model_ip_pool.go: openapi_v18/model_ip_pool.go
+      downstream_templates/go/v18/model_ip_pool_all_of.go: openapi_v18/model_ip_pool_all_of.go
+      # # the templates for identity_providers is because of how the openapi-generator treat discriminator objects.
+      # # The default behavior within openapi-generator is to create 1 api service for all, but that does not really work well
+      # # in practice because we need a way in the code to have separate models for each type of identity providers,
+      # # that is why we create a copy for each type in the discriminator object based on the default api_identity_providers.go
+      # # the only difference is the service name and the models used in the arguments, the patch template-patches/go/identity_providers.patch
+      # # will append the extra services to the client.
+      downstream_templates/go/v18/api_connector_identity_providers.go: openapi_v18/api_connector_identity_providers.go
+      downstream_templates/go/v18/model_connector_identity_provider_list.go: openapi_v18/model_connector_identity_provider_list.go
+
+      downstream_templates/go/v18/api_local_database_identity_providers.go: openapi_v18/api_local_database_identity_providers.go
+      downstream_templates/go/v18/model_local_database_identity_provider_list.go: openapi_v18/model_local_database_identity_provider_list.go
+
+      downstream_templates/go/v18/api_ldap_certificate_identity_providers.go: openapi_v18/api_ldap_certificate_identity_providers.go
+      downstream_templates/go/v18/model_ldap_certificate_identity_provider_list.go: openapi_v18/model_ldap_certificate_identity_provider_list.go
+
+      downstream_templates/go/v18/api_saml_identity_providers.go: openapi_v18/api_saml_identity_providers.go
+      downstream_templates/go/v18/model_saml_identity_provider_list.go: openapi_v18/model_saml_identity_provider_list.go
+
+      downstream_templates/go/v18/api_radius_identity_providers.go: openapi_v18/api_radius_identity_providers.go
+      downstream_templates/go/v18/model_radius_identity_provider_list.go: openapi_v18/model_radius_identity_provider_list.go
+
+      downstream_templates/go/v18/api_ldap_identity_providers.go: openapi_v18/api_ldap_identity_providers.go
+      downstream_templates/go/v18/model_ldap_identity_provider_list.go: openapi_v18/model_ldap_identity_provider_list.go
+
     generation:
       default:
         templates:
