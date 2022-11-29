@@ -119,12 +119,14 @@ languages:
     github_repo_name: sdp-api-client-go
     github_org_name: appgate
     library_version: "0.0.1"
-    spec_versions: ["v16", "v17"]
+    spec_versions: ["v16", "v17", "v18"]
     version_path_template: "openapi_{{spec_version}}"
 spec_sections:
   v16:
   - api_specs.yml
   v17:
+  - api_specs.yml
+  v18:
   - api_specs.yml
 
 validation_commands:
@@ -138,3 +140,4 @@ validation_commands:
 spec_versions:
 - v16
 - v17
+- v18
