@@ -30,8 +30,10 @@ type ApplianceAllOf struct {
 	// Name of the Site for this Appliance. For convenience only.
 	SiteName *string `json:"siteName,omitempty"`
 	// Customization assigned to this Appliance.
-	Customization      *string                           `json:"customization,omitempty"`
-	ClientInterface    ApplianceAllOfClientInterface     `json:"clientInterface"`
+	Customization   *string                       `json:"customization,omitempty"`
+	ClientInterface ApplianceAllOfClientInterface `json:"clientInterface"`
+	// Deprecated
+	PeerInterface      *ApplianceAllOfPeerInterface      `json:"peerInterface,omitempty"`
 	AdminInterface     *ApplianceAllOfAdminInterface     `json:"adminInterface,omitempty"`
 	Networking         ApplianceAllOfNetworking          `json:"networking"`
 	Ntp                *ApplianceAllOfNtp                `json:"ntp,omitempty"`
@@ -310,6 +312,41 @@ func (o *ApplianceAllOf) GetClientInterfaceOk() (*ApplianceAllOfClientInterface,
 // SetClientInterface sets field value
 func (o *ApplianceAllOf) SetClientInterface(v ApplianceAllOfClientInterface) {
 	o.ClientInterface = v
+}
+
+// GetPeerInterface returns the PeerInterface field value if set, zero value otherwise.
+// Deprecated
+func (o *ApplianceAllOf) GetPeerInterface() ApplianceAllOfPeerInterface {
+	if o == nil || o.PeerInterface == nil {
+		var ret ApplianceAllOfPeerInterface
+		return ret
+	}
+	return *o.PeerInterface
+}
+
+// GetPeerInterfaceOk returns a tuple with the PeerInterface field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *ApplianceAllOf) GetPeerInterfaceOk() (*ApplianceAllOfPeerInterface, bool) {
+	if o == nil || o.PeerInterface == nil {
+		return nil, false
+	}
+	return o.PeerInterface, true
+}
+
+// HasPeerInterface returns a boolean if a field has been set.
+func (o *ApplianceAllOf) HasPeerInterface() bool {
+	if o != nil && o.PeerInterface != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPeerInterface gets a reference to the given ApplianceAllOfPeerInterface and assigns it to the PeerInterface field.
+// Deprecated
+func (o *ApplianceAllOf) SetPeerInterface(v ApplianceAllOfPeerInterface) {
+	o.PeerInterface = &v
 }
 
 // GetAdminInterface returns the AdminInterface field value if set, zero value otherwise.
@@ -841,6 +878,9 @@ func (o ApplianceAllOf) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["clientInterface"] = o.ClientInterface
+	}
+	if o.PeerInterface != nil {
+		toSerialize["peerInterface"] = o.PeerInterface
 	}
 	if o.AdminInterface != nil {
 		toSerialize["adminInterface"] = o.AdminInterface
