@@ -30,6 +30,11 @@ type Appliance struct {
 	Updated *time.Time `json:"updated,omitempty"`
 	// Array of tags.
 	Tags []string `json:"tags,omitempty"`
+	// Makes the Appliance to connect to Controller/LogServer/LogForwarders using their clientInterface.httpsPort instead of peerInterface.httpsPort. The Appliance uses SPA to connect. This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
+	// Deprecated
+	ConnectToPeersUsingClientPortWithSpa *bool `json:"connectToPeersUsingClientPortWithSpa,omitempty"`
+	// Deprecated
+	PeerInterface *ApplianceAllOfPeerInterface `json:"peerInterface,omitempty"`
 	// Whether the Appliance is activated or not. If it is not activated, it won't be accessible by the Clients.
 	Activated *bool `json:"activated,omitempty"`
 	// Whether the Appliance is pending certificate renewal or not. Should be true for a very short period on certificate renewal.
@@ -43,10 +48,8 @@ type Appliance struct {
 	// Name of the Site for this Appliance. For convenience only.
 	SiteName *string `json:"siteName,omitempty"`
 	// Customization assigned to this Appliance.
-	Customization   *string                       `json:"customization,omitempty"`
-	ClientInterface ApplianceAllOfClientInterface `json:"clientInterface"`
-	// Deprecated
-	PeerInterface      *ApplianceAllOfPeerInterface      `json:"peerInterface,omitempty"`
+	Customization      *string                           `json:"customization,omitempty"`
+	ClientInterface    ApplianceAllOfClientInterface     `json:"clientInterface"`
 	AdminInterface     *ApplianceAllOfAdminInterface     `json:"adminInterface,omitempty"`
 	Networking         ApplianceAllOfNetworking          `json:"networking"`
 	Ntp                *ApplianceAllOfNtp                `json:"ntp,omitempty"`
@@ -74,6 +77,8 @@ type Appliance struct {
 func NewAppliance(name string, hostname string, clientInterface ApplianceAllOfClientInterface, networking ApplianceAllOfNetworking) *Appliance {
 	this := Appliance{}
 	this.Name = name
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	this.Hostname = hostname
 	this.ClientInterface = clientInterface
 	this.Networking = networking
@@ -85,6 +90,8 @@ func NewAppliance(name string, hostname string, clientInterface ApplianceAllOfCl
 // but it doesn't guarantee that properties required by API are set
 func NewApplianceWithDefaults() *Appliance {
 	this := Appliance{}
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	return &this
 }
 
@@ -270,6 +277,76 @@ func (o *Appliance) HasTags() bool {
 // SetTags gets a reference to the given []string and assigns it to the Tags field.
 func (o *Appliance) SetTags(v []string) {
 	o.Tags = v
+}
+
+// GetConnectToPeersUsingClientPortWithSpa returns the ConnectToPeersUsingClientPortWithSpa field value if set, zero value otherwise.
+// Deprecated
+func (o *Appliance) GetConnectToPeersUsingClientPortWithSpa() bool {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		var ret bool
+		return ret
+	}
+	return *o.ConnectToPeersUsingClientPortWithSpa
+}
+
+// GetConnectToPeersUsingClientPortWithSpaOk returns a tuple with the ConnectToPeersUsingClientPortWithSpa field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *Appliance) GetConnectToPeersUsingClientPortWithSpaOk() (*bool, bool) {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		return nil, false
+	}
+	return o.ConnectToPeersUsingClientPortWithSpa, true
+}
+
+// HasConnectToPeersUsingClientPortWithSpa returns a boolean if a field has been set.
+func (o *Appliance) HasConnectToPeersUsingClientPortWithSpa() bool {
+	if o != nil && o.ConnectToPeersUsingClientPortWithSpa != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectToPeersUsingClientPortWithSpa gets a reference to the given bool and assigns it to the ConnectToPeersUsingClientPortWithSpa field.
+// Deprecated
+func (o *Appliance) SetConnectToPeersUsingClientPortWithSpa(v bool) {
+	o.ConnectToPeersUsingClientPortWithSpa = &v
+}
+
+// GetPeerInterface returns the PeerInterface field value if set, zero value otherwise.
+// Deprecated
+func (o *Appliance) GetPeerInterface() ApplianceAllOfPeerInterface {
+	if o == nil || o.PeerInterface == nil {
+		var ret ApplianceAllOfPeerInterface
+		return ret
+	}
+	return *o.PeerInterface
+}
+
+// GetPeerInterfaceOk returns a tuple with the PeerInterface field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *Appliance) GetPeerInterfaceOk() (*ApplianceAllOfPeerInterface, bool) {
+	if o == nil || o.PeerInterface == nil {
+		return nil, false
+	}
+	return o.PeerInterface, true
+}
+
+// HasPeerInterface returns a boolean if a field has been set.
+func (o *Appliance) HasPeerInterface() bool {
+	if o != nil && o.PeerInterface != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPeerInterface gets a reference to the given ApplianceAllOfPeerInterface and assigns it to the PeerInterface field.
+// Deprecated
+func (o *Appliance) SetPeerInterface(v ApplianceAllOfPeerInterface) {
+	o.PeerInterface = &v
 }
 
 // GetActivated returns the Activated field value if set, zero value otherwise.
@@ -510,41 +587,6 @@ func (o *Appliance) GetClientInterfaceOk() (*ApplianceAllOfClientInterface, bool
 // SetClientInterface sets field value
 func (o *Appliance) SetClientInterface(v ApplianceAllOfClientInterface) {
 	o.ClientInterface = v
-}
-
-// GetPeerInterface returns the PeerInterface field value if set, zero value otherwise.
-// Deprecated
-func (o *Appliance) GetPeerInterface() ApplianceAllOfPeerInterface {
-	if o == nil || o.PeerInterface == nil {
-		var ret ApplianceAllOfPeerInterface
-		return ret
-	}
-	return *o.PeerInterface
-}
-
-// GetPeerInterfaceOk returns a tuple with the PeerInterface field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *Appliance) GetPeerInterfaceOk() (*ApplianceAllOfPeerInterface, bool) {
-	if o == nil || o.PeerInterface == nil {
-		return nil, false
-	}
-	return o.PeerInterface, true
-}
-
-// HasPeerInterface returns a boolean if a field has been set.
-func (o *Appliance) HasPeerInterface() bool {
-	if o != nil && o.PeerInterface != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPeerInterface gets a reference to the given ApplianceAllOfPeerInterface and assigns it to the PeerInterface field.
-// Deprecated
-func (o *Appliance) SetPeerInterface(v ApplianceAllOfPeerInterface) {
-	o.PeerInterface = &v
 }
 
 // GetAdminInterface returns the AdminInterface field value if set, zero value otherwise.
@@ -1071,6 +1113,12 @@ func (o Appliance) MarshalJSON() ([]byte, error) {
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
 	}
+	if o.ConnectToPeersUsingClientPortWithSpa != nil {
+		toSerialize["connectToPeersUsingClientPortWithSpa"] = o.ConnectToPeersUsingClientPortWithSpa
+	}
+	if o.PeerInterface != nil {
+		toSerialize["peerInterface"] = o.PeerInterface
+	}
 	if o.Activated != nil {
 		toSerialize["activated"] = o.Activated
 	}
@@ -1094,9 +1142,6 @@ func (o Appliance) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["clientInterface"] = o.ClientInterface
-	}
-	if o.PeerInterface != nil {
-		toSerialize["peerInterface"] = o.PeerInterface
 	}
 	if o.AdminInterface != nil {
 		toSerialize["adminInterface"] = o.AdminInterface
