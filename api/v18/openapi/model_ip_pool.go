@@ -31,13 +31,13 @@ type IpPool struct {
 	// Array of tags.
 	Tags []string `json:"tags,omitempty"`
 	// Whether the IP pool is for v4 or v6.
-	IpVersion6     *bool         `json:"ipVersion6,omitempty"`
-	Ranges         NullableArray `json:"ranges,omitempty"`
-	ExcludedRanges NullableArray `json:"excludedRanges,omitempty"`
+	IpVersion6     *bool              `json:"ipVersion6,omitempty"`
+	Ranges         []IpPoolRangeInner `json:"ranges,omitempty"`
+	ExcludedRanges []IpPoolRangeInner `json:"excludedRanges,omitempty"`
 	// Number of days Allocated IPs will be reserved for device&users before they are reclaimable by others.
 	LeaseTimeDays *int32 `json:"leaseTimeDays,omitempty"`
 	// The total size of the IP Pool.
-	Total *int64 `json:"total,omitempty"`
+	Total *BigInt `json:"total,omitempty"`
 	// Number of IPs in the pool are currently in use by device&users.
 	CurrentlyUsed *int64 `json:"currentlyUsed,omitempty"`
 	// Number of IPs in the pool are not currently in use but reserved for device&users according to the \"leaseTimeDays\" setting.
@@ -286,90 +286,68 @@ func (o *IpPool) SetIpVersion6(v bool) {
 	o.IpVersion6 = &v
 }
 
-// GetRanges returns the Ranges field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *IpPool) GetRanges() Array {
-	if o == nil || o.Ranges.Get() == nil {
-		var ret Array
+// GetRanges returns the Ranges field value if set, zero value otherwise.
+func (o *IpPool) GetRanges() []IpPoolRangeInner {
+	if o == nil || o.Ranges == nil {
+		var ret []IpPoolRangeInner
 		return ret
 	}
-	return *o.Ranges.Get()
+	return o.Ranges
 }
 
 // GetRangesOk returns a tuple with the Ranges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *IpPool) GetRangesOk() (*Array, bool) {
-	if o == nil {
+func (o *IpPool) GetRangesOk() ([]IpPoolRangeInner, bool) {
+	if o == nil || o.Ranges == nil {
 		return nil, false
 	}
-	return o.Ranges.Get(), o.Ranges.IsSet()
+	return o.Ranges, true
 }
 
 // HasRanges returns a boolean if a field has been set.
 func (o *IpPool) HasRanges() bool {
-	if o != nil && o.Ranges.IsSet() {
+	if o != nil && o.Ranges != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetRanges gets a reference to the given NullableArray and assigns it to the Ranges field.
-func (o *IpPool) SetRanges(v Array) {
-	o.Ranges.Set(&v)
+// SetRanges gets a reference to the given []IpPoolRangeInner and assigns it to the Ranges field.
+func (o *IpPool) SetRanges(v []IpPoolRangeInner) {
+	o.Ranges = v
 }
 
-// SetRangesNil sets the value for Ranges to be an explicit nil
-func (o *IpPool) SetRangesNil() {
-	o.Ranges.Set(nil)
-}
-
-// UnsetRanges ensures that no value is present for Ranges, not even an explicit nil
-func (o *IpPool) UnsetRanges() {
-	o.Ranges.Unset()
-}
-
-// GetExcludedRanges returns the ExcludedRanges field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *IpPool) GetExcludedRanges() Array {
-	if o == nil || o.ExcludedRanges.Get() == nil {
-		var ret Array
+// GetExcludedRanges returns the ExcludedRanges field value if set, zero value otherwise.
+func (o *IpPool) GetExcludedRanges() []IpPoolRangeInner {
+	if o == nil || o.ExcludedRanges == nil {
+		var ret []IpPoolRangeInner
 		return ret
 	}
-	return *o.ExcludedRanges.Get()
+	return o.ExcludedRanges
 }
 
 // GetExcludedRangesOk returns a tuple with the ExcludedRanges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *IpPool) GetExcludedRangesOk() (*Array, bool) {
-	if o == nil {
+func (o *IpPool) GetExcludedRangesOk() ([]IpPoolRangeInner, bool) {
+	if o == nil || o.ExcludedRanges == nil {
 		return nil, false
 	}
-	return o.ExcludedRanges.Get(), o.ExcludedRanges.IsSet()
+	return o.ExcludedRanges, true
 }
 
 // HasExcludedRanges returns a boolean if a field has been set.
 func (o *IpPool) HasExcludedRanges() bool {
-	if o != nil && o.ExcludedRanges.IsSet() {
+	if o != nil && o.ExcludedRanges != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetExcludedRanges gets a reference to the given NullableArray and assigns it to the ExcludedRanges field.
-func (o *IpPool) SetExcludedRanges(v Array) {
-	o.ExcludedRanges.Set(&v)
-}
-
-// SetExcludedRangesNil sets the value for ExcludedRanges to be an explicit nil
-func (o *IpPool) SetExcludedRangesNil() {
-	o.ExcludedRanges.Set(nil)
-}
-
-// UnsetExcludedRanges ensures that no value is present for ExcludedRanges, not even an explicit nil
-func (o *IpPool) UnsetExcludedRanges() {
-	o.ExcludedRanges.Unset()
+// SetExcludedRanges gets a reference to the given []IpPoolRangeInner and assigns it to the ExcludedRanges field.
+func (o *IpPool) SetExcludedRanges(v []IpPoolRangeInner) {
+	o.ExcludedRanges = v
 }
 
 // GetLeaseTimeDays returns the LeaseTimeDays field value if set, zero value otherwise.
@@ -405,9 +383,9 @@ func (o *IpPool) SetLeaseTimeDays(v int32) {
 }
 
 // GetTotal returns the Total field value if set, zero value otherwise.
-func (o *IpPool) GetTotal() int64 {
+func (o *IpPool) GetTotal() BigInt {
 	if o == nil || o.Total == nil {
-		var ret int64
+		var ret BigInt
 		return ret
 	}
 	return *o.Total
@@ -415,7 +393,7 @@ func (o *IpPool) GetTotal() int64 {
 
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IpPool) GetTotalOk() (*int64, bool) {
+func (o *IpPool) GetTotalOk() (*BigInt, bool) {
 	if o == nil || o.Total == nil {
 		return nil, false
 	}
@@ -432,7 +410,7 @@ func (o *IpPool) HasTotal() bool {
 }
 
 // SetTotal gets a reference to the given int64 and assigns it to the Total field.
-func (o *IpPool) SetTotal(v int64) {
+func (o *IpPool) SetTotal(v BigInt) {
 	o.Total = &v
 }
 
@@ -523,11 +501,11 @@ func (o IpPool) MarshalJSON() ([]byte, error) {
 	if o.IpVersion6 != nil {
 		toSerialize["ipVersion6"] = o.IpVersion6
 	}
-	if o.Ranges.IsSet() {
-		toSerialize["ranges"] = o.Ranges.Get()
+	if o.Ranges != nil {
+		toSerialize["ranges"] = o.Ranges
 	}
-	if o.ExcludedRanges.IsSet() {
-		toSerialize["excludedRanges"] = o.ExcludedRanges.Get()
+	if o.ExcludedRanges != nil {
+		toSerialize["excludedRanges"] = o.ExcludedRanges
 	}
 	if o.LeaseTimeDays != nil {
 		toSerialize["leaseTimeDays"] = o.LeaseTimeDays
