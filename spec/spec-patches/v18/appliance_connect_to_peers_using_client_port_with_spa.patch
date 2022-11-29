@@ -1,0 +1,19 @@
+diff --git a/appliance.yml b/appliance.yml
+index a2114ace2..a4d0f2286 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -1084,6 +1084,14 @@ definitions:
+           - clientInterface
+           - networking
+         properties:
++          connectToPeersUsingClientPortWithSpa:
++            type: boolean
++            description: >-
++              Makes the Appliance to connect to Controller/LogServer/LogForwarders using their clientInterface.httpsPort instead of peerInterface.httpsPort.
++              The Appliance uses SPA to connect.
++              This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
++            default: true
++            deprecated: true
+           activated:
+             type: boolean
+             readOnly: true

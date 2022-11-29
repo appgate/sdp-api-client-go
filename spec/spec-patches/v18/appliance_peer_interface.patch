@@ -1,11 +1,11 @@
 diff --git a/appliance.yml b/appliance.yml
-index 99927ce..448becb 100644
+index a4d0f2286..9f4d8e3d5 100644
 --- a/appliance.yml
 +++ b/appliance.yml
-@@ -935,6 +935,26 @@ definitions:
-                 enum:
-                   - TCP
-                   - 'UDP-TCP'
+@@ -1092,6 +1092,26 @@ definitions:
+               This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
+             default: true
+             deprecated: true
 +          peerInterface:
 +            type: object
 +            description: >-
@@ -26,6 +26,6 @@ index 99927ce..448becb 100644
 +                default: 444
 +              allowSources:
 +                $ref: '#/definitions/AllowSources'
-           adminInterface:
-             type: object
-             description: >-
+           activated:
+             type: boolean
+             readOnly: true
