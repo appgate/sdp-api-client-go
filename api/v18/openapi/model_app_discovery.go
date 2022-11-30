@@ -26,9 +26,6 @@ type AppDiscovery struct {
 	RefreshInterval *float32 `json:"refreshInterval,omitempty"`
 	// The queries applied to the list.
 	Queries []string `json:"queries,omitempty"`
-	// The first query applied to the list. Deprecated as of 6.0. Use queries instead.
-	// Deprecated
-	Query *string `json:"query,omitempty"`
 	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
@@ -185,41 +182,6 @@ func (o *AppDiscovery) HasQueries() bool {
 // SetQueries gets a reference to the given []string and assigns it to the Queries field.
 func (o *AppDiscovery) SetQueries(v []string) {
 	o.Queries = v
-}
-
-// GetQuery returns the Query field value if set, zero value otherwise.
-// Deprecated
-func (o *AppDiscovery) GetQuery() string {
-	if o == nil || o.Query == nil {
-		var ret string
-		return ret
-	}
-	return *o.Query
-}
-
-// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *AppDiscovery) GetQueryOk() (*string, bool) {
-	if o == nil || o.Query == nil {
-		return nil, false
-	}
-	return o.Query, true
-}
-
-// HasQuery returns a boolean if a field has been set.
-func (o *AppDiscovery) HasQuery() bool {
-	if o != nil && o.Query != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQuery gets a reference to the given string and assigns it to the Query field.
-// Deprecated
-func (o *AppDiscovery) SetQuery(v string) {
-	o.Query = &v
 }
 
 // GetRange returns the Range field value if set, zero value otherwise.
@@ -427,9 +389,6 @@ func (o AppDiscovery) MarshalJSON() ([]byte, error) {
 	}
 	if o.Queries != nil {
 		toSerialize["queries"] = o.Queries
-	}
-	if o.Query != nil {
-		toSerialize["query"] = o.Query
 	}
 	if o.Range != nil {
 		toSerialize["range"] = o.Range
