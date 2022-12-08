@@ -192,7 +192,7 @@ func (r ApiFido2DevicesGetRequest) Authorization(authorization string) ApiFido2D
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
 func (r ApiFido2DevicesGetRequest) Query(query string) ApiFido2DevicesGetRequest {
 	r.query = &query
 	return r

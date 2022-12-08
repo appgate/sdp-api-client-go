@@ -198,7 +198,7 @@ func (r ApiIpPoolsAllocatedIpsGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
 func (r ApiIpPoolsAllocatedIpsGetRequest) Query(query string) ApiIpPoolsAllocatedIpsGetRequest {
 	r.query = &query
 	return r
@@ -398,7 +398,7 @@ func (r ApiIpPoolsGetRequest) Authorization(authorization string) ApiIpPoolsGetR
 	return r
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
 func (r ApiIpPoolsGetRequest) Query(query string) ApiIpPoolsGetRequest {
 	r.query = &query
 	return r

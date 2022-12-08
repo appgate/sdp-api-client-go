@@ -17,14 +17,14 @@ import (
 
 // TokenRevocationResponse struct for TokenRevocationResponse
 type TokenRevocationResponse struct {
-	// The queries applied to the list.
-	Queries []string `json:"queries,omitempty"`
 	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
 	OrderBy *string `json:"orderBy,omitempty"`
 	// Whether the sorting is applied descending or ascending.
 	Descending *bool `json:"descending,omitempty"`
+	// The queries applied to the list.
+	Queries []string `json:"queries,omitempty"`
 	// The filters applied to the list.
 	FilterBy []FilterBy `json:"filterBy,omitempty"`
 	// List of TokenRevocation.
@@ -46,38 +46,6 @@ func NewTokenRevocationResponse() *TokenRevocationResponse {
 func NewTokenRevocationResponseWithDefaults() *TokenRevocationResponse {
 	this := TokenRevocationResponse{}
 	return &this
-}
-
-// GetQueries returns the Queries field value if set, zero value otherwise.
-func (o *TokenRevocationResponse) GetQueries() []string {
-	if o == nil || o.Queries == nil {
-		var ret []string
-		return ret
-	}
-	return o.Queries
-}
-
-// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TokenRevocationResponse) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
-		return nil, false
-	}
-	return o.Queries, true
-}
-
-// HasQueries returns a boolean if a field has been set.
-func (o *TokenRevocationResponse) HasQueries() bool {
-	if o != nil && o.Queries != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQueries gets a reference to the given []string and assigns it to the Queries field.
-func (o *TokenRevocationResponse) SetQueries(v []string) {
-	o.Queries = v
 }
 
 // GetRange returns the Range field value if set, zero value otherwise.
@@ -176,6 +144,38 @@ func (o *TokenRevocationResponse) SetDescending(v bool) {
 	o.Descending = &v
 }
 
+// GetQueries returns the Queries field value if set, zero value otherwise.
+func (o *TokenRevocationResponse) GetQueries() []string {
+	if o == nil || o.Queries == nil {
+		var ret []string
+		return ret
+	}
+	return o.Queries
+}
+
+// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenRevocationResponse) GetQueriesOk() ([]string, bool) {
+	if o == nil || o.Queries == nil {
+		return nil, false
+	}
+	return o.Queries, true
+}
+
+// HasQueries returns a boolean if a field has been set.
+func (o *TokenRevocationResponse) HasQueries() bool {
+	if o != nil && o.Queries != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueries gets a reference to the given []string and assigns it to the Queries field.
+func (o *TokenRevocationResponse) SetQueries(v []string) {
+	o.Queries = v
+}
+
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *TokenRevocationResponse) GetFilterBy() []FilterBy {
 	if o == nil || o.FilterBy == nil {
@@ -242,9 +242,6 @@ func (o *TokenRevocationResponse) SetData(v []TokenRevocation) {
 
 func (o TokenRevocationResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
 	if o.Range != nil {
 		toSerialize["range"] = o.Range
 	}
@@ -253,6 +250,9 @@ func (o TokenRevocationResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.Descending != nil {
 		toSerialize["descending"] = o.Descending
+	}
+	if o.Queries != nil {
+		toSerialize["queries"] = o.Queries
 	}
 	if o.FilterBy != nil {
 		toSerialize["filterBy"] = o.FilterBy

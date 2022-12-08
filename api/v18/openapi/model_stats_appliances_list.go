@@ -24,14 +24,17 @@ type StatsAppliancesList struct {
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 	// Recommended refresh interval in minutes.
 	RefreshInterval *float32 `json:"refreshInterval,omitempty"`
-	// The queries applied to the list.
-	Queries []string `json:"queries,omitempty"`
 	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
 	OrderBy *string `json:"orderBy,omitempty"`
 	// Whether the sorting is applied descending or ascending.
 	Descending *bool `json:"descending,omitempty"`
+	// The queries applied to the list.
+	Queries []string `json:"queries,omitempty"`
+	// The first query applied to the list. Deprecated as of 6.0. Use queries instead.
+	// Deprecated
+	Query *string `json:"query,omitempty"`
 	// The number of active Appliances with the Controller role enabled.
 	ControllerCount *float32 `json:"controllerCount,omitempty"`
 	// The number of active Appliances with the Gateway role enabled.
@@ -162,38 +165,6 @@ func (o *StatsAppliancesList) SetRefreshInterval(v float32) {
 	o.RefreshInterval = &v
 }
 
-// GetQueries returns the Queries field value if set, zero value otherwise.
-func (o *StatsAppliancesList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
-		var ret []string
-		return ret
-	}
-	return o.Queries
-}
-
-// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *StatsAppliancesList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
-		return nil, false
-	}
-	return o.Queries, true
-}
-
-// HasQueries returns a boolean if a field has been set.
-func (o *StatsAppliancesList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQueries gets a reference to the given []string and assigns it to the Queries field.
-func (o *StatsAppliancesList) SetQueries(v []string) {
-	o.Queries = v
-}
-
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetRange() string {
 	if o == nil || o.Range == nil {
@@ -288,6 +259,73 @@ func (o *StatsAppliancesList) HasDescending() bool {
 // SetDescending gets a reference to the given bool and assigns it to the Descending field.
 func (o *StatsAppliancesList) SetDescending(v bool) {
 	o.Descending = &v
+}
+
+// GetQueries returns the Queries field value if set, zero value otherwise.
+func (o *StatsAppliancesList) GetQueries() []string {
+	if o == nil || o.Queries == nil {
+		var ret []string
+		return ret
+	}
+	return o.Queries
+}
+
+// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StatsAppliancesList) GetQueriesOk() ([]string, bool) {
+	if o == nil || o.Queries == nil {
+		return nil, false
+	}
+	return o.Queries, true
+}
+
+// HasQueries returns a boolean if a field has been set.
+func (o *StatsAppliancesList) HasQueries() bool {
+	if o != nil && o.Queries != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueries gets a reference to the given []string and assigns it to the Queries field.
+func (o *StatsAppliancesList) SetQueries(v []string) {
+	o.Queries = v
+}
+
+// GetQuery returns the Query field value if set, zero value otherwise.
+// Deprecated
+func (o *StatsAppliancesList) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
+		return ret
+	}
+	return *o.Query
+}
+
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *StatsAppliancesList) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
+		return nil, false
+	}
+	return o.Query, true
+}
+
+// HasQuery returns a boolean if a field has been set.
+func (o *StatsAppliancesList) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+// Deprecated
+func (o *StatsAppliancesList) SetQuery(v string) {
+	o.Query = &v
 }
 
 // GetControllerCount returns the ControllerCount field value if set, zero value otherwise.
@@ -557,9 +595,6 @@ func (o StatsAppliancesList) MarshalJSON() ([]byte, error) {
 	if o.RefreshInterval != nil {
 		toSerialize["refreshInterval"] = o.RefreshInterval
 	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
 	if o.Range != nil {
 		toSerialize["range"] = o.Range
 	}
@@ -568,6 +603,12 @@ func (o StatsAppliancesList) MarshalJSON() ([]byte, error) {
 	}
 	if o.Descending != nil {
 		toSerialize["descending"] = o.Descending
+	}
+	if o.Queries != nil {
+		toSerialize["queries"] = o.Queries
+	}
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
 	}
 	if o.ControllerCount != nil {
 		toSerialize["controllerCount"] = o.ControllerCount

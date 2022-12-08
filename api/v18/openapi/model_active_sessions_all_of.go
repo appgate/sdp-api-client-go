@@ -17,6 +17,8 @@ import (
 
 // ActiveSessionsAllOf struct for ActiveSessionsAllOf
 type ActiveSessionsAllOf struct {
+	// The first query applied to the list.
+	Query *string `json:"query,omitempty"`
 	// The number of total Distinct Users currently active.
 	DistinctUserCount *float32        `json:"distinctUserCount,omitempty"`
 	Data              []DeviceAndUser `json:"data,omitempty"`
@@ -37,6 +39,38 @@ func NewActiveSessionsAllOf() *ActiveSessionsAllOf {
 func NewActiveSessionsAllOfWithDefaults() *ActiveSessionsAllOf {
 	this := ActiveSessionsAllOf{}
 	return &this
+}
+
+// GetQuery returns the Query field value if set, zero value otherwise.
+func (o *ActiveSessionsAllOf) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
+		return ret
+	}
+	return *o.Query
+}
+
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ActiveSessionsAllOf) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
+		return nil, false
+	}
+	return o.Query, true
+}
+
+// HasQuery returns a boolean if a field has been set.
+func (o *ActiveSessionsAllOf) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+func (o *ActiveSessionsAllOf) SetQuery(v string) {
+	o.Query = &v
 }
 
 // GetDistinctUserCount returns the DistinctUserCount field value if set, zero value otherwise.
@@ -105,6 +139,9 @@ func (o *ActiveSessionsAllOf) SetData(v []DeviceAndUser) {
 
 func (o ActiveSessionsAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
+	}
 	if o.DistinctUserCount != nil {
 		toSerialize["distinctUserCount"] = o.DistinctUserCount
 	}

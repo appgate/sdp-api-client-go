@@ -15,39 +15,35 @@ import (
 	"encoding/json"
 )
 
-// ResultList struct for ResultList
-type ResultList struct {
+// ResultListBase struct for ResultListBase
+type ResultListBase struct {
 	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
 	OrderBy *string `json:"orderBy,omitempty"`
 	// Whether the sorting is applied descending or ascending.
 	Descending *bool `json:"descending,omitempty"`
-	// The queries applied to the list.
-	Queries []string `json:"queries,omitempty"`
-	// The filters applied to the list.
-	FilterBy []FilterBy `json:"filterBy,omitempty"`
 }
 
-// NewResultList instantiates a new ResultList object
+// NewResultListBase instantiates a new ResultListBase object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewResultList() *ResultList {
-	this := ResultList{}
+func NewResultListBase() *ResultListBase {
+	this := ResultListBase{}
 	return &this
 }
 
-// NewResultListWithDefaults instantiates a new ResultList object
+// NewResultListBaseWithDefaults instantiates a new ResultListBase object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewResultListWithDefaults() *ResultList {
-	this := ResultList{}
+func NewResultListBaseWithDefaults() *ResultListBase {
+	this := ResultListBase{}
 	return &this
 }
 
 // GetRange returns the Range field value if set, zero value otherwise.
-func (o *ResultList) GetRange() string {
+func (o *ResultListBase) GetRange() string {
 	if o == nil || o.Range == nil {
 		var ret string
 		return ret
@@ -57,7 +53,7 @@ func (o *ResultList) GetRange() string {
 
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ResultList) GetRangeOk() (*string, bool) {
+func (o *ResultListBase) GetRangeOk() (*string, bool) {
 	if o == nil || o.Range == nil {
 		return nil, false
 	}
@@ -65,7 +61,7 @@ func (o *ResultList) GetRangeOk() (*string, bool) {
 }
 
 // HasRange returns a boolean if a field has been set.
-func (o *ResultList) HasRange() bool {
+func (o *ResultListBase) HasRange() bool {
 	if o != nil && o.Range != nil {
 		return true
 	}
@@ -74,12 +70,12 @@ func (o *ResultList) HasRange() bool {
 }
 
 // SetRange gets a reference to the given string and assigns it to the Range field.
-func (o *ResultList) SetRange(v string) {
+func (o *ResultListBase) SetRange(v string) {
 	o.Range = &v
 }
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
-func (o *ResultList) GetOrderBy() string {
+func (o *ResultListBase) GetOrderBy() string {
 	if o == nil || o.OrderBy == nil {
 		var ret string
 		return ret
@@ -89,7 +85,7 @@ func (o *ResultList) GetOrderBy() string {
 
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ResultList) GetOrderByOk() (*string, bool) {
+func (o *ResultListBase) GetOrderByOk() (*string, bool) {
 	if o == nil || o.OrderBy == nil {
 		return nil, false
 	}
@@ -97,7 +93,7 @@ func (o *ResultList) GetOrderByOk() (*string, bool) {
 }
 
 // HasOrderBy returns a boolean if a field has been set.
-func (o *ResultList) HasOrderBy() bool {
+func (o *ResultListBase) HasOrderBy() bool {
 	if o != nil && o.OrderBy != nil {
 		return true
 	}
@@ -106,12 +102,12 @@ func (o *ResultList) HasOrderBy() bool {
 }
 
 // SetOrderBy gets a reference to the given string and assigns it to the OrderBy field.
-func (o *ResultList) SetOrderBy(v string) {
+func (o *ResultListBase) SetOrderBy(v string) {
 	o.OrderBy = &v
 }
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
-func (o *ResultList) GetDescending() bool {
+func (o *ResultListBase) GetDescending() bool {
 	if o == nil || o.Descending == nil {
 		var ret bool
 		return ret
@@ -121,7 +117,7 @@ func (o *ResultList) GetDescending() bool {
 
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ResultList) GetDescendingOk() (*bool, bool) {
+func (o *ResultListBase) GetDescendingOk() (*bool, bool) {
 	if o == nil || o.Descending == nil {
 		return nil, false
 	}
@@ -129,7 +125,7 @@ func (o *ResultList) GetDescendingOk() (*bool, bool) {
 }
 
 // HasDescending returns a boolean if a field has been set.
-func (o *ResultList) HasDescending() bool {
+func (o *ResultListBase) HasDescending() bool {
 	if o != nil && o.Descending != nil {
 		return true
 	}
@@ -138,75 +134,11 @@ func (o *ResultList) HasDescending() bool {
 }
 
 // SetDescending gets a reference to the given bool and assigns it to the Descending field.
-func (o *ResultList) SetDescending(v bool) {
+func (o *ResultListBase) SetDescending(v bool) {
 	o.Descending = &v
 }
 
-// GetQueries returns the Queries field value if set, zero value otherwise.
-func (o *ResultList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
-		var ret []string
-		return ret
-	}
-	return o.Queries
-}
-
-// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ResultList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
-		return nil, false
-	}
-	return o.Queries, true
-}
-
-// HasQueries returns a boolean if a field has been set.
-func (o *ResultList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQueries gets a reference to the given []string and assigns it to the Queries field.
-func (o *ResultList) SetQueries(v []string) {
-	o.Queries = v
-}
-
-// GetFilterBy returns the FilterBy field value if set, zero value otherwise.
-func (o *ResultList) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
-		var ret []FilterBy
-		return ret
-	}
-	return o.FilterBy
-}
-
-// GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ResultList) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
-		return nil, false
-	}
-	return o.FilterBy, true
-}
-
-// HasFilterBy returns a boolean if a field has been set.
-func (o *ResultList) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFilterBy gets a reference to the given []FilterBy and assigns it to the FilterBy field.
-func (o *ResultList) SetFilterBy(v []FilterBy) {
-	o.FilterBy = v
-}
-
-func (o ResultList) MarshalJSON() ([]byte, error) {
+func (o ResultListBase) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Range != nil {
 		toSerialize["range"] = o.Range
@@ -217,47 +149,41 @@ func (o ResultList) MarshalJSON() ([]byte, error) {
 	if o.Descending != nil {
 		toSerialize["descending"] = o.Descending
 	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableResultList struct {
-	value *ResultList
+type NullableResultListBase struct {
+	value *ResultListBase
 	isSet bool
 }
 
-func (v NullableResultList) Get() *ResultList {
+func (v NullableResultListBase) Get() *ResultListBase {
 	return v.value
 }
 
-func (v *NullableResultList) Set(val *ResultList) {
+func (v *NullableResultListBase) Set(val *ResultListBase) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableResultList) IsSet() bool {
+func (v NullableResultListBase) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableResultList) Unset() {
+func (v *NullableResultListBase) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableResultList(val *ResultList) *NullableResultList {
-	return &NullableResultList{value: val, isSet: true}
+func NewNullableResultListBase(val *ResultListBase) *NullableResultListBase {
+	return &NullableResultListBase{value: val, isSet: true}
 }
 
-func (v NullableResultList) MarshalJSON() ([]byte, error) {
+func (v NullableResultListBase) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableResultList) UnmarshalJSON(src []byte) error {
+func (v *NullableResultListBase) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

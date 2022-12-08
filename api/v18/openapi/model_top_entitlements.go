@@ -24,7 +24,7 @@ type TopEntitlements struct {
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 	// Recommended refresh interval in minutes.
 	RefreshInterval *float32 `json:"refreshInterval,omitempty"`
-	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total) , the items between the (including) 3rd and the 5th are returned.
+	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
 	OrderBy *string `json:"orderBy,omitempty"`

@@ -17,13 +17,7 @@ import (
 
 // TopEntitlementsAllOf struct for TopEntitlementsAllOf
 type TopEntitlementsAllOf struct {
-	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total) , the items between the (including) 3rd and the 5th are returned.
-	Range *string `json:"range,omitempty"`
-	// The field name used to sort the list.
-	OrderBy *string `json:"orderBy,omitempty"`
-	// Whether the sorting is applied descending or ascending.
-	Descending *bool                `json:"descending,omitempty"`
-	Data       []map[string]float32 `json:"data,omitempty"`
+	Data []map[string]float32 `json:"data,omitempty"`
 }
 
 // NewTopEntitlementsAllOf instantiates a new TopEntitlementsAllOf object
@@ -41,102 +35,6 @@ func NewTopEntitlementsAllOf() *TopEntitlementsAllOf {
 func NewTopEntitlementsAllOfWithDefaults() *TopEntitlementsAllOf {
 	this := TopEntitlementsAllOf{}
 	return &this
-}
-
-// GetRange returns the Range field value if set, zero value otherwise.
-func (o *TopEntitlementsAllOf) GetRange() string {
-	if o == nil || o.Range == nil {
-		var ret string
-		return ret
-	}
-	return *o.Range
-}
-
-// GetRangeOk returns a tuple with the Range field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TopEntitlementsAllOf) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
-		return nil, false
-	}
-	return o.Range, true
-}
-
-// HasRange returns a boolean if a field has been set.
-func (o *TopEntitlementsAllOf) HasRange() bool {
-	if o != nil && o.Range != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetRange gets a reference to the given string and assigns it to the Range field.
-func (o *TopEntitlementsAllOf) SetRange(v string) {
-	o.Range = &v
-}
-
-// GetOrderBy returns the OrderBy field value if set, zero value otherwise.
-func (o *TopEntitlementsAllOf) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
-		var ret string
-		return ret
-	}
-	return *o.OrderBy
-}
-
-// GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TopEntitlementsAllOf) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
-		return nil, false
-	}
-	return o.OrderBy, true
-}
-
-// HasOrderBy returns a boolean if a field has been set.
-func (o *TopEntitlementsAllOf) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetOrderBy gets a reference to the given string and assigns it to the OrderBy field.
-func (o *TopEntitlementsAllOf) SetOrderBy(v string) {
-	o.OrderBy = &v
-}
-
-// GetDescending returns the Descending field value if set, zero value otherwise.
-func (o *TopEntitlementsAllOf) GetDescending() bool {
-	if o == nil || o.Descending == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Descending
-}
-
-// GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TopEntitlementsAllOf) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
-		return nil, false
-	}
-	return o.Descending, true
-}
-
-// HasDescending returns a boolean if a field has been set.
-func (o *TopEntitlementsAllOf) HasDescending() bool {
-	if o != nil && o.Descending != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDescending gets a reference to the given bool and assigns it to the Descending field.
-func (o *TopEntitlementsAllOf) SetDescending(v bool) {
-	o.Descending = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -173,15 +71,6 @@ func (o *TopEntitlementsAllOf) SetData(v []map[string]float32) {
 
 func (o TopEntitlementsAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
 	if o.Data != nil {
 		toSerialize["data"] = o.Data
 	}

@@ -17,7 +17,9 @@ import (
 
 // ActiveSessionsDnAllOf struct for ActiveSessionsDnAllOf
 type ActiveSessionsDnAllOf struct {
-	Data []DeviceAndUser `json:"data,omitempty"`
+	// The first query applied to the list.
+	Query *string         `json:"query,omitempty"`
+	Data  []DeviceAndUser `json:"data,omitempty"`
 }
 
 // NewActiveSessionsDnAllOf instantiates a new ActiveSessionsDnAllOf object
@@ -35,6 +37,38 @@ func NewActiveSessionsDnAllOf() *ActiveSessionsDnAllOf {
 func NewActiveSessionsDnAllOfWithDefaults() *ActiveSessionsDnAllOf {
 	this := ActiveSessionsDnAllOf{}
 	return &this
+}
+
+// GetQuery returns the Query field value if set, zero value otherwise.
+func (o *ActiveSessionsDnAllOf) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
+		return ret
+	}
+	return *o.Query
+}
+
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ActiveSessionsDnAllOf) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
+		return nil, false
+	}
+	return o.Query, true
+}
+
+// HasQuery returns a boolean if a field has been set.
+func (o *ActiveSessionsDnAllOf) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+func (o *ActiveSessionsDnAllOf) SetQuery(v string) {
+	o.Query = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -71,6 +105,9 @@ func (o *ActiveSessionsDnAllOf) SetData(v []DeviceAndUser) {
 
 func (o ActiveSessionsDnAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
+	}
 	if o.Data != nil {
 		toSerialize["data"] = o.Data
 	}

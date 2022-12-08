@@ -17,6 +17,8 @@ import (
 
 // ResultListAllOf struct for ResultListAllOf
 type ResultListAllOf struct {
+	// The queries applied to the list.
+	Queries []string `json:"queries,omitempty"`
 	// The filters applied to the list.
 	FilterBy []FilterBy `json:"filterBy,omitempty"`
 }
@@ -36,6 +38,38 @@ func NewResultListAllOf() *ResultListAllOf {
 func NewResultListAllOfWithDefaults() *ResultListAllOf {
 	this := ResultListAllOf{}
 	return &this
+}
+
+// GetQueries returns the Queries field value if set, zero value otherwise.
+func (o *ResultListAllOf) GetQueries() []string {
+	if o == nil || o.Queries == nil {
+		var ret []string
+		return ret
+	}
+	return o.Queries
+}
+
+// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ResultListAllOf) GetQueriesOk() ([]string, bool) {
+	if o == nil || o.Queries == nil {
+		return nil, false
+	}
+	return o.Queries, true
+}
+
+// HasQueries returns a boolean if a field has been set.
+func (o *ResultListAllOf) HasQueries() bool {
+	if o != nil && o.Queries != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueries gets a reference to the given []string and assigns it to the Queries field.
+func (o *ResultListAllOf) SetQueries(v []string) {
+	o.Queries = v
 }
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
@@ -72,6 +106,9 @@ func (o *ResultListAllOf) SetFilterBy(v []FilterBy) {
 
 func (o ResultListAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Queries != nil {
+		toSerialize["queries"] = o.Queries
+	}
 	if o.FilterBy != nil {
 		toSerialize["filterBy"] = o.FilterBy
 	}

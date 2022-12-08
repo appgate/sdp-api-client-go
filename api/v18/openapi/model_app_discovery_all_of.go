@@ -17,6 +17,8 @@ import (
 
 // AppDiscoveryAllOf struct for AppDiscoveryAllOf
 type AppDiscoveryAllOf struct {
+	// The first query applied to the list.
+	Query *string `json:"query,omitempty"`
 	// The number of total distinct Discovered Apps.
 	DistinctAppCount *float32                `json:"distinctAppCount,omitempty"`
 	Data             []AppDiscoveryAllOfData `json:"data,omitempty"`
@@ -37,6 +39,38 @@ func NewAppDiscoveryAllOf() *AppDiscoveryAllOf {
 func NewAppDiscoveryAllOfWithDefaults() *AppDiscoveryAllOf {
 	this := AppDiscoveryAllOf{}
 	return &this
+}
+
+// GetQuery returns the Query field value if set, zero value otherwise.
+func (o *AppDiscoveryAllOf) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
+		return ret
+	}
+	return *o.Query
+}
+
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppDiscoveryAllOf) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
+		return nil, false
+	}
+	return o.Query, true
+}
+
+// HasQuery returns a boolean if a field has been set.
+func (o *AppDiscoveryAllOf) HasQuery() bool {
+	if o != nil && o.Query != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+func (o *AppDiscoveryAllOf) SetQuery(v string) {
+	o.Query = &v
 }
 
 // GetDistinctAppCount returns the DistinctAppCount field value if set, zero value otherwise.
@@ -105,6 +139,9 @@ func (o *AppDiscoveryAllOf) SetData(v []AppDiscoveryAllOfData) {
 
 func (o AppDiscoveryAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
+	}
 	if o.DistinctAppCount != nil {
 		toSerialize["distinctAppCount"] = o.DistinctAppCount
 	}

@@ -24,17 +24,15 @@ type ActiveSessionsDn struct {
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 	// Recommended refresh interval in minutes.
 	RefreshInterval *float32 `json:"refreshInterval,omitempty"`
-	// The queries applied to the list.
-	Queries []string `json:"queries,omitempty"`
 	// 'The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.'
 	Range *string `json:"range,omitempty"`
 	// The field name used to sort the list.
 	OrderBy *string `json:"orderBy,omitempty"`
 	// Whether the sorting is applied descending or ascending.
 	Descending *bool `json:"descending,omitempty"`
-	// The filters applied to the list.
-	FilterBy []FilterBy      `json:"filterBy,omitempty"`
-	Data     []DeviceAndUser `json:"data,omitempty"`
+	// The first query applied to the list.
+	Query *string         `json:"query,omitempty"`
+	Data  []DeviceAndUser `json:"data,omitempty"`
 }
 
 // NewActiveSessionsDn instantiates a new ActiveSessionsDn object
@@ -150,38 +148,6 @@ func (o *ActiveSessionsDn) SetRefreshInterval(v float32) {
 	o.RefreshInterval = &v
 }
 
-// GetQueries returns the Queries field value if set, zero value otherwise.
-func (o *ActiveSessionsDn) GetQueries() []string {
-	if o == nil || o.Queries == nil {
-		var ret []string
-		return ret
-	}
-	return o.Queries
-}
-
-// GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ActiveSessionsDn) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
-		return nil, false
-	}
-	return o.Queries, true
-}
-
-// HasQueries returns a boolean if a field has been set.
-func (o *ActiveSessionsDn) HasQueries() bool {
-	if o != nil && o.Queries != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetQueries gets a reference to the given []string and assigns it to the Queries field.
-func (o *ActiveSessionsDn) SetQueries(v []string) {
-	o.Queries = v
-}
-
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *ActiveSessionsDn) GetRange() string {
 	if o == nil || o.Range == nil {
@@ -278,36 +244,36 @@ func (o *ActiveSessionsDn) SetDescending(v bool) {
 	o.Descending = &v
 }
 
-// GetFilterBy returns the FilterBy field value if set, zero value otherwise.
-func (o *ActiveSessionsDn) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
-		var ret []FilterBy
+// GetQuery returns the Query field value if set, zero value otherwise.
+func (o *ActiveSessionsDn) GetQuery() string {
+	if o == nil || o.Query == nil {
+		var ret string
 		return ret
 	}
-	return o.FilterBy
+	return *o.Query
 }
 
-// GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
+// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ActiveSessionsDn) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+func (o *ActiveSessionsDn) GetQueryOk() (*string, bool) {
+	if o == nil || o.Query == nil {
 		return nil, false
 	}
-	return o.FilterBy, true
+	return o.Query, true
 }
 
-// HasFilterBy returns a boolean if a field has been set.
-func (o *ActiveSessionsDn) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+// HasQuery returns a boolean if a field has been set.
+func (o *ActiveSessionsDn) HasQuery() bool {
+	if o != nil && o.Query != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetFilterBy gets a reference to the given []FilterBy and assigns it to the FilterBy field.
-func (o *ActiveSessionsDn) SetFilterBy(v []FilterBy) {
-	o.FilterBy = v
+// SetQuery gets a reference to the given string and assigns it to the Query field.
+func (o *ActiveSessionsDn) SetQuery(v string) {
+	o.Query = &v
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
@@ -353,9 +319,6 @@ func (o ActiveSessionsDn) MarshalJSON() ([]byte, error) {
 	if o.RefreshInterval != nil {
 		toSerialize["refreshInterval"] = o.RefreshInterval
 	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
 	if o.Range != nil {
 		toSerialize["range"] = o.Range
 	}
@@ -365,8 +328,8 @@ func (o ActiveSessionsDn) MarshalJSON() ([]byte, error) {
 	if o.Descending != nil {
 		toSerialize["descending"] = o.Descending
 	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
+	if o.Query != nil {
+		toSerialize["query"] = o.Query
 	}
 	if o.Data != nil {
 		toSerialize["data"] = o.Data
