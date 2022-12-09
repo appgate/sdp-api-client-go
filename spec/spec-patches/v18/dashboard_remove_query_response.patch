@@ -1,0 +1,15 @@
+diff --git a/dashboard.yml b/dashboard.yml
+index 95a9377..e20466c 100644
+--- a/dashboard.yml
++++ b/dashboard.yml
+@@ -497,10 +497,6 @@ definitions:
+             description: The queries applied to the list.
+             items:
+               type: string
+-          query:
+-            type: string
+-            deprecated: true
+-            description: The first query applied to the list. Deprecated as of 6.0. Use queries instead.
+           controllerCount:
+             type: number
+             description: The number of active Appliances with the Controller role enabled.
