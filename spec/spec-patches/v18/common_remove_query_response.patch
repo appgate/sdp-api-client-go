@@ -1,0 +1,15 @@
+diff --git a/common.yml b/common.yml
+index 22fa275..5dcb7e9 100644
+--- a/common.yml
++++ b/common.yml
+@@ -171,10 +171,6 @@ definitions:
+             description: The queries applied to the list.
+             items:
+               type: string
+-          query:
+-            type: string
+-            deprecated: true
+-            description: The first query applied to the list. Deprecated as of 6.0. Use queries instead.
+           filterBy:
+             type: array
+             description: The filters applied to the list.
