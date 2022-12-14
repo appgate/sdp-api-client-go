@@ -1,0 +1,13 @@
+diff --git a/appliance.yml b/appliance.yml
+index a2114ac..3a12439 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -1550,7 +1550,7 @@ definitions:
+                 description: SumoLogic endpoints to connect and send the audit logs to.
+                 items:
+                   $ref: '#/definitions/SumoLogic'
+-              splunk:
++              splunkClients:
+                 type: array
+                 description: Splunk endpoints to connect and send the audit logs to.
+                 items:

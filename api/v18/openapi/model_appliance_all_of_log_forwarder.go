@@ -25,9 +25,9 @@ type ApplianceAllOfLogForwarder struct {
 	// AWS Kinesis endpoints to connect and send the audit logs with the given format.
 	AwsKineses []AwsKinesis `json:"awsKineses,omitempty"`
 	// SumoLogic endpoints to connect and send the audit logs to.
-	SumoLogic []SumoLogic `json:"sumoLogic,omitempty"`
+	SumoLogicClients []SumoLogic `json:"sumoLogicClients,omitempty"`
 	// Splunk endpoints to connect and send the audit logs to.
-	Splunk []Splunk `json:"splunk,omitempty"`
+	SplunkClients []Splunk `json:"splunkClients,omitempty"`
 	// The sites to collect logs from and forward.
 	Sites []string `json:"sites,omitempty"`
 }
@@ -192,68 +192,68 @@ func (o *ApplianceAllOfLogForwarder) SetAwsKineses(v []AwsKinesis) {
 	o.AwsKineses = v
 }
 
-// GetSumoLogic returns the SumoLogic field value if set, zero value otherwise.
-func (o *ApplianceAllOfLogForwarder) GetSumoLogic() []SumoLogic {
-	if o == nil || o.SumoLogic == nil {
+// GetSumoLogicClients returns the SumoLogicClients field value if set, zero value otherwise.
+func (o *ApplianceAllOfLogForwarder) GetSumoLogicClients() []SumoLogic {
+	if o == nil || o.SumoLogicClients == nil {
 		var ret []SumoLogic
 		return ret
 	}
-	return o.SumoLogic
+	return o.SumoLogicClients
 }
 
-// GetSumoLogicOk returns a tuple with the SumoLogic field value if set, nil otherwise
+// GetSumoLogicClientsOk returns a tuple with the SumoLogicClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetSumoLogicOk() ([]SumoLogic, bool) {
-	if o == nil || o.SumoLogic == nil {
+func (o *ApplianceAllOfLogForwarder) GetSumoLogicClientsOk() ([]SumoLogic, bool) {
+	if o == nil || o.SumoLogicClients == nil {
 		return nil, false
 	}
-	return o.SumoLogic, true
+	return o.SumoLogicClients, true
 }
 
-// HasSumoLogic returns a boolean if a field has been set.
-func (o *ApplianceAllOfLogForwarder) HasSumoLogic() bool {
-	if o != nil && o.SumoLogic != nil {
+// HasSumoLogicClients returns a boolean if a field has been set.
+func (o *ApplianceAllOfLogForwarder) HasSumoLogicClients() bool {
+	if o != nil && o.SumoLogicClients != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetSumoLogic gets a reference to the given []SumoLogic and assigns it to the SumoLogic field.
-func (o *ApplianceAllOfLogForwarder) SetSumoLogic(v []SumoLogic) {
-	o.SumoLogic = v
+// SetSumoLogicClients gets a reference to the given []SumoLogic and assigns it to the SumoLogicClients field.
+func (o *ApplianceAllOfLogForwarder) SetSumoLogicClients(v []SumoLogic) {
+	o.SumoLogicClients = v
 }
 
-// GetSplunk returns the Splunk field value if set, zero value otherwise.
-func (o *ApplianceAllOfLogForwarder) GetSplunk() []Splunk {
-	if o == nil || o.Splunk == nil {
+// GetSplunkClients returns the SplunkClients field value if set, zero value otherwise.
+func (o *ApplianceAllOfLogForwarder) GetSplunkClients() []Splunk {
+	if o == nil || o.SplunkClients == nil {
 		var ret []Splunk
 		return ret
 	}
-	return o.Splunk
+	return o.SplunkClients
 }
 
-// GetSplunkOk returns a tuple with the Splunk field value if set, nil otherwise
+// GetSplunkClientsOk returns a tuple with the SplunkClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApplianceAllOfLogForwarder) GetSplunkOk() ([]Splunk, bool) {
-	if o == nil || o.Splunk == nil {
+func (o *ApplianceAllOfLogForwarder) GetSplunkClientsOk() ([]Splunk, bool) {
+	if o == nil || o.SplunkClients == nil {
 		return nil, false
 	}
-	return o.Splunk, true
+	return o.SplunkClients, true
 }
 
-// HasSplunk returns a boolean if a field has been set.
-func (o *ApplianceAllOfLogForwarder) HasSplunk() bool {
-	if o != nil && o.Splunk != nil {
+// HasSplunkClients returns a boolean if a field has been set.
+func (o *ApplianceAllOfLogForwarder) HasSplunkClients() bool {
+	if o != nil && o.SplunkClients != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetSplunk gets a reference to the given []Splunk and assigns it to the Splunk field.
-func (o *ApplianceAllOfLogForwarder) SetSplunk(v []Splunk) {
-	o.Splunk = v
+// SetSplunkClients gets a reference to the given []Splunk and assigns it to the SplunkClients field.
+func (o *ApplianceAllOfLogForwarder) SetSplunkClients(v []Splunk) {
+	o.SplunkClients = v
 }
 
 // GetSites returns the Sites field value if set, zero value otherwise.
@@ -302,11 +302,11 @@ func (o ApplianceAllOfLogForwarder) MarshalJSON() ([]byte, error) {
 	if o.AwsKineses != nil {
 		toSerialize["awsKineses"] = o.AwsKineses
 	}
-	if o.SumoLogic != nil {
-		toSerialize["sumoLogic"] = o.SumoLogic
+	if o.SumoLogicClients != nil {
+		toSerialize["sumoLogicClients"] = o.SumoLogicClients
 	}
-	if o.Splunk != nil {
-		toSerialize["splunk"] = o.Splunk
+	if o.SplunkClients != nil {
+		toSerialize["splunkClients"] = o.SplunkClients
 	}
 	if o.Sites != nil {
 		toSerialize["sites"] = o.Sites
