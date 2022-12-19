@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v18+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 18.0
+API version: API version 18.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -45,9 +45,9 @@ DeviceScriptsDownloadIdGet Download a Device Claim Script.
 
 Download the raw script.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsDownloadIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsDownloadIdGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx context.Context, id string) ApiDeviceScriptsDownloadIdGetRequest {
 	return ApiDeviceScriptsDownloadIdGetRequest{
@@ -58,8 +58,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx context.Co
 }
 
 // Execute executes the request
-//
-//	@return DeviceScriptsDownloadIdGet200Response
+//  @return DeviceScriptsDownloadIdGet200Response
 func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDeviceScriptsDownloadIdGetRequest) (*DeviceScriptsDownloadIdGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -243,8 +242,8 @@ DeviceScriptsGet List all Device Claim Scripts.
 
 List all Device Claim Scripts visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiDeviceScriptsGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiDeviceScriptsGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx context.Context) ApiDeviceScriptsGetRequest {
 	return ApiDeviceScriptsGetRequest{
@@ -254,8 +253,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx context.Context) Api
 }
 
 // Execute executes the request
-//
-//	@return DeviceScriptList
+//  @return DeviceScriptList
 func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScriptsGetRequest) (*DeviceScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -409,9 +407,9 @@ DeviceScriptsIdDelete Delete a specific Device Claim Script.
 
 Delete a specific Device Claim Script.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdDeleteRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDelete(ctx context.Context, id string) ApiDeviceScriptsIdDeleteRequest {
 	return ApiDeviceScriptsIdDeleteRequest{
@@ -561,9 +559,9 @@ DeviceScriptsIdGet Get a specific Device Claim Script.
 
 Get a specific Device Claim Script.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx context.Context, id string) ApiDeviceScriptsIdGetRequest {
 	return ApiDeviceScriptsIdGetRequest{
@@ -574,8 +572,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx context.Context, i
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScriptsIdGetRequest) (*DeviceScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -732,9 +729,9 @@ DeviceScriptsIdPut Update an existing Device Claim Script.
 
 Update an existing Device Claim Script.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdPutRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx context.Context, id string) ApiDeviceScriptsIdPutRequest {
 	return ApiDeviceScriptsIdPutRequest{
@@ -745,8 +742,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx context.Context, i
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScriptsIdPutRequest) (*DeviceScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -927,8 +923,8 @@ DeviceScriptsPost Create a new Device Claim Script.
 
 Create a new Device Claim Script.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiDeviceScriptsPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiDeviceScriptsPostRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx context.Context) ApiDeviceScriptsPostRequest {
 	return ApiDeviceScriptsPostRequest{
@@ -938,8 +934,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx context.Context) Ap
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScriptsPostRequest) (*DeviceScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

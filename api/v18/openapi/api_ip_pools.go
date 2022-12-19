@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v18+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 18.0
+API version: API version 18.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -45,9 +45,9 @@ IpPoolsAllocatedIpsByDnDistinguishedNameGet List all Allocated IPs by Distinguis
 
 List all Allocated IPs by Distinguished Name. Deprecated as of 6.1. Use the querying capabilities of the regular list API.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
-	@return ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+ @return ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest
 
 Deprecated
 */
@@ -60,9 +60,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx cont
 }
 
 // Execute executes the request
-//
-//	@return AllocatedIpList
-//
+//  @return AllocatedIpList
 // Deprecated
 func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGetExecute(r ApiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) (*AllocatedIpList, *http.Response, error) {
 	var (
@@ -237,8 +235,8 @@ IpPoolsAllocatedIpsGet List all Allocated IPs in the system.
 
 List all Allocated IPs in the system
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIpPoolsAllocatedIpsGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIpPoolsAllocatedIpsGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoolsAllocatedIpsGetRequest {
 	return ApiIpPoolsAllocatedIpsGetRequest{
@@ -248,8 +246,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoo
 }
 
 // Execute executes the request
-//
-//	@return AllocatedIpList
+//  @return AllocatedIpList
 func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedIpsGetRequest) (*AllocatedIpList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -437,8 +434,8 @@ IpPoolsGet List all IP Pools.
 
 List all IP Pools visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIpPoolsGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIpPoolsGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest {
 	return ApiIpPoolsGetRequest{
@@ -448,8 +445,7 @@ func (a *IPPoolsApiService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest
 }
 
 // Execute executes the request
-//
-//	@return IpPoolList
+//  @return IpPoolList
 func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -603,9 +599,9 @@ IpPoolsIdDelete Delete a specific IP Pool.
 
 Delete a specific IP Pool.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIpPoolsIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIpPoolsIdDeleteRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdDelete(ctx context.Context, id string) ApiIpPoolsIdDeleteRequest {
 	return ApiIpPoolsIdDeleteRequest{
@@ -755,9 +751,9 @@ IpPoolsIdGet Get a specific IP Pool.
 
 Get a specific IP Pool.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIpPoolsIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIpPoolsIdGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPoolsIdGetRequest {
 	return ApiIpPoolsIdGetRequest{
@@ -768,8 +764,7 @@ func (a *IPPoolsApiService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPo
 }
 
 // Execute executes the request
-//
-//	@return IpPool
+//  @return IpPool
 func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -926,9 +921,9 @@ IpPoolsIdPut Update an existing IP Pool.
 
 Update an existing IP Pool.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIpPoolsIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIpPoolsIdPutRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPoolsIdPutRequest {
 	return ApiIpPoolsIdPutRequest{
@@ -939,8 +934,7 @@ func (a *IPPoolsApiService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPo
 }
 
 // Execute executes the request
-//
-//	@return IpPool
+//  @return IpPool
 func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -1121,8 +1115,8 @@ IpPoolsPost Create a new IP Pool.
 
 Create a new IP Pool.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIpPoolsPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIpPoolsPostRequest
 */
 func (a *IPPoolsApiService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostRequest {
 	return ApiIpPoolsPostRequest{
@@ -1132,8 +1126,7 @@ func (a *IPPoolsApiService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostReque
 }
 
 // Execute executes the request
-//
-//	@return IpPool
+//  @return IpPool
 func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
