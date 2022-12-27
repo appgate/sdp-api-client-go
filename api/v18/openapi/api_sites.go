@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v18+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 18.1
+API version: API version 18.2
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -79,8 +79,8 @@ SitesGet List all Sites.
 
 List all Sites visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSitesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSitesGetRequest
 */
 func (a *SitesApiService) SitesGet(ctx context.Context) ApiSitesGetRequest {
 	return ApiSitesGetRequest{
@@ -90,7 +90,8 @@ func (a *SitesApiService) SitesGet(ctx context.Context) ApiSitesGetRequest {
 }
 
 // Execute executes the request
-//  @return SiteList
+//
+//	@return SiteList
 func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -244,9 +245,9 @@ SitesIdDelete Delete a specific Site.
 
 Delete a specific Site.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSitesIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSitesIdDeleteRequest
 */
 func (a *SitesApiService) SitesIdDelete(ctx context.Context, id string) ApiSitesIdDeleteRequest {
 	return ApiSitesIdDeleteRequest{
@@ -396,9 +397,9 @@ SitesIdGet Get a specific Site.
 
 Get a specific Site.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSitesIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSitesIdGetRequest
 */
 func (a *SitesApiService) SitesIdGet(ctx context.Context, id string) ApiSitesIdGetRequest {
 	return ApiSitesIdGetRequest{
@@ -409,7 +410,8 @@ func (a *SitesApiService) SitesIdGet(ctx context.Context, id string) ApiSitesIdG
 }
 
 // Execute executes the request
-//  @return Site
+//
+//	@return Site
 func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -566,9 +568,9 @@ SitesIdPut Update an existing Site.
 
 Update an existing Site.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSitesIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSitesIdPutRequest
 */
 func (a *SitesApiService) SitesIdPut(ctx context.Context, id string) ApiSitesIdPutRequest {
 	return ApiSitesIdPutRequest{
@@ -579,7 +581,8 @@ func (a *SitesApiService) SitesIdPut(ctx context.Context, id string) ApiSitesIdP
 }
 
 // Execute executes the request
-//  @return Site
+//
+//	@return Site
 func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -760,8 +763,8 @@ SitesPost Create a new Site.
 
 Create a new Site.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSitesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSitesPostRequest
 */
 func (a *SitesApiService) SitesPost(ctx context.Context) ApiSitesPostRequest {
 	return ApiSitesPostRequest{
@@ -771,7 +774,8 @@ func (a *SitesApiService) SitesPost(ctx context.Context) ApiSitesPostRequest {
 }
 
 // Execute executes the request
-//  @return Site
+//
+//	@return Site
 func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
