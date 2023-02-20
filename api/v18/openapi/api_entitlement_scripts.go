@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v18+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 18.1
+API version: API version 18.4
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -64,7 +64,7 @@ func (r ApiEntitlementScriptsGetRequest) Descending(descending string) ApiEntitl
 	return r
 }
 
-// Filters the result list by the given field and value. Supported fields vary from object to object. The filters can be combined with each other as well as the generic query field. The given value is checked for inclusion. The representation of the dynamic query parameters is not correct at the moment. See the example for getting a better idea.
+// Filters the result list by the given field and value. Supported fields vary from API to API. The filters can be combined with each other as well as the generic query parameter. The given value is checked for inclusion.
 func (r ApiEntitlementScriptsGetRequest) FilterBy(filterBy map[string]string) ApiEntitlementScriptsGetRequest {
 	r.filterBy = &filterBy
 	return r
@@ -79,8 +79,8 @@ EntitlementScriptsGet List all Entitlement Scripts.
 
 List all Entitlement Scripts visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context) ApiEntitlementScriptsGetRequest {
 	return ApiEntitlementScriptsGetRequest{
@@ -90,7 +90,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context
 }
 
 // Execute executes the request
-//  @return EntitlementScriptList
+//
+//	@return EntitlementScriptList
 func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (*EntitlementScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -244,9 +245,9 @@ EntitlementScriptsIdDelete Delete a specific Entitlement Script.
 
 Delete a specific Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdDeleteRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
 	return ApiEntitlementScriptsIdDeleteRequest{
@@ -396,9 +397,9 @@ EntitlementScriptsIdGet Get a specific Entitlement Script.
 
 Get a specific Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Context, id string) ApiEntitlementScriptsIdGetRequest {
 	return ApiEntitlementScriptsIdGetRequest{
@@ -409,7 +410,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -566,9 +568,9 @@ EntitlementScriptsIdPut Update an existing Entitlement Script.
 
 Update an existing Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdPutRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Context, id string) ApiEntitlementScriptsIdPutRequest {
 	return ApiEntitlementScriptsIdPutRequest{
@@ -579,7 +581,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -760,8 +763,8 @@ EntitlementScriptsPost Create a new Entitlement Script.
 
 Create a new Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsPostRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Context) ApiEntitlementScriptsPostRequest {
 	return ApiEntitlementScriptsPostRequest{
@@ -771,7 +774,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -951,8 +955,8 @@ EntitlementScriptsTestPost Simulate a given expression for an Entitlement Script
 
 Simulate a given expression for an Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsTestPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsTestPostRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Context) ApiEntitlementScriptsTestPostRequest {
 	return ApiEntitlementScriptsTestPostRequest{
@@ -962,7 +966,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Co
 }
 
 // Execute executes the request
-//  @return EntitlementScriptTestResult
+//
+//	@return EntitlementScriptTestResult
 func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (*EntitlementScriptTestResult, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
