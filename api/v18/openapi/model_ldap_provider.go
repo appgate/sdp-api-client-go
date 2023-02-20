@@ -52,7 +52,7 @@ type LdapProvider struct {
 	// (Desktop) clients will sign out automatically after the user has been inactive on the device for the configured duration. Set it to 0 to disable.
 	InactivityTimeoutMinutes *int32 `json:"inactivityTimeoutMinutes,omitempty"`
 	// Whether or not to take network inactivity into account when measuring client inactivity timeout.
-	NetworkInactivityEnabled *bool `json:"networkInactivityEnabled,omitempty"`
+	NetworkInactivityTimeoutEnabled *bool `json:"networkInactivityTimeoutEnabled,omitempty"`
 	// If enabled, Windows Client will configure the network profile as \"DomainAuthenticated\".
 	EnforceWindowsNetworkProfileAsDomain *bool `json:"enforceWindowsNetworkProfileAsDomain,omitempty"`
 	// Whether the Windows Client will block local DNS requests or not.
@@ -96,8 +96,8 @@ func NewLdapProvider(name string, type_ string, hostnames []string, port int32, 
 	this.DeviceLimitPerUser = &deviceLimitPerUser
 	var inactivityTimeoutMinutes int32 = 0
 	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
-	var networkInactivityEnabled bool = false
-	this.NetworkInactivityEnabled = &networkInactivityEnabled
+	var networkInactivityTimeoutEnabled bool = false
+	this.NetworkInactivityTimeoutEnabled = &networkInactivityTimeoutEnabled
 	var blockLocalDnsRequests bool = false
 	this.BlockLocalDnsRequests = &blockLocalDnsRequests
 	this.Hostnames = hostnames
@@ -125,8 +125,8 @@ func NewLdapProviderWithDefaults() *LdapProvider {
 	this.DeviceLimitPerUser = &deviceLimitPerUser
 	var inactivityTimeoutMinutes int32 = 0
 	this.InactivityTimeoutMinutes = &inactivityTimeoutMinutes
-	var networkInactivityEnabled bool = false
-	this.NetworkInactivityEnabled = &networkInactivityEnabled
+	var networkInactivityTimeoutEnabled bool = false
+	this.NetworkInactivityTimeoutEnabled = &networkInactivityTimeoutEnabled
 	var blockLocalDnsRequests bool = false
 	this.BlockLocalDnsRequests = &blockLocalDnsRequests
 	var sslEnabled bool = false
@@ -668,36 +668,36 @@ func (o *LdapProvider) SetInactivityTimeoutMinutes(v int32) {
 	o.InactivityTimeoutMinutes = &v
 }
 
-// GetNetworkInactivityEnabled returns the NetworkInactivityEnabled field value if set, zero value otherwise.
-func (o *LdapProvider) GetNetworkInactivityEnabled() bool {
-	if o == nil || o.NetworkInactivityEnabled == nil {
+// GetNetworkInactivityTimeoutEnabled returns the NetworkInactivityTimeoutEnabled field value if set, zero value otherwise.
+func (o *LdapProvider) GetNetworkInactivityTimeoutEnabled() bool {
+	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
 		var ret bool
 		return ret
 	}
-	return *o.NetworkInactivityEnabled
+	return *o.NetworkInactivityTimeoutEnabled
 }
 
-// GetNetworkInactivityEnabledOk returns a tuple with the NetworkInactivityEnabled field value if set, nil otherwise
+// GetNetworkInactivityTimeoutEnabledOk returns a tuple with the NetworkInactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LdapProvider) GetNetworkInactivityEnabledOk() (*bool, bool) {
-	if o == nil || o.NetworkInactivityEnabled == nil {
+func (o *LdapProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
+	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
 		return nil, false
 	}
-	return o.NetworkInactivityEnabled, true
+	return o.NetworkInactivityTimeoutEnabled, true
 }
 
-// HasNetworkInactivityEnabled returns a boolean if a field has been set.
-func (o *LdapProvider) HasNetworkInactivityEnabled() bool {
-	if o != nil && o.NetworkInactivityEnabled != nil {
+// HasNetworkInactivityTimeoutEnabled returns a boolean if a field has been set.
+func (o *LdapProvider) HasNetworkInactivityTimeoutEnabled() bool {
+	if o != nil && o.NetworkInactivityTimeoutEnabled != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetNetworkInactivityEnabled gets a reference to the given bool and assigns it to the NetworkInactivityEnabled field.
-func (o *LdapProvider) SetNetworkInactivityEnabled(v bool) {
-	o.NetworkInactivityEnabled = &v
+// SetNetworkInactivityTimeoutEnabled gets a reference to the given bool and assigns it to the NetworkInactivityTimeoutEnabled field.
+func (o *LdapProvider) SetNetworkInactivityTimeoutEnabled(v bool) {
+	o.NetworkInactivityTimeoutEnabled = &v
 }
 
 // GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
@@ -1177,8 +1177,8 @@ func (o LdapProvider) MarshalJSON() ([]byte, error) {
 	if o.InactivityTimeoutMinutes != nil {
 		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
 	}
-	if o.NetworkInactivityEnabled != nil {
-		toSerialize["networkInactivityEnabled"] = o.NetworkInactivityEnabled
+	if o.NetworkInactivityTimeoutEnabled != nil {
+		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
 	}
 	if o.EnforceWindowsNetworkProfileAsDomain != nil {
 		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
