@@ -1,0 +1,13 @@
+diff --git a/identity_provider.yml b/identity_provider.yml
+index 39367ddb6..68fcde3a3 100644
+--- a/identity_provider.yml
++++ b/identity_provider.yml
+@@ -353,7 +353,7 @@ definitions:
+             type: integer
+             description: (Desktop) clients will sign out automatically after the user has been inactive on the device for the configured duration. Set it to 0 to disable.
+             default: 0
+-          networkInactivityEnabled:
++          networkInactivityTimeoutEnabled:
+             type: boolean
+             description: Whether or not to take network inactivity into account when measuring client inactivity timeout.
+             default: false
