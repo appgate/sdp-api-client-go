@@ -6,20 +6,25 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 
 
 ## Requirements
-	- go 1.17
+	- go 1.20
 	- apigentools v1.6.0
 
 
 ## Version compatibility matrix
 
+Each appliance version has a minimum of compatibility with 2 API versions back.
 
-|                         	|  client version 12 	| client version 13 	| client version 14 	| client version 15 	| client version 16 	|
-|-------------------------	|--------------------	|-------------------	|-------------------	|-------------------	|-------------------	|
-| Appliance version 5.1.* 	| Full support       	|                   	|                   	|                   	|                   	|
-| Appliance version 5.2.* 	| Partial support    	| Full support      	| Partial support      	|                   	|                   	|
-| Appliance version 5.3.* 	| Partial support   	| Partial support   	| Full support      	| Partial support      	|                   	|
-| Appliance version 5.4.* 	| Partial support   	| Partial support   	| Partial support      	| Full support      	|                   	|
-| Appliance version 5.5.* 	| Partial support   	| Partial support   	| Partial support      	| Full support      	| Full support      	|
+| Appliance Version 	| API Version 	|
+|-------------------	|-------------	|
+| 5.1.*             	| 12          	|
+| 5.2.*             	| 13          	|
+| 5.3.*             	| 14          	|
+| 5.4.*             	| 15          	|
+| 5.5.*             	| 16          	|
+| 6.0.*             	| 17          	|
+| 6.1.*             	| 18          	|
+
+
 
 
 ## Getting started
