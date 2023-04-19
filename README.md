@@ -8,6 +8,7 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 ## Requirements
 	- go 1.20
 	- apigentools v1.6.0
+	- docker (with userns enabled)
 
 
 ## Version compatibility matrix
@@ -23,6 +24,7 @@ Each appliance version has a minimum of compatibility with 2 API versions back.
 | 5.5.*             	| 16          	|
 | 6.0.*             	| 17          	|
 | 6.1.*             	| 18          	|
+| 6.2.*             	| 19          	|
 
 
 
