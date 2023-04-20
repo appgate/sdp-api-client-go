@@ -1,13 +1,13 @@
 /*
 Appgate SDP Controller REST API
 
-# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
+# About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v17+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LocalDatabase. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 17.1
+API version: API version 18
 Contact: appgatesdp.support@appgate.com
 */
 
-// Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
+// Code generated by Go Generator (https://github.com/appgate/sdp-api-client-go); DO NOT EDIT.
 
 package openapi
 
@@ -223,7 +223,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersGetExecute(r
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersIdAttributesPostRequest struct {
+type ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest struct {
 	ctx                                      context.Context
 	ApiService                               *LocalDatabaseIdentityProvidersApiService
 	authorization                            *string
@@ -232,18 +232,18 @@ type ApiLocalDatabaseProvidersIdAttributesPostRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersIdAttributesPostRequest) Authorization(authorization string) ApiLocalDatabaseProvidersIdAttributesPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
 // User details to get attributes for.
-func (r ApiLocalDatabaseProvidersIdAttributesPostRequest) IdentityProvidersIdAttributesPostRequest(identityProvidersIdAttributesPostRequest IdentityProvidersIdAttributesPostRequest) ApiLocalDatabaseProvidersIdAttributesPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest) IdentityProvidersIdAttributesPostRequest(identityProvidersIdAttributesPostRequest IdentityProvidersIdAttributesPostRequest) ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest {
 	r.identityProvidersIdAttributesPostRequest = &identityProvidersIdAttributesPostRequest
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdAttributesPostRequest) Execute() (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest) Execute() (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdAttributesPostExecute(r)
 }
 
@@ -254,10 +254,10 @@ Get raw attributes and mapped claims for a user.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
-	@return ApiLocalDatabaseProvidersIdAttributesPostRequest
+	@return ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiLocalDatabaseProvidersIdAttributesPostRequest {
-	return ApiLocalDatabaseProvidersIdAttributesPostRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest {
+	return ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -267,7 +267,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributes
 // Execute executes the request
 //
 //	@return IdentityProvidersIdAttributesPost200Response
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiLocalDatabaseProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiLocalDatabaseIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -416,7 +416,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdAttributes
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersIdDeleteRequest struct {
+type ApiLocalDatabaseIdentityProvidersIdDeleteRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
@@ -424,12 +424,12 @@ type ApiLocalDatabaseProvidersIdDeleteRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersIdDeleteRequest) Authorization(authorization string) ApiLocalDatabaseProvidersIdDeleteRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersIdDeleteRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersIdDeleteRequest) Execute() (*http.Response, error) {
 	return r.ApiService.IdentityProvidersIdDeleteExecute(r)
 }
 
@@ -440,10 +440,10 @@ Delete a specific Identity Provider.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
-	@return ApiLocalDatabaseProvidersIdDeleteRequest
+	@return ApiLocalDatabaseIdentityProvidersIdDeleteRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiLocalDatabaseProvidersIdDeleteRequest {
-	return ApiLocalDatabaseProvidersIdDeleteRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiLocalDatabaseIdentityProvidersIdDeleteRequest {
+	return ApiLocalDatabaseIdentityProvidersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -451,7 +451,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDelete(ctx
 }
 
 // Execute executes the request
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiLocalDatabaseProvidersIdDeleteRequest) (*http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiLocalDatabaseIdentityProvidersIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
@@ -568,7 +568,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdDeleteExec
 	return localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersIdGetRequest struct {
+type ApiLocalDatabaseIdentityProvidersIdGetRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
@@ -576,12 +576,12 @@ type ApiLocalDatabaseProvidersIdGetRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersIdGetRequest) Authorization(authorization string) ApiLocalDatabaseProvidersIdGetRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdGetRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersIdGetRequest {
 	r.authorization = &authorization
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdGetRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersIdGetRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdGetExecute(r)
 }
 
@@ -592,10 +592,10 @@ Get a specific Identity Provider.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
-	@return ApiLocalDatabaseProvidersIdGetRequest
+	@return ApiLocalDatabaseIdentityProvidersIdGetRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiLocalDatabaseProvidersIdGetRequest {
-	return ApiLocalDatabaseProvidersIdGetRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiLocalDatabaseIdentityProvidersIdGetRequest {
+	return ApiLocalDatabaseIdentityProvidersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -605,7 +605,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGet(ctx co
 // Execute executes the request
 //
 //	@return LocalDatabaseProvider
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLocalDatabaseProvidersIdGetRequest) (*LocalDatabaseProvider, *http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLocalDatabaseIdentityProvidersIdGetRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -732,7 +732,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdGetExecute
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersIdPutRequest struct {
+type ApiLocalDatabaseIdentityProvidersIdPutRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
@@ -741,18 +741,18 @@ type ApiLocalDatabaseProvidersIdPutRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersIdPutRequest) Authorization(authorization string) ApiLocalDatabaseProvidersIdPutRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdPutRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersIdPutRequest {
 	r.authorization = &authorization
 	return r
 }
 
 // Identity Provider object.
-func (r ApiLocalDatabaseProvidersIdPutRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseProvidersIdPutRequest {
+func (r ApiLocalDatabaseIdentityProvidersIdPutRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseIdentityProvidersIdPutRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersIdPutRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersIdPutRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersIdPutExecute(r)
 }
 
@@ -763,10 +763,10 @@ Update an existing Identity Provider.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
-	@return ApiLocalDatabaseProvidersIdPutRequest
+	@return ApiLocalDatabaseIdentityProvidersIdPutRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiLocalDatabaseProvidersIdPutRequest {
-	return ApiLocalDatabaseProvidersIdPutRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiLocalDatabaseIdentityProvidersIdPutRequest {
+	return ApiLocalDatabaseIdentityProvidersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
 		id:         id,
@@ -776,7 +776,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPut(ctx co
 // Execute executes the request
 //
 //	@return LocalDatabaseProvider
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLocalDatabaseProvidersIdPutRequest) (*LocalDatabaseProvider, *http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLocalDatabaseIdentityProvidersIdPutRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -928,7 +928,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersIdPutExecute
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersPostRequest struct {
+type ApiLocalDatabaseIdentityProvidersPostRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
@@ -936,18 +936,18 @@ type ApiLocalDatabaseProvidersPostRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersPostRequest) Authorization(authorization string) ApiLocalDatabaseProvidersPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersPostRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
 // Identity Provider object.
-func (r ApiLocalDatabaseProvidersPostRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseProvidersPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersPostRequest) Body(body LocalDatabaseProvider) ApiLocalDatabaseIdentityProvidersPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersPostRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersPostRequest) Execute() (*LocalDatabaseProvider, *http.Response, error) {
 	return r.ApiService.IdentityProvidersPostExecute(r)
 }
 
@@ -957,10 +957,10 @@ IdentityProvidersPost Create a new Identity Provider.
 Create a new Identity Provider.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiLocalDatabaseProvidersPostRequest
+	@return ApiLocalDatabaseIdentityProvidersPostRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiLocalDatabaseProvidersPostRequest {
-	return ApiLocalDatabaseProvidersPostRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiLocalDatabaseIdentityProvidersPostRequest {
+	return ApiLocalDatabaseIdentityProvidersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -969,7 +969,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPost(ctx con
 // Execute executes the request
 //
 //	@return LocalDatabaseProvider
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLocalDatabaseProvidersPostRequest) (*LocalDatabaseProvider, *http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiLocalDatabaseIdentityProvidersPostRequest) (*LocalDatabaseProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1120,7 +1120,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersPostExecute(
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLocalDatabaseProvidersTestPostRequest struct {
+type ApiLocalDatabaseIdentityProvidersTestPostRequest struct {
 	ctx           context.Context
 	ApiService    *LocalDatabaseIdentityProvidersApiService
 	authorization *string
@@ -1128,18 +1128,18 @@ type ApiLocalDatabaseProvidersTestPostRequest struct {
 }
 
 // The Token from the LoginResponse.
-func (r ApiLocalDatabaseProvidersTestPostRequest) Authorization(authorization string) ApiLocalDatabaseProvidersTestPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersTestPostRequest) Authorization(authorization string) ApiLocalDatabaseIdentityProvidersTestPostRequest {
 	r.authorization = &authorization
 	return r
 }
 
 // Identity Provider object.
-func (r ApiLocalDatabaseProvidersTestPostRequest) Body(body map[string]interface{}) ApiLocalDatabaseProvidersTestPostRequest {
+func (r ApiLocalDatabaseIdentityProvidersTestPostRequest) Body(body map[string]interface{}) ApiLocalDatabaseIdentityProvidersTestPostRequest {
 	r.body = &body
 	return r
 }
 
-func (r ApiLocalDatabaseProvidersTestPostRequest) Execute() (*IdentityProvidersTestPost200Response, *http.Response, error) {
+func (r ApiLocalDatabaseIdentityProvidersTestPostRequest) Execute() (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	return r.ApiService.IdentityProvidersTestPostExecute(r)
 }
 
@@ -1149,10 +1149,10 @@ IdentityProvidersTestPost Test an Identity Provider connection.
 Test connection for the given Identity Provider JSON.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiLocalDatabaseProvidersTestPostRequest
+	@return ApiLocalDatabaseIdentityProvidersTestPostRequest
 */
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiLocalDatabaseProvidersTestPostRequest {
-	return ApiLocalDatabaseProvidersTestPostRequest{
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiLocalDatabaseIdentityProvidersTestPostRequest {
+	return ApiLocalDatabaseIdentityProvidersTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1161,7 +1161,7 @@ func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersTestPost(ctx
 // Execute executes the request
 //
 //	@return IdentityProvidersTestPost200Response
-func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiLocalDatabaseProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
+func (a *LocalDatabaseIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiLocalDatabaseIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}

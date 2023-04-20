@@ -74,5 +74,11 @@ for version in "${supportedVersions[@]}"; do
     apigentools --api-versions "v${version}" generate
     mkdir -p "../api/v${version}/openapi/"
     find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' -exec cp {} "../api/v$version/openapi/" \;
-    cd ..
+    popd
+done
+
+# use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs
+goGenerators=(18)
+for version in "${goGenerators[@]}"; do
+    go run go-generators/identity-providers/main.go  -v -version "$version"
 done
