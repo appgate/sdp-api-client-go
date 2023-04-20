@@ -62,7 +62,7 @@ for version in "${supportedVersions[@]}"; do
 done
 
 for version in "${supportedVersions[@]}"; do
-    cd spec
+    pushd spec
     if [[ $version == 16 ]]; then
         # shellcheck disable=SC2016
         sed 's/${IMAGE}/openapitools\/openapi-generator-cli:v5.2.1/g' config/config_template.yaml | tee config/config.yaml 1> /dev/null
