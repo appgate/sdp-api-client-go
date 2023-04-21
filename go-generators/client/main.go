@@ -134,7 +134,7 @@ func writeFile(name, tmpl string, version int, data interface{}) (*os.File, erro
 	if err != nil {
 		return f, err
 	}
-	body, err := os.ReadFile(filepath.Join(cwd, "go-generators/identity-providers", tmpl))
+	body, err := os.ReadFile(filepath.Join(cwd, "go-generators/client", tmpl))
 	if err != nil {
 		return f, err
 	}

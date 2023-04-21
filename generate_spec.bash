@@ -80,5 +80,5 @@ done
 # use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs
 goGenerators=(18)
 for version in "${goGenerators[@]}"; do
-    go run go-generators/identity-providers/main.go  -v -version "$version"
+    go run go-generators/client/main.go  -v -version "$version"
 done
