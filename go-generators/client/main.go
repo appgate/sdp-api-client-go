@@ -34,6 +34,9 @@ var files = []string{
 	"model_ldap_certificate_identity_provider_list.template",
 	"model_local_database_identity_provider_list.template",
 	"model_saml_identity_provider_list.template",
+
+	// Unit test for client to test custom patches
+	"client_test.template",
 }
 
 type identityProvider struct {

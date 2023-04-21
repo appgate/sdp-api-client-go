@@ -81,4 +81,5 @@ done
 goGenerators=(18)
 for version in "${goGenerators[@]}"; do
     go run go-generators/client/main.go  -v -version "$version"
+    go test -v -count 1 ./api/...
 done
