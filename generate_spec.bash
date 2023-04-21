@@ -78,8 +78,10 @@ for version in "${supportedVersions[@]}"; do
 done
 
 # use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs
-goGenerators=(18)
+goGenerators=(18 19)
 for version in "${goGenerators[@]}"; do
     go run go-generators/client/main.go  -v -version "$version"
-    go test -v -count 1 ./api/...
+    go test -v -count 1 "./api/v${version}/..."
 done
+
+
