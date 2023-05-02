@@ -70,7 +70,8 @@ func (r apiTrustedCertificatesGetRequest) FilterBy(filterBy map[string]string) a
 /*
 TrustedCertificatesGet List all Trusted Certificates.
 List all Trusted Certificates visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiTrustedCertificatesGetRequest
 */
 func (a *TrustedCertificatesApiService) TrustedCertificatesGet(ctx _context.Context) apiTrustedCertificatesGetRequest {
@@ -82,7 +83,8 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGet(ctx _context.Cont
 
 /*
 Execute executes the request
- @return TrustedCertificateList
+
+	@return TrustedCertificateList
 */
 func (r apiTrustedCertificatesGetRequest) Execute() (TrustedCertificateList, *_nethttp.Response, error) {
 	var (
@@ -232,8 +234,9 @@ func (r apiTrustedCertificatesIdDeleteRequest) Authorization(authorization strin
 /*
 TrustedCertificatesIdDelete Delete a specific Trusted Certificate.
 Delete a specific Trusted Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiTrustedCertificatesIdDeleteRequest
 */
 func (a *TrustedCertificatesApiService) TrustedCertificatesIdDelete(ctx _context.Context, id string) apiTrustedCertificatesIdDeleteRequest {
@@ -246,7 +249,6 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDelete(ctx _context
 
 /*
 Execute executes the request
-
 */
 func (r apiTrustedCertificatesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -372,8 +374,9 @@ func (r apiTrustedCertificatesIdGetRequest) Authorization(authorization string) 
 /*
 TrustedCertificatesIdGet Get a specific Trusted Certificate.
 Get a specific Trusted Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiTrustedCertificatesIdGetRequest
 */
 func (a *TrustedCertificatesApiService) TrustedCertificatesIdGet(ctx _context.Context, id string) apiTrustedCertificatesIdGetRequest {
@@ -386,7 +389,8 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGet(ctx _context.Co
 
 /*
 Execute executes the request
- @return TrustedCertificate
+
+	@return TrustedCertificate
 */
 func (r apiTrustedCertificatesIdGetRequest) Execute() (TrustedCertificate, *_nethttp.Response, error) {
 	var (
@@ -538,8 +542,9 @@ func (r apiTrustedCertificatesIdPutRequest) TrustedCertificate(trustedCertificat
 /*
 TrustedCertificatesIdPut Update an existing Trusted Certificate.
 Update an existing Trusted Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiTrustedCertificatesIdPutRequest
 */
 func (a *TrustedCertificatesApiService) TrustedCertificatesIdPut(ctx _context.Context, id string) apiTrustedCertificatesIdPutRequest {
@@ -552,7 +557,8 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPut(ctx _context.Co
 
 /*
 Execute executes the request
- @return TrustedCertificate
+
+	@return TrustedCertificate
 */
 func (r apiTrustedCertificatesIdPutRequest) Execute() (TrustedCertificate, *_nethttp.Response, error) {
 	var (
@@ -729,7 +735,8 @@ func (r apiTrustedCertificatesPostRequest) TrustedCertificate(trustedCertificate
 /*
 TrustedCertificatesPost Create a new Trusted Certificate.
 Create a new Trusted Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiTrustedCertificatesPostRequest
 */
 func (a *TrustedCertificatesApiService) TrustedCertificatesPost(ctx _context.Context) apiTrustedCertificatesPostRequest {
@@ -741,7 +748,8 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPost(ctx _context.Con
 
 /*
 Execute executes the request
- @return TrustedCertificate
+
+	@return TrustedCertificate
 */
 func (r apiTrustedCertificatesPostRequest) Execute() (TrustedCertificate, *_nethttp.Response, error) {
 	var (

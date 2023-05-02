@@ -41,8 +41,9 @@ func (r apiOnBoardedDevicesDistinguishedNameDeleteRequest) Authorization(authori
 /*
 OnBoardedDevicesDistinguishedNameDelete Remove an On-Boarded Device for the given Distinguished Name.
 Remove an On-Boarded Device for the given Distinguished Name. The device will need to on-board again.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+
 @return apiOnBoardedDevicesDistinguishedNameDeleteRequest
 */
 func (a *OnBoardedDevicesApiService) OnBoardedDevicesDistinguishedNameDelete(ctx _context.Context, distinguishedName string) apiOnBoardedDevicesDistinguishedNameDeleteRequest {
@@ -55,7 +56,6 @@ func (a *OnBoardedDevicesApiService) OnBoardedDevicesDistinguishedNameDelete(ctx
 
 /*
 Execute executes the request
-
 */
 func (r apiOnBoardedDevicesDistinguishedNameDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -204,7 +204,8 @@ func (r apiOnBoardedDevicesGetRequest) Descending(descending string) apiOnBoarde
 /*
 OnBoardedDevicesGet List all On-Boarded Devices.
 List all On-Boarded Devices.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiOnBoardedDevicesGetRequest
 */
 func (a *OnBoardedDevicesApiService) OnBoardedDevicesGet(ctx _context.Context) apiOnBoardedDevicesGetRequest {
@@ -216,7 +217,8 @@ func (a *OnBoardedDevicesApiService) OnBoardedDevicesGet(ctx _context.Context) a
 
 /*
 Execute executes the request
- @return OnBoardedDeviceList
+
+	@return OnBoardedDeviceList
 */
 func (r apiOnBoardedDevicesGetRequest) Execute() (OnBoardedDeviceList, *_nethttp.Response, error) {
 	var (

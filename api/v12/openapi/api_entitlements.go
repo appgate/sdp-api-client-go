@@ -64,7 +64,8 @@ func (r apiEntitlementsGetRequest) Descending(descending string) apiEntitlements
 /*
 EntitlementsGet List all Entitlements.
 List all Entitlements visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiEntitlementsGetRequest
 */
 func (a *EntitlementsApiService) EntitlementsGet(ctx _context.Context) apiEntitlementsGetRequest {
@@ -76,7 +77,8 @@ func (a *EntitlementsApiService) EntitlementsGet(ctx _context.Context) apiEntitl
 
 /*
 Execute executes the request
- @return EntitlementList
+
+	@return EntitlementList
 */
 func (r apiEntitlementsGetRequest) Execute() (EntitlementList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiEntitlementsIdDeleteRequest) Authorization(authorization string) apiE
 /*
 EntitlementsIdDelete Delete a specific Entitlement.
 Delete a specific Entitlement.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementsIdDeleteRequest
 */
 func (a *EntitlementsApiService) EntitlementsIdDelete(ctx _context.Context, id string) apiEntitlementsIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *EntitlementsApiService) EntitlementsIdDelete(ctx _context.Context, id s
 
 /*
 Execute executes the request
-
 */
 func (r apiEntitlementsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiEntitlementsIdGetRequest) Authorization(authorization string) apiEnti
 /*
 EntitlementsIdGet Get a specific Entitlement.
 Get a specific Entitlement.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementsIdGetRequest
 */
 func (a *EntitlementsApiService) EntitlementsIdGet(ctx _context.Context, id string) apiEntitlementsIdGetRequest {
@@ -377,7 +380,8 @@ func (a *EntitlementsApiService) EntitlementsIdGet(ctx _context.Context, id stri
 
 /*
 Execute executes the request
- @return Entitlement
+
+	@return Entitlement
 */
 func (r apiEntitlementsIdGetRequest) Execute() (Entitlement, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiEntitlementsIdPutRequest) Entitlement(entitlement Entitlement) apiEnt
 /*
 EntitlementsIdPut Update an existing Entitlement.
 Update an existing Entitlement.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementsIdPutRequest
 */
 func (a *EntitlementsApiService) EntitlementsIdPut(ctx _context.Context, id string) apiEntitlementsIdPutRequest {
@@ -543,7 +548,8 @@ func (a *EntitlementsApiService) EntitlementsIdPut(ctx _context.Context, id stri
 
 /*
 Execute executes the request
- @return Entitlement
+
+	@return Entitlement
 */
 func (r apiEntitlementsIdPutRequest) Execute() (Entitlement, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiEntitlementsPostRequest) Entitlement(entitlement Entitlement) apiEnti
 /*
 EntitlementsPost Create a new Entitlement.
 Create a new Entitlement.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiEntitlementsPostRequest
 */
 func (a *EntitlementsApiService) EntitlementsPost(ctx _context.Context) apiEntitlementsPostRequest {
@@ -732,7 +739,8 @@ func (a *EntitlementsApiService) EntitlementsPost(ctx _context.Context) apiEntit
 
 /*
 Execute executes the request
- @return Entitlement
+
+	@return Entitlement
 */
 func (r apiEntitlementsPostRequest) Execute() (Entitlement, *_nethttp.Response, error) {
 	var (

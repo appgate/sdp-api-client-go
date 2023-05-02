@@ -64,7 +64,8 @@ func (r apiTokenRecordsDnGetRequest) Descending(descending string) apiTokenRecor
 /*
 TokenRecordsDnGet List all Distinguished Names active in the past 24 hour.
 List all Distinguished Names active in the past 24 hour. Includes the users who has at least one token that has not expired past 24 hours. If a token was created 30 hours ago and it has 10 hours expiration time, it will be in this list.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiTokenRecordsDnGetRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx _context.Context) apiTokenRecordsDnGetRequest {
@@ -76,7 +77,8 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx _context.Context) apiTok
 
 /*
 Execute executes the request
- @return DistinguishedNameList
+
+	@return DistinguishedNameList
 */
 func (r apiTokenRecordsDnGetRequest) Execute() (DistinguishedNameList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiTokenRecordsReevalByDnDistinguishedNamePostRequest) Authorization(aut
 /*
 TokenRecordsReevalByDnDistinguishedNamePost Reevaluate all sessions with given Distinguished Name substring.
 Reevaluate all sessions belongs to the user&devices ending with the given Distinguished Name substring.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+
 @return apiTokenRecordsReevalByDnDistinguishedNamePostRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ctx _context.Context, distinguishedName string) apiTokenRecordsReevalByDnDistinguishedNamePostRequest {
@@ -237,7 +240,8 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ct
 
 /*
 Execute executes the request
- @return InlineResponse20013
+
+	@return InlineResponse20013
 */
 func (r apiTokenRecordsReevalByDnDistinguishedNamePostRequest) Execute() (InlineResponse20013, *_nethttp.Response, error) {
 	var (
@@ -395,8 +399,9 @@ func (r apiTokenRecordsRevokedByDnDistinguishedNamePutRequest) TokenRevocationRe
 /*
 TokenRecordsRevokedByDnDistinguishedNamePut Revoke all Tokens ending with the given Distinguished Name substring.
 Revoke all Tokens belong to the user&devices ending with the given Distinguished Name substring.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+
 @return apiTokenRecordsRevokedByDnDistinguishedNamePutRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ctx _context.Context, distinguishedName string) apiTokenRecordsRevokedByDnDistinguishedNamePutRequest {
@@ -409,7 +414,6 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ct
 
 /*
 Execute executes the request
-
 */
 func (r apiTokenRecordsRevokedByDnDistinguishedNamePutRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -556,8 +560,9 @@ func (r apiTokenRecordsRevokedByTypeTokenTypePutRequest) TokenRevocationRequest(
 /*
 TokenRecordsRevokedByTypeTokenTypePut Revoke all Tokens with given type.
 Revoke all Tokens with given type.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param tokenType The type of the tokens.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param tokenType The type of the tokens.
+
 @return apiTokenRecordsRevokedByTypeTokenTypePutRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx _context.Context, tokenType string) apiTokenRecordsRevokedByTypeTokenTypePutRequest {
@@ -570,7 +575,6 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx _con
 
 /*
 Execute executes the request
-
 */
 func (r apiTokenRecordsRevokedByTypeTokenTypePutRequest) Execute() (*_nethttp.Response, error) {
 	var (

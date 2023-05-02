@@ -64,7 +64,8 @@ func (r apiEntitlementScriptsGetRequest) Descending(descending string) apiEntitl
 /*
 EntitlementScriptsGet List all Entitlement Scripts.
 List all Entitlement Scripts visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiEntitlementScriptsGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx _context.Context) apiEntitlementScriptsGetRequest {
@@ -76,7 +77,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx _context.Contex
 
 /*
 Execute executes the request
- @return EntitlementScriptList
+
+	@return EntitlementScriptList
 */
 func (r apiEntitlementScriptsGetRequest) Execute() (EntitlementScriptList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiEntitlementScriptsIdDeleteRequest) Authorization(authorization string
 /*
 EntitlementScriptsIdDelete Delete a specific Entitlement Script.
 Delete a specific Entitlement Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementScriptsIdDeleteRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx _context.Context, id string) apiEntitlementScriptsIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx _context.C
 
 /*
 Execute executes the request
-
 */
 func (r apiEntitlementScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiEntitlementScriptsIdGetRequest) Authorization(authorization string) a
 /*
 EntitlementScriptsIdGet Get a specific Entitlement Script.
 Get a specific Entitlement Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementScriptsIdGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx _context.Context, id string) apiEntitlementScriptsIdGetRequest {
@@ -377,7 +380,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx _context.Cont
 
 /*
 Execute executes the request
- @return EntitlementScript
+
+	@return EntitlementScript
 */
 func (r apiEntitlementScriptsIdGetRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiEntitlementScriptsIdPutRequest) EntitlementScript(entitlementScript E
 /*
 EntitlementScriptsIdPut Update an existing Entitlement Script.
 Update an existing Entitlement Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiEntitlementScriptsIdPutRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx _context.Context, id string) apiEntitlementScriptsIdPutRequest {
@@ -543,7 +548,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx _context.Cont
 
 /*
 Execute executes the request
- @return EntitlementScript
+
+	@return EntitlementScript
 */
 func (r apiEntitlementScriptsIdPutRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiEntitlementScriptsPostRequest) EntitlementScript(entitlementScript En
 /*
 EntitlementScriptsPost Create a new Entitlement Script.
 Create a new Entitlement Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiEntitlementScriptsPostRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx _context.Context) apiEntitlementScriptsPostRequest {
@@ -732,7 +739,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx _context.Conte
 
 /*
 Execute executes the request
- @return EntitlementScript
+
+	@return EntitlementScript
 */
 func (r apiEntitlementScriptsPostRequest) Execute() (EntitlementScript, *_nethttp.Response, error) {
 	var (

@@ -41,8 +41,9 @@ func (r apiFido2DevicesDistinguishedNameDeleteRequest) Authorization(authorizati
 /*
 Fido2DevicesDistinguishedNameDelete Delete a registered FIDO2 Device for the given Distinguished Name.
 Delete a registered FIDO2 Device for the given Distinguished Name.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
+
 @return apiFido2DevicesDistinguishedNameDeleteRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx _context.Context, distinguishedName string) apiFido2DevicesDistinguishedNameDeleteRequest {
@@ -55,7 +56,6 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx _contex
 
 /*
 Execute executes the request
-
 */
 func (r apiFido2DevicesDistinguishedNameDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -204,7 +204,8 @@ func (r apiFido2DevicesGetRequest) Descending(descending string) apiFido2Devices
 /*
 Fido2DevicesGet List all registered FIDO2 Devices.
 List all registered FIDO2 Devices.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiFido2DevicesGetRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx _context.Context) apiFido2DevicesGetRequest {
@@ -216,7 +217,8 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx _context.Context) apiFido2D
 
 /*
 Execute executes the request
- @return Fido2DeviceList
+
+	@return Fido2DeviceList
 */
 func (r apiFido2DevicesGetRequest) Execute() (Fido2DeviceList, *_nethttp.Response, error) {
 	var (

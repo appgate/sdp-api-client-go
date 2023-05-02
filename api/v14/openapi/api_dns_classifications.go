@@ -70,7 +70,8 @@ func (r apiDnsClassificationsGetRequest) FilterBy(filterBy map[string]string) ap
 /*
 DnsClassificationsGet List all DNS Classifications.
 List all DNS Classifications visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDnsClassificationsGetRequest
 */
 func (a *DNSClassificationsApiService) DnsClassificationsGet(ctx _context.Context) apiDnsClassificationsGetRequest {
@@ -82,7 +83,8 @@ func (a *DNSClassificationsApiService) DnsClassificationsGet(ctx _context.Contex
 
 /*
 Execute executes the request
- @return DNSClassificationList
+
+	@return DNSClassificationList
 */
 func (r apiDnsClassificationsGetRequest) Execute() (DNSClassificationList, *_nethttp.Response, error) {
 	var (
@@ -232,8 +234,9 @@ func (r apiDnsClassificationsIdDeleteRequest) Authorization(authorization string
 /*
 DnsClassificationsIdDelete Delete a specific DNS Classification.
 Delete a specific DNS Classification.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsClassificationsIdDeleteRequest
 */
 func (a *DNSClassificationsApiService) DnsClassificationsIdDelete(ctx _context.Context, id string) apiDnsClassificationsIdDeleteRequest {
@@ -246,7 +249,6 @@ func (a *DNSClassificationsApiService) DnsClassificationsIdDelete(ctx _context.C
 
 /*
 Execute executes the request
-
 */
 func (r apiDnsClassificationsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -372,8 +374,9 @@ func (r apiDnsClassificationsIdGetRequest) Authorization(authorization string) a
 /*
 DnsClassificationsIdGet Get a specific DNS Classification.
 Get a specific DNS Classification.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsClassificationsIdGetRequest
 */
 func (a *DNSClassificationsApiService) DnsClassificationsIdGet(ctx _context.Context, id string) apiDnsClassificationsIdGetRequest {
@@ -386,7 +389,8 @@ func (a *DNSClassificationsApiService) DnsClassificationsIdGet(ctx _context.Cont
 
 /*
 Execute executes the request
- @return DNSClassification
+
+	@return DNSClassification
 */
 func (r apiDnsClassificationsIdGetRequest) Execute() (DNSClassification, *_nethttp.Response, error) {
 	var (
@@ -538,8 +542,9 @@ func (r apiDnsClassificationsIdPutRequest) DNSClassification(dNSClassification D
 /*
 DnsClassificationsIdPut Update an existing DNS Classification.
 Update an existing DNS Classification.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsClassificationsIdPutRequest
 */
 func (a *DNSClassificationsApiService) DnsClassificationsIdPut(ctx _context.Context, id string) apiDnsClassificationsIdPutRequest {
@@ -552,7 +557,8 @@ func (a *DNSClassificationsApiService) DnsClassificationsIdPut(ctx _context.Cont
 
 /*
 Execute executes the request
- @return DNSClassification
+
+	@return DNSClassification
 */
 func (r apiDnsClassificationsIdPutRequest) Execute() (DNSClassification, *_nethttp.Response, error) {
 	var (
@@ -729,7 +735,8 @@ func (r apiDnsClassificationsPostRequest) DNSClassification(dNSClassification DN
 /*
 DnsClassificationsPost Create a new DNS Classification.
 Create a new DNS Classification.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDnsClassificationsPostRequest
 */
 func (a *DNSClassificationsApiService) DnsClassificationsPost(ctx _context.Context) apiDnsClassificationsPostRequest {
@@ -741,7 +748,8 @@ func (a *DNSClassificationsApiService) DnsClassificationsPost(ctx _context.Conte
 
 /*
 Execute executes the request
- @return DNSClassification
+
+	@return DNSClassification
 */
 func (r apiDnsClassificationsPostRequest) Execute() (DNSClassification, *_nethttp.Response, error) {
 	var (

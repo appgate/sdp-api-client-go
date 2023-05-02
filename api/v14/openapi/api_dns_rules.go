@@ -70,7 +70,8 @@ func (r apiDnsRulesGetRequest) FilterBy(filterBy map[string]string) apiDnsRulesG
 /*
 DnsRulesGet List all DNS Rules.
 List all DNS Rules visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDnsRulesGetRequest
 */
 func (a *DNSRulesApiService) DnsRulesGet(ctx _context.Context) apiDnsRulesGetRequest {
@@ -82,7 +83,8 @@ func (a *DNSRulesApiService) DnsRulesGet(ctx _context.Context) apiDnsRulesGetReq
 
 /*
 Execute executes the request
- @return DnsRuleList
+
+	@return DnsRuleList
 */
 func (r apiDnsRulesGetRequest) Execute() (DnsRuleList, *_nethttp.Response, error) {
 	var (
@@ -232,8 +234,9 @@ func (r apiDnsRulesIdDeleteRequest) Authorization(authorization string) apiDnsRu
 /*
 DnsRulesIdDelete Delete a specific DNS Rule.
 Delete a specific DNS Rule.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsRulesIdDeleteRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdDelete(ctx _context.Context, id string) apiDnsRulesIdDeleteRequest {
@@ -246,7 +249,6 @@ func (a *DNSRulesApiService) DnsRulesIdDelete(ctx _context.Context, id string) a
 
 /*
 Execute executes the request
-
 */
 func (r apiDnsRulesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -372,8 +374,9 @@ func (r apiDnsRulesIdGetRequest) Authorization(authorization string) apiDnsRules
 /*
 DnsRulesIdGet Get a specific DNS Rule.
 Get a specific DNS Rule.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsRulesIdGetRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) apiDnsRulesIdGetRequest {
@@ -386,7 +389,8 @@ func (a *DNSRulesApiService) DnsRulesIdGet(ctx _context.Context, id string) apiD
 
 /*
 Execute executes the request
- @return DnsRule
+
+	@return DnsRule
 */
 func (r apiDnsRulesIdGetRequest) Execute() (DnsRule, *_nethttp.Response, error) {
 	var (
@@ -538,8 +542,9 @@ func (r apiDnsRulesIdPutRequest) DnsRule(dnsRule DnsRule) apiDnsRulesIdPutReques
 /*
 DnsRulesIdPut Update an existing DNS Rule.
 Update an existing DNS Rule.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDnsRulesIdPutRequest
 */
 func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) apiDnsRulesIdPutRequest {
@@ -552,7 +557,8 @@ func (a *DNSRulesApiService) DnsRulesIdPut(ctx _context.Context, id string) apiD
 
 /*
 Execute executes the request
- @return DnsRule
+
+	@return DnsRule
 */
 func (r apiDnsRulesIdPutRequest) Execute() (DnsRule, *_nethttp.Response, error) {
 	var (
@@ -729,7 +735,8 @@ func (r apiDnsRulesPostRequest) DnsRule(dnsRule DnsRule) apiDnsRulesPostRequest 
 /*
 DnsRulesPost Create a new DNS Rule.
 Create a new DNS Rule.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDnsRulesPostRequest
 */
 func (a *DNSRulesApiService) DnsRulesPost(ctx _context.Context) apiDnsRulesPostRequest {
@@ -741,7 +748,8 @@ func (a *DNSRulesApiService) DnsRulesPost(ctx _context.Context) apiDnsRulesPostR
 
 /*
 Execute executes the request
- @return DnsRule
+
+	@return DnsRule
 */
 func (r apiDnsRulesPostRequest) Execute() (DnsRule, *_nethttp.Response, error) {
 	var (

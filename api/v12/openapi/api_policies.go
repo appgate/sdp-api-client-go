@@ -64,7 +64,8 @@ func (r apiPoliciesGetRequest) Descending(descending string) apiPoliciesGetReque
 /*
 PoliciesGet List all Policies.
 List all Policies visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiPoliciesGetRequest
 */
 func (a *PoliciesApiService) PoliciesGet(ctx _context.Context) apiPoliciesGetRequest {
@@ -76,7 +77,8 @@ func (a *PoliciesApiService) PoliciesGet(ctx _context.Context) apiPoliciesGetReq
 
 /*
 Execute executes the request
- @return PolicyList
+
+	@return PolicyList
 */
 func (r apiPoliciesGetRequest) Execute() (PolicyList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiPoliciesIdDeleteRequest) Authorization(authorization string) apiPolic
 /*
 PoliciesIdDelete Delete a specific Policy.
 Delete a specific Policy.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiPoliciesIdDeleteRequest
 */
 func (a *PoliciesApiService) PoliciesIdDelete(ctx _context.Context, id string) apiPoliciesIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *PoliciesApiService) PoliciesIdDelete(ctx _context.Context, id string) a
 
 /*
 Execute executes the request
-
 */
 func (r apiPoliciesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiPoliciesIdGetRequest) Authorization(authorization string) apiPolicies
 /*
 PoliciesIdGet Get a specific Policy.
 Get a specific Policy.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiPoliciesIdGetRequest
 */
 func (a *PoliciesApiService) PoliciesIdGet(ctx _context.Context, id string) apiPoliciesIdGetRequest {
@@ -377,7 +380,8 @@ func (a *PoliciesApiService) PoliciesIdGet(ctx _context.Context, id string) apiP
 
 /*
 Execute executes the request
- @return Policy
+
+	@return Policy
 */
 func (r apiPoliciesIdGetRequest) Execute() (Policy, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiPoliciesIdPutRequest) Policy(policy Policy) apiPoliciesIdPutRequest {
 /*
 PoliciesIdPut Update an existing Policy.
 Update an existing Policy.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiPoliciesIdPutRequest
 */
 func (a *PoliciesApiService) PoliciesIdPut(ctx _context.Context, id string) apiPoliciesIdPutRequest {
@@ -543,7 +548,8 @@ func (a *PoliciesApiService) PoliciesIdPut(ctx _context.Context, id string) apiP
 
 /*
 Execute executes the request
- @return Policy
+
+	@return Policy
 */
 func (r apiPoliciesIdPutRequest) Execute() (Policy, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiPoliciesPostRequest) Policy(policy Policy) apiPoliciesPostRequest {
 /*
 PoliciesPost Create a new Policy.
 Create a new Policy.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiPoliciesPostRequest
 */
 func (a *PoliciesApiService) PoliciesPost(ctx _context.Context) apiPoliciesPostRequest {
@@ -732,7 +739,8 @@ func (a *PoliciesApiService) PoliciesPost(ctx _context.Context) apiPoliciesPostR
 
 /*
 Execute executes the request
- @return Policy
+
+	@return Policy
 */
 func (r apiPoliciesPostRequest) Execute() (Policy, *_nethttp.Response, error) {
 	var (

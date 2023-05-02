@@ -92,10 +92,11 @@ func (r apiLdapIdentityProvidersGetRequest) FilterBy(filterBy map[string]string)
 }
 
 /*
- IdentityProvidersGet List all Identity Providers.
- List all Identity Providers visible to current user.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return apiLdapIdentityProvidersGetRequest
+IdentityProvidersGet List all Identity Providers.
+List all Identity Providers visible to current user.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+@return apiLdapIdentityProvidersGetRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Context) apiLdapIdentityProvidersGetRequest {
 	return apiLdapIdentityProvidersGetRequest{
@@ -105,8 +106,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Cont
 }
 
 /*
- Execute executes the request
-  @return LdapIdentityProviderList
+Execute executes the request
+
+	@return LdapIdentityProviderList
 */
 func (r apiLdapIdentityProvidersGetRequest) Execute() (LdapIdentityProviderList, *_nethttp.Response, error) {
 	var (
@@ -260,11 +262,12 @@ func (r apiLdapIdentityProvidersIdAttributesPostRequest) InlineObject3(inlineObj
 }
 
 /*
- IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
- Get raw attributes and mapped claims for a user.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  * @param id ID of the object.
- @return apiLdapIdentityProvidersIdAttributesPostRequest
+IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
+Get raw attributes and mapped claims for a user.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
+@return apiLdapIdentityProvidersIdAttributesPostRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx _context.Context, id string) apiLdapIdentityProvidersIdAttributesPostRequest {
 	return apiLdapIdentityProvidersIdAttributesPostRequest{
@@ -275,8 +278,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx 
 }
 
 /*
- Execute executes the request
-  @return InlineResponse20010
+Execute executes the request
+
+	@return InlineResponse20010
 */
 func (r apiLdapIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse20010, *_nethttp.Response, error) {
 	var (
@@ -442,11 +446,12 @@ func (r apiLdapIdentityProvidersIdDeleteRequest) Authorization(authorization str
 }
 
 /*
- IdentityProvidersIdDelete Delete a specific Identity Provider.
- Delete a specific Identity Provider.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  * @param id ID of the object.
- @return apiLdapIdentityProvidersIdDeleteRequest
+IdentityProvidersIdDelete Delete a specific Identity Provider.
+Delete a specific Identity Provider.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
+@return apiLdapIdentityProvidersIdDeleteRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context.Context, id string) apiLdapIdentityProvidersIdDeleteRequest {
 	return apiLdapIdentityProvidersIdDeleteRequest{
@@ -457,8 +462,7 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context
 }
 
 /*
- Execute executes the request
-
+Execute executes the request
 */
 func (r apiLdapIdentityProvidersIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -582,11 +586,12 @@ func (r apiLdapIdentityProvidersIdGetRequest) Authorization(authorization string
 }
 
 /*
- IdentityProvidersIdGet Get a specific Identity Provider.
- Get a specific Identity Provider.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  * @param id ID of the object.
- @return apiLdapIdentityProvidersIdGetRequest
+IdentityProvidersIdGet Get a specific Identity Provider.
+Get a specific Identity Provider.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
+@return apiLdapIdentityProvidersIdGetRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Context, id string) apiLdapIdentityProvidersIdGetRequest {
 	return apiLdapIdentityProvidersIdGetRequest{
@@ -597,8 +602,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Co
 }
 
 /*
- Execute executes the request
-  @return IdentityProvider
+Execute executes the request
+
+	@return IdentityProvider
 */
 func (r apiLdapIdentityProvidersIdGetRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	var (
@@ -748,11 +754,12 @@ func (r apiLdapIdentityProvidersIdPutRequest) IdentityProvider(identityProvider 
 }
 
 /*
- IdentityProvidersIdPut Update an existing Identity Provider.
- Update an existing Identity Provider.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  * @param id ID of the object.
- @return apiLdapIdentityProvidersIdPutRequest
+IdentityProvidersIdPut Update an existing Identity Provider.
+Update an existing Identity Provider.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
+@return apiLdapIdentityProvidersIdPutRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Context, id string) apiLdapIdentityProvidersIdPutRequest {
 	return apiLdapIdentityProvidersIdPutRequest{
@@ -763,8 +770,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Co
 }
 
 /*
- Execute executes the request
-  @return IdentityProvider
+Execute executes the request
+
+	@return IdentityProvider
 */
 func (r apiLdapIdentityProvidersIdPutRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	var (
@@ -939,10 +947,11 @@ func (r apiLdapIdentityProvidersPostRequest) IdentityProvider(identityProvider L
 }
 
 /*
- IdentityProvidersPost Create a new Identity Provider.
- Create a new Identity Provider.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return apiLdapIdentityProvidersPostRequest
+IdentityProvidersPost Create a new Identity Provider.
+Create a new Identity Provider.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+@return apiLdapIdentityProvidersPostRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context) apiLdapIdentityProvidersPostRequest {
 	return apiLdapIdentityProvidersPostRequest{
@@ -952,8 +961,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Con
 }
 
 /*
- Execute executes the request
-  @return IdentityProvider
+Execute executes the request
+
+	@return IdentityProvider
 */
 func (r apiLdapIdentityProvidersPostRequest) Execute() (LdapProvider, *_nethttp.Response, error) {
 	var (
@@ -1127,10 +1137,11 @@ func (r apiLdapIdentityProvidersTestPostRequest) IdentityProvider(identityProvid
 }
 
 /*
- IdentityProvidersTestPost Test an Identity Provider connection.
- Test connection for the given Identity Provider JSON.
-  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return apiLdapIdentityProvidersTestPostRequest
+IdentityProvidersTestPost Test an Identity Provider connection.
+Test connection for the given Identity Provider JSON.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+@return apiLdapIdentityProvidersTestPostRequest
 */
 func (a *LdapIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context.Context) apiLdapIdentityProvidersTestPostRequest {
 	return apiLdapIdentityProvidersTestPostRequest{
@@ -1140,8 +1151,9 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context
 }
 
 /*
- Execute executes the request
-  @return InlineResponse2009
+Execute executes the request
+
+	@return InlineResponse2009
 */
 func (r apiLdapIdentityProvidersTestPostRequest) Execute() (InlineResponse2009, *_nethttp.Response, error) {
 	var (

@@ -39,7 +39,8 @@ func (r apiStatsFailedAuthenticationsGetRequest) Authorization(authorization str
 /*
 StatsFailedAuthenticationsGet Get failed authentications per hour.
 Get the failed authentications per hour for the last 24 hours.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiStatsFailedAuthenticationsGetRequest
 */
 func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGet(ctx _context.Context) apiStatsFailedAuthenticationsGetRequest {
@@ -51,7 +52,8 @@ func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGet(c
 
 /*
 Execute executes the request
- @return BaseStats
+
+	@return BaseStats
 */
 func (r apiStatsFailedAuthenticationsGetRequest) Execute() (BaseStats, *_nethttp.Response, error) {
 	var (

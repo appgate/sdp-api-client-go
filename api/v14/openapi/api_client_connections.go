@@ -40,7 +40,8 @@ func (r apiClientConnectionsDeleteRequest) Authorization(authorization string) a
 /*
 ClientConnectionsDelete Reset Client Connections to the default settings.
 Reset Client Connections to the default settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiClientConnectionsDeleteRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsDelete(ctx _context.Context) apiClientConnectionsDeleteRequest {
@@ -52,7 +53,6 @@ func (a *ClientConnectionsApiService) ClientConnectionsDelete(ctx _context.Conte
 
 /*
 Execute executes the request
-
 */
 func (r apiClientConnectionsDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -166,7 +166,8 @@ func (r apiClientConnectionsGetRequest) Authorization(authorization string) apiC
 /*
 ClientConnectionsGet View Client Connection settings.
 View Client Connection settings. With API version 12, this API has changed significantly in order to manage client profiles. It is still possible to use the older APIs using older Accept headers.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiClientConnectionsGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsGet(ctx _context.Context) apiClientConnectionsGetRequest {
@@ -178,7 +179,8 @@ func (a *ClientConnectionsApiService) ClientConnectionsGet(ctx _context.Context)
 
 /*
 Execute executes the request
- @return ClientConnections
+
+	@return ClientConnections
 */
 func (r apiClientConnectionsGetRequest) Execute() (ClientConnections, *_nethttp.Response, error) {
 	var (
@@ -313,8 +315,9 @@ func (r apiClientConnectionsProfileNameBarcodeGetRequest) Authorization(authoriz
 /*
 ClientConnectionsProfileNameBarcodeGet Get QR code for connection URL.
 Get QR code for connection URL.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param profileName Name of the profile.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param profileName Name of the profile.
+
 @return apiClientConnectionsProfileNameBarcodeGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGet(ctx _context.Context, profileName string) apiClientConnectionsProfileNameBarcodeGetRequest {
@@ -327,7 +330,8 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGet(ctx
 
 /*
 Execute executes the request
- @return InlineResponse20016
+
+	@return InlineResponse20016
 */
 func (r apiClientConnectionsProfileNameBarcodeGetRequest) Execute() (InlineResponse20016, *_nethttp.Response, error) {
 	var (
@@ -473,8 +477,9 @@ func (r apiClientConnectionsProfileNameUrlGetRequest) Authorization(authorizatio
 /*
 ClientConnectionsProfileNameUrlGet Get connection URL for the profile.
 Get connection URL for the profile.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param profileName Name of the profile.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param profileName Name of the profile.
+
 @return apiClientConnectionsProfileNameUrlGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGet(ctx _context.Context, profileName string) apiClientConnectionsProfileNameUrlGetRequest {
@@ -487,7 +492,8 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGet(ctx _co
 
 /*
 Execute executes the request
- @return InlineResponse20015
+
+	@return InlineResponse20015
 */
 func (r apiClientConnectionsProfileNameUrlGetRequest) Execute() (InlineResponse20015, *_nethttp.Response, error) {
 	var (
@@ -638,7 +644,8 @@ func (r apiClientConnectionsPutRequest) ClientConnections(clientConnections Clie
 /*
 ClientConnectionsPut Update Client Connection settings.
 Update Client Connection settings. With API version 12, this API has changed significantly in order to manage client profiles. It is still possible to use the older APIs using older Accept headers.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiClientConnectionsPutRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsPut(ctx _context.Context) apiClientConnectionsPutRequest {
@@ -650,7 +657,8 @@ func (a *ClientConnectionsApiService) ClientConnectionsPut(ctx _context.Context)
 
 /*
 Execute executes the request
- @return ClientConnections
+
+	@return ClientConnections
 */
 func (r apiClientConnectionsPutRequest) Execute() (ClientConnections, *_nethttp.Response, error) {
 	var (

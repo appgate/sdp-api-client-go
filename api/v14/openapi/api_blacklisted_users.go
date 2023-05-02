@@ -41,8 +41,9 @@ func (r apiBlacklistDistinguishedNameDeleteRequest) Authorization(authorization 
 /*
 BlacklistDistinguishedNameDelete Remove the blacklist of a User for the given Distinguished Name.
 Remove the blacklist of a User for the given Distinguished Name.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user whose blacklist is to be removed. Format: \"CN=,OU=\"
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user whose blacklist is to be removed. Format: \"CN=,OU=\"
+
 @return apiBlacklistDistinguishedNameDeleteRequest
 */
 func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDelete(ctx _context.Context, distinguishedName string) apiBlacklistDistinguishedNameDeleteRequest {
@@ -55,7 +56,6 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDelete(ctx _conte
 
 /*
 Execute executes the request
-
 */
 func (r apiBlacklistDistinguishedNameDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -210,7 +210,8 @@ func (r apiBlacklistGetRequest) FilterBy(filterBy map[string]string) apiBlacklis
 /*
 BlacklistGet List all blacklisted Users.
 List all blacklisted Users.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiBlacklistGetRequest
 */
 func (a *BlacklistedUsersApiService) BlacklistGet(ctx _context.Context) apiBlacklistGetRequest {
@@ -222,7 +223,8 @@ func (a *BlacklistedUsersApiService) BlacklistGet(ctx _context.Context) apiBlack
 
 /*
 Execute executes the request
- @return BlackListList
+
+	@return BlackListList
 */
 func (r apiBlacklistGetRequest) Execute() (BlackListList, *_nethttp.Response, error) {
 	var (
@@ -377,7 +379,8 @@ func (r apiBlacklistPostRequest) BlacklistEntry(blacklistEntry BlacklistEntry) a
 /*
 BlacklistPost Blacklists a User.
 Blacklists a User.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiBlacklistPostRequest
 */
 func (a *BlacklistedUsersApiService) BlacklistPost(ctx _context.Context) apiBlacklistPostRequest {
@@ -389,7 +392,8 @@ func (a *BlacklistedUsersApiService) BlacklistPost(ctx _context.Context) apiBlac
 
 /*
 Execute executes the request
- @return BlacklistEntry
+
+	@return BlacklistEntry
 */
 func (r apiBlacklistPostRequest) Execute() (BlacklistEntry, *_nethttp.Response, error) {
 	var (

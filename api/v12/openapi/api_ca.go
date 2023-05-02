@@ -33,7 +33,8 @@ type apiCertificateAuthorityCaGetRequest struct {
 /*
 CertificateAuthorityCaGet Get the current CA Certificate.
 Get the current CA Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaGetRequest
 */
 func (a *CAApiService) CertificateAuthorityCaGet(ctx _context.Context) apiCertificateAuthorityCaGetRequest {
@@ -45,7 +46,8 @@ func (a *CAApiService) CertificateAuthorityCaGet(ctx _context.Context) apiCertif
 
 /*
 Execute executes the request
- @return CertificateDetails
+
+	@return CertificateDetails
 */
 func (r apiCertificateAuthorityCaGetRequest) Execute() (CertificateDetails, *_nethttp.Response, error) {
 	var (
@@ -154,7 +156,8 @@ func (r apiCertificateAuthorityCaNextDeleteRequest) Authorization(authorization 
 /*
 CertificateAuthorityCaNextDelete Delete the next CA certificate.
 Delete the next CA certificate in order to be able to generate a new one.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaNextDeleteRequest
 */
 func (a *CAApiService) CertificateAuthorityCaNextDelete(ctx _context.Context) apiCertificateAuthorityCaNextDeleteRequest {
@@ -166,7 +169,6 @@ func (a *CAApiService) CertificateAuthorityCaNextDelete(ctx _context.Context) ap
 
 /*
 Execute executes the request
-
 */
 func (r apiCertificateAuthorityCaNextDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -296,7 +298,8 @@ func (r apiCertificateAuthorityCaNextGeneratePostRequest) InlineObject5(inlineOb
 /*
 CertificateAuthorityCaNextGeneratePost Generate next CA Certificate.
 Generate a new self-signed next CA certificate for migration.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaNextGeneratePostRequest
 */
 func (a *CAApiService) CertificateAuthorityCaNextGeneratePost(ctx _context.Context) apiCertificateAuthorityCaNextGeneratePostRequest {
@@ -308,7 +311,8 @@ func (a *CAApiService) CertificateAuthorityCaNextGeneratePost(ctx _context.Conte
 
 /*
 Execute executes the request
- @return CertificateDetails
+
+	@return CertificateDetails
 */
 func (r apiCertificateAuthorityCaNextGeneratePostRequest) Execute() (CertificateDetails, *_nethttp.Response, error) {
 	var (
@@ -444,7 +448,8 @@ func (r apiCertificateAuthorityCaNextGetRequest) Authorization(authorization str
 /*
 CertificateAuthorityCaNextGet Get the next CA Certificate.
 Get the next CA Certificate which will be migrated.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaNextGetRequest
 */
 func (a *CAApiService) CertificateAuthorityCaNextGet(ctx _context.Context) apiCertificateAuthorityCaNextGetRequest {
@@ -456,7 +461,8 @@ func (a *CAApiService) CertificateAuthorityCaNextGet(ctx _context.Context) apiCe
 
 /*
 Execute executes the request
- @return CertificateDetails
+
+	@return CertificateDetails
 */
 func (r apiCertificateAuthorityCaNextGetRequest) Execute() (CertificateDetails, *_nethttp.Response, error) {
 	var (
@@ -606,7 +612,8 @@ func (r apiCertificateAuthorityCaNextSwitchPostRequest) InlineObject6(inlineObje
 /*
 CertificateAuthorityCaNextSwitchPost Switch to the next CA certificate.
 Switch to the next CA certificate. Note that this is a highly disruptive action. Read the manual before proceeding.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaNextSwitchPostRequest
 */
 func (a *CAApiService) CertificateAuthorityCaNextSwitchPost(ctx _context.Context) apiCertificateAuthorityCaNextSwitchPostRequest {
@@ -618,7 +625,6 @@ func (a *CAApiService) CertificateAuthorityCaNextSwitchPost(ctx _context.Context
 
 /*
 Execute executes the request
-
 */
 func (r apiCertificateAuthorityCaNextSwitchPostRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -738,7 +744,8 @@ type apiCertificateAuthorityCaPemGetRequest struct {
 /*
 CertificateAuthorityCaPemGet Get the current CA Certificate in PEM format.
 Get the current CA Certificate in PEM format.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCertificateAuthorityCaPemGetRequest
 */
 func (a *CAApiService) CertificateAuthorityCaPemGet(ctx _context.Context) apiCertificateAuthorityCaPemGetRequest {
@@ -750,7 +757,8 @@ func (a *CAApiService) CertificateAuthorityCaPemGet(ctx _context.Context) apiCer
 
 /*
 Execute executes the request
- @return CertificateDetails
+
+	@return CertificateDetails
 */
 func (r apiCertificateAuthorityCaPemGetRequest) Execute() (CertificateDetails, *_nethttp.Response, error) {
 	var (

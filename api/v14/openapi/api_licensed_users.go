@@ -41,8 +41,9 @@ func (r apiLicenseUsersDistinguishedNameDeleteRequest) Authorization(authorizati
 /*
 LicenseUsersDistinguishedNameDelete Delete a User License for the given Distinguished Name.
 Delete a User License for the given Distinguished Name.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user whose license to be deleted. Format: \"CN=,OU=\"
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user whose license to be deleted. Format: \"CN=,OU=\"
+
 @return apiLicenseUsersDistinguishedNameDeleteRequest
 */
 func (a *LicensedUsersApiService) LicenseUsersDistinguishedNameDelete(ctx _context.Context, distinguishedName string) apiLicenseUsersDistinguishedNameDeleteRequest {
@@ -55,7 +56,6 @@ func (a *LicensedUsersApiService) LicenseUsersDistinguishedNameDelete(ctx _conte
 
 /*
 Execute executes the request
-
 */
 func (r apiLicenseUsersDistinguishedNameDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -210,7 +210,8 @@ func (r apiLicenseUsersGetRequest) FilterBy(filterBy map[string]string) apiLicen
 /*
 LicenseUsersGet List all User Licenses.
 List all User Licenses.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseUsersGetRequest
 */
 func (a *LicensedUsersApiService) LicenseUsersGet(ctx _context.Context) apiLicenseUsersGetRequest {
@@ -222,7 +223,8 @@ func (a *LicensedUsersApiService) LicenseUsersGet(ctx _context.Context) apiLicen
 
 /*
 Execute executes the request
- @return UserLicenseList
+
+	@return UserLicenseList
 */
 func (r apiLicenseUsersGetRequest) Execute() (UserLicenseList, *_nethttp.Response, error) {
 	var (

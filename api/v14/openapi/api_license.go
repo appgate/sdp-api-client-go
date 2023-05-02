@@ -39,7 +39,8 @@ func (r apiLicenseDeleteRequest) Authorization(authorization string) apiLicenseD
 /*
 LicenseDelete Delete the current License.
 Delete the current License to revert to the Built-in License.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseDeleteRequest
 */
 func (a *LicenseApiService) LicenseDelete(ctx _context.Context) apiLicenseDeleteRequest {
@@ -51,7 +52,6 @@ func (a *LicenseApiService) LicenseDelete(ctx _context.Context) apiLicenseDelete
 
 /*
 Execute executes the request
-
 */
 func (r apiLicenseDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -165,7 +165,8 @@ func (r apiLicenseGetRequest) Authorization(authorization string) apiLicenseGetR
 /*
 LicenseGet Get the current License.
 Get the current License.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseGetRequest
 */
 func (a *LicenseApiService) LicenseGet(ctx _context.Context) apiLicenseGetRequest {
@@ -177,7 +178,8 @@ func (a *LicenseApiService) LicenseGet(ctx _context.Context) apiLicenseGetReques
 
 /*
 Execute executes the request
- @return LicenseDetails
+
+	@return LicenseDetails
 */
 func (r apiLicenseGetRequest) Execute() (LicenseDetails, *_nethttp.Response, error) {
 	var (
@@ -311,7 +313,8 @@ func (r apiLicenseNextDeleteRequest) Authorization(authorization string) apiLice
 /*
 LicenseNextDelete Delete the next License.
 Delete the next License.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseNextDeleteRequest
 */
 func (a *LicenseApiService) LicenseNextDelete(ctx _context.Context) apiLicenseNextDeleteRequest {
@@ -323,7 +326,6 @@ func (a *LicenseApiService) LicenseNextDelete(ctx _context.Context) apiLicenseNe
 
 /*
 Execute executes the request
-
 */
 func (r apiLicenseNextDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -437,7 +439,8 @@ func (r apiLicenseNextGetRequest) Authorization(authorization string) apiLicense
 /*
 LicenseNextGet Get the current License.
 Get the current License which will be activated when CA certificate switch occurs. Licenses are bound to the CA Certificate.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseNextGetRequest
 */
 func (a *LicenseApiService) LicenseNextGet(ctx _context.Context) apiLicenseNextGetRequest {
@@ -449,7 +452,8 @@ func (a *LicenseApiService) LicenseNextGet(ctx _context.Context) apiLicenseNextG
 
 /*
 Execute executes the request
- @return LicenseDetails
+
+	@return LicenseDetails
 */
 func (r apiLicenseNextGetRequest) Execute() (LicenseDetails, *_nethttp.Response, error) {
 	var (
@@ -599,7 +603,8 @@ func (r apiLicenseNextPostRequest) LicenseImport(licenseImport LicenseImport) ap
 /*
 LicenseNextPost Upload a new next License.
 Upload a new next License to be switched when CA certificate is switched.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicenseNextPostRequest
 */
 func (a *LicenseApiService) LicenseNextPost(ctx _context.Context) apiLicenseNextPostRequest {
@@ -611,7 +616,8 @@ func (a *LicenseApiService) LicenseNextPost(ctx _context.Context) apiLicenseNext
 
 /*
 Execute executes the request
- @return License
+
+	@return License
 */
 func (r apiLicenseNextPostRequest) Execute() (License, *_nethttp.Response, error) {
 	var (
@@ -777,7 +783,8 @@ func (r apiLicensePostRequest) LicenseImport(licenseImport LicenseImport) apiLic
 /*
 LicensePost Upload a new License.
 Upload a new License and override the existing one.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiLicensePostRequest
 */
 func (a *LicenseApiService) LicensePost(ctx _context.Context) apiLicensePostRequest {
@@ -789,7 +796,8 @@ func (a *LicenseApiService) LicensePost(ctx _context.Context) apiLicensePostRequ
 
 /*
 Execute executes the request
- @return License
+
+	@return License
 */
 func (r apiLicensePostRequest) Execute() (License, *_nethttp.Response, error) {
 	var (

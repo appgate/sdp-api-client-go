@@ -137,7 +137,8 @@ func (r apiSamlIdentityProvidersGetRequest) Descending(descending string) apiSam
 /*
 IdentityProvidersGet List all Identity Providers.
 List all Identity Providers visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiSamlIdentityProvidersGetRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Context) apiSamlIdentityProvidersGetRequest {
@@ -149,7 +150,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGet(ctx _context.Cont
 
 /*
 Execute executes the request
- @return SamlIdentityProviderList
+
+	@return SamlIdentityProviderList
 */
 func (r apiSamlIdentityProvidersGetRequest) Execute() (SamlIdentityProviderList, *_nethttp.Response, error) {
 	var (
@@ -302,8 +304,9 @@ func (r apiSamlIdentityProvidersIdAttributesPostRequest) InlineObject4(inlineObj
 /*
 IdentityProvidersIdAttributesPost Get user attributes from an existing Identity Provider.
 Get raw attributes and mapped claims for a user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSamlIdentityProvidersIdAttributesPostRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx _context.Context, id string) apiSamlIdentityProvidersIdAttributesPostRequest {
@@ -316,7 +319,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx 
 
 /*
 Execute executes the request
- @return InlineResponse20010
+
+	@return InlineResponse20010
 */
 func (r apiSamlIdentityProvidersIdAttributesPostRequest) Execute() (InlineResponse20010, *_nethttp.Response, error) {
 	var (
@@ -484,8 +488,9 @@ func (r apiSamlIdentityProvidersIdDeleteRequest) Authorization(authorization str
 /*
 IdentityProvidersIdDelete Delete a specific Identity Provider.
 Delete a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSamlIdentityProvidersIdDeleteRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context.Context, id string) apiSamlIdentityProvidersIdDeleteRequest {
@@ -498,7 +503,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDelete(ctx _context
 
 /*
 Execute executes the request
-
 */
 func (r apiSamlIdentityProvidersIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -624,8 +628,9 @@ func (r apiSamlIdentityProvidersIdGetRequest) Authorization(authorization string
 /*
 IdentityProvidersIdGet Get a specific Identity Provider.
 Get a specific Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSamlIdentityProvidersIdGetRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Context, id string) apiSamlIdentityProvidersIdGetRequest {
@@ -638,7 +643,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGet(ctx _context.Co
 
 /*
 Execute executes the request
- @return IdentityProvider
+
+	@return IdentityProvider
 */
 func (r apiSamlIdentityProvidersIdGetRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
 	var (
@@ -790,8 +796,9 @@ func (r apiSamlIdentityProvidersIdPutRequest) IdentityProvider(identityProvider 
 /*
 IdentityProvidersIdPut Update an existing Identity Provider.
 Update an existing Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSamlIdentityProvidersIdPutRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Context, id string) apiSamlIdentityProvidersIdPutRequest {
@@ -804,7 +811,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPut(ctx _context.Co
 
 /*
 Execute executes the request
- @return SamlProvider
+
+	@return SamlProvider
 */
 func (r apiSamlIdentityProvidersIdPutRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
 	var (
@@ -981,7 +989,8 @@ func (r apiSamlIdentityProvidersPostRequest) IdentityProvider(identityProvider S
 /*
 IdentityProvidersPost Create a new Identity Provider.
 Create a new Identity Provider.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiSamlIdentityProvidersPostRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Context) apiSamlIdentityProvidersPostRequest {
@@ -993,7 +1002,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPost(ctx _context.Con
 
 /*
 Execute executes the request
- @return SamlProvider
+
+	@return SamlProvider
 */
 func (r apiSamlIdentityProvidersPostRequest) Execute() (SamlProvider, *_nethttp.Response, error) {
 	var (
@@ -1169,7 +1179,8 @@ func (r apiSamlIdentityProvidersTestPostRequest) IdentityProvider(identityProvid
 /*
 IdentityProvidersTestPost Test an Identity Provider connection.
 Test connection for the given Identity Provider JSON.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiSamlIdentityProvidersTestPostRequest
 */
 func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context.Context) apiSamlIdentityProvidersTestPostRequest {
@@ -1181,7 +1192,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPost(ctx _context
 
 /*
 Execute executes the request
- @return InlineResponse2009
+
+	@return InlineResponse2009
 */
 func (r apiSamlIdentityProvidersTestPostRequest) Execute() (InlineResponse2009, *_nethttp.Response, error) {
 	var (

@@ -64,7 +64,8 @@ func (r apiAppliancesGetRequest) Descending(descending string) apiAppliancesGetR
 /*
 AppliancesGet List all Appliances.
 List all Appliances visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAppliancesGetRequest
 */
 func (a *AppliancesApiService) AppliancesGet(ctx _context.Context) apiAppliancesGetRequest {
@@ -76,7 +77,8 @@ func (a *AppliancesApiService) AppliancesGet(ctx _context.Context) apiAppliances
 
 /*
 Execute executes the request
- @return ApplianceList
+
+	@return ApplianceList
 */
 func (r apiAppliancesGetRequest) Execute() (ApplianceList, *_nethttp.Response, error) {
 	var (
@@ -229,8 +231,9 @@ func (r apiAppliancesIdDeactivatePostRequest) Wipe(wipe bool) apiAppliancesIdDea
 /*
 AppliancesIdDeactivatePost Deactivate an active Appliance.
 Deactivate an active Appliance. If the appliance is still reachable, it will get a wipe command.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdDeactivatePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdDeactivatePost(ctx _context.Context, id string) apiAppliancesIdDeactivatePostRequest {
@@ -243,7 +246,6 @@ func (a *AppliancesApiService) AppliancesIdDeactivatePost(ctx _context.Context, 
 
 /*
 Execute executes the request
-
 */
 func (r apiAppliancesIdDeactivatePostRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -382,8 +384,9 @@ func (r apiAppliancesIdDeleteRequest) Authorization(authorization string) apiApp
 /*
 AppliancesIdDelete Delete a specific Appliance.
 Delete a specific Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdDeleteRequest
 */
 func (a *AppliancesApiService) AppliancesIdDelete(ctx _context.Context, id string) apiAppliancesIdDeleteRequest {
@@ -396,7 +399,6 @@ func (a *AppliancesApiService) AppliancesIdDelete(ctx _context.Context, id strin
 
 /*
 Execute executes the request
-
 */
 func (r apiAppliancesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -534,8 +536,9 @@ func (r apiAppliancesIdExportIsoPostRequest) LatestVersion(latestVersion bool) a
 /*
 AppliancesIdExportIsoPost Export ISO seed for an inactive Appliance.
 Export ISO seed for an inactive Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdExportIsoPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdExportIsoPost(ctx _context.Context, id string) apiAppliancesIdExportIsoPostRequest {
@@ -548,7 +551,8 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPost(ctx _context.Context, i
 
 /*
 Execute executes the request
- @return InlineResponse2007
+
+	@return InlineResponse2007
 */
 func (r apiAppliancesIdExportIsoPostRequest) Execute() (InlineResponse2007, *_nethttp.Response, error) {
 	var (
@@ -735,8 +739,9 @@ func (r apiAppliancesIdExportPostRequest) LatestVersion(latestVersion bool) apiA
 /*
 AppliancesIdExportPost Export JSON seed for an inactive Appliance.
 Export JSON seed for an inactive Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdExportPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdExportPost(ctx _context.Context, id string) apiAppliancesIdExportPostRequest {
@@ -749,7 +754,8 @@ func (a *AppliancesApiService) AppliancesIdExportPost(ctx _context.Context, id s
 
 /*
 Execute executes the request
- @return map[string]interface{}
+
+	@return map[string]interface{}
 */
 func (r apiAppliancesIdExportPostRequest) Execute() (map[string]interface{}, *_nethttp.Response, error) {
 	var (
@@ -924,8 +930,9 @@ func (r apiAppliancesIdGetRequest) Authorization(authorization string) apiApplia
 /*
 AppliancesIdGet Get a specific Appliance.
 Get a specific Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdGetRequest
 */
 func (a *AppliancesApiService) AppliancesIdGet(ctx _context.Context, id string) apiAppliancesIdGetRequest {
@@ -938,7 +945,8 @@ func (a *AppliancesApiService) AppliancesIdGet(ctx _context.Context, id string) 
 
 /*
 Execute executes the request
- @return Appliance
+
+	@return Appliance
 */
 func (r apiAppliancesIdGetRequest) Execute() (Appliance, *_nethttp.Response, error) {
 	var (
@@ -1090,8 +1098,9 @@ func (r apiAppliancesIdPutRequest) Appliance(appliance Appliance) apiAppliancesI
 /*
 AppliancesIdPut Update an existing Appliance.
 Update an existing Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdPutRequest
 */
 func (a *AppliancesApiService) AppliancesIdPut(ctx _context.Context, id string) apiAppliancesIdPutRequest {
@@ -1104,7 +1113,8 @@ func (a *AppliancesApiService) AppliancesIdPut(ctx _context.Context, id string) 
 
 /*
 Execute executes the request
- @return Appliance
+
+	@return Appliance
 */
 func (r apiAppliancesIdPutRequest) Execute() (Appliance, *_nethttp.Response, error) {
 	var (
@@ -1276,8 +1286,9 @@ func (r apiAppliancesIdRebootPostRequest) Authorization(authorization string) ap
 /*
 AppliancesIdRebootPost Reboot an active Appliance.
 Reboot an active Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdRebootPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdRebootPost(ctx _context.Context, id string) apiAppliancesIdRebootPostRequest {
@@ -1290,7 +1301,6 @@ func (a *AppliancesApiService) AppliancesIdRebootPost(ctx _context.Context, id s
 
 /*
 Execute executes the request
-
 */
 func (r apiAppliancesIdRebootPostRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -1426,8 +1436,9 @@ func (r apiAppliancesIdRenewCertificatePostRequest) Authorization(authorization 
 /*
 AppliancesIdRenewCertificatePost Renew certificate of an active Appliance.
 Renew certificate of an active Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdRenewCertificatePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdRenewCertificatePost(ctx _context.Context, id string) apiAppliancesIdRenewCertificatePostRequest {
@@ -1440,7 +1451,6 @@ func (a *AppliancesApiService) AppliancesIdRenewCertificatePost(ctx _context.Con
 
 /*
 Execute executes the request
-
 */
 func (r apiAppliancesIdRenewCertificatePostRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -1582,8 +1592,9 @@ func (r apiAppliancesIdTestResolverNamePostRequest) InlineObject3(inlineObject3 
 /*
 AppliancesIdTestResolverNamePost Test a resolver name on a Gateway.
 Test a resolver name on a Gateway.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdTestResolverNamePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdTestResolverNamePost(ctx _context.Context, id string) apiAppliancesIdTestResolverNamePostRequest {
@@ -1596,7 +1607,8 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePost(ctx _context.Con
 
 /*
 Execute executes the request
- @return InlineResponse2008
+
+	@return InlineResponse2008
 */
 func (r apiAppliancesIdTestResolverNamePostRequest) Execute() (InlineResponse2008, *_nethttp.Response, error) {
 	var (
@@ -1769,7 +1781,8 @@ func (r apiAppliancesPostRequest) Appliance(appliance Appliance) apiAppliancesPo
 /*
 AppliancesPost Create a new inactive Appliance.
 Create a new inactive Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAppliancesPostRequest
 */
 func (a *AppliancesApiService) AppliancesPost(ctx _context.Context) apiAppliancesPostRequest {
@@ -1781,7 +1794,8 @@ func (a *AppliancesApiService) AppliancesPost(ctx _context.Context) apiAppliance
 
 /*
 Execute executes the request
- @return Appliance
+
+	@return Appliance
 */
 func (r apiAppliancesPostRequest) Execute() (Appliance, *_nethttp.Response, error) {
 	var (

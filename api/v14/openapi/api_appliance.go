@@ -41,8 +41,9 @@ func (r apiAppliancesIdSwitchPartitionPostRequest) Authorization(authorization s
 /*
 AppliancesIdSwitchPartitionPost Switch partition on the Appliance, regardless of the upgrade status.
 Reboot and switch partition on the Appliance.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdSwitchPartitionPostRequest
 */
 func (a *ApplianceApiService) AppliancesIdSwitchPartitionPost(ctx _context.Context, id string) apiAppliancesIdSwitchPartitionPostRequest {
@@ -55,7 +56,6 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPost(ctx _context.Conte
 
 /*
 Execute executes the request
-
 */
 func (r apiAppliancesIdSwitchPartitionPostRequest) Execute() (*_nethttp.Response, error) {
 	var (

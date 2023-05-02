@@ -63,7 +63,8 @@ func (r apiStatsTopEntitlementsGetRequest) FilterBy(filterBy map[string]string) 
 /*
 StatsTopEntitlementsGet Get Top Entitlements.
 Get the (most used) Top Entitlements for the last 7 days. Each Gateway keeps track of the most used 20 Entitlements and they are aggregated on the Controller. Number of  Entitlements in this stats varies accordingly. Rebooting a Gateway resets the most used Entitlements for that Gateway. This API makes the Controller to query every Gateway in the system to collect the statistics. The operation may take long if one or more Gateways take long to respond.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiStatsTopEntitlementsGetRequest
 */
 func (a *TopEntitlementsApiService) StatsTopEntitlementsGet(ctx _context.Context) apiStatsTopEntitlementsGetRequest {
@@ -75,7 +76,8 @@ func (a *TopEntitlementsApiService) StatsTopEntitlementsGet(ctx _context.Context
 
 /*
 Execute executes the request
- @return BaseStats
+
+	@return BaseStats
 */
 func (r apiStatsTopEntitlementsGetRequest) Execute() (BaseStats, *_nethttp.Response, error) {
 	var (

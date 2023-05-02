@@ -64,7 +64,8 @@ func (r apiApplianceCustomizationsGetRequest) Descending(descending string) apiA
 /*
 ApplianceCustomizationsGet List all Appliance Customizations.
 List all Appliance Customizations visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiApplianceCustomizationsGetRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx _context.Context) apiApplianceCustomizationsGetRequest {
@@ -76,7 +77,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx _cont
 
 /*
 Execute executes the request
- @return ApplianceCustomizationList
+
+	@return ApplianceCustomizationList
 */
 func (r apiApplianceCustomizationsGetRequest) Execute() (ApplianceCustomizationList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiApplianceCustomizationsIdDeleteRequest) Authorization(authorization s
 /*
 ApplianceCustomizationsIdDelete Delete a specific Appliance Customization.
 Delete a specific Appliance Customization.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiApplianceCustomizationsIdDeleteRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDelete(ctx _context.Context, id string) apiApplianceCustomizationsIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDelete(ctx 
 
 /*
 Execute executes the request
-
 */
 func (r apiApplianceCustomizationsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiApplianceCustomizationsIdGetRequest) Authorization(authorization stri
 /*
 ApplianceCustomizationsIdGet Get a specific Appliance Customization.
 Get a specific Appliance Customization.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiApplianceCustomizationsIdGetRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx _context.Context, id string) apiApplianceCustomizationsIdGetRequest {
@@ -377,7 +380,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx _co
 
 /*
 Execute executes the request
- @return ApplianceCustomization
+
+	@return ApplianceCustomization
 */
 func (r apiApplianceCustomizationsIdGetRequest) Execute() (ApplianceCustomization, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiApplianceCustomizationsIdPutRequest) ApplianceCustomization(appliance
 /*
 ApplianceCustomizationsIdPut Update an existing Appliance Customization.
 Update an existing Appliance Customization.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiApplianceCustomizationsIdPutRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx _context.Context, id string) apiApplianceCustomizationsIdPutRequest {
@@ -543,7 +548,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx _co
 
 /*
 Execute executes the request
- @return ApplianceCustomization
+
+	@return ApplianceCustomization
 */
 func (r apiApplianceCustomizationsIdPutRequest) Execute() (ApplianceCustomization, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiApplianceCustomizationsPostRequest) ApplianceCustomization(applianceC
 /*
 ApplianceCustomizationsPost Create a new Appliance Customization.
 Create a new Appliance Customization.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiApplianceCustomizationsPostRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx _context.Context) apiApplianceCustomizationsPostRequest {
@@ -732,7 +739,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx _con
 
 /*
 Execute executes the request
- @return ApplianceCustomization
+
+	@return ApplianceCustomization
 */
 func (r apiApplianceCustomizationsPostRequest) Execute() (ApplianceCustomization, *_nethttp.Response, error) {
 	var (

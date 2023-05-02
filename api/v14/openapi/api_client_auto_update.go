@@ -39,7 +39,8 @@ func (r apiAutoUpdateSettingsGetRequest) Authorization(authorization string) api
 /*
 AutoUpdateSettingsGet View Client Auto-Update settings.
 View Client Auto-Update settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAutoUpdateSettingsGetRequest
 */
 func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx _context.Context) apiAutoUpdateSettingsGetRequest {
@@ -51,7 +52,8 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx _context.Context)
 
 /*
 Execute executes the request
- @return AutoUpdateSettings
+
+	@return AutoUpdateSettings
 */
 func (r apiAutoUpdateSettingsGetRequest) Execute() (AutoUpdateSettings, *_nethttp.Response, error) {
 	var (
@@ -191,7 +193,8 @@ func (r apiAutoUpdateSettingsPutRequest) AutoUpdateSettings(autoUpdateSettings A
 /*
 AutoUpdateSettingsPut Update Client Auto-Update settings.
 Update Client Auto-Update settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAutoUpdateSettingsPutRequest
 */
 func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPut(ctx _context.Context) apiAutoUpdateSettingsPutRequest {
@@ -203,7 +206,6 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPut(ctx _context.Context)
 
 /*
 Execute executes the request
-
 */
 func (r apiAutoUpdateSettingsPutRequest) Execute() (*_nethttp.Response, error) {
 	var (

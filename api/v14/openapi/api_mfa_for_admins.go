@@ -39,7 +39,8 @@ func (r apiAdminMfaSettingsDeleteRequest) Authorization(authorization string) ap
 /*
 AdminMfaSettingsDelete Reset Admin MFA settings to disabled.
 Reset Admin MFA settings to disabled.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAdminMfaSettingsDeleteRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsDelete(ctx _context.Context) apiAdminMfaSettingsDeleteRequest {
@@ -51,7 +52,6 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDelete(ctx _context.Context) ap
 
 /*
 Execute executes the request
-
 */
 func (r apiAdminMfaSettingsDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -165,7 +165,8 @@ func (r apiAdminMfaSettingsGetRequest) Authorization(authorization string) apiAd
 /*
 AdminMfaSettingsGet View Admin MFA settings.
 View Admin MFA settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAdminMfaSettingsGetRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx _context.Context) apiAdminMfaSettingsGetRequest {
@@ -177,7 +178,8 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx _context.Context) apiAd
 
 /*
 Execute executes the request
- @return AdminMfaSettings
+
+	@return AdminMfaSettings
 */
 func (r apiAdminMfaSettingsGetRequest) Execute() (AdminMfaSettings, *_nethttp.Response, error) {
 	var (
@@ -317,7 +319,8 @@ func (r apiAdminMfaSettingsPutRequest) AdminMfaSettings(adminMfaSettings AdminMf
 /*
 AdminMfaSettingsPut Update Admin MFA settings.
 Update Admin MFA settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiAdminMfaSettingsPutRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsPut(ctx _context.Context) apiAdminMfaSettingsPutRequest {
@@ -329,7 +332,6 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPut(ctx _context.Context) apiAd
 
 /*
 Execute executes the request
-
 */
 func (r apiAdminMfaSettingsPutRequest) Execute() (*_nethttp.Response, error) {
 	var (

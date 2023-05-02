@@ -64,7 +64,8 @@ func (r apiSitesGetRequest) Descending(descending string) apiSitesGetRequest {
 /*
 SitesGet List all Sites.
 List all Sites visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiSitesGetRequest
 */
 func (a *SitesApiService) SitesGet(ctx _context.Context) apiSitesGetRequest {
@@ -76,7 +77,8 @@ func (a *SitesApiService) SitesGet(ctx _context.Context) apiSitesGetRequest {
 
 /*
 Execute executes the request
- @return SiteList
+
+	@return SiteList
 */
 func (r apiSitesGetRequest) Execute() (SiteList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiSitesIdDeleteRequest) Authorization(authorization string) apiSitesIdD
 /*
 SitesIdDelete Delete a specific Site.
 Delete a specific Site.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSitesIdDeleteRequest
 */
 func (a *SitesApiService) SitesIdDelete(ctx _context.Context, id string) apiSitesIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *SitesApiService) SitesIdDelete(ctx _context.Context, id string) apiSite
 
 /*
 Execute executes the request
-
 */
 func (r apiSitesIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiSitesIdGetRequest) Authorization(authorization string) apiSitesIdGetR
 /*
 SitesIdGet Get a specific Site.
 Get a specific Site.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSitesIdGetRequest
 */
 func (a *SitesApiService) SitesIdGet(ctx _context.Context, id string) apiSitesIdGetRequest {
@@ -377,7 +380,8 @@ func (a *SitesApiService) SitesIdGet(ctx _context.Context, id string) apiSitesId
 
 /*
 Execute executes the request
- @return Site
+
+	@return Site
 */
 func (r apiSitesIdGetRequest) Execute() (Site, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiSitesIdPutRequest) Site(site Site) apiSitesIdPutRequest {
 /*
 SitesIdPut Update an existing Site.
 Update an existing Site.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiSitesIdPutRequest
 */
 func (a *SitesApiService) SitesIdPut(ctx _context.Context, id string) apiSitesIdPutRequest {
@@ -543,7 +548,8 @@ func (a *SitesApiService) SitesIdPut(ctx _context.Context, id string) apiSitesId
 
 /*
 Execute executes the request
- @return Site
+
+	@return Site
 */
 func (r apiSitesIdPutRequest) Execute() (Site, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiSitesPostRequest) Site(site Site) apiSitesPostRequest {
 /*
 SitesPost Create a new Site.
 Create a new Site.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiSitesPostRequest
 */
 func (a *SitesApiService) SitesPost(ctx _context.Context) apiSitesPostRequest {
@@ -732,7 +739,8 @@ func (a *SitesApiService) SitesPost(ctx _context.Context) apiSitesPostRequest {
 
 /*
 Execute executes the request
- @return Site
+
+	@return Site
 */
 func (r apiSitesPostRequest) Execute() (Site, *_nethttp.Response, error) {
 	var (

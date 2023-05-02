@@ -39,7 +39,8 @@ func (r apiStatsAppliancesGetRequest) Authorization(authorization string) apiSta
 /*
 StatsAppliancesGet Get Appliance Stats.
 Get Stats and status of the active appliances. This API makes the controller to query every active appliance for status. The operation may take long if one or more appliances take long to respond.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiStatsAppliancesGetRequest
 */
 func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx _context.Context) apiStatsAppliancesGetRequest {
@@ -51,7 +52,8 @@ func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx _context.Context) apiS
 
 /*
 Execute executes the request
- @return BaseStats
+
+	@return BaseStats
 */
 func (r apiStatsAppliancesGetRequest) Execute() (BaseStats, *_nethttp.Response, error) {
 	var (

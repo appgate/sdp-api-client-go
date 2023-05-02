@@ -41,8 +41,9 @@ func (r apiAppliancesIdMetricsGetRequest) Authorization(authorization string) ap
 /*
 AppliancesIdMetricsGet Get all the Prometheus metrics for an Appliance.
 Get all the Prometheus metrics for the given Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v12+text** as it returns plain text instead of JSON.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiAppliancesIdMetricsGetRequest
 */
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx _context.Context, id string) apiAppliancesIdMetricsGetRequest {
@@ -55,7 +56,8 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx _context.Context
 
 /*
 Execute executes the request
- @return string
+
+	@return string
 */
 func (r apiAppliancesIdMetricsGetRequest) Execute() (string, *_nethttp.Response, error) {
 	var (
@@ -202,9 +204,10 @@ func (r apiAppliancesIdMetricsNameGetRequest) Authorization(authorization string
 /*
 AppliancesIdMetricsNameGet Get a specific Prometheus metric for an Appliance.
 Get a specific Prometheus metrics for the given Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v12+text** as it returns plain text instead of JSON.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
- * @param name Metric name
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+  - @param name Metric name
+
 @return apiAppliancesIdMetricsNameGetRequest
 */
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx _context.Context, id string, name string) apiAppliancesIdMetricsNameGetRequest {
@@ -218,7 +221,8 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx _context.Con
 
 /*
 Execute executes the request
- @return string
+
+	@return string
 */
 func (r apiAppliancesIdMetricsNameGetRequest) Execute() (string, *_nethttp.Response, error) {
 	var (

@@ -41,8 +41,9 @@ func (r apiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) Authorization(aut
 /*
 IpPoolsAllocatedIpsByDnDistinguishedNameGet List all Allocated IPs by Distinguished Name.
 List all Allocated IPs by Distinguished Name.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+
 @return apiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx _context.Context, distinguishedName string) apiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest {
@@ -55,7 +56,8 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsByDnDistinguishedNameGet(ctx _con
 
 /*
 Execute executes the request
- @return AllocatedIpList
+
+	@return AllocatedIpList
 */
 func (r apiIpPoolsAllocatedIpsByDnDistinguishedNameGetRequest) Execute() (AllocatedIpList, *_nethttp.Response, error) {
 	var (
@@ -190,7 +192,8 @@ func (r apiIpPoolsAllocatedIpsGetRequest) Authorization(authorization string) ap
 /*
 IpPoolsAllocatedIpsGet List all Allocated IPs in the system.
 List all Allocated IPs in the system
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiIpPoolsAllocatedIpsGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx _context.Context) apiIpPoolsAllocatedIpsGetRequest {
@@ -202,7 +205,8 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx _context.Context) apiIpPo
 
 /*
 Execute executes the request
- @return AllocatedIpList
+
+	@return AllocatedIpList
 */
 func (r apiIpPoolsAllocatedIpsGetRequest) Execute() (AllocatedIpList, *_nethttp.Response, error) {
 	var (
@@ -360,7 +364,8 @@ func (r apiIpPoolsGetRequest) Descending(descending string) apiIpPoolsGetRequest
 /*
 IpPoolsGet List all IP Pools.
 List all IP Pools visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiIpPoolsGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsGet(ctx _context.Context) apiIpPoolsGetRequest {
@@ -372,7 +377,8 @@ func (a *IPPoolsApiService) IpPoolsGet(ctx _context.Context) apiIpPoolsGetReques
 
 /*
 Execute executes the request
- @return IpPoolList
+
+	@return IpPoolList
 */
 func (r apiIpPoolsGetRequest) Execute() (IpPoolList, *_nethttp.Response, error) {
 	var (
@@ -519,8 +525,9 @@ func (r apiIpPoolsIdDeleteRequest) Authorization(authorization string) apiIpPool
 /*
 IpPoolsIdDelete Delete a specific IP Pool.
 Delete a specific IP Pool.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiIpPoolsIdDeleteRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdDelete(ctx _context.Context, id string) apiIpPoolsIdDeleteRequest {
@@ -533,7 +540,6 @@ func (a *IPPoolsApiService) IpPoolsIdDelete(ctx _context.Context, id string) api
 
 /*
 Execute executes the request
-
 */
 func (r apiIpPoolsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -659,8 +665,9 @@ func (r apiIpPoolsIdGetRequest) Authorization(authorization string) apiIpPoolsId
 /*
 IpPoolsIdGet Get a specific IP Pool.
 Get a specific IP Pool.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiIpPoolsIdGetRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdGet(ctx _context.Context, id string) apiIpPoolsIdGetRequest {
@@ -673,7 +680,8 @@ func (a *IPPoolsApiService) IpPoolsIdGet(ctx _context.Context, id string) apiIpP
 
 /*
 Execute executes the request
- @return IpPool
+
+	@return IpPool
 */
 func (r apiIpPoolsIdGetRequest) Execute() (IpPool, *_nethttp.Response, error) {
 	var (
@@ -825,8 +833,9 @@ func (r apiIpPoolsIdPutRequest) IpPool(ipPool IpPool) apiIpPoolsIdPutRequest {
 /*
 IpPoolsIdPut Update an existing IP Pool.
 Update an existing IP Pool.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiIpPoolsIdPutRequest
 */
 func (a *IPPoolsApiService) IpPoolsIdPut(ctx _context.Context, id string) apiIpPoolsIdPutRequest {
@@ -839,7 +848,8 @@ func (a *IPPoolsApiService) IpPoolsIdPut(ctx _context.Context, id string) apiIpP
 
 /*
 Execute executes the request
- @return IpPool
+
+	@return IpPool
 */
 func (r apiIpPoolsIdPutRequest) Execute() (IpPool, *_nethttp.Response, error) {
 	var (
@@ -1016,7 +1026,8 @@ func (r apiIpPoolsPostRequest) IpPool(ipPool IpPool) apiIpPoolsPostRequest {
 /*
 IpPoolsPost Create a new IP Pool.
 Create a new IP Pool.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiIpPoolsPostRequest
 */
 func (a *IPPoolsApiService) IpPoolsPost(ctx _context.Context) apiIpPoolsPostRequest {
@@ -1028,7 +1039,8 @@ func (a *IPPoolsApiService) IpPoolsPost(ctx _context.Context) apiIpPoolsPostRequ
 
 /*
 Execute executes the request
- @return IpPool
+
+	@return IpPool
 */
 func (r apiIpPoolsPostRequest) Execute() (IpPool, *_nethttp.Response, error) {
 	var (

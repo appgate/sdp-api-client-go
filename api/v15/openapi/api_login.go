@@ -360,14 +360,14 @@ func (r ApiAuthenticationPostRequest) Execute() (LoginResponse, *_nethttp.Respon
 }
 
 /*
- * AuthenticationPost Authenticate. For internal use.
- * API Scripts are recommended to use the Login call instead of separate Authentication & Authorization calls.
+  - AuthenticationPost Authenticate. For internal use.
+  - API Scripts are recommended to use the Login call instead of separate Authentication & Authorization calls.
 
 First step for logging in is sending the credentials and retrieving partial AuthToken.
 If the response has the "needTwoFactorAuth:true", then either API user must be extempt from Admin MFA or two-step
 MFA process must be completed before Authorization.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiAuthenticationPostRequest
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @return ApiAuthenticationPostRequest
 */
 func (a *LoginApiService) AuthenticationPost(ctx _context.Context) ApiAuthenticationPostRequest {
 	return ApiAuthenticationPostRequest{
@@ -515,11 +515,12 @@ func (r ApiAuthorizationGetRequest) Execute() (LoginResponse, *_nethttp.Response
 }
 
 /*
- * AuthorizationGet Authorize. For internal use.
- * API Scripts are recommended to use the Login call instead of separate Authentication & Authorization calls.
+  - AuthorizationGet Authorize. For internal use.
+  - API Scripts are recommended to use the Login call instead of separate Authentication & Authorization calls.
+
 Last step for logging in is sending the partial AuthToken for authorization and retrieving the AuthToken.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiAuthorizationGetRequest
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @return ApiAuthorizationGetRequest
 */
 func (a *LoginApiService) AuthorizationGet(ctx _context.Context) ApiAuthorizationGetRequest {
 	return ApiAuthorizationGetRequest{

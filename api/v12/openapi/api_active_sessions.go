@@ -41,8 +41,9 @@ func (r apiSessionInfoDistinguishedNameGetRequest) Authorization(authorization s
 /*
 SessionInfoDistinguishedNameGet Get details of a specific Active Client Session.
 Get the details of a specific Active Client Session from all Gateways. This API makes the Controller to query very Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+
 @return apiSessionInfoDistinguishedNameGetRequest
 */
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx _context.Context, distinguishedName string) apiSessionInfoDistinguishedNameGetRequest {
@@ -55,7 +56,8 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx _context.
 
 /*
 Execute executes the request
- @return InlineResponse2004
+
+	@return InlineResponse2004
 */
 func (r apiSessionInfoDistinguishedNameGetRequest) Execute() (InlineResponse2004, *_nethttp.Response, error) {
 	var (
@@ -224,7 +226,8 @@ func (r apiStatsActiveSessionsGetRequest) Descending(descending string) apiStats
 /*
 StatsActiveSessionsGet Get Active Client Sessions.
 Get currently Active Client Sessions. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiStatsActiveSessionsGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx _context.Context) apiStatsActiveSessionsGetRequest {
@@ -236,7 +239,8 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx _context.Context) 
 
 /*
 Execute executes the request
- @return BaseStats
+
+	@return BaseStats
 */
 func (r apiStatsActiveSessionsGetRequest) Execute() (BaseStats, *_nethttp.Response, error) {
 	var (

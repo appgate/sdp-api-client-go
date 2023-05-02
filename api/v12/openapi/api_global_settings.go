@@ -39,7 +39,8 @@ func (r apiGlobalSettingsBackupPassphraseDeleteRequest) Authorization(authorizat
 /*
 GlobalSettingsBackupPassphraseDelete Reset backup passphrase.
 Reset backup passphrase. Backup APIs will be disabled without a valid passphrase. Deprecated as of 5.0. Use backupApiEnabled field when editing the settings instead.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiGlobalSettingsBackupPassphraseDeleteRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsBackupPassphraseDelete(ctx _context.Context) apiGlobalSettingsBackupPassphraseDeleteRequest {
@@ -51,7 +52,6 @@ func (a *GlobalSettingsApiService) GlobalSettingsBackupPassphraseDelete(ctx _con
 
 /*
 Execute executes the request
-
 */
 func (r apiGlobalSettingsBackupPassphraseDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -165,7 +165,8 @@ func (r apiGlobalSettingsDeleteRequest) Authorization(authorization string) apiG
 /*
 GlobalSettingsDelete Reset all Global Settings to the default values.
 Reset all Global Settings to the default values.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiGlobalSettingsDeleteRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsDelete(ctx _context.Context) apiGlobalSettingsDeleteRequest {
@@ -177,7 +178,6 @@ func (a *GlobalSettingsApiService) GlobalSettingsDelete(ctx _context.Context) ap
 
 /*
 Execute executes the request
-
 */
 func (r apiGlobalSettingsDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -291,7 +291,8 @@ func (r apiGlobalSettingsGetRequest) Authorization(authorization string) apiGlob
 /*
 GlobalSettingsGet View various Global Settings.
 View various Global Settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiGlobalSettingsGetRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx _context.Context) apiGlobalSettingsGetRequest {
@@ -303,7 +304,8 @@ func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx _context.Context) apiGl
 
 /*
 Execute executes the request
- @return GlobalSettings
+
+	@return GlobalSettings
 */
 func (r apiGlobalSettingsGetRequest) Execute() (GlobalSettings, *_nethttp.Response, error) {
 	var (
@@ -443,7 +445,8 @@ func (r apiGlobalSettingsPutRequest) GlobalSettings(globalSettings GlobalSetting
 /*
 GlobalSettingsPut Update all Global Settings.
 Update all Global Settings.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiGlobalSettingsPutRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsPut(ctx _context.Context) apiGlobalSettingsPutRequest {
@@ -455,7 +458,6 @@ func (a *GlobalSettingsApiService) GlobalSettingsPut(ctx _context.Context) apiGl
 
 /*
 Execute executes the request
-
 */
 func (r apiGlobalSettingsPutRequest) Execute() (*_nethttp.Response, error) {
 	var (

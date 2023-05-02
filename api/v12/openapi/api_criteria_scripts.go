@@ -64,7 +64,8 @@ func (r apiCriteriaScriptsGetRequest) Descending(descending string) apiCriteriaS
 /*
 CriteriaScriptsGet List all Criteria Scripts.
 List all Criteria Scripts visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCriteriaScriptsGetRequest
 */
 func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx _context.Context) apiCriteriaScriptsGetRequest {
@@ -76,7 +77,8 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx _context.Context) api
 
 /*
 Execute executes the request
- @return CriteriaScriptList
+
+	@return CriteriaScriptList
 */
 func (r apiCriteriaScriptsGetRequest) Execute() (CriteriaScriptList, *_nethttp.Response, error) {
 	var (
@@ -223,8 +225,9 @@ func (r apiCriteriaScriptsIdDeleteRequest) Authorization(authorization string) a
 /*
 CriteriaScriptsIdDelete Delete a specific Criteria Script.
 Delete a specific Criteria Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiCriteriaScriptsIdDeleteRequest
 */
 func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx _context.Context, id string) apiCriteriaScriptsIdDeleteRequest {
@@ -237,7 +240,6 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx _context.Context
 
 /*
 Execute executes the request
-
 */
 func (r apiCriteriaScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -363,8 +365,9 @@ func (r apiCriteriaScriptsIdGetRequest) Authorization(authorization string) apiC
 /*
 CriteriaScriptsIdGet Get a specific Criteria Script.
 Get a specific Criteria Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiCriteriaScriptsIdGetRequest
 */
 func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx _context.Context, id string) apiCriteriaScriptsIdGetRequest {
@@ -377,7 +380,8 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx _context.Context, i
 
 /*
 Execute executes the request
- @return CriteriaScript
+
+	@return CriteriaScript
 */
 func (r apiCriteriaScriptsIdGetRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
 	var (
@@ -529,8 +533,9 @@ func (r apiCriteriaScriptsIdPutRequest) CriteriaScript(criteriaScript CriteriaSc
 /*
 CriteriaScriptsIdPut Update an existing Criteria Script.
 Update an existing Criteria Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiCriteriaScriptsIdPutRequest
 */
 func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx _context.Context, id string) apiCriteriaScriptsIdPutRequest {
@@ -543,7 +548,8 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx _context.Context, i
 
 /*
 Execute executes the request
- @return CriteriaScript
+
+	@return CriteriaScript
 */
 func (r apiCriteriaScriptsIdPutRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
 	var (
@@ -720,7 +726,8 @@ func (r apiCriteriaScriptsPostRequest) CriteriaScript(criteriaScript CriteriaScr
 /*
 CriteriaScriptsPost Create a new Criteria Script.
 Create a new Criteria Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiCriteriaScriptsPostRequest
 */
 func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx _context.Context) apiCriteriaScriptsPostRequest {
@@ -732,7 +739,8 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx _context.Context) ap
 
 /*
 Execute executes the request
- @return CriteriaScript
+
+	@return CriteriaScript
 */
 func (r apiCriteriaScriptsPostRequest) Execute() (CriteriaScript, *_nethttp.Response, error) {
 	var (

@@ -41,8 +41,9 @@ func (r apiDeviceScriptsDownloadIdGetRequest) Authorization(authorization string
 /*
 DeviceScriptsDownloadIdGet Download a Device Script.
 Download the raw script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDeviceScriptsDownloadIdGetRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.Context, id string) apiDeviceScriptsDownloadIdGetRequest {
@@ -55,7 +56,8 @@ func (a *DeviceScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.Contex
 
 /*
 Execute executes the request
- @return InlineResponse20012
+
+	@return InlineResponse20012
 */
 func (r apiDeviceScriptsDownloadIdGetRequest) Execute() (InlineResponse20012, *_nethttp.Response, error) {
 	var (
@@ -224,7 +226,8 @@ func (r apiDeviceScriptsGetRequest) Descending(descending string) apiDeviceScrip
 /*
 DeviceScriptsGet List all Device Scripts.
 List all Device Scripts visible to current user.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDeviceScriptsGetRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsGet(ctx _context.Context) apiDeviceScriptsGetRequest {
@@ -236,7 +239,8 @@ func (a *DeviceScriptsApiService) DeviceScriptsGet(ctx _context.Context) apiDevi
 
 /*
 Execute executes the request
- @return DeviceScriptList
+
+	@return DeviceScriptList
 */
 func (r apiDeviceScriptsGetRequest) Execute() (DeviceScriptList, *_nethttp.Response, error) {
 	var (
@@ -383,8 +387,9 @@ func (r apiDeviceScriptsIdDeleteRequest) Authorization(authorization string) api
 /*
 DeviceScriptsIdDelete Delete a specific Device Script.
 Delete a specific Device Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDeviceScriptsIdDeleteRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsIdDelete(ctx _context.Context, id string) apiDeviceScriptsIdDeleteRequest {
@@ -397,7 +402,6 @@ func (a *DeviceScriptsApiService) DeviceScriptsIdDelete(ctx _context.Context, id
 
 /*
 Execute executes the request
-
 */
 func (r apiDeviceScriptsIdDeleteRequest) Execute() (*_nethttp.Response, error) {
 	var (
@@ -523,8 +527,9 @@ func (r apiDeviceScriptsIdGetRequest) Authorization(authorization string) apiDev
 /*
 DeviceScriptsIdGet Get a specific Device Script.
 Get a specific Device Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDeviceScriptsIdGetRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, id string) apiDeviceScriptsIdGetRequest {
@@ -537,7 +542,8 @@ func (a *DeviceScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, id st
 
 /*
 Execute executes the request
- @return DeviceScript
+
+	@return DeviceScript
 */
 func (r apiDeviceScriptsIdGetRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
 	var (
@@ -689,8 +695,9 @@ func (r apiDeviceScriptsIdPutRequest) DeviceScript(deviceScript DeviceScript) ap
 /*
 DeviceScriptsIdPut Update an existing Device Script.
 Update an existing Device Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id ID of the object.
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id ID of the object.
+
 @return apiDeviceScriptsIdPutRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, id string) apiDeviceScriptsIdPutRequest {
@@ -703,7 +710,8 @@ func (a *DeviceScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, id st
 
 /*
 Execute executes the request
- @return DeviceScript
+
+	@return DeviceScript
 */
 func (r apiDeviceScriptsIdPutRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
 	var (
@@ -880,7 +888,8 @@ func (r apiDeviceScriptsPostRequest) DeviceScript(deviceScript DeviceScript) api
 /*
 DeviceScriptsPost Create a new Device Script.
 Create a new Device Script.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return apiDeviceScriptsPostRequest
 */
 func (a *DeviceScriptsApiService) DeviceScriptsPost(ctx _context.Context) apiDeviceScriptsPostRequest {
@@ -892,7 +901,8 @@ func (a *DeviceScriptsApiService) DeviceScriptsPost(ctx _context.Context) apiDev
 
 /*
 Execute executes the request
- @return DeviceScript
+
+	@return DeviceScript
 */
 func (r apiDeviceScriptsPostRequest) Execute() (DeviceScript, *_nethttp.Response, error) {
 	var (
