@@ -5,12 +5,6 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 
 
 
-## Requirements
-	- go 1.20
-	- apigentools v1.6.0
-	- docker (with userns enabled)
-
-
 ## Version compatibility matrix
 
 Each appliance version has a minimum of compatibility with 2 API versions back.
@@ -108,3 +102,17 @@ func main() {
 	fmt.Printf("Bearer %s", *openapi.PtrString(*loginResponse.Token))
 }
 ```
+
+
+### Code generation
+
+#### Requirements
+	- go 1.20
+	- python
+	- [apigentools](https://github.com/DataDog/apigentools) v1.6.0
+	- docker (with userns enabled)
+
+```sh
+bash generate_spec.bash
+```
+
