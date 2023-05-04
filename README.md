@@ -103,6 +103,9 @@ func main() {
 }
 ```
 
+More examples can be seen in [examples directory](./_examples/).
+
+
 
 ### Code generation
 
