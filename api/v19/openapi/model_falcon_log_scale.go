@@ -17,10 +17,8 @@ import (
 
 // FalconLogScale struct for FalconLogScale
 type FalconLogScale struct {
-	// A name like \"humio\".
-	Name string `json:"name"`
-	// Hostname or IP of the Falcon LogScale collector.
-	Host string `json:"host"`
+	// URL of the Falcon LogScale collector.
+	CollectorUrl *string `json:"collectorUrl,omitempty"`
 	// Ingest token.
 	Token *string `json:"token,omitempty"`
 	// Optional name of the repository to ingest into.
@@ -35,10 +33,8 @@ type FalconLogScale struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFalconLogScale(name string, host string) *FalconLogScale {
+func NewFalconLogScale() *FalconLogScale {
 	this := FalconLogScale{}
-	this.Name = name
-	this.Host = host
 	return &this
 }
 
@@ -50,52 +46,36 @@ func NewFalconLogScaleWithDefaults() *FalconLogScale {
 	return &this
 }
 
-// GetName returns the Name field value
-func (o *FalconLogScale) GetName() string {
-	if o == nil {
+// GetCollectorUrl returns the CollectorUrl field value if set, zero value otherwise.
+func (o *FalconLogScale) GetCollectorUrl() string {
+	if o == nil || o.CollectorUrl == nil {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.CollectorUrl
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetCollectorUrlOk returns a tuple with the CollectorUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FalconLogScale) GetNameOk() (*string, bool) {
-	if o == nil {
+func (o *FalconLogScale) GetCollectorUrlOk() (*string, bool) {
+	if o == nil || o.CollectorUrl == nil {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.CollectorUrl, true
 }
 
-// SetName sets field value
-func (o *FalconLogScale) SetName(v string) {
-	o.Name = v
-}
-
-// GetHost returns the Host field value
-func (o *FalconLogScale) GetHost() string {
-	if o == nil {
-		var ret string
-		return ret
+// HasCollectorUrl returns a boolean if a field has been set.
+func (o *FalconLogScale) HasCollectorUrl() bool {
+	if o != nil && o.CollectorUrl != nil {
+		return true
 	}
 
-	return o.Host
+	return false
 }
 
-// GetHostOk returns a tuple with the Host field value
-// and a boolean to check if the value has been set.
-func (o *FalconLogScale) GetHostOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Host, true
-}
-
-// SetHost sets field value
-func (o *FalconLogScale) SetHost(v string) {
-	o.Host = v
+// SetCollectorUrl gets a reference to the given string and assigns it to the CollectorUrl field.
+func (o *FalconLogScale) SetCollectorUrl(v string) {
+	o.CollectorUrl = &v
 }
 
 // GetToken returns the Token field value if set, zero value otherwise.
@@ -228,11 +208,8 @@ func (o *FalconLogScale) SetSource(v string) {
 
 func (o FalconLogScale) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["host"] = o.Host
+	if o.CollectorUrl != nil {
+		toSerialize["collectorUrl"] = o.CollectorUrl
 	}
 	if o.Token != nil {
 		toSerialize["token"] = o.Token

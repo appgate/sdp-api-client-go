@@ -25,6 +25,9 @@ type ConfigurableIdentityProviderAllOfOnBoarding2FA struct {
 	ClaimSuffix *string `json:"claimSuffix,omitempty"`
 	// If enabled, MFA will be required on every authentication.
 	AlwaysRequired *bool `json:"alwaysRequired,omitempty"`
+	// The device limit per user. The existing on-boarded devices will still be able to sign in even if the limit is exceeded. Deprecated. Use root level field instead.
+	// Deprecated
+	DeviceLimitPerUser *int32 `json:"deviceLimitPerUser,omitempty"`
 }
 
 // NewConfigurableIdentityProviderAllOfOnBoarding2FA instantiates a new ConfigurableIdentityProviderAllOfOnBoarding2FA object
@@ -169,6 +172,41 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetAlwaysRequired(v boo
 	o.AlwaysRequired = &v
 }
 
+// GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
+// Deprecated
+func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetDeviceLimitPerUser() int32 {
+	if o == nil || o.DeviceLimitPerUser == nil {
+		var ret int32
+		return ret
+	}
+	return *o.DeviceLimitPerUser
+}
+
+// GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetDeviceLimitPerUserOk() (*int32, bool) {
+	if o == nil || o.DeviceLimitPerUser == nil {
+		return nil, false
+	}
+	return o.DeviceLimitPerUser, true
+}
+
+// HasDeviceLimitPerUser returns a boolean if a field has been set.
+func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasDeviceLimitPerUser() bool {
+	if o != nil && o.DeviceLimitPerUser != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDeviceLimitPerUser gets a reference to the given int32 and assigns it to the DeviceLimitPerUser field.
+// Deprecated
+func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetDeviceLimitPerUser(v int32) {
+	o.DeviceLimitPerUser = &v
+}
+
 func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -182,6 +220,9 @@ func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) MarshalJSON() ([]byte, e
 	}
 	if o.AlwaysRequired != nil {
 		toSerialize["alwaysRequired"] = o.AlwaysRequired
+	}
+	if o.DeviceLimitPerUser != nil {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
 	}
 	return json.Marshal(toSerialize)
 }

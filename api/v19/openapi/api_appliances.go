@@ -800,15 +800,22 @@ func (a *AppliancesApiService) AppliancesIdCommandDigPostExecute(r ApiAppliances
 }
 
 type ApiAppliancesIdCommandIpPostRequest struct {
-	ctx           context.Context
-	ApiService    *AppliancesApiService
-	authorization *string
-	id            string
+	ctx                              context.Context
+	ApiService                       *AppliancesApiService
+	authorization                    *string
+	id                               string
+	appliancesIdCommandIpPostRequest *AppliancesIdCommandIpPostRequest
 }
 
 // The Token from the LoginResponse.
 func (r ApiAppliancesIdCommandIpPostRequest) Authorization(authorization string) ApiAppliancesIdCommandIpPostRequest {
 	r.authorization = &authorization
+	return r
+}
+
+// IP parameters
+func (r ApiAppliancesIdCommandIpPostRequest) AppliancesIdCommandIpPostRequest(appliancesIdCommandIpPostRequest AppliancesIdCommandIpPostRequest) ApiAppliancesIdCommandIpPostRequest {
+	r.appliancesIdCommandIpPostRequest = &appliancesIdCommandIpPostRequest
 	return r
 }
 
@@ -860,7 +867,7 @@ func (a *AppliancesApiService) AppliancesIdCommandIpPostExecute(r ApiAppliancesI
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -877,6 +884,8 @@ func (a *AppliancesApiService) AppliancesIdCommandIpPostExecute(r ApiAppliancesI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	// body params
+	localVarPostBody = r.appliancesIdCommandIpPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2301,6 +2310,8 @@ type ApiAppliancesIdExportPostRequest struct {
 	authorization *string
 	id            string
 	sSHConfig     *SSHConfig
+	latestVersion *bool
+	version       *float32
 }
 
 // The Token from the LoginResponse.
@@ -2312,6 +2323,20 @@ func (r ApiAppliancesIdExportPostRequest) Authorization(authorization string) Ap
 // Export seed config object.
 func (r ApiAppliancesIdExportPostRequest) SSHConfig(sSHConfig SSHConfig) ApiAppliancesIdExportPostRequest {
 	r.sSHConfig = &sSHConfig
+	return r
+}
+
+// When a Controller creates an appliance object it is saved with the current API version. This API version will be used when the seed for that appliance is generated. If the appliance version is now newer than this, the correct API version must be used for the seed. Use latestVersion to override the default API version. The latest API version is shown at the top of this API specification. Deprecated since the seed is version agnostic as of 5.5.
+// Deprecated
+func (r ApiAppliancesIdExportPostRequest) LatestVersion(latestVersion bool) ApiAppliancesIdExportPostRequest {
+	r.latestVersion = &latestVersion
+	return r
+}
+
+// Can be used to set a specific version to the Appliance prior to exporting the seed. Deprecated since the seed is version agnostic as of 5.5.
+// Deprecated
+func (r ApiAppliancesIdExportPostRequest) Version(version float32) ApiAppliancesIdExportPostRequest {
+	r.version = &version
 	return r
 }
 
@@ -2365,6 +2390,12 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 		return localVarReturnValue, nil, reportError("sSHConfig is required and must be specified")
 	}
 
+	if r.latestVersion != nil {
+		localVarQueryParams.Add("latestVersion", parameterToString(*r.latestVersion, ""))
+	}
+	if r.version != nil {
+		localVarQueryParams.Add("version", parameterToString(*r.version, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

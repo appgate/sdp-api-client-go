@@ -27,6 +27,9 @@ type SiteAllOfNameResolutionDnsResolvers struct {
 	DefaultTtlSeconds *int32 `json:"defaultTtlSeconds,omitempty"`
 	// DNS Server addresses that will be used to resolve hostnames within the Site.
 	Servers []string `json:"servers"`
+	// DNS search domains that will be used to resolve hostnames within the Site.
+	// Deprecated
+	SearchDomains []string `json:"searchDomains,omitempty"`
 	// The DNS resolver will only attempt to resolve names matching the match domains. If match domains are not specified the DNS resolver will attempt to resolve all hostnames.
 	MatchDomains []string `json:"matchDomains,omitempty"`
 }
@@ -206,6 +209,41 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetServers(v []string) {
 	o.Servers = v
 }
 
+// GetSearchDomains returns the SearchDomains field value if set, zero value otherwise.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsResolvers) GetSearchDomains() []string {
+	if o == nil || o.SearchDomains == nil {
+		var ret []string
+		return ret
+	}
+	return o.SearchDomains
+}
+
+// GetSearchDomainsOk returns a tuple with the SearchDomains field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsResolvers) GetSearchDomainsOk() ([]string, bool) {
+	if o == nil || o.SearchDomains == nil {
+		return nil, false
+	}
+	return o.SearchDomains, true
+}
+
+// HasSearchDomains returns a boolean if a field has been set.
+func (o *SiteAllOfNameResolutionDnsResolvers) HasSearchDomains() bool {
+	if o != nil && o.SearchDomains != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSearchDomains gets a reference to the given []string and assigns it to the SearchDomains field.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsResolvers) SetSearchDomains(v []string) {
+	o.SearchDomains = v
+}
+
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomains() []string {
 	if o == nil || o.MatchDomains == nil {
@@ -254,6 +292,9 @@ func (o SiteAllOfNameResolutionDnsResolvers) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["servers"] = o.Servers
+	}
+	if o.SearchDomains != nil {
+		toSerialize["searchDomains"] = o.SearchDomains
 	}
 	if o.MatchDomains != nil {
 		toSerialize["matchDomains"] = o.MatchDomains
