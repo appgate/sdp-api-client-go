@@ -1,0 +1,43 @@
+diff --git a/appliance.yml b/appliance.yml
+index 90e2f9ad4..2ca76437c 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -147,6 +147,8 @@ appliances-export:
+     parameters:
+       - $ref: './common.yml#/parameters/authorization'
+       - $ref: './common.yml#/parameters/id'
++      - $ref: '#/parameters/latestVersion'
++      - $ref: '#/parameters/version'
+     responses:
+       '200':
+         description: Exported JSON Appliance seed. Body must be saved as seed.json file.
+@@ -982,6 +984,29 @@ change:
+       '500':
+         $ref: './common.yml#/responses/UnexpectedError'
+ 
++
++parameters:
++  latestVersion:
++    name: latestVersion
++    in: query
++    deprecated: true
++    description: >-
++      When a Controller creates an appliance object it is saved with the current API version. This API version will be used when the seed for that appliance is generated.
++      If the appliance version is now newer than this, the correct API version must be used for the seed.
++      Use latestVersion to override the default API version. The latest API version is shown at the top of this API specification.
++      Deprecated since the seed is version agnostic as of 5.5.
++    schema:
++      type: boolean
++  version:
++    name: version
++    in: query
++    deprecated: true
++    description: >-
++      Can be used to set a specific version to the Appliance prior to exporting the seed.
++      Deprecated since the seed is version agnostic as of 5.5.
++    schema:
++      type: number
++
+ requestBodies:
+   Appliance:
+     content:

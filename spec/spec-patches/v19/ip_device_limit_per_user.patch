@@ -1,0 +1,18 @@
+diff --git a/identity_provider.yml b/identity_provider.yml
+index ae639da2d..2d2c071dc 100644
+--- a/identity_provider.yml
++++ b/identity_provider.yml
+@@ -339,6 +339,13 @@ definitions:
+               alwaysRequired:
+                 type: boolean
+                 description: If enabled, MFA will be required on every authentication.
++              deviceLimitPerUser:
++                type: integer
++                description: >-
++                  The device limit per user. The existing on-boarded devices will still be able to sign in even if the limit is exceeded.
++                  Deprecated. Use root level field instead.
++                deprecated: true
++                writeOnly: true
+           inactivityTimeoutMinutes:
+             type: integer
+             description: (Desktop) clients will sign out automatically after the user has been inactive on the device for the configured duration. Set it to 0 to disable.

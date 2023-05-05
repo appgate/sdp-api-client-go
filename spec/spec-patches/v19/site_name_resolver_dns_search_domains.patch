@@ -1,0 +1,18 @@
+diff --git a/site.yml b/site.yml
+index d780e11ef..60462ffdb 100644
+--- a/site.yml
++++ b/site.yml
+@@ -434,6 +434,13 @@ definitions:
+                       items:
+                         type: string
+                         example: 10.0.0.2
++                    searchDomains:
++                      type: array
++                      description: DNS search domains that will be used to resolve hostnames within the Site.
++                      deprecated: true
++                      items:
++                        type: string
++                        example: company.com
+                     matchDomains:
+                       type: array
+                       description: The DNS resolver will only attempt to resolve names matching the match domains. If match domains are not specified the DNS resolver will attempt to resolve all hostnames.
