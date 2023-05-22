@@ -109,9 +109,9 @@ languages:
             container_opts:
               system: true
           - commandline:
-            - go
-            - fmt
-            - ./...
+            - gofmt
+            - -w
+            - .
             description: go fmt
             container_opts:
               system: true
