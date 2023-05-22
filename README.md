@@ -4,6 +4,11 @@ this repository contains a Go API client for the Appgate API.
 The code is generated using [openapi-generator](https://github.com/OpenAPITools/openapi-generator) and [apigentools](https://github.com/DataDog/apigentools).
 
 
+## Installation
+
+```sh
+go get -u github.com/appgate/sdp-api-client-go/api/v19/openapi
+```
 
 ## Version compatibility matrix
 
@@ -40,7 +45,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/appgate/sdp-api-client-go/api/v14/openapi"
+	"github.com/appgate/sdp-api-client-go/api/v19/openapi"
 	"github.com/google/uuid"
 )
 
