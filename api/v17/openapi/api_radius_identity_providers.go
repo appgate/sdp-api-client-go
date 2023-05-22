@@ -79,8 +79,8 @@ IdentityProvidersGet List all Identity Providers.
 
 List all Identity Providers visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRadiusIdentityProvidersGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRadiusIdentityProvidersGetRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) ApiRadiusIdentityProvidersGetRequest {
 	return ApiRadiusIdentityProvidersGetRequest{
@@ -90,8 +90,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersGet(ctx context.Con
 }
 
 // Execute executes the request
-//
-//	@return RadiusIdentityProviderList
+//  @return RadiusIdentityProviderList
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiRadiusIdentityProvidersGetRequest) (*RadiusIdentityProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -252,9 +251,9 @@ IdentityProvidersIdAttributesPost Get user attributes from an existing Identity 
 
 Get raw attributes and mapped claims for a user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiRadiusIdentityProvidersIdAttributesPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdAttributesPostRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiRadiusIdentityProvidersIdAttributesPostRequest {
 	return ApiRadiusIdentityProvidersIdAttributesPostRequest{
@@ -265,8 +264,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPost(ct
 }
 
 // Execute executes the request
-//
-//	@return IdentityProvidersIdAttributesPost200Response
+//  @return IdentityProvidersIdAttributesPost200Response
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiRadiusIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -438,9 +436,9 @@ IdentityProvidersIdDelete Delete a specific Identity Provider.
 
 Delete a specific Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiRadiusIdentityProvidersIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdDeleteRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiRadiusIdentityProvidersIdDeleteRequest {
 	return ApiRadiusIdentityProvidersIdDeleteRequest{
@@ -590,9 +588,9 @@ IdentityProvidersIdGet Get a specific Identity Provider.
 
 Get a specific Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiRadiusIdentityProvidersIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdGetRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiRadiusIdentityProvidersIdGetRequest {
 	return ApiRadiusIdentityProvidersIdGetRequest{
@@ -603,8 +601,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGet(ctx context.C
 }
 
 // Execute executes the request
-//
-//	@return RadiusProvider
+//  @return RadiusProvider
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiRadiusIdentityProvidersIdGetRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -761,9 +758,9 @@ IdentityProvidersIdPut Update an existing Identity Provider.
 
 Update an existing Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiRadiusIdentityProvidersIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiRadiusIdentityProvidersIdPutRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiRadiusIdentityProvidersIdPutRequest {
 	return ApiRadiusIdentityProvidersIdPutRequest{
@@ -774,8 +771,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPut(ctx context.C
 }
 
 // Execute executes the request
-//
-//	@return RadiusProvider
+//  @return RadiusProvider
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiRadiusIdentityProvidersIdPutRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -956,8 +952,8 @@ IdentityProvidersPost Create a new Identity Provider.
 
 Create a new Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRadiusIdentityProvidersPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRadiusIdentityProvidersPostRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiRadiusIdentityProvidersPostRequest {
 	return ApiRadiusIdentityProvidersPostRequest{
@@ -967,8 +963,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersPost(ctx context.Co
 }
 
 // Execute executes the request
-//
-//	@return RadiusProvider
+//  @return RadiusProvider
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiRadiusIdentityProvidersPostRequest) (*RadiusProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -1148,8 +1143,8 @@ IdentityProvidersTestPost Test an Identity Provider connection.
 
 Test connection for the given Identity Provider JSON.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRadiusIdentityProvidersTestPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRadiusIdentityProvidersTestPostRequest
 */
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiRadiusIdentityProvidersTestPostRequest {
 	return ApiRadiusIdentityProvidersTestPostRequest{
@@ -1159,8 +1154,7 @@ func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPost(ctx contex
 }
 
 // Execute executes the request
-//
-//	@return IdentityProvidersTestPost200Response
+//  @return IdentityProvidersTestPost200Response
 func (a *RadiusIdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiRadiusIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
