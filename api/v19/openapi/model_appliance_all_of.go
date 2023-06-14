@@ -17,6 +17,9 @@ import (
 
 // ApplianceAllOf Represents an Appliance.
 type ApplianceAllOf struct {
+	// Makes the Appliance to connect to Controller/LogServer/LogForwarders using their clientInterface.httpsPort instead of peerInterface.httpsPort. The Appliance uses SPA to connect. This field is deprecated as of 5.4. It will always be enabled when the support for peerInterface is removed.
+	// Deprecated
+	ConnectToPeersUsingClientPortWithSpa *bool `json:"connectToPeersUsingClientPortWithSpa,omitempty"`
 	// Whether the Appliance is activated or not. If it is not activated, it won't be accessible by the Clients.
 	Activated *bool `json:"activated,omitempty"`
 	// Whether the Appliance is pending certificate renewal or not. Should be true for a very short period on certificate renewal.
@@ -61,6 +64,8 @@ type ApplianceAllOf struct {
 // will change when the set of required properties is changed
 func NewApplianceAllOf(hostname string, clientInterface ApplianceAllOfClientInterface, networking ApplianceAllOfNetworking) *ApplianceAllOf {
 	this := ApplianceAllOf{}
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	this.Hostname = hostname
 	this.ClientInterface = clientInterface
 	this.Networking = networking
@@ -72,7 +77,44 @@ func NewApplianceAllOf(hostname string, clientInterface ApplianceAllOfClientInte
 // but it doesn't guarantee that properties required by API are set
 func NewApplianceAllOfWithDefaults() *ApplianceAllOf {
 	this := ApplianceAllOf{}
+	var connectToPeersUsingClientPortWithSpa bool = true
+	this.ConnectToPeersUsingClientPortWithSpa = &connectToPeersUsingClientPortWithSpa
 	return &this
+}
+
+// GetConnectToPeersUsingClientPortWithSpa returns the ConnectToPeersUsingClientPortWithSpa field value if set, zero value otherwise.
+// Deprecated
+func (o *ApplianceAllOf) GetConnectToPeersUsingClientPortWithSpa() bool {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		var ret bool
+		return ret
+	}
+	return *o.ConnectToPeersUsingClientPortWithSpa
+}
+
+// GetConnectToPeersUsingClientPortWithSpaOk returns a tuple with the ConnectToPeersUsingClientPortWithSpa field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *ApplianceAllOf) GetConnectToPeersUsingClientPortWithSpaOk() (*bool, bool) {
+	if o == nil || o.ConnectToPeersUsingClientPortWithSpa == nil {
+		return nil, false
+	}
+	return o.ConnectToPeersUsingClientPortWithSpa, true
+}
+
+// HasConnectToPeersUsingClientPortWithSpa returns a boolean if a field has been set.
+func (o *ApplianceAllOf) HasConnectToPeersUsingClientPortWithSpa() bool {
+	if o != nil && o.ConnectToPeersUsingClientPortWithSpa != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectToPeersUsingClientPortWithSpa gets a reference to the given bool and assigns it to the ConnectToPeersUsingClientPortWithSpa field.
+// Deprecated
+func (o *ApplianceAllOf) SetConnectToPeersUsingClientPortWithSpa(v bool) {
+	o.ConnectToPeersUsingClientPortWithSpa = &v
 }
 
 // GetActivated returns the Activated field value if set, zero value otherwise.
@@ -888,6 +930,9 @@ func (o *ApplianceAllOf) SetHostnameAliases(v []string) {
 
 func (o ApplianceAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.ConnectToPeersUsingClientPortWithSpa != nil {
+		toSerialize["connectToPeersUsingClientPortWithSpa"] = o.ConnectToPeersUsingClientPortWithSpa
+	}
 	if o.Activated != nil {
 		toSerialize["activated"] = o.Activated
 	}
