@@ -1,0 +1,31 @@
+diff --git a/appliance.yml b/appliance.yml
+index 90e2f9ad4..7502c5f7a 100644
+--- a/appliance.yml
++++ b/appliance.yml
+@@ -1282,6 +1282,26 @@ definitions:
+                 $ref: '#/definitions/AllowSources'
+               httpsP12:
+                 $ref: '#/definitions/P12'
++          peerInterface:
++            type: object
++            description: >-
++              The details of peer connection interface. Used by other appliances and administrative UI.
++              This interface is deprecated as of 5.4. All connections will be handled by clientInterface and adminInterface in the future.
++              The hostname field is used as identifier and will take over the hostname field in the root of Appliance when this interface is removed.
++            deprecated: true
++            required:
++              - hostname
++            properties:
++              hostname:
++                type: string
++                description: Hostname to connect by the peers. It will be used to validate the appliance certificate.
++                example: 'appgate.company.com'
++              httpsPort:
++                type: integer
++                description: Port to connect for peer specific services.
++                default: 444
++              allowSources:
++                $ref: '#/definitions/AllowSources'
+           networking:
+             type: object
+             description: Networking configuration of the system.
