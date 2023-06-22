@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v19+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 19.0
+API version: API version 19.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -27,7 +27,7 @@ type PrometheusExporter struct {
 	UseHTTPS *bool `json:"useHTTPS,omitempty"`
 	HttpsP12 *P12  `json:"httpsP12,omitempty"`
 	// Enable basic auth for Prometheus Exporter.
-	BasicAut *bool `json:"basicAut,omitempty"`
+	BasicAuth *bool `json:"basicAuth,omitempty"`
 	// Basic auth users.
 	AllowedUsers []PrometheusExporterAllowedUsersInner `json:"allowedUsers,omitempty"`
 }
@@ -44,8 +44,8 @@ func NewPrometheusExporter() *PrometheusExporter {
 	this.Port = &port
 	var useHTTPS bool = false
 	this.UseHTTPS = &useHTTPS
-	var basicAut bool = false
-	this.BasicAut = &basicAut
+	var basicAuth bool = false
+	this.BasicAuth = &basicAuth
 	return &this
 }
 
@@ -60,8 +60,8 @@ func NewPrometheusExporterWithDefaults() *PrometheusExporter {
 	this.Port = &port
 	var useHTTPS bool = false
 	this.UseHTTPS = &useHTTPS
-	var basicAut bool = false
-	this.BasicAut = &basicAut
+	var basicAuth bool = false
+	this.BasicAuth = &basicAuth
 	return &this
 }
 
@@ -225,36 +225,36 @@ func (o *PrometheusExporter) SetHttpsP12(v P12) {
 	o.HttpsP12 = &v
 }
 
-// GetBasicAut returns the BasicAut field value if set, zero value otherwise.
-func (o *PrometheusExporter) GetBasicAut() bool {
-	if o == nil || o.BasicAut == nil {
+// GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
+func (o *PrometheusExporter) GetBasicAuth() bool {
+	if o == nil || o.BasicAuth == nil {
 		var ret bool
 		return ret
 	}
-	return *o.BasicAut
+	return *o.BasicAuth
 }
 
-// GetBasicAutOk returns a tuple with the BasicAut field value if set, nil otherwise
+// GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PrometheusExporter) GetBasicAutOk() (*bool, bool) {
-	if o == nil || o.BasicAut == nil {
+func (o *PrometheusExporter) GetBasicAuthOk() (*bool, bool) {
+	if o == nil || o.BasicAuth == nil {
 		return nil, false
 	}
-	return o.BasicAut, true
+	return o.BasicAuth, true
 }
 
-// HasBasicAut returns a boolean if a field has been set.
-func (o *PrometheusExporter) HasBasicAut() bool {
-	if o != nil && o.BasicAut != nil {
+// HasBasicAuth returns a boolean if a field has been set.
+func (o *PrometheusExporter) HasBasicAuth() bool {
+	if o != nil && o.BasicAuth != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetBasicAut gets a reference to the given bool and assigns it to the BasicAut field.
-func (o *PrometheusExporter) SetBasicAut(v bool) {
-	o.BasicAut = &v
+// SetBasicAuth gets a reference to the given bool and assigns it to the BasicAuth field.
+func (o *PrometheusExporter) SetBasicAuth(v bool) {
+	o.BasicAuth = &v
 }
 
 // GetAllowedUsers returns the AllowedUsers field value if set, zero value otherwise.
@@ -306,8 +306,8 @@ func (o PrometheusExporter) MarshalJSON() ([]byte, error) {
 	if o.HttpsP12 != nil {
 		toSerialize["httpsP12"] = o.HttpsP12
 	}
-	if o.BasicAut != nil {
-		toSerialize["basicAut"] = o.BasicAut
+	if o.BasicAuth != nil {
+		toSerialize["basicAuth"] = o.BasicAuth
 	}
 	if o.AllowedUsers != nil {
 		toSerialize["allowedUsers"] = o.AllowedUsers
