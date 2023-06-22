@@ -1,0 +1,15 @@
+diff --git a/dashboard.yml b/dashboard.yml
+index e9b25c016..73d77860d 100644
+--- a/dashboard.yml
++++ b/dashboard.yml
+@@ -526,10 +526,6 @@ definitions:
+             description: The queries applied to the list.
+             items:
+               type: string
+-          query:
+-            type: string
+-            deprecated: true
+-            description: The first query applied to the list. Deprecated as of 6.0. Use queries instead.
+           filterBy:
+             type: array
+             description: The filters applied to the list.
