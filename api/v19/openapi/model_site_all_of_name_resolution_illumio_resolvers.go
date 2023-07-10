@@ -22,7 +22,7 @@ type SiteAllOfNameResolutionIllumioResolvers struct {
 	// How often will the resolver poll the server. In seconds.
 	UpdateInterval *int32 `json:"updateInterval,omitempty"`
 	// Organization ID of the Illumio Resolver.
-	OrgId string `json:"orgId"`
+	OrgId *string `json:"orgId,omitempty"`
 	// Hostname of the Illumio Resolver.
 	Hostname string `json:"hostname"`
 	// Port number of the Illumio Resolver.
@@ -37,12 +37,11 @@ type SiteAllOfNameResolutionIllumioResolvers struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfNameResolutionIllumioResolvers(name string, orgId string, hostname string, port int32, username string) *SiteAllOfNameResolutionIllumioResolvers {
+func NewSiteAllOfNameResolutionIllumioResolvers(name string, hostname string, port int32, username string) *SiteAllOfNameResolutionIllumioResolvers {
 	this := SiteAllOfNameResolutionIllumioResolvers{}
 	this.Name = name
 	var updateInterval int32 = 60
 	this.UpdateInterval = &updateInterval
-	this.OrgId = orgId
 	this.Hostname = hostname
 	this.Port = port
 	this.Username = username
@@ -115,28 +114,36 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) SetUpdateInterval(v int32) {
 	o.UpdateInterval = &v
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetOrgId() string {
-	if o == nil {
+	if o == nil || o.OrgId == nil {
 		var ret string
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetOrgIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || o.OrgId == nil {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *SiteAllOfNameResolutionIllumioResolvers) HasOrgId() bool {
+	if o != nil && o.OrgId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given string and assigns it to the OrgId field.
 func (o *SiteAllOfNameResolutionIllumioResolvers) SetOrgId(v string) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetHostname returns the Hostname field value
@@ -251,7 +258,7 @@ func (o SiteAllOfNameResolutionIllumioResolvers) MarshalJSON() ([]byte, error) {
 	if o.UpdateInterval != nil {
 		toSerialize["updateInterval"] = o.UpdateInterval
 	}
-	if true {
+	if o.OrgId != nil {
 		toSerialize["orgId"] = o.OrgId
 	}
 	if true {

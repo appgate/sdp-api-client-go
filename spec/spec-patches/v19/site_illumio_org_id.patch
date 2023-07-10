@@ -1,0 +1,12 @@
+diff --git a/site.yml b/site.yml
+index d780e11ef..400d7056e 100644
+--- a/site.yml
++++ b/site.yml
+@@ -600,7 +600,6 @@ definitions:
+                   type: object
+                   required:
+                     - name
+-                    - orgId
+                     - hostname
+                     - port
+                     - username
