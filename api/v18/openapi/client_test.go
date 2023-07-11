@@ -12,6 +12,7 @@ func client() *APIClient {
 }
 
 func TestConfigCustomUserAgent(t *testing.T) {
+	t.Fatalf("🚀 FATAL")
 	cfg := &Configuration{
 		UserAgent: "appgate",
 		DefaultHeader: map[string]string{
