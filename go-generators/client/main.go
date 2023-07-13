@@ -34,6 +34,7 @@ var files = []string{
 	"model_ldap_certificate_identity_provider_list.template",
 	"model_local_database_identity_provider_list.template",
 	"model_saml_identity_provider_list.template",
+	"model_oidc_identity_provider_list.template",
 
 	// Unit test for client to test custom patches
 	"client_test.template",
@@ -73,6 +74,10 @@ var identityProviders = []identityProvider{
 	{
 		name:     "Saml",
 		filename: "api_saml_identity_providers",
+	},
+	{
+		name:     "Oidc",
+		filename: "api_oidc_identity_providers",
 	},
 }
 
