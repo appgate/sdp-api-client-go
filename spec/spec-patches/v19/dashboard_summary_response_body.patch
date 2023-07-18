@@ -1,0 +1,113 @@
+diff --git a/dashboard.yml b/dashboard.yml
+index ac322ab..a73b7ea 100644
+--- a/dashboard.yml
++++ b/dashboard.yml
+@@ -464,56 +464,59 @@ definitions:
+               format: date-time
+               description: When the Admin Message generated.
+   AdminMessagesSummarize:
+-    type: array
+-    items:
+-      type: object
+-      properties:
+-        data:
+-          type: array
+-          items:
+-            type: object
+-            properties:
+-              level:
+-                type: string
+-                description: The severity of the Admin Message.
+-                enum:
+-                  - Information
+-                  - Warning
+-                  - Error
+-                  - Critical
+-              category:
+-                type: string
+-                description: Message category.
+-                enum:
+-                  - Configuration
+-                  - Connectivity
+-              message:
+-                type: string
+-                description: The Admin Message.
+-                example: Identity Provider "local" does not have IP Pool assigned.
+-              source:
+-                type: string
+-                deprecated: true
+-                description: >-
+-                  The name of the Appliance(s) that generated this message.
+-                example: controller-1, controller-2
+-              sources:
+-                type: array
+-                items:
+-                  type: string
+-                description: >-
+-                  The name of the Appliance(s) that generated this message.
+-                example:
+-                  - controller-1
+-                  - controller-2
+-              created:
++    type: object
++    properties:
++      data:
++        type: array
++        items:
++          type: object
++          properties:
++            id:
++              type: string
++              format: uuid
++              description: Randomly generated UUID.
++              example: 4c07bc67-57ea-42dd-b702-c2d6c45419fc
++            level:
++              type: string
++              description: The severity of the Admin Message.
++              enum:
++                - Information
++                - Warning
++                - Error
++                - Critical
++            category:
++              type: string
++              description: Message category.
++              enum:
++                - Configuration
++                - Connectivity
++            message:
++              type: string
++              description: The Admin Message.
++              example: Identity Provider "local" does not have IP Pool assigned.
++            source:
++              type: string
++              deprecated: true
++              description: >-
++                The name of the Appliance(s) that generated this message.
++              example: controller-1, controller-2
++            sources:
++              type: array
++              items:
+                 type: string
+-                format: date-time
+-                description: When the Admin Message generated the last time.
+-              count:
+-                type: number
+-                description: Number of times this Admin Message was generated.
+-                example: 152
++              description: >-
++                The name of the Appliance(s) that generated this message.
++              example:
++                - controller-1
++                - controller-2
++            created:
++              type: string
++              format: date-time
++              description: When the Admin Message generated the last time.
++            count:
++              type: number
++              description: Number of times this Admin Message was generated.
++              example: 152
+   StatsAppliancesList:
+     allOf:
+       - $ref: '#/definitions/BaseStats'
