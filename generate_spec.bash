@@ -35,7 +35,7 @@ fi
 
 # Starting from v16 we will use apigentools to generate the sdk with openapi-generator,
 # older versions are not supported by apigentools.
-supportedVersions=(16 17 18)
+supportedVersions=(16 17 18 19)
 
 
 
