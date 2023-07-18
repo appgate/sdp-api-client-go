@@ -20,28 +20,64 @@ var (
 	verbose = flag.Bool("v", false, "Print verbose log messages")
 )
 
-var files = []string{
+type fileTemplate struct {
+	name       string
+	minVersion int
+}
+
+var files = []fileTemplate{
 	// bigInt issues
 	// modified the original generated code and replaced IpPool.Total from int64 to bigInt
 	// workaround for https://github.com/OpenAPITools/openapi-generator/issues/10620
-	"model_ip_pool.template",
-	"model_ip_pool_all_of.template",
+	{
+		name:       "model_ip_pool.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_ip_pool_all_of.template",
+		minVersion: 16,
+	},
 
 	// Custom model structs for Each identity providers
-	"model_connector_identity_provider_list.template",
-	"model_ldap_identity_provider_list.template",
-	"model_radius_identity_provider_list.template",
-	"model_ldap_certificate_identity_provider_list.template",
-	"model_local_database_identity_provider_list.template",
-	"model_saml_identity_provider_list.template",
-	"model_oidc_identity_provider_list.template",
+	{
+		name:       "model_connector_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_ldap_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_radius_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_ldap_certificate_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_local_database_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_saml_identity_provider_list.template",
+		minVersion: 16,
+	},
+	{
+		name:       "model_oidc_identity_provider_list.template",
+		minVersion: 19,
+	},
 
 	// Unit test for client to test custom patches
-	"client_test.template",
+	{
+		name:       "client_test.template",
+		minVersion: 16,
+	},
 }
 
 type identityProvider struct {
 	name, filename string
+	minVersion     int
 }
 
 // the templates for identity_providers is because of how the openapi-generator treat discriminator objects.
@@ -52,32 +88,39 @@ type identityProvider struct {
 // will append the extra services to the client.
 var identityProviders = []identityProvider{
 	{
-		name:     "Connector",
-		filename: "api_connector_identity_providers",
+		name:       "Connector",
+		filename:   "api_connector_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "Ldap",
-		filename: "api_ldap_identity_providers",
+		name:       "Ldap",
+		filename:   "api_ldap_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "LdapCertificate",
-		filename: "api_ldap_certificate_identity_providers",
+		name:       "LdapCertificate",
+		filename:   "api_ldap_certificate_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "LocalDatabase",
-		filename: "api_local_database_identity_providers",
+		name:       "LocalDatabase",
+		filename:   "api_local_database_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "Radius",
-		filename: "api_radius_identity_providers",
+		name:       "Radius",
+		filename:   "api_radius_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "Saml",
-		filename: "api_saml_identity_providers",
+		name:       "Saml",
+		filename:   "api_saml_identity_providers",
+		minVersion: 18,
 	},
 	{
-		name:     "Oidc",
-		filename: "api_oidc_identity_providers",
+		name:       "Oidc",
+		filename:   "api_oidc_identity_providers",
+		minVersion: 19,
 	},
 }
 
@@ -101,18 +144,20 @@ func main() {
 	}
 	logf("Generating for version %+v", version)
 	for _, tmpl := range files {
-		name := strings.TrimSuffix(tmpl, ".template")
-		data := struct {
-			Version int
-		}{
-			Version: version,
-		}
+		if tmpl.minVersion <= version {
+			name := strings.TrimSuffix(tmpl.name, ".template")
+			data := struct {
+				Version int
+			}{
+				Version: version,
+			}
 
-		f, err := writeFile(name, tmpl, version, data)
-		if err != nil {
-			die(err)
+			f, err := writeFile(name, tmpl.name, version, data)
+			if err != nil {
+				die(err)
+			}
+			logf("created %s for v%d", f.Name(), version)
 		}
-		logf("created %s", f.Name())
 	}
 	for _, ip := range identityProviders {
 		data := struct {
@@ -122,12 +167,13 @@ func main() {
 			Version:              version,
 			IdentityProviderName: ip.name,
 		}
-
-		f, err := writeFile(ip.filename, "api_identity_providers.template", version, data)
-		if err != nil {
-			die(err)
+		if ip.minVersion <= version {
+			f, err := writeFile(ip.filename, "api_identity_providers.template", version, data)
+			if err != nil {
+				die(err)
+			}
+			logf("created %s", f.Name())
 		}
-		logf("created %s", f.Name())
 	}
 	logf("done")
 }

@@ -1,0 +1,41 @@
+diff --git a/go/client.mustache b/go/client.mustache
+index a9b82e3ff7d..d7e8328695b 100644
+--- a/go/client.mustache
++++ b/go/client.mustache
+@@ -51,6 +51,20 @@ type APIClient struct {
+ {{/operations}}
+ {{/apis}}
+ {{/apiInfo}}
++	// PATCH seperate API services for each discriminator identity provider
++	LdapIdentityProvidersApi *LdapIdentityProvidersApiService
++
++	RadiusIdentityProvidersApi *RadiusIdentityProvidersApiService
++
++	SamlIdentityProvidersApi *SamlIdentityProvidersApiService
++
++	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
++
++	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
++
++	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
++
++	OidcIdentityProvidersApi *OidcIdentityProvidersApiService
+ }
+
+ type service struct {
+@@ -76,6 +88,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
+ {{/operations}}
+ {{/apis}}
+ {{/apiInfo}}
++	// PATCH manually added to replace IdentityProvidersApiService
++	// since openapi.generator does not play well with discriminator from the open api spec.
++	c.LdapIdentityProvidersApi = (*LdapIdentityProvidersApiService)(&c.common)
++	c.RadiusIdentityProvidersApi = (*RadiusIdentityProvidersApiService)(&c.common)
++	c.SamlIdentityProvidersApi = (*SamlIdentityProvidersApiService)(&c.common)
++	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
++	c.LdapCertificateIdentityProvidersApi = (*LdapCertificateIdentityProvidersApiService)(&c.common)
++	c.ConnectorIdentityProvidersApi = (*ConnectorIdentityProvidersApiService)(&c.common)
++	c.OidcIdentityProvidersApi = (*OidcIdentityProvidersApiService)(&c.common)
+
+ 	return c
+ }

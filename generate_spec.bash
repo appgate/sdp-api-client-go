@@ -70,6 +70,12 @@ for version in "${supportedVersions[@]}"; do
         # shellcheck disable=SC2016
         sed 's/${IMAGE}/openapitools\/openapi-generator-cli:v6.0.0/g' config/config_template.yaml | tee config/config.yaml 1> /dev/null
     fi
+    if [[ $version -lt 19 ]]; then
+        cp template-patches/go/identity_providers_legacy.patch template-patches/go/identity_providers.patch
+    else
+        cp template-patches/go/identity_providers_19_and_above.patch template-patches/go/identity_providers.patch
+    fi
+
     apigentools --api-versions "v${version}" validate
     apigentools --api-versions "v${version}" generate
     mkdir -p "../api/v${version}/openapi/"
