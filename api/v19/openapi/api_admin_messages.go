@@ -342,7 +342,7 @@ func (r ApiAdminMessagesSummarizeGetRequest) Authorization(authorization string)
 	return r
 }
 
-func (r ApiAdminMessagesSummarizeGetRequest) Execute() ([]AdminMessagesSummarizeInner, *http.Response, error) {
+func (r ApiAdminMessagesSummarizeGetRequest) Execute() (*AdminMessagesSummarize, *http.Response, error) {
 	return r.ApiService.AdminMessagesSummarizeGetExecute(r)
 }
 
@@ -363,13 +363,13 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGet(ctx context.Context)
 
 // Execute executes the request
 //
-//	@return []AdminMessagesSummarizeInner
-func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) ([]AdminMessagesSummarizeInner, *http.Response, error) {
+//	@return AdminMessagesSummarize
+func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) (*AdminMessagesSummarize, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue []AdminMessagesSummarizeInner
+		localVarReturnValue *AdminMessagesSummarize
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesSummarizeGet")
