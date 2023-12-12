@@ -78,8 +78,8 @@ LicenseUsersGet List all User Licenses.
 
 List all User Licenses.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiLicenseUsersGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiLicenseUsersGetRequest
 */
 func (a *LicensedUsersApiService) LicenseUsersGet(ctx context.Context) ApiLicenseUsersGetRequest {
 	return ApiLicenseUsersGetRequest{
@@ -89,8 +89,7 @@ func (a *LicensedUsersApiService) LicenseUsersGet(ctx context.Context) ApiLicens
 }
 
 // Execute executes the request
-//
-//	@return UserLicenseList
+//  @return UserLicenseList
 func (a *LicensedUsersApiService) LicenseUsersGetExecute(r ApiLicenseUsersGetRequest) (*UserLicenseList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

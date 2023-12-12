@@ -79,8 +79,8 @@ ServiceUsersGet List all Service Users.
 
 List all Service Users visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiServiceUsersGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiServiceUsersGetRequest
 */
 func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiServiceUsersGetRequest {
 	return ApiServiceUsersGetRequest{
@@ -90,8 +90,7 @@ func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiService
 }
 
 // Execute executes the request
-//
-//	@return ServiceUserList
+//  @return ServiceUserList
 func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequest) (*ServiceUserList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -245,9 +244,9 @@ ServiceUsersIdDelete Delete a specific Service User.
 
 Delete a specific Service User.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiServiceUsersIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiServiceUsersIdDeleteRequest
 */
 func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx context.Context, id string) ApiServiceUsersIdDeleteRequest {
 	return ApiServiceUsersIdDeleteRequest{
@@ -397,9 +396,9 @@ ServiceUsersIdGet Get a specific Service User.
 
 Get a specific Service User.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiServiceUsersIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiServiceUsersIdGetRequest
 */
 func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id string) ApiServiceUsersIdGetRequest {
 	return ApiServiceUsersIdGetRequest{
@@ -410,8 +409,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id strin
 }
 
 // Execute executes the request
-//
-//	@return ServiceUser
+//  @return ServiceUser
 func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGetRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -568,9 +566,9 @@ ServiceUsersIdPut Update an existing Service User.
 
 Update an existing Service User.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiServiceUsersIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiServiceUsersIdPutRequest
 */
 func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id string) ApiServiceUsersIdPutRequest {
 	return ApiServiceUsersIdPutRequest{
@@ -581,8 +579,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id strin
 }
 
 // Execute executes the request
-//
-//	@return ServiceUser
+//  @return ServiceUser
 func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPutRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -763,8 +760,8 @@ ServiceUsersPost Create a new Service User.
 
 Create a new Service User.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiServiceUsersPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiServiceUsersPostRequest
 */
 func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServiceUsersPostRequest {
 	return ApiServiceUsersPostRequest{
@@ -774,8 +771,7 @@ func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServic
 }
 
 // Execute executes the request
-//
-//	@return ServiceUser
+//  @return ServiceUser
 func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

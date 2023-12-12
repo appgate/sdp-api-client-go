@@ -79,8 +79,8 @@ AppliancesGet List all Appliances.
 
 List all Appliances visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAppliancesGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAppliancesGetRequest
 */
 func (a *AppliancesApiService) AppliancesGet(ctx context.Context) ApiAppliancesGetRequest {
 	return ApiAppliancesGetRequest{
@@ -90,8 +90,7 @@ func (a *AppliancesApiService) AppliancesGet(ctx context.Context) ApiAppliancesG
 }
 
 // Execute executes the request
-//
-//	@return ApplianceList
+//  @return ApplianceList
 func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (*ApplianceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -251,9 +250,9 @@ AppliancesIdAdminInterfaceP12Post Upload and apply HTTPS certificate on the admi
 
 Upload and apply HTTPS certificate on the admin interface of an active Appliance. Deprecated as of 5.4. Use adminInterface.httpsP12 field instead.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdAdminInterfaceP12PostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdAdminInterfaceP12PostRequest
 
 Deprecated
 */
@@ -438,9 +437,9 @@ AppliancesIdCommandNetcatPost Runs netcat command on an Appliance
 
 Run netcat command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.com.peer-v17+text** as it returns plain text instead of JSON
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdCommandNetcatPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdCommandNetcatPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdCommandNetcatPost(ctx context.Context, id string) ApiAppliancesIdCommandNetcatPostRequest {
 	return ApiAppliancesIdCommandNetcatPostRequest{
@@ -451,8 +450,7 @@ func (a *AppliancesApiService) AppliancesIdCommandNetcatPost(ctx context.Context
 }
 
 // Execute executes the request
-//
-//	@return string
+//  @return string
 func (a *AppliancesApiService) AppliancesIdCommandNetcatPostExecute(r ApiAppliancesIdCommandNetcatPostRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -621,9 +619,9 @@ AppliancesIdCommandPingPost Runs ICMP ping command on an Appliance.
 
 Runs ICMP ping command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v17+text** as it returns plain text instead of JSON.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdCommandPingPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdCommandPingPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdCommandPingPost(ctx context.Context, id string) ApiAppliancesIdCommandPingPostRequest {
 	return ApiAppliancesIdCommandPingPostRequest{
@@ -634,8 +632,7 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPost(ctx context.Context, 
 }
 
 // Execute executes the request
-//
-//	@return string
+//  @return string
 func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliancesIdCommandPingPostRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -804,9 +801,9 @@ AppliancesIdCommandTcpdumpPost Runs tcpdump command on an Appliance.
 
 Runs tcpdump command on an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v17+text** as it returns plain text instead of JSON.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdCommandTcpdumpPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdCommandTcpdumpPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPost(ctx context.Context, id string) ApiAppliancesIdCommandTcpdumpPostRequest {
 	return ApiAppliancesIdCommandTcpdumpPostRequest{
@@ -817,8 +814,7 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPost(ctx context.Contex
 }
 
 // Execute executes the request
-//
-//	@return string
+//  @return string
 func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiAppliancesIdCommandTcpdumpPostRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -987,9 +983,9 @@ AppliancesIdDeactivatePost Deactivate an active Appliance.
 
 Deactivate an active Appliance. If the appliance is still reachable, it will get a wipe command.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdDeactivatePostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdDeactivatePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdDeactivatePost(ctx context.Context, id string) ApiAppliancesIdDeactivatePostRequest {
 	return ApiAppliancesIdDeactivatePostRequest{
@@ -1152,9 +1148,9 @@ AppliancesIdDelete Delete a specific Appliance.
 
 Delete a specific Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdDeleteRequest
 */
 func (a *AppliancesApiService) AppliancesIdDelete(ctx context.Context, id string) ApiAppliancesIdDeleteRequest {
 	return ApiAppliancesIdDeleteRequest{
@@ -1327,9 +1323,9 @@ AppliancesIdExportIsoPost Export ISO seed for an inactive Appliance.
 
 Export ISO seed for an inactive Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdExportIsoPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdExportIsoPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdExportIsoPost(ctx context.Context, id string) ApiAppliancesIdExportIsoPostRequest {
 	return ApiAppliancesIdExportIsoPostRequest{
@@ -1340,8 +1336,7 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPost(ctx context.Context, id
 }
 
 // Execute executes the request
-//
-//	@return ApplianceSeedISO
+//  @return ApplianceSeedISO
 func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesIdExportIsoPostRequest) (*ApplianceSeedISO, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -1545,9 +1540,9 @@ AppliancesIdExportPost Export JSON seed for an inactive Appliance.
 
 Export JSON seed for an inactive Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdExportPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdExportPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdExportPost(ctx context.Context, id string) ApiAppliancesIdExportPostRequest {
 	return ApiAppliancesIdExportPostRequest{
@@ -1558,8 +1553,7 @@ func (a *AppliancesApiService) AppliancesIdExportPost(ctx context.Context, id st
 }
 
 // Execute executes the request
-//
-//	@return map[string]interface{}
+//  @return map[string]interface{}
 func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdExportPostRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -1740,9 +1734,9 @@ AppliancesIdGet Get a specific Appliance.
 
 Get a specific Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdGetRequest
 */
 func (a *AppliancesApiService) AppliancesIdGet(ctx context.Context, id string) ApiAppliancesIdGetRequest {
 	return ApiAppliancesIdGetRequest{
@@ -1753,8 +1747,7 @@ func (a *AppliancesApiService) AppliancesIdGet(ctx context.Context, id string) A
 }
 
 // Execute executes the request
-//
-//	@return Appliance
+//  @return Appliance
 func (a *AppliancesApiService) AppliancesIdGetExecute(r ApiAppliancesIdGetRequest) (*Appliance, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1904,9 +1897,9 @@ AppliancesIdNameResolutionStatusGet Get the status of name resolution on a Gatew
 
 Get the status of name resolution on a Gateway. It lists all the subscribed resource names from all the connected Clients and shows the resolution results.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdNameResolutionStatusGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdNameResolutionStatusGetRequest
 */
 func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGet(ctx context.Context, id string) ApiAppliancesIdNameResolutionStatusGetRequest {
 	return ApiAppliancesIdNameResolutionStatusGetRequest{
@@ -1917,8 +1910,7 @@ func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGet(ctx context.C
 }
 
 // Execute executes the request
-//
-//	@return AppliancesIdNameResolutionStatusGet200Response
+//  @return AppliancesIdNameResolutionStatusGet200Response
 func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGetExecute(r ApiAppliancesIdNameResolutionStatusGetRequest) (*AppliancesIdNameResolutionStatusGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -2075,9 +2067,9 @@ AppliancesIdPut Update an existing Appliance.
 
 Update an existing Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdPutRequest
 */
 func (a *AppliancesApiService) AppliancesIdPut(ctx context.Context, id string) ApiAppliancesIdPutRequest {
 	return ApiAppliancesIdPutRequest{
@@ -2088,8 +2080,7 @@ func (a *AppliancesApiService) AppliancesIdPut(ctx context.Context, id string) A
 }
 
 // Execute executes the request
-//
-//	@return Appliance
+//  @return Appliance
 func (a *AppliancesApiService) AppliancesIdPutExecute(r ApiAppliancesIdPutRequest) (*Appliance, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -2274,9 +2265,9 @@ AppliancesIdRebootPost Reboot an active Appliance.
 
 Reboot an active Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdRebootPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdRebootPostRequest
 */
 func (a *AppliancesApiService) AppliancesIdRebootPost(ctx context.Context, id string) ApiAppliancesIdRebootPostRequest {
 	return ApiAppliancesIdRebootPostRequest{
@@ -2436,9 +2427,9 @@ AppliancesIdRenewCertificatePost Renew certificate of an active Appliance.
 
 Renew certificate of an active Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdRenewCertificatePostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdRenewCertificatePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdRenewCertificatePost(ctx context.Context, id string) ApiAppliancesIdRenewCertificatePostRequest {
 	return ApiAppliancesIdRenewCertificatePostRequest{
@@ -2605,9 +2596,9 @@ AppliancesIdTestResolverNamePost Test a resolver name on a Gateway.
 
 Test a resolver name on a Gateway.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdTestResolverNamePostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdTestResolverNamePostRequest
 */
 func (a *AppliancesApiService) AppliancesIdTestResolverNamePost(ctx context.Context, id string) ApiAppliancesIdTestResolverNamePostRequest {
 	return ApiAppliancesIdTestResolverNamePostRequest{
@@ -2618,8 +2609,7 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePost(ctx context.Cont
 }
 
 // Execute executes the request
-//
-//	@return AppliancesIdTestResolverNamePost200Response
+//  @return AppliancesIdTestResolverNamePost200Response
 func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppliancesIdTestResolverNamePostRequest) (*AppliancesIdTestResolverNamePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -2787,8 +2777,8 @@ AppliancesPost Create a new inactive Appliance.
 
 Create a new inactive Appliance.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAppliancesPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAppliancesPostRequest
 */
 func (a *AppliancesApiService) AppliancesPost(ctx context.Context) ApiAppliancesPostRequest {
 	return ApiAppliancesPostRequest{
@@ -2798,8 +2788,7 @@ func (a *AppliancesApiService) AppliancesPost(ctx context.Context) ApiAppliances
 }
 
 // Execute executes the request
-//
-//	@return Appliance
+//  @return Appliance
 func (a *AppliancesApiService) AppliancesPostExecute(r ApiAppliancesPostRequest) (*Appliance, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

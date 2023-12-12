@@ -50,9 +50,9 @@ Fido2DevicesDistinguishedNameDelete Delete a registered FIDO2 Device for the giv
 
 Delete a registered FIDO2 Device for the given Distinguished Name.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
-	@return ApiFido2DevicesDistinguishedNameDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
+ @return ApiFido2DevicesDistinguishedNameDeleteRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx _context.Context, distinguishedName string) ApiFido2DevicesDistinguishedNameDeleteRequest {
 	return ApiFido2DevicesDistinguishedNameDeleteRequest{
@@ -228,8 +228,8 @@ Fido2DevicesGet List all registered FIDO2 Devices.
 
 List all registered FIDO2 Devices.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiFido2DevicesGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiFido2DevicesGetRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx _context.Context) ApiFido2DevicesGetRequest {
 	return ApiFido2DevicesGetRequest{
@@ -239,8 +239,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx _context.Context) ApiFido2D
 }
 
 // Execute executes the request
-//
-//	@return Fido2DeviceList
+//  @return Fido2DeviceList
 func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequest) (Fido2DeviceList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

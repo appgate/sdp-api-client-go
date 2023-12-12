@@ -49,8 +49,8 @@ ClientConnectionsDelete Reset Client Connections to the default settings.
 
 Reset Client Connections to the default settings.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiClientConnectionsDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiClientConnectionsDeleteRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsDelete(ctx _context.Context) ApiClientConnectionsDeleteRequest {
 	return ApiClientConnectionsDeleteRequest{
@@ -179,8 +179,8 @@ ClientConnectionsGet View Client Connection settings.
 
 View Client Connection settings.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiClientConnectionsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiClientConnectionsGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsGet(ctx _context.Context) ApiClientConnectionsGetRequest {
 	return ApiClientConnectionsGetRequest{
@@ -190,8 +190,7 @@ func (a *ClientConnectionsApiService) ClientConnectionsGet(ctx _context.Context)
 }
 
 // Execute executes the request
-//
-//	@return ClientConnections
+//  @return ClientConnections
 func (a *ClientConnectionsApiService) ClientConnectionsGetExecute(r ApiClientConnectionsGetRequest) (ClientConnections, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -322,9 +321,9 @@ ClientConnectionsProfileNameBarcodeGet Get QR code for connection URL.
 
 Get QR code for connection URL.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param profileName Name of the profile.
-	@return ApiClientConnectionsProfileNameBarcodeGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param profileName Name of the profile.
+ @return ApiClientConnectionsProfileNameBarcodeGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGet(ctx _context.Context, profileName string) ApiClientConnectionsProfileNameBarcodeGetRequest {
 	return ApiClientConnectionsProfileNameBarcodeGetRequest{
@@ -335,8 +334,7 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGet(ctx
 }
 
 // Execute executes the request
-//
-//	@return InlineResponse2009
+//  @return InlineResponse2009
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameBarcodeGetExecute(r ApiClientConnectionsProfileNameBarcodeGetRequest) (InlineResponse2009, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -478,9 +476,9 @@ ClientConnectionsProfileNameUrlGet Get connection URL for the profile.
 
 Get connection URL for the profile.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param profileName Name of the profile.
-	@return ApiClientConnectionsProfileNameUrlGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param profileName Name of the profile.
+ @return ApiClientConnectionsProfileNameUrlGetRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGet(ctx _context.Context, profileName string) ApiClientConnectionsProfileNameUrlGetRequest {
 	return ApiClientConnectionsProfileNameUrlGetRequest{
@@ -491,8 +489,7 @@ func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGet(ctx _co
 }
 
 // Execute executes the request
-//
-//	@return InlineResponse20010
+//  @return InlineResponse20010
 func (a *ClientConnectionsApiService) ClientConnectionsProfileNameUrlGetExecute(r ApiClientConnectionsProfileNameUrlGetRequest) (InlineResponse20010, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -640,8 +637,8 @@ ClientConnectionsPut Update Client Connection settings.
 
 Update Client Connection settings.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiClientConnectionsPutRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiClientConnectionsPutRequest
 */
 func (a *ClientConnectionsApiService) ClientConnectionsPut(ctx _context.Context) ApiClientConnectionsPutRequest {
 	return ApiClientConnectionsPutRequest{
@@ -651,8 +648,7 @@ func (a *ClientConnectionsApiService) ClientConnectionsPut(ctx _context.Context)
 }
 
 // Execute executes the request
-//
-//	@return ClientConnections
+//  @return ClientConnections
 func (a *ClientConnectionsApiService) ClientConnectionsPutExecute(r ApiClientConnectionsPutRequest) (ClientConnections, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut

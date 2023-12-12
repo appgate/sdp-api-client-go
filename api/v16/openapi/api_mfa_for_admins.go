@@ -48,8 +48,8 @@ AdminMfaSettingsDelete Reset Admin MFA settings to disabled.
 
 Reset Admin MFA settings to disabled.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAdminMfaSettingsDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAdminMfaSettingsDeleteRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsDelete(ctx _context.Context) ApiAdminMfaSettingsDeleteRequest {
 	return ApiAdminMfaSettingsDeleteRequest{
@@ -178,8 +178,8 @@ AdminMfaSettingsGet View Admin MFA settings.
 
 View Admin MFA settings.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAdminMfaSettingsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAdminMfaSettingsGetRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx _context.Context) ApiAdminMfaSettingsGetRequest {
 	return ApiAdminMfaSettingsGetRequest{
@@ -189,8 +189,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx _context.Context) ApiAd
 }
 
 // Execute executes the request
-//
-//	@return AdminMfaSettings
+//  @return AdminMfaSettings
 func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSettingsGetRequest) (AdminMfaSettings, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -327,8 +326,8 @@ AdminMfaSettingsPut Update Admin MFA settings.
 
 Update Admin MFA settings.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAdminMfaSettingsPutRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAdminMfaSettingsPutRequest
 */
 func (a *MFAForAdminsApiService) AdminMfaSettingsPut(ctx _context.Context) ApiAdminMfaSettingsPutRequest {
 	return ApiAdminMfaSettingsPutRequest{

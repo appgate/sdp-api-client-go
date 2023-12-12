@@ -84,8 +84,8 @@ UserScriptsGet List all user Claim Scripts.
 
 List all User Claim Scripts visible to current user.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiUserScriptsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUserScriptsGetRequest
 */
 func (a *UserClaimScriptsApiService) UserScriptsGet(ctx _context.Context) ApiUserScriptsGetRequest {
 	return ApiUserScriptsGetRequest{
@@ -95,8 +95,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGet(ctx _context.Context) ApiUse
 }
 
 // Execute executes the request
-//
-//	@return UserScriptList
+//  @return UserScriptList
 func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRequest) (UserScriptList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -242,9 +241,9 @@ UserScriptsIdDelete Delete a specific User Claim Script.
 
 Delete a specific User Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiUserScriptsIdDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiUserScriptsIdDeleteRequest
 */
 func (a *UserClaimScriptsApiService) UserScriptsIdDelete(ctx _context.Context, id string) ApiUserScriptsIdDeleteRequest {
 	return ApiUserScriptsIdDeleteRequest{
@@ -386,9 +385,9 @@ UserScriptsIdGet Get a specific User Claim Script.
 
 Get a specific User Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiUserScriptsIdGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiUserScriptsIdGetRequest
 */
 func (a *UserClaimScriptsApiService) UserScriptsIdGet(ctx _context.Context, id string) ApiUserScriptsIdGetRequest {
 	return ApiUserScriptsIdGetRequest{
@@ -399,8 +398,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGet(ctx _context.Context, id s
 }
 
 // Execute executes the request
-//
-//	@return UserScript
+//  @return UserScript
 func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdGetRequest) (UserScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -549,9 +547,9 @@ UserScriptsIdPut Update an existing User Claim Script.
 
 Update an existing User Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiUserScriptsIdPutRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiUserScriptsIdPutRequest
 */
 func (a *UserClaimScriptsApiService) UserScriptsIdPut(ctx _context.Context, id string) ApiUserScriptsIdPutRequest {
 	return ApiUserScriptsIdPutRequest{
@@ -562,8 +560,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPut(ctx _context.Context, id s
 }
 
 // Execute executes the request
-//
-//	@return UserScript
+//  @return UserScript
 func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdPutRequest) (UserScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -736,8 +733,8 @@ UserScriptsPost Create a new User Claim Script.
 
 Create a new User Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiUserScriptsPostRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUserScriptsPostRequest
 */
 func (a *UserClaimScriptsApiService) UserScriptsPost(ctx _context.Context) ApiUserScriptsPostRequest {
 	return ApiUserScriptsPostRequest{
@@ -747,8 +744,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPost(ctx _context.Context) ApiUs
 }
 
 // Execute executes the request
-//
-//	@return UserScript
+//  @return UserScript
 func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPostRequest) (UserScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

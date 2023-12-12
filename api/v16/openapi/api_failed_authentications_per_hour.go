@@ -48,8 +48,8 @@ StatsFailedAuthenticationsGet Get failed authentications per hour.
 
 Get the failed authentications per hour for the last 24 hours.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsFailedAuthenticationsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsFailedAuthenticationsGetRequest
 */
 func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGet(ctx _context.Context) ApiStatsFailedAuthenticationsGetRequest {
 	return ApiStatsFailedAuthenticationsGetRequest{
@@ -59,8 +59,7 @@ func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGet(c
 }
 
 // Execute executes the request
-//
-//	@return FailedAuthentications
+//  @return FailedAuthentications
 func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGetExecute(r ApiStatsFailedAuthenticationsGetRequest) (FailedAuthentications, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

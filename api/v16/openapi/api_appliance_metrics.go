@@ -50,9 +50,9 @@ AppliancesIdMetricsGet Get all the Prometheus metrics for an Appliance.
 
 Get all the Prometheus metrics for the given Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v16+text** as it returns plain text instead of JSON.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdMetricsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdMetricsGetRequest
 */
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx _context.Context, id string) ApiAppliancesIdMetricsGetRequest {
 	return ApiAppliancesIdMetricsGetRequest{
@@ -63,8 +63,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx _context.Context
 }
 
 // Execute executes the request
-//
-//	@return string
+//  @return string
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiAppliancesIdMetricsGetRequest) (string, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -207,10 +206,10 @@ AppliancesIdMetricsNameGet Get a specific Prometheus metric for an Appliance.
 
 Get a specific Prometheus metrics for the given Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v16+text** as it returns plain text instead of JSON.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@param name Metric name
-	@return ApiAppliancesIdMetricsNameGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @param name Metric name
+ @return ApiAppliancesIdMetricsNameGetRequest
 */
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx _context.Context, id string, name string) ApiAppliancesIdMetricsNameGetRequest {
 	return ApiAppliancesIdMetricsNameGetRequest{
@@ -222,8 +221,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx _context.Con
 }
 
 // Execute executes the request
-//
-//	@return string
+//  @return string
 func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppliancesIdMetricsNameGetRequest) (string, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
