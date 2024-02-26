@@ -50,9 +50,9 @@ OtpSeedsDistinguishedNameDelete Delete a Default Time-Based OTP Provider Seed fo
 
 Delete a Default Time-Based OTP Provider Seed for the given Distinguished Name.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName 'Distinguished name of the user whose Default Time-Based OTP Provider Seed to be deleted. Format: \"CN=,OU=\"'
-	@return ApiOtpSeedsDistinguishedNameDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName 'Distinguished name of the user whose Default Time-Based OTP Provider Seed to be deleted. Format: \"CN=,OU=\"'
+ @return ApiOtpSeedsDistinguishedNameDeleteRequest
 */
 func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDelete(ctx _context.Context, distinguishedName string) ApiOtpSeedsDistinguishedNameDeleteRequest {
 	return ApiOtpSeedsDistinguishedNameDeleteRequest{
@@ -228,8 +228,8 @@ OtpSeedsGet List all Default Time-Based OTP Provider Seeds.
 
 List all Default Time-Based OTP Provider Seeds.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiOtpSeedsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiOtpSeedsGetRequest
 */
 func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGet(ctx _context.Context) ApiOtpSeedsGetRequest {
 	return ApiOtpSeedsGetRequest{
@@ -239,8 +239,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGet(ctx _context.Co
 }
 
 // Execute executes the request
-//
-//	@return OtpSeedList
+//  @return OtpSeedList
 func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtpSeedsGetRequest) (OtpSeedList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

@@ -50,9 +50,9 @@ DeviceScriptsDownloadIdGet Download a Device Claim Script.
 
 Download the raw script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsDownloadIdGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsDownloadIdGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.Context, id string) ApiDeviceScriptsDownloadIdGetRequest {
 	return ApiDeviceScriptsDownloadIdGetRequest{
@@ -63,8 +63,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGet(ctx _context.C
 }
 
 // Execute executes the request
-//
-//	@return InlineResponse20012
+//  @return InlineResponse20012
 func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDeviceScriptsDownloadIdGetRequest) (InlineResponse20012, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -240,8 +239,8 @@ DeviceScriptsGet List all Device Claim Scripts.
 
 List all Device Claim Scripts visible to current user.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiDeviceScriptsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiDeviceScriptsGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx _context.Context) ApiDeviceScriptsGetRequest {
 	return ApiDeviceScriptsGetRequest{
@@ -251,8 +250,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGet(ctx _context.Context) Ap
 }
 
 // Execute executes the request
-//
-//	@return DeviceScriptList
+//  @return DeviceScriptList
 func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScriptsGetRequest) (DeviceScriptList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -398,9 +396,9 @@ DeviceScriptsIdDelete Delete a specific Device Claim Script.
 
 Delete a specific Device Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdDeleteRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdDeleteRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDelete(ctx _context.Context, id string) ApiDeviceScriptsIdDeleteRequest {
 	return ApiDeviceScriptsIdDeleteRequest{
@@ -542,9 +540,9 @@ DeviceScriptsIdGet Get a specific Device Claim Script.
 
 Get a specific Device Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdGetRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, id string) ApiDeviceScriptsIdGetRequest {
 	return ApiDeviceScriptsIdGetRequest{
@@ -555,8 +553,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGet(ctx _context.Context, 
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScriptsIdGetRequest) (DeviceScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -705,9 +702,9 @@ DeviceScriptsIdPut Update an existing Device Claim Script.
 
 Update an existing Device Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiDeviceScriptsIdPutRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiDeviceScriptsIdPutRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, id string) ApiDeviceScriptsIdPutRequest {
 	return ApiDeviceScriptsIdPutRequest{
@@ -718,8 +715,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPut(ctx _context.Context, 
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScriptsIdPutRequest) (DeviceScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -892,8 +888,8 @@ DeviceScriptsPost Create a new Device Claim Script.
 
 Create a new Device Claim Script.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiDeviceScriptsPostRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiDeviceScriptsPostRequest
 */
 func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx _context.Context) ApiDeviceScriptsPostRequest {
 	return ApiDeviceScriptsPostRequest{
@@ -903,8 +899,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPost(ctx _context.Context) A
 }
 
 // Execute executes the request
-//
-//	@return DeviceScript
+//  @return DeviceScript
 func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScriptsPostRequest) (DeviceScript, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

@@ -50,9 +50,9 @@ SessionInfoDistinguishedNameGet Get details of a specific Active Client Session.
 
 Get the details of a specific Active Client Session from all Gateways. This API makes the Controller to query very Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
-	@return ApiSessionInfoDistinguishedNameGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+ @return ApiSessionInfoDistinguishedNameGetRequest
 */
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx _context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
 	return ApiSessionInfoDistinguishedNameGetRequest{
@@ -63,8 +63,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx _context.
 }
 
 // Execute executes the request
-//
-//	@return SessionInfoDistinguishedName
+//  @return SessionInfoDistinguishedName
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (SessionInfoDistinguishedName, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -240,8 +239,8 @@ StatsActiveSessionsGet Get Active Client Sessions.
 
 Get currently Active Client Sessions. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
-	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsActiveSessionsGetRequest
+ @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsActiveSessionsGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx _context.Context) ApiStatsActiveSessionsGetRequest {
 	return ApiStatsActiveSessionsGetRequest{
@@ -251,8 +250,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx _context.Context) 
 }
 
 // Execute executes the request
-//
-//	@return ActiveSessions
+//  @return ActiveSessions
 func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiveSessionsGetRequest) (ActiveSessions, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

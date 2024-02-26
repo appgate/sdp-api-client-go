@@ -43,8 +43,8 @@ StatsUserLoginsGet Get User Logins Per Hour.
 
 Get the User Logins Per Hour for the last 24 hours.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsUserLoginsGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsUserLoginsGetRequest
 */
 func (a *UserLoginsPerHourApiService) StatsUserLoginsGet(ctx context.Context) ApiStatsUserLoginsGetRequest {
 	return ApiStatsUserLoginsGetRequest{
@@ -54,8 +54,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGet(ctx context.Context) Ap
 }
 
 // Execute executes the request
-//
-//	@return UserLogins
+//  @return UserLogins
 func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

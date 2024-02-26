@@ -47,10 +47,10 @@ AppliancesIdBackupBackupIdDelete Delete an Appliance Backup.
 
 Delete an Appliance Backup file from an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v18+gpg**.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@param backupId The Appliance Backup ID given in the initiation response.
-	@return ApiAppliancesIdBackupBackupIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @param backupId The Appliance Backup ID given in the initiation response.
+ @return ApiAppliancesIdBackupBackupIdDeleteRequest
 */
 func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDelete(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdDeleteRequest {
 	return ApiAppliancesIdBackupBackupIdDeleteRequest{
@@ -203,10 +203,10 @@ AppliancesIdBackupBackupIdGet Download an Appliance Backup.
 
 Download a completed Appliance Backup with the given ID of an Appliance. This API call must be made with **Accept** header of **application/vnd.appgate.peer-v18+gpg** as it returns a GPG file as blob instead of JSON.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@param backupId The Appliance Backup ID given in the initiation response.
-	@return ApiAppliancesIdBackupBackupIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @param backupId The Appliance Backup ID given in the initiation response.
+ @return ApiAppliancesIdBackupBackupIdGetRequest
 */
 func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdGetRequest {
 	return ApiAppliancesIdBackupBackupIdGetRequest{
@@ -218,8 +218,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGet(ctx context.Co
 }
 
 // Execute executes the request
-//
-//	@return *os.File
+//  @return *os.File
 func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAppliancesIdBackupBackupIdGetRequest) (**os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -371,10 +370,10 @@ AppliancesIdBackupBackupIdStatusGet Get the status of a Appliance Backup.
 
 Get the status of the given Appliance Backup ID. If the status is "done", it can be downloaded using "GET appliances/{id}/backup/{backupId}".
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@param backupId The Appliance Backup ID given in the initiation response.
-	@return ApiAppliancesIdBackupBackupIdStatusGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @param backupId The Appliance Backup ID given in the initiation response.
+ @return ApiAppliancesIdBackupBackupIdStatusGetRequest
 */
 func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdStatusGetRequest {
 	return ApiAppliancesIdBackupBackupIdStatusGetRequest{
@@ -386,8 +385,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGet(ctx cont
 }
 
 // Execute executes the request
-//
-//	@return AppliancesIdBackupBackupIdStatusGet200Response
+//  @return AppliancesIdBackupBackupIdStatusGet200Response
 func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r ApiAppliancesIdBackupBackupIdStatusGetRequest) (*AppliancesIdBackupBackupIdStatusGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -545,9 +543,9 @@ AppliancesIdBackupPost Initiate an Appliance Backup.
 
 Initiate an Appliance Backup. The progress can be followed by polling the Appliance via "GET appliances/{id}/backup/{backupId}/status".
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiAppliancesIdBackupPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiAppliancesIdBackupPostRequest
 */
 func (a *ApplianceBackupApiService) AppliancesIdBackupPost(ctx context.Context, id string) ApiAppliancesIdBackupPostRequest {
 	return ApiAppliancesIdBackupPostRequest{
@@ -558,8 +556,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPost(ctx context.Context, 
 }
 
 // Execute executes the request
-//
-//	@return AppliancesIdBackupPost200Response
+//  @return AppliancesIdBackupPost200Response
 func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliancesIdBackupPostRequest) (*AppliancesIdBackupPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

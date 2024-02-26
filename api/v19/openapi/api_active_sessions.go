@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v19+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 19.1
+API version: API version 19.2
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -45,9 +45,9 @@ SessionInfoDistinguishedNameGet Get details of a specific Active Client Session.
 
 Get the details of a specific Active Client Session from all Gateways. This API makes the Controller to query very Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
-	@return ApiSessionInfoDistinguishedNameGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+ @return ApiSessionInfoDistinguishedNameGetRequest
 */
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
 	return ApiSessionInfoDistinguishedNameGetRequest{
@@ -58,8 +58,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.C
 }
 
 // Execute executes the request
-//
-//	@return SessionInfoDistinguishedName
+//  @return SessionInfoDistinguishedName
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -196,6 +195,7 @@ type ApiStatsActiveSessionsDnGetRequest struct {
 	orderBy          *string
 	descending       *string
 	geolocationQuery *GeolocationQuery
+	filterBy         *map[string]string
 }
 
 // The Token from the LoginResponse.
@@ -234,6 +234,12 @@ func (r ApiStatsActiveSessionsDnGetRequest) GeolocationQuery(geolocationQuery Ge
 	return r
 }
 
+// Filters the result list by the given field and value. Supported fields vary from API to API. The filters can be combined with each other as well as the generic query parameter. The given value is checked for inclusion.
+func (r ApiStatsActiveSessionsDnGetRequest) FilterBy(filterBy map[string]string) ApiStatsActiveSessionsDnGetRequest {
+	r.filterBy = &filterBy
+	return r
+}
+
 func (r ApiStatsActiveSessionsDnGetRequest) Execute() (*ActiveSessionsDn, *http.Response, error) {
 	return r.ApiService.StatsActiveSessionsDnGetExecute(r)
 }
@@ -243,8 +249,8 @@ StatsActiveSessionsDnGet Get Active Client Sessions grouped by Distinguished Nam
 
 Get session data from currently Active Client Sessions grouped by distinguished name. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsActiveSessionsDnGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsActiveSessionsDnGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
 	return ApiStatsActiveSessionsDnGetRequest{
@@ -254,8 +260,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context)
 }
 
 // Execute executes the request
-//
-//	@return ActiveSessionsDn
+//  @return ActiveSessionsDn
 func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -292,6 +297,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	}
 	if r.geolocationQuery != nil {
 		localVarQueryParams.Add("geolocationQuery", parameterToString(*r.geolocationQuery, ""))
+	}
+	if r.filterBy != nil {
+		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -396,6 +404,7 @@ type ApiStatsActiveSessionsGetRequest struct {
 	orderBy          *string
 	descending       *string
 	geolocationQuery *GeolocationQuery
+	filterBy         *map[string]string
 }
 
 // The Token from the LoginResponse.
@@ -434,6 +443,12 @@ func (r ApiStatsActiveSessionsGetRequest) GeolocationQuery(geolocationQuery Geol
 	return r
 }
 
+// Filters the result list by the given field and value. Supported fields vary from API to API. The filters can be combined with each other as well as the generic query parameter. The given value is checked for inclusion.
+func (r ApiStatsActiveSessionsGetRequest) FilterBy(filterBy map[string]string) ApiStatsActiveSessionsGetRequest {
+	r.filterBy = &filterBy
+	return r
+}
+
 func (r ApiStatsActiveSessionsGetRequest) Execute() (*ActiveSessions, *http.Response, error) {
 	return r.ApiService.StatsActiveSessionsGetExecute(r)
 }
@@ -443,8 +458,8 @@ StatsActiveSessionsGet Get Active Client Sessions.
 
 Get currently Active Client Sessions. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsActiveSessionsGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsActiveSessionsGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) ApiStatsActiveSessionsGetRequest {
 	return ApiStatsActiveSessionsGetRequest{
@@ -454,8 +469,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) A
 }
 
 // Execute executes the request
-//
-//	@return ActiveSessions
+//  @return ActiveSessions
 func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiveSessionsGetRequest) (*ActiveSessions, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -492,6 +506,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 	}
 	if r.geolocationQuery != nil {
 		localVarQueryParams.Add("geolocationQuery", parameterToString(*r.geolocationQuery, ""))
+	}
+	if r.filterBy != nil {
+		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

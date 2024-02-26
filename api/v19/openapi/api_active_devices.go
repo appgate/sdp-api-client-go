@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v19+json** # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 19.1
+API version: API version 19.2
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -79,8 +79,8 @@ TokenRecordsDnGet List all Distinguished Names active in the past 24 hour.
 
 List all Distinguished Names active in the past 24 hour. Includes the users who has at least one token that has not expired past 24 hours. If a token was created 30 hours ago and it has 10 hours expiration time, it will be in this list.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiTokenRecordsDnGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiTokenRecordsDnGetRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx context.Context) ApiTokenRecordsDnGetRequest {
 	return ApiTokenRecordsDnGetRequest{
@@ -90,8 +90,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx context.Context) ApiToke
 }
 
 // Execute executes the request
-//
-//	@return DistinguishedNameList
+//  @return DistinguishedNameList
 func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGetRequest) (*DistinguishedNameList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -245,9 +244,9 @@ TokenRecordsReevalByDnDistinguishedNamePost Reevaluate all sessions with given D
 
 Reevaluate all sessions belongs to the user&devices ending with the given Distinguished Name substring.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
-	@return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+ @return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiTokenRecordsReevalByDnDistinguishedNamePostRequest {
 	return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest{
@@ -258,8 +257,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ct
 }
 
 // Execute executes the request
-//
-//	@return TokenRecordsReevalByDnDistinguishedNamePost200Response
+//  @return TokenRecordsReevalByDnDistinguishedNamePost200Response
 func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (*TokenRecordsReevalByDnDistinguishedNamePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -430,9 +428,9 @@ TokenRecordsRevokedByDnDistinguishedNamePut Revoke all Tokens ending with the gi
 
 Revoke all Tokens belong to the user&devices ending with the given Distinguished Name substring.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
-	@return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+ @return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ctx context.Context, distinguishedName string) ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest {
 	return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest{
@@ -443,8 +441,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ct
 }
 
 // Execute executes the request
-//
-//	@return TokenRevocationResponse
+//  @return TokenRevocationResponse
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExecute(r ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -626,9 +623,9 @@ TokenRecordsRevokedByTypeTokenTypePut Revoke all Tokens with given type.
 
 Revoke all Tokens with given type.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param tokenType The type of the tokens.
-	@return ApiTokenRecordsRevokedByTypeTokenTypePutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenType The type of the tokens.
+ @return ApiTokenRecordsRevokedByTypeTokenTypePutRequest
 */
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx context.Context, tokenType string) ApiTokenRecordsRevokedByTypeTokenTypePutRequest {
 	return ApiTokenRecordsRevokedByTypeTokenTypePutRequest{
@@ -639,8 +636,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx cont
 }
 
 // Execute executes the request
-//
-//	@return TokenRevocationResponse
+//  @return TokenRevocationResponse
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r ApiTokenRecordsRevokedByTypeTokenTypePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
