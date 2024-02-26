@@ -23,8 +23,15 @@ import (
 type LoginApiService service
 
 type ApiAuthenticationLogoutPostRequest struct {
-	ctx        context.Context
-	ApiService *LoginApiService
+	ctx           context.Context
+	ApiService    *LoginApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAuthenticationLogoutPostRequest) Authorization(authorization string) ApiAuthenticationLogoutPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAuthenticationLogoutPostRequest) Execute() (*http.Response, error) {
@@ -64,6 +71,9 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -82,6 +92,7 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -142,7 +153,14 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 type ApiAuthenticationOtpInitializePostRequest struct {
 	ctx                                    context.Context
 	ApiService                             *LoginApiService
+	authorization                          *string
 	authenticationOtpInitializePostRequest *AuthenticationOtpInitializePostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAuthenticationOtpInitializePostRequest) Authorization(authorization string) ApiAuthenticationOtpInitializePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Optional MFA initialization details.
@@ -191,6 +209,9 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -209,6 +230,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.authenticationOtpInitializePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -300,7 +322,14 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 type ApiAuthenticationOtpPostRequest struct {
 	ctx                          context.Context
 	ApiService                   *LoginApiService
+	authorization                *string
 	authenticationOtpPostRequest *AuthenticationOtpPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAuthenticationOtpPostRequest) Authorization(authorization string) ApiAuthenticationOtpPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // MFA credentials.
@@ -349,6 +378,9 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.authenticationOtpPostRequest == nil {
 		return localVarReturnValue, nil, reportError("authenticationOtpPostRequest is required and must be specified")
 	}
@@ -370,6 +402,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.authenticationOtpPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -624,8 +657,15 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 }
 
 type ApiAuthorizationGetRequest struct {
-	ctx        context.Context
-	ApiService *LoginApiService
+	ctx           context.Context
+	ApiService    *LoginApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAuthorizationGetRequest) Authorization(authorization string) ApiAuthorizationGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAuthorizationGetRequest) Execute() (*LoginResponse, *http.Response, error) {
@@ -669,6 +709,9 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -687,6 +730,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -24,13 +24,20 @@ import (
 type EntitlementScriptsApiService service
 
 type ApiEntitlementScriptsGetRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *EntitlementScriptsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsGetRequest) Authorization(authorization string) ApiEntitlementScriptsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 }
 
 type ApiEntitlementScriptsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *EntitlementScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsIdDeleteRequest) Authorization(authorization string) ApiEntitlementScriptsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiEntitlementScriptsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 }
 
 type ApiEntitlementScriptsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *EntitlementScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsIdGetRequest) Authorization(authorization string) ApiEntitlementScriptsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiEntitlementScriptsIdGetRequest) Execute() (*EntitlementScript, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -509,8 +542,15 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 type ApiEntitlementScriptsIdPutRequest struct {
 	ctx               context.Context
 	ApiService        *EntitlementScriptsApiService
+	authorization     *string
 	id                string
 	entitlementScript *EntitlementScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsIdPutRequest) Authorization(authorization string) ApiEntitlementScriptsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Entitlement Script object.
@@ -562,6 +602,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.entitlementScript == nil {
 		return localVarReturnValue, nil, reportError("entitlementScript is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 type ApiEntitlementScriptsPostRequest struct {
 	ctx               context.Context
 	ApiService        *EntitlementScriptsApiService
+	authorization     *string
 	entitlementScript *EntitlementScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsPostRequest) Authorization(authorization string) ApiEntitlementScriptsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Entitlement Script object.
@@ -743,6 +794,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.entitlementScript == nil {
 		return localVarReturnValue, nil, reportError("entitlementScript is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -875,7 +930,14 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 type ApiEntitlementScriptsTestPostRequest struct {
 	ctx                    context.Context
 	ApiService             *EntitlementScriptsApiService
+	authorization          *string
 	entitlementScriptsTest *EntitlementScriptsTest
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementScriptsTestPostRequest) Authorization(authorization string) ApiEntitlementScriptsTestPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // The evaluation details.
@@ -924,6 +986,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.entitlementScriptsTest == nil {
 		return localVarReturnValue, nil, reportError("entitlementScriptsTest is required and must be specified")
 	}
@@ -945,6 +1010,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlementScriptsTest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

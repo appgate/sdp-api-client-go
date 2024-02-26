@@ -24,8 +24,15 @@ import (
 type IssuedCertificatesApiService service
 
 type ApiCertificateAuthorityIssuedCertificatesGetRequest struct {
-	ctx        context.Context
-	ApiService *IssuedCertificatesApiService
+	ctx           context.Context
+	ApiService    *IssuedCertificatesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiCertificateAuthorityIssuedCertificatesGetRequest) Authorization(authorization string) ApiCertificateAuthorityIssuedCertificatesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiCertificateAuthorityIssuedCertificatesGetRequest) Execute() (*IssuedCertificateList, *http.Response, error) {
@@ -68,6 +75,9 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGet
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -86,6 +96,7 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -165,8 +176,15 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGet
 type ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest struct {
 	ctx                                                                  context.Context
 	ApiService                                                           *IssuedCertificatesApiService
+	authorization                                                        *string
 	certificateId                                                        string
 	certificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) Authorization(authorization string) ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Revocation details.
@@ -218,6 +236,9 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesRev
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -236,6 +257,7 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesRev
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.certificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

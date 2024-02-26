@@ -23,13 +23,20 @@ import (
 type LicensedUsersApiService service
 
 type ApiLicenseUsersGetRequest struct {
-	ctx        context.Context
-	ApiService *LicensedUsersApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *LicensedUsersApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseUsersGetRequest) Authorization(authorization string) ApiLicenseUsersGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -102,6 +109,9 @@ func (a *LicensedUsersApiService) LicenseUsersGetExecute(r ApiLicenseUsersGetReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -135,6 +145,7 @@ func (a *LicensedUsersApiService) LicenseUsersGetExecute(r ApiLicenseUsersGetReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

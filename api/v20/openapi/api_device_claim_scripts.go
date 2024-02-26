@@ -24,9 +24,16 @@ import (
 type DeviceClaimScriptsApiService service
 
 type ApiDeviceScriptsDownloadIdGetRequest struct {
-	ctx        context.Context
-	ApiService *DeviceClaimScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsDownloadIdGetRequest) Authorization(authorization string) ApiDeviceScriptsDownloadIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiDeviceScriptsDownloadIdGetRequest) Execute() (*DeviceScriptsDownloadIdGet200Response, *http.Response, error) {
@@ -72,6 +79,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -90,6 +100,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -177,13 +188,20 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsDownloadIdGetExecute(r ApiDe
 }
 
 type ApiDeviceScriptsGetRequest struct {
-	ctx        context.Context
-	ApiService *DeviceClaimScriptsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsGetRequest) Authorization(authorization string) ApiDeviceScriptsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -256,6 +274,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -289,6 +310,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -366,9 +388,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsGetExecute(r ApiDeviceScript
 }
 
 type ApiDeviceScriptsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *DeviceClaimScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsIdDeleteRequest) Authorization(authorization string) ApiDeviceScriptsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiDeviceScriptsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -411,6 +440,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -429,6 +461,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -507,9 +540,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdDeleteExecute(r ApiDeviceS
 }
 
 type ApiDeviceScriptsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *DeviceClaimScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsIdGetRequest) Authorization(authorization string) ApiDeviceScriptsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiDeviceScriptsIdGetRequest) Execute() (*DeviceScript, *http.Response, error) {
@@ -555,6 +595,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -573,6 +616,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -660,10 +704,17 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdGetExecute(r ApiDeviceScri
 }
 
 type ApiDeviceScriptsIdPutRequest struct {
-	ctx          context.Context
-	ApiService   *DeviceClaimScriptsApiService
-	id           string
-	deviceScript *DeviceScript
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	id            string
+	deviceScript  *DeviceScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsIdPutRequest) Authorization(authorization string) ApiDeviceScriptsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Device Claim Script object.
@@ -715,6 +766,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.deviceScript == nil {
 		return localVarReturnValue, nil, reportError("deviceScript is required and must be specified")
 	}
@@ -736,6 +790,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.deviceScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -845,9 +900,16 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsIdPutExecute(r ApiDeviceScri
 }
 
 type ApiDeviceScriptsPostRequest struct {
-	ctx          context.Context
-	ApiService   *DeviceClaimScriptsApiService
-	deviceScript *DeviceScript
+	ctx           context.Context
+	ApiService    *DeviceClaimScriptsApiService
+	authorization *string
+	deviceScript  *DeviceScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiDeviceScriptsPostRequest) Authorization(authorization string) ApiDeviceScriptsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Device Claim Script object.
@@ -896,6 +958,9 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.deviceScript == nil {
 		return localVarReturnValue, nil, reportError("deviceScript is required and must be specified")
 	}
@@ -917,6 +982,7 @@ func (a *DeviceClaimScriptsApiService) DeviceScriptsPostExecute(r ApiDeviceScrip
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.deviceScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

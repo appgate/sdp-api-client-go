@@ -23,10 +23,17 @@ import (
 type AdminMessagesApiService service
 
 type ApiAdminMessagesDeleteRequest struct {
-	ctx        context.Context
-	ApiService *AdminMessagesApiService
-	message    *string
-	source     *string
+	ctx           context.Context
+	ApiService    *AdminMessagesApiService
+	authorization *string
+	message       *string
+	source        *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMessagesDeleteRequest) Authorization(authorization string) ApiAdminMessagesDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // The message text of an Admin Message.
@@ -78,6 +85,9 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.message != nil {
 		localVarQueryParams.Add("message", parameterToString(*r.message, ""))
@@ -102,6 +112,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -170,8 +181,15 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 }
 
 type ApiAdminMessagesGetRequest struct {
-	ctx        context.Context
-	ApiService *AdminMessagesApiService
+	ctx           context.Context
+	ApiService    *AdminMessagesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMessagesGetRequest) Authorization(authorization string) ApiAdminMessagesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdminMessagesGetRequest) Execute() (*AdminMessagesList, *http.Response, error) {
@@ -214,6 +232,9 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -232,6 +253,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -309,8 +331,15 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 }
 
 type ApiAdminMessagesSummarizeGetRequest struct {
-	ctx        context.Context
-	ApiService *AdminMessagesApiService
+	ctx           context.Context
+	ApiService    *AdminMessagesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMessagesSummarizeGetRequest) Authorization(authorization string) ApiAdminMessagesSummarizeGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdminMessagesSummarizeGetRequest) Execute() (*AdminMessagesSummarize, *http.Response, error) {
@@ -353,6 +382,9 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -371,6 +403,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

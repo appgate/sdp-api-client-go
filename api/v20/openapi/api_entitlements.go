@@ -24,13 +24,20 @@ import (
 type EntitlementsApiService service
 
 type ApiEntitlementsGetRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *EntitlementsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementsGetRequest) Authorization(authorization string) ApiEntitlementsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 }
 
 type ApiEntitlementsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *EntitlementsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementsIdDeleteRequest) Authorization(authorization string) ApiEntitlementsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiEntitlementsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 }
 
 type ApiEntitlementsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *EntitlementsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *EntitlementsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementsIdGetRequest) Authorization(authorization string) ApiEntitlementsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiEntitlementsIdGetRequest) Execute() (*Entitlement, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 }
 
 type ApiEntitlementsIdPutRequest struct {
-	ctx         context.Context
-	ApiService  *EntitlementsApiService
-	id          string
-	entitlement *Entitlement
+	ctx           context.Context
+	ApiService    *EntitlementsApiService
+	authorization *string
+	id            string
+	entitlement   *Entitlement
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementsIdPutRequest) Authorization(authorization string) ApiEntitlementsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Entitlement object.
@@ -562,6 +602,9 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.entitlement == nil {
 		return localVarReturnValue, nil, reportError("entitlement is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlement
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -692,9 +736,16 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 }
 
 type ApiEntitlementsPostRequest struct {
-	ctx         context.Context
-	ApiService  *EntitlementsApiService
-	entitlement *Entitlement
+	ctx           context.Context
+	ApiService    *EntitlementsApiService
+	authorization *string
+	entitlement   *Entitlement
+}
+
+// The Token from the LoginResponse.
+func (r ApiEntitlementsPostRequest) Authorization(authorization string) ApiEntitlementsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Entitlement object.
@@ -743,6 +794,9 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.entitlement == nil {
 		return localVarReturnValue, nil, reportError("entitlement is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.entitlement
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

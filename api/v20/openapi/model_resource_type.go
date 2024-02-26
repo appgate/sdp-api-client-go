@@ -42,6 +42,7 @@ const (
 	PROJECTS_IDS                 ResourceType = "projects-ids"
 	FORWARDING_RULES             ResourceType = "forwarding-rules"
 	INSTANCES                    ResourceType = "instances"
+	INSTANCES_NETWORK_TAGS       ResourceType = "instances-network-tags"
 	SERVICE_ACCOUNT_EMAILS       ResourceType = "service-account-emails"
 	LABELS                       ResourceType = "labels"
 	VIRTUAL_MACHINES             ResourceType = "virtual-machines"
@@ -73,6 +74,7 @@ var AllowedResourceTypeEnumValues = []ResourceType{
 	"projects-ids",
 	"forwarding-rules",
 	"instances",
+	"instances-network-tags",
 	"service-account-emails",
 	"labels",
 	"virtual-machines",

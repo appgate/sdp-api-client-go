@@ -24,13 +24,20 @@ import (
 type SecretsManagerApiService service
 
 type ApiSecretsGetRequest struct {
-	ctx        context.Context
-	ApiService *SecretsManagerApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *SecretsManagerApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSecretsGetRequest) Authorization(authorization string) ApiSecretsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 }
 
 type ApiSecretsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *SecretsManagerApiService
-	id         string
+	ctx           context.Context
+	ApiService    *SecretsManagerApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSecretsIdDeleteRequest) Authorization(authorization string) ApiSecretsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiSecretsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 }
 
 type ApiSecretsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *SecretsManagerApiService
-	id         string
+	ctx           context.Context
+	ApiService    *SecretsManagerApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSecretsIdGetRequest) Authorization(authorization string) ApiSecretsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiSecretsIdGetRequest) Execute() (*Secret, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 }
 
 type ApiSecretsIdPutRequest struct {
-	ctx        context.Context
-	ApiService *SecretsManagerApiService
-	id         string
-	secret     *Secret
+	ctx           context.Context
+	ApiService    *SecretsManagerApiService
+	authorization *string
+	id            string
+	secret        *Secret
+}
+
+// The Token from the LoginResponse.
+func (r ApiSecretsIdPutRequest) Authorization(authorization string) ApiSecretsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Secret object.
@@ -562,6 +602,9 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.secret == nil {
 		return localVarReturnValue, nil, reportError("secret is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.secret
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

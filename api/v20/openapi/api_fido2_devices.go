@@ -26,7 +26,14 @@ type FIDO2DevicesApiService service
 type ApiFido2DevicesDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
 	ApiService        *FIDO2DevicesApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiFido2DevicesDistinguishedNameDeleteRequest) Authorization(authorization string) ApiFido2DevicesDistinguishedNameDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiFido2DevicesDistinguishedNameDeleteRequest) Execute() (*http.Response, error) {
@@ -69,6 +76,9 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -87,6 +97,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -165,13 +176,20 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 }
 
 type ApiFido2DevicesGetRequest struct {
-	ctx        context.Context
-	ApiService *FIDO2DevicesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *FIDO2DevicesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiFido2DevicesGetRequest) Authorization(authorization string) ApiFido2DevicesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -244,6 +262,9 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -277,6 +298,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -24,13 +24,20 @@ import (
 type ServiceUsersApiService service
 
 type ApiServiceUsersGetRequest struct {
-	ctx        context.Context
-	ApiService *ServiceUsersApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *ServiceUsersApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiServiceUsersGetRequest) Authorization(authorization string) ApiServiceUsersGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 }
 
 type ApiServiceUsersIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *ServiceUsersApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ServiceUsersApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiServiceUsersIdDeleteRequest) Authorization(authorization string) ApiServiceUsersIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiServiceUsersIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 }
 
 type ApiServiceUsersIdGetRequest struct {
-	ctx        context.Context
-	ApiService *ServiceUsersApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ServiceUsersApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiServiceUsersIdGetRequest) Authorization(authorization string) ApiServiceUsersIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiServiceUsersIdGetRequest) Execute() (*ServiceUser, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 }
 
 type ApiServiceUsersIdPutRequest struct {
-	ctx         context.Context
-	ApiService  *ServiceUsersApiService
-	id          string
-	serviceUser *ServiceUser
+	ctx           context.Context
+	ApiService    *ServiceUsersApiService
+	authorization *string
+	id            string
+	serviceUser   *ServiceUser
+}
+
+// The Token from the LoginResponse.
+func (r ApiServiceUsersIdPutRequest) Authorization(authorization string) ApiServiceUsersIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Service User object.
@@ -562,6 +602,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.serviceUser == nil {
 		return localVarReturnValue, nil, reportError("serviceUser is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.serviceUser
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 type ApiServiceUsersPostRequest struct {
 	ctx                    context.Context
 	ApiService             *ServiceUsersApiService
+	authorization          *string
 	serviceUsersGetRequest *ServiceUsersGetRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiServiceUsersPostRequest) Authorization(authorization string) ApiServiceUsersPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Service User object.
@@ -743,6 +794,9 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.serviceUsersGetRequest == nil {
 		return localVarReturnValue, nil, reportError("serviceUsersGetRequest is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.serviceUsersGetRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

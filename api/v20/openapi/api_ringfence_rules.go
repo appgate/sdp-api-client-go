@@ -24,13 +24,20 @@ import (
 type RingfenceRulesApiService service
 
 type ApiRingfenceRulesGetRequest struct {
-	ctx        context.Context
-	ApiService *RingfenceRulesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *RingfenceRulesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiRingfenceRulesGetRequest) Authorization(authorization string) ApiRingfenceRulesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *RingfenceRulesApiService) RingfenceRulesGetExecute(r ApiRingfenceRulesG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *RingfenceRulesApiService) RingfenceRulesGetExecute(r ApiRingfenceRulesG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *RingfenceRulesApiService) RingfenceRulesGetExecute(r ApiRingfenceRulesG
 }
 
 type ApiRingfenceRulesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *RingfenceRulesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *RingfenceRulesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiRingfenceRulesIdDeleteRequest) Authorization(authorization string) ApiRingfenceRulesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiRingfenceRulesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdDeleteExecute(r ApiRingfenceR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdDeleteExecute(r ApiRingfenceR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdDeleteExecute(r ApiRingfenceR
 }
 
 type ApiRingfenceRulesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *RingfenceRulesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *RingfenceRulesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiRingfenceRulesIdGetRequest) Authorization(authorization string) ApiRingfenceRulesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiRingfenceRulesIdGetRequest) Execute() (*RingfenceRule, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdGetExecute(r ApiRingfenceRule
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdGetExecute(r ApiRingfenceRule
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -509,8 +542,15 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdGetExecute(r ApiRingfenceRule
 type ApiRingfenceRulesIdPutRequest struct {
 	ctx           context.Context
 	ApiService    *RingfenceRulesApiService
+	authorization *string
 	id            string
 	ringfenceRule *RingfenceRule
+}
+
+// The Token from the LoginResponse.
+func (r ApiRingfenceRulesIdPutRequest) Authorization(authorization string) ApiRingfenceRulesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Ringfence Rule object.
@@ -562,6 +602,9 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdPutExecute(r ApiRingfenceRule
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.ringfenceRule == nil {
 		return localVarReturnValue, nil, reportError("ringfenceRule is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdPutExecute(r ApiRingfenceRule
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ringfenceRule
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdPutExecute(r ApiRingfenceRule
 type ApiRingfenceRulesPostRequest struct {
 	ctx           context.Context
 	ApiService    *RingfenceRulesApiService
+	authorization *string
 	ringfenceRule *RingfenceRule
+}
+
+// The Token from the LoginResponse.
+func (r ApiRingfenceRulesPostRequest) Authorization(authorization string) ApiRingfenceRulesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Ringfence Rule object.
@@ -743,6 +794,9 @@ func (a *RingfenceRulesApiService) RingfenceRulesPostExecute(r ApiRingfenceRules
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.ringfenceRule == nil {
 		return localVarReturnValue, nil, reportError("ringfenceRule is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *RingfenceRulesApiService) RingfenceRulesPostExecute(r ApiRingfenceRules
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ringfenceRule
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -26,7 +26,14 @@ type ActiveDevicesApiService service
 type ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest struct {
 	ctx               context.Context
 	ApiService        *ActiveDevicesApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest) Authorization(authorization string) ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest) Execute() (*OnBoardedDevicesReevaluateDistinguishedNamePost200Response, *http.Response, error) {
@@ -72,6 +79,9 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePos
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -90,6 +100,7 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePos
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -179,7 +190,14 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePos
 type ApiOnBoardedDevicesRevokeTokensPostRequest struct {
 	ctx                     context.Context
 	ApiService              *ActiveDevicesApiService
+	authorization           *string
 	deviceRevocationRequest *DeviceRevocationRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiOnBoardedDevicesRevokeTokensPostRequest) Authorization(authorization string) ApiOnBoardedDevicesRevokeTokensPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Device revocation parameters.
@@ -228,6 +246,9 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r ApiO
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -246,6 +267,7 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r ApiO
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.deviceRevocationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -345,13 +367,20 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r ApiO
 }
 
 type ApiTokenRecordsDnGetRequest struct {
-	ctx        context.Context
-	ApiService *ActiveDevicesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *ActiveDevicesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiTokenRecordsDnGetRequest) Authorization(authorization string) ApiTokenRecordsDnGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -428,6 +457,9 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -461,6 +493,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -540,7 +573,14 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 type ApiTokenRecordsReevalByDnDistinguishedNamePostRequest struct {
 	ctx               context.Context
 	ApiService        *ActiveDevicesApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) Authorization(authorization string) ApiTokenRecordsReevalByDnDistinguishedNamePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) Execute() (*TokenRecordsReevalByDnDistinguishedNamePost200Response, *http.Response, error) {
@@ -590,6 +630,9 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -608,6 +651,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -697,10 +741,17 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 type ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest struct {
 	ctx                    context.Context
 	ApiService             *ActiveDevicesApiService
+	authorization          *string
 	distinguishedName      string
 	siteId                 *string
 	tokenType              *string
 	tokenRevocationRequest *TokenRevocationRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest) Authorization(authorization string) ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Optional query parameter to revoke only entitlement tokens for the given Site ID.
@@ -768,6 +819,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.siteId != nil {
 		localVarQueryParams.Add("siteId", parameterToString(*r.siteId, ""))
@@ -792,6 +846,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.tokenRevocationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -893,9 +948,16 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 type ApiTokenRecordsRevokedByTypeTokenTypePutRequest struct {
 	ctx                    context.Context
 	ApiService             *ActiveDevicesApiService
+	authorization          *string
 	tokenType              string
 	siteId                 *string
 	tokenRevocationRequest *TokenRevocationRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiTokenRecordsRevokedByTypeTokenTypePutRequest) Authorization(authorization string) ApiTokenRecordsRevokedByTypeTokenTypePutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Optional query parameter to revoke only entitlement tokens for the given Site ID.
@@ -957,6 +1019,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.siteId != nil {
 		localVarQueryParams.Add("siteId", parameterToString(*r.siteId, ""))
@@ -978,6 +1043,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.tokenRevocationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

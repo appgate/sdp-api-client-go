@@ -24,13 +24,20 @@ import (
 type ClientProfilesApiService service
 
 type ApiClientProfilesGetRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesGetRequest) Authorization(authorization string) ApiClientProfilesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *ClientProfilesApiService) ClientProfilesGetExecute(r ApiClientProfilesG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *ClientProfilesApiService) ClientProfilesGetExecute(r ApiClientProfilesG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *ClientProfilesApiService) ClientProfilesGetExecute(r ApiClientProfilesG
 }
 
 type ApiClientProfilesIdBarcodeGetRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesIdBarcodeGetRequest) Authorization(authorization string) ApiClientProfilesIdBarcodeGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClientProfilesIdBarcodeGetRequest) Execute() (*ClientProfilesIdBarcodeGet200Response, *http.Response, error) {
@@ -261,6 +279,9 @@ func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGetExecute(r ApiClient
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -279,6 +300,7 @@ func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGetExecute(r ApiClient
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -366,9 +388,16 @@ func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGetExecute(r ApiClient
 }
 
 type ApiClientProfilesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesIdDeleteRequest) Authorization(authorization string) ApiClientProfilesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClientProfilesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -411,6 +440,9 @@ func (a *ClientProfilesApiService) ClientProfilesIdDeleteExecute(r ApiClientProf
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -429,6 +461,7 @@ func (a *ClientProfilesApiService) ClientProfilesIdDeleteExecute(r ApiClientProf
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -507,9 +540,16 @@ func (a *ClientProfilesApiService) ClientProfilesIdDeleteExecute(r ApiClientProf
 }
 
 type ApiClientProfilesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesIdGetRequest) Authorization(authorization string) ApiClientProfilesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClientProfilesIdGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
@@ -555,6 +595,9 @@ func (a *ClientProfilesApiService) ClientProfilesIdGetExecute(r ApiClientProfile
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -573,6 +616,7 @@ func (a *ClientProfilesApiService) ClientProfilesIdGetExecute(r ApiClientProfile
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -660,10 +704,17 @@ func (a *ClientProfilesApiService) ClientProfilesIdGetExecute(r ApiClientProfile
 }
 
 type ApiClientProfilesIdPutRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	id         string
-	body       *map[string]interface{}
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	id            string
+	body          *map[string]interface{}
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesIdPutRequest) Authorization(authorization string) ApiClientProfilesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Client Profile object.
@@ -715,6 +766,9 @@ func (a *ClientProfilesApiService) ClientProfilesIdPutExecute(r ApiClientProfile
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -736,6 +790,7 @@ func (a *ClientProfilesApiService) ClientProfilesIdPutExecute(r ApiClientProfile
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -845,9 +900,16 @@ func (a *ClientProfilesApiService) ClientProfilesIdPutExecute(r ApiClientProfile
 }
 
 type ApiClientProfilesIdUrlGetRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesIdUrlGetRequest) Authorization(authorization string) ApiClientProfilesIdUrlGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClientProfilesIdUrlGetRequest) Execute() (*ClientProfilesIdUrlGet200Response, *http.Response, error) {
@@ -893,6 +955,9 @@ func (a *ClientProfilesApiService) ClientProfilesIdUrlGetExecute(r ApiClientProf
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -911,6 +976,7 @@ func (a *ClientProfilesApiService) ClientProfilesIdUrlGetExecute(r ApiClientProf
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -998,9 +1064,16 @@ func (a *ClientProfilesApiService) ClientProfilesIdUrlGetExecute(r ApiClientProf
 }
 
 type ApiClientProfilesPostRequest struct {
-	ctx        context.Context
-	ApiService *ClientProfilesApiService
-	body       *map[string]interface{}
+	ctx           context.Context
+	ApiService    *ClientProfilesApiService
+	authorization *string
+	body          *map[string]interface{}
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientProfilesPostRequest) Authorization(authorization string) ApiClientProfilesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Client Profile object.
@@ -1049,6 +1122,9 @@ func (a *ClientProfilesApiService) ClientProfilesPostExecute(r ApiClientProfiles
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -1070,6 +1146,7 @@ func (a *ClientProfilesApiService) ClientProfilesPostExecute(r ApiClientProfiles
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

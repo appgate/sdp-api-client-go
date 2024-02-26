@@ -24,8 +24,15 @@ import (
 type ConditionsApiService service
 
 type ApiClaimsNamesGetRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClaimsNamesGetRequest) Authorization(authorization string) ApiClaimsNamesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClaimsNamesGetRequest) Execute() (*ClaimNamesList, *http.Response, error) {
@@ -68,6 +75,9 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -86,6 +96,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -163,13 +174,20 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 }
 
 type ApiConditionsGetRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsGetRequest) Authorization(authorization string) ApiConditionsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -242,6 +260,9 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -275,6 +296,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -352,9 +374,16 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 }
 
 type ApiConditionsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsIdDeleteRequest) Authorization(authorization string) ApiConditionsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiConditionsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -397,6 +426,9 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -415,6 +447,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -493,9 +526,16 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 }
 
 type ApiConditionsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsIdGetRequest) Authorization(authorization string) ApiConditionsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiConditionsIdGetRequest) Execute() (*Condition, *http.Response, error) {
@@ -541,6 +581,9 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -559,6 +602,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -646,10 +690,17 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 }
 
 type ApiConditionsIdPutRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
-	id         string
-	condition  *Condition
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	id            string
+	condition     *Condition
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsIdPutRequest) Authorization(authorization string) ApiConditionsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Condition object.
@@ -701,6 +752,9 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.condition == nil {
 		return localVarReturnValue, nil, reportError("condition is required and must be specified")
 	}
@@ -722,6 +776,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.condition
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -831,9 +886,16 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 }
 
 type ApiConditionsPostRequest struct {
-	ctx        context.Context
-	ApiService *ConditionsApiService
-	condition  *Condition
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	condition     *Condition
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsPostRequest) Authorization(authorization string) ApiConditionsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Condition object.
@@ -882,6 +944,9 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.condition == nil {
 		return localVarReturnValue, nil, reportError("condition is required and must be specified")
 	}
@@ -903,6 +968,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.condition
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1012,9 +1078,16 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 }
 
 type ApiConditionsTestPostRequest struct {
-	ctx         context.Context
-	ApiService  *ConditionsApiService
-	testRequest *TestRequest
+	ctx           context.Context
+	ApiService    *ConditionsApiService
+	authorization *string
+	testRequest   *TestRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiConditionsTestPostRequest) Authorization(authorization string) ApiConditionsTestPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // The evaluation details.
@@ -1063,6 +1136,9 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.testRequest == nil {
 		return localVarReturnValue, nil, reportError("testRequest is required and must be specified")
 	}
@@ -1084,6 +1160,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.testRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

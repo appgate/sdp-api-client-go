@@ -25,10 +25,17 @@ import (
 type ApplianceBackupApiService service
 
 type ApiAppliancesIdBackupBackupIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceBackupApiService
-	id         string
-	backupId   string
+	ctx           context.Context
+	ApiService    *ApplianceBackupApiService
+	authorization *string
+	id            string
+	backupId      string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdBackupBackupIdDeleteRequest) Authorization(authorization string) ApiAppliancesIdBackupBackupIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdBackupBackupIdDeleteRequest) Execute() (*http.Response, error) {
@@ -74,6 +81,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -92,6 +102,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -180,11 +191,18 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 }
 
 type ApiAppliancesIdBackupBackupIdGetRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceBackupApiService
-	id         string
-	backupId   string
-	range_     *string
+	ctx           context.Context
+	ApiService    *ApplianceBackupApiService
+	authorization *string
+	id            string
+	backupId      string
+	range_        *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdBackupBackupIdGetRequest) Authorization(authorization string) ApiAppliancesIdBackupBackupIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // HTTP Range support for downloading partial backups.
@@ -239,6 +257,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.range_ == nil {
 		return localVarReturnValue, nil, reportError("range_ is required and must be specified")
 	}
@@ -260,6 +281,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	localVarHeaderParams["range"] = parameterToString(*r.range_, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -358,10 +380,17 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 }
 
 type ApiAppliancesIdBackupBackupIdStatusGetRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceBackupApiService
-	id         string
-	backupId   string
+	ctx           context.Context
+	ApiService    *ApplianceBackupApiService
+	authorization *string
+	id            string
+	backupId      string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdBackupBackupIdStatusGetRequest) Authorization(authorization string) ApiAppliancesIdBackupBackupIdStatusGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdBackupBackupIdStatusGetRequest) Execute() (*AppliancesIdBackupBackupIdStatusGet200Response, *http.Response, error) {
@@ -410,6 +439,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -428,6 +460,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -527,8 +560,15 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 type ApiAppliancesIdBackupPostRequest struct {
 	ctx                           context.Context
 	ApiService                    *ApplianceBackupApiService
+	authorization                 *string
 	id                            string
 	appliancesIdBackupPostRequest *AppliancesIdBackupPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdBackupPostRequest) Authorization(authorization string) ApiAppliancesIdBackupPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Appliance Backup parameters.
@@ -580,6 +620,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -598,6 +641,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdBackupPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -24,8 +24,15 @@ import (
 type LicenseApiService service
 
 type ApiLicenseDeleteRequest struct {
-	ctx        context.Context
-	ApiService *LicenseApiService
+	ctx           context.Context
+	ApiService    *LicenseApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseDeleteRequest) Authorization(authorization string) ApiLicenseDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiLicenseDeleteRequest) Execute() (*http.Response, error) {
@@ -68,6 +75,9 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -86,6 +96,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -154,8 +165,15 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 }
 
 type ApiLicenseGetRequest struct {
-	ctx        context.Context
-	ApiService *LicenseApiService
+	ctx           context.Context
+	ApiService    *LicenseApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseGetRequest) Authorization(authorization string) ApiLicenseGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiLicenseGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
@@ -198,6 +216,9 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -216,6 +237,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -293,9 +315,16 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 }
 
 type ApiLicenseIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *LicenseApiService
-	id         string
+	ctx           context.Context
+	ApiService    *LicenseApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseIdDeleteRequest) Authorization(authorization string) ApiLicenseIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiLicenseIdDeleteRequest) Execute() (*http.Response, error) {
@@ -338,6 +367,9 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -356,6 +388,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -434,8 +467,15 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 }
 
 type ApiLicenseNextDeleteRequest struct {
-	ctx        context.Context
-	ApiService *LicenseApiService
+	ctx           context.Context
+	ApiService    *LicenseApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseNextDeleteRequest) Authorization(authorization string) ApiLicenseNextDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiLicenseNextDeleteRequest) Execute() (*http.Response, error) {
@@ -475,6 +515,9 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -493,6 +536,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -561,8 +605,15 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 }
 
 type ApiLicenseNextGetRequest struct {
-	ctx        context.Context
-	ApiService *LicenseApiService
+	ctx           context.Context
+	ApiService    *LicenseApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseNextGetRequest) Authorization(authorization string) ApiLicenseNextGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiLicenseNextGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
@@ -605,6 +656,9 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -623,6 +677,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -712,7 +767,14 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 type ApiLicenseNextPostRequest struct {
 	ctx           context.Context
 	ApiService    *LicenseApiService
+	authorization *string
 	licenseImport *LicenseImport
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicenseNextPostRequest) Authorization(authorization string) ApiLicenseNextPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // License import.
@@ -761,6 +823,9 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.licenseImport == nil {
 		return localVarReturnValue, nil, reportError("licenseImport is required and must be specified")
 	}
@@ -782,6 +847,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.licenseImport
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -883,7 +949,14 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 type ApiLicensePostRequest struct {
 	ctx           context.Context
 	ApiService    *LicenseApiService
+	authorization *string
 	licenseImport *LicenseImport
+}
+
+// The Token from the LoginResponse.
+func (r ApiLicensePostRequest) Authorization(authorization string) ApiLicensePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // License import.
@@ -932,6 +1005,9 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.licenseImport == nil {
 		return localVarReturnValue, nil, reportError("licenseImport is required and must be specified")
 	}
@@ -953,6 +1029,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.licenseImport
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

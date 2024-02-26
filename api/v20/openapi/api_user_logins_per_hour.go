@@ -23,8 +23,15 @@ import (
 type UserLoginsPerHourApiService service
 
 type ApiStatsUserLoginsGetRequest struct {
-	ctx        context.Context
-	ApiService *UserLoginsPerHourApiService
+	ctx           context.Context
+	ApiService    *UserLoginsPerHourApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiStatsUserLoginsGetRequest) Authorization(authorization string) ApiStatsUserLoginsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiStatsUserLoginsGetRequest) Execute() (*UserLogins, *http.Response, error) {
@@ -71,6 +78,9 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -89,6 +99,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

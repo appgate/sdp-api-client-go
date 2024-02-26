@@ -23,11 +23,18 @@ import (
 type TopEntitlementsApiService service
 
 type ApiStatsTopEntitlementsGetRequest struct {
-	ctx        context.Context
-	ApiService *TopEntitlementsApiService
-	range_     *string
-	orderBy    *string
-	descending *string
+	ctx           context.Context
+	ApiService    *TopEntitlementsApiService
+	authorization *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiStatsTopEntitlementsGetRequest) Authorization(authorization string) ApiStatsTopEntitlementsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // &#39;Range string to limit the result list. Format: -. 3-10 means he items between the (including) 3rd and the 10th  will be returned. Defaults to all objects.&#39;
@@ -88,6 +95,9 @@ func (a *TopEntitlementsApiService) StatsTopEntitlementsGetExecute(r ApiStatsTop
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.range_ != nil {
 		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
@@ -115,6 +125,7 @@ func (a *TopEntitlementsApiService) StatsTopEntitlementsGetExecute(r ApiStatsTop
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

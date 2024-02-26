@@ -24,9 +24,16 @@ import (
 type ApplianceApiService service
 
 type ApiAppliancesIdSwitchPartitionPostRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ApplianceApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdSwitchPartitionPostRequest) Authorization(authorization string) ApiAppliancesIdSwitchPartitionPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdSwitchPartitionPostRequest) Execute() (*http.Response, error) {
@@ -69,6 +76,9 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -87,6 +97,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

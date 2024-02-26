@@ -24,13 +24,20 @@ import (
 type TrustedCertificatesApiService service
 
 type ApiTrustedCertificatesGetRequest struct {
-	ctx        context.Context
-	ApiService *TrustedCertificatesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *TrustedCertificatesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiTrustedCertificatesGetRequest) Authorization(authorization string) ApiTrustedCertificatesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 }
 
 type ApiTrustedCertificatesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *TrustedCertificatesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *TrustedCertificatesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiTrustedCertificatesIdDeleteRequest) Authorization(authorization string) ApiTrustedCertificatesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiTrustedCertificatesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 }
 
 type ApiTrustedCertificatesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *TrustedCertificatesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *TrustedCertificatesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiTrustedCertificatesIdGetRequest) Authorization(authorization string) ApiTrustedCertificatesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiTrustedCertificatesIdGetRequest) Execute() (*TrustedCertificate, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -509,8 +542,15 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 type ApiTrustedCertificatesIdPutRequest struct {
 	ctx                context.Context
 	ApiService         *TrustedCertificatesApiService
+	authorization      *string
 	id                 string
 	trustedCertificate *TrustedCertificate
+}
+
+// The Token from the LoginResponse.
+func (r ApiTrustedCertificatesIdPutRequest) Authorization(authorization string) ApiTrustedCertificatesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Trusted Certificate object.
@@ -562,6 +602,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.trustedCertificate == nil {
 		return localVarReturnValue, nil, reportError("trustedCertificate is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.trustedCertificate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 type ApiTrustedCertificatesPostRequest struct {
 	ctx                context.Context
 	ApiService         *TrustedCertificatesApiService
+	authorization      *string
 	trustedCertificate *TrustedCertificate
+}
+
+// The Token from the LoginResponse.
+func (r ApiTrustedCertificatesPostRequest) Authorization(authorization string) ApiTrustedCertificatesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Trusted Certificate object.
@@ -743,6 +794,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.trustedCertificate == nil {
 		return localVarReturnValue, nil, reportError("trustedCertificate is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.trustedCertificate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

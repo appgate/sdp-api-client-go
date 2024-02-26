@@ -26,8 +26,15 @@ type ApplianceMaintenanceApiService service
 type ApiAppliancesIdMaintenancePostRequest struct {
 	ctx                                context.Context
 	ApiService                         *ApplianceMaintenanceApiService
+	authorization                      *string
 	id                                 string
 	appliancesIdMaintenancePostRequest *AppliancesIdMaintenancePostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdMaintenancePostRequest) Authorization(authorization string) ApiAppliancesIdMaintenancePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Enable/disable maintenance mode on Appliance
@@ -79,6 +86,9 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.appliancesIdMaintenancePostRequest == nil {
 		return localVarReturnValue, nil, reportError("appliancesIdMaintenancePostRequest is required and must be specified")
 	}
@@ -100,6 +110,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdMaintenancePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

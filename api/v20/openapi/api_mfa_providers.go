@@ -24,13 +24,20 @@ import (
 type MFAProvidersApiService service
 
 type ApiMfaProvidersGetRequest struct {
-	ctx        context.Context
-	ApiService *MFAProvidersApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersGetRequest) Authorization(authorization string) ApiMfaProvidersGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 }
 
 type ApiMfaProvidersIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *MFAProvidersApiService
-	id         string
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersIdDeleteRequest) Authorization(authorization string) ApiMfaProvidersIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiMfaProvidersIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 }
 
 type ApiMfaProvidersIdGetRequest struct {
-	ctx        context.Context
-	ApiService *MFAProvidersApiService
-	id         string
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersIdGetRequest) Authorization(authorization string) ApiMfaProvidersIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiMfaProvidersIdGetRequest) Execute() (*MfaProvider, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 }
 
 type ApiMfaProvidersIdPutRequest struct {
-	ctx         context.Context
-	ApiService  *MFAProvidersApiService
-	id          string
-	mfaProvider *MfaProvider
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	id            string
+	mfaProvider   *MfaProvider
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersIdPutRequest) Authorization(authorization string) ApiMfaProvidersIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // MFA Provider object.
@@ -562,6 +602,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.mfaProvider == nil {
 		return localVarReturnValue, nil, reportError("mfaProvider is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.mfaProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -692,9 +736,16 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 }
 
 type ApiMfaProvidersPostRequest struct {
-	ctx         context.Context
-	ApiService  *MFAProvidersApiService
-	mfaProvider *MfaProvider
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	mfaProvider   *MfaProvider
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersPostRequest) Authorization(authorization string) ApiMfaProvidersPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // MFA Provider object.
@@ -743,6 +794,9 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.mfaProvider == nil {
 		return localVarReturnValue, nil, reportError("mfaProvider is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.mfaProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -873,9 +928,16 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 }
 
 type ApiMfaProvidersTestPostRequest struct {
-	ctx         context.Context
-	ApiService  *MFAProvidersApiService
-	mfaProvider *MfaProvider
+	ctx           context.Context
+	ApiService    *MFAProvidersApiService
+	authorization *string
+	mfaProvider   *MfaProvider
+}
+
+// The Token from the LoginResponse.
+func (r ApiMfaProvidersTestPostRequest) Authorization(authorization string) ApiMfaProvidersTestPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // MFA Provider object.
@@ -924,6 +986,9 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.mfaProvider == nil {
 		return localVarReturnValue, nil, reportError("mfaProvider is required and must be specified")
 	}
@@ -945,6 +1010,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.mfaProvider
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

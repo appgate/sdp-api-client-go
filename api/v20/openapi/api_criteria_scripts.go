@@ -24,13 +24,20 @@ import (
 type CriteriaScriptsApiService service
 
 type ApiCriteriaScriptsGetRequest struct {
-	ctx        context.Context
-	ApiService *CriteriaScriptsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *CriteriaScriptsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiCriteriaScriptsGetRequest) Authorization(authorization string) ApiCriteriaScriptsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 }
 
 type ApiCriteriaScriptsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *CriteriaScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *CriteriaScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiCriteriaScriptsIdDeleteRequest) Authorization(authorization string) ApiCriteriaScriptsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiCriteriaScriptsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 }
 
 type ApiCriteriaScriptsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *CriteriaScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *CriteriaScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiCriteriaScriptsIdGetRequest) Authorization(authorization string) ApiCriteriaScriptsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiCriteriaScriptsIdGetRequest) Execute() (*CriteriaScript, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -509,8 +542,15 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 type ApiCriteriaScriptsIdPutRequest struct {
 	ctx            context.Context
 	ApiService     *CriteriaScriptsApiService
+	authorization  *string
 	id             string
 	criteriaScript *CriteriaScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiCriteriaScriptsIdPutRequest) Authorization(authorization string) ApiCriteriaScriptsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Criteria Script object.
@@ -562,6 +602,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.criteriaScript == nil {
 		return localVarReturnValue, nil, reportError("criteriaScript is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.criteriaScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 type ApiCriteriaScriptsPostRequest struct {
 	ctx            context.Context
 	ApiService     *CriteriaScriptsApiService
+	authorization  *string
 	criteriaScript *CriteriaScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiCriteriaScriptsPostRequest) Authorization(authorization string) ApiCriteriaScriptsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Criteria Script object.
@@ -743,6 +794,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.criteriaScript == nil {
 		return localVarReturnValue, nil, reportError("criteriaScript is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.criteriaScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

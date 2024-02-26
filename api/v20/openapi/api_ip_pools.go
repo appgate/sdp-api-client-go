@@ -24,13 +24,20 @@ import (
 type IPPoolsApiService service
 
 type ApiIpPoolsAllocatedIpsGetRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsAllocatedIpsGetRequest) Authorization(authorization string) ApiIpPoolsAllocatedIpsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,13 +224,20 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 }
 
 type ApiIpPoolsGetRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsGetRequest) Authorization(authorization string) ApiIpPoolsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -292,6 +310,9 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -325,6 +346,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -402,9 +424,16 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 }
 
 type ApiIpPoolsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsIdDeleteRequest) Authorization(authorization string) ApiIpPoolsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiIpPoolsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -447,6 +476,9 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -465,6 +497,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -543,9 +576,16 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 }
 
 type ApiIpPoolsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsIdGetRequest) Authorization(authorization string) ApiIpPoolsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiIpPoolsIdGetRequest) Execute() (*IpPool, *http.Response, error) {
@@ -591,6 +631,9 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -609,6 +652,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -696,10 +740,17 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 }
 
 type ApiIpPoolsIdPutRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	id         string
-	ipPool     *IpPool
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	id            string
+	ipPool        *IpPool
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsIdPutRequest) Authorization(authorization string) ApiIpPoolsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // IP Pool object.
@@ -751,6 +802,9 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.ipPool == nil {
 		return localVarReturnValue, nil, reportError("ipPool is required and must be specified")
 	}
@@ -772,6 +826,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ipPool
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -881,9 +936,16 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 }
 
 type ApiIpPoolsPostRequest struct {
-	ctx        context.Context
-	ApiService *IPPoolsApiService
-	ipPool     *IpPool
+	ctx           context.Context
+	ApiService    *IPPoolsApiService
+	authorization *string
+	ipPool        *IpPool
+}
+
+// The Token from the LoginResponse.
+func (r ApiIpPoolsPostRequest) Authorization(authorization string) ApiIpPoolsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // IP Pool object.
@@ -932,6 +994,9 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.ipPool == nil {
 		return localVarReturnValue, nil, reportError("ipPool is required and must be specified")
 	}
@@ -953,6 +1018,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ipPool
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

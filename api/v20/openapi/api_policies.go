@@ -24,13 +24,20 @@ import (
 type PoliciesApiService service
 
 type ApiPoliciesGetRequest struct {
-	ctx        context.Context
-	ApiService *PoliciesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *PoliciesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiPoliciesGetRequest) Authorization(authorization string) ApiPoliciesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *PoliciesApiService) PoliciesGetExecute(r ApiPoliciesGetRequest) (*Polic
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *PoliciesApiService) PoliciesGetExecute(r ApiPoliciesGetRequest) (*Polic
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *PoliciesApiService) PoliciesGetExecute(r ApiPoliciesGetRequest) (*Polic
 }
 
 type ApiPoliciesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *PoliciesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *PoliciesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiPoliciesIdDeleteRequest) Authorization(authorization string) ApiPoliciesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiPoliciesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *PoliciesApiService) PoliciesIdDeleteExecute(r ApiPoliciesIdDeleteReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *PoliciesApiService) PoliciesIdDeleteExecute(r ApiPoliciesIdDeleteReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *PoliciesApiService) PoliciesIdDeleteExecute(r ApiPoliciesIdDeleteReques
 }
 
 type ApiPoliciesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *PoliciesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *PoliciesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiPoliciesIdGetRequest) Authorization(authorization string) ApiPoliciesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiPoliciesIdGetRequest) Execute() (*Policy, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *PoliciesApiService) PoliciesIdGetExecute(r ApiPoliciesIdGetRequest) (*P
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *PoliciesApiService) PoliciesIdGetExecute(r ApiPoliciesIdGetRequest) (*P
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *PoliciesApiService) PoliciesIdGetExecute(r ApiPoliciesIdGetRequest) (*P
 }
 
 type ApiPoliciesIdPutRequest struct {
-	ctx        context.Context
-	ApiService *PoliciesApiService
-	id         string
-	policy     *Policy
+	ctx           context.Context
+	ApiService    *PoliciesApiService
+	authorization *string
+	id            string
+	policy        *Policy
+}
+
+// The Token from the LoginResponse.
+func (r ApiPoliciesIdPutRequest) Authorization(authorization string) ApiPoliciesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Policy object.
@@ -562,6 +602,9 @@ func (a *PoliciesApiService) PoliciesIdPutExecute(r ApiPoliciesIdPutRequest) (*P
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.policy == nil {
 		return localVarReturnValue, nil, reportError("policy is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *PoliciesApiService) PoliciesIdPutExecute(r ApiPoliciesIdPutRequest) (*P
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.policy
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -692,9 +736,16 @@ func (a *PoliciesApiService) PoliciesIdPutExecute(r ApiPoliciesIdPutRequest) (*P
 }
 
 type ApiPoliciesPostRequest struct {
-	ctx        context.Context
-	ApiService *PoliciesApiService
-	policy     *Policy
+	ctx           context.Context
+	ApiService    *PoliciesApiService
+	authorization *string
+	policy        *Policy
+}
+
+// The Token from the LoginResponse.
+func (r ApiPoliciesPostRequest) Authorization(authorization string) ApiPoliciesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Policy object.
@@ -743,6 +794,9 @@ func (a *PoliciesApiService) PoliciesPostExecute(r ApiPoliciesPostRequest) (*Pol
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.policy == nil {
 		return localVarReturnValue, nil, reportError("policy is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *PoliciesApiService) PoliciesPostExecute(r ApiPoliciesPostRequest) (*Pol
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.policy
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -23,8 +23,15 @@ import (
 type GlobalSettingsApiService service
 
 type ApiGlobalSettingsDeleteRequest struct {
-	ctx        context.Context
-	ApiService *GlobalSettingsApiService
+	ctx           context.Context
+	ApiService    *GlobalSettingsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiGlobalSettingsDeleteRequest) Authorization(authorization string) ApiGlobalSettingsDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiGlobalSettingsDeleteRequest) Execute() (*http.Response, error) {
@@ -64,6 +71,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -82,6 +92,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -150,8 +161,15 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 }
 
 type ApiGlobalSettingsGetRequest struct {
-	ctx        context.Context
-	ApiService *GlobalSettingsApiService
+	ctx           context.Context
+	ApiService    *GlobalSettingsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiGlobalSettingsGetRequest) Authorization(authorization string) ApiGlobalSettingsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiGlobalSettingsGetRequest) Execute() (*GlobalSettings, *http.Response, error) {
@@ -194,6 +212,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -212,6 +233,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -291,7 +313,14 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 type ApiGlobalSettingsPutRequest struct {
 	ctx            context.Context
 	ApiService     *GlobalSettingsApiService
+	authorization  *string
 	globalSettings *GlobalSettings
+}
+
+// The Token from the LoginResponse.
+func (r ApiGlobalSettingsPutRequest) Authorization(authorization string) ApiGlobalSettingsPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Global settings.
@@ -337,6 +366,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 	if r.globalSettings == nil {
 		return nil, reportError("globalSettings is required and must be specified")
 	}
@@ -358,6 +390,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.globalSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

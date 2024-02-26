@@ -26,7 +26,14 @@ type AppliancesApiService service
 type ApiAppliancesForceDisableControllersPostRequest struct {
 	ctx                                          context.Context
 	ApiService                                   *AppliancesApiService
+	authorization                                *string
 	appliancesForceDisableControllersPostRequest *AppliancesForceDisableControllersPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesForceDisableControllersPostRequest) Authorization(authorization string) ApiAppliancesForceDisableControllersPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Active Appliances to disable the Controller function for.
@@ -75,6 +82,9 @@ func (a *AppliancesApiService) AppliancesForceDisableControllersPostExecute(r Ap
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -93,6 +103,7 @@ func (a *AppliancesApiService) AppliancesForceDisableControllersPostExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesForceDisableControllersPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -212,13 +223,20 @@ func (a *AppliancesApiService) AppliancesForceDisableControllersPostExecute(r Ap
 }
 
 type ApiAppliancesGetRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesGetRequest) Authorization(authorization string) ApiAppliancesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -291,6 +309,9 @@ func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -324,6 +345,7 @@ func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -403,8 +425,15 @@ func (a *AppliancesApiService) AppliancesGetExecute(r ApiAppliancesGetRequest) (
 type ApiAppliancesIdCommandAddressshowPostRequest struct {
 	ctx                                       context.Context
 	ApiService                                *AppliancesApiService
+	authorization                             *string
 	id                                        string
 	appliancesIdCommandAddressshowPostRequest *AppliancesIdCommandAddressshowPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandAddressshowPostRequest) Authorization(authorization string) ApiAppliancesIdCommandAddressshowPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Addressshow parameters
@@ -456,6 +485,9 @@ func (a *AppliancesApiService) AppliancesIdCommandAddressshowPostExecute(r ApiAp
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -474,6 +506,7 @@ func (a *AppliancesApiService) AppliancesIdCommandAddressshowPostExecute(r ApiAp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandAddressshowPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -585,8 +618,15 @@ func (a *AppliancesApiService) AppliancesIdCommandAddressshowPostExecute(r ApiAp
 type ApiAppliancesIdCommandDigPostRequest struct {
 	ctx                               context.Context
 	ApiService                        *AppliancesApiService
+	authorization                     *string
 	id                                string
 	appliancesIdCommandDigPostRequest *AppliancesIdCommandDigPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandDigPostRequest) Authorization(authorization string) ApiAppliancesIdCommandDigPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Dig parameters
@@ -638,6 +678,9 @@ func (a *AppliancesApiService) AppliancesIdCommandDigPostExecute(r ApiAppliances
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -656,6 +699,7 @@ func (a *AppliancesApiService) AppliancesIdCommandDigPostExecute(r ApiAppliances
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandDigPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -767,8 +811,15 @@ func (a *AppliancesApiService) AppliancesIdCommandDigPostExecute(r ApiAppliances
 type ApiAppliancesIdCommandIpPostRequest struct {
 	ctx                              context.Context
 	ApiService                       *AppliancesApiService
+	authorization                    *string
 	id                               string
 	appliancesIdCommandIpPostRequest *AppliancesIdCommandIpPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandIpPostRequest) Authorization(authorization string) ApiAppliancesIdCommandIpPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // IP parameters
@@ -820,6 +871,9 @@ func (a *AppliancesApiService) AppliancesIdCommandIpPostExecute(r ApiAppliancesI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -838,6 +892,7 @@ func (a *AppliancesApiService) AppliancesIdCommandIpPostExecute(r ApiAppliancesI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandIpPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -949,8 +1004,15 @@ func (a *AppliancesApiService) AppliancesIdCommandIpPostExecute(r ApiAppliancesI
 type ApiAppliancesIdCommandNetcatPostRequest struct {
 	ctx                                  context.Context
 	ApiService                           *AppliancesApiService
+	authorization                        *string
 	id                                   string
 	appliancesIdCommandNetcatPostRequest *AppliancesIdCommandNetcatPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandNetcatPostRequest) Authorization(authorization string) ApiAppliancesIdCommandNetcatPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Netcat parameters
@@ -1002,6 +1064,9 @@ func (a *AppliancesApiService) AppliancesIdCommandNetcatPostExecute(r ApiApplian
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1020,6 +1085,7 @@ func (a *AppliancesApiService) AppliancesIdCommandNetcatPostExecute(r ApiApplian
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandNetcatPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1131,8 +1197,15 @@ func (a *AppliancesApiService) AppliancesIdCommandNetcatPostExecute(r ApiApplian
 type ApiAppliancesIdCommandNtpqPostRequest struct {
 	ctx                                       context.Context
 	ApiService                                *AppliancesApiService
+	authorization                             *string
 	id                                        string
 	appliancesIdCommandAddressshowPostRequest *AppliancesIdCommandAddressshowPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandNtpqPostRequest) Authorization(authorization string) ApiAppliancesIdCommandNtpqPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Ntpq parameters
@@ -1184,6 +1257,9 @@ func (a *AppliancesApiService) AppliancesIdCommandNtpqPostExecute(r ApiAppliance
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1202,6 +1278,7 @@ func (a *AppliancesApiService) AppliancesIdCommandNtpqPostExecute(r ApiAppliance
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandAddressshowPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1313,8 +1390,15 @@ func (a *AppliancesApiService) AppliancesIdCommandNtpqPostExecute(r ApiAppliance
 type ApiAppliancesIdCommandPingPostRequest struct {
 	ctx                                context.Context
 	ApiService                         *AppliancesApiService
+	authorization                      *string
 	id                                 string
 	appliancesIdCommandPingPostRequest *AppliancesIdCommandPingPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandPingPostRequest) Authorization(authorization string) ApiAppliancesIdCommandPingPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Ping parameters
@@ -1366,6 +1450,9 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1384,6 +1471,7 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandPingPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1495,8 +1583,15 @@ func (a *AppliancesApiService) AppliancesIdCommandPingPostExecute(r ApiAppliance
 type ApiAppliancesIdCommandTcpdumpPostRequest struct {
 	ctx                                   context.Context
 	ApiService                            *AppliancesApiService
+	authorization                         *string
 	id                                    string
 	appliancesIdCommandTcpdumpPostRequest *AppliancesIdCommandTcpdumpPostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandTcpdumpPostRequest) Authorization(authorization string) ApiAppliancesIdCommandTcpdumpPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Tcpdump parameters
@@ -1548,6 +1643,9 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiApplia
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1566,6 +1664,7 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiApplia
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandTcpdumpPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1677,8 +1776,15 @@ func (a *AppliancesApiService) AppliancesIdCommandTcpdumpPostExecute(r ApiApplia
 type ApiAppliancesIdCommandTraceroutePostRequest struct {
 	ctx                                      context.Context
 	ApiService                               *AppliancesApiService
+	authorization                            *string
 	id                                       string
 	appliancesIdCommandTraceroutePostRequest *AppliancesIdCommandTraceroutePostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdCommandTraceroutePostRequest) Authorization(authorization string) ApiAppliancesIdCommandTraceroutePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Traceroute parameters
@@ -1730,6 +1836,9 @@ func (a *AppliancesApiService) AppliancesIdCommandTraceroutePostExecute(r ApiApp
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1748,6 +1857,7 @@ func (a *AppliancesApiService) AppliancesIdCommandTraceroutePostExecute(r ApiApp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdCommandTraceroutePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1857,10 +1967,17 @@ func (a *AppliancesApiService) AppliancesIdCommandTraceroutePostExecute(r ApiApp
 }
 
 type ApiAppliancesIdDeactivatePostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
-	wipe       *bool
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	wipe          *bool
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdDeactivatePostRequest) Authorization(authorization string) ApiAppliancesIdDeactivatePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Sends wipe command to the Appliance. Equivalent to &#39;cz-config wipe-appliance&#39; command on the Appliance. True by default.
@@ -1909,6 +2026,9 @@ func (a *AppliancesApiService) AppliancesIdDeactivatePostExecute(r ApiAppliances
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.wipe != nil {
 		localVarQueryParams.Add("wipe", parameterToString(*r.wipe, ""))
@@ -1930,6 +2050,7 @@ func (a *AppliancesApiService) AppliancesIdDeactivatePostExecute(r ApiAppliances
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -2028,9 +2149,16 @@ func (a *AppliancesApiService) AppliancesIdDeactivatePostExecute(r ApiAppliances
 }
 
 type ApiAppliancesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdDeleteRequest) Authorization(authorization string) ApiAppliancesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -2073,6 +2201,9 @@ func (a *AppliancesApiService) AppliancesIdDeleteExecute(r ApiAppliancesIdDelete
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2091,6 +2222,7 @@ func (a *AppliancesApiService) AppliancesIdDeleteExecute(r ApiAppliancesIdDelete
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -2169,10 +2301,17 @@ func (a *AppliancesApiService) AppliancesIdDeleteExecute(r ApiAppliancesIdDelete
 }
 
 type ApiAppliancesIdExportIsoPostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
-	sSHConfig  *SSHConfig
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	sSHConfig     *SSHConfig
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdExportIsoPostRequest) Authorization(authorization string) ApiAppliancesIdExportIsoPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Export seed config object.
@@ -2224,6 +2363,9 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.sSHConfig == nil {
 		return localVarReturnValue, nil, reportError("sSHConfig is required and must be specified")
 	}
@@ -2245,6 +2387,7 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.sSHConfig
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -2364,10 +2507,17 @@ func (a *AppliancesApiService) AppliancesIdExportIsoPostExecute(r ApiAppliancesI
 }
 
 type ApiAppliancesIdExportPostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
-	sSHConfig  *SSHConfig
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	sSHConfig     *SSHConfig
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdExportPostRequest) Authorization(authorization string) ApiAppliancesIdExportPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Export seed config object.
@@ -2419,6 +2569,9 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.sSHConfig == nil {
 		return localVarReturnValue, nil, reportError("sSHConfig is required and must be specified")
 	}
@@ -2440,6 +2593,7 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.sSHConfig
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -2559,9 +2713,16 @@ func (a *AppliancesApiService) AppliancesIdExportPostExecute(r ApiAppliancesIdEx
 }
 
 type ApiAppliancesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdGetRequest) Authorization(authorization string) ApiAppliancesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdGetRequest) Execute() (*Appliance, *http.Response, error) {
@@ -2607,6 +2768,9 @@ func (a *AppliancesApiService) AppliancesIdGetExecute(r ApiAppliancesIdGetReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2625,6 +2789,7 @@ func (a *AppliancesApiService) AppliancesIdGetExecute(r ApiAppliancesIdGetReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2712,9 +2877,16 @@ func (a *AppliancesApiService) AppliancesIdGetExecute(r ApiAppliancesIdGetReques
 }
 
 type ApiAppliancesIdNameResolutionStatusGetRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdNameResolutionStatusGetRequest) Authorization(authorization string) ApiAppliancesIdNameResolutionStatusGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdNameResolutionStatusGetRequest) Execute() (*AppliancesIdNameResolutionStatusGet200Response, *http.Response, error) {
@@ -2760,6 +2932,9 @@ func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGetExecute(r ApiA
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2778,6 +2953,7 @@ func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGetExecute(r ApiA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2875,10 +3051,17 @@ func (a *AppliancesApiService) AppliancesIdNameResolutionStatusGetExecute(r ApiA
 }
 
 type ApiAppliancesIdPutRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
-	appliance  *Appliance
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+	appliance     *Appliance
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdPutRequest) Authorization(authorization string) ApiAppliancesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Appliance object.
@@ -2930,6 +3113,9 @@ func (a *AppliancesApiService) AppliancesIdPutExecute(r ApiAppliancesIdPutReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.appliance == nil {
 		return localVarReturnValue, nil, reportError("appliance is required and must be specified")
 	}
@@ -2951,6 +3137,7 @@ func (a *AppliancesApiService) AppliancesIdPutExecute(r ApiAppliancesIdPutReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliance
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -3070,9 +3257,16 @@ func (a *AppliancesApiService) AppliancesIdPutExecute(r ApiAppliancesIdPutReques
 }
 
 type ApiAppliancesIdRebootPostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdRebootPostRequest) Authorization(authorization string) ApiAppliancesIdRebootPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdRebootPostRequest) Execute() (*http.Response, error) {
@@ -3115,6 +3309,9 @@ func (a *AppliancesApiService) AppliancesIdRebootPostExecute(r ApiAppliancesIdRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3133,6 +3330,7 @@ func (a *AppliancesApiService) AppliancesIdRebootPostExecute(r ApiAppliancesIdRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -3231,9 +3429,16 @@ func (a *AppliancesApiService) AppliancesIdRebootPostExecute(r ApiAppliancesIdRe
 }
 
 type ApiAppliancesIdRenewCertificatePostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdRenewCertificatePostRequest) Authorization(authorization string) ApiAppliancesIdRenewCertificatePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdRenewCertificatePostRequest) Execute() (*http.Response, error) {
@@ -3276,6 +3481,9 @@ func (a *AppliancesApiService) AppliancesIdRenewCertificatePostExecute(r ApiAppl
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3294,6 +3502,7 @@ func (a *AppliancesApiService) AppliancesIdRenewCertificatePostExecute(r ApiAppl
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -3394,8 +3603,15 @@ func (a *AppliancesApiService) AppliancesIdRenewCertificatePostExecute(r ApiAppl
 type ApiAppliancesIdTestResolverNamePostRequest struct {
 	ctx                                     context.Context
 	ApiService                              *AppliancesApiService
+	authorization                           *string
 	id                                      string
 	appliancesIdTestResolverNamePostRequest *AppliancesIdTestResolverNamePostRequest
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdTestResolverNamePostRequest) Authorization(authorization string) ApiAppliancesIdTestResolverNamePostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // What to test on name resolvers.
@@ -3447,6 +3663,9 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppl
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -3465,6 +3684,7 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppl
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdTestResolverNamePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -3574,9 +3794,16 @@ func (a *AppliancesApiService) AppliancesIdTestResolverNamePostExecute(r ApiAppl
 }
 
 type ApiAppliancesPostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	appliance  *Appliance
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	appliance     *Appliance
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesPostRequest) Authorization(authorization string) ApiAppliancesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Appliance object.
@@ -3625,6 +3852,9 @@ func (a *AppliancesApiService) AppliancesPostExecute(r ApiAppliancesPostRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.appliance == nil {
 		return localVarReturnValue, nil, reportError("appliance is required and must be specified")
 	}
@@ -3646,6 +3876,7 @@ func (a *AppliancesApiService) AppliancesPostExecute(r ApiAppliancesPostRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.appliance
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -3765,8 +3996,15 @@ func (a *AppliancesApiService) AppliancesPostExecute(r ApiAppliancesPostRequest)
 }
 
 type ApiAppliancesRepartitionIpAllocationsPostRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesRepartitionIpAllocationsPostRequest) Authorization(authorization string) ApiAppliancesRepartitionIpAllocationsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesRepartitionIpAllocationsPostRequest) Execute() (*http.Response, error) {
@@ -3806,6 +4044,9 @@ func (a *AppliancesApiService) AppliancesRepartitionIpAllocationsPostExecute(r A
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3824,6 +4065,7 @@ func (a *AppliancesApiService) AppliancesRepartitionIpAllocationsPostExecute(r A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -3912,13 +4154,20 @@ func (a *AppliancesApiService) AppliancesRepartitionIpAllocationsPostExecute(r A
 }
 
 type ApiAppliancesStatusGetRequest struct {
-	ctx        context.Context
-	ApiService *AppliancesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *AppliancesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesStatusGetRequest) Authorization(authorization string) ApiAppliancesStatusGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -3991,6 +4240,9 @@ func (a *AppliancesApiService) AppliancesStatusGetExecute(r ApiAppliancesStatusG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -4024,6 +4276,7 @@ func (a *AppliancesApiService) AppliancesStatusGetExecute(r ApiAppliancesStatusG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

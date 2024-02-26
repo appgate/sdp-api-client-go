@@ -26,7 +26,14 @@ type ActiveSessionsApiService service
 type ApiSessionInfoDistinguishedNameGetRequest struct {
 	ctx               context.Context
 	ApiService        *ActiveSessionsApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSessionInfoDistinguishedNameGetRequest) Authorization(authorization string) ApiSessionInfoDistinguishedNameGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiSessionInfoDistinguishedNameGetRequest) Execute() (*SessionInfoDistinguishedName, *http.Response, error) {
@@ -72,6 +79,9 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -90,6 +100,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -177,8 +188,15 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 }
 
 type ApiStatsActiveSessionsDashboardGetRequest struct {
-	ctx        context.Context
-	ApiService *ActiveSessionsApiService
+	ctx           context.Context
+	ApiService    *ActiveSessionsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiStatsActiveSessionsDashboardGetRequest) Authorization(authorization string) ApiStatsActiveSessionsDashboardGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiStatsActiveSessionsDashboardGetRequest) Execute() (*DashboardSessionsDto, *http.Response, error) {
@@ -223,6 +241,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -241,6 +262,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -320,12 +342,19 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 type ApiStatsActiveSessionsDnGetRequest struct {
 	ctx              context.Context
 	ApiService       *ActiveSessionsApiService
+	authorization    *string
 	query            *string
 	range_           *string
 	orderBy          *string
 	descending       *string
 	geolocationQuery *GeolocationQuery
 	filterBy         *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiStatsActiveSessionsDnGetRequest) Authorization(authorization string) ApiStatsActiveSessionsDnGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -404,6 +433,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -440,6 +472,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -519,12 +552,19 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 type ApiStatsActiveSessionsGetRequest struct {
 	ctx              context.Context
 	ApiService       *ActiveSessionsApiService
+	authorization    *string
 	query            *string
 	range_           *string
 	orderBy          *string
 	descending       *string
 	geolocationQuery *GeolocationQuery
 	filterBy         *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiStatsActiveSessionsGetRequest) Authorization(authorization string) ApiStatsActiveSessionsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -607,6 +647,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -643,6 +686,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

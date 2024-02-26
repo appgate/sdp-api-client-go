@@ -24,13 +24,20 @@ import (
 type SitesApiService service
 
 type ApiSitesGetRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesGetRequest) Authorization(authorization string) ApiSitesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 }
 
 type ApiSitesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesIdDeleteRequest) Authorization(authorization string) ApiSitesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiSitesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 }
 
 type ApiSitesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesIdGetRequest) Authorization(authorization string) ApiSitesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiSitesIdGetRequest) Execute() (*Site, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 }
 
 type ApiSitesIdPutRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	id         string
-	site       *Site
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	id            string
+	site          *Site
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesIdPutRequest) Authorization(authorization string) ApiSitesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Site object.
@@ -562,6 +602,9 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.site == nil {
 		return localVarReturnValue, nil, reportError("site is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.site
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -692,13 +736,20 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 }
 
 type ApiSitesIdResourcesGetRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	id         string
-	resolver   *ResolverType
-	type_      *ResourceType
-	query      *string
-	range_     *string
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	id            string
+	resolver      *ResolverType
+	type_         *ResourceType
+	query         *string
+	range_        *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesIdResourcesGetRequest) Authorization(authorization string) ApiSitesIdResourcesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Resolver type to query.
@@ -768,6 +819,9 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.resolver == nil {
 		return localVarReturnValue, nil, reportError("resolver is required and must be specified")
 	}
@@ -800,6 +854,7 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -877,9 +932,16 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 }
 
 type ApiSitesPostRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	site       *Site
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	site          *Site
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesPostRequest) Authorization(authorization string) ApiSitesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Site object.
@@ -928,6 +990,9 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.site == nil {
 		return localVarReturnValue, nil, reportError("site is required and must be specified")
 	}
@@ -949,6 +1014,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.site
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1068,13 +1134,20 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 }
 
 type ApiSitesStatusGetRequest struct {
-	ctx        context.Context
-	ApiService *SitesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *SitesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiSitesStatusGetRequest) Authorization(authorization string) ApiSitesStatusGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -1147,6 +1220,9 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -1180,6 +1256,7 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -24,13 +24,20 @@ import (
 type UserClaimScriptsApiService service
 
 type ApiUserScriptsGetRequest struct {
-	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *UserClaimScriptsApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiUserScriptsGetRequest) Authorization(authorization string) ApiUserScriptsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 }
 
 type ApiUserScriptsIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *UserClaimScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiUserScriptsIdDeleteRequest) Authorization(authorization string) ApiUserScriptsIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiUserScriptsIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 }
 
 type ApiUserScriptsIdGetRequest struct {
-	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *UserClaimScriptsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiUserScriptsIdGetRequest) Authorization(authorization string) ApiUserScriptsIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiUserScriptsIdGetRequest) Execute() (*UserScript, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -507,10 +540,17 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 }
 
 type ApiUserScriptsIdPutRequest struct {
-	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
-	id         string
-	userScript *UserScript
+	ctx           context.Context
+	ApiService    *UserClaimScriptsApiService
+	authorization *string
+	id            string
+	userScript    *UserScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiUserScriptsIdPutRequest) Authorization(authorization string) ApiUserScriptsIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // User Claim Script object.
@@ -562,6 +602,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.userScript == nil {
 		return localVarReturnValue, nil, reportError("userScript is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.userScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -692,9 +736,16 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 }
 
 type ApiUserScriptsPostRequest struct {
-	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
-	userScript *UserScript
+	ctx           context.Context
+	ApiService    *UserClaimScriptsApiService
+	authorization *string
+	userScript    *UserScript
+}
+
+// The Token from the LoginResponse.
+func (r ApiUserScriptsPostRequest) Authorization(authorization string) ApiUserScriptsPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // User Claim Script object.
@@ -743,6 +794,9 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.userScript == nil {
 		return localVarReturnValue, nil, reportError("userScript is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.userScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

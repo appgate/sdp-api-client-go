@@ -23,8 +23,15 @@ import (
 type MFAForAdminsApiService service
 
 type ApiAdminMfaSettingsDeleteRequest struct {
-	ctx        context.Context
-	ApiService *MFAForAdminsApiService
+	ctx           context.Context
+	ApiService    *MFAForAdminsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMfaSettingsDeleteRequest) Authorization(authorization string) ApiAdminMfaSettingsDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdminMfaSettingsDeleteRequest) Execute() (*http.Response, error) {
@@ -64,6 +71,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -82,6 +92,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -150,8 +161,15 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 }
 
 type ApiAdminMfaSettingsGetRequest struct {
-	ctx        context.Context
-	ApiService *MFAForAdminsApiService
+	ctx           context.Context
+	ApiService    *MFAForAdminsApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMfaSettingsGetRequest) Authorization(authorization string) ApiAdminMfaSettingsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdminMfaSettingsGetRequest) Execute() (*AdminMfaSettings, *http.Response, error) {
@@ -194,6 +212,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -212,6 +233,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -291,7 +313,14 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 type ApiAdminMfaSettingsPutRequest struct {
 	ctx              context.Context
 	ApiService       *MFAForAdminsApiService
+	authorization    *string
 	adminMfaSettings *AdminMfaSettings
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdminMfaSettingsPutRequest) Authorization(authorization string) ApiAdminMfaSettingsPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Admin MFA settings.
@@ -337,6 +366,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -355,6 +387,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.adminMfaSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -23,8 +23,15 @@ import (
 type ZTPApiService service
 
 type ApiZtpDeleteRequest struct {
-	ctx        context.Context
-	ApiService *ZTPApiService
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpDeleteRequest) Authorization(authorization string) ApiZtpDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpDeleteRequest) Execute() (*ZtpStatus, *http.Response, error) {
@@ -67,6 +74,9 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -85,6 +95,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -162,8 +173,15 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 }
 
 type ApiZtpGetRequest struct {
-	ctx        context.Context
-	ApiService *ZTPApiService
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpGetRequest) Authorization(authorization string) ApiZtpGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpGetRequest) Execute() (*ZtpStatus, *http.Response, error) {
@@ -206,6 +224,9 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -224,6 +245,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -303,7 +325,14 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 type ApiZtpPostRequest struct {
 	ctx               context.Context
 	ApiService        *ZTPApiService
+	authorization     *string
 	registrationToken *RegistrationToken
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpPostRequest) Authorization(authorization string) ApiZtpPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Token to register to ZTP with.
@@ -352,6 +381,9 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.registrationToken == nil {
 		return localVarReturnValue, nil, reportError("registrationToken is required and must be specified")
 	}
@@ -373,6 +405,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.registrationToken
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -472,8 +505,15 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 }
 
 type ApiZtpServicesVersionGetRequest struct {
-	ctx        context.Context
-	ApiService *ZTPApiService
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpServicesVersionGetRequest) Authorization(authorization string) ApiZtpServicesVersionGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpServicesVersionGetRequest) Execute() (*ZtpVersionStatus, *http.Response, error) {
@@ -516,6 +556,9 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -534,6 +577,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -611,8 +655,15 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 }
 
 type ApiZtpServicesVersionPostRequest struct {
-	ctx        context.Context
-	ApiService *ZTPApiService
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpServicesVersionPostRequest) Authorization(authorization string) ApiZtpServicesVersionPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpServicesVersionPostRequest) Execute() (*ZtpVersionStatus, *http.Response, error) {
@@ -655,6 +706,9 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -673,6 +727,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -770,8 +825,15 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 }
 
 type ApiZtpSettingsGetRequest struct {
-	ctx        context.Context
-	ApiService *ZTPApiService
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpSettingsGetRequest) Authorization(authorization string) ApiZtpSettingsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpSettingsGetRequest) Execute() (*ZtpSettings, *http.Response, error) {
@@ -814,6 +876,9 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -832,6 +897,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -909,9 +975,16 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 }
 
 type ApiZtpSettingsPutRequest struct {
-	ctx         context.Context
-	ApiService  *ZTPApiService
-	ztpSettings *ZtpSettings
+	ctx           context.Context
+	ApiService    *ZTPApiService
+	authorization *string
+	ztpSettings   *ZtpSettings
+}
+
+// The Token from the LoginResponse.
+func (r ApiZtpSettingsPutRequest) Authorization(authorization string) ApiZtpSettingsPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiZtpSettingsPutRequest) ZtpSettings(ztpSettings ZtpSettings) ApiZtpSettingsPutRequest {
@@ -959,6 +1032,9 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.ztpSettings == nil {
 		return localVarReturnValue, nil, reportError("ztpSettings is required and must be specified")
 	}
@@ -980,6 +1056,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.ztpSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

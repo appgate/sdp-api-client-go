@@ -27,7 +27,14 @@ type ClientLogsApiService service
 type ApiClientLogsDistinguishedNameGetRequest struct {
 	ctx               context.Context
 	ApiService        *ClientLogsApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiClientLogsDistinguishedNameGetRequest) Authorization(authorization string) ApiClientLogsDistinguishedNameGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiClientLogsDistinguishedNameGetRequest) Execute() (**os.File, *http.Response, error) {
@@ -73,6 +80,9 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -91,6 +101,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

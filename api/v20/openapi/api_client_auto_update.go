@@ -23,8 +23,15 @@ import (
 type ClientAutoUpdateApiService service
 
 type ApiAutoUpdateSettingsGetRequest struct {
-	ctx        context.Context
-	ApiService *ClientAutoUpdateApiService
+	ctx           context.Context
+	ApiService    *ClientAutoUpdateApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAutoUpdateSettingsGetRequest) Authorization(authorization string) ApiAutoUpdateSettingsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAutoUpdateSettingsGetRequest) Execute() (*AutoUpdateSettings, *http.Response, error) {
@@ -67,6 +74,9 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -85,6 +95,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -164,7 +175,14 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 type ApiAutoUpdateSettingsPutRequest struct {
 	ctx                context.Context
 	ApiService         *ClientAutoUpdateApiService
+	authorization      *string
 	autoUpdateSettings *AutoUpdateSettings
+}
+
+// The Token from the LoginResponse.
+func (r ApiAutoUpdateSettingsPutRequest) Authorization(authorization string) ApiAutoUpdateSettingsPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Client Auto-Update settings.
@@ -210,6 +228,9 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -228,6 +249,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.autoUpdateSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

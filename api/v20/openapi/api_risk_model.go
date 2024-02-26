@@ -23,8 +23,15 @@ import (
 type RiskModelApiService service
 
 type ApiRiskModelGetRequest struct {
-	ctx        context.Context
-	ApiService *RiskModelApiService
+	ctx           context.Context
+	ApiService    *RiskModelApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiRiskModelGetRequest) Authorization(authorization string) ApiRiskModelGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiRiskModelGetRequest) Execute() (*RiskModel, *http.Response, error) {
@@ -67,6 +74,9 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -85,6 +95,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -162,9 +173,16 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 }
 
 type ApiRiskModelPutRequest struct {
-	ctx        context.Context
-	ApiService *RiskModelApiService
-	riskModel  *RiskModel
+	ctx           context.Context
+	ApiService    *RiskModelApiService
+	authorization *string
+	riskModel     *RiskModel
+}
+
+// The Token from the LoginResponse.
+func (r ApiRiskModelPutRequest) Authorization(authorization string) ApiRiskModelPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Risk Model.
@@ -210,6 +228,9 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -228,6 +249,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.riskModel
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

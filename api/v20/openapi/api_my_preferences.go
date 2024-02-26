@@ -23,8 +23,15 @@ import (
 type MyPreferencesApiService service
 
 type ApiMyPreferencesGetRequest struct {
-	ctx        context.Context
-	ApiService *MyPreferencesApiService
+	ctx           context.Context
+	ApiService    *MyPreferencesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiMyPreferencesGetRequest) Authorization(authorization string) ApiMyPreferencesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiMyPreferencesGetRequest) Execute() (map[string]interface{}, *http.Response, error) {
@@ -67,6 +74,9 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -85,6 +95,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -162,9 +173,16 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 }
 
 type ApiMyPreferencesPutRequest struct {
-	ctx         context.Context
-	ApiService  *MyPreferencesApiService
-	requestBody *map[string]interface{}
+	ctx           context.Context
+	ApiService    *MyPreferencesApiService
+	authorization *string
+	requestBody   *map[string]interface{}
+}
+
+// The Token from the LoginResponse.
+func (r ApiMyPreferencesPutRequest) Authorization(authorization string) ApiMyPreferencesPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiMyPreferencesPutRequest) RequestBody(requestBody map[string]interface{}) ApiMyPreferencesPutRequest {
@@ -209,6 +227,9 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 	if r.requestBody == nil {
 		return nil, reportError("requestBody is required and must be specified")
 	}
@@ -230,6 +251,7 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -39,9 +39,6 @@ type GlobalSettings struct {
 	BackupApiEnabled *bool `json:"backupApiEnabled,omitempty"`
 	// The passphrase to encrypt Appliance Backups when backup API is used.
 	BackupPassphrase *string `json:"backupPassphrase,omitempty"`
-	// FIPS 140-2 Compliant Tunneling.
-	// Deprecated
-	Fips *bool `json:"fips,omitempty"`
 	// Whether the automatic GeoIp updates are enabled or not.
 	GeoIpUpdates *bool `json:"geoIpUpdates,omitempty"`
 	// Audit Log persistence mode.
@@ -402,41 +399,6 @@ func (o *GlobalSettings) SetBackupPassphrase(v string) {
 	o.BackupPassphrase = &v
 }
 
-// GetFips returns the Fips field value if set, zero value otherwise.
-// Deprecated
-func (o *GlobalSettings) GetFips() bool {
-	if o == nil || o.Fips == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Fips
-}
-
-// GetFipsOk returns a tuple with the Fips field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// Deprecated
-func (o *GlobalSettings) GetFipsOk() (*bool, bool) {
-	if o == nil || o.Fips == nil {
-		return nil, false
-	}
-	return o.Fips, true
-}
-
-// HasFips returns a boolean if a field has been set.
-func (o *GlobalSettings) HasFips() bool {
-	if o != nil && o.Fips != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFips gets a reference to the given bool and assigns it to the Fips field.
-// Deprecated
-func (o *GlobalSettings) SetFips(v bool) {
-	o.Fips = &v
-}
-
 // GetGeoIpUpdates returns the GeoIpUpdates field value if set, zero value otherwise.
 func (o *GlobalSettings) GetGeoIpUpdates() bool {
 	if o == nil || o.GeoIpUpdates == nil {
@@ -655,9 +617,6 @@ func (o GlobalSettings) MarshalJSON() ([]byte, error) {
 	}
 	if o.BackupPassphrase != nil {
 		toSerialize["backupPassphrase"] = o.BackupPassphrase
-	}
-	if o.Fips != nil {
-		toSerialize["fips"] = o.Fips
 	}
 	if o.GeoIpUpdates != nil {
 		toSerialize["geoIpUpdates"] = o.GeoIpUpdates

@@ -24,13 +24,20 @@ import (
 type AdminRolesApiService service
 
 type ApiAdministrativeRolesGetRequest struct {
-	ctx        context.Context
-	ApiService *AdminRolesApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *AdminRolesApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesGetRequest) Authorization(authorization string) ApiAdministrativeRolesGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -103,6 +110,9 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -136,6 +146,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -213,9 +224,16 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 }
 
 type ApiAdministrativeRolesIdDeleteRequest struct {
-	ctx        context.Context
-	ApiService *AdminRolesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AdminRolesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesIdDeleteRequest) Authorization(authorization string) ApiAdministrativeRolesIdDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdministrativeRolesIdDeleteRequest) Execute() (*http.Response, error) {
@@ -258,6 +276,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -276,6 +297,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -354,9 +376,16 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 }
 
 type ApiAdministrativeRolesIdGetRequest struct {
-	ctx        context.Context
-	ApiService *AdminRolesApiService
-	id         string
+	ctx           context.Context
+	ApiService    *AdminRolesApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesIdGetRequest) Authorization(authorization string) ApiAdministrativeRolesIdGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdministrativeRolesIdGetRequest) Execute() (*AdministrativeRole, *http.Response, error) {
@@ -402,6 +431,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -420,6 +452,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -509,8 +542,15 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 type ApiAdministrativeRolesIdPutRequest struct {
 	ctx                context.Context
 	ApiService         *AdminRolesApiService
+	authorization      *string
 	id                 string
 	administrativeRole *AdministrativeRole
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesIdPutRequest) Authorization(authorization string) ApiAdministrativeRolesIdPutRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Administrative Role object.
@@ -562,6 +602,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.administrativeRole == nil {
 		return localVarReturnValue, nil, reportError("administrativeRole is required and must be specified")
 	}
@@ -583,6 +626,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.administrativeRole
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -694,7 +738,14 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 type ApiAdministrativeRolesPostRequest struct {
 	ctx                context.Context
 	ApiService         *AdminRolesApiService
+	authorization      *string
 	administrativeRole *AdministrativeRole
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesPostRequest) Authorization(authorization string) ApiAdministrativeRolesPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Administrative Role object.
@@ -743,6 +794,9 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.administrativeRole == nil {
 		return localVarReturnValue, nil, reportError("administrativeRole is required and must be specified")
 	}
@@ -764,6 +818,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.administrativeRole
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -873,8 +928,15 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 }
 
 type ApiAdministrativeRolesTypeTargetMapGetRequest struct {
-	ctx        context.Context
-	ApiService *AdminRolesApiService
+	ctx           context.Context
+	ApiService    *AdminRolesApiService
+	authorization *string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAdministrativeRolesTypeTargetMapGetRequest) Authorization(authorization string) ApiAdministrativeRolesTypeTargetMapGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAdministrativeRolesTypeTargetMapGetRequest) Execute() (*AdministrativeRolesTypeTargetMapGet200Response, *http.Response, error) {
@@ -917,6 +979,9 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -935,6 +1000,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

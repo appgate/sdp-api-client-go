@@ -26,7 +26,14 @@ type BlacklistedUsersApiService service
 type ApiBlacklistDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
 	ApiService        *BlacklistedUsersApiService
+	authorization     *string
 	distinguishedName string
+}
+
+// The Token from the LoginResponse.
+func (r ApiBlacklistDistinguishedNameDeleteRequest) Authorization(authorization string) ApiBlacklistDistinguishedNameDeleteRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiBlacklistDistinguishedNameDeleteRequest) Execute() (*http.Response, error) {
@@ -69,6 +76,9 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -87,6 +97,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -165,13 +176,20 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 }
 
 type ApiBlacklistGetRequest struct {
-	ctx        context.Context
-	ApiService *BlacklistedUsersApiService
-	query      *string
-	range_     *string
-	orderBy    *string
-	descending *string
-	filterBy   *map[string]string
+	ctx           context.Context
+	ApiService    *BlacklistedUsersApiService
+	authorization *string
+	query         *string
+	range_        *string
+	orderBy       *string
+	descending    *string
+	filterBy      *map[string]string
+}
+
+// The Token from the LoginResponse.
+func (r ApiBlacklistGetRequest) Authorization(authorization string) ApiBlacklistGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
@@ -244,6 +262,9 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -277,6 +298,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -356,7 +378,14 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 type ApiBlacklistPostRequest struct {
 	ctx            context.Context
 	ApiService     *BlacklistedUsersApiService
+	authorization  *string
 	blacklistEntry *BlacklistEntry
+}
+
+// The Token from the LoginResponse.
+func (r ApiBlacklistPostRequest) Authorization(authorization string) ApiBlacklistPostRequest {
+	r.authorization = &authorization
+	return r
 }
 
 // Blacklisting details
@@ -405,6 +434,9 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 	if r.blacklistEntry == nil {
 		return localVarReturnValue, nil, reportError("blacklistEntry is required and must be specified")
 	}
@@ -426,6 +458,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.blacklistEntry
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

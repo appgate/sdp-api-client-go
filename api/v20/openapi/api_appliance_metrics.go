@@ -24,9 +24,16 @@ import (
 type ApplianceMetricsApiService service
 
 type ApiAppliancesIdMetricsGetRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceMetricsApiService
-	id         string
+	ctx           context.Context
+	ApiService    *ApplianceMetricsApiService
+	authorization *string
+	id            string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdMetricsGetRequest) Authorization(authorization string) ApiAppliancesIdMetricsGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdMetricsGetRequest) Execute() (string, *http.Response, error) {
@@ -72,6 +79,9 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -90,6 +100,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -187,10 +198,17 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 }
 
 type ApiAppliancesIdMetricsNameGetRequest struct {
-	ctx        context.Context
-	ApiService *ApplianceMetricsApiService
-	id         string
-	name       string
+	ctx           context.Context
+	ApiService    *ApplianceMetricsApiService
+	authorization *string
+	id            string
+	name          string
+}
+
+// The Token from the LoginResponse.
+func (r ApiAppliancesIdMetricsNameGetRequest) Authorization(authorization string) ApiAppliancesIdMetricsNameGetRequest {
+	r.authorization = &authorization
+	return r
 }
 
 func (r ApiAppliancesIdMetricsNameGetRequest) Execute() (string, *http.Response, error) {
@@ -239,6 +257,9 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.authorization == nil {
+		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -257,6 +278,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
