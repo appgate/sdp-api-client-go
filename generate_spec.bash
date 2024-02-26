@@ -35,7 +35,7 @@ fi
 
 # Starting from v16 we will use apigentools to generate the sdk with openapi-generator,
 # older versions are not supported by apigentools.
-supportedVersions=(16 17 18 19)
+supportedVersions=(16 17 18 19 20)
 
 
 
@@ -84,7 +84,7 @@ for version in "${supportedVersions[@]}"; do
 done
 
 # use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs
-goGenerators=(18 19)
+goGenerators=(18 19 20)
 for version in "${goGenerators[@]}"; do
     go run go-generators/client/main.go  -v -version "$version"
     go test -v -count 1 "./api/v${version}/..."
