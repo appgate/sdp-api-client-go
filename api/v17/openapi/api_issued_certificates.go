@@ -44,8 +44,8 @@ CertificateAuthorityIssuedCertificatesGet Get the list of issued certificates by
 
 Get the list of issued certificates by CA.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCertificateAuthorityIssuedCertificatesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCertificateAuthorityIssuedCertificatesGetRequest
 */
 func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGet(ctx context.Context) ApiCertificateAuthorityIssuedCertificatesGetRequest {
 	return ApiCertificateAuthorityIssuedCertificatesGetRequest{
@@ -55,7 +55,8 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGet
 }
 
 // Execute executes the request
-//  @return IssuedCertificateList
+//
+//	@return IssuedCertificateList
 func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesGetExecute(r ApiCertificateAuthorityIssuedCertificatesGetRequest) (*IssuedCertificateList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -201,9 +202,9 @@ CertificateAuthorityIssuedCertificatesRevokedCertificateIdPut Revoke an issued c
 
 Revoke an issued certificate.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param certificateId ID of the issued certificate.
- @return ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param certificateId ID of the issued certificate.
+	@return ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest
 */
 func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesRevokedCertificateIdPut(ctx context.Context, certificateId string) ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest {
 	return ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest{
@@ -214,7 +215,8 @@ func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesRev
 }
 
 // Execute executes the request
-//  @return IssuedCertificate
+//
+//	@return IssuedCertificate
 func (a *IssuedCertificatesApiService) CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutExecute(r ApiCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) (*IssuedCertificate, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut

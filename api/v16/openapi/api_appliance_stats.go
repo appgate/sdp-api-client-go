@@ -48,8 +48,8 @@ StatsAppliancesGet Get Appliance Stats.
 
 Get Stats and status of the active appliances. This API makes the controller to query every active appliance for status. The operation may take long if one or more appliances take long to respond.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsAppliancesGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsAppliancesGetRequest
 */
 func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx _context.Context) ApiStatsAppliancesGetRequest {
 	return ApiStatsAppliancesGetRequest{
@@ -59,7 +59,8 @@ func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx _context.Context) ApiS
 }
 
 // Execute executes the request
-//  @return StatsAppliancesList
+//
+//	@return StatsAppliancesList
 func (a *ApplianceStatsApiService) StatsAppliancesGetExecute(r ApiStatsAppliancesGetRequest) (StatsAppliancesList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

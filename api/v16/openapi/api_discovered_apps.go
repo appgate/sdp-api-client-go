@@ -83,8 +83,8 @@ StatsAppDiscoveryGet Get Discovered Apps.
 
 Get Discovered Apps for the last 7 days. Rebooting a Gateway resets the Discovered Apps for that Gateway. This API makes the Controller to query every Gateway in the system to collect the statistics. The operation may take long if one or more appliances take long to respond.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsAppDiscoveryGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsAppDiscoveryGetRequest
 */
 func (a *DiscoveredAppsApiService) StatsAppDiscoveryGet(ctx _context.Context) ApiStatsAppDiscoveryGetRequest {
 	return ApiStatsAppDiscoveryGetRequest{
@@ -94,7 +94,8 @@ func (a *DiscoveredAppsApiService) StatsAppDiscoveryGet(ctx _context.Context) Ap
 }
 
 // Execute executes the request
-//  @return AppDiscovery
+//
+//	@return AppDiscovery
 func (a *DiscoveredAppsApiService) StatsAppDiscoveryGetExecute(r ApiStatsAppDiscoveryGetRequest) (AppDiscovery, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet

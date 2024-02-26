@@ -36,8 +36,8 @@ StatsUserLoginsGet Get User Logins Per Hour.
 
 Deprecated as of 6.3.0. Please use /on-boarded-devices APIs. Get the User Logins Per Hour for the last 24 hours.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsUserLoginsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsUserLoginsGetRequest
 
 Deprecated
 */
@@ -49,7 +49,9 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGet(ctx context.Context) Ap
 }
 
 // Execute executes the request
-//  @return UserLogins
+//
+//	@return UserLogins
+//
 // Deprecated
 func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
 	var (

@@ -36,8 +36,8 @@ MyPreferencesGet Get Admin UI User Preferences.
 
 Get UI user preferences (including search history) of the authorized user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiMyPreferencesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiMyPreferencesGetRequest
 */
 func (a *MyPreferencesApiService) MyPreferencesGet(ctx context.Context) ApiMyPreferencesGetRequest {
 	return ApiMyPreferencesGetRequest{
@@ -47,7 +47,8 @@ func (a *MyPreferencesApiService) MyPreferencesGet(ctx context.Context) ApiMyPre
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
+//
+//	@return map[string]interface{}
 func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -180,8 +181,8 @@ MyPreferencesPut Update Admin UI User Preferences.
 
 Update Admin UI user preferences and search history of admin user. Note that this endpoint does not validate keys or values but a max length of **10000** characters is enforced.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiMyPreferencesPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiMyPreferencesPutRequest
 */
 func (a *MyPreferencesApiService) MyPreferencesPut(ctx context.Context) ApiMyPreferencesPutRequest {
 	return ApiMyPreferencesPutRequest{

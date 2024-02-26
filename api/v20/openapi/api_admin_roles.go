@@ -72,8 +72,8 @@ AdministrativeRolesGet List all Administrative Roles.
 
 List all Administrative Roles visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAdministrativeRolesGetRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesGet(ctx context.Context) ApiAdministrativeRolesGetRequest {
 	return ApiAdministrativeRolesGetRequest{
@@ -83,7 +83,8 @@ func (a *AdminRolesApiService) AdministrativeRolesGet(ctx context.Context) ApiAd
 }
 
 // Execute executes the request
-//  @return AdministrativeRoleList
+//
+//	@return AdministrativeRoleList
 func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrativeRolesGetRequest) (*AdministrativeRoleList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -226,9 +227,9 @@ AdministrativeRolesIdDelete Delete a specific Administrative Role.
 
 Delete a specific Administrative Role.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAdministrativeRolesIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAdministrativeRolesIdDeleteRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesIdDelete(ctx context.Context, id string) ApiAdministrativeRolesIdDeleteRequest {
 	return ApiAdministrativeRolesIdDeleteRequest{
@@ -367,9 +368,9 @@ AdministrativeRolesIdGet Get a specific Administrative Role.
 
 Get a specific Administrative Role.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAdministrativeRolesIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAdministrativeRolesIdGetRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesIdGet(ctx context.Context, id string) ApiAdministrativeRolesIdGetRequest {
 	return ApiAdministrativeRolesIdGetRequest{
@@ -380,7 +381,8 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGet(ctx context.Context, id 
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
+//
+//	@return AdministrativeRole
 func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrativeRolesIdGetRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -526,9 +528,9 @@ AdministrativeRolesIdPut Update an existing Administrative Role.
 
 Update an existing Administrative Role.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAdministrativeRolesIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAdministrativeRolesIdPutRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesIdPut(ctx context.Context, id string) ApiAdministrativeRolesIdPutRequest {
 	return ApiAdministrativeRolesIdPutRequest{
@@ -539,7 +541,8 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPut(ctx context.Context, id 
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
+//
+//	@return AdministrativeRole
 func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrativeRolesIdPutRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -709,8 +712,8 @@ AdministrativeRolesPost Create a new Administrative Role.
 
 Create a new Administrative Role.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAdministrativeRolesPostRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesPost(ctx context.Context) ApiAdministrativeRolesPostRequest {
 	return ApiAdministrativeRolesPostRequest{
@@ -720,7 +723,8 @@ func (a *AdminRolesApiService) AdministrativeRolesPost(ctx context.Context) ApiA
 }
 
 // Execute executes the request
-//  @return AdministrativeRole
+//
+//	@return AdministrativeRole
 func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativeRolesPostRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -882,8 +886,8 @@ AdministrativeRolesTypeTargetMapGet Get Administrative Privilege type target map
 
 The type target map summarizes what kind of Privileges one can create.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAdministrativeRolesTypeTargetMapGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAdministrativeRolesTypeTargetMapGetRequest
 */
 func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGet(ctx context.Context) ApiAdministrativeRolesTypeTargetMapGetRequest {
 	return ApiAdministrativeRolesTypeTargetMapGetRequest{
@@ -893,7 +897,8 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGet(ctx context.C
 }
 
 // Execute executes the request
-//  @return AdministrativeRolesTypeTargetMapGet200Response
+//
+//	@return AdministrativeRolesTypeTargetMapGet200Response
 func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiAdministrativeRolesTypeTargetMapGetRequest) (*AdministrativeRolesTypeTargetMapGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

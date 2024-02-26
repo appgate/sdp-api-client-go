@@ -43,8 +43,8 @@ AuthenticationLogoutPost Logout
 
 The tokens for this session will be revoked
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAuthenticationLogoutPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAuthenticationLogoutPostRequest
 */
 func (a *LoginApiService) AuthenticationLogoutPost(ctx context.Context) ApiAuthenticationLogoutPostRequest {
 	return ApiAuthenticationLogoutPostRequest{
@@ -178,8 +178,8 @@ AuthenticationOtpInitializePost Initialize the MFA. For internal use.
 
 This API starts the Multi-Factor Authentication process. It requires the partial AuthToken from Authentication call. The Controller will initiate the flow and return details required to continue MFA.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAuthenticationOtpInitializePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAuthenticationOtpInitializePostRequest
 */
 func (a *LoginApiService) AuthenticationOtpInitializePost(ctx context.Context) ApiAuthenticationOtpInitializePostRequest {
 	return ApiAuthenticationOtpInitializePostRequest{
@@ -189,7 +189,8 @@ func (a *LoginApiService) AuthenticationOtpInitializePost(ctx context.Context) A
 }
 
 // Execute executes the request
-//  @return AuthenticationOtpInitializePost200Response
+//
+//	@return AuthenticationOtpInitializePost200Response
 func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthenticationOtpInitializePostRequest) (*AuthenticationOtpInitializePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -346,8 +347,8 @@ AuthenticationOtpPost Finalize the MFA. For internal use.
 
 This API starts the Multi-Factor Authentication process. It requires the partial AuthToken from Authentication call. The fields required depends on the initialization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAuthenticationOtpPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAuthenticationOtpPostRequest
 */
 func (a *LoginApiService) AuthenticationOtpPost(ctx context.Context) ApiAuthenticationOtpPostRequest {
 	return ApiAuthenticationOtpPostRequest{
@@ -357,7 +358,8 @@ func (a *LoginApiService) AuthenticationOtpPost(ctx context.Context) ApiAuthenti
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -514,8 +516,8 @@ First step for logging in is sending the credentials and retrieving partial Auth
 If the response has the "needTwoFactorAuth:true", then either API user must be extempt from Admin MFA or two-step
 MFA process must be completed before Authorization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAuthenticationPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAuthenticationPostRequest
 */
 func (a *LoginApiService) AuthenticationPost(ctx context.Context) ApiAuthenticationPostRequest {
 	return ApiAuthenticationPostRequest{
@@ -525,7 +527,8 @@ func (a *LoginApiService) AuthenticationPost(ctx context.Context) ApiAuthenticat
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -675,8 +678,8 @@ AuthorizationGet Authorize. For internal use.
 API Scripts are recommended to use the Login call instead of separate Authentication & Authorization calls.
 Last step for logging in is sending the partial AuthToken for authorization and retrieving the AuthToken.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAuthorizationGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAuthorizationGetRequest
 */
 func (a *LoginApiService) AuthorizationGet(ctx context.Context) ApiAuthorizationGetRequest {
 	return ApiAuthorizationGetRequest{
@@ -686,7 +689,8 @@ func (a *LoginApiService) AuthorizationGet(ctx context.Context) ApiAuthorization
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -837,8 +841,8 @@ IdentityProvidersNamesGet Get the list of identity providers available for admin
 
 Get the list of identity providers available for admin login.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiIdentityProvidersNamesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiIdentityProvidersNamesGetRequest
 */
 func (a *LoginApiService) IdentityProvidersNamesGet(ctx context.Context) ApiIdentityProvidersNamesGetRequest {
 	return ApiIdentityProvidersNamesGetRequest{
@@ -848,7 +852,8 @@ func (a *LoginApiService) IdentityProvidersNamesGet(ctx context.Context) ApiIden
 }
 
 // Execute executes the request
-//  @return IdentityProvidersNamesGet200Response
+//
+//	@return IdentityProvidersNamesGet200Response
 func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvidersNamesGetRequest) (*IdentityProvidersNamesGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -952,8 +957,8 @@ LoginPost Simplified Login
 
 First step for any API call is retrieving AuthToken using Login API. All other calls require the AuthToken. Client is advised to **securely store** the AuthToken and reuse until it expires. Multi-Factor Authentication is not supported by Login call, API user must be exempt from Admin MFA requirement. It is important to restrict API user's permissions strictly as-needed basis and restrict IP access to API port to trusted networks.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLoginPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLoginPostRequest
 */
 func (a *LoginApiService) LoginPost(ctx context.Context) ApiLoginPostRequest {
 	return ApiLoginPostRequest{
@@ -963,7 +968,8 @@ func (a *LoginApiService) LoginPost(ctx context.Context) ApiLoginPostRequest {
 }
 
 // Execute executes the request
-//  @return LoginResponse
+//
+//	@return LoginResponse
 func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

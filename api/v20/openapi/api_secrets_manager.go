@@ -72,8 +72,8 @@ SecretsGet List all Secrets.
 
 List all Secrets visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSecretsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSecretsGetRequest
 */
 func (a *SecretsManagerApiService) SecretsGet(ctx context.Context) ApiSecretsGetRequest {
 	return ApiSecretsGetRequest{
@@ -83,7 +83,8 @@ func (a *SecretsManagerApiService) SecretsGet(ctx context.Context) ApiSecretsGet
 }
 
 // Execute executes the request
-//  @return SecretList
+//
+//	@return SecretList
 func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*SecretList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -226,9 +227,9 @@ SecretsIdDelete Delete a specific Secret.
 
 Delete a specific Secret.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSecretsIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSecretsIdDeleteRequest
 */
 func (a *SecretsManagerApiService) SecretsIdDelete(ctx context.Context, id string) ApiSecretsIdDeleteRequest {
 	return ApiSecretsIdDeleteRequest{
@@ -367,9 +368,9 @@ SecretsIdGet Get a specific Secret.
 
 Get a specific Secret.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSecretsIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSecretsIdGetRequest
 */
 func (a *SecretsManagerApiService) SecretsIdGet(ctx context.Context, id string) ApiSecretsIdGetRequest {
 	return ApiSecretsIdGetRequest{
@@ -380,7 +381,8 @@ func (a *SecretsManagerApiService) SecretsIdGet(ctx context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return Secret
+//
+//	@return Secret
 func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -526,9 +528,9 @@ SecretsIdPut Update an existing Secret.
 
 Update an existing Secret.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiSecretsIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiSecretsIdPutRequest
 */
 func (a *SecretsManagerApiService) SecretsIdPut(ctx context.Context, id string) ApiSecretsIdPutRequest {
 	return ApiSecretsIdPutRequest{
@@ -539,7 +541,8 @@ func (a *SecretsManagerApiService) SecretsIdPut(ctx context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return Secret
+//
+//	@return Secret
 func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -709,8 +712,8 @@ SecretsPost Create a new Secret.
 
 Create a new Secret.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSecretsPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSecretsPostRequest
 */
 func (a *SecretsManagerApiService) SecretsPost(ctx context.Context) ApiSecretsPostRequest {
 	return ApiSecretsPostRequest{
@@ -720,7 +723,8 @@ func (a *SecretsManagerApiService) SecretsPost(ctx context.Context) ApiSecretsPo
 }
 
 // Execute executes the request
-//  @return Secret
+//
+//	@return Secret
 func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

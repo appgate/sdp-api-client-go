@@ -46,9 +46,9 @@ ClientLogsDistinguishedNameGet Download log files from Client by Distinguished N
 
 Sends a message to Client with the specified Distinguished Name to upload its logs. The logs are collected in a zip archive and returned as a byte stream in the response.  This API call must be made with **Accept** header of **application/vnd.appgate.peer-v19+zip**.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiClientLogsDistinguishedNameGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiClientLogsDistinguishedNameGetRequest
 */
 func (a *ClientLogsApiService) ClientLogsDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiClientLogsDistinguishedNameGetRequest {
 	return ApiClientLogsDistinguishedNameGetRequest{
@@ -59,7 +59,8 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGet(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return *os.File
+//
+//	@return *os.File
 func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClientLogsDistinguishedNameGetRequest) (**os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

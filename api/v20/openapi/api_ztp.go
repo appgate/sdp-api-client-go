@@ -36,8 +36,8 @@ ZtpDelete Unregister from ZTP.
 
 Unregister from ZTP.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpDeleteRequest
 */
 func (a *ZTPApiService) ZtpDelete(ctx context.Context) ApiZtpDeleteRequest {
 	return ApiZtpDeleteRequest{
@@ -47,7 +47,8 @@ func (a *ZTPApiService) ZtpDelete(ctx context.Context) ApiZtpDeleteRequest {
 }
 
 // Execute executes the request
-//  @return ZtpStatus
+//
+//	@return ZtpStatus
 func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
@@ -174,8 +175,8 @@ ZtpGet View the status of ZTP integration.
 
 View the status of ZTP integration.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpGetRequest
 */
 func (a *ZTPApiService) ZtpGet(ctx context.Context) ApiZtpGetRequest {
 	return ApiZtpGetRequest{
@@ -185,7 +186,8 @@ func (a *ZTPApiService) ZtpGet(ctx context.Context) ApiZtpGetRequest {
 }
 
 // Execute executes the request
-//  @return ZtpStatus
+//
+//	@return ZtpStatus
 func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -319,8 +321,8 @@ ZtpPost Register to ZTP.
 
 Register to ZTP.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpPostRequest
 */
 func (a *ZTPApiService) ZtpPost(ctx context.Context) ApiZtpPostRequest {
 	return ApiZtpPostRequest{
@@ -330,7 +332,8 @@ func (a *ZTPApiService) ZtpPost(ctx context.Context) ApiZtpPostRequest {
 }
 
 // Execute executes the request
-//  @return ZtpStatus
+//
+//	@return ZtpStatus
 func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -482,8 +485,8 @@ ZtpServicesVersionGet View the status of ZTP version checking service.
 
 View the status of ZTP version checking service.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpServicesVersionGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpServicesVersionGetRequest
 */
 func (a *ZTPApiService) ZtpServicesVersionGet(ctx context.Context) ApiZtpServicesVersionGetRequest {
 	return ApiZtpServicesVersionGetRequest{
@@ -493,7 +496,8 @@ func (a *ZTPApiService) ZtpServicesVersionGet(ctx context.Context) ApiZtpService
 }
 
 // Execute executes the request
-//  @return ZtpVersionStatus
+//
+//	@return ZtpVersionStatus
 func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetRequest) (*ZtpVersionStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -620,8 +624,8 @@ ZtpServicesVersionPost Trigger ZTP version checking service manually.
 
 Trigger ZTP version checking service manually.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpServicesVersionPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpServicesVersionPostRequest
 */
 func (a *ZTPApiService) ZtpServicesVersionPost(ctx context.Context) ApiZtpServicesVersionPostRequest {
 	return ApiZtpServicesVersionPostRequest{
@@ -631,7 +635,8 @@ func (a *ZTPApiService) ZtpServicesVersionPost(ctx context.Context) ApiZtpServic
 }
 
 // Execute executes the request
-//  @return ZtpVersionStatus
+//
+//	@return ZtpVersionStatus
 func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPostRequest) (*ZtpVersionStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -778,8 +783,8 @@ ZtpSettingsGet View ZTP settings.
 
 View ZTP settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpSettingsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpSettingsGetRequest
 */
 func (a *ZTPApiService) ZtpSettingsGet(ctx context.Context) ApiZtpSettingsGetRequest {
 	return ApiZtpSettingsGetRequest{
@@ -789,7 +794,8 @@ func (a *ZTPApiService) ZtpSettingsGet(ctx context.Context) ApiZtpSettingsGetReq
 }
 
 // Execute executes the request
-//  @return ZtpSettings
+//
+//	@return ZtpSettings
 func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -922,8 +928,8 @@ ZtpSettingsPut Update ZTP settings.
 
 Update ZTP settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiZtpSettingsPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiZtpSettingsPutRequest
 */
 func (a *ZTPApiService) ZtpSettingsPut(ctx context.Context) ApiZtpSettingsPutRequest {
 	return ApiZtpSettingsPutRequest{
@@ -933,7 +939,8 @@ func (a *ZTPApiService) ZtpSettingsPut(ctx context.Context) ApiZtpSettingsPutReq
 }
 
 // Execute executes the request
-//  @return ZtpSettings
+//
+//	@return ZtpSettings
 func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut

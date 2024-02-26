@@ -43,8 +43,8 @@ RiskModelGet View the current Risk Model.
 
 View the current Risk Model.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRiskModelGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiRiskModelGetRequest
 */
 func (a *RiskModelApiService) RiskModelGet(ctx context.Context) ApiRiskModelGetRequest {
 	return ApiRiskModelGetRequest{
@@ -54,7 +54,8 @@ func (a *RiskModelApiService) RiskModelGet(ctx context.Context) ApiRiskModelGetR
 }
 
 // Execute executes the request
-//  @return RiskModel
+//
+//	@return RiskModel
 func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*RiskModel, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -199,8 +200,8 @@ RiskModelPut Update Risk Model.
 
 Update Risk Model.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRiskModelPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiRiskModelPutRequest
 */
 func (a *RiskModelApiService) RiskModelPut(ctx context.Context) ApiRiskModelPutRequest {
 	return ApiRiskModelPutRequest{

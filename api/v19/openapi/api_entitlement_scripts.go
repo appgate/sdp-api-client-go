@@ -79,8 +79,8 @@ EntitlementScriptsGet List all Entitlement Scripts.
 
 List all Entitlement Scripts visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context) ApiEntitlementScriptsGetRequest {
 	return ApiEntitlementScriptsGetRequest{
@@ -90,7 +90,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context
 }
 
 // Execute executes the request
-//  @return EntitlementScriptList
+//
+//	@return EntitlementScriptList
 func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (*EntitlementScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -244,9 +245,9 @@ EntitlementScriptsIdDelete Delete a specific Entitlement Script.
 
 Delete a specific Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdDeleteRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
 	return ApiEntitlementScriptsIdDeleteRequest{
@@ -396,9 +397,9 @@ EntitlementScriptsIdGet Get a specific Entitlement Script.
 
 Get a specific Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdGetRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Context, id string) ApiEntitlementScriptsIdGetRequest {
 	return ApiEntitlementScriptsIdGetRequest{
@@ -409,7 +410,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -566,9 +568,9 @@ EntitlementScriptsIdPut Update an existing Entitlement Script.
 
 Update an existing Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiEntitlementScriptsIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiEntitlementScriptsIdPutRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Context, id string) ApiEntitlementScriptsIdPutRequest {
 	return ApiEntitlementScriptsIdPutRequest{
@@ -579,7 +581,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -760,8 +763,8 @@ EntitlementScriptsPost Create a new Entitlement Script.
 
 Create a new Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsPostRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Context) ApiEntitlementScriptsPostRequest {
 	return ApiEntitlementScriptsPostRequest{
@@ -771,7 +774,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return EntitlementScript
+//
+//	@return EntitlementScript
 func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -951,8 +955,8 @@ EntitlementScriptsTestPost Simulate a given expression for an Entitlement Script
 
 Simulate a given expression for an Entitlement Script.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEntitlementScriptsTestPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEntitlementScriptsTestPostRequest
 */
 func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Context) ApiEntitlementScriptsTestPostRequest {
 	return ApiEntitlementScriptsTestPostRequest{
@@ -962,7 +966,8 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Co
 }
 
 // Execute executes the request
-//  @return EntitlementScriptTestResult
+//
+//	@return EntitlementScriptTestResult
 func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (*EntitlementScriptTestResult, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

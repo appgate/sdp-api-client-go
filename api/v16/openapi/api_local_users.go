@@ -84,8 +84,8 @@ LocalUsersGet List all Local Users.
 
 List all Local Users visible to current user.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLocalUsersGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLocalUsersGetRequest
 */
 func (a *LocalUsersApiService) LocalUsersGet(ctx _context.Context) ApiLocalUsersGetRequest {
 	return ApiLocalUsersGetRequest{
@@ -95,7 +95,8 @@ func (a *LocalUsersApiService) LocalUsersGet(ctx _context.Context) ApiLocalUsers
 }
 
 // Execute executes the request
-//  @return LocalUserList
+//
+//	@return LocalUserList
 func (a *LocalUsersApiService) LocalUsersGetExecute(r ApiLocalUsersGetRequest) (LocalUserList, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -241,9 +242,9 @@ LocalUsersIdDelete Delete a specific Local User.
 
 Delete a specific Local User.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiLocalUsersIdDeleteRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiLocalUsersIdDeleteRequest
 */
 func (a *LocalUsersApiService) LocalUsersIdDelete(ctx _context.Context, id string) ApiLocalUsersIdDeleteRequest {
 	return ApiLocalUsersIdDeleteRequest{
@@ -385,9 +386,9 @@ LocalUsersIdGet Get a specific Local User.
 
 Get a specific Local User.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiLocalUsersIdGetRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiLocalUsersIdGetRequest
 */
 func (a *LocalUsersApiService) LocalUsersIdGet(ctx _context.Context, id string) ApiLocalUsersIdGetRequest {
 	return ApiLocalUsersIdGetRequest{
@@ -398,7 +399,8 @@ func (a *LocalUsersApiService) LocalUsersIdGet(ctx _context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return LocalUser
+//
+//	@return LocalUser
 func (a *LocalUsersApiService) LocalUsersIdGetExecute(r ApiLocalUsersIdGetRequest) (LocalUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
@@ -547,9 +549,9 @@ LocalUsersIdPut Update an existing Local User.
 
 Update an existing Local User.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiLocalUsersIdPutRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiLocalUsersIdPutRequest
 */
 func (a *LocalUsersApiService) LocalUsersIdPut(ctx _context.Context, id string) ApiLocalUsersIdPutRequest {
 	return ApiLocalUsersIdPutRequest{
@@ -560,7 +562,8 @@ func (a *LocalUsersApiService) LocalUsersIdPut(ctx _context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return LocalUser
+//
+//	@return LocalUser
 func (a *LocalUsersApiService) LocalUsersIdPutExecute(r ApiLocalUsersIdPutRequest) (LocalUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
@@ -733,8 +736,8 @@ LocalUsersPost Create a new Local User.
 
 Create a new Local User.
 
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLocalUsersPostRequest
+	@param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLocalUsersPostRequest
 */
 func (a *LocalUsersApiService) LocalUsersPost(ctx _context.Context) ApiLocalUsersPostRequest {
 	return ApiLocalUsersPostRequest{
@@ -744,7 +747,8 @@ func (a *LocalUsersApiService) LocalUsersPost(ctx _context.Context) ApiLocalUser
 }
 
 // Execute executes the request
-//  @return LocalUser
+//
+//	@return LocalUser
 func (a *LocalUsersApiService) LocalUsersPostExecute(r ApiLocalUsersPostRequest) (LocalUser, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost

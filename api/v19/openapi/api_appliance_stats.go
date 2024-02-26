@@ -80,8 +80,8 @@ Get Stats and status of the active appliances. This API makes the controller to 
 
 **Note:** if identical filter keys are chained with '&', the first filter is applied and the rest are ignored.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsAppliancesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsAppliancesGetRequest
 */
 func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx context.Context) ApiStatsAppliancesGetRequest {
 	return ApiStatsAppliancesGetRequest{
@@ -91,7 +91,8 @@ func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx context.Context) ApiSt
 }
 
 // Execute executes the request
-//  @return StatsAppliancesList
+//
+//	@return StatsAppliancesList
 func (a *ApplianceStatsApiService) StatsAppliancesGetExecute(r ApiStatsAppliancesGetRequest) (*StatsAppliancesList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

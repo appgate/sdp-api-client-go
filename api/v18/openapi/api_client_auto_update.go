@@ -43,8 +43,8 @@ AutoUpdateSettingsGet View Client Auto-Update settings.
 
 View Client Auto-Update settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAutoUpdateSettingsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAutoUpdateSettingsGetRequest
 */
 func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx context.Context) ApiAutoUpdateSettingsGetRequest {
 	return ApiAutoUpdateSettingsGetRequest{
@@ -54,7 +54,8 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx context.Context) 
 }
 
 // Execute executes the request
-//  @return AutoUpdateSettings
+//
+//	@return AutoUpdateSettings
 func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdateSettingsGetRequest) (*AutoUpdateSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -199,8 +200,8 @@ AutoUpdateSettingsPut Update Client Auto-Update settings.
 
 Update Client Auto-Update settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAutoUpdateSettingsPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAutoUpdateSettingsPutRequest
 */
 func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPut(ctx context.Context) ApiAutoUpdateSettingsPutRequest {
 	return ApiAutoUpdateSettingsPutRequest{

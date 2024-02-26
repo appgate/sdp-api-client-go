@@ -52,9 +52,9 @@ AppliancesIdUpgradeCompletePost Install the prepared Appliance Upgrade.
 
 Install the downloaded to Upgrade image to the other partition. This will stop the Controller and other services which may be affected by the Upgrade. "GET appliances/{id}/upgrade" must return "status":"ready" before accepting the complete command. The progress can be followed by polling the appliance via "GET appliances/{id}/upgrade". Unless "switchPartition" field is sent as true, the appliance will stay in the same partition, waiting for the "POST appliances/{id}/switch-partition" request to finalize the Upgrade.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradeCompletePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradeCompletePostRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePost(ctx context.Context, id string) ApiAppliancesIdUpgradeCompletePostRequest {
 	return ApiAppliancesIdUpgradeCompletePostRequest{
@@ -65,7 +65,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePost(ctx context
 }
 
 // Execute executes the request
-//  @return ApplianceUpgradeInternal
+//
+//	@return ApplianceUpgradeInternal
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r ApiAppliancesIdUpgradeCompletePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -237,9 +238,9 @@ AppliancesIdUpgradeDelete Cancel an Appliance Upgrade.
 
 Cancel an Appliance Upgrade. The request is rejected if 'GET appliances/{id}/upgrade' returns '"status":"installing"'.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradeDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradeDeleteRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDelete(ctx context.Context, id string) ApiAppliancesIdUpgradeDeleteRequest {
 	return ApiAppliancesIdUpgradeDeleteRequest{
@@ -399,9 +400,9 @@ AppliancesIdUpgradeGet Get the status of an Appliance Upgrade.
 
 Get the status of an Appliance Upgrade.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradeGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradeGetRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx context.Context, id string) ApiAppliancesIdUpgradeGetRequest {
 	return ApiAppliancesIdUpgradeGetRequest{
@@ -412,7 +413,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx context.Context,
 }
 
 // Execute executes the request
-//  @return AppliancesIdUpgradeDelete200Response
+//
+//	@return AppliancesIdUpgradeDelete200Response
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (*AppliancesIdUpgradeDelete200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -578,9 +580,9 @@ AppliancesIdUpgradePost Initiate an Appliance Upgrade.
 
 Initiate an Appliance Upgrade. This API call does what "prepare", "complete" and "switchPartition" API calls do all at once. "GET appliances/{id}/upgrade" must return "status":"idle|failed" before accepting the complete command. The progress can be followed by by polling the appliance via "GET appliances/{id}/upgrade".
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradePostRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePost(ctx context.Context, id string) ApiAppliancesIdUpgradePostRequest {
 	return ApiAppliancesIdUpgradePostRequest{
@@ -591,7 +593,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePost(ctx context.Context
 }
 
 // Execute executes the request
-//  @return ApplianceUpgradeInternal
+//
+//	@return ApplianceUpgradeInternal
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiAppliancesIdUpgradePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -772,9 +775,9 @@ AppliancesIdUpgradePreparePost Prepare an Appliance Upgrade.
 
 Prepare an Appliance Upgrade. Appliance will download the Upgrade image and wait for the "complete" call before starting the Upgrade. The appliance will be functional until the "complete" call is made. "GET appliances/{id}/upgrade" must return "status":"idle|failed" before accepting the complete command. The progress can be followed by polling the appliance via "GET appliances/{id}/upgrade".
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradePreparePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradePreparePostRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePost(ctx context.Context, id string) ApiAppliancesIdUpgradePreparePostRequest {
 	return ApiAppliancesIdUpgradePreparePostRequest{
@@ -785,7 +788,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePost(ctx context.
 }
 
 // Execute executes the request
-//  @return ApplianceUpgradeInternal
+//
+//	@return ApplianceUpgradeInternal
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r ApiAppliancesIdUpgradePreparePostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -960,9 +964,9 @@ AppliancesIdUpgradeSwitchPartitionPost Switch partition on the Appliance for com
 
 Reboot and switch partition on the appliance to finalize the Upgrade. "GET appliances/{id}/upgrade" must return "status":"success" before accepting the complete command. Since the appliance will be rebooted, the status cannot be queried directly. The Upgrade Script utilizes the Appliance Status dashboard APIs to verify the status after this.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdUpgradeSwitchPartitionPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdUpgradeSwitchPartitionPostRequest
 */
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPost(ctx context.Context, id string) ApiAppliancesIdUpgradeSwitchPartitionPostRequest {
 	return ApiAppliancesIdUpgradeSwitchPartitionPostRequest{
@@ -973,7 +977,8 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPost(ctx 
 }
 
 // Execute executes the request
-//  @return ApplianceUpgradeInternal
+//
+//	@return ApplianceUpgradeInternal
 func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecute(r ApiAppliancesIdUpgradeSwitchPartitionPostRequest) (*ApplianceUpgradeInternal, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -1150,9 +1155,9 @@ FilesFilenameDelete Delete a File.
 
 Delete a File from the current Controller.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param filename The filename as it's uploaded to the Controller.
- @return ApiFilesFilenameDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param filename The filename as it's uploaded to the Controller.
+	@return ApiFilesFilenameDeleteRequest
 */
 func (a *ApplianceUpgradeApiService) FilesFilenameDelete(ctx context.Context, filename string) ApiFilesFilenameDeleteRequest {
 	return ApiFilesFilenameDeleteRequest{
@@ -1322,9 +1327,9 @@ FilesFilenameGet Get the status of a File.
 
 Get the status of a File uploaded to the current Controller.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param filename The filename as it's uploaded to the Controller.
- @return ApiFilesFilenameGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param filename The filename as it's uploaded to the Controller.
+	@return ApiFilesFilenameGetRequest
 */
 func (a *ApplianceUpgradeApiService) FilesFilenameGet(ctx context.Context, filename string) ApiFilesFilenameGetRequest {
 	return ApiFilesFilenameGetRequest{
@@ -1335,7 +1340,8 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGet(ctx context.Context, filen
 }
 
 // Execute executes the request
-//  @return File
+//
+//	@return File
 func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameGetRequest) (*File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1504,8 +1510,8 @@ FilesGet List all Files.
 
 List all Files uploaded to the current Controller and their details.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiFilesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiFilesGetRequest
 */
 func (a *ApplianceUpgradeApiService) FilesGet(ctx context.Context) ApiFilesGetRequest {
 	return ApiFilesGetRequest{
@@ -1515,7 +1521,8 @@ func (a *ApplianceUpgradeApiService) FilesGet(ctx context.Context) ApiFilesGetRe
 }
 
 // Execute executes the request
-//  @return FileList
+//
+//	@return FileList
 func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*FileList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1662,8 +1669,8 @@ FilesPost Make Controller download a File from a given URL.
 
 Make the current Controller download a File from a given URL. Note that the File is downloaded and stored only on the current Controller, not synced between Controllers.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiFilesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiFilesPostRequest
 */
 func (a *ApplianceUpgradeApiService) FilesPost(ctx context.Context) ApiFilesPostRequest {
 	return ApiFilesPostRequest{
@@ -1839,8 +1846,8 @@ FilesPut Upload a File directly to the Controller.
 
 Upload a File directly to the current Controller. Note that the File is stored only on the current Controller, not synced between Controllers.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiFilesPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiFilesPutRequest
 */
 func (a *ApplianceUpgradeApiService) FilesPut(ctx context.Context) ApiFilesPutRequest {
 	return ApiFilesPutRequest{

@@ -45,9 +45,9 @@ SessionInfoDistinguishedNameGet Get details of a specific Active Client Session.
 
 Get the details of a specific Active Client Session from all Gateways. This API makes the Controller to query very Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiSessionInfoDistinguishedNameGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiSessionInfoDistinguishedNameGetRequest
 */
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
 	return ApiSessionInfoDistinguishedNameGetRequest{
@@ -58,7 +58,8 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.C
 }
 
 // Execute executes the request
-//  @return SessionInfoDistinguishedName
+//
+//	@return SessionInfoDistinguishedName
 func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -249,8 +250,8 @@ StatsActiveSessionsDnGet Get Active Client Sessions grouped by Distinguished Nam
 
 Get session data from currently Active Client Sessions grouped by distinguished name. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsActiveSessionsDnGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsActiveSessionsDnGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
 	return ApiStatsActiveSessionsDnGetRequest{
@@ -260,7 +261,8 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context)
 }
 
 // Execute executes the request
-//  @return ActiveSessionsDn
+//
+//	@return ActiveSessionsDn
 func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -458,8 +460,8 @@ StatsActiveSessionsGet Get Active Client Sessions.
 
 Get currently Active Client Sessions. This API makes the Controller to query every Gateway in the system to collect the session data. The operation may take long if one or more Gateways take long to respond.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsActiveSessionsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsActiveSessionsGetRequest
 */
 func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) ApiStatsActiveSessionsGetRequest {
 	return ApiStatsActiveSessionsGetRequest{
@@ -469,7 +471,8 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) A
 }
 
 // Execute executes the request
-//  @return ActiveSessions
+//
+//	@return ActiveSessions
 func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiveSessionsGetRequest) (*ActiveSessions, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

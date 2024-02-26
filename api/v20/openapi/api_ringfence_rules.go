@@ -72,8 +72,8 @@ RingfenceRulesGet List all Ringfence Rules.
 
 List all Ringfence Rules visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRingfenceRulesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiRingfenceRulesGetRequest
 */
 func (a *RingfenceRulesApiService) RingfenceRulesGet(ctx context.Context) ApiRingfenceRulesGetRequest {
 	return ApiRingfenceRulesGetRequest{
@@ -83,7 +83,8 @@ func (a *RingfenceRulesApiService) RingfenceRulesGet(ctx context.Context) ApiRin
 }
 
 // Execute executes the request
-//  @return RingfenceRuleList
+//
+//	@return RingfenceRuleList
 func (a *RingfenceRulesApiService) RingfenceRulesGetExecute(r ApiRingfenceRulesGetRequest) (*RingfenceRuleList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -226,9 +227,9 @@ RingfenceRulesIdDelete Delete a specific Ringfence Rule.
 
 Delete a specific Ringfence Rule.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiRingfenceRulesIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiRingfenceRulesIdDeleteRequest
 */
 func (a *RingfenceRulesApiService) RingfenceRulesIdDelete(ctx context.Context, id string) ApiRingfenceRulesIdDeleteRequest {
 	return ApiRingfenceRulesIdDeleteRequest{
@@ -367,9 +368,9 @@ RingfenceRulesIdGet Get a specific Ringfence Rule.
 
 Get a specific Ringfence Rule.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiRingfenceRulesIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiRingfenceRulesIdGetRequest
 */
 func (a *RingfenceRulesApiService) RingfenceRulesIdGet(ctx context.Context, id string) ApiRingfenceRulesIdGetRequest {
 	return ApiRingfenceRulesIdGetRequest{
@@ -380,7 +381,8 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdGet(ctx context.Context, id s
 }
 
 // Execute executes the request
-//  @return RingfenceRule
+//
+//	@return RingfenceRule
 func (a *RingfenceRulesApiService) RingfenceRulesIdGetExecute(r ApiRingfenceRulesIdGetRequest) (*RingfenceRule, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -526,9 +528,9 @@ RingfenceRulesIdPut Update an existing Ringfence Rule.
 
 Update an existing Ringfence Rule.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiRingfenceRulesIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiRingfenceRulesIdPutRequest
 */
 func (a *RingfenceRulesApiService) RingfenceRulesIdPut(ctx context.Context, id string) ApiRingfenceRulesIdPutRequest {
 	return ApiRingfenceRulesIdPutRequest{
@@ -539,7 +541,8 @@ func (a *RingfenceRulesApiService) RingfenceRulesIdPut(ctx context.Context, id s
 }
 
 // Execute executes the request
-//  @return RingfenceRule
+//
+//	@return RingfenceRule
 func (a *RingfenceRulesApiService) RingfenceRulesIdPutExecute(r ApiRingfenceRulesIdPutRequest) (*RingfenceRule, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -709,8 +712,8 @@ RingfenceRulesPost Create a new Ringfence Rule.
 
 Create a new Ringfence Rule.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiRingfenceRulesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiRingfenceRulesPostRequest
 */
 func (a *RingfenceRulesApiService) RingfenceRulesPost(ctx context.Context) ApiRingfenceRulesPostRequest {
 	return ApiRingfenceRulesPostRequest{
@@ -720,7 +723,8 @@ func (a *RingfenceRulesApiService) RingfenceRulesPost(ctx context.Context) ApiRi
 }
 
 // Execute executes the request
-//  @return RingfenceRule
+//
+//	@return RingfenceRule
 func (a *RingfenceRulesApiService) RingfenceRulesPostExecute(r ApiRingfenceRulesPostRequest) (*RingfenceRule, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

@@ -38,9 +38,9 @@ OnBoardedDevicesReevaluateDistinguishedNamePost Reevaluate all sessions with giv
 
 Reevaluate all sessions belongs to the user&devices ending with the given Distinguished Name substring.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest
 */
 func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest {
 	return ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest{
@@ -51,7 +51,8 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePos
 }
 
 // Execute executes the request
-//  @return OnBoardedDevicesReevaluateDistinguishedNamePost200Response
+//
+//	@return OnBoardedDevicesReevaluateDistinguishedNamePost200Response
 func (a *ActiveDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePostExecute(r ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest) (*OnBoardedDevicesReevaluateDistinguishedNamePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -196,8 +197,8 @@ OnBoardedDevicesRevokeTokensPost Revoke tokens for devices.
 
 Revoke tokens for devices according to the request parameters.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiOnBoardedDevicesRevokeTokensPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiOnBoardedDevicesRevokeTokensPostRequest
 */
 func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPost(ctx context.Context) ApiOnBoardedDevicesRevokeTokensPostRequest {
 	return ApiOnBoardedDevicesRevokeTokensPostRequest{
@@ -207,7 +208,8 @@ func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPost(ctx context.C
 }
 
 // Execute executes the request
-//  @return OnBoardedDeviceList
+//
+//	@return OnBoardedDeviceList
 func (a *ActiveDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r ApiOnBoardedDevicesRevokeTokensPostRequest) (*OnBoardedDeviceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -391,8 +393,8 @@ TokenRecordsDnGet List all Distinguished Names active in the past 24 hour.
 
 Deprecated as of 6.3. Please use /on-boarded-devices APIs. List all Distinguished Names active in the past 24 hour. Includes the users who has at least one token that has not expired past 24 hours. If a token was created 30 hours ago and it has 10 hours expiration time, it will be in this list.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTokenRecordsDnGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTokenRecordsDnGetRequest
 
 Deprecated
 */
@@ -404,7 +406,9 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx context.Context) ApiToke
 }
 
 // Execute executes the request
-//  @return DistinguishedNameList
+//
+//	@return DistinguishedNameList
+//
 // Deprecated
 func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGetRequest) (*DistinguishedNameList, *http.Response, error) {
 	var (
@@ -548,9 +552,9 @@ TokenRecordsReevalByDnDistinguishedNamePost Reevaluate all sessions with given D
 
 Deprecated as of 6.3. Please use /on-boarded-devices APIs. Reevaluate all sessions belongs to the user&devices ending with the given Distinguished Name substring.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest
 
 Deprecated
 */
@@ -563,7 +567,9 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ct
 }
 
 // Execute executes the request
-//  @return TokenRecordsReevalByDnDistinguishedNamePost200Response
+//
+//	@return TokenRecordsReevalByDnDistinguishedNamePost200Response
+//
 // Deprecated
 func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (*TokenRecordsReevalByDnDistinguishedNamePost200Response, *http.Response, error) {
 	var (
@@ -724,9 +730,9 @@ TokenRecordsRevokedByDnDistinguishedNamePut Revoke all Tokens ending with the gi
 
 Deprecated as of 6.3. Please use /on-boarded-devices APIs. Revoke all Tokens belong to the user&devices ending with the given Distinguished Name substring.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
- @return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
+	@return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest
 
 Deprecated
 */
@@ -739,7 +745,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ct
 }
 
 // Execute executes the request
-//  @return TokenRevocationResponse
+//
+//	@return TokenRevocationResponse
+//
 // Deprecated
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExecute(r ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (
@@ -911,9 +919,9 @@ TokenRecordsRevokedByTypeTokenTypePut Revoke all Tokens with given type.
 
 Deprecated as of 6.3. Please use /on-boarded-devices APIs. Revoke all Tokens with given type.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param tokenType The type of the tokens.
- @return ApiTokenRecordsRevokedByTypeTokenTypePutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param tokenType The type of the tokens.
+	@return ApiTokenRecordsRevokedByTypeTokenTypePutRequest
 
 Deprecated
 */
@@ -926,7 +934,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx cont
 }
 
 // Execute executes the request
-//  @return TokenRevocationResponse
+//
+//	@return TokenRevocationResponse
+//
 // Deprecated
 func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r ApiTokenRecordsRevokedByTypeTokenTypePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (

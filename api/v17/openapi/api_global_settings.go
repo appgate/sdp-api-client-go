@@ -43,8 +43,8 @@ GlobalSettingsDelete Reset all Global Settings to the default values.
 
 Reset all Global Settings to the default values.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGlobalSettingsDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGlobalSettingsDeleteRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsDelete(ctx context.Context) ApiGlobalSettingsDeleteRequest {
 	return ApiGlobalSettingsDeleteRequest{
@@ -181,8 +181,8 @@ GlobalSettingsGet View various Global Settings.
 
 View various Global Settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGlobalSettingsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGlobalSettingsGetRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx context.Context) ApiGlobalSettingsGetRequest {
 	return ApiGlobalSettingsGetRequest{
@@ -192,7 +192,8 @@ func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx context.Context) ApiGlo
 }
 
 // Execute executes the request
-//  @return GlobalSettings
+//
+//	@return GlobalSettings
 func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsGetRequest) (*GlobalSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -337,8 +338,8 @@ GlobalSettingsPut Update all Global Settings.
 
 Update all Global Settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGlobalSettingsPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGlobalSettingsPutRequest
 */
 func (a *GlobalSettingsApiService) GlobalSettingsPut(ctx context.Context) ApiGlobalSettingsPutRequest {
 	return ApiGlobalSettingsPutRequest{

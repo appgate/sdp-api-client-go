@@ -46,10 +46,10 @@ AppliancesIdChangeChangeIdGet Get all change information from an Appliance.
 
 When a change is requested on an appliance it returns a change id. We can use that change id to get information about that change.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param changeId Change id
- @param id ID of the object.
- @return ApiAppliancesIdChangeChangeIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param changeId Change id
+	@param id ID of the object.
+	@return ApiAppliancesIdChangeChangeIdGetRequest
 */
 func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGet(ctx context.Context, changeId string, id string) ApiAppliancesIdChangeChangeIdGetRequest {
 	return ApiAppliancesIdChangeChangeIdGetRequest{
@@ -61,7 +61,8 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGet(ctx context.Co
 }
 
 // Execute executes the request
-//  @return AppliancesIdChangeChangeIdGet200Response
+//
+//	@return AppliancesIdChangeChangeIdGet200Response
 func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAppliancesIdChangeChangeIdGetRequest) (*AppliancesIdChangeChangeIdGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

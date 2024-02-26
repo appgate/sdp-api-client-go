@@ -43,8 +43,8 @@ StatsFailedAuthenticationsGet Get failed authentications per hour.
 
 Get the failed authentications per hour for the last 24 hours. Deprecated as of 6.1.0. Use monitoring tools or audit logs instead.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsFailedAuthenticationsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsFailedAuthenticationsGetRequest
 
 Deprecated
 */
@@ -56,7 +56,9 @@ func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGet(c
 }
 
 // Execute executes the request
-//  @return FailedAuthentications
+//
+//	@return FailedAuthentications
+//
 // Deprecated
 func (a *FailedAuthenticationsPerHourApiService) StatsFailedAuthenticationsGetExecute(r ApiStatsFailedAuthenticationsGetRequest) (*FailedAuthentications, *http.Response, error) {
 	var (

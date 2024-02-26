@@ -38,9 +38,9 @@ AppliancesIdSwitchPartitionPost Switch partition on the Appliance, regardless of
 
 Reboot and switch partition on the Appliance.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiAppliancesIdSwitchPartitionPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiAppliancesIdSwitchPartitionPostRequest
 */
 func (a *ApplianceApiService) AppliancesIdSwitchPartitionPost(ctx context.Context, id string) ApiAppliancesIdSwitchPartitionPostRequest {
 	return ApiAppliancesIdSwitchPartitionPostRequest{

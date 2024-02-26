@@ -44,8 +44,8 @@ ClientConnectionsDelete Reset Client Connections to the default settings.
 
 Reset Client Connections to the default settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClientConnectionsDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClientConnectionsDeleteRequest
 
 Deprecated
 */
@@ -185,8 +185,8 @@ ClientConnectionsGet View Client Connection settings.
 
 View Client Connection settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClientConnectionsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClientConnectionsGetRequest
 
 Deprecated
 */
@@ -198,7 +198,9 @@ func (a *ClientProfilesApiService) ClientConnectionsGet(ctx context.Context) Api
 }
 
 // Execute executes the request
-//  @return ClientConnections
+//
+//	@return ClientConnections
+//
 // Deprecated
 func (a *ClientProfilesApiService) ClientConnectionsGetExecute(r ApiClientConnectionsGetRequest) (*ClientConnections, *http.Response, error) {
 	var (
@@ -338,9 +340,9 @@ ClientConnectionsProfileNameBarcodeGet Get QR code for connection URL.
 
 Get QR code for connection URL.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param profileName Name of the profile.
- @return ApiClientConnectionsProfileNameBarcodeGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param profileName Name of the profile.
+	@return ApiClientConnectionsProfileNameBarcodeGetRequest
 
 Deprecated
 */
@@ -353,7 +355,9 @@ func (a *ClientProfilesApiService) ClientConnectionsProfileNameBarcodeGet(ctx co
 }
 
 // Execute executes the request
-//  @return ClientConnectionsProfileNameBarcodeGet200Response
+//
+//	@return ClientConnectionsProfileNameBarcodeGet200Response
+//
 // Deprecated
 func (a *ClientProfilesApiService) ClientConnectionsProfileNameBarcodeGetExecute(r ApiClientConnectionsProfileNameBarcodeGetRequest) (*ClientConnectionsProfileNameBarcodeGet200Response, *http.Response, error) {
 	var (
@@ -504,9 +508,9 @@ ClientConnectionsProfileNameUrlGet Get connection URL for the profile.
 
 Get connection URL for the profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param profileName Name of the profile.
- @return ApiClientConnectionsProfileNameUrlGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param profileName Name of the profile.
+	@return ApiClientConnectionsProfileNameUrlGetRequest
 
 Deprecated
 */
@@ -519,7 +523,9 @@ func (a *ClientProfilesApiService) ClientConnectionsProfileNameUrlGet(ctx contex
 }
 
 // Execute executes the request
-//  @return ClientConnectionsProfileNameUrlGet200Response
+//
+//	@return ClientConnectionsProfileNameUrlGet200Response
+//
 // Deprecated
 func (a *ClientProfilesApiService) ClientConnectionsProfileNameUrlGetExecute(r ApiClientConnectionsProfileNameUrlGetRequest) (*ClientConnectionsProfileNameUrlGet200Response, *http.Response, error) {
 	var (
@@ -676,8 +682,8 @@ ClientConnectionsPut Update Client Connection settings.
 
 Update Client Connection settings.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClientConnectionsPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClientConnectionsPutRequest
 
 Deprecated
 */
@@ -689,7 +695,9 @@ func (a *ClientProfilesApiService) ClientConnectionsPut(ctx context.Context) Api
 }
 
 // Execute executes the request
-//  @return ClientConnections
+//
+//	@return ClientConnections
+//
 // Deprecated
 func (a *ClientProfilesApiService) ClientConnectionsPutExecute(r ApiClientConnectionsPutRequest) (*ClientConnections, *http.Response, error) {
 	var (
@@ -888,8 +896,8 @@ ClientProfilesGet List all Client Profiles.
 
 List all Client Profiles visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClientProfilesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClientProfilesGetRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesGet(ctx context.Context) ApiClientProfilesGetRequest {
 	return ApiClientProfilesGetRequest{
@@ -899,7 +907,8 @@ func (a *ClientProfilesApiService) ClientProfilesGet(ctx context.Context) ApiCli
 }
 
 // Execute executes the request
-//  @return ClientProfileList
+//
+//	@return ClientProfileList
 func (a *ClientProfilesApiService) ClientProfilesGetExecute(r ApiClientProfilesGetRequest) (*ClientProfileList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1053,9 +1062,9 @@ ClientProfilesIdBarcodeGet Get QR code for a Client Profile URL.
 
 Get QR code for Client Profile URL.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiClientProfilesIdBarcodeGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiClientProfilesIdBarcodeGetRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGet(ctx context.Context, id string) ApiClientProfilesIdBarcodeGetRequest {
 	return ApiClientProfilesIdBarcodeGetRequest{
@@ -1066,7 +1075,8 @@ func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGet(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return ClientProfilesIdBarcodeGet200Response
+//
+//	@return ClientProfilesIdBarcodeGet200Response
 func (a *ClientProfilesApiService) ClientProfilesIdBarcodeGetExecute(r ApiClientProfilesIdBarcodeGetRequest) (*ClientProfilesIdBarcodeGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1216,9 +1226,9 @@ ClientProfilesIdDelete Delete a specific Client Profile.
 
 Delete a specific Client Profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiClientProfilesIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiClientProfilesIdDeleteRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesIdDelete(ctx context.Context, id string) ApiClientProfilesIdDeleteRequest {
 	return ApiClientProfilesIdDeleteRequest{
@@ -1368,9 +1378,9 @@ ClientProfilesIdGet Get a specific Client Profile.
 
 Get a specific Client Profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiClientProfilesIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiClientProfilesIdGetRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesIdGet(ctx context.Context, id string) ApiClientProfilesIdGetRequest {
 	return ApiClientProfilesIdGetRequest{
@@ -1381,7 +1391,8 @@ func (a *ClientProfilesApiService) ClientProfilesIdGet(ctx context.Context, id s
 }
 
 // Execute executes the request
-//  @return ClientProfile
+//
+//	@return ClientProfile
 func (a *ClientProfilesApiService) ClientProfilesIdGetExecute(r ApiClientProfilesIdGetRequest) (*ClientProfile, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1538,9 +1549,9 @@ ClientProfilesIdPut Update an existing Client Profile.
 
 Update an existing Client Profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiClientProfilesIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiClientProfilesIdPutRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesIdPut(ctx context.Context, id string) ApiClientProfilesIdPutRequest {
 	return ApiClientProfilesIdPutRequest{
@@ -1551,7 +1562,8 @@ func (a *ClientProfilesApiService) ClientProfilesIdPut(ctx context.Context, id s
 }
 
 // Execute executes the request
-//  @return ClientProfile
+//
+//	@return ClientProfile
 func (a *ClientProfilesApiService) ClientProfilesIdPutExecute(r ApiClientProfilesIdPutRequest) (*ClientProfile, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -1726,9 +1738,9 @@ ClientProfilesIdUrlGet Get connection URL for the Client Profile.
 
 Get connection URL for the Client Profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiClientProfilesIdUrlGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiClientProfilesIdUrlGetRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesIdUrlGet(ctx context.Context, id string) ApiClientProfilesIdUrlGetRequest {
 	return ApiClientProfilesIdUrlGetRequest{
@@ -1739,7 +1751,8 @@ func (a *ClientProfilesApiService) ClientProfilesIdUrlGet(ctx context.Context, i
 }
 
 // Execute executes the request
-//  @return ClientProfilesIdUrlGet200Response
+//
+//	@return ClientProfilesIdUrlGet200Response
 func (a *ClientProfilesApiService) ClientProfilesIdUrlGetExecute(r ApiClientProfilesIdUrlGetRequest) (*ClientProfilesIdUrlGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -1895,8 +1908,8 @@ ClientProfilesPost Create a new Client Profile.
 
 Create a new Client Profile.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiClientProfilesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiClientProfilesPostRequest
 */
 func (a *ClientProfilesApiService) ClientProfilesPost(ctx context.Context) ApiClientProfilesPostRequest {
 	return ApiClientProfilesPostRequest{
@@ -1906,7 +1919,8 @@ func (a *ClientProfilesApiService) ClientProfilesPost(ctx context.Context) ApiCl
 }
 
 // Execute executes the request
-//  @return ClientProfile
+//
+//	@return ClientProfile
 func (a *ClientProfilesApiService) ClientProfilesPostExecute(r ApiClientProfilesPostRequest) (*ClientProfile, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

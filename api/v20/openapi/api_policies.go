@@ -72,8 +72,8 @@ PoliciesGet List all Policies.
 
 List all Policies visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiPoliciesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPoliciesGetRequest
 */
 func (a *PoliciesApiService) PoliciesGet(ctx context.Context) ApiPoliciesGetRequest {
 	return ApiPoliciesGetRequest{
@@ -83,7 +83,8 @@ func (a *PoliciesApiService) PoliciesGet(ctx context.Context) ApiPoliciesGetRequ
 }
 
 // Execute executes the request
-//  @return PolicyList
+//
+//	@return PolicyList
 func (a *PoliciesApiService) PoliciesGetExecute(r ApiPoliciesGetRequest) (*PolicyList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -226,9 +227,9 @@ PoliciesIdDelete Delete a specific Policy.
 
 Delete a specific Policy.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiPoliciesIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiPoliciesIdDeleteRequest
 */
 func (a *PoliciesApiService) PoliciesIdDelete(ctx context.Context, id string) ApiPoliciesIdDeleteRequest {
 	return ApiPoliciesIdDeleteRequest{
@@ -367,9 +368,9 @@ PoliciesIdGet Get a specific Policy.
 
 Get a specific Policy.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiPoliciesIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiPoliciesIdGetRequest
 */
 func (a *PoliciesApiService) PoliciesIdGet(ctx context.Context, id string) ApiPoliciesIdGetRequest {
 	return ApiPoliciesIdGetRequest{
@@ -380,7 +381,8 @@ func (a *PoliciesApiService) PoliciesIdGet(ctx context.Context, id string) ApiPo
 }
 
 // Execute executes the request
-//  @return Policy
+//
+//	@return Policy
 func (a *PoliciesApiService) PoliciesIdGetExecute(r ApiPoliciesIdGetRequest) (*Policy, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -526,9 +528,9 @@ PoliciesIdPut Update an existing Policy.
 
 Update an existing Policy.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiPoliciesIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiPoliciesIdPutRequest
 */
 func (a *PoliciesApiService) PoliciesIdPut(ctx context.Context, id string) ApiPoliciesIdPutRequest {
 	return ApiPoliciesIdPutRequest{
@@ -539,7 +541,8 @@ func (a *PoliciesApiService) PoliciesIdPut(ctx context.Context, id string) ApiPo
 }
 
 // Execute executes the request
-//  @return Policy
+//
+//	@return Policy
 func (a *PoliciesApiService) PoliciesIdPutExecute(r ApiPoliciesIdPutRequest) (*Policy, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -709,8 +712,8 @@ PoliciesPost Create a new Policy.
 
 Create a new Policy.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiPoliciesPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPoliciesPostRequest
 */
 func (a *PoliciesApiService) PoliciesPost(ctx context.Context) ApiPoliciesPostRequest {
 	return ApiPoliciesPostRequest{
@@ -720,7 +723,8 @@ func (a *PoliciesApiService) PoliciesPost(ctx context.Context) ApiPoliciesPostRe
 }
 
 // Execute executes the request
-//  @return Policy
+//
+//	@return Policy
 func (a *PoliciesApiService) PoliciesPostExecute(r ApiPoliciesPostRequest) (*Policy, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

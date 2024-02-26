@@ -43,8 +43,8 @@ StatsOnBoardedDevicesGet Get Device On-Boardings Per Hour.
 
 Get the Device On-Boardings Per Hour for the last 24 hours.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStatsOnBoardedDevicesGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStatsOnBoardedDevicesGetRequest
 */
 func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGet(ctx context.Context) ApiStatsOnBoardedDevicesGetRequest {
 	return ApiStatsOnBoardedDevicesGetRequest{
@@ -54,7 +54,8 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGet(ctx context
 }
 
 // Execute executes the request
-//  @return OnBoardedDevices
+//
+//	@return OnBoardedDevices
 func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r ApiStatsOnBoardedDevicesGetRequest) (*OnBoardedDevices, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
