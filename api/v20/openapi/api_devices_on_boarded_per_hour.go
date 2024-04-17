@@ -43,8 +43,8 @@ StatsOnBoardedDevicesGet Get Device On-Boardings Per Hour.
 
 Deprecated as of 6.3.0. Please use /on-boarded-devices APIs. Get the Device On-Boardings Per Hour for the last 24 hours.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsOnBoardedDevicesGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsOnBoardedDevicesGetRequest
 
 Deprecated
 */
@@ -56,9 +56,7 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGet(ctx context
 }
 
 // Execute executes the request
-//
-//	@return OnBoardedDevices
-//
+//  @return OnBoardedDevices
 // Deprecated
 func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r ApiStatsOnBoardedDevicesGetRequest) (*OnBoardedDevices, *http.Response, error) {
 	var (

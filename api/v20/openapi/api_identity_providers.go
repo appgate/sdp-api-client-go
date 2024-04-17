@@ -79,8 +79,8 @@ IdentityProvidersGet List all Identity Providers.
 
 List all Identity Providers visible to current user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIdentityProvidersGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIdentityProvidersGetRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) ApiIdentityProvidersGetRequest {
 	return ApiIdentityProvidersGetRequest{
@@ -90,8 +90,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) 
 }
 
 // Execute executes the request
-//
-//	@return IdentityProviderList
+//  @return IdentityProviderList
 func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -252,9 +251,9 @@ IdentityProvidersIdAttributesPost Get user attributes from an existing Identity 
 
 Get raw attributes and mapped claims for a user.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIdentityProvidersIdAttributesPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIdentityProvidersIdAttributesPostRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiIdentityProvidersIdAttributesPostRequest {
 	return ApiIdentityProvidersIdAttributesPostRequest{
@@ -265,8 +264,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx cont
 }
 
 // Execute executes the request
-//
-//	@return IdentityProvidersIdAttributesPost200Response
+//  @return IdentityProvidersIdAttributesPost200Response
 func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -438,9 +436,9 @@ IdentityProvidersIdDelete Delete a specific Identity Provider.
 
 Delete a specific Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIdentityProvidersIdDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIdentityProvidersIdDeleteRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiIdentityProvidersIdDeleteRequest {
 	return ApiIdentityProvidersIdDeleteRequest{
@@ -590,9 +588,9 @@ IdentityProvidersIdGet Get a specific Identity Provider.
 
 Get a specific Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIdentityProvidersIdGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIdentityProvidersIdGetRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiIdentityProvidersIdGetRequest {
 	return ApiIdentityProvidersIdGetRequest{
@@ -603,8 +601,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context
 }
 
 // Execute executes the request
-//
-//	@return map[string]interface{}
+//  @return map[string]interface{}
 func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -761,9 +758,9 @@ IdentityProvidersIdPut Update an existing Identity Provider.
 
 Update an existing Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id ID of the object.
-	@return ApiIdentityProvidersIdPutRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the object.
+ @return ApiIdentityProvidersIdPutRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiIdentityProvidersIdPutRequest {
 	return ApiIdentityProvidersIdPutRequest{
@@ -774,8 +771,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context
 }
 
 // Execute executes the request
-//
-//	@return map[string]interface{}
+//  @return map[string]interface{}
 func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -956,8 +952,8 @@ IdentityProvidersPost Create a new Identity Provider.
 
 Create a new Identity Provider.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIdentityProvidersPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIdentityProvidersPostRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiIdentityProvidersPostRequest {
 	return ApiIdentityProvidersPostRequest{
@@ -967,8 +963,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx context.Context)
 }
 
 // Execute executes the request
-//
-//	@return map[string]interface{}
+//  @return map[string]interface{}
 func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -1148,8 +1143,8 @@ IdentityProvidersTestPost Test an Identity Provider connection.
 
 Test connection for the given Identity Provider JSON.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiIdentityProvidersTestPostRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiIdentityProvidersTestPostRequest
 */
 func (a *IdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiIdentityProvidersTestPostRequest {
 	return ApiIdentityProvidersTestPostRequest{
@@ -1159,8 +1154,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Cont
 }
 
 // Execute executes the request
-//
-//	@return IdentityProvidersTestPost200Response
+//  @return IdentityProvidersTestPost200Response
 func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

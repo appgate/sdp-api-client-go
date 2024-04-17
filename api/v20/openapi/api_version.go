@@ -34,8 +34,8 @@ func (r ApiVersionGetRequest) Execute() (*VersionGet200Response, *http.Response,
 /*
 VersionGet Get the current and lowest accepted version of the peer API.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiVersionGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiVersionGetRequest
 */
 func (a *VersionApiService) VersionGet(ctx context.Context) ApiVersionGetRequest {
 	return ApiVersionGetRequest{
@@ -45,8 +45,7 @@ func (a *VersionApiService) VersionGet(ctx context.Context) ApiVersionGetRequest
 }
 
 // Execute executes the request
-//
-//	@return VersionGet200Response
+//  @return VersionGet200Response
 func (a *VersionApiService) VersionGetExecute(r ApiVersionGetRequest) (*VersionGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet

@@ -82,8 +82,8 @@ Get Stats and status of the active appliances. This API makes the controller to 
 
 Deprecated as of 6.3.0. Use `/appliances/status` instead.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiStatsAppliancesGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStatsAppliancesGetRequest
 
 Deprecated
 */
@@ -95,9 +95,7 @@ func (a *ApplianceStatsApiService) StatsAppliancesGet(ctx context.Context) ApiSt
 }
 
 // Execute executes the request
-//
-//	@return StatsAppliancesList
-//
+//  @return StatsAppliancesList
 // Deprecated
 func (a *ApplianceStatsApiService) StatsAppliancesGetExecute(r ApiStatsAppliancesGetRequest) (*StatsAppliancesList, *http.Response, error) {
 	var (

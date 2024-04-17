@@ -45,9 +45,9 @@ Fido2DevicesDistinguishedNameDelete Delete a registered FIDO2 Device for the giv
 
 Delete a registered FIDO2 Device for the given Distinguished Name.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
-	@return ApiFido2DevicesDistinguishedNameDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
+ @return ApiFido2DevicesDistinguishedNameDeleteRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiFido2DevicesDistinguishedNameDeleteRequest {
 	return ApiFido2DevicesDistinguishedNameDeleteRequest{
@@ -231,8 +231,8 @@ Fido2DevicesGet List all registered FIDO2 Devices.
 
 List all registered FIDO2 Devices.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiFido2DevicesGetRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiFido2DevicesGetRequest
 */
 func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx context.Context) ApiFido2DevicesGetRequest {
 	return ApiFido2DevicesGetRequest{
@@ -242,8 +242,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx context.Context) ApiFido2De
 }
 
 // Execute executes the request
-//
-//	@return Fido2DeviceList
+//  @return Fido2DeviceList
 func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequest) (*Fido2DeviceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
