@@ -41,6 +41,7 @@ var (
 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
+	redactPW  = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
 )
 
 // APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 19.2
@@ -337,7 +338,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
+		log.Printf("\n%s\n", redactPW.ReplaceAllString(redact.ReplaceAllString(string(dump), "${1}REDACTED"), "${2}REDACTED"))
 	}
 
 	resp, err := c.cfg.HTTPClient.Do(request)
@@ -350,7 +351,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return resp, err
 		}
-		log.Printf("\n%s\n", redact.ReplaceAllString(string(dump), "${1}REDACTED"))
+		log.Printf("\n%s\n", redactPW.ReplaceAllString(redact.ReplaceAllString(string(dump), "${1}REDACTED"), "${2}REDACTED"))
 	}
 	return resp, err
 }
