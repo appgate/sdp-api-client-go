@@ -9,7 +9,7 @@ if ! command -v apigentools &> /dev/null; then
 fi
 
 
-go_version_minimum="1.19.4"
+go_version_minimum="1.22.2"
 
 go_version() {
     go version | sed -nE -e 's/[^0-9.]+([0-9.]+).+/\1/p'
@@ -84,8 +84,7 @@ for version in "${supportedVersions[@]}"; do
 done
 
 # use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs
-goGenerators=(18 19 20)
-for version in "${goGenerators[@]}"; do
+for version in "${supportedVersions[@]}"; do
     go run go-generators/client/main.go  -v -version "$version"
     go test -v -count 1 "./api/v${version}/..."
 done

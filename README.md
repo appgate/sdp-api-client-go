@@ -7,7 +7,7 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 ## Installation
 
 ```sh
-go get -u github.com/appgate/sdp-api-client-go/api/v19/openapi
+go get -u github.com/appgate/sdp-api-client-go/api/v20/openapi
 ```
 
 ## Version compatibility matrix
@@ -16,15 +16,9 @@ Each appliance version has a minimum of compatibility with 2 API versions back.
 
 | Appliance Version 	| API Version 	|
 |-------------------	|-------------	|
-| 5.1.*             	| 12          	|
-| 5.2.*             	| 13          	|
-| 5.3.*             	| 14          	|
-| 5.4.*             	| 15          	|
-| 5.5.*             	| 16          	|
-| 6.0.*             	| 17          	|
 | 6.1.*             	| 18          	|
 | 6.2.*             	| 19          	|
-
+| 6.3.*             	| 20          	|
 
 
 
@@ -50,7 +44,7 @@ import (
 )
 
 const (
-	version  = 14
+	version  = 20
 	timeout  = 10
 	insecure = true
 	provider = "local"

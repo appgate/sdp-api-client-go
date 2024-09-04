@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v20+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 20.0
+API version: API version 20.3
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -79,8 +79,8 @@ ApplianceCustomizationsGet List all Appliance Customizations.
 
 List all Appliance Customizations visible to current user.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiApplianceCustomizationsGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiApplianceCustomizationsGetRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx context.Context) ApiApplianceCustomizationsGetRequest {
 	return ApiApplianceCustomizationsGetRequest{
@@ -90,7 +90,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx conte
 }
 
 // Execute executes the request
-//  @return ApplianceCustomizationList
+//
+//	@return ApplianceCustomizationList
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r ApiApplianceCustomizationsGetRequest) (*ApplianceCustomizationList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -244,9 +245,9 @@ ApplianceCustomizationsIdDelete Delete a specific Appliance Customization.
 
 Delete a specific Appliance Customization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiApplianceCustomizationsIdDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiApplianceCustomizationsIdDeleteRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDelete(ctx context.Context, id string) ApiApplianceCustomizationsIdDeleteRequest {
 	return ApiApplianceCustomizationsIdDeleteRequest{
@@ -396,9 +397,9 @@ ApplianceCustomizationsIdGet Get a specific Appliance Customization.
 
 Get a specific Appliance Customization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiApplianceCustomizationsIdGetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiApplianceCustomizationsIdGetRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx context.Context, id string) ApiApplianceCustomizationsIdGetRequest {
 	return ApiApplianceCustomizationsIdGetRequest{
@@ -409,7 +410,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx con
 }
 
 // Execute executes the request
-//  @return ApplianceCustomization
+//
+//	@return ApplianceCustomization
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(r ApiApplianceCustomizationsIdGetRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -566,9 +568,9 @@ ApplianceCustomizationsIdPut Update an existing Appliance Customization.
 
 Update an existing Appliance Customization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id ID of the object.
- @return ApiApplianceCustomizationsIdPutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id ID of the object.
+	@return ApiApplianceCustomizationsIdPutRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx context.Context, id string) ApiApplianceCustomizationsIdPutRequest {
 	return ApiApplianceCustomizationsIdPutRequest{
@@ -579,7 +581,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx con
 }
 
 // Execute executes the request
-//  @return ApplianceCustomization
+//
+//	@return ApplianceCustomization
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(r ApiApplianceCustomizationsIdPutRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -760,8 +763,8 @@ ApplianceCustomizationsPost Create a new Appliance Customization.
 
 Create a new Appliance Customization.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiApplianceCustomizationsPostRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiApplianceCustomizationsPostRequest
 */
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx context.Context) ApiApplianceCustomizationsPostRequest {
 	return ApiApplianceCustomizationsPostRequest{
@@ -771,7 +774,8 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx cont
 }
 
 // Execute executes the request
-//  @return ApplianceCustomization
+//
+//	@return ApplianceCustomization
 func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r ApiApplianceCustomizationsPostRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
