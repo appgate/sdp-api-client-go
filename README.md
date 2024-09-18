@@ -19,6 +19,7 @@ Each appliance version has a minimum of compatibility with 2 API versions back.
 | 6.1.*             	| 18          	|
 | 6.2.*             	| 19          	|
 | 6.3.*             	| 20          	|
+| 6.4.*             	| 21          	|
 
 
 
@@ -44,7 +45,7 @@ import (
 )
 
 const (
-	version  = 20
+	version  = 21
 	timeout  = 10
 	insecure = true
 	provider = "local"
