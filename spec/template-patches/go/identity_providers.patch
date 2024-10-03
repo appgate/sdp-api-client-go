@@ -2,7 +2,7 @@ diff --git a/go/client.mustache b/go/client.mustache
 index a9b82e3ff7d..d7e8328695b 100644
 --- a/go/client.mustache
 +++ b/go/client.mustache
-@@ -51,6 +51,18 @@ type APIClient struct {
+@@ -51,6 +51,20 @@ type APIClient struct {
  {{/operations}}
  {{/apis}}
  {{/apiInfo}}
@@ -18,10 +18,12 @@ index a9b82e3ff7d..d7e8328695b 100644
 +	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
 +
 +	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
++
++	OidcIdentityProvidersApi *OidcIdentityProvidersApiService
  }
 
  type service struct {
-@@ -76,6 +88,14 @@ func NewAPIClient(cfg *Configuration) *APIClient {
+@@ -76,6 +88,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
  {{/operations}}
  {{/apis}}
  {{/apiInfo}}
@@ -33,6 +35,7 @@ index a9b82e3ff7d..d7e8328695b 100644
 +	c.LocalDatabaseIdentityProvidersApi = (*LocalDatabaseIdentityProvidersApiService)(&c.common)
 +	c.LdapCertificateIdentityProvidersApi = (*LdapCertificateIdentityProvidersApiService)(&c.common)
 +	c.ConnectorIdentityProvidersApi = (*ConnectorIdentityProvidersApiService)(&c.common)
++	c.OidcIdentityProvidersApi = (*OidcIdentityProvidersApiService)(&c.common)
 
  	return c
  }
