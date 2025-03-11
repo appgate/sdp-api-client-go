@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v21+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 21.0
+API version: API version 21.1
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -36,10 +36,10 @@ type License struct {
 	MaxConnectorGroups *float32 `json:"maxConnectorGroups,omitempty"`
 	// Whether the Risk Engine feature is enabled.
 	RiskEngine *bool `json:"riskEngine,omitempty"`
-	// Whether the Learning Mode feature is enabled.
-	LearningMode *bool `json:"learningMode,omitempty"`
-	// Whether the User Experience Monitoring feature is enabled.
-	UserExperienceMonitoring *bool `json:"userExperienceMonitoring,omitempty"`
+	// Whether the Application Discovery feature is enabled.
+	ApplicationDiscovery *bool `json:"applicationDiscovery,omitempty"`
+	// Whether the Digital Experience Monitoring feature is enabled.
+	DigitalExperienceMonitoring *bool `json:"digitalExperienceMonitoring,omitempty"`
 	// Unique ID for the license.
 	Id *string `json:"id,omitempty"`
 	// License version. There can be only one v1 License in the system, while v2 Licenses can be added as extra.
@@ -359,68 +359,68 @@ func (o *License) SetRiskEngine(v bool) {
 	o.RiskEngine = &v
 }
 
-// GetLearningMode returns the LearningMode field value if set, zero value otherwise.
-func (o *License) GetLearningMode() bool {
-	if o == nil || o.LearningMode == nil {
+// GetApplicationDiscovery returns the ApplicationDiscovery field value if set, zero value otherwise.
+func (o *License) GetApplicationDiscovery() bool {
+	if o == nil || o.ApplicationDiscovery == nil {
 		var ret bool
 		return ret
 	}
-	return *o.LearningMode
+	return *o.ApplicationDiscovery
 }
 
-// GetLearningModeOk returns a tuple with the LearningMode field value if set, nil otherwise
+// GetApplicationDiscoveryOk returns a tuple with the ApplicationDiscovery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *License) GetLearningModeOk() (*bool, bool) {
-	if o == nil || o.LearningMode == nil {
+func (o *License) GetApplicationDiscoveryOk() (*bool, bool) {
+	if o == nil || o.ApplicationDiscovery == nil {
 		return nil, false
 	}
-	return o.LearningMode, true
+	return o.ApplicationDiscovery, true
 }
 
-// HasLearningMode returns a boolean if a field has been set.
-func (o *License) HasLearningMode() bool {
-	if o != nil && o.LearningMode != nil {
+// HasApplicationDiscovery returns a boolean if a field has been set.
+func (o *License) HasApplicationDiscovery() bool {
+	if o != nil && o.ApplicationDiscovery != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetLearningMode gets a reference to the given bool and assigns it to the LearningMode field.
-func (o *License) SetLearningMode(v bool) {
-	o.LearningMode = &v
+// SetApplicationDiscovery gets a reference to the given bool and assigns it to the ApplicationDiscovery field.
+func (o *License) SetApplicationDiscovery(v bool) {
+	o.ApplicationDiscovery = &v
 }
 
-// GetUserExperienceMonitoring returns the UserExperienceMonitoring field value if set, zero value otherwise.
-func (o *License) GetUserExperienceMonitoring() bool {
-	if o == nil || o.UserExperienceMonitoring == nil {
+// GetDigitalExperienceMonitoring returns the DigitalExperienceMonitoring field value if set, zero value otherwise.
+func (o *License) GetDigitalExperienceMonitoring() bool {
+	if o == nil || o.DigitalExperienceMonitoring == nil {
 		var ret bool
 		return ret
 	}
-	return *o.UserExperienceMonitoring
+	return *o.DigitalExperienceMonitoring
 }
 
-// GetUserExperienceMonitoringOk returns a tuple with the UserExperienceMonitoring field value if set, nil otherwise
+// GetDigitalExperienceMonitoringOk returns a tuple with the DigitalExperienceMonitoring field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *License) GetUserExperienceMonitoringOk() (*bool, bool) {
-	if o == nil || o.UserExperienceMonitoring == nil {
+func (o *License) GetDigitalExperienceMonitoringOk() (*bool, bool) {
+	if o == nil || o.DigitalExperienceMonitoring == nil {
 		return nil, false
 	}
-	return o.UserExperienceMonitoring, true
+	return o.DigitalExperienceMonitoring, true
 }
 
-// HasUserExperienceMonitoring returns a boolean if a field has been set.
-func (o *License) HasUserExperienceMonitoring() bool {
-	if o != nil && o.UserExperienceMonitoring != nil {
+// HasDigitalExperienceMonitoring returns a boolean if a field has been set.
+func (o *License) HasDigitalExperienceMonitoring() bool {
+	if o != nil && o.DigitalExperienceMonitoring != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUserExperienceMonitoring gets a reference to the given bool and assigns it to the UserExperienceMonitoring field.
-func (o *License) SetUserExperienceMonitoring(v bool) {
-	o.UserExperienceMonitoring = &v
+// SetDigitalExperienceMonitoring gets a reference to the given bool and assigns it to the DigitalExperienceMonitoring field.
+func (o *License) SetDigitalExperienceMonitoring(v bool) {
+	o.DigitalExperienceMonitoring = &v
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -644,11 +644,11 @@ func (o License) MarshalJSON() ([]byte, error) {
 	if o.RiskEngine != nil {
 		toSerialize["riskEngine"] = o.RiskEngine
 	}
-	if o.LearningMode != nil {
-		toSerialize["learningMode"] = o.LearningMode
+	if o.ApplicationDiscovery != nil {
+		toSerialize["applicationDiscovery"] = o.ApplicationDiscovery
 	}
-	if o.UserExperienceMonitoring != nil {
-		toSerialize["userExperienceMonitoring"] = o.UserExperienceMonitoring
+	if o.DigitalExperienceMonitoring != nil {
+		toSerialize["digitalExperienceMonitoring"] = o.DigitalExperienceMonitoring
 	}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
