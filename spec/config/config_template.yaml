@@ -69,13 +69,9 @@ languages:
     github_repo_name: sdp-api-client-go
     github_org_name: appgate
     library_version: "0.0.1"
-    spec_versions: ["v18", "v19", "v20", "v21", "v22"]
+    spec_versions: ["v20", "v21", "v22"]
     version_path_template: "openapi_{{spec_version}}"
 spec_sections:
-  v18:
-  - api_specs.yml
-  v19:
-  - api_specs.yml
   v20:
   - api_specs.yml
   v21:
@@ -93,8 +89,6 @@ validation_commands:
     description: "Validate the full spec using openapi-generator"
 
 spec_versions:
-- v18
-- v19
 - v20
 - v21
 - v22
