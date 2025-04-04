@@ -1,0 +1,10 @@
+{
+    "gitUserId": "appgate",
+    "gitRepoId": "my-api-client-go",
+    "isGoSubmodule": true,
+    "packageName": "openapi",
+    "packageVersion": "0.0.1",
+    "withGoCodegenComment": true,
+    "useOneOfDiscriminatorLookup": true,
+    "generateInterfaces": false
+}
