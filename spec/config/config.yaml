@@ -1,6 +1,6 @@
 config_version: '1.6'
 container_opts:
-  image: ${IMAGE}
+  image: openapitools/openapi-generator-cli:v6.0.0
 languages:
   go:
     generation:
