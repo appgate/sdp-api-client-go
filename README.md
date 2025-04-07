@@ -14,12 +14,11 @@ go get -u github.com/appgate/sdp-api-client-go/api/v20/openapi
 
 Each appliance version has a minimum of compatibility with 2 API versions back.
 
-| Appliance Version 	| API Version 	|
-|-------------------	|-------------	|
-| 6.1.*             	| 18          	|
-| 6.2.*             	| 19          	|
-| 6.3.*             	| 20          	|
-| 6.4.*             	| 21          	|
+| Appliance Version 	 | API Version 	 |
+|---------------------|---------------|
+| 6.3.*             	 | 20          	 |
+| 6.4.*             	 | 21          	 |
+| 6.5.*             	 | 22          	 |
 
 
 

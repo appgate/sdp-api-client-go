@@ -6,4 +6,3 @@ spec/*/full_spec.yaml
 spec/templates/*
 spec/templates/
 spec/spec/*
-spec/config/config.yaml

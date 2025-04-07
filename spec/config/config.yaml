@@ -1,6 +1,6 @@
 config_version: '1.6'
 container_opts:
-  image: ${IMAGE}
+  image: openapitools/openapi-generator-cli:v6.0.0
 languages:
   go:
     generation:
@@ -69,17 +69,16 @@ languages:
     github_repo_name: sdp-api-client-go
     github_org_name: appgate
     library_version: "0.0.1"
-    spec_versions: ["v18", "v19", "v20", "v21"]
+    spec_versions: ["v20", "v21", "v22"]
     version_path_template: "openapi_{{spec_version}}"
 spec_sections:
-  v18:
-  - api_specs.yml
-  v19:
-  - api_specs.yml
   v20:
   - api_specs.yml
   v21:
   - api_specs.yml
+  v22:
+  - api_specs.yml
+
 
 validation_commands:
   - commandline:
@@ -90,7 +89,6 @@ validation_commands:
     description: "Validate the full spec using openapi-generator"
 
 spec_versions:
-- v18
-- v19
 - v20
 - v21
+- v22
