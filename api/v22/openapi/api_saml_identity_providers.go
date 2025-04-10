@@ -24,20 +24,13 @@ import (
 type SamlIdentityProvidersApiService service
 
 type ApiSamlIdentityProvidersGetRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	query         *string
-	range_        *string
-	orderBy       *string
-	descending    *string
-	filterBy      *map[string]string
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersGetRequest) Authorization(authorization string) ApiSamlIdentityProvidersGetRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	query      *string
+	range_     *string
+	orderBy    *string
+	descending *string
+	filterBy   *map[string]string
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
@@ -110,9 +103,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	if r.query != nil {
 		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
@@ -146,7 +136,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -226,15 +215,8 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiSamlI
 type ApiSamlIdentityProvidersIdAttributesPostRequest struct {
 	ctx                                      context.Context
 	ApiService                               *SamlIdentityProvidersApiService
-	authorization                            *string
 	id                                       string
 	identityProvidersIdAttributesPostRequest *IdentityProvidersIdAttributesPostRequest
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdAttributesPostRequest {
-	r.authorization = &authorization
-	return r
 }
 
 // User details to get attributes for.
@@ -286,9 +268,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -307,7 +286,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.identityProvidersIdAttributesPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -417,16 +395,9 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 }
 
 type ApiSamlIdentityProvidersIdDeleteRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	id            string
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdDeleteRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	id         string
 }
 
 func (r ApiSamlIdentityProvidersIdDeleteRequest) Execute() (*http.Response, error) {
@@ -469,9 +440,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -490,7 +458,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -569,16 +536,9 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 }
 
 type ApiSamlIdentityProvidersIdGetRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	id            string
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersIdGetRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdGetRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	id         string
 }
 
 func (r ApiSamlIdentityProvidersIdGetRequest) Execute() (*SamlProvider, *http.Response, error) {
@@ -624,9 +584,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -645,7 +602,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -733,17 +689,10 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiSam
 }
 
 type ApiSamlIdentityProvidersIdPutRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	id            string
-	body          *SamlProvider
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersIdPutRequest) Authorization(authorization string) ApiSamlIdentityProvidersIdPutRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	id         string
+	body       *SamlProvider
 }
 
 // Identity Provider object.
@@ -795,9 +744,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -819,7 +765,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -929,16 +874,9 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiSam
 }
 
 type ApiSamlIdentityProvidersPostRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	body          *SamlProvider
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersPostRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	body       *SamlProvider
 }
 
 // Identity Provider object.
@@ -987,9 +925,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -1011,7 +946,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1121,16 +1055,9 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiSaml
 }
 
 type ApiSamlIdentityProvidersTestPostRequest struct {
-	ctx           context.Context
-	ApiService    *SamlIdentityProvidersApiService
-	authorization *string
-	body          *map[string]interface{}
-}
-
-// The Token from the LoginResponse.
-func (r ApiSamlIdentityProvidersTestPostRequest) Authorization(authorization string) ApiSamlIdentityProvidersTestPostRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *SamlIdentityProvidersApiService
+	body       *map[string]interface{}
 }
 
 // Identity Provider object.
@@ -1179,9 +1106,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -1203,7 +1127,6 @@ func (a *SamlIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
