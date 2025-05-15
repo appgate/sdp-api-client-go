@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.2
+API version: API version 22.4
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -38,6 +38,10 @@ type AppDetailsAllOf struct {
 	PolicyId *string `json:"policyId,omitempty"`
 	// The ID of the Entitlement generated when access is configured to this app.
 	EntitlementId *string `json:"entitlementId,omitempty"`
+	// The Entitlements that were used to access the app.
+	OriginatingEntitlements []interface{} `json:"originatingEntitlements,omitempty"`
+	// The IPs used to access the app.
+	Ips []string `json:"ips,omitempty"`
 	// History of the actions taken on this app.
 	History []interface{} `json:"history,omitempty"`
 }
@@ -379,6 +383,70 @@ func (o *AppDetailsAllOf) SetEntitlementId(v string) {
 	o.EntitlementId = &v
 }
 
+// GetOriginatingEntitlements returns the OriginatingEntitlements field value if set, zero value otherwise.
+func (o *AppDetailsAllOf) GetOriginatingEntitlements() []interface{} {
+	if o == nil || o.OriginatingEntitlements == nil {
+		var ret []interface{}
+		return ret
+	}
+	return o.OriginatingEntitlements
+}
+
+// GetOriginatingEntitlementsOk returns a tuple with the OriginatingEntitlements field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppDetailsAllOf) GetOriginatingEntitlementsOk() ([]interface{}, bool) {
+	if o == nil || o.OriginatingEntitlements == nil {
+		return nil, false
+	}
+	return o.OriginatingEntitlements, true
+}
+
+// HasOriginatingEntitlements returns a boolean if a field has been set.
+func (o *AppDetailsAllOf) HasOriginatingEntitlements() bool {
+	if o != nil && o.OriginatingEntitlements != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginatingEntitlements gets a reference to the given []interface{} and assigns it to the OriginatingEntitlements field.
+func (o *AppDetailsAllOf) SetOriginatingEntitlements(v []interface{}) {
+	o.OriginatingEntitlements = v
+}
+
+// GetIps returns the Ips field value if set, zero value otherwise.
+func (o *AppDetailsAllOf) GetIps() []string {
+	if o == nil || o.Ips == nil {
+		var ret []string
+		return ret
+	}
+	return o.Ips
+}
+
+// GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AppDetailsAllOf) GetIpsOk() ([]string, bool) {
+	if o == nil || o.Ips == nil {
+		return nil, false
+	}
+	return o.Ips, true
+}
+
+// HasIps returns a boolean if a field has been set.
+func (o *AppDetailsAllOf) HasIps() bool {
+	if o != nil && o.Ips != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIps gets a reference to the given []string and assigns it to the Ips field.
+func (o *AppDetailsAllOf) SetIps(v []string) {
+	o.Ips = v
+}
+
 // GetHistory returns the History field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetHistory() []interface{} {
 	if o == nil || o.History == nil {
@@ -442,6 +510,12 @@ func (o AppDetailsAllOf) MarshalJSON() ([]byte, error) {
 	}
 	if o.EntitlementId != nil {
 		toSerialize["entitlementId"] = o.EntitlementId
+	}
+	if o.OriginatingEntitlements != nil {
+		toSerialize["originatingEntitlements"] = o.OriginatingEntitlements
+	}
+	if o.Ips != nil {
+		toSerialize["ips"] = o.Ips
 	}
 	if o.History != nil {
 		toSerialize["history"] = o.History
