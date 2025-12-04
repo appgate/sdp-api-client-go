@@ -78,6 +78,8 @@ spec_sections:
   - api_specs.yml
   v22:
   - api_specs.yml
+  v23:
+  - api_specs.yml
 
 
 validation_commands:
