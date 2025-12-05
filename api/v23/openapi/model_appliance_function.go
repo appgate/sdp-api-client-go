@@ -28,6 +28,7 @@ const (
 	CONNECTOR          ApplianceFunction = "Connector"
 	PORTAL             ApplianceFunction = "Portal"
 	METRICS_AGGREGATOR ApplianceFunction = "Metrics Aggregator"
+	CONNECTION_BROKER  ApplianceFunction = "Connection Broker"
 )
 
 // All allowed values of ApplianceFunction enum
@@ -39,6 +40,7 @@ var AllowedApplianceFunctionEnumValues = []ApplianceFunction{
 	"Connector",
 	"Portal",
 	"Metrics Aggregator",
+	"Connection Broker",
 }
 
 func (v *ApplianceFunction) UnmarshalJSON(src []byte) error {

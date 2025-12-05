@@ -33,7 +33,7 @@ type ApiIpPoolsAllocatedIpsGetRequest struct {
 	filterBy   *map[string]string
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple query parameters to make the queries more specific.
 func (r ApiIpPoolsAllocatedIpsGetRequest) Query(query string) ApiIpPoolsAllocatedIpsGetRequest {
 	r.query = &query
 	return r
@@ -222,7 +222,7 @@ type ApiIpPoolsGetRequest struct {
 	filterBy   *map[string]string
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple query parameters to make the queries more specific.
 func (r ApiIpPoolsGetRequest) Query(query string) ApiIpPoolsGetRequest {
 	r.query = &query
 	return r

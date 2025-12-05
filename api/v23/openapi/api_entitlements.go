@@ -29,7 +29,7 @@ type ApiEntitlementsAppShortcutsGroupsGetRequest struct {
 	query      *string
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple query parameters to make the queries more specific.
 func (r ApiEntitlementsAppShortcutsGroupsGetRequest) Query(query string) ApiEntitlementsAppShortcutsGroupsGetRequest {
 	r.query = &query
 	return r
@@ -182,7 +182,7 @@ type ApiEntitlementsGetRequest struct {
 	filterBy   *map[string]string
 }
 
-// Query string to filter the result list. It&#39;s used for various fields depending on the object type.  Send multiple query parameters to make the queries more specific.
+// Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple query parameters to make the queries more specific.
 func (r ApiEntitlementsGetRequest) Query(query string) ApiEntitlementsGetRequest {
 	r.query = &query
 	return r
