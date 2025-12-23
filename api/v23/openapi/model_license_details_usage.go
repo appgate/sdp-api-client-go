@@ -60,6 +60,8 @@ type LicenseDetailsUsage struct {
 	Policies          *LicenseDetailsUsagePolicies          `json:"policies,omitempty"`
 	// Whether the risk model is utilized or not.
 	RiskModel *bool `json:"riskModel,omitempty"`
+	// GeoIP provider in use.
+	GeoLocationUpdates *string `json:"geoLocationUpdates,omitempty"`
 }
 
 // NewLicenseDetailsUsage instantiates a new LicenseDetailsUsage object
@@ -815,6 +817,38 @@ func (o *LicenseDetailsUsage) SetRiskModel(v bool) {
 	o.RiskModel = &v
 }
 
+// GetGeoLocationUpdates returns the GeoLocationUpdates field value if set, zero value otherwise.
+func (o *LicenseDetailsUsage) GetGeoLocationUpdates() string {
+	if o == nil || o.GeoLocationUpdates == nil {
+		var ret string
+		return ret
+	}
+	return *o.GeoLocationUpdates
+}
+
+// GetGeoLocationUpdatesOk returns a tuple with the GeoLocationUpdates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LicenseDetailsUsage) GetGeoLocationUpdatesOk() (*string, bool) {
+	if o == nil || o.GeoLocationUpdates == nil {
+		return nil, false
+	}
+	return o.GeoLocationUpdates, true
+}
+
+// HasGeoLocationUpdates returns a boolean if a field has been set.
+func (o *LicenseDetailsUsage) HasGeoLocationUpdates() bool {
+	if o != nil && o.GeoLocationUpdates != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetGeoLocationUpdates gets a reference to the given string and assigns it to the GeoLocationUpdates field.
+func (o *LicenseDetailsUsage) SetGeoLocationUpdates(v string) {
+	o.GeoLocationUpdates = &v
+}
+
 func (o LicenseDetailsUsage) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Users != nil {
@@ -885,6 +919,9 @@ func (o LicenseDetailsUsage) MarshalJSON() ([]byte, error) {
 	}
 	if o.RiskModel != nil {
 		toSerialize["riskModel"] = o.RiskModel
+	}
+	if o.GeoLocationUpdates != nil {
+		toSerialize["geoLocationUpdates"] = o.GeoLocationUpdates
 	}
 	return json.Marshal(toSerialize)
 }

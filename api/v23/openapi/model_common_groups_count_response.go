@@ -15,145 +15,101 @@ import (
 	"encoding/json"
 )
 
-// SiteAllOfVpnTls VPN over TLS protocol configuration.
-type SiteAllOfVpnTls struct {
-	Enabled *bool `json:"enabled,omitempty"`
-	// TLS version.
-	Version *string `json:"version,omitempty"`
+// CommonGroupsCountResponse Response body for common user groups count across the groups.
+type CommonGroupsCountResponse struct {
+	// Number of common user groups.
+	Count *int32 `json:"count,omitempty"`
 }
 
-// NewSiteAllOfVpnTls instantiates a new SiteAllOfVpnTls object
+// NewCommonGroupsCountResponse instantiates a new CommonGroupsCountResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfVpnTls() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewCommonGroupsCountResponse() *CommonGroupsCountResponse {
+	this := CommonGroupsCountResponse{}
 	return &this
 }
 
-// NewSiteAllOfVpnTlsWithDefaults instantiates a new SiteAllOfVpnTls object
+// NewCommonGroupsCountResponseWithDefaults instantiates a new CommonGroupsCountResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSiteAllOfVpnTlsWithDefaults() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewCommonGroupsCountResponseWithDefaults() *CommonGroupsCountResponse {
+	this := CommonGroupsCountResponse{}
 	return &this
 }
 
-// GetEnabled returns the Enabled field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
-		var ret bool
+// GetCount returns the Count field value if set, zero value otherwise.
+func (o *CommonGroupsCountResponse) GetCount() int32 {
+	if o == nil || o.Count == nil {
+		var ret int32
 		return ret
 	}
-	return *o.Enabled
+	return *o.Count
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// GetCountOk returns a tuple with the Count field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+func (o *CommonGroupsCountResponse) GetCountOk() (*int32, bool) {
+	if o == nil || o.Count == nil {
 		return nil, false
 	}
-	return o.Enabled, true
+	return o.Count, true
 }
 
-// HasEnabled returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+// HasCount returns a boolean if a field has been set.
+func (o *CommonGroupsCountResponse) HasCount() bool {
+	if o != nil && o.Count != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
-func (o *SiteAllOfVpnTls) SetEnabled(v bool) {
-	o.Enabled = &v
+// SetCount gets a reference to the given int32 and assigns it to the Count field.
+func (o *CommonGroupsCountResponse) SetCount(v int32) {
+	o.Count = &v
 }
 
-// GetVersion returns the Version field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetVersion() string {
-	if o == nil || o.Version == nil {
-		var ret string
-		return ret
-	}
-	return *o.Version
-}
-
-// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
-		return nil, false
-	}
-	return o.Version, true
-}
-
-// HasVersion returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasVersion() bool {
-	if o != nil && o.Version != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetVersion gets a reference to the given string and assigns it to the Version field.
-func (o *SiteAllOfVpnTls) SetVersion(v string) {
-	o.Version = &v
-}
-
-func (o SiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
+func (o CommonGroupsCountResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	if o.Count != nil {
+		toSerialize["count"] = o.Count
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableSiteAllOfVpnTls struct {
-	value *SiteAllOfVpnTls
+type NullableCommonGroupsCountResponse struct {
+	value *CommonGroupsCountResponse
 	isSet bool
 }
 
-func (v NullableSiteAllOfVpnTls) Get() *SiteAllOfVpnTls {
+func (v NullableCommonGroupsCountResponse) Get() *CommonGroupsCountResponse {
 	return v.value
 }
 
-func (v *NullableSiteAllOfVpnTls) Set(val *SiteAllOfVpnTls) {
+func (v *NullableCommonGroupsCountResponse) Set(val *CommonGroupsCountResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSiteAllOfVpnTls) IsSet() bool {
+func (v NullableCommonGroupsCountResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSiteAllOfVpnTls) Unset() {
+func (v *NullableCommonGroupsCountResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSiteAllOfVpnTls(val *SiteAllOfVpnTls) *NullableSiteAllOfVpnTls {
-	return &NullableSiteAllOfVpnTls{value: val, isSet: true}
+func NewNullableCommonGroupsCountResponse(val *CommonGroupsCountResponse) *NullableCommonGroupsCountResponse {
+	return &NullableCommonGroupsCountResponse{value: val, isSet: true}
 }
 
-func (v NullableSiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
+func (v NullableCommonGroupsCountResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSiteAllOfVpnTls) UnmarshalJSON(src []byte) error {
+func (v *NullableCommonGroupsCountResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

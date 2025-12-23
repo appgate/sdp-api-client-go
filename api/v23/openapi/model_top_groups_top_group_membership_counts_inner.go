@@ -15,213 +15,175 @@ import (
 	"encoding/json"
 )
 
-// GeoIpSettings GeoIP provider settings supporting multiple providers.
-type GeoIpSettings struct {
-	// Selected GeoIP provider when enabled.
-	Updates *string               `json:"updates,omitempty"`
-	Maxmind *GeoIpSettingsMaxmind `json:"maxmind,omitempty"`
-	IpInfo  *GeoIpSettingsIpInfo  `json:"ipInfo,omitempty"`
-	Custom  *GeoIpSettingsCustom  `json:"custom,omitempty"`
+// TopGroupsTopGroupMembershipCountsInner struct for TopGroupsTopGroupMembershipCountsInner
+type TopGroupsTopGroupMembershipCountsInner struct {
+	// Name of the user group.
+	GroupName *string `json:"groupName,omitempty"`
+	// Number of users in this group accessing the app.
+	MemberCount *int32 `json:"memberCount,omitempty"`
+	// Identity provider associated with the group.
+	ProviderName *string `json:"providerName,omitempty"`
 }
 
-// NewGeoIpSettings instantiates a new GeoIpSettings object
+// NewTopGroupsTopGroupMembershipCountsInner instantiates a new TopGroupsTopGroupMembershipCountsInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGeoIpSettings() *GeoIpSettings {
-	this := GeoIpSettings{}
-	var updates string = "Disabled"
-	this.Updates = &updates
+func NewTopGroupsTopGroupMembershipCountsInner() *TopGroupsTopGroupMembershipCountsInner {
+	this := TopGroupsTopGroupMembershipCountsInner{}
 	return &this
 }
 
-// NewGeoIpSettingsWithDefaults instantiates a new GeoIpSettings object
+// NewTopGroupsTopGroupMembershipCountsInnerWithDefaults instantiates a new TopGroupsTopGroupMembershipCountsInner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGeoIpSettingsWithDefaults() *GeoIpSettings {
-	this := GeoIpSettings{}
-	var updates string = "Disabled"
-	this.Updates = &updates
+func NewTopGroupsTopGroupMembershipCountsInnerWithDefaults() *TopGroupsTopGroupMembershipCountsInner {
+	this := TopGroupsTopGroupMembershipCountsInner{}
 	return &this
 }
 
-// GetUpdates returns the Updates field value if set, zero value otherwise.
-func (o *GeoIpSettings) GetUpdates() string {
-	if o == nil || o.Updates == nil {
+// GetGroupName returns the GroupName field value if set, zero value otherwise.
+func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupName() string {
+	if o == nil || o.GroupName == nil {
 		var ret string
 		return ret
 	}
-	return *o.Updates
+	return *o.GroupName
 }
 
-// GetUpdatesOk returns a tuple with the Updates field value if set, nil otherwise
+// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GeoIpSettings) GetUpdatesOk() (*string, bool) {
-	if o == nil || o.Updates == nil {
+func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupNameOk() (*string, bool) {
+	if o == nil || o.GroupName == nil {
 		return nil, false
 	}
-	return o.Updates, true
+	return o.GroupName, true
 }
 
-// HasUpdates returns a boolean if a field has been set.
-func (o *GeoIpSettings) HasUpdates() bool {
-	if o != nil && o.Updates != nil {
+// HasGroupName returns a boolean if a field has been set.
+func (o *TopGroupsTopGroupMembershipCountsInner) HasGroupName() bool {
+	if o != nil && o.GroupName != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetUpdates gets a reference to the given string and assigns it to the Updates field.
-func (o *GeoIpSettings) SetUpdates(v string) {
-	o.Updates = &v
+// SetGroupName gets a reference to the given string and assigns it to the GroupName field.
+func (o *TopGroupsTopGroupMembershipCountsInner) SetGroupName(v string) {
+	o.GroupName = &v
 }
 
-// GetMaxmind returns the Maxmind field value if set, zero value otherwise.
-func (o *GeoIpSettings) GetMaxmind() GeoIpSettingsMaxmind {
-	if o == nil || o.Maxmind == nil {
-		var ret GeoIpSettingsMaxmind
+// GetMemberCount returns the MemberCount field value if set, zero value otherwise.
+func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCount() int32 {
+	if o == nil || o.MemberCount == nil {
+		var ret int32
 		return ret
 	}
-	return *o.Maxmind
+	return *o.MemberCount
 }
 
-// GetMaxmindOk returns a tuple with the Maxmind field value if set, nil otherwise
+// GetMemberCountOk returns a tuple with the MemberCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GeoIpSettings) GetMaxmindOk() (*GeoIpSettingsMaxmind, bool) {
-	if o == nil || o.Maxmind == nil {
+func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCountOk() (*int32, bool) {
+	if o == nil || o.MemberCount == nil {
 		return nil, false
 	}
-	return o.Maxmind, true
+	return o.MemberCount, true
 }
 
-// HasMaxmind returns a boolean if a field has been set.
-func (o *GeoIpSettings) HasMaxmind() bool {
-	if o != nil && o.Maxmind != nil {
+// HasMemberCount returns a boolean if a field has been set.
+func (o *TopGroupsTopGroupMembershipCountsInner) HasMemberCount() bool {
+	if o != nil && o.MemberCount != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetMaxmind gets a reference to the given GeoIpSettingsMaxmind and assigns it to the Maxmind field.
-func (o *GeoIpSettings) SetMaxmind(v GeoIpSettingsMaxmind) {
-	o.Maxmind = &v
+// SetMemberCount gets a reference to the given int32 and assigns it to the MemberCount field.
+func (o *TopGroupsTopGroupMembershipCountsInner) SetMemberCount(v int32) {
+	o.MemberCount = &v
 }
 
-// GetIpInfo returns the IpInfo field value if set, zero value otherwise.
-func (o *GeoIpSettings) GetIpInfo() GeoIpSettingsIpInfo {
-	if o == nil || o.IpInfo == nil {
-		var ret GeoIpSettingsIpInfo
+// GetProviderName returns the ProviderName field value if set, zero value otherwise.
+func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderName() string {
+	if o == nil || o.ProviderName == nil {
+		var ret string
 		return ret
 	}
-	return *o.IpInfo
+	return *o.ProviderName
 }
 
-// GetIpInfoOk returns a tuple with the IpInfo field value if set, nil otherwise
+// GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GeoIpSettings) GetIpInfoOk() (*GeoIpSettingsIpInfo, bool) {
-	if o == nil || o.IpInfo == nil {
+func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderNameOk() (*string, bool) {
+	if o == nil || o.ProviderName == nil {
 		return nil, false
 	}
-	return o.IpInfo, true
+	return o.ProviderName, true
 }
 
-// HasIpInfo returns a boolean if a field has been set.
-func (o *GeoIpSettings) HasIpInfo() bool {
-	if o != nil && o.IpInfo != nil {
+// HasProviderName returns a boolean if a field has been set.
+func (o *TopGroupsTopGroupMembershipCountsInner) HasProviderName() bool {
+	if o != nil && o.ProviderName != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetIpInfo gets a reference to the given GeoIpSettingsIpInfo and assigns it to the IpInfo field.
-func (o *GeoIpSettings) SetIpInfo(v GeoIpSettingsIpInfo) {
-	o.IpInfo = &v
+// SetProviderName gets a reference to the given string and assigns it to the ProviderName field.
+func (o *TopGroupsTopGroupMembershipCountsInner) SetProviderName(v string) {
+	o.ProviderName = &v
 }
 
-// GetCustom returns the Custom field value if set, zero value otherwise.
-func (o *GeoIpSettings) GetCustom() GeoIpSettingsCustom {
-	if o == nil || o.Custom == nil {
-		var ret GeoIpSettingsCustom
-		return ret
-	}
-	return *o.Custom
-}
-
-// GetCustomOk returns a tuple with the Custom field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GeoIpSettings) GetCustomOk() (*GeoIpSettingsCustom, bool) {
-	if o == nil || o.Custom == nil {
-		return nil, false
-	}
-	return o.Custom, true
-}
-
-// HasCustom returns a boolean if a field has been set.
-func (o *GeoIpSettings) HasCustom() bool {
-	if o != nil && o.Custom != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCustom gets a reference to the given GeoIpSettingsCustom and assigns it to the Custom field.
-func (o *GeoIpSettings) SetCustom(v GeoIpSettingsCustom) {
-	o.Custom = &v
-}
-
-func (o GeoIpSettings) MarshalJSON() ([]byte, error) {
+func (o TopGroupsTopGroupMembershipCountsInner) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Updates != nil {
-		toSerialize["updates"] = o.Updates
+	if o.GroupName != nil {
+		toSerialize["groupName"] = o.GroupName
 	}
-	if o.Maxmind != nil {
-		toSerialize["maxmind"] = o.Maxmind
+	if o.MemberCount != nil {
+		toSerialize["memberCount"] = o.MemberCount
 	}
-	if o.IpInfo != nil {
-		toSerialize["ipInfo"] = o.IpInfo
-	}
-	if o.Custom != nil {
-		toSerialize["custom"] = o.Custom
+	if o.ProviderName != nil {
+		toSerialize["providerName"] = o.ProviderName
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableGeoIpSettings struct {
-	value *GeoIpSettings
+type NullableTopGroupsTopGroupMembershipCountsInner struct {
+	value *TopGroupsTopGroupMembershipCountsInner
 	isSet bool
 }
 
-func (v NullableGeoIpSettings) Get() *GeoIpSettings {
+func (v NullableTopGroupsTopGroupMembershipCountsInner) Get() *TopGroupsTopGroupMembershipCountsInner {
 	return v.value
 }
 
-func (v *NullableGeoIpSettings) Set(val *GeoIpSettings) {
+func (v *NullableTopGroupsTopGroupMembershipCountsInner) Set(val *TopGroupsTopGroupMembershipCountsInner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGeoIpSettings) IsSet() bool {
+func (v NullableTopGroupsTopGroupMembershipCountsInner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGeoIpSettings) Unset() {
+func (v *NullableTopGroupsTopGroupMembershipCountsInner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGeoIpSettings(val *GeoIpSettings) *NullableGeoIpSettings {
-	return &NullableGeoIpSettings{value: val, isSet: true}
+func NewNullableTopGroupsTopGroupMembershipCountsInner(val *TopGroupsTopGroupMembershipCountsInner) *NullableTopGroupsTopGroupMembershipCountsInner {
+	return &NullableTopGroupsTopGroupMembershipCountsInner{value: val, isSet: true}
 }
 
-func (v NullableGeoIpSettings) MarshalJSON() ([]byte, error) {
+func (v NullableTopGroupsTopGroupMembershipCountsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGeoIpSettings) UnmarshalJSON(src []byte) error {
+func (v *NullableTopGroupsTopGroupMembershipCountsInner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

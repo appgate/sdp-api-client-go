@@ -15,145 +15,138 @@ import (
 	"encoding/json"
 )
 
-// SiteAllOfVpnTls VPN over TLS protocol configuration.
-type SiteAllOfVpnTls struct {
-	Enabled *bool `json:"enabled,omitempty"`
-	// TLS version.
-	Version *string `json:"version,omitempty"`
+// TopGroups Represents a top user groups accessing discovered app for ID.
+type TopGroups struct {
+	// ID of the app.
+	AppId *string `json:"appId,omitempty"`
+	// List of top user groups with their membership counts.
+	TopGroupMembershipCounts []TopGroupsTopGroupMembershipCountsInner `json:"topGroupMembershipCounts,omitempty"`
 }
 
-// NewSiteAllOfVpnTls instantiates a new SiteAllOfVpnTls object
+// NewTopGroups instantiates a new TopGroups object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfVpnTls() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewTopGroups() *TopGroups {
+	this := TopGroups{}
 	return &this
 }
 
-// NewSiteAllOfVpnTlsWithDefaults instantiates a new SiteAllOfVpnTls object
+// NewTopGroupsWithDefaults instantiates a new TopGroups object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSiteAllOfVpnTlsWithDefaults() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewTopGroupsWithDefaults() *TopGroups {
+	this := TopGroups{}
 	return &this
 }
 
-// GetEnabled returns the Enabled field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Enabled
-}
-
-// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
-		return nil, false
-	}
-	return o.Enabled, true
-}
-
-// HasEnabled returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
-func (o *SiteAllOfVpnTls) SetEnabled(v bool) {
-	o.Enabled = &v
-}
-
-// GetVersion returns the Version field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetVersion() string {
-	if o == nil || o.Version == nil {
+// GetAppId returns the AppId field value if set, zero value otherwise.
+func (o *TopGroups) GetAppId() string {
+	if o == nil || o.AppId == nil {
 		var ret string
 		return ret
 	}
-	return *o.Version
+	return *o.AppId
 }
 
-// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+func (o *TopGroups) GetAppIdOk() (*string, bool) {
+	if o == nil || o.AppId == nil {
 		return nil, false
 	}
-	return o.Version, true
+	return o.AppId, true
 }
 
-// HasVersion returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasVersion() bool {
-	if o != nil && o.Version != nil {
+// HasAppId returns a boolean if a field has been set.
+func (o *TopGroups) HasAppId() bool {
+	if o != nil && o.AppId != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetVersion gets a reference to the given string and assigns it to the Version field.
-func (o *SiteAllOfVpnTls) SetVersion(v string) {
-	o.Version = &v
+// SetAppId gets a reference to the given string and assigns it to the AppId field.
+func (o *TopGroups) SetAppId(v string) {
+	o.AppId = &v
 }
 
-func (o SiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
+// GetTopGroupMembershipCounts returns the TopGroupMembershipCounts field value if set, zero value otherwise.
+func (o *TopGroups) GetTopGroupMembershipCounts() []TopGroupsTopGroupMembershipCountsInner {
+	if o == nil || o.TopGroupMembershipCounts == nil {
+		var ret []TopGroupsTopGroupMembershipCountsInner
+		return ret
 	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	return o.TopGroupMembershipCounts
+}
+
+// GetTopGroupMembershipCountsOk returns a tuple with the TopGroupMembershipCounts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TopGroups) GetTopGroupMembershipCountsOk() ([]TopGroupsTopGroupMembershipCountsInner, bool) {
+	if o == nil || o.TopGroupMembershipCounts == nil {
+		return nil, false
+	}
+	return o.TopGroupMembershipCounts, true
+}
+
+// HasTopGroupMembershipCounts returns a boolean if a field has been set.
+func (o *TopGroups) HasTopGroupMembershipCounts() bool {
+	if o != nil && o.TopGroupMembershipCounts != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTopGroupMembershipCounts gets a reference to the given []TopGroupsTopGroupMembershipCountsInner and assigns it to the TopGroupMembershipCounts field.
+func (o *TopGroups) SetTopGroupMembershipCounts(v []TopGroupsTopGroupMembershipCountsInner) {
+	o.TopGroupMembershipCounts = v
+}
+
+func (o TopGroups) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+	if o.AppId != nil {
+		toSerialize["appId"] = o.AppId
+	}
+	if o.TopGroupMembershipCounts != nil {
+		toSerialize["topGroupMembershipCounts"] = o.TopGroupMembershipCounts
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableSiteAllOfVpnTls struct {
-	value *SiteAllOfVpnTls
+type NullableTopGroups struct {
+	value *TopGroups
 	isSet bool
 }
 
-func (v NullableSiteAllOfVpnTls) Get() *SiteAllOfVpnTls {
+func (v NullableTopGroups) Get() *TopGroups {
 	return v.value
 }
 
-func (v *NullableSiteAllOfVpnTls) Set(val *SiteAllOfVpnTls) {
+func (v *NullableTopGroups) Set(val *TopGroups) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSiteAllOfVpnTls) IsSet() bool {
+func (v NullableTopGroups) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSiteAllOfVpnTls) Unset() {
+func (v *NullableTopGroups) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSiteAllOfVpnTls(val *SiteAllOfVpnTls) *NullableSiteAllOfVpnTls {
-	return &NullableSiteAllOfVpnTls{value: val, isSet: true}
+func NewNullableTopGroups(val *TopGroups) *NullableTopGroups {
+	return &NullableTopGroups{value: val, isSet: true}
 }
 
-func (v NullableSiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
+func (v NullableTopGroups) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSiteAllOfVpnTls) UnmarshalJSON(src []byte) error {
+func (v *NullableTopGroups) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

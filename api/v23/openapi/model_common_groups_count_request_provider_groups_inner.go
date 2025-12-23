@@ -15,145 +15,124 @@ import (
 	"encoding/json"
 )
 
-// SiteAllOfVpnTls VPN over TLS protocol configuration.
-type SiteAllOfVpnTls struct {
-	Enabled *bool `json:"enabled,omitempty"`
-	// TLS version.
-	Version *string `json:"version,omitempty"`
+// CommonGroupsCountRequestProviderGroupsInner struct for CommonGroupsCountRequestProviderGroupsInner
+type CommonGroupsCountRequestProviderGroupsInner struct {
+	// Name of the group.
+	GroupName string `json:"groupName"`
+	// Identity provider that owns the group.
+	ProviderName string `json:"providerName"`
 }
 
-// NewSiteAllOfVpnTls instantiates a new SiteAllOfVpnTls object
+// NewCommonGroupsCountRequestProviderGroupsInner instantiates a new CommonGroupsCountRequestProviderGroupsInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfVpnTls() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewCommonGroupsCountRequestProviderGroupsInner(groupName string, providerName string) *CommonGroupsCountRequestProviderGroupsInner {
+	this := CommonGroupsCountRequestProviderGroupsInner{}
+	this.GroupName = groupName
+	this.ProviderName = providerName
 	return &this
 }
 
-// NewSiteAllOfVpnTlsWithDefaults instantiates a new SiteAllOfVpnTls object
+// NewCommonGroupsCountRequestProviderGroupsInnerWithDefaults instantiates a new CommonGroupsCountRequestProviderGroupsInner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSiteAllOfVpnTlsWithDefaults() *SiteAllOfVpnTls {
-	this := SiteAllOfVpnTls{}
-	var enabled bool = true
-	this.Enabled = &enabled
-	var version string = "TLSv1.3"
-	this.Version = &version
+func NewCommonGroupsCountRequestProviderGroupsInnerWithDefaults() *CommonGroupsCountRequestProviderGroupsInner {
+	this := CommonGroupsCountRequestProviderGroupsInner{}
 	return &this
 }
 
-// GetEnabled returns the Enabled field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
-		var ret bool
-		return ret
-	}
-	return *o.Enabled
-}
-
-// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
-		return nil, false
-	}
-	return o.Enabled, true
-}
-
-// HasEnabled returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
-func (o *SiteAllOfVpnTls) SetEnabled(v bool) {
-	o.Enabled = &v
-}
-
-// GetVersion returns the Version field value if set, zero value otherwise.
-func (o *SiteAllOfVpnTls) GetVersion() string {
-	if o == nil || o.Version == nil {
+// GetGroupName returns the GroupName field value
+func (o *CommonGroupsCountRequestProviderGroupsInner) GetGroupName() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Version
+
+	return o.GroupName
 }
 
-// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// GetGroupNameOk returns a tuple with the GroupName field value
 // and a boolean to check if the value has been set.
-func (o *SiteAllOfVpnTls) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+func (o *CommonGroupsCountRequestProviderGroupsInner) GetGroupNameOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Version, true
+	return &o.GroupName, true
 }
 
-// HasVersion returns a boolean if a field has been set.
-func (o *SiteAllOfVpnTls) HasVersion() bool {
-	if o != nil && o.Version != nil {
-		return true
+// SetGroupName sets field value
+func (o *CommonGroupsCountRequestProviderGroupsInner) SetGroupName(v string) {
+	o.GroupName = v
+}
+
+// GetProviderName returns the ProviderName field value
+func (o *CommonGroupsCountRequestProviderGroupsInner) GetProviderName() string {
+	if o == nil {
+		var ret string
+		return ret
 	}
 
-	return false
+	return o.ProviderName
 }
 
-// SetVersion gets a reference to the given string and assigns it to the Version field.
-func (o *SiteAllOfVpnTls) SetVersion(v string) {
-	o.Version = &v
+// GetProviderNameOk returns a tuple with the ProviderName field value
+// and a boolean to check if the value has been set.
+func (o *CommonGroupsCountRequestProviderGroupsInner) GetProviderNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ProviderName, true
 }
 
-func (o SiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
+// SetProviderName sets field value
+func (o *CommonGroupsCountRequestProviderGroupsInner) SetProviderName(v string) {
+	o.ProviderName = v
+}
+
+func (o CommonGroupsCountRequestProviderGroupsInner) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
+	if true {
+		toSerialize["groupName"] = o.GroupName
 	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	if true {
+		toSerialize["providerName"] = o.ProviderName
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableSiteAllOfVpnTls struct {
-	value *SiteAllOfVpnTls
+type NullableCommonGroupsCountRequestProviderGroupsInner struct {
+	value *CommonGroupsCountRequestProviderGroupsInner
 	isSet bool
 }
 
-func (v NullableSiteAllOfVpnTls) Get() *SiteAllOfVpnTls {
+func (v NullableCommonGroupsCountRequestProviderGroupsInner) Get() *CommonGroupsCountRequestProviderGroupsInner {
 	return v.value
 }
 
-func (v *NullableSiteAllOfVpnTls) Set(val *SiteAllOfVpnTls) {
+func (v *NullableCommonGroupsCountRequestProviderGroupsInner) Set(val *CommonGroupsCountRequestProviderGroupsInner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSiteAllOfVpnTls) IsSet() bool {
+func (v NullableCommonGroupsCountRequestProviderGroupsInner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSiteAllOfVpnTls) Unset() {
+func (v *NullableCommonGroupsCountRequestProviderGroupsInner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSiteAllOfVpnTls(val *SiteAllOfVpnTls) *NullableSiteAllOfVpnTls {
-	return &NullableSiteAllOfVpnTls{value: val, isSet: true}
+func NewNullableCommonGroupsCountRequestProviderGroupsInner(val *CommonGroupsCountRequestProviderGroupsInner) *NullableCommonGroupsCountRequestProviderGroupsInner {
+	return &NullableCommonGroupsCountRequestProviderGroupsInner{value: val, isSet: true}
 }
 
-func (v NullableSiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
+func (v NullableCommonGroupsCountRequestProviderGroupsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSiteAllOfVpnTls) UnmarshalJSON(src []byte) error {
+func (v *NullableCommonGroupsCountRequestProviderGroupsInner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

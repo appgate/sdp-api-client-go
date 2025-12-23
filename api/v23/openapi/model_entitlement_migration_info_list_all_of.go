@@ -17,7 +17,7 @@ import (
 
 // EntitlementMigrationInfoListAllOf Represents a list of migrated Entitlement Actions.
 type EntitlementMigrationInfoListAllOf struct {
-	Data *EntitlementMigrationInfo `json:"data,omitempty"`
+	Data []EntitlementMigrationInfo `json:"data,omitempty"`
 }
 
 // NewEntitlementMigrationInfoListAllOf instantiates a new EntitlementMigrationInfoListAllOf object
@@ -38,17 +38,17 @@ func NewEntitlementMigrationInfoListAllOfWithDefaults() *EntitlementMigrationInf
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *EntitlementMigrationInfoListAllOf) GetData() EntitlementMigrationInfo {
+func (o *EntitlementMigrationInfoListAllOf) GetData() []EntitlementMigrationInfo {
 	if o == nil || o.Data == nil {
-		var ret EntitlementMigrationInfo
+		var ret []EntitlementMigrationInfo
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EntitlementMigrationInfoListAllOf) GetDataOk() (*EntitlementMigrationInfo, bool) {
+func (o *EntitlementMigrationInfoListAllOf) GetDataOk() ([]EntitlementMigrationInfo, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -64,9 +64,9 @@ func (o *EntitlementMigrationInfoListAllOf) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given EntitlementMigrationInfo and assigns it to the Data field.
-func (o *EntitlementMigrationInfoListAllOf) SetData(v EntitlementMigrationInfo) {
-	o.Data = &v
+// SetData gets a reference to the given []EntitlementMigrationInfo and assigns it to the Data field.
+func (o *EntitlementMigrationInfoListAllOf) SetData(v []EntitlementMigrationInfo) {
+	o.Data = v
 }
 
 func (o EntitlementMigrationInfoListAllOf) MarshalJSON() ([]byte, error) {

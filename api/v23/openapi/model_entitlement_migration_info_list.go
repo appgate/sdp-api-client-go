@@ -28,8 +28,8 @@ type EntitlementMigrationInfoList struct {
 	// The total readable count of entities. Not influenced by the query.
 	TotalCount *int32 `json:"totalCount,omitempty"`
 	// The filters applied to the list.
-	FilterBy []FilterBy                `json:"filterBy,omitempty"`
-	Data     *EntitlementMigrationInfo `json:"data,omitempty"`
+	FilterBy []FilterBy                 `json:"filterBy,omitempty"`
+	Data     []EntitlementMigrationInfo `json:"data,omitempty"`
 }
 
 // NewEntitlementMigrationInfoList instantiates a new EntitlementMigrationInfoList object
@@ -242,17 +242,17 @@ func (o *EntitlementMigrationInfoList) SetFilterBy(v []FilterBy) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *EntitlementMigrationInfoList) GetData() EntitlementMigrationInfo {
+func (o *EntitlementMigrationInfoList) GetData() []EntitlementMigrationInfo {
 	if o == nil || o.Data == nil {
-		var ret EntitlementMigrationInfo
+		var ret []EntitlementMigrationInfo
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EntitlementMigrationInfoList) GetDataOk() (*EntitlementMigrationInfo, bool) {
+func (o *EntitlementMigrationInfoList) GetDataOk() ([]EntitlementMigrationInfo, bool) {
 	if o == nil || o.Data == nil {
 		return nil, false
 	}
@@ -268,9 +268,9 @@ func (o *EntitlementMigrationInfoList) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given EntitlementMigrationInfo and assigns it to the Data field.
-func (o *EntitlementMigrationInfoList) SetData(v EntitlementMigrationInfo) {
-	o.Data = &v
+// SetData gets a reference to the given []EntitlementMigrationInfo and assigns it to the Data field.
+func (o *EntitlementMigrationInfoList) SetData(v []EntitlementMigrationInfo) {
+	o.Data = v
 }
 
 func (o EntitlementMigrationInfoList) MarshalJSON() ([]byte, error) {
