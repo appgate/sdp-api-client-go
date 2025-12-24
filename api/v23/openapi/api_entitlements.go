@@ -226,7 +226,7 @@ func (a *EntitlementsApiService) EntitlementsCloudMigrationsPostExecute(r ApiEnt
 	localVarFormParams := url.Values{}
 
 	if r.dryRun != nil {
-		localVarQueryParams.Add("dryRun", parameterToString(*r.dryRun, ""))
+		localVarQueryParams.Add("dry-run", parameterToString(*r.dryRun, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
