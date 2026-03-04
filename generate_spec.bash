@@ -35,7 +35,9 @@ fi
 
 # Starting from v16 we will use apigentools to generate the sdk with openapi-generator,
 # older versions are not supported by apigentools.
-supportedVersions=(20 21 22)
+supportedVersions=(20 21 22 23 24)
+maxSupportedVersion="${supportedVersions[-1]}"
+
 
 
 
@@ -45,8 +47,13 @@ for version in "${supportedVersions[@]}"; do
 done
 
 for version in "${supportedVersions[@]}"; do
-    echo "Cloning $version to spec/spec/v$version"
-    git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "version-$version" "spec/spec/v$version"
+    if [ "$version" == "$maxSupportedVersion" ]; then
+        branch="beta"
+    else
+        branch="version-$version"
+    fi
+    echo "Cloning $branch to spec/spec/v$version"
+    git clone git@github.com:appgate/sdp-api-specification.git --depth 1 --single-branch --branch "$branch" "spec/spec/v$version"
 done
 
 for version in "${supportedVersions[@]}"; do
