@@ -20,8 +20,8 @@ type BulkUpsertFailure struct {
 	// ID from the request item, if available.
 	Id NullableString `json:"id,omitempty"`
 	// Name from the request item, if available.
-	Name  NullableString          `json:"name,omitempty"`
-	Error *BulkUpsertFailureError `json:"error,omitempty"`
+	Name  NullableString   `json:"name,omitempty"`
+	Error *ValidationError `json:"error,omitempty"`
 }
 
 // NewBulkUpsertFailure instantiates a new BulkUpsertFailure object
@@ -128,9 +128,9 @@ func (o *BulkUpsertFailure) UnsetName() {
 }
 
 // GetError returns the Error field value if set, zero value otherwise.
-func (o *BulkUpsertFailure) GetError() BulkUpsertFailureError {
+func (o *BulkUpsertFailure) GetError() ValidationError {
 	if o == nil || o.Error == nil {
-		var ret BulkUpsertFailureError
+		var ret ValidationError
 		return ret
 	}
 	return *o.Error
@@ -138,7 +138,7 @@ func (o *BulkUpsertFailure) GetError() BulkUpsertFailureError {
 
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BulkUpsertFailure) GetErrorOk() (*BulkUpsertFailureError, bool) {
+func (o *BulkUpsertFailure) GetErrorOk() (*ValidationError, bool) {
 	if o == nil || o.Error == nil {
 		return nil, false
 	}
@@ -154,8 +154,8 @@ func (o *BulkUpsertFailure) HasError() bool {
 	return false
 }
 
-// SetError gets a reference to the given BulkUpsertFailureError and assigns it to the Error field.
-func (o *BulkUpsertFailure) SetError(v BulkUpsertFailureError) {
+// SetError gets a reference to the given ValidationError and assigns it to the Error field.
+func (o *BulkUpsertFailure) SetError(v ValidationError) {
 	o.Error = &v
 }
 

@@ -18,15 +18,7 @@ import (
 
 // BulkUpsertFailureError - struct for BulkUpsertFailureError
 type BulkUpsertFailureError struct {
-	Error           *Error
 	ValidationError *ValidationError
-}
-
-// ErrorAsBulkUpsertFailureError is a convenience function that returns Error wrapped in BulkUpsertFailureError
-func ErrorAsBulkUpsertFailureError(v *Error) BulkUpsertFailureError {
-	return BulkUpsertFailureError{
-		Error: v,
-	}
 }
 
 // ValidationErrorAsBulkUpsertFailureError is a convenience function that returns ValidationError wrapped in BulkUpsertFailureError
@@ -40,19 +32,6 @@ func ValidationErrorAsBulkUpsertFailureError(v *ValidationError) BulkUpsertFailu
 func (dst *BulkUpsertFailureError) UnmarshalJSON(data []byte) error {
 	var err error
 	match := 0
-	// try to unmarshal data into Error
-	err = json.Unmarshal(data, &dst.Error)
-	if err == nil {
-		jsonError, _ := json.Marshal(dst.Error)
-		if string(jsonError) == "{}" { // empty struct
-			dst.Error = nil
-		} else {
-			match++
-		}
-	} else {
-		dst.Error = nil
-	}
-
 	// try to unmarshal data into ValidationError
 	err = json.Unmarshal(data, &dst.ValidationError)
 	if err == nil {
@@ -68,7 +47,6 @@ func (dst *BulkUpsertFailureError) UnmarshalJSON(data []byte) error {
 
 	if match > 1 { // more than 1 match
 		// reset to nil
-		dst.Error = nil
 		dst.ValidationError = nil
 
 		return fmt.Errorf("Data matches more than one schema in oneOf(BulkUpsertFailureError)")
@@ -81,10 +59,6 @@ func (dst *BulkUpsertFailureError) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src BulkUpsertFailureError) MarshalJSON() ([]byte, error) {
-	if src.Error != nil {
-		return json.Marshal(&src.Error)
-	}
-
 	if src.ValidationError != nil {
 		return json.Marshal(&src.ValidationError)
 	}
@@ -97,10 +71,6 @@ func (obj *BulkUpsertFailureError) GetActualInstance() interface{} {
 	if obj == nil {
 		return nil
 	}
-	if obj.Error != nil {
-		return obj.Error
-	}
-
 	if obj.ValidationError != nil {
 		return obj.ValidationError
 	}
