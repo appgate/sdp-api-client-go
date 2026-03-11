@@ -18,6 +18,7 @@ import (
 // ReplicationItems struct for ReplicationItems
 type ReplicationItems struct {
 	AdministrativeRoles *ReplicationReportItem `json:"administrativeRoles,omitempty"`
+	ClientProfiles      *ReplicationReportItem `json:"clientProfiles,omitempty"`
 	Conditions          *ReplicationReportItem `json:"conditions,omitempty"`
 	CriteriaScripts     *ReplicationReportItem `json:"criteriaScripts,omitempty"`
 	DeviceClaimScripts  *ReplicationReportItem `json:"deviceClaimScripts,omitempty"`
@@ -26,7 +27,6 @@ type ReplicationItems struct {
 	IdentityProviders   *ReplicationReportItem `json:"identityProviders,omitempty"`
 	IpPools             *ReplicationReportItem `json:"ipPools,omitempty"`
 	Policies            *ReplicationReportItem `json:"policies,omitempty"`
-	Profiles            *ReplicationReportItem `json:"profiles,omitempty"`
 	RingfenceRules      *ReplicationReportItem `json:"ringfenceRules,omitempty"`
 	Sites               *ReplicationReportItem `json:"sites,omitempty"`
 	Tags                *ReplicationReportItem `json:"tags,omitempty"`
@@ -79,6 +79,38 @@ func (o *ReplicationItems) HasAdministrativeRoles() bool {
 // SetAdministrativeRoles gets a reference to the given ReplicationReportItem and assigns it to the AdministrativeRoles field.
 func (o *ReplicationItems) SetAdministrativeRoles(v ReplicationReportItem) {
 	o.AdministrativeRoles = &v
+}
+
+// GetClientProfiles returns the ClientProfiles field value if set, zero value otherwise.
+func (o *ReplicationItems) GetClientProfiles() ReplicationReportItem {
+	if o == nil || o.ClientProfiles == nil {
+		var ret ReplicationReportItem
+		return ret
+	}
+	return *o.ClientProfiles
+}
+
+// GetClientProfilesOk returns a tuple with the ClientProfiles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationItems) GetClientProfilesOk() (*ReplicationReportItem, bool) {
+	if o == nil || o.ClientProfiles == nil {
+		return nil, false
+	}
+	return o.ClientProfiles, true
+}
+
+// HasClientProfiles returns a boolean if a field has been set.
+func (o *ReplicationItems) HasClientProfiles() bool {
+	if o != nil && o.ClientProfiles != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetClientProfiles gets a reference to the given ReplicationReportItem and assigns it to the ClientProfiles field.
+func (o *ReplicationItems) SetClientProfiles(v ReplicationReportItem) {
+	o.ClientProfiles = &v
 }
 
 // GetConditions returns the Conditions field value if set, zero value otherwise.
@@ -337,38 +369,6 @@ func (o *ReplicationItems) SetPolicies(v ReplicationReportItem) {
 	o.Policies = &v
 }
 
-// GetProfiles returns the Profiles field value if set, zero value otherwise.
-func (o *ReplicationItems) GetProfiles() ReplicationReportItem {
-	if o == nil || o.Profiles == nil {
-		var ret ReplicationReportItem
-		return ret
-	}
-	return *o.Profiles
-}
-
-// GetProfilesOk returns a tuple with the Profiles field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ReplicationItems) GetProfilesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Profiles == nil {
-		return nil, false
-	}
-	return o.Profiles, true
-}
-
-// HasProfiles returns a boolean if a field has been set.
-func (o *ReplicationItems) HasProfiles() bool {
-	if o != nil && o.Profiles != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetProfiles gets a reference to the given ReplicationReportItem and assigns it to the Profiles field.
-func (o *ReplicationItems) SetProfiles(v ReplicationReportItem) {
-	o.Profiles = &v
-}
-
 // GetRingfenceRules returns the RingfenceRules field value if set, zero value otherwise.
 func (o *ReplicationItems) GetRingfenceRules() ReplicationReportItem {
 	if o == nil || o.RingfenceRules == nil {
@@ -470,6 +470,9 @@ func (o ReplicationItems) MarshalJSON() ([]byte, error) {
 	if o.AdministrativeRoles != nil {
 		toSerialize["administrativeRoles"] = o.AdministrativeRoles
 	}
+	if o.ClientProfiles != nil {
+		toSerialize["clientProfiles"] = o.ClientProfiles
+	}
 	if o.Conditions != nil {
 		toSerialize["conditions"] = o.Conditions
 	}
@@ -493,9 +496,6 @@ func (o ReplicationItems) MarshalJSON() ([]byte, error) {
 	}
 	if o.Policies != nil {
 		toSerialize["policies"] = o.Policies
-	}
-	if o.Profiles != nil {
-		toSerialize["profiles"] = o.Profiles
 	}
 	if o.RingfenceRules != nil {
 		toSerialize["ringfenceRules"] = o.RingfenceRules
