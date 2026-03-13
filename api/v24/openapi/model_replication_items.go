@@ -26,10 +26,12 @@ type ReplicationItems struct {
 	Entitlements        *ReplicationReportItem `json:"entitlements,omitempty"`
 	IdentityProviders   *ReplicationReportItem `json:"identityProviders,omitempty"`
 	IpPools             *ReplicationReportItem `json:"ipPools,omitempty"`
+	MfaProviders        *ReplicationReportItem `json:"mfaProviders,omitempty"`
 	Policies            *ReplicationReportItem `json:"policies,omitempty"`
 	RingfenceRules      *ReplicationReportItem `json:"ringfenceRules,omitempty"`
 	Sites               *ReplicationReportItem `json:"sites,omitempty"`
 	Tags                *ReplicationReportItem `json:"tags,omitempty"`
+	UserClaimScripts    *ReplicationReportItem `json:"userClaimScripts,omitempty"`
 }
 
 // NewReplicationItems instantiates a new ReplicationItems object
@@ -337,6 +339,38 @@ func (o *ReplicationItems) SetIpPools(v ReplicationReportItem) {
 	o.IpPools = &v
 }
 
+// GetMfaProviders returns the MfaProviders field value if set, zero value otherwise.
+func (o *ReplicationItems) GetMfaProviders() ReplicationReportItem {
+	if o == nil || o.MfaProviders == nil {
+		var ret ReplicationReportItem
+		return ret
+	}
+	return *o.MfaProviders
+}
+
+// GetMfaProvidersOk returns a tuple with the MfaProviders field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationItems) GetMfaProvidersOk() (*ReplicationReportItem, bool) {
+	if o == nil || o.MfaProviders == nil {
+		return nil, false
+	}
+	return o.MfaProviders, true
+}
+
+// HasMfaProviders returns a boolean if a field has been set.
+func (o *ReplicationItems) HasMfaProviders() bool {
+	if o != nil && o.MfaProviders != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMfaProviders gets a reference to the given ReplicationReportItem and assigns it to the MfaProviders field.
+func (o *ReplicationItems) SetMfaProviders(v ReplicationReportItem) {
+	o.MfaProviders = &v
+}
+
 // GetPolicies returns the Policies field value if set, zero value otherwise.
 func (o *ReplicationItems) GetPolicies() ReplicationReportItem {
 	if o == nil || o.Policies == nil {
@@ -465,6 +499,38 @@ func (o *ReplicationItems) SetTags(v ReplicationReportItem) {
 	o.Tags = &v
 }
 
+// GetUserClaimScripts returns the UserClaimScripts field value if set, zero value otherwise.
+func (o *ReplicationItems) GetUserClaimScripts() ReplicationReportItem {
+	if o == nil || o.UserClaimScripts == nil {
+		var ret ReplicationReportItem
+		return ret
+	}
+	return *o.UserClaimScripts
+}
+
+// GetUserClaimScriptsOk returns a tuple with the UserClaimScripts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationItems) GetUserClaimScriptsOk() (*ReplicationReportItem, bool) {
+	if o == nil || o.UserClaimScripts == nil {
+		return nil, false
+	}
+	return o.UserClaimScripts, true
+}
+
+// HasUserClaimScripts returns a boolean if a field has been set.
+func (o *ReplicationItems) HasUserClaimScripts() bool {
+	if o != nil && o.UserClaimScripts != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUserClaimScripts gets a reference to the given ReplicationReportItem and assigns it to the UserClaimScripts field.
+func (o *ReplicationItems) SetUserClaimScripts(v ReplicationReportItem) {
+	o.UserClaimScripts = &v
+}
+
 func (o ReplicationItems) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AdministrativeRoles != nil {
@@ -494,6 +560,9 @@ func (o ReplicationItems) MarshalJSON() ([]byte, error) {
 	if o.IpPools != nil {
 		toSerialize["ipPools"] = o.IpPools
 	}
+	if o.MfaProviders != nil {
+		toSerialize["mfaProviders"] = o.MfaProviders
+	}
 	if o.Policies != nil {
 		toSerialize["policies"] = o.Policies
 	}
@@ -505,6 +574,9 @@ func (o ReplicationItems) MarshalJSON() ([]byte, error) {
 	}
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
+	}
+	if o.UserClaimScripts != nil {
+		toSerialize["userClaimScripts"] = o.UserClaimScripts
 	}
 	return json.Marshal(toSerialize)
 }
