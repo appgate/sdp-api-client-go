@@ -28,12 +28,14 @@ type ReplicationTarget struct {
 	Created *time.Time `json:"created,omitempty"`
 	// Last update date.
 	Updated *time.Time `json:"updated,omitempty"`
-	// Tags used for selecting items to replicate to this target.
+	// Tags used for selecting items to replicate to this target. The tag builtin is not permitted.
 	ReplicationTags []string `json:"replicationTags,omitempty"`
 	// Replication status.
 	Status *string `json:"status,omitempty"`
 	// Last replication timestamp.
-	LastReplicationTime    *time.Time          `json:"lastReplicationTime,omitempty"`
+	LastReplicationTime *time.Time `json:"lastReplicationTime,omitempty"`
+	// Source-side health check message that explains a controller-detected issue affecting this target’s status.
+	SourceHealthMessage    *string             `json:"sourceHealthMessage,omitempty"`
 	LastReplicationDetails *ReplicationDetails `json:"lastReplicationDetails,omitempty"`
 }
 
@@ -303,6 +305,38 @@ func (o *ReplicationTarget) SetLastReplicationTime(v time.Time) {
 	o.LastReplicationTime = &v
 }
 
+// GetSourceHealthMessage returns the SourceHealthMessage field value if set, zero value otherwise.
+func (o *ReplicationTarget) GetSourceHealthMessage() string {
+	if o == nil || o.SourceHealthMessage == nil {
+		var ret string
+		return ret
+	}
+	return *o.SourceHealthMessage
+}
+
+// GetSourceHealthMessageOk returns a tuple with the SourceHealthMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationTarget) GetSourceHealthMessageOk() (*string, bool) {
+	if o == nil || o.SourceHealthMessage == nil {
+		return nil, false
+	}
+	return o.SourceHealthMessage, true
+}
+
+// HasSourceHealthMessage returns a boolean if a field has been set.
+func (o *ReplicationTarget) HasSourceHealthMessage() bool {
+	if o != nil && o.SourceHealthMessage != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceHealthMessage gets a reference to the given string and assigns it to the SourceHealthMessage field.
+func (o *ReplicationTarget) SetSourceHealthMessage(v string) {
+	o.SourceHealthMessage = &v
+}
+
 // GetLastReplicationDetails returns the LastReplicationDetails field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetLastReplicationDetails() ReplicationDetails {
 	if o == nil || o.LastReplicationDetails == nil {
@@ -360,6 +394,9 @@ func (o ReplicationTarget) MarshalJSON() ([]byte, error) {
 	}
 	if o.LastReplicationTime != nil {
 		toSerialize["lastReplicationTime"] = o.LastReplicationTime
+	}
+	if o.SourceHealthMessage != nil {
+		toSerialize["sourceHealthMessage"] = o.SourceHealthMessage
 	}
 	if o.LastReplicationDetails != nil {
 		toSerialize["lastReplicationDetails"] = o.LastReplicationDetails

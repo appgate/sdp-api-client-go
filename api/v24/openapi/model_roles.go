@@ -17,15 +17,16 @@ import (
 
 // Roles Appliance roles.
 type Roles struct {
-	Controller        *ControllerRole            `json:"controller,omitempty"`
-	LogServer         *ApplianceRole             `json:"logServer,omitempty"`
-	LogForwarder      *ApplianceRole             `json:"logForwarder,omitempty"`
-	MetricsAggregator *ApplianceRole             `json:"metricsAggregator,omitempty"`
-	ConnectionBroker  *ConnectionBrokerRole      `json:"connectionBroker,omitempty"`
-	Gateway           *GatewayRole               `json:"gateway,omitempty"`
-	Connector         *ApplianceWithSessionsRole `json:"connector,omitempty"`
-	Portal            *ApplianceWithSessionsRole `json:"portal,omitempty"`
-	Appliance         *ApplianceBaseRole         `json:"appliance,omitempty"`
+	Controller            *ControllerRole            `json:"controller,omitempty"`
+	LogServer             *ApplianceRole             `json:"logServer,omitempty"`
+	LogForwarder          *ApplianceRole             `json:"logForwarder,omitempty"`
+	MetricsAggregator     *ApplianceRole             `json:"metricsAggregator,omitempty"`
+	CollectiveReplication *ApplianceRole             `json:"collectiveReplication,omitempty"`
+	ConnectionBroker      *ConnectionBrokerRole      `json:"connectionBroker,omitempty"`
+	Gateway               *GatewayRole               `json:"gateway,omitempty"`
+	Connector             *ApplianceWithSessionsRole `json:"connector,omitempty"`
+	Portal                *ApplianceWithSessionsRole `json:"portal,omitempty"`
+	Appliance             *ApplianceBaseRole         `json:"appliance,omitempty"`
 }
 
 // NewRoles instantiates a new Roles object
@@ -171,6 +172,38 @@ func (o *Roles) HasMetricsAggregator() bool {
 // SetMetricsAggregator gets a reference to the given ApplianceRole and assigns it to the MetricsAggregator field.
 func (o *Roles) SetMetricsAggregator(v ApplianceRole) {
 	o.MetricsAggregator = &v
+}
+
+// GetCollectiveReplication returns the CollectiveReplication field value if set, zero value otherwise.
+func (o *Roles) GetCollectiveReplication() ApplianceRole {
+	if o == nil || o.CollectiveReplication == nil {
+		var ret ApplianceRole
+		return ret
+	}
+	return *o.CollectiveReplication
+}
+
+// GetCollectiveReplicationOk returns a tuple with the CollectiveReplication field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Roles) GetCollectiveReplicationOk() (*ApplianceRole, bool) {
+	if o == nil || o.CollectiveReplication == nil {
+		return nil, false
+	}
+	return o.CollectiveReplication, true
+}
+
+// HasCollectiveReplication returns a boolean if a field has been set.
+func (o *Roles) HasCollectiveReplication() bool {
+	if o != nil && o.CollectiveReplication != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCollectiveReplication gets a reference to the given ApplianceRole and assigns it to the CollectiveReplication field.
+func (o *Roles) SetCollectiveReplication(v ApplianceRole) {
+	o.CollectiveReplication = &v
 }
 
 // GetConnectionBroker returns the ConnectionBroker field value if set, zero value otherwise.
@@ -346,6 +379,9 @@ func (o Roles) MarshalJSON() ([]byte, error) {
 	}
 	if o.MetricsAggregator != nil {
 		toSerialize["metricsAggregator"] = o.MetricsAggregator
+	}
+	if o.CollectiveReplication != nil {
+		toSerialize["collectiveReplication"] = o.CollectiveReplication
 	}
 	if o.ConnectionBroker != nil {
 		toSerialize["connectionBroker"] = o.ConnectionBroker

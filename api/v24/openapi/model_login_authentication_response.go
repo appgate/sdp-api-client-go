@@ -13,148 +13,177 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
-// DnsSettings struct for DnsSettings
-type DnsSettings struct {
-	// The DNS servers to be assigned to the Clients of the users in this Identity Provider. Deprecated as of 6.6. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
-	// Deprecated
-	DnsServers []string `json:"dnsServers,omitempty"`
-	// The DNS search domains to be assigned to Clients of the users in this Identity Provider. Deprecated as of 6.6. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
-	// Deprecated
-	DnsSearchDomains []string `json:"dnsSearchDomains,omitempty"`
+// LoginAuthenticationResponse struct for LoginAuthenticationResponse
+type LoginAuthenticationResponse struct {
+	User *LoginAuthenticationResponseUser `json:"user,omitempty"`
+	// The AuthToken required for subsequent API calls.
+	Token *string `json:"token,omitempty"`
+	// Token expiration time.
+	Expires *time.Time `json:"expires,omitempty"`
 }
 
-// NewDnsSettings instantiates a new DnsSettings object
+// NewLoginAuthenticationResponse instantiates a new LoginAuthenticationResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDnsSettings() *DnsSettings {
-	this := DnsSettings{}
+func NewLoginAuthenticationResponse() *LoginAuthenticationResponse {
+	this := LoginAuthenticationResponse{}
 	return &this
 }
 
-// NewDnsSettingsWithDefaults instantiates a new DnsSettings object
+// NewLoginAuthenticationResponseWithDefaults instantiates a new LoginAuthenticationResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewDnsSettingsWithDefaults() *DnsSettings {
-	this := DnsSettings{}
+func NewLoginAuthenticationResponseWithDefaults() *LoginAuthenticationResponse {
+	this := LoginAuthenticationResponse{}
 	return &this
 }
 
-// GetDnsServers returns the DnsServers field value if set, zero value otherwise.
-// Deprecated
-func (o *DnsSettings) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
-		var ret []string
+// GetUser returns the User field value if set, zero value otherwise.
+func (o *LoginAuthenticationResponse) GetUser() LoginAuthenticationResponseUser {
+	if o == nil || o.User == nil {
+		var ret LoginAuthenticationResponseUser
 		return ret
 	}
-	return o.DnsServers
+	return *o.User
 }
 
-// GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
+// GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// Deprecated
-func (o *DnsSettings) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+func (o *LoginAuthenticationResponse) GetUserOk() (*LoginAuthenticationResponseUser, bool) {
+	if o == nil || o.User == nil {
 		return nil, false
 	}
-	return o.DnsServers, true
+	return o.User, true
 }
 
-// HasDnsServers returns a boolean if a field has been set.
-func (o *DnsSettings) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+// HasUser returns a boolean if a field has been set.
+func (o *LoginAuthenticationResponse) HasUser() bool {
+	if o != nil && o.User != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetDnsServers gets a reference to the given []string and assigns it to the DnsServers field.
-// Deprecated
-func (o *DnsSettings) SetDnsServers(v []string) {
-	o.DnsServers = v
+// SetUser gets a reference to the given LoginAuthenticationResponseUser and assigns it to the User field.
+func (o *LoginAuthenticationResponse) SetUser(v LoginAuthenticationResponseUser) {
+	o.User = &v
 }
 
-// GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
-// Deprecated
-func (o *DnsSettings) GetDnsSearchDomains() []string {
-	if o == nil || o.DnsSearchDomains == nil {
-		var ret []string
+// GetToken returns the Token field value if set, zero value otherwise.
+func (o *LoginAuthenticationResponse) GetToken() string {
+	if o == nil || o.Token == nil {
+		var ret string
 		return ret
 	}
-	return o.DnsSearchDomains
+	return *o.Token
 }
 
-// GetDnsSearchDomainsOk returns a tuple with the DnsSearchDomains field value if set, nil otherwise
+// GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// Deprecated
-func (o *DnsSettings) GetDnsSearchDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsSearchDomains == nil {
+func (o *LoginAuthenticationResponse) GetTokenOk() (*string, bool) {
+	if o == nil || o.Token == nil {
 		return nil, false
 	}
-	return o.DnsSearchDomains, true
+	return o.Token, true
 }
 
-// HasDnsSearchDomains returns a boolean if a field has been set.
-func (o *DnsSettings) HasDnsSearchDomains() bool {
-	if o != nil && o.DnsSearchDomains != nil {
+// HasToken returns a boolean if a field has been set.
+func (o *LoginAuthenticationResponse) HasToken() bool {
+	if o != nil && o.Token != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetDnsSearchDomains gets a reference to the given []string and assigns it to the DnsSearchDomains field.
-// Deprecated
-func (o *DnsSettings) SetDnsSearchDomains(v []string) {
-	o.DnsSearchDomains = v
+// SetToken gets a reference to the given string and assigns it to the Token field.
+func (o *LoginAuthenticationResponse) SetToken(v string) {
+	o.Token = &v
 }
 
-func (o DnsSettings) MarshalJSON() ([]byte, error) {
+// GetExpires returns the Expires field value if set, zero value otherwise.
+func (o *LoginAuthenticationResponse) GetExpires() time.Time {
+	if o == nil || o.Expires == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.Expires
+}
+
+// GetExpiresOk returns a tuple with the Expires field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LoginAuthenticationResponse) GetExpiresOk() (*time.Time, bool) {
+	if o == nil || o.Expires == nil {
+		return nil, false
+	}
+	return o.Expires, true
+}
+
+// HasExpires returns a boolean if a field has been set.
+func (o *LoginAuthenticationResponse) HasExpires() bool {
+	if o != nil && o.Expires != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetExpires gets a reference to the given time.Time and assigns it to the Expires field.
+func (o *LoginAuthenticationResponse) SetExpires(v time.Time) {
+	o.Expires = &v
+}
+
+func (o LoginAuthenticationResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
+	if o.User != nil {
+		toSerialize["user"] = o.User
 	}
-	if o.DnsSearchDomains != nil {
-		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	if o.Token != nil {
+		toSerialize["token"] = o.Token
+	}
+	if o.Expires != nil {
+		toSerialize["expires"] = o.Expires
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableDnsSettings struct {
-	value *DnsSettings
+type NullableLoginAuthenticationResponse struct {
+	value *LoginAuthenticationResponse
 	isSet bool
 }
 
-func (v NullableDnsSettings) Get() *DnsSettings {
+func (v NullableLoginAuthenticationResponse) Get() *LoginAuthenticationResponse {
 	return v.value
 }
 
-func (v *NullableDnsSettings) Set(val *DnsSettings) {
+func (v *NullableLoginAuthenticationResponse) Set(val *LoginAuthenticationResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableDnsSettings) IsSet() bool {
+func (v NullableLoginAuthenticationResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableDnsSettings) Unset() {
+func (v *NullableLoginAuthenticationResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableDnsSettings(val *DnsSettings) *NullableDnsSettings {
-	return &NullableDnsSettings{value: val, isSet: true}
+func NewNullableLoginAuthenticationResponse(val *LoginAuthenticationResponse) *NullableLoginAuthenticationResponse {
+	return &NullableLoginAuthenticationResponse{value: val, isSet: true}
 }
 
-func (v NullableDnsSettings) MarshalJSON() ([]byte, error) {
+func (v NullableLoginAuthenticationResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableDnsSettings) UnmarshalJSON(src []byte) error {
+func (v *NullableLoginAuthenticationResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

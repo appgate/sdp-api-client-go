@@ -36,6 +36,8 @@ type ApplianceAllOfLogForwarder struct {
 	Datadogs []Datadog `json:"datadogs,omitempty"`
 	// Coralogix endpoints to connect and send the audit logs to.
 	Coralogixs []Coralogix `json:"coralogixs,omitempty"`
+	// Kafka endpoints to connect and send the audit logs to.
+	KafkaClients []Kafka `json:"kafkaClients,omitempty"`
 	// The sites to collect logs from and forward.
 	Sites []string `json:"sites,omitempty"`
 }
@@ -392,6 +394,38 @@ func (o *ApplianceAllOfLogForwarder) SetCoralogixs(v []Coralogix) {
 	o.Coralogixs = v
 }
 
+// GetKafkaClients returns the KafkaClients field value if set, zero value otherwise.
+func (o *ApplianceAllOfLogForwarder) GetKafkaClients() []Kafka {
+	if o == nil || o.KafkaClients == nil {
+		var ret []Kafka
+		return ret
+	}
+	return o.KafkaClients
+}
+
+// GetKafkaClientsOk returns a tuple with the KafkaClients field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApplianceAllOfLogForwarder) GetKafkaClientsOk() ([]Kafka, bool) {
+	if o == nil || o.KafkaClients == nil {
+		return nil, false
+	}
+	return o.KafkaClients, true
+}
+
+// HasKafkaClients returns a boolean if a field has been set.
+func (o *ApplianceAllOfLogForwarder) HasKafkaClients() bool {
+	if o != nil && o.KafkaClients != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetKafkaClients gets a reference to the given []Kafka and assigns it to the KafkaClients field.
+func (o *ApplianceAllOfLogForwarder) SetKafkaClients(v []Kafka) {
+	o.KafkaClients = v
+}
+
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetSites() []string {
 	if o == nil || o.Sites == nil {
@@ -455,6 +489,9 @@ func (o ApplianceAllOfLogForwarder) MarshalJSON() ([]byte, error) {
 	}
 	if o.Coralogixs != nil {
 		toSerialize["coralogixs"] = o.Coralogixs
+	}
+	if o.KafkaClients != nil {
+		toSerialize["kafkaClients"] = o.KafkaClients
 	}
 	if o.Sites != nil {
 		toSerialize["sites"] = o.Sites

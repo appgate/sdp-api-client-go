@@ -26,10 +26,8 @@ type LicenseDetailsUsage struct {
 	// The amount of Sites in the system at present.
 	Sites *float32 `json:"sites,omitempty"`
 	// The amount of grouped Connector clients in the system at present.
-	ConnectorGroups *float32 `json:"connectorGroups,omitempty"`
-	// The amount of licensed multi-user clients in the system at present.
-	MultiUserClients *float32                        `json:"multiUserClients,omitempty"`
-	ClientTypes      *LicenseDetailsUsageClientTypes `json:"clientTypes,omitempty"`
+	ConnectorGroups *float32                        `json:"connectorGroups,omitempty"`
+	ClientTypes     *LicenseDetailsUsageClientTypes `json:"clientTypes,omitempty"`
 	// The amount of non-built-in MFA Providers in the system at present.
 	MfaProviders *float32 `json:"mfaProviders,omitempty"`
 	// The amount of non-built-in Device Claim Scripts in the system at present.
@@ -241,38 +239,6 @@ func (o *LicenseDetailsUsage) HasConnectorGroups() bool {
 // SetConnectorGroups gets a reference to the given float32 and assigns it to the ConnectorGroups field.
 func (o *LicenseDetailsUsage) SetConnectorGroups(v float32) {
 	o.ConnectorGroups = &v
-}
-
-// GetMultiUserClients returns the MultiUserClients field value if set, zero value otherwise.
-func (o *LicenseDetailsUsage) GetMultiUserClients() float32 {
-	if o == nil || o.MultiUserClients == nil {
-		var ret float32
-		return ret
-	}
-	return *o.MultiUserClients
-}
-
-// GetMultiUserClientsOk returns a tuple with the MultiUserClients field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *LicenseDetailsUsage) GetMultiUserClientsOk() (*float32, bool) {
-	if o == nil || o.MultiUserClients == nil {
-		return nil, false
-	}
-	return o.MultiUserClients, true
-}
-
-// HasMultiUserClients returns a boolean if a field has been set.
-func (o *LicenseDetailsUsage) HasMultiUserClients() bool {
-	if o != nil && o.MultiUserClients != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMultiUserClients gets a reference to the given float32 and assigns it to the MultiUserClients field.
-func (o *LicenseDetailsUsage) SetMultiUserClients(v float32) {
-	o.MultiUserClients = &v
 }
 
 // GetClientTypes returns the ClientTypes field value if set, zero value otherwise.
@@ -899,9 +865,6 @@ func (o LicenseDetailsUsage) MarshalJSON() ([]byte, error) {
 	}
 	if o.ConnectorGroups != nil {
 		toSerialize["connectorGroups"] = o.ConnectorGroups
-	}
-	if o.MultiUserClients != nil {
-		toSerialize["multiUserClients"] = o.MultiUserClients
 	}
 	if o.ClientTypes != nil {
 		toSerialize["clientTypes"] = o.ClientTypes

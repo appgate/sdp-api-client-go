@@ -20,6 +20,8 @@ import (
 type ReplicationSourceStatus struct {
 	// Replication status.
 	Status *string `json:"status,omitempty"`
+	// Whether a replication run is currently in progress.
+	ReplicationInProgress *bool `json:"replicationInProgress,omitempty"`
 	// Time of the most recent replication attempt.
 	LastReplicationTime *time.Time `json:"lastReplicationTime,omitempty"`
 	// Scheduled time for the next replication attempt.
@@ -74,6 +76,38 @@ func (o *ReplicationSourceStatus) HasStatus() bool {
 // SetStatus gets a reference to the given string and assigns it to the Status field.
 func (o *ReplicationSourceStatus) SetStatus(v string) {
 	o.Status = &v
+}
+
+// GetReplicationInProgress returns the ReplicationInProgress field value if set, zero value otherwise.
+func (o *ReplicationSourceStatus) GetReplicationInProgress() bool {
+	if o == nil || o.ReplicationInProgress == nil {
+		var ret bool
+		return ret
+	}
+	return *o.ReplicationInProgress
+}
+
+// GetReplicationInProgressOk returns a tuple with the ReplicationInProgress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReplicationSourceStatus) GetReplicationInProgressOk() (*bool, bool) {
+	if o == nil || o.ReplicationInProgress == nil {
+		return nil, false
+	}
+	return o.ReplicationInProgress, true
+}
+
+// HasReplicationInProgress returns a boolean if a field has been set.
+func (o *ReplicationSourceStatus) HasReplicationInProgress() bool {
+	if o != nil && o.ReplicationInProgress != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicationInProgress gets a reference to the given bool and assigns it to the ReplicationInProgress field.
+func (o *ReplicationSourceStatus) SetReplicationInProgress(v bool) {
+	o.ReplicationInProgress = &v
 }
 
 // GetLastReplicationTime returns the LastReplicationTime field value if set, zero value otherwise.
@@ -176,6 +210,9 @@ func (o ReplicationSourceStatus) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Status != nil {
 		toSerialize["status"] = o.Status
+	}
+	if o.ReplicationInProgress != nil {
+		toSerialize["replicationInProgress"] = o.ReplicationInProgress
 	}
 	if o.LastReplicationTime != nil {
 		toSerialize["lastReplicationTime"] = o.LastReplicationTime

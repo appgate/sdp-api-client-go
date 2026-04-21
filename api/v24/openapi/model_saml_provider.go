@@ -42,10 +42,10 @@ type SamlProvider struct {
 	ClaimMappings []ClaimMappingsInner `json:"claimMappings,omitempty"`
 	// ID of the User Claim Scripts to run during authorization.
 	UserScripts []string `json:"userScripts,omitempty"`
-	// The DNS servers to be assigned to the Clients of the users in this Identity Provider. Deprecated as of 6.4. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
+	// The DNS servers to be assigned to the Clients of the users in this Identity Provider. Deprecated as of 6.6. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
 	// Deprecated
 	DnsServers []string `json:"dnsServers,omitempty"`
-	// The DNS search domains to be assigned to Clients of the users in this Identity Provider. Deprecated as of 6.4. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
+	// The DNS search domains to be assigned to Clients of the users in this Identity Provider. Deprecated as of 6.6. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
 	// Deprecated
 	DnsSearchDomains []string `json:"dnsSearchDomains,omitempty"`
 	// The device limit per user. The existing on-boarded devices will still be able to sign in even if the limit is exceeded.
@@ -59,7 +59,7 @@ type SamlProvider struct {
 	NetworkInactivityTimeoutEnabled *bool `json:"networkInactivityTimeoutEnabled,omitempty"`
 	// If enabled, Windows Client will configure the network profile as \"DomainAuthenticated\".
 	EnforceWindowsNetworkProfileAsDomain *bool `json:"enforceWindowsNetworkProfileAsDomain,omitempty"`
-	// Whether the Windows Client will block local DNS requests or not.
+	// Whether the Windows Client will block local DNS requests or not. Deprecated as of 6.6. Use DNS Policies.
 	// Deprecated
 	BlockLocalDnsRequests *bool `json:"blockLocalDnsRequests,omitempty"`
 	// The mapping of Identity Provider on demand attributes to claims.

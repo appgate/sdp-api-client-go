@@ -44,6 +44,10 @@ type GlobalSettings struct {
 	// The passphrase to encrypt Appliance Backups when backup API is used.
 	BackupPassphrase *string        `json:"backupPassphrase,omitempty"`
 	GeoIpSettings    *GeoIpSettings `json:"geoIpSettings,omitempty"`
+	// Whether user session inactivity timeout is enabled or not.
+	InactivityTimeoutEnabled *bool `json:"inactivityTimeoutEnabled,omitempty"`
+	// Number of minutes of inactivity before a user session is terminated. Minimum value is 1 minute. Not applicable if inactivity timeout is disabled.
+	InactivityTimeout *float32 `json:"inactivityTimeout,omitempty"`
 	// Audit Log persistence mode.
 	AuditLogPersistenceMode string `json:"auditLogPersistenceMode"`
 	// The hostname to use for generating profile URLs.
@@ -68,6 +72,10 @@ func NewGlobalSettings(claimsTokenExpiration float32, entitlementTokenExpiration
 	this.SpaTimeWindowSeconds = &spaTimeWindowSeconds
 	var applianceKeyEncryption bool = false
 	this.ApplianceKeyEncryption = &applianceKeyEncryption
+	var inactivityTimeoutEnabled bool = true
+	this.InactivityTimeoutEnabled = &inactivityTimeoutEnabled
+	var inactivityTimeout float32 = 60
+	this.InactivityTimeout = &inactivityTimeout
 	this.AuditLogPersistenceMode = auditLogPersistenceMode
 	return &this
 }
@@ -81,6 +89,10 @@ func NewGlobalSettingsWithDefaults() *GlobalSettings {
 	this.SpaTimeWindowSeconds = &spaTimeWindowSeconds
 	var applianceKeyEncryption bool = false
 	this.ApplianceKeyEncryption = &applianceKeyEncryption
+	var inactivityTimeoutEnabled bool = true
+	this.InactivityTimeoutEnabled = &inactivityTimeoutEnabled
+	var inactivityTimeout float32 = 60
+	this.InactivityTimeout = &inactivityTimeout
 	return &this
 }
 
@@ -500,6 +512,70 @@ func (o *GlobalSettings) SetGeoIpSettings(v GeoIpSettings) {
 	o.GeoIpSettings = &v
 }
 
+// GetInactivityTimeoutEnabled returns the InactivityTimeoutEnabled field value if set, zero value otherwise.
+func (o *GlobalSettings) GetInactivityTimeoutEnabled() bool {
+	if o == nil || o.InactivityTimeoutEnabled == nil {
+		var ret bool
+		return ret
+	}
+	return *o.InactivityTimeoutEnabled
+}
+
+// GetInactivityTimeoutEnabledOk returns a tuple with the InactivityTimeoutEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalSettings) GetInactivityTimeoutEnabledOk() (*bool, bool) {
+	if o == nil || o.InactivityTimeoutEnabled == nil {
+		return nil, false
+	}
+	return o.InactivityTimeoutEnabled, true
+}
+
+// HasInactivityTimeoutEnabled returns a boolean if a field has been set.
+func (o *GlobalSettings) HasInactivityTimeoutEnabled() bool {
+	if o != nil && o.InactivityTimeoutEnabled != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetInactivityTimeoutEnabled gets a reference to the given bool and assigns it to the InactivityTimeoutEnabled field.
+func (o *GlobalSettings) SetInactivityTimeoutEnabled(v bool) {
+	o.InactivityTimeoutEnabled = &v
+}
+
+// GetInactivityTimeout returns the InactivityTimeout field value if set, zero value otherwise.
+func (o *GlobalSettings) GetInactivityTimeout() float32 {
+	if o == nil || o.InactivityTimeout == nil {
+		var ret float32
+		return ret
+	}
+	return *o.InactivityTimeout
+}
+
+// GetInactivityTimeoutOk returns a tuple with the InactivityTimeout field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GlobalSettings) GetInactivityTimeoutOk() (*float32, bool) {
+	if o == nil || o.InactivityTimeout == nil {
+		return nil, false
+	}
+	return o.InactivityTimeout, true
+}
+
+// HasInactivityTimeout returns a boolean if a field has been set.
+func (o *GlobalSettings) HasInactivityTimeout() bool {
+	if o != nil && o.InactivityTimeout != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetInactivityTimeout gets a reference to the given float32 and assigns it to the InactivityTimeout field.
+func (o *GlobalSettings) SetInactivityTimeout(v float32) {
+	o.InactivityTimeout = &v
+}
+
 // GetAuditLogPersistenceMode returns the AuditLogPersistenceMode field value
 func (o *GlobalSettings) GetAuditLogPersistenceMode() string {
 	if o == nil {
@@ -663,6 +739,12 @@ func (o GlobalSettings) MarshalJSON() ([]byte, error) {
 	}
 	if o.GeoIpSettings != nil {
 		toSerialize["geoIpSettings"] = o.GeoIpSettings
+	}
+	if o.InactivityTimeoutEnabled != nil {
+		toSerialize["inactivityTimeoutEnabled"] = o.InactivityTimeoutEnabled
+	}
+	if o.InactivityTimeout != nil {
+		toSerialize["inactivityTimeout"] = o.InactivityTimeout
 	}
 	if true {
 		toSerialize["auditLogPersistenceMode"] = o.AuditLogPersistenceMode

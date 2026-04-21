@@ -19,6 +19,8 @@ import (
 type ApplianceAllOfCollectiveReplication struct {
 	// Whether the Collective Replication Service is enabled on this Appliance or not. It's managed by registering and unregistering Replication Source.
 	Enabled *bool `json:"enabled,omitempty"`
+	// Whether the Collective Replication Service is paused due to licensing state.
+	Paused *bool `json:"paused,omitempty"`
 }
 
 // NewApplianceAllOfCollectiveReplication instantiates a new ApplianceAllOfCollectiveReplication object
@@ -70,10 +72,45 @@ func (o *ApplianceAllOfCollectiveReplication) SetEnabled(v bool) {
 	o.Enabled = &v
 }
 
+// GetPaused returns the Paused field value if set, zero value otherwise.
+func (o *ApplianceAllOfCollectiveReplication) GetPaused() bool {
+	if o == nil || o.Paused == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Paused
+}
+
+// GetPausedOk returns a tuple with the Paused field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApplianceAllOfCollectiveReplication) GetPausedOk() (*bool, bool) {
+	if o == nil || o.Paused == nil {
+		return nil, false
+	}
+	return o.Paused, true
+}
+
+// HasPaused returns a boolean if a field has been set.
+func (o *ApplianceAllOfCollectiveReplication) HasPaused() bool {
+	if o != nil && o.Paused != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPaused gets a reference to the given bool and assigns it to the Paused field.
+func (o *ApplianceAllOfCollectiveReplication) SetPaused(v bool) {
+	o.Paused = &v
+}
+
 func (o ApplianceAllOfCollectiveReplication) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Enabled != nil {
 		toSerialize["enabled"] = o.Enabled
+	}
+	if o.Paused != nil {
+		toSerialize["paused"] = o.Paused
 	}
 	return json.Marshal(toSerialize)
 }

@@ -309,7 +309,7 @@ func (r ApiAuthenticationOtpPostRequest) AuthenticationOtpPostRequest(authentica
 	return r
 }
 
-func (r ApiAuthenticationOtpPostRequest) Execute() (*LoginResponse, *http.Response, error) {
+func (r ApiAuthenticationOtpPostRequest) Execute() (*LoginAuthenticationResponse, *http.Response, error) {
 	return r.ApiService.AuthenticationOtpPostExecute(r)
 }
 
@@ -330,13 +330,13 @@ func (a *LoginApiService) AuthenticationOtpPost(ctx context.Context) ApiAuthenti
 
 // Execute executes the request
 //
-//	@return LoginResponse
-func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPostRequest) (*LoginResponse, *http.Response, error) {
+//	@return LoginAuthenticationResponse
+func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPostRequest) (*LoginAuthenticationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *LoginResponse
+		localVarReturnValue *LoginAuthenticationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationOtpPost")
@@ -470,7 +470,7 @@ func (r ApiAuthenticationPostRequest) LoginRequest(loginRequest LoginRequest) Ap
 	return r
 }
 
-func (r ApiAuthenticationPostRequest) Execute() (*LoginResponse, *http.Response, error) {
+func (r ApiAuthenticationPostRequest) Execute() (*LoginAuthenticationResponse, *http.Response, error) {
 	return r.ApiService.AuthenticationPostExecute(r)
 }
 
@@ -495,13 +495,13 @@ func (a *LoginApiService) AuthenticationPost(ctx context.Context) ApiAuthenticat
 
 // Execute executes the request
 //
-//	@return LoginResponse
-func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostRequest) (*LoginResponse, *http.Response, error) {
+//	@return LoginAuthenticationResponse
+func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostRequest) (*LoginAuthenticationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *LoginResponse
+		localVarReturnValue *LoginAuthenticationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationPost")
@@ -628,7 +628,7 @@ type ApiAuthorizationGetRequest struct {
 	ApiService *LoginApiService
 }
 
-func (r ApiAuthorizationGetRequest) Execute() (*LoginResponse, *http.Response, error) {
+func (r ApiAuthorizationGetRequest) Execute() (*LoginAuthorizationResponse, *http.Response, error) {
 	return r.ApiService.AuthorizationGetExecute(r)
 }
 
@@ -650,13 +650,13 @@ func (a *LoginApiService) AuthorizationGet(ctx context.Context) ApiAuthorization
 
 // Execute executes the request
 //
-//	@return LoginResponse
-func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) (*LoginResponse, *http.Response, error) {
+//	@return LoginAuthorizationResponse
+func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) (*LoginAuthorizationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *LoginResponse
+		localVarReturnValue *LoginAuthorizationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthorizationGet")
@@ -904,7 +904,7 @@ func (r ApiLoginPostRequest) LoginRequest(loginRequest LoginRequest) ApiLoginPos
 	return r
 }
 
-func (r ApiLoginPostRequest) Execute() (*LoginResponse, *http.Response, error) {
+func (r ApiLoginPostRequest) Execute() (*LoginAuthorizationResponse, *http.Response, error) {
 	return r.ApiService.LoginPostExecute(r)
 }
 
@@ -925,13 +925,13 @@ func (a *LoginApiService) LoginPost(ctx context.Context) ApiLoginPostRequest {
 
 // Execute executes the request
 //
-//	@return LoginResponse
-func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginResponse, *http.Response, error) {
+//	@return LoginAuthorizationResponse
+func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginAuthorizationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *LoginResponse
+		localVarReturnValue *LoginAuthorizationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.LoginPost")

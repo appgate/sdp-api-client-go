@@ -26,7 +26,7 @@ type ConfigurableIdentityProviderAllOf struct {
 	NetworkInactivityTimeoutEnabled *bool `json:"networkInactivityTimeoutEnabled,omitempty"`
 	// If enabled, Windows Client will configure the network profile as \"DomainAuthenticated\".
 	EnforceWindowsNetworkProfileAsDomain *bool `json:"enforceWindowsNetworkProfileAsDomain,omitempty"`
-	// Whether the Windows Client will block local DNS requests or not.
+	// Whether the Windows Client will block local DNS requests or not. Deprecated as of 6.6. Use DNS Policies.
 	// Deprecated
 	BlockLocalDnsRequests *bool `json:"blockLocalDnsRequests,omitempty"`
 	// The mapping of Identity Provider on demand attributes to claims.
