@@ -43,7 +43,7 @@ type ClientProfile struct {
 	Hostname *string `json:"hostname,omitempty"`
 	// The Global Profile Hostname as defined in global settings. Generated URLs will use this hostname.
 	GlobalHostname *string `json:"globalHostname,omitempty"`
-	// Exported time is the last time when the client profile is exported either using  the URL or Barcode.
+	// Exported time is the last time when the client profile is exported either using the URL or Barcode.
 	Exported *time.Time `json:"exported,omitempty"`
 }
 

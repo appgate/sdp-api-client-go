@@ -19,7 +19,7 @@ import (
 type SiteAllOfLocalSiteDetection struct {
 	// Enables the Local Site Detection feature.
 	Enabled *bool `json:"enabled,omitempty"`
-	// The public IPs or the CIDRs of the clients that will be considered local to this Site.  Those clients will connect to Gateways with the configured local hostname and local weights in Appliance configuration.
+	// The public IPs or the CIDRs of the clients that will be considered local to this Site. Those clients will connect to Gateways with the configured local hostname and local weights in Appliance configuration.
 	PublicIps []string `json:"publicIps,omitempty"`
 }
 

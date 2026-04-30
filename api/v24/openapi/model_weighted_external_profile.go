@@ -19,14 +19,14 @@ import (
 type WeightedExternalProfile struct {
 	// Identifier to track the object on update since all the other fields are write-only. A random one will be assigned if left empty.
 	Id *string `json:"id,omitempty"`
+	// Appgate URL exported from Client Profiles.
+	Url *string `json:"url,omitempty"`
 	// Hostname parsed from the given URL.
 	Hostname *string `json:"hostname,omitempty"`
 	// Profile name parsed from the given URL.
 	ProfileName *string `json:"profileName,omitempty"`
 	// Load balancing weight of the profile in this group.
 	Weight *int32 `json:"weight,omitempty"`
-	// Appgate URL exported from Client Profiles.
-	Url *string `json:"url,omitempty"`
 }
 
 // NewWeightedExternalProfile instantiates a new WeightedExternalProfile object
@@ -80,6 +80,38 @@ func (o *WeightedExternalProfile) HasId() bool {
 // SetId gets a reference to the given string and assigns it to the Id field.
 func (o *WeightedExternalProfile) SetId(v string) {
 	o.Id = &v
+}
+
+// GetUrl returns the Url field value if set, zero value otherwise.
+func (o *WeightedExternalProfile) GetUrl() string {
+	if o == nil || o.Url == nil {
+		var ret string
+		return ret
+	}
+	return *o.Url
+}
+
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WeightedExternalProfile) GetUrlOk() (*string, bool) {
+	if o == nil || o.Url == nil {
+		return nil, false
+	}
+	return o.Url, true
+}
+
+// HasUrl returns a boolean if a field has been set.
+func (o *WeightedExternalProfile) HasUrl() bool {
+	if o != nil && o.Url != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
+func (o *WeightedExternalProfile) SetUrl(v string) {
+	o.Url = &v
 }
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
@@ -178,42 +210,13 @@ func (o *WeightedExternalProfile) SetWeight(v int32) {
 	o.Weight = &v
 }
 
-// GetUrl returns the Url field value if set, zero value otherwise.
-func (o *WeightedExternalProfile) GetUrl() string {
-	if o == nil || o.Url == nil {
-		var ret string
-		return ret
-	}
-	return *o.Url
-}
-
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WeightedExternalProfile) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
-		return nil, false
-	}
-	return o.Url, true
-}
-
-// HasUrl returns a boolean if a field has been set.
-func (o *WeightedExternalProfile) HasUrl() bool {
-	if o != nil && o.Url != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetUrl gets a reference to the given string and assigns it to the Url field.
-func (o *WeightedExternalProfile) SetUrl(v string) {
-	o.Url = &v
-}
-
 func (o WeightedExternalProfile) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
+	}
+	if o.Url != nil {
+		toSerialize["url"] = o.Url
 	}
 	if o.Hostname != nil {
 		toSerialize["hostname"] = o.Hostname
@@ -223,9 +226,6 @@ func (o WeightedExternalProfile) MarshalJSON() ([]byte, error) {
 	}
 	if o.Weight != nil {
 		toSerialize["weight"] = o.Weight
-	}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
 	}
 	return json.Marshal(toSerialize)
 }

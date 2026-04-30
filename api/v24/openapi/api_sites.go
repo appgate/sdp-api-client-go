@@ -900,7 +900,7 @@ func (r ApiSitesIdResourcesGetRequest) Execute() (*ResolverResources, *http.Resp
 /*
 SitesIdResourcesGet Query the resolvers on this Site for available resources.
 
-Query the resolvers on this Site for available resources.  Controller will make a query to a random Gateway which will query the resolver providers in turn for the given parameters.
+Query the resolvers on this Site for available resources. Controller will make a query to a random Gateway which will query the resolver providers in turn for the given parameters.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.

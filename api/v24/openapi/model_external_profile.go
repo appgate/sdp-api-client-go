@@ -19,6 +19,8 @@ import (
 type ExternalProfile struct {
 	// Identifier to track the object on update since all the other fields are write-only. A random one will be assigned if left empty.
 	Id *string `json:"id,omitempty"`
+	// Appgate URL exported from Client Profiles.
+	Url *string `json:"url,omitempty"`
 	// Hostname parsed from the given URL.
 	Hostname *string `json:"hostname,omitempty"`
 	// Profile name parsed from the given URL.
@@ -72,6 +74,38 @@ func (o *ExternalProfile) HasId() bool {
 // SetId gets a reference to the given string and assigns it to the Id field.
 func (o *ExternalProfile) SetId(v string) {
 	o.Id = &v
+}
+
+// GetUrl returns the Url field value if set, zero value otherwise.
+func (o *ExternalProfile) GetUrl() string {
+	if o == nil || o.Url == nil {
+		var ret string
+		return ret
+	}
+	return *o.Url
+}
+
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ExternalProfile) GetUrlOk() (*string, bool) {
+	if o == nil || o.Url == nil {
+		return nil, false
+	}
+	return o.Url, true
+}
+
+// HasUrl returns a boolean if a field has been set.
+func (o *ExternalProfile) HasUrl() bool {
+	if o != nil && o.Url != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
+func (o *ExternalProfile) SetUrl(v string) {
+	o.Url = &v
 }
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
@@ -142,6 +176,9 @@ func (o ExternalProfile) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
 		toSerialize["id"] = o.Id
+	}
+	if o.Url != nil {
+		toSerialize["url"] = o.Url
 	}
 	if o.Hostname != nil {
 		toSerialize["hostname"] = o.Hostname

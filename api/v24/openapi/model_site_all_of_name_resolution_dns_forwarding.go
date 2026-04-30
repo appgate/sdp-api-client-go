@@ -25,6 +25,9 @@ type SiteAllOfNameResolutionDnsForwarding struct {
 	DnsServers []string `json:"dnsServers,omitempty"`
 	// A list of subnets to allow access.
 	AllowDestinations []AllowResourcesInner `json:"allowDestinations"`
+	// Deprecated as of 6.4. This will apply whenever Gateway gets a DNS response which has no TTL set.
+	// Deprecated
+	DefaultTtlSeconds *int32 `json:"defaultTtlSeconds,omitempty"`
 	// The match domains to use for automatic Client DNS configuration.
 	MatchDomains []string `json:"matchDomains,omitempty"`
 	// This will configure Client machines' DNS according to this forwarder if the Client connects to this Site.
@@ -38,6 +41,8 @@ type SiteAllOfNameResolutionDnsForwarding struct {
 func NewSiteAllOfNameResolutionDnsForwarding(allowDestinations []AllowResourcesInner) *SiteAllOfNameResolutionDnsForwarding {
 	this := SiteAllOfNameResolutionDnsForwarding{}
 	this.AllowDestinations = allowDestinations
+	var defaultTtlSeconds int32 = 300
+	this.DefaultTtlSeconds = &defaultTtlSeconds
 	return &this
 }
 
@@ -46,6 +51,8 @@ func NewSiteAllOfNameResolutionDnsForwarding(allowDestinations []AllowResourcesI
 // but it doesn't guarantee that properties required by API are set
 func NewSiteAllOfNameResolutionDnsForwardingWithDefaults() *SiteAllOfNameResolutionDnsForwarding {
 	this := SiteAllOfNameResolutionDnsForwarding{}
+	var defaultTtlSeconds int32 = 300
+	this.DefaultTtlSeconds = &defaultTtlSeconds
 	return &this
 }
 
@@ -169,6 +176,41 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []AllowRes
 	o.AllowDestinations = v
 }
 
+// GetDefaultTtlSeconds returns the DefaultTtlSeconds field value if set, zero value otherwise.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSeconds() int32 {
+	if o == nil || o.DefaultTtlSeconds == nil {
+		var ret int32
+		return ret
+	}
+	return *o.DefaultTtlSeconds
+}
+
+// GetDefaultTtlSecondsOk returns a tuple with the DefaultTtlSeconds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSecondsOk() (*int32, bool) {
+	if o == nil || o.DefaultTtlSeconds == nil {
+		return nil, false
+	}
+	return o.DefaultTtlSeconds, true
+}
+
+// HasDefaultTtlSeconds returns a boolean if a field has been set.
+func (o *SiteAllOfNameResolutionDnsForwarding) HasDefaultTtlSeconds() bool {
+	if o != nil && o.DefaultTtlSeconds != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultTtlSeconds gets a reference to the given int32 and assigns it to the DefaultTtlSeconds field.
+// Deprecated
+func (o *SiteAllOfNameResolutionDnsForwarding) SetDefaultTtlSeconds(v int32) {
+	o.DefaultTtlSeconds = &v
+}
+
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomains() []string {
 	if o == nil || o.MatchDomains == nil {
@@ -246,6 +288,9 @@ func (o SiteAllOfNameResolutionDnsForwarding) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["allowDestinations"] = o.AllowDestinations
+	}
+	if o.DefaultTtlSeconds != nil {
+		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
 	}
 	if o.MatchDomains != nil {
 		toSerialize["matchDomains"] = o.MatchDomains
