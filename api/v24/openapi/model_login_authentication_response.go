@@ -23,6 +23,10 @@ type LoginAuthenticationResponse struct {
 	Token *string `json:"token,omitempty"`
 	// Token expiration time.
 	Expires *time.Time `json:"expires,omitempty"`
+	// Rotated replication access token. For internal use.
+	RotatedReplicationAccessToken *string `json:"rotatedReplicationAccessToken,omitempty"`
+	// Next replication access token. For internal use.
+	NextReplicationAccessToken *string `json:"nextReplicationAccessToken,omitempty"`
 }
 
 // NewLoginAuthenticationResponse instantiates a new LoginAuthenticationResponse object
@@ -138,6 +142,70 @@ func (o *LoginAuthenticationResponse) SetExpires(v time.Time) {
 	o.Expires = &v
 }
 
+// GetRotatedReplicationAccessToken returns the RotatedReplicationAccessToken field value if set, zero value otherwise.
+func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessToken() string {
+	if o == nil || o.RotatedReplicationAccessToken == nil {
+		var ret string
+		return ret
+	}
+	return *o.RotatedReplicationAccessToken
+}
+
+// GetRotatedReplicationAccessTokenOk returns a tuple with the RotatedReplicationAccessToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessTokenOk() (*string, bool) {
+	if o == nil || o.RotatedReplicationAccessToken == nil {
+		return nil, false
+	}
+	return o.RotatedReplicationAccessToken, true
+}
+
+// HasRotatedReplicationAccessToken returns a boolean if a field has been set.
+func (o *LoginAuthenticationResponse) HasRotatedReplicationAccessToken() bool {
+	if o != nil && o.RotatedReplicationAccessToken != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRotatedReplicationAccessToken gets a reference to the given string and assigns it to the RotatedReplicationAccessToken field.
+func (o *LoginAuthenticationResponse) SetRotatedReplicationAccessToken(v string) {
+	o.RotatedReplicationAccessToken = &v
+}
+
+// GetNextReplicationAccessToken returns the NextReplicationAccessToken field value if set, zero value otherwise.
+func (o *LoginAuthenticationResponse) GetNextReplicationAccessToken() string {
+	if o == nil || o.NextReplicationAccessToken == nil {
+		var ret string
+		return ret
+	}
+	return *o.NextReplicationAccessToken
+}
+
+// GetNextReplicationAccessTokenOk returns a tuple with the NextReplicationAccessToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LoginAuthenticationResponse) GetNextReplicationAccessTokenOk() (*string, bool) {
+	if o == nil || o.NextReplicationAccessToken == nil {
+		return nil, false
+	}
+	return o.NextReplicationAccessToken, true
+}
+
+// HasNextReplicationAccessToken returns a boolean if a field has been set.
+func (o *LoginAuthenticationResponse) HasNextReplicationAccessToken() bool {
+	if o != nil && o.NextReplicationAccessToken != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetNextReplicationAccessToken gets a reference to the given string and assigns it to the NextReplicationAccessToken field.
+func (o *LoginAuthenticationResponse) SetNextReplicationAccessToken(v string) {
+	o.NextReplicationAccessToken = &v
+}
+
 func (o LoginAuthenticationResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.User != nil {
@@ -148,6 +216,12 @@ func (o LoginAuthenticationResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.Expires != nil {
 		toSerialize["expires"] = o.Expires
+	}
+	if o.RotatedReplicationAccessToken != nil {
+		toSerialize["rotatedReplicationAccessToken"] = o.RotatedReplicationAccessToken
+	}
+	if o.NextReplicationAccessToken != nil {
+		toSerialize["nextReplicationAccessToken"] = o.NextReplicationAccessToken
 	}
 	return json.Marshal(toSerialize)
 }
