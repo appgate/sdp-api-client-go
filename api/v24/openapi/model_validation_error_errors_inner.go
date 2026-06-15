@@ -21,6 +21,10 @@ type ValidationErrorErrorsInner struct {
 	Field *string `json:"field,omitempty"`
 	// Failure reason.
 	Message *string `json:"message,omitempty"`
+	// Name of the field that should be displayed in the UI. It's an internal field to be used by the local replication service.
+	DisplayField *string `json:"displayField,omitempty"`
+	// Message to be displayed in the replication UI. It's an internal field to be used by the local replication service.
+	ReplicationMessage *string `json:"replicationMessage,omitempty"`
 }
 
 // NewValidationErrorErrorsInner instantiates a new ValidationErrorErrorsInner object
@@ -104,6 +108,70 @@ func (o *ValidationErrorErrorsInner) SetMessage(v string) {
 	o.Message = &v
 }
 
+// GetDisplayField returns the DisplayField field value if set, zero value otherwise.
+func (o *ValidationErrorErrorsInner) GetDisplayField() string {
+	if o == nil || o.DisplayField == nil {
+		var ret string
+		return ret
+	}
+	return *o.DisplayField
+}
+
+// GetDisplayFieldOk returns a tuple with the DisplayField field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationErrorErrorsInner) GetDisplayFieldOk() (*string, bool) {
+	if o == nil || o.DisplayField == nil {
+		return nil, false
+	}
+	return o.DisplayField, true
+}
+
+// HasDisplayField returns a boolean if a field has been set.
+func (o *ValidationErrorErrorsInner) HasDisplayField() bool {
+	if o != nil && o.DisplayField != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayField gets a reference to the given string and assigns it to the DisplayField field.
+func (o *ValidationErrorErrorsInner) SetDisplayField(v string) {
+	o.DisplayField = &v
+}
+
+// GetReplicationMessage returns the ReplicationMessage field value if set, zero value otherwise.
+func (o *ValidationErrorErrorsInner) GetReplicationMessage() string {
+	if o == nil || o.ReplicationMessage == nil {
+		var ret string
+		return ret
+	}
+	return *o.ReplicationMessage
+}
+
+// GetReplicationMessageOk returns a tuple with the ReplicationMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ValidationErrorErrorsInner) GetReplicationMessageOk() (*string, bool) {
+	if o == nil || o.ReplicationMessage == nil {
+		return nil, false
+	}
+	return o.ReplicationMessage, true
+}
+
+// HasReplicationMessage returns a boolean if a field has been set.
+func (o *ValidationErrorErrorsInner) HasReplicationMessage() bool {
+	if o != nil && o.ReplicationMessage != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetReplicationMessage gets a reference to the given string and assigns it to the ReplicationMessage field.
+func (o *ValidationErrorErrorsInner) SetReplicationMessage(v string) {
+	o.ReplicationMessage = &v
+}
+
 func (o ValidationErrorErrorsInner) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Field != nil {
@@ -111,6 +179,12 @@ func (o ValidationErrorErrorsInner) MarshalJSON() ([]byte, error) {
 	}
 	if o.Message != nil {
 		toSerialize["message"] = o.Message
+	}
+	if o.DisplayField != nil {
+		toSerialize["displayField"] = o.DisplayField
+	}
+	if o.ReplicationMessage != nil {
+		toSerialize["replicationMessage"] = o.ReplicationMessage
 	}
 	return json.Marshal(toSerialize)
 }

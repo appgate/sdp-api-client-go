@@ -27,10 +27,11 @@ type LoginRequest struct {
 	DeviceId string `json:"deviceId"`
 	// SAMLResponse received from SAML provider. Required if a SAML based Identity Provider is used.
 	SamlResponse *string `json:"samlResponse,omitempty"`
-	// ID Token received from OIDC provider. Required if an OIDC based Identity Provider is used.
+	// ID Token received from OIDC provider. Required if an OIDC based Identity Provider is used and the provider does not have a client secret (public client flow).
 	IdToken *string `json:"idToken,omitempty"`
-	// Access Token received from OIDC provider. Required if an OIDC based Identity Provider is used.
-	AccessToken *string `json:"accessToken,omitempty"`
+	// Access Token received from OIDC provider. Optional for OIDC authentication.
+	AccessToken      *string                       `json:"accessToken,omitempty"`
+	OidcCodeExchange *LoginRequestOidcCodeExchange `json:"oidcCodeExchange,omitempty"`
 }
 
 // NewLoginRequest instantiates a new LoginRequest object
@@ -260,6 +261,38 @@ func (o *LoginRequest) SetAccessToken(v string) {
 	o.AccessToken = &v
 }
 
+// GetOidcCodeExchange returns the OidcCodeExchange field value if set, zero value otherwise.
+func (o *LoginRequest) GetOidcCodeExchange() LoginRequestOidcCodeExchange {
+	if o == nil || o.OidcCodeExchange == nil {
+		var ret LoginRequestOidcCodeExchange
+		return ret
+	}
+	return *o.OidcCodeExchange
+}
+
+// GetOidcCodeExchangeOk returns a tuple with the OidcCodeExchange field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LoginRequest) GetOidcCodeExchangeOk() (*LoginRequestOidcCodeExchange, bool) {
+	if o == nil || o.OidcCodeExchange == nil {
+		return nil, false
+	}
+	return o.OidcCodeExchange, true
+}
+
+// HasOidcCodeExchange returns a boolean if a field has been set.
+func (o *LoginRequest) HasOidcCodeExchange() bool {
+	if o != nil && o.OidcCodeExchange != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetOidcCodeExchange gets a reference to the given LoginRequestOidcCodeExchange and assigns it to the OidcCodeExchange field.
+func (o *LoginRequest) SetOidcCodeExchange(v LoginRequestOidcCodeExchange) {
+	o.OidcCodeExchange = &v
+}
+
 func (o LoginRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -282,6 +315,9 @@ func (o LoginRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.AccessToken != nil {
 		toSerialize["accessToken"] = o.AccessToken
+	}
+	if o.OidcCodeExchange != nil {
+		toSerialize["oidcCodeExchange"] = o.OidcCodeExchange
 	}
 	return json.Marshal(toSerialize)
 }

@@ -27,14 +27,12 @@ type IdentityProvidersNamesGet200ResponseDataInner struct {
 	CertificatePriorities []map[string]interface{} `json:"certificatePriorities,omitempty"`
 	// Authorization endpoint URL for OIDC login.
 	AuthUrl *string `json:"authUrl,omitempty"`
-	// Token endpoint URL for OIDC login.
+	// Token endpoint URL for OIDC login. Only present for public clients.
 	TokenUrl *string `json:"tokenUrl,omitempty"`
 	// Client ID for OIDC login.
 	ClientId *string `json:"clientId,omitempty"`
 	// OIDC scope for getting user information.
 	Scope *string `json:"scope,omitempty"`
-	// OIDC client secret for Google.
-	GoogleClientSecret *string `json:"googleClientSecret,omitempty"`
 }
 
 // NewIdentityProvidersNamesGet200ResponseDataInner instantiates a new IdentityProvidersNamesGet200ResponseDataInner object
@@ -310,38 +308,6 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetScope(v string) {
 	o.Scope = &v
 }
 
-// GetGoogleClientSecret returns the GoogleClientSecret field value if set, zero value otherwise.
-func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecret() string {
-	if o == nil || o.GoogleClientSecret == nil {
-		var ret string
-		return ret
-	}
-	return *o.GoogleClientSecret
-}
-
-// GetGoogleClientSecretOk returns a tuple with the GoogleClientSecret field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecretOk() (*string, bool) {
-	if o == nil || o.GoogleClientSecret == nil {
-		return nil, false
-	}
-	return o.GoogleClientSecret, true
-}
-
-// HasGoogleClientSecret returns a boolean if a field has been set.
-func (o *IdentityProvidersNamesGet200ResponseDataInner) HasGoogleClientSecret() bool {
-	if o != nil && o.GoogleClientSecret != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetGoogleClientSecret gets a reference to the given string and assigns it to the GoogleClientSecret field.
-func (o *IdentityProvidersNamesGet200ResponseDataInner) SetGoogleClientSecret(v string) {
-	o.GoogleClientSecret = &v
-}
-
 func (o IdentityProvidersNamesGet200ResponseDataInner) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -367,9 +333,6 @@ func (o IdentityProvidersNamesGet200ResponseDataInner) MarshalJSON() ([]byte, er
 	}
 	if o.Scope != nil {
 		toSerialize["scope"] = o.Scope
-	}
-	if o.GoogleClientSecret != nil {
-		toSerialize["googleClientSecret"] = o.GoogleClientSecret
 	}
 	return json.Marshal(toSerialize)
 }
