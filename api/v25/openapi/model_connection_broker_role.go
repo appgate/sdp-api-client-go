@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectionBrokerRole type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectionBrokerRole{}
+
 // ConnectionBrokerRole struct for ConnectionBrokerRole
 type ConnectionBrokerRole struct {
 	// Status of the role.
@@ -43,7 +46,7 @@ func NewConnectionBrokerRoleWithDefaults() *ConnectionBrokerRole {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ConnectionBrokerRole) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ConnectionBrokerRole) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRole) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -61,7 +64,7 @@ func (o *ConnectionBrokerRole) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ConnectionBrokerRole) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *ConnectionBrokerRole) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *ConnectionBrokerRole) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ConnectionBrokerRole) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRole) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -93,7 +96,7 @@ func (o *ConnectionBrokerRole) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *ConnectionBrokerRole) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ConnectionBrokerRole) SetDetails(v string) {
 
 // GetRelayed returns the Relayed field value if set, zero value otherwise.
 func (o *ConnectionBrokerRole) GetRelayed() ConnectionBrokerRoleAllOfRelayed {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		var ret ConnectionBrokerRoleAllOfRelayed
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ConnectionBrokerRole) GetRelayed() ConnectionBrokerRoleAllOfRelayed {
 // GetRelayedOk returns a tuple with the Relayed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRole) GetRelayedOk() (*ConnectionBrokerRoleAllOfRelayed, bool) {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		return nil, false
 	}
 	return o.Relayed, true
@@ -125,7 +128,7 @@ func (o *ConnectionBrokerRole) GetRelayedOk() (*ConnectionBrokerRoleAllOfRelayed
 
 // HasRelayed returns a boolean if a field has been set.
 func (o *ConnectionBrokerRole) HasRelayed() bool {
-	if o != nil && o.Relayed != nil {
+	if o != nil && !IsNil(o.Relayed) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *ConnectionBrokerRole) SetRelayed(v ConnectionBrokerRoleAllOfRelayed) {
 }
 
 func (o ConnectionBrokerRole) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.Relayed != nil {
-		toSerialize["relayed"] = o.Relayed
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectionBrokerRole) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.Relayed) {
+		toSerialize["relayed"] = o.Relayed
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectionBrokerRole struct {

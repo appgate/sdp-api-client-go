@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// ClientAutoUpdateApiService ClientAutoUpdateApi service
-type ClientAutoUpdateApiService service
+// ClientAutoUpdateAPIService ClientAutoUpdateAPI service
+type ClientAutoUpdateAPIService service
 
 type ApiAutoUpdateSettingsGetRequest struct {
 	ctx        context.Context
-	ApiService *ClientAutoUpdateApiService
+	ApiService *ClientAutoUpdateAPIService
 }
 
 func (r ApiAutoUpdateSettingsGetRequest) Execute() (*AutoUpdateSettings, *http.Response, error) {
@@ -39,7 +39,7 @@ View Client Auto-Update settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAutoUpdateSettingsGetRequest
 */
-func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx context.Context) ApiAutoUpdateSettingsGetRequest {
+func (a *ClientAutoUpdateAPIService) AutoUpdateSettingsGet(ctx context.Context) ApiAutoUpdateSettingsGetRequest {
 	return ApiAutoUpdateSettingsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -49,7 +49,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGet(ctx context.Context) 
 // Execute executes the request
 //
 //	@return AutoUpdateSettings
-func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdateSettingsGetRequest) (*AutoUpdateSettings, *http.Response, error) {
+func (a *ClientAutoUpdateAPIService) AutoUpdateSettingsGetExecute(r ApiAutoUpdateSettingsGetRequest) (*AutoUpdateSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -57,7 +57,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 		localVarReturnValue *AutoUpdateSettings
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientAutoUpdateApiService.AutoUpdateSettingsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientAutoUpdateAPIService.AutoUpdateSettingsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,9 +95,9 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -114,6 +114,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -124,6 +125,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -134,6 +136,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -144,6 +147,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -163,7 +167,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsGetExecute(r ApiAutoUpdat
 
 type ApiAutoUpdateSettingsPutRequest struct {
 	ctx                context.Context
-	ApiService         *ClientAutoUpdateApiService
+	ApiService         *ClientAutoUpdateAPIService
 	autoUpdateSettings *AutoUpdateSettings
 }
 
@@ -185,7 +189,7 @@ Update Client Auto-Update settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAutoUpdateSettingsPutRequest
 */
-func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPut(ctx context.Context) ApiAutoUpdateSettingsPutRequest {
+func (a *ClientAutoUpdateAPIService) AutoUpdateSettingsPut(ctx context.Context) ApiAutoUpdateSettingsPutRequest {
 	return ApiAutoUpdateSettingsPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -193,14 +197,14 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPut(ctx context.Context) 
 }
 
 // Execute executes the request
-func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdateSettingsPutRequest) (*http.Response, error) {
+func (a *ClientAutoUpdateAPIService) AutoUpdateSettingsPutExecute(r ApiAutoUpdateSettingsPutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPut
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientAutoUpdateApiService.AutoUpdateSettingsPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientAutoUpdateAPIService.AutoUpdateSettingsPut")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -240,9 +244,9 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -259,6 +263,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -269,6 +274,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -279,6 +285,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -289,6 +296,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -299,6 +307,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -309,6 +318,7 @@ func (a *ClientAutoUpdateApiService) AutoUpdateSettingsPutExecute(r ApiAutoUpdat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

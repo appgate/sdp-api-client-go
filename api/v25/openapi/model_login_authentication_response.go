@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the LoginAuthenticationResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginAuthenticationResponse{}
+
 // LoginAuthenticationResponse struct for LoginAuthenticationResponse
 type LoginAuthenticationResponse struct {
 	User *LoginAuthenticationResponseUser `json:"user,omitempty"`
@@ -48,7 +51,7 @@ func NewLoginAuthenticationResponseWithDefaults() *LoginAuthenticationResponse {
 
 // GetUser returns the User field value if set, zero value otherwise.
 func (o *LoginAuthenticationResponse) GetUser() LoginAuthenticationResponseUser {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		var ret LoginAuthenticationResponseUser
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *LoginAuthenticationResponse) GetUser() LoginAuthenticationResponseUser 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthenticationResponse) GetUserOk() (*LoginAuthenticationResponseUser, bool) {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		return nil, false
 	}
 	return o.User, true
@@ -66,7 +69,7 @@ func (o *LoginAuthenticationResponse) GetUserOk() (*LoginAuthenticationResponseU
 
 // HasUser returns a boolean if a field has been set.
 func (o *LoginAuthenticationResponse) HasUser() bool {
-	if o != nil && o.User != nil {
+	if o != nil && !IsNil(o.User) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *LoginAuthenticationResponse) SetUser(v LoginAuthenticationResponseUser)
 
 // GetToken returns the Token field value if set, zero value otherwise.
 func (o *LoginAuthenticationResponse) GetToken() string {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *LoginAuthenticationResponse) GetToken() string {
 // GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthenticationResponse) GetTokenOk() (*string, bool) {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
 	return o.Token, true
@@ -98,7 +101,7 @@ func (o *LoginAuthenticationResponse) GetTokenOk() (*string, bool) {
 
 // HasToken returns a boolean if a field has been set.
 func (o *LoginAuthenticationResponse) HasToken() bool {
-	if o != nil && o.Token != nil {
+	if o != nil && !IsNil(o.Token) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *LoginAuthenticationResponse) SetToken(v string) {
 
 // GetExpires returns the Expires field value if set, zero value otherwise.
 func (o *LoginAuthenticationResponse) GetExpires() time.Time {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		var ret time.Time
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *LoginAuthenticationResponse) GetExpires() time.Time {
 // GetExpiresOk returns a tuple with the Expires field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthenticationResponse) GetExpiresOk() (*time.Time, bool) {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		return nil, false
 	}
 	return o.Expires, true
@@ -130,7 +133,7 @@ func (o *LoginAuthenticationResponse) GetExpiresOk() (*time.Time, bool) {
 
 // HasExpires returns a boolean if a field has been set.
 func (o *LoginAuthenticationResponse) HasExpires() bool {
-	if o != nil && o.Expires != nil {
+	if o != nil && !IsNil(o.Expires) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *LoginAuthenticationResponse) SetExpires(v time.Time) {
 
 // GetRotatedReplicationAccessToken returns the RotatedReplicationAccessToken field value if set, zero value otherwise.
 func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessToken() string {
-	if o == nil || o.RotatedReplicationAccessToken == nil {
+	if o == nil || IsNil(o.RotatedReplicationAccessToken) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessToken() string 
 // GetRotatedReplicationAccessTokenOk returns a tuple with the RotatedReplicationAccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessTokenOk() (*string, bool) {
-	if o == nil || o.RotatedReplicationAccessToken == nil {
+	if o == nil || IsNil(o.RotatedReplicationAccessToken) {
 		return nil, false
 	}
 	return o.RotatedReplicationAccessToken, true
@@ -162,7 +165,7 @@ func (o *LoginAuthenticationResponse) GetRotatedReplicationAccessTokenOk() (*str
 
 // HasRotatedReplicationAccessToken returns a boolean if a field has been set.
 func (o *LoginAuthenticationResponse) HasRotatedReplicationAccessToken() bool {
-	if o != nil && o.RotatedReplicationAccessToken != nil {
+	if o != nil && !IsNil(o.RotatedReplicationAccessToken) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *LoginAuthenticationResponse) SetRotatedReplicationAccessToken(v string)
 
 // GetNextReplicationAccessToken returns the NextReplicationAccessToken field value if set, zero value otherwise.
 func (o *LoginAuthenticationResponse) GetNextReplicationAccessToken() string {
-	if o == nil || o.NextReplicationAccessToken == nil {
+	if o == nil || IsNil(o.NextReplicationAccessToken) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *LoginAuthenticationResponse) GetNextReplicationAccessToken() string {
 // GetNextReplicationAccessTokenOk returns a tuple with the NextReplicationAccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthenticationResponse) GetNextReplicationAccessTokenOk() (*string, bool) {
-	if o == nil || o.NextReplicationAccessToken == nil {
+	if o == nil || IsNil(o.NextReplicationAccessToken) {
 		return nil, false
 	}
 	return o.NextReplicationAccessToken, true
@@ -194,7 +197,7 @@ func (o *LoginAuthenticationResponse) GetNextReplicationAccessTokenOk() (*string
 
 // HasNextReplicationAccessToken returns a boolean if a field has been set.
 func (o *LoginAuthenticationResponse) HasNextReplicationAccessToken() bool {
-	if o != nil && o.NextReplicationAccessToken != nil {
+	if o != nil && !IsNil(o.NextReplicationAccessToken) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *LoginAuthenticationResponse) SetNextReplicationAccessToken(v string) {
 }
 
 func (o LoginAuthenticationResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.User != nil {
-		toSerialize["user"] = o.User
-	}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
-	}
-	if o.Expires != nil {
-		toSerialize["expires"] = o.Expires
-	}
-	if o.RotatedReplicationAccessToken != nil {
-		toSerialize["rotatedReplicationAccessToken"] = o.RotatedReplicationAccessToken
-	}
-	if o.NextReplicationAccessToken != nil {
-		toSerialize["nextReplicationAccessToken"] = o.NextReplicationAccessToken
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginAuthenticationResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.User) {
+		toSerialize["user"] = o.User
+	}
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.Expires) {
+		toSerialize["expires"] = o.Expires
+	}
+	if !IsNil(o.RotatedReplicationAccessToken) {
+		toSerialize["rotatedReplicationAccessToken"] = o.RotatedReplicationAccessToken
+	}
+	if !IsNil(o.NextReplicationAccessToken) {
+		toSerialize["nextReplicationAccessToken"] = o.NextReplicationAccessToken
+	}
+	return toSerialize, nil
 }
 
 type NullableLoginAuthenticationResponse struct {

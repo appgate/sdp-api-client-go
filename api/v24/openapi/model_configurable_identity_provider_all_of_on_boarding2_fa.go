@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ConfigurableIdentityProviderAllOfOnBoarding2FA type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConfigurableIdentityProviderAllOfOnBoarding2FA{}
 
 // ConfigurableIdentityProviderAllOfOnBoarding2FA On-boarding two-factor authentication settings. Leave it empty keep it disabled.
 type ConfigurableIdentityProviderAllOfOnBoarding2FA struct {
@@ -26,6 +31,8 @@ type ConfigurableIdentityProviderAllOfOnBoarding2FA struct {
 	// If enabled, MFA will be required on every authentication.
 	AlwaysRequired *bool `json:"alwaysRequired,omitempty"`
 }
+
+type _ConfigurableIdentityProviderAllOfOnBoarding2FA ConfigurableIdentityProviderAllOfOnBoarding2FA
 
 // NewConfigurableIdentityProviderAllOfOnBoarding2FA instantiates a new ConfigurableIdentityProviderAllOfOnBoarding2FA object
 // This constructor will assign default values to properties that have it defined,
@@ -75,7 +82,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetMfaProviderId(v stri
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -85,7 +92,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -93,7 +100,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessageOk() (*string
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -107,7 +114,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetMessage(v string) {
 
 // GetClaimSuffix returns the ClaimSuffix field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffix() string {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		var ret string
 		return ret
 	}
@@ -117,7 +124,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffix() string
 // GetClaimSuffixOk returns a tuple with the ClaimSuffix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffixOk() (*string, bool) {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		return nil, false
 	}
 	return o.ClaimSuffix, true
@@ -125,7 +132,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffixOk() (*st
 
 // HasClaimSuffix returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasClaimSuffix() bool {
-	if o != nil && o.ClaimSuffix != nil {
+	if o != nil && !IsNil(o.ClaimSuffix) {
 		return true
 	}
 
@@ -139,7 +146,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetClaimSuffix(v string
 
 // GetAlwaysRequired returns the AlwaysRequired field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequired() bool {
-	if o == nil || o.AlwaysRequired == nil {
+	if o == nil || IsNil(o.AlwaysRequired) {
 		var ret bool
 		return ret
 	}
@@ -149,7 +156,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequired() boo
 // GetAlwaysRequiredOk returns a tuple with the AlwaysRequired field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequiredOk() (*bool, bool) {
-	if o == nil || o.AlwaysRequired == nil {
+	if o == nil || IsNil(o.AlwaysRequired) {
 		return nil, false
 	}
 	return o.AlwaysRequired, true
@@ -157,7 +164,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequiredOk() (
 
 // HasAlwaysRequired returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasAlwaysRequired() bool {
-	if o != nil && o.AlwaysRequired != nil {
+	if o != nil && !IsNil(o.AlwaysRequired) {
 		return true
 	}
 
@@ -170,20 +177,63 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetAlwaysRequired(v boo
 }
 
 func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["mfaProviderId"] = o.MfaProviderId
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.ClaimSuffix != nil {
-		toSerialize["claimSuffix"] = o.ClaimSuffix
-	}
-	if o.AlwaysRequired != nil {
-		toSerialize["alwaysRequired"] = o.AlwaysRequired
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["mfaProviderId"] = o.MfaProviderId
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ClaimSuffix) {
+		toSerialize["claimSuffix"] = o.ClaimSuffix
+	}
+	if !IsNil(o.AlwaysRequired) {
+		toSerialize["alwaysRequired"] = o.AlwaysRequired
+	}
+	return toSerialize, nil
+}
+
+func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"mfaProviderId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConfigurableIdentityProviderAllOfOnBoarding2FA := _ConfigurableIdentityProviderAllOfOnBoarding2FA{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConfigurableIdentityProviderAllOfOnBoarding2FA)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConfigurableIdentityProviderAllOfOnBoarding2FA(varConfigurableIdentityProviderAllOfOnBoarding2FA)
+
+	return err
 }
 
 type NullableConfigurableIdentityProviderAllOfOnBoarding2FA struct {

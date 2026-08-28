@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// TagsApiService TagsApi service
-type TagsApiService service
+// TagsAPIService TagsAPI service
+type TagsAPIService service
 
 type ApiTagsGetRequest struct {
 	ctx        context.Context
-	ApiService *TagsApiService
+	ApiService *TagsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all Tags.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiTagsGetRequest
 */
-func (a *TagsApiService) TagsGet(ctx context.Context) ApiTagsGetRequest {
+func (a *TagsAPIService) TagsGet(ctx context.Context) ApiTagsGetRequest {
 	return ApiTagsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *TagsApiService) TagsGet(ctx context.Context) ApiTagsGetRequest {
 // Execute executes the request
 //
 //	@return TagList
-func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Response, error) {
+func (a *TagsAPIService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 		localVarReturnValue *TagList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.TagsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsAPIService.TagsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,16 +176,18 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *TagsApiService) TagsGetExecute(r ApiTagsGetRequest) (*TagList, *http.Re
 
 type ApiTagsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *TagsApiService
+	ApiService *TagsAPIService
 	id         string
 }
 
@@ -231,7 +235,7 @@ Delete a specific Tag.
 	@param id ID of the object.
 	@return ApiTagsIdDeleteRequest
 */
-func (a *TagsApiService) TagsIdDelete(ctx context.Context, id string) ApiTagsIdDeleteRequest {
+func (a *TagsAPIService) TagsIdDelete(ctx context.Context, id string) ApiTagsIdDeleteRequest {
 	return ApiTagsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -240,20 +244,20 @@ func (a *TagsApiService) TagsIdDelete(ctx context.Context, id string) ApiTagsIdD
 }
 
 // Execute executes the request
-func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Response, error) {
+func (a *TagsAPIService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.TagsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsAPIService.TagsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/tags/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -286,9 +290,9 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -305,6 +309,7 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -315,6 +320,7 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -325,16 +331,18 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -345,6 +353,7 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *TagsApiService) TagsIdDeleteExecute(r ApiTagsIdDeleteRequest) (*http.Re
 
 type ApiTagsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *TagsApiService
+	ApiService *TagsAPIService
 	id         string
 }
 
@@ -372,7 +381,7 @@ Get a specific Tag.
 	@param id ID of the object.
 	@return ApiTagsIdGetRequest
 */
-func (a *TagsApiService) TagsIdGet(ctx context.Context, id string) ApiTagsIdGetRequest {
+func (a *TagsAPIService) TagsIdGet(ctx context.Context, id string) ApiTagsIdGetRequest {
 	return ApiTagsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -383,7 +392,7 @@ func (a *TagsApiService) TagsIdGet(ctx context.Context, id string) ApiTagsIdGetR
 // Execute executes the request
 //
 //	@return TagDetails
-func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *http.Response, error) {
+func (a *TagsAPIService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 		localVarReturnValue *TagDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.TagsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsAPIService.TagsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/tags/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,16 +480,18 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *TagsApiService) TagsIdGetExecute(r ApiTagsIdGetRequest) (*TagDetails, *
 
 type ApiTagsIdPutRequest struct {
 	ctx        context.Context
-	ApiService *TagsApiService
+	ApiService *TagsAPIService
 	id         string
 	tag        *Tag
 }
@@ -532,7 +546,7 @@ Update an existing Tag.
 	@param id ID of the object.
 	@return ApiTagsIdPutRequest
 */
-func (a *TagsApiService) TagsIdPut(ctx context.Context, id string) ApiTagsIdPutRequest {
+func (a *TagsAPIService) TagsIdPut(ctx context.Context, id string) ApiTagsIdPutRequest {
 	return ApiTagsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -543,7 +557,7 @@ func (a *TagsApiService) TagsIdPut(ctx context.Context, id string) ApiTagsIdPutR
 // Execute executes the request
 //
 //	@return Tag
-func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Response, error) {
+func (a *TagsAPIService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -551,13 +565,13 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 		localVarReturnValue *Tag
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.TagsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsAPIService.TagsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/tags/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -595,9 +609,9 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -614,6 +628,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -624,6 +639,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -634,6 +650,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -644,16 +661,18 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -664,6 +683,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -674,6 +694,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -693,7 +714,7 @@ func (a *TagsApiService) TagsIdPutExecute(r ApiTagsIdPutRequest) (*Tag, *http.Re
 
 type ApiTagsPostRequest struct {
 	ctx        context.Context
-	ApiService *TagsApiService
+	ApiService *TagsAPIService
 	tag        *Tag
 }
 
@@ -715,7 +736,7 @@ Create a new Tag.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiTagsPostRequest
 */
-func (a *TagsApiService) TagsPost(ctx context.Context) ApiTagsPostRequest {
+func (a *TagsAPIService) TagsPost(ctx context.Context) ApiTagsPostRequest {
 	return ApiTagsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -725,7 +746,7 @@ func (a *TagsApiService) TagsPost(ctx context.Context) ApiTagsPostRequest {
 // Execute executes the request
 //
 //	@return Tag
-func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Response, error) {
+func (a *TagsAPIService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -733,7 +754,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 		localVarReturnValue *Tag
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsApiService.TagsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TagsAPIService.TagsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -776,9 +797,9 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -795,6 +816,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,16 +838,18 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -845,6 +871,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -855,6 +882,7 @@ func (a *TagsApiService) TagsPostExecute(r ApiTagsPostRequest) (*Tag, *http.Resp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

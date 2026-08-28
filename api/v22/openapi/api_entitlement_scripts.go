@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// EntitlementScriptsApiService EntitlementScriptsApi service
-type EntitlementScriptsApiService service
+// EntitlementScriptsAPIService EntitlementScriptsAPI service
+type EntitlementScriptsAPIService service
 
 type ApiEntitlementScriptsGetRequest struct {
 	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
+	ApiService *EntitlementScriptsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all Entitlement Scripts visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiEntitlementScriptsGetRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context) ApiEntitlementScriptsGetRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsGet(ctx context.Context) ApiEntitlementScriptsGetRequest {
 	return ApiEntitlementScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGet(ctx context.Context
 // Execute executes the request
 //
 //	@return EntitlementScriptList
-func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (*EntitlementScriptList, *http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsGetExecute(r ApiEntitlementScriptsGetRequest) (*EntitlementScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 		localVarReturnValue *EntitlementScriptList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,6 +176,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -185,6 +187,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsGetExecute(r ApiEntitle
 
 type ApiEntitlementScriptsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
+	ApiService *EntitlementScriptsAPIService
 	id         string
 }
 
@@ -231,7 +235,7 @@ Delete a specific Entitlement Script.
 	@param id ID of the object.
 	@return ApiEntitlementScriptsIdDeleteRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdDelete(ctx context.Context, id string) ApiEntitlementScriptsIdDeleteRequest {
 	return ApiEntitlementScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -240,20 +244,20 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDelete(ctx context.Co
 }
 
 // Execute executes the request
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEntitlementScriptsIdDeleteRequest) (*http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdDeleteExecute(r ApiEntitlementScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -286,9 +290,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -305,6 +309,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -315,6 +320,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -325,6 +331,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -335,6 +342,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -345,6 +353,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdDeleteExecute(r ApiEn
 
 type ApiEntitlementScriptsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *EntitlementScriptsApiService
+	ApiService *EntitlementScriptsAPIService
 	id         string
 }
 
@@ -372,7 +381,7 @@ Get a specific Entitlement Script.
 	@param id ID of the object.
 	@return ApiEntitlementScriptsIdGetRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Context, id string) ApiEntitlementScriptsIdGetRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdGet(ctx context.Context, id string) ApiEntitlementScriptsIdGetRequest {
 	return ApiEntitlementScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -383,7 +392,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGet(ctx context.Conte
 // Execute executes the request
 //
 //	@return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (*EntitlementScript, *http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdGetExecute(r ApiEntitlementScriptsIdGetRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 		localVarReturnValue *EntitlementScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,6 +480,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -479,6 +491,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdGetExecute(r ApiEntit
 
 type ApiEntitlementScriptsIdPutRequest struct {
 	ctx               context.Context
-	ApiService        *EntitlementScriptsApiService
+	ApiService        *EntitlementScriptsAPIService
 	id                string
 	entitlementScript *EntitlementScript
 }
@@ -532,7 +546,7 @@ Update an existing Entitlement Script.
 	@param id ID of the object.
 	@return ApiEntitlementScriptsIdPutRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Context, id string) ApiEntitlementScriptsIdPutRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdPut(ctx context.Context, id string) ApiEntitlementScriptsIdPutRequest {
 	return ApiEntitlementScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -543,7 +557,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPut(ctx context.Conte
 // Execute executes the request
 //
 //	@return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (*EntitlementScript, *http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsIdPutExecute(r ApiEntitlementScriptsIdPutRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -551,13 +565,13 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 		localVarReturnValue *EntitlementScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlement-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -595,9 +609,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -614,6 +628,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -624,6 +639,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -634,6 +650,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -644,6 +661,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -654,6 +672,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -664,6 +683,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -674,6 +694,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -693,7 +714,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsIdPutExecute(r ApiEntit
 
 type ApiEntitlementScriptsPostRequest struct {
 	ctx               context.Context
-	ApiService        *EntitlementScriptsApiService
+	ApiService        *EntitlementScriptsAPIService
 	entitlementScript *EntitlementScript
 }
 
@@ -715,7 +736,7 @@ Create a new Entitlement Script.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiEntitlementScriptsPostRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Context) ApiEntitlementScriptsPostRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsPost(ctx context.Context) ApiEntitlementScriptsPostRequest {
 	return ApiEntitlementScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -725,7 +746,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return EntitlementScript
-func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (*EntitlementScript, *http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsPostExecute(r ApiEntitlementScriptsPostRequest) (*EntitlementScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -733,7 +754,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 		localVarReturnValue *EntitlementScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -776,9 +797,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -795,6 +816,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,6 +838,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -825,6 +849,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -845,6 +871,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -855,6 +882,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -874,7 +902,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsPostExecute(r ApiEntitl
 
 type ApiEntitlementScriptsTestPostRequest struct {
 	ctx                    context.Context
-	ApiService             *EntitlementScriptsApiService
+	ApiService             *EntitlementScriptsAPIService
 	entitlementScriptsTest *EntitlementScriptsTest
 }
 
@@ -896,7 +924,7 @@ Simulate a given expression for an Entitlement Script.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiEntitlementScriptsTestPostRequest
 */
-func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Context) ApiEntitlementScriptsTestPostRequest {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsTestPost(ctx context.Context) ApiEntitlementScriptsTestPostRequest {
 	return ApiEntitlementScriptsTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -906,7 +934,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPost(ctx context.Co
 // Execute executes the request
 //
 //	@return EntitlementScriptTestResult
-func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (*EntitlementScriptTestResult, *http.Response, error) {
+func (a *EntitlementScriptsAPIService) EntitlementScriptsTestPostExecute(r ApiEntitlementScriptsTestPostRequest) (*EntitlementScriptTestResult, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -914,7 +942,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 		localVarReturnValue *EntitlementScriptTestResult
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsApiService.EntitlementScriptsTestPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementScriptsAPIService.EntitlementScriptsTestPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -957,9 +985,9 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -976,6 +1004,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -986,6 +1015,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -996,6 +1026,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1006,6 +1037,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1016,6 +1048,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1026,6 +1059,7 @@ func (a *EntitlementScriptsApiService) EntitlementScriptsTestPostExecute(r ApiEn
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

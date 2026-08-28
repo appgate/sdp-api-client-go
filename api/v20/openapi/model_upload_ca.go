@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UploadCa type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UploadCa{}
+
 // UploadCa struct for UploadCa
 type UploadCa struct {
 	// P12 binary in Base64 format.
@@ -48,7 +51,7 @@ func NewUploadCaWithDefaults() *UploadCa {
 
 // GetP12 returns the P12 field value if set, zero value otherwise.
 func (o *UploadCa) GetP12() string {
-	if o == nil || o.P12 == nil {
+	if o == nil || IsNil(o.P12) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *UploadCa) GetP12() string {
 // GetP12Ok returns a tuple with the P12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UploadCa) GetP12Ok() (*string, bool) {
-	if o == nil || o.P12 == nil {
+	if o == nil || IsNil(o.P12) {
 		return nil, false
 	}
 	return o.P12, true
@@ -66,7 +69,7 @@ func (o *UploadCa) GetP12Ok() (*string, bool) {
 
 // HasP12 returns a boolean if a field has been set.
 func (o *UploadCa) HasP12() bool {
-	if o != nil && o.P12 != nil {
+	if o != nil && !IsNil(o.P12) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *UploadCa) SetP12(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *UploadCa) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *UploadCa) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UploadCa) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -98,7 +101,7 @@ func (o *UploadCa) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *UploadCa) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *UploadCa) SetPassword(v string) {
 
 // GetCrlUrl returns the CrlUrl field value if set, zero value otherwise.
 func (o *UploadCa) GetCrlUrl() string {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *UploadCa) GetCrlUrl() string {
 // GetCrlUrlOk returns a tuple with the CrlUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UploadCa) GetCrlUrlOk() (*string, bool) {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		return nil, false
 	}
 	return o.CrlUrl, true
@@ -130,7 +133,7 @@ func (o *UploadCa) GetCrlUrlOk() (*string, bool) {
 
 // HasCrlUrl returns a boolean if a field has been set.
 func (o *UploadCa) HasCrlUrl() bool {
-	if o != nil && o.CrlUrl != nil {
+	if o != nil && !IsNil(o.CrlUrl) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *UploadCa) SetCrlUrl(v string) {
 }
 
 func (o UploadCa) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.P12 != nil {
-		toSerialize["p12"] = o.P12
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.CrlUrl != nil {
-		toSerialize["crlUrl"] = o.CrlUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UploadCa) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.P12) {
+		toSerialize["p12"] = o.P12
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.CrlUrl) {
+		toSerialize["crlUrl"] = o.CrlUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableUploadCa struct {

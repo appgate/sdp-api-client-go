@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ResultListBase type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ResultListBase{}
+
 // ResultListBase struct for ResultListBase
 type ResultListBase struct {
 	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.
@@ -44,7 +47,7 @@ func NewResultListBaseWithDefaults() *ResultListBase {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *ResultListBase) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ResultListBase) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResultListBase) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -62,7 +65,7 @@ func (o *ResultListBase) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *ResultListBase) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ResultListBase) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *ResultListBase) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ResultListBase) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResultListBase) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -94,7 +97,7 @@ func (o *ResultListBase) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *ResultListBase) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ResultListBase) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *ResultListBase) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ResultListBase) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResultListBase) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -126,7 +129,7 @@ func (o *ResultListBase) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *ResultListBase) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ResultListBase) SetDescending(v bool) {
 }
 
 func (o ResultListBase) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ResultListBase) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	return toSerialize, nil
 }
 
 type NullableResultListBase struct {

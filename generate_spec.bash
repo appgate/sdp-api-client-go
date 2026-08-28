@@ -70,8 +70,20 @@ for version in "${supportedVersions[@]}"; do
     apigentools --api-versions "v${version}" validate
     apigentools --api-versions "v${version}" generate
     mkdir -p "../api/v${version}/openapi/"
-    find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' -exec cp {} "../api/v$version/openapi/" \;
+    # openapi-generator v7+ emits empty api/model test stubs with an incorrect
+    # module import path; skip them (v6.0.0 did not generate these).
+    find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' ! -name '*_test.go' -exec cp {} "../api/v$version/openapi/" \;
     popd
+
+    # openapi-generator v7 injects a "gopkg.in/validator.v2" import into every
+    # oneOf model, but the Appgate specs all use discriminator lookup so
+    # validator.Validate is never called, leaving the import unused (a compile
+    # error). Strip it from any generated file that imports but does not use it.
+    while IFS= read -r gofile; do
+        if ! grep -q 'validator\.Validate' "$gofile"; then
+            perl -ni -e 'print unless m{^\s*"gopkg\.in/validator\.v2"\s*$}' "$gofile"
+        fi
+    done < <(grep -rl 'gopkg.in/validator.v2' "api/v${version}/openapi/" 2>/dev/null)
 done
 
 # use custom go run to generate arbitrary go code for the current version, such as identity provicers custom API services and structs

@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the RingfenceRuleAllOfActions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RingfenceRuleAllOfActions{}
 
 // RingfenceRuleAllOfActions struct for RingfenceRuleAllOfActions
 type RingfenceRuleAllOfActions struct {
@@ -30,6 +35,8 @@ type RingfenceRuleAllOfActions struct {
 	// ICMP type. Only valid for icmp protocol.
 	Types []string `json:"types,omitempty"`
 }
+
+type _RingfenceRuleAllOfActions RingfenceRuleAllOfActions
 
 // NewRingfenceRuleAllOfActions instantiates a new RingfenceRuleAllOfActions object
 // This constructor will assign default values to properties that have it defined,
@@ -150,7 +157,7 @@ func (o *RingfenceRuleAllOfActions) SetHosts(v []string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *RingfenceRuleAllOfActions) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -160,7 +167,7 @@ func (o *RingfenceRuleAllOfActions) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RingfenceRuleAllOfActions) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -168,7 +175,7 @@ func (o *RingfenceRuleAllOfActions) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *RingfenceRuleAllOfActions) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -182,7 +189,7 @@ func (o *RingfenceRuleAllOfActions) SetPorts(v []string) {
 
 // GetTypes returns the Types field value if set, zero value otherwise.
 func (o *RingfenceRuleAllOfActions) GetTypes() []string {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		var ret []string
 		return ret
 	}
@@ -192,7 +199,7 @@ func (o *RingfenceRuleAllOfActions) GetTypes() []string {
 // GetTypesOk returns a tuple with the Types field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RingfenceRuleAllOfActions) GetTypesOk() ([]string, bool) {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		return nil, false
 	}
 	return o.Types, true
@@ -200,7 +207,7 @@ func (o *RingfenceRuleAllOfActions) GetTypesOk() ([]string, bool) {
 
 // HasTypes returns a boolean if a field has been set.
 func (o *RingfenceRuleAllOfActions) HasTypes() bool {
-	if o != nil && o.Types != nil {
+	if o != nil && !IsNil(o.Types) {
 		return true
 	}
 
@@ -213,26 +220,66 @@ func (o *RingfenceRuleAllOfActions) SetTypes(v []string) {
 }
 
 func (o RingfenceRuleAllOfActions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if true {
-		toSerialize["direction"] = o.Direction
-	}
-	if true {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Types != nil {
-		toSerialize["types"] = o.Types
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RingfenceRuleAllOfActions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["protocol"] = o.Protocol
+	toSerialize["direction"] = o.Direction
+	toSerialize["action"] = o.Action
+	toSerialize["hosts"] = o.Hosts
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Types) {
+		toSerialize["types"] = o.Types
+	}
+	return toSerialize, nil
+}
+
+func (o *RingfenceRuleAllOfActions) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"protocol",
+		"direction",
+		"action",
+		"hosts",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varRingfenceRuleAllOfActions := _RingfenceRuleAllOfActions{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varRingfenceRuleAllOfActions)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RingfenceRuleAllOfActions(varRingfenceRuleAllOfActions)
+
+	return err
 }
 
 type NullableRingfenceRuleAllOfActions struct {

@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the SiteAllOfNameResolutionGcpResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionGcpResolvers{}
 
 // SiteAllOfNameResolutionGcpResolvers struct for SiteAllOfNameResolutionGcpResolvers
 type SiteAllOfNameResolutionGcpResolvers struct {
@@ -28,6 +33,8 @@ type SiteAllOfNameResolutionGcpResolvers struct {
 	// GCP forwarding rules filter.
 	ForwardingRulesFilter *string `json:"forwardingRulesFilter,omitempty"`
 }
+
+type _SiteAllOfNameResolutionGcpResolvers SiteAllOfNameResolutionGcpResolvers
 
 // NewSiteAllOfNameResolutionGcpResolvers instantiates a new SiteAllOfNameResolutionGcpResolvers object
 // This constructor will assign default values to properties that have it defined,
@@ -77,7 +84,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -87,7 +94,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -95,7 +102,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetUpdateIntervalOk() (*int32, boo
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -109,7 +116,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) SetUpdateInterval(v int32) {
 
 // GetProjectFilter returns the ProjectFilter field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetProjectFilter() string {
-	if o == nil || o.ProjectFilter == nil {
+	if o == nil || IsNil(o.ProjectFilter) {
 		var ret string
 		return ret
 	}
@@ -119,7 +126,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetProjectFilter() string {
 // GetProjectFilterOk returns a tuple with the ProjectFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetProjectFilterOk() (*string, bool) {
-	if o == nil || o.ProjectFilter == nil {
+	if o == nil || IsNil(o.ProjectFilter) {
 		return nil, false
 	}
 	return o.ProjectFilter, true
@@ -127,7 +134,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetProjectFilterOk() (*string, boo
 
 // HasProjectFilter returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) HasProjectFilter() bool {
-	if o != nil && o.ProjectFilter != nil {
+	if o != nil && !IsNil(o.ProjectFilter) {
 		return true
 	}
 
@@ -141,7 +148,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) SetProjectFilter(v string) {
 
 // GetInstanceFilter returns the InstanceFilter field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetInstanceFilter() string {
-	if o == nil || o.InstanceFilter == nil {
+	if o == nil || IsNil(o.InstanceFilter) {
 		var ret string
 		return ret
 	}
@@ -151,7 +158,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetInstanceFilter() string {
 // GetInstanceFilterOk returns a tuple with the InstanceFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetInstanceFilterOk() (*string, bool) {
-	if o == nil || o.InstanceFilter == nil {
+	if o == nil || IsNil(o.InstanceFilter) {
 		return nil, false
 	}
 	return o.InstanceFilter, true
@@ -159,7 +166,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetInstanceFilterOk() (*string, bo
 
 // HasInstanceFilter returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) HasInstanceFilter() bool {
-	if o != nil && o.InstanceFilter != nil {
+	if o != nil && !IsNil(o.InstanceFilter) {
 		return true
 	}
 
@@ -173,7 +180,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) SetInstanceFilter(v string) {
 
 // GetForwardingRulesFilter returns the ForwardingRulesFilter field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetForwardingRulesFilter() string {
-	if o == nil || o.ForwardingRulesFilter == nil {
+	if o == nil || IsNil(o.ForwardingRulesFilter) {
 		var ret string
 		return ret
 	}
@@ -183,7 +190,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetForwardingRulesFilter() string 
 // GetForwardingRulesFilterOk returns a tuple with the ForwardingRulesFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) GetForwardingRulesFilterOk() (*string, bool) {
-	if o == nil || o.ForwardingRulesFilter == nil {
+	if o == nil || IsNil(o.ForwardingRulesFilter) {
 		return nil, false
 	}
 	return o.ForwardingRulesFilter, true
@@ -191,7 +198,7 @@ func (o *SiteAllOfNameResolutionGcpResolvers) GetForwardingRulesFilterOk() (*str
 
 // HasForwardingRulesFilter returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionGcpResolvers) HasForwardingRulesFilter() bool {
-	if o != nil && o.ForwardingRulesFilter != nil {
+	if o != nil && !IsNil(o.ForwardingRulesFilter) {
 		return true
 	}
 
@@ -204,23 +211,66 @@ func (o *SiteAllOfNameResolutionGcpResolvers) SetForwardingRulesFilter(v string)
 }
 
 func (o SiteAllOfNameResolutionGcpResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if o.ProjectFilter != nil {
-		toSerialize["projectFilter"] = o.ProjectFilter
-	}
-	if o.InstanceFilter != nil {
-		toSerialize["instanceFilter"] = o.InstanceFilter
-	}
-	if o.ForwardingRulesFilter != nil {
-		toSerialize["forwardingRulesFilter"] = o.ForwardingRulesFilter
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionGcpResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.ProjectFilter) {
+		toSerialize["projectFilter"] = o.ProjectFilter
+	}
+	if !IsNil(o.InstanceFilter) {
+		toSerialize["instanceFilter"] = o.InstanceFilter
+	}
+	if !IsNil(o.ForwardingRulesFilter) {
+		toSerialize["forwardingRulesFilter"] = o.ForwardingRulesFilter
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteAllOfNameResolutionGcpResolvers) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteAllOfNameResolutionGcpResolvers := _SiteAllOfNameResolutionGcpResolvers{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteAllOfNameResolutionGcpResolvers)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteAllOfNameResolutionGcpResolvers(varSiteAllOfNameResolutionGcpResolvers)
+
+	return err
 }
 
 type NullableSiteAllOfNameResolutionGcpResolvers struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfNtpServers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNtpServers{}
 
 // ApplianceAllOfNtpServers NTP server.
 type ApplianceAllOfNtpServers struct {
@@ -26,6 +31,8 @@ type ApplianceAllOfNtpServers struct {
 	// Key to use for secure NTP communication.
 	Key *string `json:"key,omitempty"`
 }
+
+type _ApplianceAllOfNtpServers ApplianceAllOfNtpServers
 
 // NewApplianceAllOfNtpServers instantiates a new ApplianceAllOfNtpServers object
 // This constructor will assign default values to properties that have it defined,
@@ -71,7 +78,7 @@ func (o *ApplianceAllOfNtpServers) SetHostname(v string) {
 
 // GetKeyType returns the KeyType field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKeyType() string {
-	if o == nil || o.KeyType == nil {
+	if o == nil || IsNil(o.KeyType) {
 		var ret string
 		return ret
 	}
@@ -81,7 +88,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyType() string {
 // GetKeyTypeOk returns a tuple with the KeyType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyTypeOk() (*string, bool) {
-	if o == nil || o.KeyType == nil {
+	if o == nil || IsNil(o.KeyType) {
 		return nil, false
 	}
 	return o.KeyType, true
@@ -89,7 +96,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyTypeOk() (*string, bool) {
 
 // HasKeyType returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKeyType() bool {
-	if o != nil && o.KeyType != nil {
+	if o != nil && !IsNil(o.KeyType) {
 		return true
 	}
 
@@ -103,7 +110,7 @@ func (o *ApplianceAllOfNtpServers) SetKeyType(v string) {
 
 // GetKeyNo returns the KeyNo field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKeyNo() int32 {
-	if o == nil || o.KeyNo == nil {
+	if o == nil || IsNil(o.KeyNo) {
 		var ret int32
 		return ret
 	}
@@ -113,7 +120,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyNo() int32 {
 // GetKeyNoOk returns a tuple with the KeyNo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyNoOk() (*int32, bool) {
-	if o == nil || o.KeyNo == nil {
+	if o == nil || IsNil(o.KeyNo) {
 		return nil, false
 	}
 	return o.KeyNo, true
@@ -121,7 +128,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyNoOk() (*int32, bool) {
 
 // HasKeyNo returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKeyNo() bool {
-	if o != nil && o.KeyNo != nil {
+	if o != nil && !IsNil(o.KeyNo) {
 		return true
 	}
 
@@ -135,7 +142,7 @@ func (o *ApplianceAllOfNtpServers) SetKeyNo(v int32) {
 
 // GetKey returns the Key field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKey() string {
-	if o == nil || o.Key == nil {
+	if o == nil || IsNil(o.Key) {
 		var ret string
 		return ret
 	}
@@ -145,7 +152,7 @@ func (o *ApplianceAllOfNtpServers) GetKey() string {
 // GetKeyOk returns a tuple with the Key field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyOk() (*string, bool) {
-	if o == nil || o.Key == nil {
+	if o == nil || IsNil(o.Key) {
 		return nil, false
 	}
 	return o.Key, true
@@ -153,7 +160,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyOk() (*string, bool) {
 
 // HasKey returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKey() bool {
-	if o != nil && o.Key != nil {
+	if o != nil && !IsNil(o.Key) {
 		return true
 	}
 
@@ -166,20 +173,63 @@ func (o *ApplianceAllOfNtpServers) SetKey(v string) {
 }
 
 func (o ApplianceAllOfNtpServers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.KeyType != nil {
-		toSerialize["keyType"] = o.KeyType
-	}
-	if o.KeyNo != nil {
-		toSerialize["keyNo"] = o.KeyNo
-	}
-	if o.Key != nil {
-		toSerialize["key"] = o.Key
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNtpServers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.KeyType) {
+		toSerialize["keyType"] = o.KeyType
+	}
+	if !IsNil(o.KeyNo) {
+		toSerialize["keyNo"] = o.KeyNo
+	}
+	if !IsNil(o.Key) {
+		toSerialize["key"] = o.Key
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfNtpServers) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"hostname",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfNtpServers := _ApplianceAllOfNtpServers{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfNtpServers)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfNtpServers(varApplianceAllOfNtpServers)
+
+	return err
 }
 
 type NullableApplianceAllOfNtpServers struct {

@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// ApplianceStatsDeprecatedApiService ApplianceStatsDeprecatedApi service
-type ApplianceStatsDeprecatedApiService service
+// ApplianceStatsDeprecatedAPIService ApplianceStatsDeprecatedAPI service
+type ApplianceStatsDeprecatedAPIService service
 
 type ApiStatsAppliancesGetRequest struct {
 	ctx        context.Context
-	ApiService *ApplianceStatsDeprecatedApiService
+	ApiService *ApplianceStatsDeprecatedAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -80,7 +80,7 @@ Deprecated as of 6.3. Use `/appliances/status` instead.
 
 Deprecated
 */
-func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGet(ctx context.Context) ApiStatsAppliancesGetRequest {
+func (a *ApplianceStatsDeprecatedAPIService) StatsAppliancesGet(ctx context.Context) ApiStatsAppliancesGetRequest {
 	return ApiStatsAppliancesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGet(ctx context.Cont
 //	@return StatsAppliancesList
 //
 // Deprecated
-func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGetExecute(r ApiStatsAppliancesGetRequest) (*StatsAppliancesList, *http.Response, error) {
+func (a *ApplianceStatsDeprecatedAPIService) StatsAppliancesGetExecute(r ApiStatsAppliancesGetRequest) (*StatsAppliancesList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGetExecute(r ApiStat
 		localVarReturnValue *StatsAppliancesList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceStatsDeprecatedApiService.StatsAppliancesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceStatsDeprecatedAPIService.StatsAppliancesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -112,19 +112,19 @@ func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGetExecute(r ApiStat
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -153,9 +153,9 @@ func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGetExecute(r ApiStat
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -166,12 +166,13 @@ func (a *ApplianceStatsDeprecatedApiService) StatsAppliancesGetExecute(r ApiStat
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

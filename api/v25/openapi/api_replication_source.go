@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// ReplicationSourceApiService ReplicationSourceApi service
-type ReplicationSourceApiService service
+// ReplicationSourceAPIService ReplicationSourceAPI service
+type ReplicationSourceAPIService service
 
 type ApiReplicationSourceDeleteRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationSourceApiService
+	ApiService *ReplicationSourceAPIService
 }
 
 func (r ApiReplicationSourceDeleteRequest) Execute() (*ReplicationSourceStatus, *http.Response, error) {
@@ -39,7 +39,7 @@ Disable replication source registration.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourceDeleteRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourceDelete(ctx context.Context) ApiReplicationSourceDeleteRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourceDelete(ctx context.Context) ApiReplicationSourceDeleteRequest {
 	return ApiReplicationSourceDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -49,7 +49,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDelete(ctx context.Contex
 // Execute executes the request
 //
 //	@return ReplicationSourceStatus
-func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplicationSourceDeleteRequest) (*ReplicationSourceStatus, *http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourceDeleteExecute(r ApiReplicationSourceDeleteRequest) (*ReplicationSourceStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
@@ -57,7 +57,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 		localVarReturnValue *ReplicationSourceStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourceDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourceDelete")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,9 +95,9 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -114,6 +114,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -124,16 +125,18 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -144,6 +147,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -154,6 +158,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -173,7 +178,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceDeleteExecute(r ApiReplic
 
 type ApiReplicationSourceGetRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationSourceApiService
+	ApiService *ReplicationSourceAPIService
 }
 
 func (r ApiReplicationSourceGetRequest) Execute() (*ReplicationSourceStatus, *http.Response, error) {
@@ -188,7 +193,7 @@ View replication status.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourceGetRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourceGet(ctx context.Context) ApiReplicationSourceGetRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourceGet(ctx context.Context) ApiReplicationSourceGetRequest {
 	return ApiReplicationSourceGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -198,7 +203,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceGet(ctx context.Context) 
 // Execute executes the request
 //
 //	@return ReplicationSourceStatus
-func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicationSourceGetRequest) (*ReplicationSourceStatus, *http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourceGetExecute(r ApiReplicationSourceGetRequest) (*ReplicationSourceStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -206,7 +211,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 		localVarReturnValue *ReplicationSourceStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourceGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourceGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -244,9 +249,9 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -263,6 +268,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -273,16 +279,18 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -293,6 +301,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -312,7 +321,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceGetExecute(r ApiReplicati
 
 type ApiReplicationSourcePostRequest struct {
 	ctx                          context.Context
-	ApiService                   *ReplicationSourceApiService
+	ApiService                   *ReplicationSourceAPIService
 	replicationRegistrationToken *ReplicationRegistrationToken
 }
 
@@ -334,7 +343,7 @@ Register the Controller as a replication target using the provided token.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourcePostRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourcePost(ctx context.Context) ApiReplicationSourcePostRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourcePost(ctx context.Context) ApiReplicationSourcePostRequest {
 	return ApiReplicationSourcePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -344,7 +353,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePost(ctx context.Context)
 // Execute executes the request
 //
 //	@return ReplicationSourceStatus
-func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicationSourcePostRequest) (*ReplicationSourceStatus, *http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourcePostExecute(r ApiReplicationSourcePostRequest) (*ReplicationSourceStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -352,7 +361,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 		localVarReturnValue *ReplicationSourceStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourcePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourcePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -395,9 +404,9 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -414,6 +423,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -424,6 +434,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -434,16 +445,18 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -454,6 +467,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -464,6 +478,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -474,6 +489,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -493,7 +509,7 @@ func (a *ReplicationSourceApiService) ReplicationSourcePostExecute(r ApiReplicat
 
 type ApiReplicationSourceReplicationStartedPostRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationSourceApiService
+	ApiService *ReplicationSourceAPIService
 }
 
 func (r ApiReplicationSourceReplicationStartedPostRequest) Execute() (*ReplicationSourceStatus, *http.Response, error) {
@@ -508,7 +524,7 @@ Mark replication as ongoing. It's an internal API to be used by the local replic
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourceReplicationStartedPostRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPost(ctx context.Context) ApiReplicationSourceReplicationStartedPostRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourceReplicationStartedPost(ctx context.Context) ApiReplicationSourceReplicationStartedPostRequest {
 	return ApiReplicationSourceReplicationStartedPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -518,7 +534,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPost(ct
 // Execute executes the request
 //
 //	@return ReplicationSourceStatus
-func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExecute(r ApiReplicationSourceReplicationStartedPostRequest) (*ReplicationSourceStatus, *http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourceReplicationStartedPostExecute(r ApiReplicationSourceReplicationStartedPostRequest) (*ReplicationSourceStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -526,7 +542,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 		localVarReturnValue *ReplicationSourceStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourceReplicationStartedPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourceReplicationStartedPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -564,9 +580,9 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -583,6 +599,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -593,16 +610,18 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -613,6 +632,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -623,6 +643,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -642,7 +663,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceReplicationStartedPostExe
 
 type ApiReplicationSourceStatusPostRequest struct {
 	ctx                     context.Context
-	ApiService              *ReplicationSourceApiService
+	ApiService              *ReplicationSourceAPIService
 	replicationStatusUpdate *ReplicationStatusUpdate
 }
 
@@ -663,7 +684,7 @@ Update replication status. It's an internal API to be used by the local replicat
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourceStatusPostRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourceStatusPost(ctx context.Context) ApiReplicationSourceStatusPostRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourceStatusPost(ctx context.Context) ApiReplicationSourceStatusPostRequest {
 	return ApiReplicationSourceStatusPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -673,7 +694,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPost(ctx context.Co
 // Execute executes the request
 //
 //	@return ReplicationSourceStatus
-func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiReplicationSourceStatusPostRequest) (*ReplicationSourceStatus, *http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourceStatusPostExecute(r ApiReplicationSourceStatusPostRequest) (*ReplicationSourceStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -681,7 +702,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 		localVarReturnValue *ReplicationSourceStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourceStatusPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourceStatusPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -724,9 +745,9 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -743,6 +764,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -753,16 +775,18 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -773,6 +797,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -783,6 +808,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -793,6 +819,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -812,7 +839,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceStatusPostExecute(r ApiRe
 
 type ApiReplicationSourceTriggerReplicationPostRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationSourceApiService
+	ApiService *ReplicationSourceAPIService
 }
 
 func (r ApiReplicationSourceTriggerReplicationPostRequest) Execute() (*http.Response, error) {
@@ -827,7 +854,7 @@ Trigger a replication run on the local replication service.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationSourceTriggerReplicationPostRequest
 */
-func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPost(ctx context.Context) ApiReplicationSourceTriggerReplicationPostRequest {
+func (a *ReplicationSourceAPIService) ReplicationSourceTriggerReplicationPost(ctx context.Context) ApiReplicationSourceTriggerReplicationPostRequest {
 	return ApiReplicationSourceTriggerReplicationPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -835,14 +862,14 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPost(ct
 }
 
 // Execute executes the request
-func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExecute(r ApiReplicationSourceTriggerReplicationPostRequest) (*http.Response, error) {
+func (a *ReplicationSourceAPIService) ReplicationSourceTriggerReplicationPostExecute(r ApiReplicationSourceTriggerReplicationPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceApiService.ReplicationSourceTriggerReplicationPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationSourceAPIService.ReplicationSourceTriggerReplicationPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -880,9 +907,9 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -899,6 +926,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -909,16 +937,18 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -929,6 +959,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -939,6 +970,7 @@ func (a *ReplicationSourceApiService) ReplicationSourceTriggerReplicationPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

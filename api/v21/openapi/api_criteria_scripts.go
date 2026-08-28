@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// CriteriaScriptsApiService CriteriaScriptsApi service
-type CriteriaScriptsApiService service
+// CriteriaScriptsAPIService CriteriaScriptsAPI service
+type CriteriaScriptsAPIService service
 
 type ApiCriteriaScriptsGetRequest struct {
 	ctx           context.Context
-	ApiService    *CriteriaScriptsApiService
+	ApiService    *CriteriaScriptsAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -82,7 +82,7 @@ List all Criteria Scripts visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCriteriaScriptsGetRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx context.Context) ApiCriteriaScriptsGetRequest {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsGet(ctx context.Context) ApiCriteriaScriptsGetRequest {
 	return ApiCriteriaScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGet(ctx context.Context) ApiC
 // Execute executes the request
 //
 //	@return CriteriaScriptList
-func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScriptsGetRequest) (*CriteriaScriptList, *http.Response, error) {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsGetExecute(r ApiCriteriaScriptsGetRequest) (*CriteriaScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 		localVarReturnValue *CriteriaScriptList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsAPIService.CriteriaScriptsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -115,19 +115,19 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +146,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -157,9 +157,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,6 +187,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -196,6 +198,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsGetExecute(r ApiCriteriaScrip
 
 type ApiCriteriaScriptsIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *CriteriaScriptsApiService
+	ApiService    *CriteriaScriptsAPIService
 	authorization *string
 	id            string
 }
@@ -249,7 +253,7 @@ Delete a specific Criteria Script.
 	@param id ID of the object.
 	@return ApiCriteriaScriptsIdDeleteRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx context.Context, id string) ApiCriteriaScriptsIdDeleteRequest {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdDelete(ctx context.Context, id string) ApiCriteriaScriptsIdDeleteRequest {
 	return ApiCriteriaScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -258,20 +262,20 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDelete(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteriaScriptsIdDeleteRequest) (*http.Response, error) {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdDeleteExecute(r ApiCriteriaScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsAPIService.CriteriaScriptsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -297,7 +301,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -308,9 +312,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -327,6 +331,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -337,6 +342,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -347,6 +353,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -357,6 +364,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -367,6 +375,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -377,7 +386,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdDeleteExecute(r ApiCriteria
 
 type ApiCriteriaScriptsIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *CriteriaScriptsApiService
+	ApiService    *CriteriaScriptsAPIService
 	authorization *string
 	id            string
 }
@@ -401,7 +410,7 @@ Get a specific Criteria Script.
 	@param id ID of the object.
 	@return ApiCriteriaScriptsIdGetRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx context.Context, id string) ApiCriteriaScriptsIdGetRequest {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdGet(ctx context.Context, id string) ApiCriteriaScriptsIdGetRequest {
 	return ApiCriteriaScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -412,7 +421,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGet(ctx context.Context, id
 // Execute executes the request
 //
 //	@return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScriptsIdGetRequest) (*CriteriaScript, *http.Response, error) {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdGetExecute(r ApiCriteriaScriptsIdGetRequest) (*CriteriaScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -420,13 +429,13 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 		localVarReturnValue *CriteriaScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsAPIService.CriteriaScriptsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -452,7 +461,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -463,9 +472,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -482,6 +491,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -492,6 +502,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -502,6 +513,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -512,6 +524,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -522,6 +535,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -541,7 +555,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdGetExecute(r ApiCriteriaScr
 
 type ApiCriteriaScriptsIdPutRequest struct {
 	ctx            context.Context
-	ApiService     *CriteriaScriptsApiService
+	ApiService     *CriteriaScriptsAPIService
 	authorization  *string
 	id             string
 	criteriaScript *CriteriaScript
@@ -572,7 +586,7 @@ Update an existing Criteria Script.
 	@param id ID of the object.
 	@return ApiCriteriaScriptsIdPutRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx context.Context, id string) ApiCriteriaScriptsIdPutRequest {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdPut(ctx context.Context, id string) ApiCriteriaScriptsIdPutRequest {
 	return ApiCriteriaScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -583,7 +597,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPut(ctx context.Context, id
 // Execute executes the request
 //
 //	@return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScriptsIdPutRequest) (*CriteriaScript, *http.Response, error) {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsIdPutExecute(r ApiCriteriaScriptsIdPutRequest) (*CriteriaScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -591,13 +605,13 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 		localVarReturnValue *CriteriaScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsAPIService.CriteriaScriptsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/criteria-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -626,7 +640,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.criteriaScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -639,9 +653,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -658,6 +672,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -668,6 +683,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +694,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,6 +705,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -698,6 +716,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -708,6 +727,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -718,6 +738,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -737,7 +758,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsIdPutExecute(r ApiCriteriaScr
 
 type ApiCriteriaScriptsPostRequest struct {
 	ctx            context.Context
-	ApiService     *CriteriaScriptsApiService
+	ApiService     *CriteriaScriptsAPIService
 	authorization  *string
 	criteriaScript *CriteriaScript
 }
@@ -766,7 +787,7 @@ Create a new Criteria Script.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCriteriaScriptsPostRequest
 */
-func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx context.Context) ApiCriteriaScriptsPostRequest {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsPost(ctx context.Context) ApiCriteriaScriptsPostRequest {
 	return ApiCriteriaScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -776,7 +797,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPost(ctx context.Context) Api
 // Execute executes the request
 //
 //	@return CriteriaScript
-func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScriptsPostRequest) (*CriteriaScript, *http.Response, error) {
+func (a *CriteriaScriptsAPIService) CriteriaScriptsPostExecute(r ApiCriteriaScriptsPostRequest) (*CriteriaScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -784,7 +805,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 		localVarReturnValue *CriteriaScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsApiService.CriteriaScriptsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CriteriaScriptsAPIService.CriteriaScriptsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -818,7 +839,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.criteriaScript
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -831,9 +852,9 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -850,6 +871,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -860,6 +882,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -870,6 +893,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -880,6 +904,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -890,6 +915,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -900,6 +926,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -910,6 +937,7 @@ func (a *CriteriaScriptsApiService) CriteriaScriptsPostExecute(r ApiCriteriaScri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

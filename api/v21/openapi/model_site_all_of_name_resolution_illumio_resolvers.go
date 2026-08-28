@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the SiteAllOfNameResolutionIllumioResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionIllumioResolvers{}
 
 // SiteAllOfNameResolutionIllumioResolvers struct for SiteAllOfNameResolutionIllumioResolvers
 type SiteAllOfNameResolutionIllumioResolvers struct {
@@ -22,7 +27,7 @@ type SiteAllOfNameResolutionIllumioResolvers struct {
 	// How often will the resolver poll the server. In seconds.
 	UpdateInterval *int32 `json:"updateInterval,omitempty"`
 	// Organization ID of the Illumio Resolver.
-	OrgId string `json:"orgId"`
+	OrgId *string `json:"orgId,omitempty"`
 	// Hostname of the Illumio Resolver.
 	Hostname string `json:"hostname"`
 	// Port number of the Illumio Resolver.
@@ -33,16 +38,17 @@ type SiteAllOfNameResolutionIllumioResolvers struct {
 	Password *string `json:"password,omitempty"`
 }
 
+type _SiteAllOfNameResolutionIllumioResolvers SiteAllOfNameResolutionIllumioResolvers
+
 // NewSiteAllOfNameResolutionIllumioResolvers instantiates a new SiteAllOfNameResolutionIllumioResolvers object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSiteAllOfNameResolutionIllumioResolvers(name string, orgId string, hostname string, port int32, username string) *SiteAllOfNameResolutionIllumioResolvers {
+func NewSiteAllOfNameResolutionIllumioResolvers(name string, hostname string, port int32, username string) *SiteAllOfNameResolutionIllumioResolvers {
 	this := SiteAllOfNameResolutionIllumioResolvers{}
 	this.Name = name
 	var updateInterval int32 = 60
 	this.UpdateInterval = &updateInterval
-	this.OrgId = orgId
 	this.Hostname = hostname
 	this.Port = port
 	this.Username = username
@@ -85,7 +91,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -95,7 +101,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -103,7 +109,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) GetUpdateIntervalOk() (*int32,
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -115,28 +121,36 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) SetUpdateInterval(v int32) {
 	o.UpdateInterval = &v
 }
 
-// GetOrgId returns the OrgId field value
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetOrgId() string {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		var ret string
 		return ret
 	}
-
-	return o.OrgId
+	return *o.OrgId
 }
 
-// GetOrgIdOk returns a tuple with the OrgId field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetOrgIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.OrgId, true
+	return o.OrgId, true
 }
 
-// SetOrgId sets field value
+// HasOrgId returns a boolean if a field has been set.
+func (o *SiteAllOfNameResolutionIllumioResolvers) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgId gets a reference to the given string and assigns it to the OrgId field.
 func (o *SiteAllOfNameResolutionIllumioResolvers) SetOrgId(v string) {
-	o.OrgId = v
+	o.OrgId = &v
 }
 
 // GetHostname returns the Hostname field value
@@ -213,7 +227,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -223,7 +237,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -231,7 +245,7 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) GetPasswordOk() (*string, bool
 
 // HasPassword returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionIllumioResolvers) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -244,29 +258,69 @@ func (o *SiteAllOfNameResolutionIllumioResolvers) SetPassword(v string) {
 }
 
 func (o SiteAllOfNameResolutionIllumioResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if true {
-		toSerialize["orgId"] = o.OrgId
-	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionIllumioResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.OrgId) {
+		toSerialize["orgId"] = o.OrgId
+	}
+	toSerialize["hostname"] = o.Hostname
+	toSerialize["port"] = o.Port
+	toSerialize["username"] = o.Username
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteAllOfNameResolutionIllumioResolvers) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"hostname",
+		"port",
+		"username",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteAllOfNameResolutionIllumioResolvers := _SiteAllOfNameResolutionIllumioResolvers{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteAllOfNameResolutionIllumioResolvers)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteAllOfNameResolutionIllumioResolvers(varSiteAllOfNameResolutionIllumioResolvers)
+
+	return err
 }
 
 type NullableSiteAllOfNameResolutionIllumioResolvers struct {

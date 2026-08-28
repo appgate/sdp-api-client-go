@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// MFAForAdminsApiService MFAForAdminsApi service
-type MFAForAdminsApiService service
+// MFAForAdminsAPIService MFAForAdminsAPI service
+type MFAForAdminsAPIService service
 
 type ApiAdminMfaSettingsDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *MFAForAdminsApiService
+	ApiService    *MFAForAdminsAPIService
 	authorization *string
 }
 
@@ -46,7 +46,7 @@ Reset Admin MFA settings to disabled.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMfaSettingsDeleteRequest
 */
-func (a *MFAForAdminsApiService) AdminMfaSettingsDelete(ctx context.Context) ApiAdminMfaSettingsDeleteRequest {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsDelete(ctx context.Context) ApiAdminMfaSettingsDeleteRequest {
 	return ApiAdminMfaSettingsDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -54,14 +54,14 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDelete(ctx context.Context) Api
 }
 
 // Execute executes the request
-func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSettingsDeleteRequest) (*http.Response, error) {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSettingsDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsApiService.AdminMfaSettingsDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsAPIService.AdminMfaSettingsDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -92,7 +92,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -103,9 +103,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -122,6 +122,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -132,6 +133,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -142,6 +144,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -152,6 +155,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -162,7 +166,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsDeleteExecute(r ApiAdminMfaSett
 
 type ApiAdminMfaSettingsGetRequest struct {
 	ctx           context.Context
-	ApiService    *MFAForAdminsApiService
+	ApiService    *MFAForAdminsAPIService
 	authorization *string
 }
 
@@ -184,7 +188,7 @@ View Admin MFA settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMfaSettingsGetRequest
 */
-func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx context.Context) ApiAdminMfaSettingsGetRequest {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsGet(ctx context.Context) ApiAdminMfaSettingsGetRequest {
 	return ApiAdminMfaSettingsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -194,7 +198,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGet(ctx context.Context) ApiAdm
 // Execute executes the request
 //
 //	@return AdminMfaSettings
-func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSettingsGetRequest) (*AdminMfaSettings, *http.Response, error) {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsGetExecute(r ApiAdminMfaSettingsGetRequest) (*AdminMfaSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -202,7 +206,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 		localVarReturnValue *AdminMfaSettings
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsApiService.AdminMfaSettingsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsAPIService.AdminMfaSettingsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -233,7 +237,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -244,9 +248,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -263,6 +267,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -273,6 +278,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -283,6 +289,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -293,6 +300,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -312,7 +320,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsGetExecute(r ApiAdminMfaSetting
 
 type ApiAdminMfaSettingsPutRequest struct {
 	ctx              context.Context
-	ApiService       *MFAForAdminsApiService
+	ApiService       *MFAForAdminsAPIService
 	authorization    *string
 	adminMfaSettings *AdminMfaSettings
 }
@@ -341,7 +349,7 @@ Update Admin MFA settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMfaSettingsPutRequest
 */
-func (a *MFAForAdminsApiService) AdminMfaSettingsPut(ctx context.Context) ApiAdminMfaSettingsPutRequest {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsPut(ctx context.Context) ApiAdminMfaSettingsPutRequest {
 	return ApiAdminMfaSettingsPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -349,14 +357,14 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPut(ctx context.Context) ApiAdm
 }
 
 // Execute executes the request
-func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSettingsPutRequest) (*http.Response, error) {
+func (a *MFAForAdminsAPIService) AdminMfaSettingsPutExecute(r ApiAdminMfaSettingsPutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPut
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsApiService.AdminMfaSettingsPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAForAdminsAPIService.AdminMfaSettingsPut")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -387,7 +395,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.adminMfaSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -400,9 +408,9 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -419,6 +427,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -429,6 +438,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -439,6 +449,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -449,6 +460,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -459,6 +471,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -469,6 +482,7 @@ func (a *MFAForAdminsApiService) AdminMfaSettingsPutExecute(r ApiAdminMfaSetting
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

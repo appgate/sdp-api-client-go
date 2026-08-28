@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceUpgrade type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceUpgrade{}
 
 // ApplianceUpgrade Appliance Upgrade request.
 type ApplianceUpgrade struct {
@@ -22,6 +27,8 @@ type ApplianceUpgrade struct {
 	// The URL for the Appliance the download the Upgrade image from. The URL may be a public HTTP URL or it could be a file uploaded to the Controller. See \"files\" APIs for uploading to Controller. In order to use a Controller based file, set this field to \"controller://\\<controller-peer-hostname:port\\>/{filename}\". The Appliance will authenticate itself to the Controller and download the file.
 	ImageUrl string `json:"imageUrl"`
 }
+
+type _ApplianceUpgrade ApplianceUpgrade
 
 // NewApplianceUpgrade instantiates a new ApplianceUpgrade object
 // This constructor will assign default values to properties that have it defined,
@@ -43,7 +50,7 @@ func NewApplianceUpgradeWithDefaults() *ApplianceUpgrade {
 
 // GetDevKeyring returns the DevKeyring field value if set, zero value otherwise.
 func (o *ApplianceUpgrade) GetDevKeyring() bool {
-	if o == nil || o.DevKeyring == nil {
+	if o == nil || IsNil(o.DevKeyring) {
 		var ret bool
 		return ret
 	}
@@ -53,7 +60,7 @@ func (o *ApplianceUpgrade) GetDevKeyring() bool {
 // GetDevKeyringOk returns a tuple with the DevKeyring field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceUpgrade) GetDevKeyringOk() (*bool, bool) {
-	if o == nil || o.DevKeyring == nil {
+	if o == nil || IsNil(o.DevKeyring) {
 		return nil, false
 	}
 	return o.DevKeyring, true
@@ -61,7 +68,7 @@ func (o *ApplianceUpgrade) GetDevKeyringOk() (*bool, bool) {
 
 // HasDevKeyring returns a boolean if a field has been set.
 func (o *ApplianceUpgrade) HasDevKeyring() bool {
-	if o != nil && o.DevKeyring != nil {
+	if o != nil && !IsNil(o.DevKeyring) {
 		return true
 	}
 
@@ -98,14 +105,57 @@ func (o *ApplianceUpgrade) SetImageUrl(v string) {
 }
 
 func (o ApplianceUpgrade) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DevKeyring != nil {
-		toSerialize["devKeyring"] = o.DevKeyring
-	}
-	if true {
-		toSerialize["imageUrl"] = o.ImageUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceUpgrade) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DevKeyring) {
+		toSerialize["devKeyring"] = o.DevKeyring
+	}
+	toSerialize["imageUrl"] = o.ImageUrl
+	return toSerialize, nil
+}
+
+func (o *ApplianceUpgrade) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"imageUrl",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceUpgrade := _ApplianceUpgrade{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceUpgrade)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceUpgrade(varApplianceUpgrade)
+
+	return err
 }
 
 type NullableApplianceUpgrade struct {

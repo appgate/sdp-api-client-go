@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// UserLoginsPerHourApiService UserLoginsPerHourApi service
-type UserLoginsPerHourApiService service
+// UserLoginsPerHourAPIService UserLoginsPerHourAPI service
+type UserLoginsPerHourAPIService service
 
 type ApiStatsUserLoginsGetRequest struct {
 	ctx        context.Context
-	ApiService *UserLoginsPerHourApiService
+	ApiService *UserLoginsPerHourAPIService
 }
 
 func (r ApiStatsUserLoginsGetRequest) Execute() (*UserLogins, *http.Response, error) {
@@ -39,7 +39,7 @@ Get the User Logins Per Hour for the last 24 hours.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsUserLoginsGetRequest
 */
-func (a *UserLoginsPerHourApiService) StatsUserLoginsGet(ctx context.Context) ApiStatsUserLoginsGetRequest {
+func (a *UserLoginsPerHourAPIService) StatsUserLoginsGet(ctx context.Context) ApiStatsUserLoginsGetRequest {
 	return ApiStatsUserLoginsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -49,7 +49,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGet(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return UserLogins
-func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
+func (a *UserLoginsPerHourAPIService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -57,7 +57,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 		localVarReturnValue *UserLogins
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserLoginsPerHourApiService.StatsUserLoginsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserLoginsPerHourAPIService.StatsUserLoginsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,9 +95,9 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -114,6 +114,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -124,16 +125,18 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -144,6 +147,7 @@ func (a *UserLoginsPerHourApiService) StatsUserLoginsGetExecute(r ApiStatsUserLo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

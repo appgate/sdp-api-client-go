@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// BlacklistedUsersApiService BlacklistedUsersApi service
-type BlacklistedUsersApiService service
+// BlacklistedUsersAPIService BlacklistedUsersAPI service
+type BlacklistedUsersAPIService service
 
 type ApiBlacklistDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
-	ApiService        *BlacklistedUsersApiService
+	ApiService        *BlacklistedUsersAPIService
 	authorization     *string
 	distinguishedName string
 }
@@ -49,7 +49,7 @@ Remove the blacklist of a User for the given Distinguished Name.
 	@param distinguishedName Distinguished name of the user whose blacklist is to be removed. Format: \"CN=,OU=\"
 	@return ApiBlacklistDistinguishedNameDeleteRequest
 */
-func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiBlacklistDistinguishedNameDeleteRequest {
+func (a *BlacklistedUsersAPIService) BlacklistDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiBlacklistDistinguishedNameDeleteRequest {
 	return ApiBlacklistDistinguishedNameDeleteRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -58,20 +58,20 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDelete(ctx contex
 }
 
 // Execute executes the request
-func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r ApiBlacklistDistinguishedNameDeleteRequest) (*http.Response, error) {
+func (a *BlacklistedUsersAPIService) BlacklistDistinguishedNameDeleteExecute(r ApiBlacklistDistinguishedNameDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersApiService.BlacklistDistinguishedNameDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersAPIService.BlacklistDistinguishedNameDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/blacklist/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -97,7 +97,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -108,9 +108,9 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -127,6 +127,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -137,6 +138,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -147,6 +149,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -157,6 +160,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -167,6 +171,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -177,7 +182,7 @@ func (a *BlacklistedUsersApiService) BlacklistDistinguishedNameDeleteExecute(r A
 
 type ApiBlacklistGetRequest struct {
 	ctx           context.Context
-	ApiService    *BlacklistedUsersApiService
+	ApiService    *BlacklistedUsersAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -234,7 +239,7 @@ List all blacklisted Users.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiBlacklistGetRequest
 */
-func (a *BlacklistedUsersApiService) BlacklistGet(ctx context.Context) ApiBlacklistGetRequest {
+func (a *BlacklistedUsersAPIService) BlacklistGet(ctx context.Context) ApiBlacklistGetRequest {
 	return ApiBlacklistGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -244,7 +249,7 @@ func (a *BlacklistedUsersApiService) BlacklistGet(ctx context.Context) ApiBlackl
 // Execute executes the request
 //
 //	@return BlackListList
-func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetRequest) (*BlackListList, *http.Response, error) {
+func (a *BlacklistedUsersAPIService) BlacklistGetExecute(r ApiBlacklistGetRequest) (*BlackListList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -252,7 +257,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 		localVarReturnValue *BlackListList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersApiService.BlacklistGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersAPIService.BlacklistGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -267,19 +272,19 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -298,7 +303,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -309,9 +314,9 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -328,6 +333,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -338,6 +344,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -348,6 +355,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -358,6 +366,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -377,7 +386,7 @@ func (a *BlacklistedUsersApiService) BlacklistGetExecute(r ApiBlacklistGetReques
 
 type ApiBlacklistPostRequest struct {
 	ctx            context.Context
-	ApiService     *BlacklistedUsersApiService
+	ApiService     *BlacklistedUsersAPIService
 	authorization  *string
 	blacklistEntry *BlacklistEntry
 }
@@ -406,7 +415,7 @@ Blacklists a User.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiBlacklistPostRequest
 */
-func (a *BlacklistedUsersApiService) BlacklistPost(ctx context.Context) ApiBlacklistPostRequest {
+func (a *BlacklistedUsersAPIService) BlacklistPost(ctx context.Context) ApiBlacklistPostRequest {
 	return ApiBlacklistPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -416,7 +425,7 @@ func (a *BlacklistedUsersApiService) BlacklistPost(ctx context.Context) ApiBlack
 // Execute executes the request
 //
 //	@return BlacklistEntry
-func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequest) (*BlacklistEntry, *http.Response, error) {
+func (a *BlacklistedUsersAPIService) BlacklistPostExecute(r ApiBlacklistPostRequest) (*BlacklistEntry, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -424,7 +433,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 		localVarReturnValue *BlacklistEntry
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersApiService.BlacklistPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BlacklistedUsersAPIService.BlacklistPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -458,7 +467,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.blacklistEntry
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -471,9 +480,9 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -490,6 +499,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -500,6 +510,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -510,6 +521,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -520,6 +532,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -530,6 +543,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -540,6 +554,7 @@ func (a *BlacklistedUsersApiService) BlacklistPostExecute(r ApiBlacklistPostRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

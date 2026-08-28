@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppList type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppList{}
+
 // AppList struct for AppList
 type AppList struct {
 	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.
@@ -54,7 +57,7 @@ func NewAppListWithDefaults() *AppList {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *AppList) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -64,7 +67,7 @@ func (o *AppList) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -72,7 +75,7 @@ func (o *AppList) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *AppList) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *AppList) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *AppList) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -96,7 +99,7 @@ func (o *AppList) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -104,7 +107,7 @@ func (o *AppList) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *AppList) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -118,7 +121,7 @@ func (o *AppList) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *AppList) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -128,7 +131,7 @@ func (o *AppList) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -136,7 +139,7 @@ func (o *AppList) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *AppList) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *AppList) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *AppList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *AppList) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -168,7 +171,7 @@ func (o *AppList) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *AppList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *AppList) SetQueries(v []string) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *AppList) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *AppList) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -200,7 +203,7 @@ func (o *AppList) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *AppList) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -214,7 +217,7 @@ func (o *AppList) SetTotalCount(v int32) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *AppList) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -224,7 +227,7 @@ func (o *AppList) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -232,7 +235,7 @@ func (o *AppList) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *AppList) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *AppList) SetFilterBy(v []FilterBy) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AppList) GetData() []App {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []App
 		return ret
 	}
@@ -256,7 +259,7 @@ func (o *AppList) GetData() []App {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetDataOk() ([]App, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -264,7 +267,7 @@ func (o *AppList) GetDataOk() ([]App, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *AppList) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -278,7 +281,7 @@ func (o *AppList) SetData(v []App) {
 
 // GetAllOriginatingEntitlements returns the AllOriginatingEntitlements field value if set, zero value otherwise.
 func (o *AppList) GetAllOriginatingEntitlements() []OriginatingEntitlement {
-	if o == nil || o.AllOriginatingEntitlements == nil {
+	if o == nil || IsNil(o.AllOriginatingEntitlements) {
 		var ret []OriginatingEntitlement
 		return ret
 	}
@@ -288,7 +291,7 @@ func (o *AppList) GetAllOriginatingEntitlements() []OriginatingEntitlement {
 // GetAllOriginatingEntitlementsOk returns a tuple with the AllOriginatingEntitlements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppList) GetAllOriginatingEntitlementsOk() ([]OriginatingEntitlement, bool) {
-	if o == nil || o.AllOriginatingEntitlements == nil {
+	if o == nil || IsNil(o.AllOriginatingEntitlements) {
 		return nil, false
 	}
 	return o.AllOriginatingEntitlements, true
@@ -296,7 +299,7 @@ func (o *AppList) GetAllOriginatingEntitlementsOk() ([]OriginatingEntitlement, b
 
 // HasAllOriginatingEntitlements returns a boolean if a field has been set.
 func (o *AppList) HasAllOriginatingEntitlements() bool {
-	if o != nil && o.AllOriginatingEntitlements != nil {
+	if o != nil && !IsNil(o.AllOriginatingEntitlements) {
 		return true
 	}
 
@@ -309,32 +312,40 @@ func (o *AppList) SetAllOriginatingEntitlements(v []OriginatingEntitlement) {
 }
 
 func (o AppList) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.TotalCount != nil {
-		toSerialize["totalCount"] = o.TotalCount
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.AllOriginatingEntitlements != nil {
-		toSerialize["allOriginatingEntitlements"] = o.AllOriginatingEntitlements
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppList) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["totalCount"] = o.TotalCount
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.AllOriginatingEntitlements) {
+		toSerialize["allOriginatingEntitlements"] = o.AllOriginatingEntitlements
+	}
+	return toSerialize, nil
 }
 
 type NullableAppList struct {

@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ApplianceMaintenanceApiService ApplianceMaintenanceApi service
-type ApplianceMaintenanceApiService service
+// ApplianceMaintenanceAPIService ApplianceMaintenanceAPI service
+type ApplianceMaintenanceAPIService service
 
 type ApiAppliancesIdMaintenancePostRequest struct {
 	ctx                                context.Context
-	ApiService                         *ApplianceMaintenanceApiService
+	ApiService                         *ApplianceMaintenanceAPIService
 	authorization                      *string
 	id                                 string
 	appliancesIdMaintenancePostRequest *AppliancesIdMaintenancePostRequest
@@ -56,7 +56,7 @@ Enable or disable maintenance mode on Appliance An appliance in maintenance mode
 	@param id ID of the object.
 	@return ApiAppliancesIdMaintenancePostRequest
 */
-func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePost(ctx context.Context, id string) ApiAppliancesIdMaintenancePostRequest {
+func (a *ApplianceMaintenanceAPIService) AppliancesIdMaintenancePost(ctx context.Context, id string) ApiAppliancesIdMaintenancePostRequest {
 	return ApiAppliancesIdMaintenancePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -67,7 +67,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePost(ctx context
 // Execute executes the request
 //
 //	@return AppliancesRepartitionIpAllocationsPost202Response
-func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r ApiAppliancesIdMaintenancePostRequest) (*AppliancesRepartitionIpAllocationsPost202Response, *http.Response, error) {
+func (a *ApplianceMaintenanceAPIService) AppliancesIdMaintenancePostExecute(r ApiAppliancesIdMaintenancePostRequest) (*AppliancesRepartitionIpAllocationsPost202Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -75,13 +75,13 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 		localVarReturnValue *AppliancesRepartitionIpAllocationsPost202Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMaintenanceApiService.AppliancesIdMaintenancePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMaintenanceAPIService.AppliancesIdMaintenancePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/maintenance"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -110,7 +110,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.appliancesIdMaintenancePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -123,9 +123,9 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -142,6 +142,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -152,6 +153,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -162,6 +164,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -172,6 +175,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -182,6 +186,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -192,6 +197,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -202,6 +208,7 @@ func (a *ApplianceMaintenanceApiService) AppliancesIdMaintenancePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ValidationErrorErrorsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ValidationErrorErrorsInner{}
+
 // ValidationErrorErrorsInner struct for ValidationErrorErrorsInner
 type ValidationErrorErrorsInner struct {
 	// Name of the field that failed validation.
@@ -46,7 +49,7 @@ func NewValidationErrorErrorsInnerWithDefaults() *ValidationErrorErrorsInner {
 
 // GetField returns the Field field value if set, zero value otherwise.
 func (o *ValidationErrorErrorsInner) GetField() string {
-	if o == nil || o.Field == nil {
+	if o == nil || IsNil(o.Field) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ValidationErrorErrorsInner) GetField() string {
 // GetFieldOk returns a tuple with the Field field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationErrorErrorsInner) GetFieldOk() (*string, bool) {
-	if o == nil || o.Field == nil {
+	if o == nil || IsNil(o.Field) {
 		return nil, false
 	}
 	return o.Field, true
@@ -64,7 +67,7 @@ func (o *ValidationErrorErrorsInner) GetFieldOk() (*string, bool) {
 
 // HasField returns a boolean if a field has been set.
 func (o *ValidationErrorErrorsInner) HasField() bool {
-	if o != nil && o.Field != nil {
+	if o != nil && !IsNil(o.Field) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ValidationErrorErrorsInner) SetField(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ValidationErrorErrorsInner) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ValidationErrorErrorsInner) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationErrorErrorsInner) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -96,7 +99,7 @@ func (o *ValidationErrorErrorsInner) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ValidationErrorErrorsInner) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ValidationErrorErrorsInner) SetMessage(v string) {
 
 // GetDisplayField returns the DisplayField field value if set, zero value otherwise.
 func (o *ValidationErrorErrorsInner) GetDisplayField() string {
-	if o == nil || o.DisplayField == nil {
+	if o == nil || IsNil(o.DisplayField) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ValidationErrorErrorsInner) GetDisplayField() string {
 // GetDisplayFieldOk returns a tuple with the DisplayField field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationErrorErrorsInner) GetDisplayFieldOk() (*string, bool) {
-	if o == nil || o.DisplayField == nil {
+	if o == nil || IsNil(o.DisplayField) {
 		return nil, false
 	}
 	return o.DisplayField, true
@@ -128,7 +131,7 @@ func (o *ValidationErrorErrorsInner) GetDisplayFieldOk() (*string, bool) {
 
 // HasDisplayField returns a boolean if a field has been set.
 func (o *ValidationErrorErrorsInner) HasDisplayField() bool {
-	if o != nil && o.DisplayField != nil {
+	if o != nil && !IsNil(o.DisplayField) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ValidationErrorErrorsInner) SetDisplayField(v string) {
 
 // GetReplicationMessage returns the ReplicationMessage field value if set, zero value otherwise.
 func (o *ValidationErrorErrorsInner) GetReplicationMessage() string {
-	if o == nil || o.ReplicationMessage == nil {
+	if o == nil || IsNil(o.ReplicationMessage) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ValidationErrorErrorsInner) GetReplicationMessage() string {
 // GetReplicationMessageOk returns a tuple with the ReplicationMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationErrorErrorsInner) GetReplicationMessageOk() (*string, bool) {
-	if o == nil || o.ReplicationMessage == nil {
+	if o == nil || IsNil(o.ReplicationMessage) {
 		return nil, false
 	}
 	return o.ReplicationMessage, true
@@ -160,7 +163,7 @@ func (o *ValidationErrorErrorsInner) GetReplicationMessageOk() (*string, bool) {
 
 // HasReplicationMessage returns a boolean if a field has been set.
 func (o *ValidationErrorErrorsInner) HasReplicationMessage() bool {
-	if o != nil && o.ReplicationMessage != nil {
+	if o != nil && !IsNil(o.ReplicationMessage) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ValidationErrorErrorsInner) SetReplicationMessage(v string) {
 }
 
 func (o ValidationErrorErrorsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Field != nil {
-		toSerialize["field"] = o.Field
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.DisplayField != nil {
-		toSerialize["displayField"] = o.DisplayField
-	}
-	if o.ReplicationMessage != nil {
-		toSerialize["replicationMessage"] = o.ReplicationMessage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ValidationErrorErrorsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Field) {
+		toSerialize["field"] = o.Field
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.DisplayField) {
+		toSerialize["displayField"] = o.DisplayField
+	}
+	if !IsNil(o.ReplicationMessage) {
+		toSerialize["replicationMessage"] = o.ReplicationMessage
+	}
+	return toSerialize, nil
 }
 
 type NullableValidationErrorErrorsInner struct {

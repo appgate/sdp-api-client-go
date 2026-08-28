@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// HealthApiService HealthApi service
-type HealthApiService service
+// HealthAPIService HealthAPI service
+type HealthAPIService service
 
 type ApiHealthAppConnectivityGetRequest struct {
 	ctx        context.Context
-	ApiService *HealthApiService
+	ApiService *HealthAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -74,7 +74,7 @@ Get a list of all unhealthy apps reported by gateways. Requires a license.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiHealthAppConnectivityGetRequest
 */
-func (a *HealthApiService) HealthAppConnectivityGet(ctx context.Context) ApiHealthAppConnectivityGetRequest {
+func (a *HealthAPIService) HealthAppConnectivityGet(ctx context.Context) ApiHealthAppConnectivityGetRequest {
 	return ApiHealthAppConnectivityGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -84,7 +84,7 @@ func (a *HealthApiService) HealthAppConnectivityGet(ctx context.Context) ApiHeal
 // Execute executes the request
 //
 //	@return UnhealthyAppList
-func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnectivityGetRequest) (*UnhealthyAppList, *http.Response, error) {
+func (a *HealthAPIService) HealthAppConnectivityGetExecute(r ApiHealthAppConnectivityGetRequest) (*UnhealthyAppList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -92,7 +92,7 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 		localVarReturnValue *UnhealthyAppList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthApiService.HealthAppConnectivityGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthAPIService.HealthAppConnectivityGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -104,19 +104,19 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -145,9 +145,9 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -164,6 +164,7 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -174,6 +175,7 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -184,6 +186,7 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -194,6 +197,7 @@ func (a *HealthApiService) HealthAppConnectivityGetExecute(r ApiHealthAppConnect
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

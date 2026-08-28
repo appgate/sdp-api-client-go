@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfTelemetryAggregatorOtlpExporters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfTelemetryAggregatorOtlpExporters{}
 
 // ApplianceAllOfTelemetryAggregatorOtlpExporters struct for ApplianceAllOfTelemetryAggregatorOtlpExporters
 type ApplianceAllOfTelemetryAggregatorOtlpExporters struct {
@@ -36,6 +41,8 @@ type ApplianceAllOfTelemetryAggregatorOtlpExporters struct {
 	// The OTLP payload encoding.
 	Encoding *string `json:"encoding,omitempty"`
 }
+
+type _ApplianceAllOfTelemetryAggregatorOtlpExporters ApplianceAllOfTelemetryAggregatorOtlpExporters
 
 // NewApplianceAllOfTelemetryAggregatorOtlpExporters instantiates a new ApplianceAllOfTelemetryAggregatorOtlpExporters object
 // This constructor will assign default values to properties that have it defined,
@@ -143,7 +150,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetProtocol(v string) {
 
 // GetInsecure returns the Insecure field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecure() bool {
-	if o == nil || o.Insecure == nil {
+	if o == nil || IsNil(o.Insecure) {
 		var ret bool
 		return ret
 	}
@@ -153,7 +160,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecure() bool {
 // GetInsecureOk returns a tuple with the Insecure field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecureOk() (*bool, bool) {
-	if o == nil || o.Insecure == nil {
+	if o == nil || IsNil(o.Insecure) {
 		return nil, false
 	}
 	return o.Insecure, true
@@ -161,7 +168,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecureOk() (*bool,
 
 // HasInsecure returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasInsecure() bool {
-	if o != nil && o.Insecure != nil {
+	if o != nil && !IsNil(o.Insecure) {
 		return true
 	}
 
@@ -175,7 +182,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetInsecure(v bool) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -185,7 +192,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -193,7 +200,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsernameOk() (*strin
 
 // HasUsername returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -207,7 +214,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -217,7 +224,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -225,7 +232,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPasswordOk() (*strin
 
 // HasPassword returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -239,7 +246,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetPassword(v string) {
 
 // GetHeaders returns the Headers field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetHeaders() []ApplianceAllOfTelemetryAggregatorHeaders {
-	if o == nil || o.Headers == nil {
+	if o == nil || IsNil(o.Headers) {
 		var ret []ApplianceAllOfTelemetryAggregatorHeaders
 		return ret
 	}
@@ -249,7 +256,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetHeaders() []Applianc
 // GetHeadersOk returns a tuple with the Headers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetHeadersOk() ([]ApplianceAllOfTelemetryAggregatorHeaders, bool) {
-	if o == nil || o.Headers == nil {
+	if o == nil || IsNil(o.Headers) {
 		return nil, false
 	}
 	return o.Headers, true
@@ -257,7 +264,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetHeadersOk() ([]Appli
 
 // HasHeaders returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasHeaders() bool {
-	if o != nil && o.Headers != nil {
+	if o != nil && !IsNil(o.Headers) {
 		return true
 	}
 
@@ -271,7 +278,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetHeaders(v []Applianc
 
 // GetCompression returns the Compression field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetCompression() bool {
-	if o == nil || o.Compression == nil {
+	if o == nil || IsNil(o.Compression) {
 		var ret bool
 		return ret
 	}
@@ -281,7 +288,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetCompression() bool {
 // GetCompressionOk returns a tuple with the Compression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetCompressionOk() (*bool, bool) {
-	if o == nil || o.Compression == nil {
+	if o == nil || IsNil(o.Compression) {
 		return nil, false
 	}
 	return o.Compression, true
@@ -289,7 +296,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetCompressionOk() (*bo
 
 // HasCompression returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasCompression() bool {
-	if o != nil && o.Compression != nil {
+	if o != nil && !IsNil(o.Compression) {
 		return true
 	}
 
@@ -303,7 +310,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetCompression(v bool) 
 
 // GetEncoding returns the Encoding field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetEncoding() string {
-	if o == nil || o.Encoding == nil {
+	if o == nil || IsNil(o.Encoding) {
 		var ret string
 		return ret
 	}
@@ -313,7 +320,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetEncoding() string {
 // GetEncodingOk returns a tuple with the Encoding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetEncodingOk() (*string, bool) {
-	if o == nil || o.Encoding == nil {
+	if o == nil || IsNil(o.Encoding) {
 		return nil, false
 	}
 	return o.Encoding, true
@@ -321,7 +328,7 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetEncodingOk() (*strin
 
 // HasEncoding returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasEncoding() bool {
-	if o != nil && o.Encoding != nil {
+	if o != nil && !IsNil(o.Encoding) {
 		return true
 	}
 
@@ -334,35 +341,76 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetEncoding(v string) {
 }
 
 func (o ApplianceAllOfTelemetryAggregatorOtlpExporters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["endpoint"] = o.Endpoint
-	}
-	if true {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if o.Insecure != nil {
-		toSerialize["insecure"] = o.Insecure
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.Headers != nil {
-		toSerialize["headers"] = o.Headers
-	}
-	if o.Compression != nil {
-		toSerialize["compression"] = o.Compression
-	}
-	if o.Encoding != nil {
-		toSerialize["encoding"] = o.Encoding
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfTelemetryAggregatorOtlpExporters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["endpoint"] = o.Endpoint
+	toSerialize["protocol"] = o.Protocol
+	if !IsNil(o.Insecure) {
+		toSerialize["insecure"] = o.Insecure
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Headers) {
+		toSerialize["headers"] = o.Headers
+	}
+	if !IsNil(o.Compression) {
+		toSerialize["compression"] = o.Compression
+	}
+	if !IsNil(o.Encoding) {
+		toSerialize["encoding"] = o.Encoding
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"endpoint",
+		"protocol",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfTelemetryAggregatorOtlpExporters := _ApplianceAllOfTelemetryAggregatorOtlpExporters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfTelemetryAggregatorOtlpExporters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfTelemetryAggregatorOtlpExporters(varApplianceAllOfTelemetryAggregatorOtlpExporters)
+
+	return err
 }
 
 type NullableApplianceAllOfTelemetryAggregatorOtlpExporters struct {

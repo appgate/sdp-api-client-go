@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IdentityProvidersNamesGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersNamesGet200Response{}
+
 // IdentityProvidersNamesGet200Response struct for IdentityProvidersNamesGet200Response
 type IdentityProvidersNamesGet200Response struct {
 	// The list of the identity providers.
@@ -42,7 +45,7 @@ func NewIdentityProvidersNamesGet200ResponseWithDefaults() *IdentityProvidersNam
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200Response) GetData() []IdentityProvidersNamesGet200ResponseDataInner {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []IdentityProvidersNamesGet200ResponseDataInner
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *IdentityProvidersNamesGet200Response) GetData() []IdentityProvidersName
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200Response) GetDataOk() ([]IdentityProvidersNamesGet200ResponseDataInner, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -60,7 +63,7 @@ func (o *IdentityProvidersNamesGet200Response) GetDataOk() ([]IdentityProvidersN
 
 // HasData returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200Response) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *IdentityProvidersNamesGet200Response) SetData(v []IdentityProvidersName
 
 // GetBannerMessage returns the BannerMessage field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200Response) GetBannerMessage() string {
-	if o == nil || o.BannerMessage == nil {
+	if o == nil || IsNil(o.BannerMessage) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *IdentityProvidersNamesGet200Response) GetBannerMessage() string {
 // GetBannerMessageOk returns a tuple with the BannerMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200Response) GetBannerMessageOk() (*string, bool) {
-	if o == nil || o.BannerMessage == nil {
+	if o == nil || IsNil(o.BannerMessage) {
 		return nil, false
 	}
 	return o.BannerMessage, true
@@ -92,7 +95,7 @@ func (o *IdentityProvidersNamesGet200Response) GetBannerMessageOk() (*string, bo
 
 // HasBannerMessage returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200Response) HasBannerMessage() bool {
-	if o != nil && o.BannerMessage != nil {
+	if o != nil && !IsNil(o.BannerMessage) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *IdentityProvidersNamesGet200Response) SetBannerMessage(v string) {
 }
 
 func (o IdentityProvidersNamesGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.BannerMessage != nil {
-		toSerialize["bannerMessage"] = o.BannerMessage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersNamesGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.BannerMessage) {
+		toSerialize["bannerMessage"] = o.BannerMessage
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersNamesGet200Response struct {

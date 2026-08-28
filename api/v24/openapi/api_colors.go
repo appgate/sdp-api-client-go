@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// ColorsApiService ColorsApi service
-type ColorsApiService service
+// ColorsAPIService ColorsAPI service
+type ColorsAPIService service
 
 type ApiColorsGetRequest struct {
 	ctx        context.Context
-	ApiService *ColorsApiService
+	ApiService *ColorsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -74,7 +74,7 @@ Get a list of all supported color codes.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiColorsGetRequest
 */
-func (a *ColorsApiService) ColorsGet(ctx context.Context) ApiColorsGetRequest {
+func (a *ColorsAPIService) ColorsGet(ctx context.Context) ApiColorsGetRequest {
 	return ApiColorsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -84,7 +84,7 @@ func (a *ColorsApiService) ColorsGet(ctx context.Context) ApiColorsGetRequest {
 // Execute executes the request
 //
 //	@return ColorList
-func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, *http.Response, error) {
+func (a *ColorsAPIService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -92,7 +92,7 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 		localVarReturnValue *ColorList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ColorsApiService.ColorsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ColorsAPIService.ColorsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -104,19 +104,19 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -145,9 +145,9 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -164,6 +164,7 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -174,6 +175,7 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -184,6 +186,7 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -194,6 +197,7 @@ func (a *ColorsApiService) ColorsGetExecute(r ApiColorsGetRequest) (*ColorList, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

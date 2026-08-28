@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ActiveSessionsApiService ActiveSessionsApi service
-type ActiveSessionsApiService service
+// ActiveSessionsAPIService ActiveSessionsAPI service
+type ActiveSessionsAPIService service
 
 type ApiSessionInfoDistinguishedNameGetRequest struct {
 	ctx               context.Context
-	ApiService        *ActiveSessionsApiService
+	ApiService        *ActiveSessionsAPIService
 	distinguishedName string
 }
 
@@ -42,7 +42,7 @@ Get the details of a specific Active Client Session from all Gateways. This API 
 	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
 	@return ApiSessionInfoDistinguishedNameGetRequest
 */
-func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
+func (a *ActiveSessionsAPIService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
 	return ApiSessionInfoDistinguishedNameGetRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -53,7 +53,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.C
 // Execute executes the request
 //
 //	@return SessionInfoDistinguishedName
-func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
+func (a *ActiveSessionsAPIService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -61,13 +61,13 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 		localVarReturnValue *SessionInfoDistinguishedName
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.SessionInfoDistinguishedNameGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.SessionInfoDistinguishedNameGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/session-info/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,9 +100,9 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -119,6 +119,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -129,6 +130,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -139,16 +141,18 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -159,6 +163,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -178,7 +183,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 
 type ApiStatsActiveSessionsDashboardGetRequest struct {
 	ctx        context.Context
-	ApiService *ActiveSessionsApiService
+	ApiService *ActiveSessionsAPIService
 }
 
 func (r ApiStatsActiveSessionsDashboardGetRequest) Execute() (*DashboardSessionsDto, *http.Response, error) {
@@ -195,7 +200,7 @@ Retrieves dashboard data related to active sessions. This includes information a
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsActiveSessionsDashboardGetRequest
 */
-func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGet(ctx context.Context) ApiStatsActiveSessionsDashboardGetRequest {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDashboardGet(ctx context.Context) ApiStatsActiveSessionsDashboardGetRequest {
 	return ApiStatsActiveSessionsDashboardGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -205,7 +210,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGet(ctx context.C
 // Execute executes the request
 //
 //	@return DashboardSessionsDto
-func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiStatsActiveSessionsDashboardGetRequest) (*DashboardSessionsDto, *http.Response, error) {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDashboardGetExecute(r ApiStatsActiveSessionsDashboardGetRequest) (*DashboardSessionsDto, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -213,7 +218,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 		localVarReturnValue *DashboardSessionsDto
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.StatsActiveSessionsDashboardGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.StatsActiveSessionsDashboardGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -251,9 +256,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -270,6 +275,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -280,16 +286,18 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -300,6 +308,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -319,7 +328,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 
 type ApiStatsActiveSessionsDnGetRequest struct {
 	ctx              context.Context
-	ApiService       *ActiveSessionsApiService
+	ApiService       *ActiveSessionsAPIService
 	query            *string
 	range_           *string
 	orderBy          *string
@@ -376,7 +385,7 @@ Get session data from currently Active Client Sessions grouped by distinguished 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsActiveSessionsDnGetRequest
 */
-func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
 	return ApiStatsActiveSessionsDnGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -386,7 +395,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context)
 // Execute executes the request
 //
 //	@return ActiveSessionsDn
-func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -394,7 +403,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 		localVarReturnValue *ActiveSessionsDn
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.StatsActiveSessionsDnGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.StatsActiveSessionsDnGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -406,22 +415,22 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.geolocationQuery != nil {
-		localVarQueryParams.Add("geolocationQuery", parameterToString(*r.geolocationQuery, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "geolocationQuery", r.geolocationQuery, "form", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -450,9 +459,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -469,6 +478,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -479,16 +489,18 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -499,6 +511,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

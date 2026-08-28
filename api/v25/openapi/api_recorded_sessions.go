@@ -14,19 +14,19 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 )
 
-// RecordedSessionsApiService RecordedSessionsApi service
-type RecordedSessionsApiService service
+// RecordedSessionsAPIService RecordedSessionsAPI service
+type RecordedSessionsAPIService service
 
 type ApiRecordedSessionsGetRequest struct {
 	ctx        context.Context
-	ApiService *RecordedSessionsApiService
+	ApiService *RecordedSessionsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -83,7 +83,7 @@ Get a list of recorded (past) embedded SSH/RDP sessions from every Gateway in th
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiRecordedSessionsGetRequest
 */
-func (a *RecordedSessionsApiService) RecordedSessionsGet(ctx context.Context) ApiRecordedSessionsGetRequest {
+func (a *RecordedSessionsAPIService) RecordedSessionsGet(ctx context.Context) ApiRecordedSessionsGetRequest {
 	return ApiRecordedSessionsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -93,7 +93,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsGet(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return RecordedSessionList
-func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSessionsGetRequest) (*RecordedSessionList, *http.Response, error) {
+func (a *RecordedSessionsAPIService) RecordedSessionsGetExecute(r ApiRecordedSessionsGetRequest) (*RecordedSessionList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -101,7 +101,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 		localVarReturnValue *RecordedSessionList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsApiService.RecordedSessionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsAPIService.RecordedSessionsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -113,22 +113,22 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	if r.siteName != nil {
-		localVarQueryParams.Add("siteName", parameterToString(*r.siteName, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "siteName", r.siteName, "", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -157,9 +157,9 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,16 +187,18 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsGetExecute(r ApiRecordedSes
 
 type ApiRecordedSessionsIdConvertPostRequest struct {
 	ctx                     context.Context
-	ApiService              *RecordedSessionsApiService
+	ApiService              *RecordedSessionsAPIService
 	id                      string
 	convertRecordingRequest *ConvertRecordingRequest
 }
@@ -248,7 +252,7 @@ Requests an on-demand transcode of a recording's raw .guac stream to MP4 on the 
 	@param id The recording session id (Gateway session token).
 	@return ApiRecordedSessionsIdConvertPostRequest
 */
-func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPost(ctx context.Context, id string) ApiRecordedSessionsIdConvertPostRequest {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdConvertPost(ctx context.Context, id string) ApiRecordedSessionsIdConvertPostRequest {
 	return ApiRecordedSessionsIdConvertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -259,7 +263,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPost(ctx context.C
 // Execute executes the request
 //
 //	@return ConvertRecordingResponse
-func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiRecordedSessionsIdConvertPostRequest) (*ConvertRecordingResponse, *http.Response, error) {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdConvertPostExecute(r ApiRecordedSessionsIdConvertPostRequest) (*ConvertRecordingResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -267,13 +271,13 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 		localVarReturnValue *ConvertRecordingResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsApiService.RecordedSessionsIdConvertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsAPIService.RecordedSessionsIdConvertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/recorded-sessions/{id}/convert"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -311,9 +315,9 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -330,6 +334,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -340,6 +345,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -350,6 +356,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -360,6 +367,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -379,7 +387,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdConvertPostExecute(r ApiR
 
 type ApiRecordedSessionsIdDownloadGetRequest struct {
 	ctx        context.Context
-	ApiService *RecordedSessionsApiService
+	ApiService *RecordedSessionsAPIService
 	id         string
 	gatewayId  *string
 	format     *string
@@ -404,7 +412,7 @@ func (r ApiRecordedSessionsIdDownloadGetRequest) Range_(range_ string) ApiRecord
 	return r
 }
 
-func (r ApiRecordedSessionsIdDownloadGetRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiRecordedSessionsIdDownloadGetRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.RecordedSessionsIdDownloadGetExecute(r)
 }
 
@@ -417,7 +425,7 @@ Streams a recording artifact from the owning Gateway through the Controller to t
 	@param id The recording session id (Gateway session token).
 	@return ApiRecordedSessionsIdDownloadGetRequest
 */
-func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGet(ctx context.Context, id string) ApiRecordedSessionsIdDownloadGetRequest {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdDownloadGet(ctx context.Context, id string) ApiRecordedSessionsIdDownloadGetRequest {
 	return ApiRecordedSessionsIdDownloadGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -428,21 +436,21 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGet(ctx context.C
 // Execute executes the request
 //
 //	@return *os.File
-func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiRecordedSessionsIdDownloadGetRequest) (**os.File, *http.Response, error) {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdDownloadGetExecute(r ApiRecordedSessionsIdDownloadGetRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue **os.File
+		localVarReturnValue *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsApiService.RecordedSessionsIdDownloadGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsAPIService.RecordedSessionsIdDownloadGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/recorded-sessions/{id}/download"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -451,9 +459,12 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 		return localVarReturnValue, nil, reportError("gatewayId is required and must be specified")
 	}
 
-	localVarQueryParams.Add("gatewayId", parameterToString(*r.gatewayId, ""))
+	parameterAddToHeaderOrQuery(localVarQueryParams, "gatewayId", r.gatewayId, "", "")
 	if r.format != nil {
-		localVarQueryParams.Add("format", parameterToString(*r.format, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "", "")
+	} else {
+		var defaultValue string = "auto"
+		r.format = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -473,7 +484,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.range_ != nil {
-		localVarHeaderParams["Range"] = parameterToString(*r.range_, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Range", r.range_, "", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -485,9 +496,9 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -504,6 +515,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -514,6 +526,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -524,6 +537,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -534,6 +548,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -544,6 +559,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -563,7 +579,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdDownloadGetExecute(r ApiR
 
 type ApiRecordedSessionsIdExportDeleteRequest struct {
 	ctx        context.Context
-	ApiService *RecordedSessionsApiService
+	ApiService *RecordedSessionsAPIService
 	id         string
 	gatewayId  *string
 }
@@ -587,7 +603,7 @@ Removes the MP4 export artifact from the owning Gateway. The raw .guac source is
 	@param id The recording session id (Gateway session token).
 	@return ApiRecordedSessionsIdExportDeleteRequest
 */
-func (a *RecordedSessionsApiService) RecordedSessionsIdExportDelete(ctx context.Context, id string) ApiRecordedSessionsIdExportDeleteRequest {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdExportDelete(ctx context.Context, id string) ApiRecordedSessionsIdExportDeleteRequest {
 	return ApiRecordedSessionsIdExportDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -598,7 +614,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDelete(ctx context.
 // Execute executes the request
 //
 //	@return DeleteExportResponse
-func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r ApiRecordedSessionsIdExportDeleteRequest) (*DeleteExportResponse, *http.Response, error) {
+func (a *RecordedSessionsAPIService) RecordedSessionsIdExportDeleteExecute(r ApiRecordedSessionsIdExportDeleteRequest) (*DeleteExportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
@@ -606,13 +622,13 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 		localVarReturnValue *DeleteExportResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsApiService.RecordedSessionsIdExportDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RecordedSessionsAPIService.RecordedSessionsIdExportDelete")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/recorded-sessions/{id}/export"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -621,7 +637,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 		return localVarReturnValue, nil, reportError("gatewayId is required and must be specified")
 	}
 
-	localVarQueryParams.Add("gatewayId", parameterToString(*r.gatewayId, ""))
+	parameterAddToHeaderOrQuery(localVarQueryParams, "gatewayId", r.gatewayId, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -649,9 +665,9 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -668,6 +684,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +695,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,6 +706,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -698,6 +717,7 @@ func (a *RecordedSessionsApiService) RecordedSessionsIdExportDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AuthenticationOtpInitializePost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationOtpInitializePost200Response{}
+
 // AuthenticationOtpInitializePost200Response struct for AuthenticationOtpInitializePost200Response
 type AuthenticationOtpInitializePost200Response struct {
 	// The type of the Multi-Factor Authentication. * 'AlreadySeeded': The MFA provider is the built-in Time-based OTP provider and the user has already a seed in the system. OTP is required on the next step. * 'Secret': The MFA provider is the built-in Time-based OTP provider and this is the first time the user is doing an MFA. It includes details about the seed. OTP is required on the next step. * 'Challenge': The MFA provider is a RADIUS provider. It might include a challenge that needs to be sent back. OTP is required on the next step. * 'Push': The MFA provider is a RADIUS provider but the authentication is done externally, such as a  mobile app that prompts. Send a dummy OTP right away to trigger the external authentication.
@@ -54,7 +57,7 @@ func NewAuthenticationOtpInitializePost200ResponseWithDefaults() *Authentication
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -64,7 +67,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -72,7 +75,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTypeOk() (*string, bool)
 
 // HasType returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetType(v string) {
 
 // GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetSecret() string {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		var ret string
 		return ret
 	}
@@ -96,7 +99,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSecret() string {
 // GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetSecretOk() (*string, bool) {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		return nil, false
 	}
 	return o.Secret, true
@@ -104,7 +107,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSecretOk() (*string, boo
 
 // HasSecret returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasSecret() bool {
-	if o != nil && o.Secret != nil {
+	if o != nil && !IsNil(o.Secret) {
 		return true
 	}
 
@@ -118,7 +121,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetSecret(v string) {
 
 // GetOtpAuthUrl returns the OtpAuthUrl field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrl() string {
-	if o == nil || o.OtpAuthUrl == nil {
+	if o == nil || IsNil(o.OtpAuthUrl) {
 		var ret string
 		return ret
 	}
@@ -128,7 +131,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrl() string {
 // GetOtpAuthUrlOk returns a tuple with the OtpAuthUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrlOk() (*string, bool) {
-	if o == nil || o.OtpAuthUrl == nil {
+	if o == nil || IsNil(o.OtpAuthUrl) {
 		return nil, false
 	}
 	return o.OtpAuthUrl, true
@@ -136,7 +139,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrlOk() (*string,
 
 // HasOtpAuthUrl returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasOtpAuthUrl() bool {
-	if o != nil && o.OtpAuthUrl != nil {
+	if o != nil && !IsNil(o.OtpAuthUrl) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetOtpAuthUrl(v string) {
 
 // GetBarcode returns the Barcode field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetBarcode() string {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		var ret string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetBarcode() string {
 // GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetBarcodeOk() (*string, bool) {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		return nil, false
 	}
 	return o.Barcode, true
@@ -168,7 +171,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetBarcodeOk() (*string, bo
 
 // HasBarcode returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasBarcode() bool {
-	if o != nil && o.Barcode != nil {
+	if o != nil && !IsNil(o.Barcode) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetBarcode(v string) {
 
 // GetResponseMessage returns the ResponseMessage field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetResponseMessage() string {
-	if o == nil || o.ResponseMessage == nil {
+	if o == nil || IsNil(o.ResponseMessage) {
 		var ret string
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetResponseMessage() string
 // GetResponseMessageOk returns a tuple with the ResponseMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetResponseMessageOk() (*string, bool) {
-	if o == nil || o.ResponseMessage == nil {
+	if o == nil || IsNil(o.ResponseMessage) {
 		return nil, false
 	}
 	return o.ResponseMessage, true
@@ -200,7 +203,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetResponseMessageOk() (*st
 
 // HasResponseMessage returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasResponseMessage() bool {
-	if o != nil && o.ResponseMessage != nil {
+	if o != nil && !IsNil(o.ResponseMessage) {
 		return true
 	}
 
@@ -214,7 +217,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetResponseMessage(v string
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetState() string {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret string
 		return ret
 	}
@@ -224,7 +227,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetState() string {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetStateOk() (*string, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -232,7 +235,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetStateOk() (*string, bool
 
 // HasState returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetState(v string) {
 
 // GetTimeout returns the Timeout field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetTimeout() float32 {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		var ret float32
 		return ret
 	}
@@ -256,7 +259,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTimeout() float32 {
 // GetTimeoutOk returns a tuple with the Timeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetTimeoutOk() (*float32, bool) {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		return nil, false
 	}
 	return o.Timeout, true
@@ -264,7 +267,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTimeoutOk() (*float32, b
 
 // HasTimeout returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasTimeout() bool {
-	if o != nil && o.Timeout != nil {
+	if o != nil && !IsNil(o.Timeout) {
 		return true
 	}
 
@@ -278,7 +281,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetTimeout(v float32) {
 
 // GetSendPassword returns the SendPassword field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetSendPassword() bool {
-	if o == nil || o.SendPassword == nil {
+	if o == nil || IsNil(o.SendPassword) {
 		var ret bool
 		return ret
 	}
@@ -288,7 +291,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSendPassword() bool {
 // GetSendPasswordOk returns a tuple with the SendPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetSendPasswordOk() (*bool, bool) {
-	if o == nil || o.SendPassword == nil {
+	if o == nil || IsNil(o.SendPassword) {
 		return nil, false
 	}
 	return o.SendPassword, true
@@ -296,7 +299,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSendPasswordOk() (*bool,
 
 // HasSendPassword returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasSendPassword() bool {
-	if o != nil && o.SendPassword != nil {
+	if o != nil && !IsNil(o.SendPassword) {
 		return true
 	}
 
@@ -309,32 +312,40 @@ func (o *AuthenticationOtpInitializePost200Response) SetSendPassword(v bool) {
 }
 
 func (o AuthenticationOtpInitializePost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Secret != nil {
-		toSerialize["secret"] = o.Secret
-	}
-	if o.OtpAuthUrl != nil {
-		toSerialize["otpAuthUrl"] = o.OtpAuthUrl
-	}
-	if o.Barcode != nil {
-		toSerialize["barcode"] = o.Barcode
-	}
-	if o.ResponseMessage != nil {
-		toSerialize["responseMessage"] = o.ResponseMessage
-	}
-	if o.State != nil {
-		toSerialize["state"] = o.State
-	}
-	if o.Timeout != nil {
-		toSerialize["timeout"] = o.Timeout
-	}
-	if o.SendPassword != nil {
-		toSerialize["sendPassword"] = o.SendPassword
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationOtpInitializePost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Secret) {
+		toSerialize["secret"] = o.Secret
+	}
+	if !IsNil(o.OtpAuthUrl) {
+		toSerialize["otpAuthUrl"] = o.OtpAuthUrl
+	}
+	if !IsNil(o.Barcode) {
+		toSerialize["barcode"] = o.Barcode
+	}
+	if !IsNil(o.ResponseMessage) {
+		toSerialize["responseMessage"] = o.ResponseMessage
+	}
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	if !IsNil(o.Timeout) {
+		toSerialize["timeout"] = o.Timeout
+	}
+	if !IsNil(o.SendPassword) {
+		toSerialize["sendPassword"] = o.SendPassword
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationOtpInitializePost200Response struct {

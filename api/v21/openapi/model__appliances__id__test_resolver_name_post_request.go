@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdTestResolverNamePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdTestResolverNamePostRequest{}
+
 // AppliancesIdTestResolverNamePostRequest struct for AppliancesIdTestResolverNamePostRequest
 type AppliancesIdTestResolverNamePostRequest struct {
 	// The resource name to test on the Gateway.
@@ -40,7 +43,7 @@ func NewAppliancesIdTestResolverNamePostRequestWithDefaults() *AppliancesIdTestR
 
 // GetResourceName returns the ResourceName field value if set, zero value otherwise.
 func (o *AppliancesIdTestResolverNamePostRequest) GetResourceName() string {
-	if o == nil || o.ResourceName == nil {
+	if o == nil || IsNil(o.ResourceName) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesIdTestResolverNamePostRequest) GetResourceName() string {
 // GetResourceNameOk returns a tuple with the ResourceName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdTestResolverNamePostRequest) GetResourceNameOk() (*string, bool) {
-	if o == nil || o.ResourceName == nil {
+	if o == nil || IsNil(o.ResourceName) {
 		return nil, false
 	}
 	return o.ResourceName, true
@@ -58,7 +61,7 @@ func (o *AppliancesIdTestResolverNamePostRequest) GetResourceNameOk() (*string, 
 
 // HasResourceName returns a boolean if a field has been set.
 func (o *AppliancesIdTestResolverNamePostRequest) HasResourceName() bool {
-	if o != nil && o.ResourceName != nil {
+	if o != nil && !IsNil(o.ResourceName) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesIdTestResolverNamePostRequest) SetResourceName(v string) {
 }
 
 func (o AppliancesIdTestResolverNamePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ResourceName != nil {
-		toSerialize["resourceName"] = o.ResourceName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdTestResolverNamePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ResourceName) {
+		toSerialize["resourceName"] = o.ResourceName
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdTestResolverNamePostRequest struct {

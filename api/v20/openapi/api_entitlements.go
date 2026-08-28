@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// EntitlementsApiService EntitlementsApi service
-type EntitlementsApiService service
+// EntitlementsAPIService EntitlementsAPI service
+type EntitlementsAPIService service
 
 type ApiEntitlementsGetRequest struct {
 	ctx           context.Context
-	ApiService    *EntitlementsApiService
+	ApiService    *EntitlementsAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -82,7 +82,7 @@ List all Entitlements visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiEntitlementsGetRequest
 */
-func (a *EntitlementsApiService) EntitlementsGet(ctx context.Context) ApiEntitlementsGetRequest {
+func (a *EntitlementsAPIService) EntitlementsGet(ctx context.Context) ApiEntitlementsGetRequest {
 	return ApiEntitlementsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *EntitlementsApiService) EntitlementsGet(ctx context.Context) ApiEntitle
 // Execute executes the request
 //
 //	@return EntitlementList
-func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequest) (*EntitlementList, *http.Response, error) {
+func (a *EntitlementsAPIService) EntitlementsGetExecute(r ApiEntitlementsGetRequest) (*EntitlementList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 		localVarReturnValue *EntitlementList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsApiService.EntitlementsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsAPIService.EntitlementsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -115,19 +115,19 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +146,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -157,9 +157,9 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,6 +187,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -196,6 +198,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *EntitlementsApiService) EntitlementsGetExecute(r ApiEntitlementsGetRequ
 
 type ApiEntitlementsIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *EntitlementsApiService
+	ApiService    *EntitlementsAPIService
 	authorization *string
 	id            string
 }
@@ -249,7 +253,7 @@ Delete a specific Entitlement.
 	@param id ID of the object.
 	@return ApiEntitlementsIdDeleteRequest
 */
-func (a *EntitlementsApiService) EntitlementsIdDelete(ctx context.Context, id string) ApiEntitlementsIdDeleteRequest {
+func (a *EntitlementsAPIService) EntitlementsIdDelete(ctx context.Context, id string) ApiEntitlementsIdDeleteRequest {
 	return ApiEntitlementsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -258,20 +262,20 @@ func (a *EntitlementsApiService) EntitlementsIdDelete(ctx context.Context, id st
 }
 
 // Execute executes the request
-func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsIdDeleteRequest) (*http.Response, error) {
+func (a *EntitlementsAPIService) EntitlementsIdDeleteExecute(r ApiEntitlementsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsApiService.EntitlementsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsAPIService.EntitlementsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlements/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -297,7 +301,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -308,9 +312,9 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -327,6 +331,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -337,6 +342,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -347,6 +353,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -357,6 +364,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -367,6 +375,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -377,7 +386,7 @@ func (a *EntitlementsApiService) EntitlementsIdDeleteExecute(r ApiEntitlementsId
 
 type ApiEntitlementsIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *EntitlementsApiService
+	ApiService    *EntitlementsAPIService
 	authorization *string
 	id            string
 }
@@ -401,7 +410,7 @@ Get a specific Entitlement.
 	@param id ID of the object.
 	@return ApiEntitlementsIdGetRequest
 */
-func (a *EntitlementsApiService) EntitlementsIdGet(ctx context.Context, id string) ApiEntitlementsIdGetRequest {
+func (a *EntitlementsAPIService) EntitlementsIdGet(ctx context.Context, id string) ApiEntitlementsIdGetRequest {
 	return ApiEntitlementsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -412,7 +421,7 @@ func (a *EntitlementsApiService) EntitlementsIdGet(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return Entitlement
-func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGetRequest) (*Entitlement, *http.Response, error) {
+func (a *EntitlementsAPIService) EntitlementsIdGetExecute(r ApiEntitlementsIdGetRequest) (*Entitlement, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -420,13 +429,13 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 		localVarReturnValue *Entitlement
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsApiService.EntitlementsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsAPIService.EntitlementsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlements/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -452,7 +461,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -463,9 +472,9 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -482,6 +491,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -492,6 +502,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -502,6 +513,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -512,6 +524,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -522,6 +535,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -541,7 +555,7 @@ func (a *EntitlementsApiService) EntitlementsIdGetExecute(r ApiEntitlementsIdGet
 
 type ApiEntitlementsIdPutRequest struct {
 	ctx           context.Context
-	ApiService    *EntitlementsApiService
+	ApiService    *EntitlementsAPIService
 	authorization *string
 	id            string
 	entitlement   *Entitlement
@@ -572,7 +586,7 @@ Update an existing Entitlement.
 	@param id ID of the object.
 	@return ApiEntitlementsIdPutRequest
 */
-func (a *EntitlementsApiService) EntitlementsIdPut(ctx context.Context, id string) ApiEntitlementsIdPutRequest {
+func (a *EntitlementsAPIService) EntitlementsIdPut(ctx context.Context, id string) ApiEntitlementsIdPutRequest {
 	return ApiEntitlementsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -583,7 +597,7 @@ func (a *EntitlementsApiService) EntitlementsIdPut(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return Entitlement
-func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPutRequest) (*Entitlement, *http.Response, error) {
+func (a *EntitlementsAPIService) EntitlementsIdPutExecute(r ApiEntitlementsIdPutRequest) (*Entitlement, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -591,13 +605,13 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 		localVarReturnValue *Entitlement
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsApiService.EntitlementsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsAPIService.EntitlementsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/entitlements/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -626,7 +640,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.entitlement
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -639,9 +653,9 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -658,6 +672,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -668,6 +683,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +694,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,6 +705,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -698,6 +716,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -708,6 +727,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -718,6 +738,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -737,7 +758,7 @@ func (a *EntitlementsApiService) EntitlementsIdPutExecute(r ApiEntitlementsIdPut
 
 type ApiEntitlementsPostRequest struct {
 	ctx           context.Context
-	ApiService    *EntitlementsApiService
+	ApiService    *EntitlementsAPIService
 	authorization *string
 	entitlement   *Entitlement
 }
@@ -766,7 +787,7 @@ Create a new Entitlement.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiEntitlementsPostRequest
 */
-func (a *EntitlementsApiService) EntitlementsPost(ctx context.Context) ApiEntitlementsPostRequest {
+func (a *EntitlementsAPIService) EntitlementsPost(ctx context.Context) ApiEntitlementsPostRequest {
 	return ApiEntitlementsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -776,7 +797,7 @@ func (a *EntitlementsApiService) EntitlementsPost(ctx context.Context) ApiEntitl
 // Execute executes the request
 //
 //	@return Entitlement
-func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRequest) (*Entitlement, *http.Response, error) {
+func (a *EntitlementsAPIService) EntitlementsPostExecute(r ApiEntitlementsPostRequest) (*Entitlement, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -784,7 +805,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 		localVarReturnValue *Entitlement
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsApiService.EntitlementsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EntitlementsAPIService.EntitlementsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -818,7 +839,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.entitlement
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -831,9 +852,9 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -850,6 +871,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -860,6 +882,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -870,6 +893,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -880,6 +904,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -890,6 +915,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -900,6 +926,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -910,6 +937,7 @@ func (a *EntitlementsApiService) EntitlementsPostExecute(r ApiEntitlementsPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the LoginRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginRequest{}
 
 // LoginRequest struct for LoginRequest
 type LoginRequest struct {
@@ -33,6 +38,8 @@ type LoginRequest struct {
 	AccessToken      *string                       `json:"accessToken,omitempty"`
 	OidcCodeExchange *LoginRequestOidcCodeExchange `json:"oidcCodeExchange,omitempty"`
 }
+
+type _LoginRequest LoginRequest
 
 // NewLoginRequest instantiates a new LoginRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -79,7 +86,7 @@ func (o *LoginRequest) SetProviderName(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *LoginRequest) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -89,7 +96,7 @@ func (o *LoginRequest) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -97,7 +104,7 @@ func (o *LoginRequest) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *LoginRequest) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -111,7 +118,7 @@ func (o *LoginRequest) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *LoginRequest) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -121,7 +128,7 @@ func (o *LoginRequest) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -129,7 +136,7 @@ func (o *LoginRequest) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *LoginRequest) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -167,7 +174,7 @@ func (o *LoginRequest) SetDeviceId(v string) {
 
 // GetSamlResponse returns the SamlResponse field value if set, zero value otherwise.
 func (o *LoginRequest) GetSamlResponse() string {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		var ret string
 		return ret
 	}
@@ -177,7 +184,7 @@ func (o *LoginRequest) GetSamlResponse() string {
 // GetSamlResponseOk returns a tuple with the SamlResponse field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetSamlResponseOk() (*string, bool) {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		return nil, false
 	}
 	return o.SamlResponse, true
@@ -185,7 +192,7 @@ func (o *LoginRequest) GetSamlResponseOk() (*string, bool) {
 
 // HasSamlResponse returns a boolean if a field has been set.
 func (o *LoginRequest) HasSamlResponse() bool {
-	if o != nil && o.SamlResponse != nil {
+	if o != nil && !IsNil(o.SamlResponse) {
 		return true
 	}
 
@@ -199,7 +206,7 @@ func (o *LoginRequest) SetSamlResponse(v string) {
 
 // GetIdToken returns the IdToken field value if set, zero value otherwise.
 func (o *LoginRequest) GetIdToken() string {
-	if o == nil || o.IdToken == nil {
+	if o == nil || IsNil(o.IdToken) {
 		var ret string
 		return ret
 	}
@@ -209,7 +216,7 @@ func (o *LoginRequest) GetIdToken() string {
 // GetIdTokenOk returns a tuple with the IdToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetIdTokenOk() (*string, bool) {
-	if o == nil || o.IdToken == nil {
+	if o == nil || IsNil(o.IdToken) {
 		return nil, false
 	}
 	return o.IdToken, true
@@ -217,7 +224,7 @@ func (o *LoginRequest) GetIdTokenOk() (*string, bool) {
 
 // HasIdToken returns a boolean if a field has been set.
 func (o *LoginRequest) HasIdToken() bool {
-	if o != nil && o.IdToken != nil {
+	if o != nil && !IsNil(o.IdToken) {
 		return true
 	}
 
@@ -231,7 +238,7 @@ func (o *LoginRequest) SetIdToken(v string) {
 
 // GetAccessToken returns the AccessToken field value if set, zero value otherwise.
 func (o *LoginRequest) GetAccessToken() string {
-	if o == nil || o.AccessToken == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		var ret string
 		return ret
 	}
@@ -241,7 +248,7 @@ func (o *LoginRequest) GetAccessToken() string {
 // GetAccessTokenOk returns a tuple with the AccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetAccessTokenOk() (*string, bool) {
-	if o == nil || o.AccessToken == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		return nil, false
 	}
 	return o.AccessToken, true
@@ -249,7 +256,7 @@ func (o *LoginRequest) GetAccessTokenOk() (*string, bool) {
 
 // HasAccessToken returns a boolean if a field has been set.
 func (o *LoginRequest) HasAccessToken() bool {
-	if o != nil && o.AccessToken != nil {
+	if o != nil && !IsNil(o.AccessToken) {
 		return true
 	}
 
@@ -263,7 +270,7 @@ func (o *LoginRequest) SetAccessToken(v string) {
 
 // GetOidcCodeExchange returns the OidcCodeExchange field value if set, zero value otherwise.
 func (o *LoginRequest) GetOidcCodeExchange() LoginRequestOidcCodeExchange {
-	if o == nil || o.OidcCodeExchange == nil {
+	if o == nil || IsNil(o.OidcCodeExchange) {
 		var ret LoginRequestOidcCodeExchange
 		return ret
 	}
@@ -273,7 +280,7 @@ func (o *LoginRequest) GetOidcCodeExchange() LoginRequestOidcCodeExchange {
 // GetOidcCodeExchangeOk returns a tuple with the OidcCodeExchange field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginRequest) GetOidcCodeExchangeOk() (*LoginRequestOidcCodeExchange, bool) {
-	if o == nil || o.OidcCodeExchange == nil {
+	if o == nil || IsNil(o.OidcCodeExchange) {
 		return nil, false
 	}
 	return o.OidcCodeExchange, true
@@ -281,7 +288,7 @@ func (o *LoginRequest) GetOidcCodeExchangeOk() (*LoginRequestOidcCodeExchange, b
 
 // HasOidcCodeExchange returns a boolean if a field has been set.
 func (o *LoginRequest) HasOidcCodeExchange() bool {
-	if o != nil && o.OidcCodeExchange != nil {
+	if o != nil && !IsNil(o.OidcCodeExchange) {
 		return true
 	}
 
@@ -294,32 +301,74 @@ func (o *LoginRequest) SetOidcCodeExchange(v LoginRequestOidcCodeExchange) {
 }
 
 func (o LoginRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if true {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.SamlResponse != nil {
-		toSerialize["samlResponse"] = o.SamlResponse
-	}
-	if o.IdToken != nil {
-		toSerialize["idToken"] = o.IdToken
-	}
-	if o.AccessToken != nil {
-		toSerialize["accessToken"] = o.AccessToken
-	}
-	if o.OidcCodeExchange != nil {
-		toSerialize["oidcCodeExchange"] = o.OidcCodeExchange
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["providerName"] = o.ProviderName
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	toSerialize["deviceId"] = o.DeviceId
+	if !IsNil(o.SamlResponse) {
+		toSerialize["samlResponse"] = o.SamlResponse
+	}
+	if !IsNil(o.IdToken) {
+		toSerialize["idToken"] = o.IdToken
+	}
+	if !IsNil(o.AccessToken) {
+		toSerialize["accessToken"] = o.AccessToken
+	}
+	if !IsNil(o.OidcCodeExchange) {
+		toSerialize["oidcCodeExchange"] = o.OidcCodeExchange
+	}
+	return toSerialize, nil
+}
+
+func (o *LoginRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"providerName",
+		"deviceId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varLoginRequest := _LoginRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varLoginRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = LoginRequest(varLoginRequest)
+
+	return err
 }
 
 type NullableLoginRequest struct {

@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// MyPreferencesApiService MyPreferencesApi service
-type MyPreferencesApiService service
+// MyPreferencesAPIService MyPreferencesAPI service
+type MyPreferencesAPIService service
 
 type ApiMyPreferencesGetRequest struct {
 	ctx           context.Context
-	ApiService    *MyPreferencesApiService
+	ApiService    *MyPreferencesAPIService
 	authorization *string
 }
 
@@ -46,7 +46,7 @@ Get UI user preferences (including search history) of the authorized user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMyPreferencesGetRequest
 */
-func (a *MyPreferencesApiService) MyPreferencesGet(ctx context.Context) ApiMyPreferencesGetRequest {
+func (a *MyPreferencesAPIService) MyPreferencesGet(ctx context.Context) ApiMyPreferencesGetRequest {
 	return ApiMyPreferencesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *MyPreferencesApiService) MyPreferencesGet(ctx context.Context) ApiMyPre
 // Execute executes the request
 //
 //	@return map[string]interface{}
-func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetRequest) (map[string]interface{}, *http.Response, error) {
+func (a *MyPreferencesAPIService) MyPreferencesGetExecute(r ApiMyPreferencesGetRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 		localVarReturnValue map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MyPreferencesApiService.MyPreferencesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MyPreferencesAPIService.MyPreferencesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,7 +95,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -106,9 +106,9 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -125,6 +125,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -135,16 +136,18 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -155,6 +158,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -174,7 +178,7 @@ func (a *MyPreferencesApiService) MyPreferencesGetExecute(r ApiMyPreferencesGetR
 
 type ApiMyPreferencesPutRequest struct {
 	ctx           context.Context
-	ApiService    *MyPreferencesApiService
+	ApiService    *MyPreferencesAPIService
 	authorization *string
 	requestBody   *map[string]interface{}
 }
@@ -202,7 +206,7 @@ Update Admin UI user preferences and search history of admin user. Note that thi
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMyPreferencesPutRequest
 */
-func (a *MyPreferencesApiService) MyPreferencesPut(ctx context.Context) ApiMyPreferencesPutRequest {
+func (a *MyPreferencesAPIService) MyPreferencesPut(ctx context.Context) ApiMyPreferencesPutRequest {
 	return ApiMyPreferencesPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -210,14 +214,14 @@ func (a *MyPreferencesApiService) MyPreferencesPut(ctx context.Context) ApiMyPre
 }
 
 // Execute executes the request
-func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutRequest) (*http.Response, error) {
+func (a *MyPreferencesAPIService) MyPreferencesPutExecute(r ApiMyPreferencesPutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPut
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MyPreferencesApiService.MyPreferencesPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MyPreferencesAPIService.MyPreferencesPut")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -251,7 +255,7 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -264,9 +268,9 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -283,16 +287,18 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -303,6 +309,7 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -313,6 +320,7 @@ func (a *MyPreferencesApiService) MyPreferencesPutExecute(r ApiMyPreferencesPutR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationTargetRegistrationResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationTargetRegistrationResponse{}
+
 // ReplicationTargetRegistrationResponse struct for ReplicationTargetRegistrationResponse
 type ReplicationTargetRegistrationResponse struct {
 	// SPA key assigned to the replication target.
@@ -42,7 +45,7 @@ func NewReplicationTargetRegistrationResponseWithDefaults() *ReplicationTargetRe
 
 // GetSpaKey returns the SpaKey field value if set, zero value otherwise.
 func (o *ReplicationTargetRegistrationResponse) GetSpaKey() string {
-	if o == nil || o.SpaKey == nil {
+	if o == nil || IsNil(o.SpaKey) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ReplicationTargetRegistrationResponse) GetSpaKey() string {
 // GetSpaKeyOk returns a tuple with the SpaKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTargetRegistrationResponse) GetSpaKeyOk() (*string, bool) {
-	if o == nil || o.SpaKey == nil {
+	if o == nil || IsNil(o.SpaKey) {
 		return nil, false
 	}
 	return o.SpaKey, true
@@ -60,7 +63,7 @@ func (o *ReplicationTargetRegistrationResponse) GetSpaKeyOk() (*string, bool) {
 
 // HasSpaKey returns a boolean if a field has been set.
 func (o *ReplicationTargetRegistrationResponse) HasSpaKey() bool {
-	if o != nil && o.SpaKey != nil {
+	if o != nil && !IsNil(o.SpaKey) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ReplicationTargetRegistrationResponse) SetSpaKey(v string) {
 
 // GetAccessToken returns the AccessToken field value if set, zero value otherwise.
 func (o *ReplicationTargetRegistrationResponse) GetAccessToken() string {
-	if o == nil || o.AccessToken == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ReplicationTargetRegistrationResponse) GetAccessToken() string {
 // GetAccessTokenOk returns a tuple with the AccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTargetRegistrationResponse) GetAccessTokenOk() (*string, bool) {
-	if o == nil || o.AccessToken == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		return nil, false
 	}
 	return o.AccessToken, true
@@ -92,7 +95,7 @@ func (o *ReplicationTargetRegistrationResponse) GetAccessTokenOk() (*string, boo
 
 // HasAccessToken returns a boolean if a field has been set.
 func (o *ReplicationTargetRegistrationResponse) HasAccessToken() bool {
-	if o != nil && o.AccessToken != nil {
+	if o != nil && !IsNil(o.AccessToken) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ReplicationTargetRegistrationResponse) SetAccessToken(v string) {
 }
 
 func (o ReplicationTargetRegistrationResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SpaKey != nil {
-		toSerialize["spaKey"] = o.SpaKey
-	}
-	if o.AccessToken != nil {
-		toSerialize["accessToken"] = o.AccessToken
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationTargetRegistrationResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SpaKey) {
+		toSerialize["spaKey"] = o.SpaKey
+	}
+	if !IsNil(o.AccessToken) {
+		toSerialize["accessToken"] = o.AccessToken
+	}
+	return toSerialize, nil
 }
 
 type NullableReplicationTargetRegistrationResponse struct {

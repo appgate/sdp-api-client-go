@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the SiteAllOfNameResolutionColorTokensResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionColorTokensResolvers{}
 
 // SiteAllOfNameResolutionColorTokensResolvers struct for SiteAllOfNameResolutionColorTokensResolvers
 type SiteAllOfNameResolutionColorTokensResolvers struct {
@@ -32,6 +37,8 @@ type SiteAllOfNameResolutionColorTokensResolvers struct {
 	// Private key for authentication.
 	PrivateKey *string `json:"privateKey,omitempty"`
 }
+
+type _SiteAllOfNameResolutionColorTokensResolvers SiteAllOfNameResolutionColorTokensResolvers
 
 // NewSiteAllOfNameResolutionColorTokensResolvers instantiates a new SiteAllOfNameResolutionColorTokensResolvers object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +92,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -95,7 +102,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateInterval() int32 
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -103,7 +110,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateIntervalOk() (*in
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -213,7 +220,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetFingerprint(v string) {
 
 // GetPrivateKey returns the PrivateKey field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKey() string {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		var ret string
 		return ret
 	}
@@ -223,7 +230,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKey() string {
 // GetPrivateKeyOk returns a tuple with the PrivateKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKeyOk() (*string, bool) {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		return nil, false
 	}
 	return o.PrivateKey, true
@@ -231,7 +238,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKeyOk() (*string
 
 // HasPrivateKey returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) HasPrivateKey() bool {
-	if o != nil && o.PrivateKey != nil {
+	if o != nil && !IsNil(o.PrivateKey) {
 		return true
 	}
 
@@ -244,29 +251,68 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetPrivateKey(v string) {
 }
 
 func (o SiteAllOfNameResolutionColorTokensResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if true {
-		toSerialize["clusterName"] = o.ClusterName
-	}
-	if true {
-		toSerialize["tenantId"] = o.TenantId
-	}
-	if true {
-		toSerialize["userId"] = o.UserId
-	}
-	if true {
-		toSerialize["fingerprint"] = o.Fingerprint
-	}
-	if o.PrivateKey != nil {
-		toSerialize["privateKey"] = o.PrivateKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionColorTokensResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	toSerialize["clusterName"] = o.ClusterName
+	toSerialize["tenantId"] = o.TenantId
+	toSerialize["userId"] = o.UserId
+	toSerialize["fingerprint"] = o.Fingerprint
+	if !IsNil(o.PrivateKey) {
+		toSerialize["privateKey"] = o.PrivateKey
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteAllOfNameResolutionColorTokensResolvers) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"clusterName",
+		"tenantId",
+		"userId",
+		"fingerprint",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteAllOfNameResolutionColorTokensResolvers := _SiteAllOfNameResolutionColorTokensResolvers{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteAllOfNameResolutionColorTokensResolvers)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteAllOfNameResolutionColorTokensResolvers(varSiteAllOfNameResolutionColorTokensResolvers)
+
+	return err
 }
 
 type NullableSiteAllOfNameResolutionColorTokensResolvers struct {

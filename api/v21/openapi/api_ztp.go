@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// ZTPApiService ZTPApi service
-type ZTPApiService service
+// ZTPAPIService ZTPAPI service
+type ZTPAPIService service
 
 type ApiZtpDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 }
 
@@ -46,7 +46,7 @@ Unregister from ZTP.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpDeleteRequest
 */
-func (a *ZTPApiService) ZtpDelete(ctx context.Context) ApiZtpDeleteRequest {
+func (a *ZTPAPIService) ZtpDelete(ctx context.Context) ApiZtpDeleteRequest {
 	return ApiZtpDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *ZTPApiService) ZtpDelete(ctx context.Context) ApiZtpDeleteRequest {
 // Execute executes the request
 //
 //	@return ZtpStatus
-func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *http.Response, error) {
+func (a *ZTPAPIService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 		localVarReturnValue *ZtpStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpDelete")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,7 +95,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -106,9 +106,9 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -125,6 +125,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -135,16 +136,18 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -155,6 +158,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -174,7 +178,7 @@ func (a *ZTPApiService) ZtpDeleteExecute(r ApiZtpDeleteRequest) (*ZtpStatus, *ht
 
 type ApiZtpGetRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 }
 
@@ -196,7 +200,7 @@ View the status of ZTP integration.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpGetRequest
 */
-func (a *ZTPApiService) ZtpGet(ctx context.Context) ApiZtpGetRequest {
+func (a *ZTPAPIService) ZtpGet(ctx context.Context) ApiZtpGetRequest {
 	return ApiZtpGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -206,7 +210,7 @@ func (a *ZTPApiService) ZtpGet(ctx context.Context) ApiZtpGetRequest {
 // Execute executes the request
 //
 //	@return ZtpStatus
-func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Response, error) {
+func (a *ZTPAPIService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -214,7 +218,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 		localVarReturnValue *ZtpStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -245,7 +249,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -256,9 +260,9 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -275,6 +279,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -285,16 +290,18 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -305,6 +312,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -324,7 +332,7 @@ func (a *ZTPApiService) ZtpGetExecute(r ApiZtpGetRequest) (*ZtpStatus, *http.Res
 
 type ApiZtpPostRequest struct {
 	ctx               context.Context
-	ApiService        *ZTPApiService
+	ApiService        *ZTPAPIService
 	authorization     *string
 	registrationToken *RegistrationToken
 }
@@ -353,7 +361,7 @@ Register to ZTP.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpPostRequest
 */
-func (a *ZTPApiService) ZtpPost(ctx context.Context) ApiZtpPostRequest {
+func (a *ZTPAPIService) ZtpPost(ctx context.Context) ApiZtpPostRequest {
 	return ApiZtpPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -363,7 +371,7 @@ func (a *ZTPApiService) ZtpPost(ctx context.Context) ApiZtpPostRequest {
 // Execute executes the request
 //
 //	@return ZtpStatus
-func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.Response, error) {
+func (a *ZTPAPIService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -371,7 +379,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 		localVarReturnValue *ZtpStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -405,7 +413,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.registrationToken
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -418,9 +426,9 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -437,6 +445,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -447,6 +456,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -457,16 +467,18 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -477,6 +489,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -487,6 +500,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -506,7 +520,7 @@ func (a *ZTPApiService) ZtpPostExecute(r ApiZtpPostRequest) (*ZtpStatus, *http.R
 
 type ApiZtpServicesVersionGetRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 }
 
@@ -528,7 +542,7 @@ View the status of ZTP version checking service.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpServicesVersionGetRequest
 */
-func (a *ZTPApiService) ZtpServicesVersionGet(ctx context.Context) ApiZtpServicesVersionGetRequest {
+func (a *ZTPAPIService) ZtpServicesVersionGet(ctx context.Context) ApiZtpServicesVersionGetRequest {
 	return ApiZtpServicesVersionGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -538,7 +552,7 @@ func (a *ZTPApiService) ZtpServicesVersionGet(ctx context.Context) ApiZtpService
 // Execute executes the request
 //
 //	@return ZtpVersionStatus
-func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetRequest) (*ZtpVersionStatus, *http.Response, error) {
+func (a *ZTPAPIService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetRequest) (*ZtpVersionStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -546,7 +560,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 		localVarReturnValue *ZtpVersionStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpServicesVersionGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpServicesVersionGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -577,7 +591,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -588,9 +602,9 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -607,6 +621,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -617,16 +632,18 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -637,6 +654,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -656,7 +674,7 @@ func (a *ZTPApiService) ZtpServicesVersionGetExecute(r ApiZtpServicesVersionGetR
 
 type ApiZtpServicesVersionPostRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 }
 
@@ -678,7 +696,7 @@ Trigger ZTP version checking service manually.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpServicesVersionPostRequest
 */
-func (a *ZTPApiService) ZtpServicesVersionPost(ctx context.Context) ApiZtpServicesVersionPostRequest {
+func (a *ZTPAPIService) ZtpServicesVersionPost(ctx context.Context) ApiZtpServicesVersionPostRequest {
 	return ApiZtpServicesVersionPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -688,7 +706,7 @@ func (a *ZTPApiService) ZtpServicesVersionPost(ctx context.Context) ApiZtpServic
 // Execute executes the request
 //
 //	@return ZtpVersionStatus
-func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPostRequest) (*ZtpVersionStatus, *http.Response, error) {
+func (a *ZTPAPIService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPostRequest) (*ZtpVersionStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -696,7 +714,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 		localVarReturnValue *ZtpVersionStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpServicesVersionPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpServicesVersionPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -727,7 +745,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -738,9 +756,9 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -757,6 +775,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -767,6 +786,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -777,16 +797,18 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -797,6 +819,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -807,6 +830,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -826,7 +850,7 @@ func (a *ZTPApiService) ZtpServicesVersionPostExecute(r ApiZtpServicesVersionPos
 
 type ApiZtpSettingsGetRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 }
 
@@ -848,7 +872,7 @@ View ZTP settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpSettingsGetRequest
 */
-func (a *ZTPApiService) ZtpSettingsGet(ctx context.Context) ApiZtpSettingsGetRequest {
+func (a *ZTPAPIService) ZtpSettingsGet(ctx context.Context) ApiZtpSettingsGetRequest {
 	return ApiZtpSettingsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -858,7 +882,7 @@ func (a *ZTPApiService) ZtpSettingsGet(ctx context.Context) ApiZtpSettingsGetReq
 // Execute executes the request
 //
 //	@return ZtpSettings
-func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpSettings, *http.Response, error) {
+func (a *ZTPAPIService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -866,7 +890,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 		localVarReturnValue *ZtpSettings
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpSettingsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpSettingsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -897,7 +921,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -908,9 +932,9 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -927,6 +951,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -937,16 +962,18 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -957,6 +984,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -976,7 +1004,7 @@ func (a *ZTPApiService) ZtpSettingsGetExecute(r ApiZtpSettingsGetRequest) (*ZtpS
 
 type ApiZtpSettingsPutRequest struct {
 	ctx           context.Context
-	ApiService    *ZTPApiService
+	ApiService    *ZTPAPIService
 	authorization *string
 	ztpSettings   *ZtpSettings
 }
@@ -1004,7 +1032,7 @@ Update ZTP settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiZtpSettingsPutRequest
 */
-func (a *ZTPApiService) ZtpSettingsPut(ctx context.Context) ApiZtpSettingsPutRequest {
+func (a *ZTPAPIService) ZtpSettingsPut(ctx context.Context) ApiZtpSettingsPutRequest {
 	return ApiZtpSettingsPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1014,7 +1042,7 @@ func (a *ZTPApiService) ZtpSettingsPut(ctx context.Context) ApiZtpSettingsPutReq
 // Execute executes the request
 //
 //	@return ZtpSettings
-func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpSettings, *http.Response, error) {
+func (a *ZTPAPIService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -1022,7 +1050,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 		localVarReturnValue *ZtpSettings
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPApiService.ZtpSettingsPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ZTPAPIService.ZtpSettingsPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1056,7 +1084,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.ztpSettings
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1069,9 +1097,9 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1088,6 +1116,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1098,6 +1127,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1108,16 +1138,18 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1128,6 +1160,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1138,6 +1171,7 @@ func (a *ZTPApiService) ZtpSettingsPutExecute(r ApiZtpSettingsPutRequest) (*ZtpS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

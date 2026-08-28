@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfNetworkingNics type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingNics{}
 
 // ApplianceAllOfNetworkingNics struct for ApplianceAllOfNetworkingNics
 type ApplianceAllOfNetworkingNics struct {
@@ -26,6 +31,8 @@ type ApplianceAllOfNetworkingNics struct {
 	// MTU setting for the NIC. If left empty, appliance default will be used.
 	Mtu *int32 `json:"mtu,omitempty"`
 }
+
+type _ApplianceAllOfNetworkingNics ApplianceAllOfNetworkingNics
 
 // NewApplianceAllOfNetworkingNics instantiates a new ApplianceAllOfNetworkingNics object
 // This constructor will assign default values to properties that have it defined,
@@ -47,7 +54,7 @@ func NewApplianceAllOfNetworkingNicsWithDefaults() *ApplianceAllOfNetworkingNics
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -57,7 +64,7 @@ func (o *ApplianceAllOfNetworkingNics) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -65,7 +72,7 @@ func (o *ApplianceAllOfNetworkingNics) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -103,7 +110,7 @@ func (o *ApplianceAllOfNetworkingNics) SetName(v string) {
 
 // GetIpv4 returns the Ipv4 field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetIpv4() ApplianceAllOfNetworkingIpv4 {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		var ret ApplianceAllOfNetworkingIpv4
 		return ret
 	}
@@ -113,7 +120,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv4() ApplianceAllOfNetworkingIpv4 {
 // GetIpv4Ok returns a tuple with the Ipv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetIpv4Ok() (*ApplianceAllOfNetworkingIpv4, bool) {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		return nil, false
 	}
 	return o.Ipv4, true
@@ -121,7 +128,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv4Ok() (*ApplianceAllOfNetworkingIpv
 
 // HasIpv4 returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasIpv4() bool {
-	if o != nil && o.Ipv4 != nil {
+	if o != nil && !IsNil(o.Ipv4) {
 		return true
 	}
 
@@ -135,7 +142,7 @@ func (o *ApplianceAllOfNetworkingNics) SetIpv4(v ApplianceAllOfNetworkingIpv4) {
 
 // GetIpv6 returns the Ipv6 field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetIpv6() ApplianceAllOfNetworkingIpv6 {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		var ret ApplianceAllOfNetworkingIpv6
 		return ret
 	}
@@ -145,7 +152,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv6() ApplianceAllOfNetworkingIpv6 {
 // GetIpv6Ok returns a tuple with the Ipv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetIpv6Ok() (*ApplianceAllOfNetworkingIpv6, bool) {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		return nil, false
 	}
 	return o.Ipv6, true
@@ -153,7 +160,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv6Ok() (*ApplianceAllOfNetworkingIpv
 
 // HasIpv6 returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasIpv6() bool {
-	if o != nil && o.Ipv6 != nil {
+	if o != nil && !IsNil(o.Ipv6) {
 		return true
 	}
 
@@ -167,7 +174,7 @@ func (o *ApplianceAllOfNetworkingNics) SetIpv6(v ApplianceAllOfNetworkingIpv6) {
 
 // GetMtu returns the Mtu field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetMtu() int32 {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		var ret int32
 		return ret
 	}
@@ -177,7 +184,7 @@ func (o *ApplianceAllOfNetworkingNics) GetMtu() int32 {
 // GetMtuOk returns a tuple with the Mtu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetMtuOk() (*int32, bool) {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		return nil, false
 	}
 	return o.Mtu, true
@@ -185,7 +192,7 @@ func (o *ApplianceAllOfNetworkingNics) GetMtuOk() (*int32, bool) {
 
 // HasMtu returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasMtu() bool {
-	if o != nil && o.Mtu != nil {
+	if o != nil && !IsNil(o.Mtu) {
 		return true
 	}
 
@@ -198,23 +205,66 @@ func (o *ApplianceAllOfNetworkingNics) SetMtu(v int32) {
 }
 
 func (o ApplianceAllOfNetworkingNics) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Ipv4 != nil {
-		toSerialize["ipv4"] = o.Ipv4
-	}
-	if o.Ipv6 != nil {
-		toSerialize["ipv6"] = o.Ipv6
-	}
-	if o.Mtu != nil {
-		toSerialize["mtu"] = o.Mtu
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingNics) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Ipv4) {
+		toSerialize["ipv4"] = o.Ipv4
+	}
+	if !IsNil(o.Ipv6) {
+		toSerialize["ipv6"] = o.Ipv6
+	}
+	if !IsNil(o.Mtu) {
+		toSerialize["mtu"] = o.Mtu
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfNetworkingNics) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfNetworkingNics := _ApplianceAllOfNetworkingNics{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfNetworkingNics)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfNetworkingNics(varApplianceAllOfNetworkingNics)
+
+	return err
 }
 
 type NullableApplianceAllOfNetworkingNics struct {

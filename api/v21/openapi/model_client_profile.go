@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the ClientProfile type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfile{}
 
 // ClientProfile struct for ClientProfile
 type ClientProfile struct {
@@ -45,6 +50,8 @@ type ClientProfile struct {
 	Exported *time.Time `json:"exported,omitempty"`
 }
 
+type _ClientProfile ClientProfile
+
 // NewClientProfile instantiates a new ClientProfile object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -70,7 +77,7 @@ func NewClientProfileWithDefaults() *ClientProfile {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ClientProfile) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -80,7 +87,7 @@ func (o *ClientProfile) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -88,7 +95,7 @@ func (o *ClientProfile) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ClientProfile) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -126,7 +133,7 @@ func (o *ClientProfile) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ClientProfile) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -136,7 +143,7 @@ func (o *ClientProfile) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -144,7 +151,7 @@ func (o *ClientProfile) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ClientProfile) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -158,7 +165,7 @@ func (o *ClientProfile) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ClientProfile) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -168,7 +175,7 @@ func (o *ClientProfile) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -176,7 +183,7 @@ func (o *ClientProfile) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ClientProfile) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -190,7 +197,7 @@ func (o *ClientProfile) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ClientProfile) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -200,7 +207,7 @@ func (o *ClientProfile) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -208,7 +215,7 @@ func (o *ClientProfile) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ClientProfile) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -222,7 +229,7 @@ func (o *ClientProfile) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ClientProfile) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -232,7 +239,7 @@ func (o *ClientProfile) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -240,7 +247,7 @@ func (o *ClientProfile) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ClientProfile) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -254,7 +261,7 @@ func (o *ClientProfile) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ClientProfile) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -264,7 +271,7 @@ func (o *ClientProfile) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -272,7 +279,7 @@ func (o *ClientProfile) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ClientProfile) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -287,7 +294,7 @@ func (o *ClientProfile) SetType(v string) {
 // GetSpaKeyName returns the SpaKeyName field value if set, zero value otherwise.
 // Deprecated
 func (o *ClientProfile) GetSpaKeyName() string {
-	if o == nil || o.SpaKeyName == nil {
+	if o == nil || IsNil(o.SpaKeyName) {
 		var ret string
 		return ret
 	}
@@ -298,7 +305,7 @@ func (o *ClientProfile) GetSpaKeyName() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *ClientProfile) GetSpaKeyNameOk() (*string, bool) {
-	if o == nil || o.SpaKeyName == nil {
+	if o == nil || IsNil(o.SpaKeyName) {
 		return nil, false
 	}
 	return o.SpaKeyName, true
@@ -306,7 +313,7 @@ func (o *ClientProfile) GetSpaKeyNameOk() (*string, bool) {
 
 // HasSpaKeyName returns a boolean if a field has been set.
 func (o *ClientProfile) HasSpaKeyName() bool {
-	if o != nil && o.SpaKeyName != nil {
+	if o != nil && !IsNil(o.SpaKeyName) {
 		return true
 	}
 
@@ -345,7 +352,7 @@ func (o *ClientProfile) SetIdentityProviderName(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *ClientProfile) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -355,7 +362,7 @@ func (o *ClientProfile) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -363,7 +370,7 @@ func (o *ClientProfile) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *ClientProfile) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -377,7 +384,7 @@ func (o *ClientProfile) SetHostname(v string) {
 
 // GetGlobalHostname returns the GlobalHostname field value if set, zero value otherwise.
 func (o *ClientProfile) GetGlobalHostname() string {
-	if o == nil || o.GlobalHostname == nil {
+	if o == nil || IsNil(o.GlobalHostname) {
 		var ret string
 		return ret
 	}
@@ -387,7 +394,7 @@ func (o *ClientProfile) GetGlobalHostname() string {
 // GetGlobalHostnameOk returns a tuple with the GlobalHostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetGlobalHostnameOk() (*string, bool) {
-	if o == nil || o.GlobalHostname == nil {
+	if o == nil || IsNil(o.GlobalHostname) {
 		return nil, false
 	}
 	return o.GlobalHostname, true
@@ -395,7 +402,7 @@ func (o *ClientProfile) GetGlobalHostnameOk() (*string, bool) {
 
 // HasGlobalHostname returns a boolean if a field has been set.
 func (o *ClientProfile) HasGlobalHostname() bool {
-	if o != nil && o.GlobalHostname != nil {
+	if o != nil && !IsNil(o.GlobalHostname) {
 		return true
 	}
 
@@ -409,7 +416,7 @@ func (o *ClientProfile) SetGlobalHostname(v string) {
 
 // GetExported returns the Exported field value if set, zero value otherwise.
 func (o *ClientProfile) GetExported() time.Time {
-	if o == nil || o.Exported == nil {
+	if o == nil || IsNil(o.Exported) {
 		var ret time.Time
 		return ret
 	}
@@ -419,7 +426,7 @@ func (o *ClientProfile) GetExported() time.Time {
 // GetExportedOk returns a tuple with the Exported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfile) GetExportedOk() (*time.Time, bool) {
-	if o == nil || o.Exported == nil {
+	if o == nil || IsNil(o.Exported) {
 		return nil, false
 	}
 	return o.Exported, true
@@ -427,7 +434,7 @@ func (o *ClientProfile) GetExportedOk() (*time.Time, bool) {
 
 // HasExported returns a boolean if a field has been set.
 func (o *ClientProfile) HasExported() bool {
-	if o != nil && o.Exported != nil {
+	if o != nil && !IsNil(o.Exported) {
 		return true
 	}
 
@@ -440,44 +447,86 @@ func (o *ClientProfile) SetExported(v time.Time) {
 }
 
 func (o ClientProfile) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.SpaKeyName != nil {
-		toSerialize["spaKeyName"] = o.SpaKeyName
-	}
-	if true {
-		toSerialize["identityProviderName"] = o.IdentityProviderName
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.GlobalHostname != nil {
-		toSerialize["globalHostname"] = o.GlobalHostname
-	}
-	if o.Exported != nil {
-		toSerialize["exported"] = o.Exported
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfile) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.SpaKeyName) {
+		toSerialize["spaKeyName"] = o.SpaKeyName
+	}
+	toSerialize["identityProviderName"] = o.IdentityProviderName
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.GlobalHostname) {
+		toSerialize["globalHostname"] = o.GlobalHostname
+	}
+	if !IsNil(o.Exported) {
+		toSerialize["exported"] = o.Exported
+	}
+	return toSerialize, nil
+}
+
+func (o *ClientProfile) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"identityProviderName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varClientProfile := _ClientProfile{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varClientProfile)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ClientProfile(varClientProfile)
+
+	return err
 }
 
 type NullableClientProfile struct {

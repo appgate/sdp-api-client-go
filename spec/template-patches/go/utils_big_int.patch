@@ -1,21 +1,21 @@
 diff --git a/go/utils.mustache b/go/utils.mustache
-index 5ae789a996c..4766b5eb3fe 100644
 --- a/go/utils.mustache
 +++ b/go/utils.mustache
-@@ -4,6 +4,8 @@ package {{packageName}}
- import (
+@@ -5,6 +5,7 @@
+ 	"bytes"
  	"encoding/json"
- 	"time"
-+	"fmt"
+ 	"fmt"
 +	"math/big"
+ 	"reflect"
+ 	"time"
  )
-
- // PtrBool is a helper routine that returns a pointer to given boolean value.
-@@ -317,3 +319,28 @@ func (v *NullableTime) UnmarshalJSON(src []byte) error {
- 	v.isSet = true
- 	return json.Unmarshal(src, &v.value)
- }
-+
+@@ -349,4 +350,28 @@
+ // Prevent trying to import "fmt"
+ func reportError(format string, a ...interface{}) error {
+ 	return fmt.Errorf(format, a...)
+-}
+\ No newline at end of file
++}
 +type BigInt struct {
 +	big.Int
 +}

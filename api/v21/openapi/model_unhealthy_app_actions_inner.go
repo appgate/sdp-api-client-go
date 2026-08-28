@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the UnhealthyAppActionsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UnhealthyAppActionsInner{}
+
 // UnhealthyAppActionsInner struct for UnhealthyAppActionsInner
 type UnhealthyAppActionsInner struct {
 	// IP of the resource.
@@ -53,7 +56,7 @@ func NewUnhealthyAppActionsInnerWithDefaults() *UnhealthyAppActionsInner {
 
 // GetIp returns the Ip field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetIp() string {
-	if o == nil || o.Ip == nil {
+	if o == nil || IsNil(o.Ip) {
 		var ret string
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *UnhealthyAppActionsInner) GetIp() string {
 // GetIpOk returns a tuple with the Ip field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetIpOk() (*string, bool) {
-	if o == nil || o.Ip == nil {
+	if o == nil || IsNil(o.Ip) {
 		return nil, false
 	}
 	return o.Ip, true
@@ -71,7 +74,7 @@ func (o *UnhealthyAppActionsInner) GetIpOk() (*string, bool) {
 
 // HasIp returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasIp() bool {
-	if o != nil && o.Ip != nil {
+	if o != nil && !IsNil(o.Ip) {
 		return true
 	}
 
@@ -85,7 +88,7 @@ func (o *UnhealthyAppActionsInner) SetIp(v string) {
 
 // GetIndex returns the Index field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetIndex() int32 {
-	if o == nil || o.Index == nil {
+	if o == nil || IsNil(o.Index) {
 		var ret int32
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *UnhealthyAppActionsInner) GetIndex() int32 {
 // GetIndexOk returns a tuple with the Index field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetIndexOk() (*int32, bool) {
-	if o == nil || o.Index == nil {
+	if o == nil || IsNil(o.Index) {
 		return nil, false
 	}
 	return o.Index, true
@@ -103,7 +106,7 @@ func (o *UnhealthyAppActionsInner) GetIndexOk() (*int32, bool) {
 
 // HasIndex returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasIndex() bool {
-	if o != nil && o.Index != nil {
+	if o != nil && !IsNil(o.Index) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *UnhealthyAppActionsInner) SetIndex(v int32) {
 
 // GetReportCount returns the ReportCount field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetReportCount() int32 {
-	if o == nil || o.ReportCount == nil {
+	if o == nil || IsNil(o.ReportCount) {
 		var ret int32
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *UnhealthyAppActionsInner) GetReportCount() int32 {
 // GetReportCountOk returns a tuple with the ReportCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetReportCountOk() (*int32, bool) {
-	if o == nil || o.ReportCount == nil {
+	if o == nil || IsNil(o.ReportCount) {
 		return nil, false
 	}
 	return o.ReportCount, true
@@ -135,7 +138,7 @@ func (o *UnhealthyAppActionsInner) GetReportCountOk() (*int32, bool) {
 
 // HasReportCount returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasReportCount() bool {
-	if o != nil && o.ReportCount != nil {
+	if o != nil && !IsNil(o.ReportCount) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *UnhealthyAppActionsInner) SetReportCount(v int32) {
 
 // GetUserCount returns the UserCount field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetUserCount() int32 {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		var ret int32
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *UnhealthyAppActionsInner) GetUserCount() int32 {
 // GetUserCountOk returns a tuple with the UserCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetUserCountOk() (*int32, bool) {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		return nil, false
 	}
 	return o.UserCount, true
@@ -167,7 +170,7 @@ func (o *UnhealthyAppActionsInner) GetUserCountOk() (*int32, bool) {
 
 // HasUserCount returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasUserCount() bool {
-	if o != nil && o.UserCount != nil {
+	if o != nil && !IsNil(o.UserCount) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *UnhealthyAppActionsInner) SetUserCount(v int32) {
 
 // GetPortRange returns the PortRange field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetPortRange() string {
-	if o == nil || o.PortRange == nil {
+	if o == nil || IsNil(o.PortRange) {
 		var ret string
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *UnhealthyAppActionsInner) GetPortRange() string {
 // GetPortRangeOk returns a tuple with the PortRange field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetPortRangeOk() (*string, bool) {
-	if o == nil || o.PortRange == nil {
+	if o == nil || IsNil(o.PortRange) {
 		return nil, false
 	}
 	return o.PortRange, true
@@ -199,7 +202,7 @@ func (o *UnhealthyAppActionsInner) GetPortRangeOk() (*string, bool) {
 
 // HasPortRange returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasPortRange() bool {
-	if o != nil && o.PortRange != nil {
+	if o != nil && !IsNil(o.PortRange) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *UnhealthyAppActionsInner) SetPortRange(v string) {
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *UnhealthyAppActionsInner) GetReason() string {
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -231,7 +234,7 @@ func (o *UnhealthyAppActionsInner) GetReasonOk() (*string, bool) {
 
 // HasReason returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *UnhealthyAppActionsInner) SetReason(v string) {
 
 // GetLastReported returns the LastReported field value if set, zero value otherwise.
 func (o *UnhealthyAppActionsInner) GetLastReported() time.Time {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		var ret time.Time
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *UnhealthyAppActionsInner) GetLastReported() time.Time {
 // GetLastReportedOk returns a tuple with the LastReported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppActionsInner) GetLastReportedOk() (*time.Time, bool) {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		return nil, false
 	}
 	return o.LastReported, true
@@ -263,7 +266,7 @@ func (o *UnhealthyAppActionsInner) GetLastReportedOk() (*time.Time, bool) {
 
 // HasLastReported returns a boolean if a field has been set.
 func (o *UnhealthyAppActionsInner) HasLastReported() bool {
-	if o != nil && o.LastReported != nil {
+	if o != nil && !IsNil(o.LastReported) {
 		return true
 	}
 
@@ -276,29 +279,37 @@ func (o *UnhealthyAppActionsInner) SetLastReported(v time.Time) {
 }
 
 func (o UnhealthyAppActionsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Ip != nil {
-		toSerialize["ip"] = o.Ip
-	}
-	if o.Index != nil {
-		toSerialize["index"] = o.Index
-	}
-	if o.ReportCount != nil {
-		toSerialize["reportCount"] = o.ReportCount
-	}
-	if o.UserCount != nil {
-		toSerialize["userCount"] = o.UserCount
-	}
-	if o.PortRange != nil {
-		toSerialize["portRange"] = o.PortRange
-	}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
-	}
-	if o.LastReported != nil {
-		toSerialize["lastReported"] = o.LastReported
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UnhealthyAppActionsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Ip) {
+		toSerialize["ip"] = o.Ip
+	}
+	if !IsNil(o.Index) {
+		toSerialize["index"] = o.Index
+	}
+	if !IsNil(o.ReportCount) {
+		toSerialize["reportCount"] = o.ReportCount
+	}
+	if !IsNil(o.UserCount) {
+		toSerialize["userCount"] = o.UserCount
+	}
+	if !IsNil(o.PortRange) {
+		toSerialize["portRange"] = o.PortRange
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	if !IsNil(o.LastReported) {
+		toSerialize["lastReported"] = o.LastReported
+	}
+	return toSerialize, nil
 }
 
 type NullableUnhealthyAppActionsInner struct {

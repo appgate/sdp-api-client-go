@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// LicenseApiService LicenseApi service
-type LicenseApiService service
+// LicenseAPIService LicenseAPI service
+type LicenseAPIService service
 
 type ApiLicenseDeleteRequest struct {
 	ctx        context.Context
-	ApiService *LicenseApiService
+	ApiService *LicenseAPIService
 }
 
 func (r ApiLicenseDeleteRequest) Execute() (*http.Response, error) {
@@ -42,7 +42,7 @@ Delete all Licenses to revert to the Built-in License.
 
 Deprecated
 */
-func (a *LicenseApiService) LicenseDelete(ctx context.Context) ApiLicenseDeleteRequest {
+func (a *LicenseAPIService) LicenseDelete(ctx context.Context) ApiLicenseDeleteRequest {
 	return ApiLicenseDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -51,14 +51,14 @@ func (a *LicenseApiService) LicenseDelete(ctx context.Context) ApiLicenseDeleteR
 
 // Execute executes the request
 // Deprecated
-func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*http.Response, error) {
+func (a *LicenseAPIService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -96,9 +96,9 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -115,6 +115,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -125,6 +126,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -135,6 +137,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -145,6 +148,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -155,7 +159,7 @@ func (a *LicenseApiService) LicenseDeleteExecute(r ApiLicenseDeleteRequest) (*ht
 
 type ApiLicenseGetRequest struct {
 	ctx        context.Context
-	ApiService *LicenseApiService
+	ApiService *LicenseAPIService
 }
 
 func (r ApiLicenseGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
@@ -170,7 +174,7 @@ Get the current License.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLicenseGetRequest
 */
-func (a *LicenseApiService) LicenseGet(ctx context.Context) ApiLicenseGetRequest {
+func (a *LicenseAPIService) LicenseGet(ctx context.Context) ApiLicenseGetRequest {
 	return ApiLicenseGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -180,7 +184,7 @@ func (a *LicenseApiService) LicenseGet(ctx context.Context) ApiLicenseGetRequest
 // Execute executes the request
 //
 //	@return LicenseDetails
-func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseDetails, *http.Response, error) {
+func (a *LicenseAPIService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -188,7 +192,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 		localVarReturnValue *LicenseDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -226,9 +230,9 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -245,6 +249,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -255,6 +260,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -265,6 +271,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -275,6 +282,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -294,7 +302,7 @@ func (a *LicenseApiService) LicenseGetExecute(r ApiLicenseGetRequest) (*LicenseD
 
 type ApiLicenseIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *LicenseApiService
+	ApiService *LicenseAPIService
 	id         string
 }
 
@@ -311,7 +319,7 @@ Delete a specific License from list of Licenses.
 	@param id ID of the object.
 	@return ApiLicenseIdDeleteRequest
 */
-func (a *LicenseApiService) LicenseIdDelete(ctx context.Context, id string) ApiLicenseIdDeleteRequest {
+func (a *LicenseAPIService) LicenseIdDelete(ctx context.Context, id string) ApiLicenseIdDeleteRequest {
 	return ApiLicenseIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -320,20 +328,20 @@ func (a *LicenseApiService) LicenseIdDelete(ctx context.Context, id string) ApiL
 }
 
 // Execute executes the request
-func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) (*http.Response, error) {
+func (a *LicenseAPIService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/license/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -366,9 +374,9 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -385,6 +393,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -395,6 +404,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -405,6 +415,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -415,6 +426,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -425,6 +437,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -435,7 +448,7 @@ func (a *LicenseApiService) LicenseIdDeleteExecute(r ApiLicenseIdDeleteRequest) 
 
 type ApiLicenseNextDeleteRequest struct {
 	ctx        context.Context
-	ApiService *LicenseApiService
+	ApiService *LicenseAPIService
 }
 
 func (r ApiLicenseNextDeleteRequest) Execute() (*http.Response, error) {
@@ -450,7 +463,7 @@ Delete the next License.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLicenseNextDeleteRequest
 */
-func (a *LicenseApiService) LicenseNextDelete(ctx context.Context) ApiLicenseNextDeleteRequest {
+func (a *LicenseAPIService) LicenseNextDelete(ctx context.Context) ApiLicenseNextDeleteRequest {
 	return ApiLicenseNextDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -458,14 +471,14 @@ func (a *LicenseApiService) LicenseNextDelete(ctx context.Context) ApiLicenseNex
 }
 
 // Execute executes the request
-func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteRequest) (*http.Response, error) {
+func (a *LicenseAPIService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseNextDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -503,9 +516,9 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -522,6 +535,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -532,6 +546,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -542,6 +557,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -552,6 +568,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -562,7 +579,7 @@ func (a *LicenseApiService) LicenseNextDeleteExecute(r ApiLicenseNextDeleteReque
 
 type ApiLicenseNextGetRequest struct {
 	ctx        context.Context
-	ApiService *LicenseApiService
+	ApiService *LicenseAPIService
 }
 
 func (r ApiLicenseNextGetRequest) Execute() (*LicenseDetails, *http.Response, error) {
@@ -577,7 +594,7 @@ Get the next License which will be activated when CA certificate switch occurs. 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLicenseNextGetRequest
 */
-func (a *LicenseApiService) LicenseNextGet(ctx context.Context) ApiLicenseNextGetRequest {
+func (a *LicenseAPIService) LicenseNextGet(ctx context.Context) ApiLicenseNextGetRequest {
 	return ApiLicenseNextGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -587,7 +604,7 @@ func (a *LicenseApiService) LicenseNextGet(ctx context.Context) ApiLicenseNextGe
 // Execute executes the request
 //
 //	@return LicenseDetails
-func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*LicenseDetails, *http.Response, error) {
+func (a *LicenseAPIService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*LicenseDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -595,7 +612,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 		localVarReturnValue *LicenseDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseNextGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -633,9 +650,9 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -652,6 +669,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -662,6 +680,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -672,6 +691,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -682,6 +702,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -692,6 +713,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -711,7 +733,7 @@ func (a *LicenseApiService) LicenseNextGetExecute(r ApiLicenseNextGetRequest) (*
 
 type ApiLicenseNextPostRequest struct {
 	ctx           context.Context
-	ApiService    *LicenseApiService
+	ApiService    *LicenseAPIService
 	licenseImport *LicenseImport
 }
 
@@ -733,7 +755,7 @@ Upload a new next License to be switched when CA certificate is switched.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLicenseNextPostRequest
 */
-func (a *LicenseApiService) LicenseNextPost(ctx context.Context) ApiLicenseNextPostRequest {
+func (a *LicenseAPIService) LicenseNextPost(ctx context.Context) ApiLicenseNextPostRequest {
 	return ApiLicenseNextPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -743,7 +765,7 @@ func (a *LicenseApiService) LicenseNextPost(ctx context.Context) ApiLicenseNextP
 // Execute executes the request
 //
 //	@return License
-func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) (*License, *http.Response, error) {
+func (a *LicenseAPIService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) (*License, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -751,7 +773,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 		localVarReturnValue *License
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicenseNextPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicenseNextPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -794,9 +816,9 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -813,6 +835,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -823,6 +846,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -833,6 +857,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -843,6 +868,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -853,6 +879,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -863,6 +890,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -882,7 +910,7 @@ func (a *LicenseApiService) LicenseNextPostExecute(r ApiLicenseNextPostRequest) 
 
 type ApiLicensePostRequest struct {
 	ctx           context.Context
-	ApiService    *LicenseApiService
+	ApiService    *LicenseAPIService
 	licenseImport *LicenseImport
 }
 
@@ -904,7 +932,7 @@ Upload a new License and override the existing one.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLicensePostRequest
 */
-func (a *LicenseApiService) LicensePost(ctx context.Context) ApiLicensePostRequest {
+func (a *LicenseAPIService) LicensePost(ctx context.Context) ApiLicensePostRequest {
 	return ApiLicensePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -914,7 +942,7 @@ func (a *LicenseApiService) LicensePost(ctx context.Context) ApiLicensePostReque
 // Execute executes the request
 //
 //	@return License
-func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*License, *http.Response, error) {
+func (a *LicenseAPIService) LicensePostExecute(r ApiLicensePostRequest) (*License, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -922,7 +950,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 		localVarReturnValue *License
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseApiService.LicensePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LicenseAPIService.LicensePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -965,9 +993,9 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -984,6 +1012,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -994,6 +1023,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1004,6 +1034,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1014,6 +1045,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1024,6 +1056,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1034,6 +1067,7 @@ func (a *LicenseApiService) LicensePostExecute(r ApiLicensePostRequest) (*Licens
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

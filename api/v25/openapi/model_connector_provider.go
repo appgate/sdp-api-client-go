@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the ConnectorProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectorProvider{}
 
 // ConnectorProvider struct for ConnectorProvider
 type ConnectorProvider struct {
@@ -44,6 +49,8 @@ type ConnectorProvider struct {
 	UserScripts []string `json:"userScripts,omitempty"`
 }
 
+type _ConnectorProvider ConnectorProvider
+
 // NewConnectorProvider instantiates a new ConnectorProvider object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -65,7 +72,7 @@ func NewConnectorProviderWithDefaults() *ConnectorProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -75,7 +82,7 @@ func (o *ConnectorProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -83,7 +90,7 @@ func (o *ConnectorProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -121,7 +128,7 @@ func (o *ConnectorProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -131,7 +138,7 @@ func (o *ConnectorProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -139,7 +146,7 @@ func (o *ConnectorProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -153,7 +160,7 @@ func (o *ConnectorProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -163,7 +170,7 @@ func (o *ConnectorProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -171,7 +178,7 @@ func (o *ConnectorProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -185,7 +192,7 @@ func (o *ConnectorProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -195,7 +202,7 @@ func (o *ConnectorProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -203,7 +210,7 @@ func (o *ConnectorProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -217,7 +224,7 @@ func (o *ConnectorProvider) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -227,7 +234,7 @@ func (o *ConnectorProvider) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -235,7 +242,7 @@ func (o *ConnectorProvider) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -249,7 +256,7 @@ func (o *ConnectorProvider) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -259,7 +266,7 @@ func (o *ConnectorProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -267,7 +274,7 @@ func (o *ConnectorProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -305,7 +312,7 @@ func (o *ConnectorProvider) SetType(v string) {
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetIpPoolV4() string {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		var ret string
 		return ret
 	}
@@ -315,7 +322,7 @@ func (o *ConnectorProvider) GetIpPoolV4() string {
 // GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetIpPoolV4Ok() (*string, bool) {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		return nil, false
 	}
 	return o.IpPoolV4, true
@@ -323,7 +330,7 @@ func (o *ConnectorProvider) GetIpPoolV4Ok() (*string, bool) {
 
 // HasIpPoolV4 returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasIpPoolV4() bool {
-	if o != nil && o.IpPoolV4 != nil {
+	if o != nil && !IsNil(o.IpPoolV4) {
 		return true
 	}
 
@@ -337,7 +344,7 @@ func (o *ConnectorProvider) SetIpPoolV4(v string) {
 
 // GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetIpPoolV6() string {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		var ret string
 		return ret
 	}
@@ -347,7 +354,7 @@ func (o *ConnectorProvider) GetIpPoolV6() string {
 // GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetIpPoolV6Ok() (*string, bool) {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		return nil, false
 	}
 	return o.IpPoolV6, true
@@ -355,7 +362,7 @@ func (o *ConnectorProvider) GetIpPoolV6Ok() (*string, bool) {
 
 // HasIpPoolV6 returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasIpPoolV6() bool {
-	if o != nil && o.IpPoolV6 != nil {
+	if o != nil && !IsNil(o.IpPoolV6) {
 		return true
 	}
 
@@ -369,7 +376,7 @@ func (o *ConnectorProvider) SetIpPoolV6(v string) {
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetClaimMappings() []ClaimMappingsInner {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		var ret []ClaimMappingsInner
 		return ret
 	}
@@ -379,7 +386,7 @@ func (o *ConnectorProvider) GetClaimMappings() []ClaimMappingsInner {
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		return nil, false
 	}
 	return o.ClaimMappings, true
@@ -387,7 +394,7 @@ func (o *ConnectorProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
 
 // HasClaimMappings returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
+	if o != nil && !IsNil(o.ClaimMappings) {
 		return true
 	}
 
@@ -401,7 +408,7 @@ func (o *ConnectorProvider) SetClaimMappings(v []ClaimMappingsInner) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *ConnectorProvider) GetUserScripts() []string {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret []string
 		return ret
 	}
@@ -411,7 +418,7 @@ func (o *ConnectorProvider) GetUserScripts() []string {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectorProvider) GetUserScriptsOk() ([]string, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -419,7 +426,7 @@ func (o *ConnectorProvider) GetUserScriptsOk() ([]string, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *ConnectorProvider) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -432,44 +439,86 @@ func (o *ConnectorProvider) SetUserScripts(v []string) {
 }
 
 func (o ConnectorProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.IpPoolV4 != nil {
-		toSerialize["ipPoolV4"] = o.IpPoolV4
-	}
-	if o.IpPoolV6 != nil {
-		toSerialize["ipPoolV6"] = o.IpPoolV6
-	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectorProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IpPoolV4) {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if !IsNil(o.IpPoolV6) {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if !IsNil(o.ClaimMappings) {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	return toSerialize, nil
+}
+
+func (o *ConnectorProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConnectorProvider := _ConnectorProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varConnectorProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConnectorProvider(varConnectorProvider)
+
+	return err
 }
 
 type NullableConnectorProvider struct {

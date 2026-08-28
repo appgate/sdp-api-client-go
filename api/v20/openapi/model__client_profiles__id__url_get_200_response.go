@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClientProfilesIdUrlGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfilesIdUrlGet200Response{}
+
 // ClientProfilesIdUrlGet200Response struct for ClientProfilesIdUrlGet200Response
 type ClientProfilesIdUrlGet200Response struct {
 	// Connection URL for the Client Profile.
@@ -40,7 +43,7 @@ func NewClientProfilesIdUrlGet200ResponseWithDefaults() *ClientProfilesIdUrlGet2
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *ClientProfilesIdUrlGet200Response) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ClientProfilesIdUrlGet200Response) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfilesIdUrlGet200Response) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -58,7 +61,7 @@ func (o *ClientProfilesIdUrlGet200Response) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *ClientProfilesIdUrlGet200Response) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ClientProfilesIdUrlGet200Response) SetUrl(v string) {
 }
 
 func (o ClientProfilesIdUrlGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfilesIdUrlGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	return toSerialize, nil
 }
 
 type NullableClientProfilesIdUrlGet200Response struct {

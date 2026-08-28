@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the Elasticsearch type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Elasticsearch{}
 
 // Elasticsearch struct for Elasticsearch
 type Elasticsearch struct {
@@ -33,6 +38,8 @@ type Elasticsearch struct {
 	CompatibilityMode *int32                            `json:"compatibilityMode,omitempty"`
 	Authentication    *ElasticsearchAllOfAuthentication `json:"authentication,omitempty"`
 }
+
+type _Elasticsearch Elasticsearch
 
 // NewElasticsearch instantiates a new Elasticsearch object
 // This constructor will assign default values to properties that have it defined,
@@ -58,7 +65,7 @@ func NewElasticsearchWithDefaults() *Elasticsearch {
 
 // GetAwsId returns the AwsId field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsId() string {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		var ret string
 		return ret
 	}
@@ -68,7 +75,7 @@ func (o *Elasticsearch) GetAwsId() string {
 // GetAwsIdOk returns a tuple with the AwsId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsIdOk() (*string, bool) {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		return nil, false
 	}
 	return o.AwsId, true
@@ -76,7 +83,7 @@ func (o *Elasticsearch) GetAwsIdOk() (*string, bool) {
 
 // HasAwsId returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsId() bool {
-	if o != nil && o.AwsId != nil {
+	if o != nil && !IsNil(o.AwsId) {
 		return true
 	}
 
@@ -90,7 +97,7 @@ func (o *Elasticsearch) SetAwsId(v string) {
 
 // GetAwsSecret returns the AwsSecret field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsSecret() string {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		var ret string
 		return ret
 	}
@@ -100,7 +107,7 @@ func (o *Elasticsearch) GetAwsSecret() string {
 // GetAwsSecretOk returns a tuple with the AwsSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsSecretOk() (*string, bool) {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		return nil, false
 	}
 	return o.AwsSecret, true
@@ -108,7 +115,7 @@ func (o *Elasticsearch) GetAwsSecretOk() (*string, bool) {
 
 // HasAwsSecret returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsSecret() bool {
-	if o != nil && o.AwsSecret != nil {
+	if o != nil && !IsNil(o.AwsSecret) {
 		return true
 	}
 
@@ -122,7 +129,7 @@ func (o *Elasticsearch) SetAwsSecret(v string) {
 
 // GetAwsRegion returns the AwsRegion field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsRegion() string {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		var ret string
 		return ret
 	}
@@ -132,7 +139,7 @@ func (o *Elasticsearch) GetAwsRegion() string {
 // GetAwsRegionOk returns a tuple with the AwsRegion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsRegionOk() (*string, bool) {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		return nil, false
 	}
 	return o.AwsRegion, true
@@ -140,7 +147,7 @@ func (o *Elasticsearch) GetAwsRegionOk() (*string, bool) {
 
 // HasAwsRegion returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsRegion() bool {
-	if o != nil && o.AwsRegion != nil {
+	if o != nil && !IsNil(o.AwsRegion) {
 		return true
 	}
 
@@ -154,7 +161,7 @@ func (o *Elasticsearch) SetAwsRegion(v string) {
 
 // GetUseInstanceCredentials returns the UseInstanceCredentials field value if set, zero value otherwise.
 func (o *Elasticsearch) GetUseInstanceCredentials() bool {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		var ret bool
 		return ret
 	}
@@ -164,7 +171,7 @@ func (o *Elasticsearch) GetUseInstanceCredentials() bool {
 // GetUseInstanceCredentialsOk returns a tuple with the UseInstanceCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetUseInstanceCredentialsOk() (*bool, bool) {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		return nil, false
 	}
 	return o.UseInstanceCredentials, true
@@ -172,7 +179,7 @@ func (o *Elasticsearch) GetUseInstanceCredentialsOk() (*bool, bool) {
 
 // HasUseInstanceCredentials returns a boolean if a field has been set.
 func (o *Elasticsearch) HasUseInstanceCredentials() bool {
-	if o != nil && o.UseInstanceCredentials != nil {
+	if o != nil && !IsNil(o.UseInstanceCredentials) {
 		return true
 	}
 
@@ -210,7 +217,7 @@ func (o *Elasticsearch) SetUrl(v string) {
 
 // GetRetentionDays returns the RetentionDays field value if set, zero value otherwise.
 func (o *Elasticsearch) GetRetentionDays() int32 {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		var ret int32
 		return ret
 	}
@@ -220,7 +227,7 @@ func (o *Elasticsearch) GetRetentionDays() int32 {
 // GetRetentionDaysOk returns a tuple with the RetentionDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetRetentionDaysOk() (*int32, bool) {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		return nil, false
 	}
 	return o.RetentionDays, true
@@ -228,7 +235,7 @@ func (o *Elasticsearch) GetRetentionDaysOk() (*int32, bool) {
 
 // HasRetentionDays returns a boolean if a field has been set.
 func (o *Elasticsearch) HasRetentionDays() bool {
-	if o != nil && o.RetentionDays != nil {
+	if o != nil && !IsNil(o.RetentionDays) {
 		return true
 	}
 
@@ -242,7 +249,7 @@ func (o *Elasticsearch) SetRetentionDays(v int32) {
 
 // GetCompatibilityMode returns the CompatibilityMode field value if set, zero value otherwise.
 func (o *Elasticsearch) GetCompatibilityMode() int32 {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		var ret int32
 		return ret
 	}
@@ -252,7 +259,7 @@ func (o *Elasticsearch) GetCompatibilityMode() int32 {
 // GetCompatibilityModeOk returns a tuple with the CompatibilityMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetCompatibilityModeOk() (*int32, bool) {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		return nil, false
 	}
 	return o.CompatibilityMode, true
@@ -260,7 +267,7 @@ func (o *Elasticsearch) GetCompatibilityModeOk() (*int32, bool) {
 
 // HasCompatibilityMode returns a boolean if a field has been set.
 func (o *Elasticsearch) HasCompatibilityMode() bool {
-	if o != nil && o.CompatibilityMode != nil {
+	if o != nil && !IsNil(o.CompatibilityMode) {
 		return true
 	}
 
@@ -274,7 +281,7 @@ func (o *Elasticsearch) SetCompatibilityMode(v int32) {
 
 // GetAuthentication returns the Authentication field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAuthentication() ElasticsearchAllOfAuthentication {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		var ret ElasticsearchAllOfAuthentication
 		return ret
 	}
@@ -284,7 +291,7 @@ func (o *Elasticsearch) GetAuthentication() ElasticsearchAllOfAuthentication {
 // GetAuthenticationOk returns a tuple with the Authentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAuthenticationOk() (*ElasticsearchAllOfAuthentication, bool) {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		return nil, false
 	}
 	return o.Authentication, true
@@ -292,7 +299,7 @@ func (o *Elasticsearch) GetAuthenticationOk() (*ElasticsearchAllOfAuthentication
 
 // HasAuthentication returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAuthentication() bool {
-	if o != nil && o.Authentication != nil {
+	if o != nil && !IsNil(o.Authentication) {
 		return true
 	}
 
@@ -305,32 +312,75 @@ func (o *Elasticsearch) SetAuthentication(v ElasticsearchAllOfAuthentication) {
 }
 
 func (o Elasticsearch) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AwsId != nil {
-		toSerialize["awsId"] = o.AwsId
-	}
-	if o.AwsSecret != nil {
-		toSerialize["awsSecret"] = o.AwsSecret
-	}
-	if o.AwsRegion != nil {
-		toSerialize["awsRegion"] = o.AwsRegion
-	}
-	if o.UseInstanceCredentials != nil {
-		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
-	}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if o.RetentionDays != nil {
-		toSerialize["retentionDays"] = o.RetentionDays
-	}
-	if o.CompatibilityMode != nil {
-		toSerialize["compatibilityMode"] = o.CompatibilityMode
-	}
-	if o.Authentication != nil {
-		toSerialize["authentication"] = o.Authentication
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Elasticsearch) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AwsId) {
+		toSerialize["awsId"] = o.AwsId
+	}
+	if !IsNil(o.AwsSecret) {
+		toSerialize["awsSecret"] = o.AwsSecret
+	}
+	if !IsNil(o.AwsRegion) {
+		toSerialize["awsRegion"] = o.AwsRegion
+	}
+	if !IsNil(o.UseInstanceCredentials) {
+		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
+	}
+	toSerialize["url"] = o.Url
+	if !IsNil(o.RetentionDays) {
+		toSerialize["retentionDays"] = o.RetentionDays
+	}
+	if !IsNil(o.CompatibilityMode) {
+		toSerialize["compatibilityMode"] = o.CompatibilityMode
+	}
+	if !IsNil(o.Authentication) {
+		toSerialize["authentication"] = o.Authentication
+	}
+	return toSerialize, nil
+}
+
+func (o *Elasticsearch) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"url",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varElasticsearch := _Elasticsearch{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varElasticsearch)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Elasticsearch(varElasticsearch)
+
+	return err
 }
 
 type NullableElasticsearch struct {

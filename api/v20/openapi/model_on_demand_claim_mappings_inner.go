@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the OnDemandClaimMappingsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnDemandClaimMappingsInner{}
 
 // OnDemandClaimMappingsInner struct for OnDemandClaimMappingsInner
 type OnDemandClaimMappingsInner struct {
@@ -25,6 +30,8 @@ type OnDemandClaimMappingsInner struct {
 	// The platform(s) to run the on-demand claim.
 	Platform string `json:"platform"`
 }
+
+type _OnDemandClaimMappingsInner OnDemandClaimMappingsInner
 
 // NewOnDemandClaimMappingsInner instantiates a new OnDemandClaimMappingsInner object
 // This constructor will assign default values to properties that have it defined,
@@ -96,7 +103,7 @@ func (o *OnDemandClaimMappingsInner) SetClaimName(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerParameters {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret OnDemandClaimMappingsInnerParameters
 		return ret
 	}
@@ -106,7 +113,7 @@ func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerP
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsInnerParameters, bool) {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		return nil, false
 	}
 	return o.Parameters, true
@@ -114,7 +121,7 @@ func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsIn
 
 // HasParameters returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInner) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -151,20 +158,61 @@ func (o *OnDemandClaimMappingsInner) SetPlatform(v string) {
 }
 
 func (o OnDemandClaimMappingsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["command"] = o.Command
-	}
-	if true {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if true {
-		toSerialize["platform"] = o.Platform
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnDemandClaimMappingsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["command"] = o.Command
+	toSerialize["claimName"] = o.ClaimName
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	toSerialize["platform"] = o.Platform
+	return toSerialize, nil
+}
+
+func (o *OnDemandClaimMappingsInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"command",
+		"claimName",
+		"platform",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varOnDemandClaimMappingsInner := _OnDemandClaimMappingsInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varOnDemandClaimMappingsInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OnDemandClaimMappingsInner(varOnDemandClaimMappingsInner)
+
+	return err
 }
 
 type NullableOnDemandClaimMappingsInner struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the AuthenticationOtpInitializePost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationOtpInitializePost200Response{}
 
 // AuthenticationOtpInitializePost200Response struct for AuthenticationOtpInitializePost200Response
 type AuthenticationOtpInitializePost200Response struct {
@@ -54,7 +57,7 @@ func NewAuthenticationOtpInitializePost200ResponseWithDefaults() *Authentication
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -64,7 +67,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -72,7 +75,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTypeOk() (*string, bool)
 
 // HasType returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetType(v string) {
 
 // GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetSecret() string {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		var ret string
 		return ret
 	}
@@ -96,7 +99,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSecret() string {
 // GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetSecretOk() (*string, bool) {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		return nil, false
 	}
 	return o.Secret, true
@@ -104,7 +107,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSecretOk() (*string, boo
 
 // HasSecret returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasSecret() bool {
-	if o != nil && o.Secret != nil {
+	if o != nil && !IsNil(o.Secret) {
 		return true
 	}
 
@@ -118,7 +121,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetSecret(v string) {
 
 // GetOtpAuthUrl returns the OtpAuthUrl field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrl() string {
-	if o == nil || o.OtpAuthUrl == nil {
+	if o == nil || IsNil(o.OtpAuthUrl) {
 		var ret string
 		return ret
 	}
@@ -128,7 +131,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrl() string {
 // GetOtpAuthUrlOk returns a tuple with the OtpAuthUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrlOk() (*string, bool) {
-	if o == nil || o.OtpAuthUrl == nil {
+	if o == nil || IsNil(o.OtpAuthUrl) {
 		return nil, false
 	}
 	return o.OtpAuthUrl, true
@@ -136,7 +139,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetOtpAuthUrlOk() (*string,
 
 // HasOtpAuthUrl returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasOtpAuthUrl() bool {
-	if o != nil && o.OtpAuthUrl != nil {
+	if o != nil && !IsNil(o.OtpAuthUrl) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetOtpAuthUrl(v string) {
 
 // GetBarcode returns the Barcode field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetBarcode() string {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		var ret string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetBarcode() string {
 // GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetBarcodeOk() (*string, bool) {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		return nil, false
 	}
 	return o.Barcode, true
@@ -168,7 +171,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetBarcodeOk() (*string, bo
 
 // HasBarcode returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasBarcode() bool {
-	if o != nil && o.Barcode != nil {
+	if o != nil && !IsNil(o.Barcode) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetBarcode(v string) {
 
 // GetResponseMessage returns the ResponseMessage field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetResponseMessage() string {
-	if o == nil || o.ResponseMessage == nil {
+	if o == nil || IsNil(o.ResponseMessage) {
 		var ret string
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetResponseMessage() string
 // GetResponseMessageOk returns a tuple with the ResponseMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetResponseMessageOk() (*string, bool) {
-	if o == nil || o.ResponseMessage == nil {
+	if o == nil || IsNil(o.ResponseMessage) {
 		return nil, false
 	}
 	return o.ResponseMessage, true
@@ -200,7 +203,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetResponseMessageOk() (*st
 
 // HasResponseMessage returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasResponseMessage() bool {
-	if o != nil && o.ResponseMessage != nil {
+	if o != nil && !IsNil(o.ResponseMessage) {
 		return true
 	}
 
@@ -214,7 +217,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetResponseMessage(v string
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetState() string {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret string
 		return ret
 	}
@@ -224,7 +227,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetState() string {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetStateOk() (*string, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -232,7 +235,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetStateOk() (*string, bool
 
 // HasState returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetState(v string) {
 
 // GetTimeout returns the Timeout field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetTimeout() float32 {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		var ret float32
 		return ret
 	}
@@ -256,7 +259,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTimeout() float32 {
 // GetTimeoutOk returns a tuple with the Timeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetTimeoutOk() (*float32, bool) {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		return nil, false
 	}
 	return o.Timeout, true
@@ -264,7 +267,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetTimeoutOk() (*float32, b
 
 // HasTimeout returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasTimeout() bool {
-	if o != nil && o.Timeout != nil {
+	if o != nil && !IsNil(o.Timeout) {
 		return true
 	}
 
@@ -278,7 +281,7 @@ func (o *AuthenticationOtpInitializePost200Response) SetTimeout(v float32) {
 
 // GetSendPassword returns the SendPassword field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePost200Response) GetSendPassword() bool {
-	if o == nil || o.SendPassword == nil {
+	if o == nil || IsNil(o.SendPassword) {
 		var ret bool
 		return ret
 	}
@@ -288,7 +291,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSendPassword() bool {
 // GetSendPasswordOk returns a tuple with the SendPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePost200Response) GetSendPasswordOk() (*bool, bool) {
-	if o == nil || o.SendPassword == nil {
+	if o == nil || IsNil(o.SendPassword) {
 		return nil, false
 	}
 	return o.SendPassword, true
@@ -296,7 +299,7 @@ func (o *AuthenticationOtpInitializePost200Response) GetSendPasswordOk() (*bool,
 
 // HasSendPassword returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePost200Response) HasSendPassword() bool {
-	if o != nil && o.SendPassword != nil {
+	if o != nil && !IsNil(o.SendPassword) {
 		return true
 	}
 
@@ -309,32 +312,40 @@ func (o *AuthenticationOtpInitializePost200Response) SetSendPassword(v bool) {
 }
 
 func (o AuthenticationOtpInitializePost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Secret != nil {
-		toSerialize["secret"] = o.Secret
-	}
-	if o.OtpAuthUrl != nil {
-		toSerialize["otpAuthUrl"] = o.OtpAuthUrl
-	}
-	if o.Barcode != nil {
-		toSerialize["barcode"] = o.Barcode
-	}
-	if o.ResponseMessage != nil {
-		toSerialize["responseMessage"] = o.ResponseMessage
-	}
-	if o.State != nil {
-		toSerialize["state"] = o.State
-	}
-	if o.Timeout != nil {
-		toSerialize["timeout"] = o.Timeout
-	}
-	if o.SendPassword != nil {
-		toSerialize["sendPassword"] = o.SendPassword
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationOtpInitializePost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Secret) {
+		toSerialize["secret"] = o.Secret
+	}
+	if !IsNil(o.OtpAuthUrl) {
+		toSerialize["otpAuthUrl"] = o.OtpAuthUrl
+	}
+	if !IsNil(o.Barcode) {
+		toSerialize["barcode"] = o.Barcode
+	}
+	if !IsNil(o.ResponseMessage) {
+		toSerialize["responseMessage"] = o.ResponseMessage
+	}
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	if !IsNil(o.Timeout) {
+		toSerialize["timeout"] = o.Timeout
+	}
+	if !IsNil(o.SendPassword) {
+		toSerialize["sendPassword"] = o.SendPassword
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationOtpInitializePost200Response struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseEntitlementVerifiedDnsNames type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseEntitlementVerifiedDnsNames{}
+
 // LicenseEntitlementVerifiedDnsNames struct for LicenseEntitlementVerifiedDnsNames
 type LicenseEntitlementVerifiedDnsNames struct {
 	// The DNS names allowed by the license.
@@ -42,7 +45,7 @@ func NewLicenseEntitlementVerifiedDnsNamesWithDefaults() *LicenseEntitlementVeri
 
 // GetNames returns the Names field value if set, zero value otherwise.
 func (o *LicenseEntitlementVerifiedDnsNames) GetNames() []string {
-	if o == nil || o.Names == nil {
+	if o == nil || IsNil(o.Names) {
 		var ret []string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *LicenseEntitlementVerifiedDnsNames) GetNames() []string {
 // GetNamesOk returns a tuple with the Names field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlementVerifiedDnsNames) GetNamesOk() ([]string, bool) {
-	if o == nil || o.Names == nil {
+	if o == nil || IsNil(o.Names) {
 		return nil, false
 	}
 	return o.Names, true
@@ -60,7 +63,7 @@ func (o *LicenseEntitlementVerifiedDnsNames) GetNamesOk() ([]string, bool) {
 
 // HasNames returns a boolean if a field has been set.
 func (o *LicenseEntitlementVerifiedDnsNames) HasNames() bool {
-	if o != nil && o.Names != nil {
+	if o != nil && !IsNil(o.Names) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *LicenseEntitlementVerifiedDnsNames) SetNames(v []string) {
 
 // GetHashes returns the Hashes field value if set, zero value otherwise.
 func (o *LicenseEntitlementVerifiedDnsNames) GetHashes() []string {
-	if o == nil || o.Hashes == nil {
+	if o == nil || IsNil(o.Hashes) {
 		var ret []string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *LicenseEntitlementVerifiedDnsNames) GetHashes() []string {
 // GetHashesOk returns a tuple with the Hashes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlementVerifiedDnsNames) GetHashesOk() ([]string, bool) {
-	if o == nil || o.Hashes == nil {
+	if o == nil || IsNil(o.Hashes) {
 		return nil, false
 	}
 	return o.Hashes, true
@@ -92,7 +95,7 @@ func (o *LicenseEntitlementVerifiedDnsNames) GetHashesOk() ([]string, bool) {
 
 // HasHashes returns a boolean if a field has been set.
 func (o *LicenseEntitlementVerifiedDnsNames) HasHashes() bool {
-	if o != nil && o.Hashes != nil {
+	if o != nil && !IsNil(o.Hashes) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *LicenseEntitlementVerifiedDnsNames) SetHashes(v []string) {
 }
 
 func (o LicenseEntitlementVerifiedDnsNames) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Names != nil {
-		toSerialize["names"] = o.Names
-	}
-	if o.Hashes != nil {
-		toSerialize["hashes"] = o.Hashes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseEntitlementVerifiedDnsNames) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Names) {
+		toSerialize["names"] = o.Names
+	}
+	if !IsNil(o.Hashes) {
+		toSerialize["hashes"] = o.Hashes
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseEntitlementVerifiedDnsNames struct {

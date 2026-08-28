@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the BrokeredRdpEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredRdpEntitlement{}
 
 // BrokeredRdpEntitlement struct for BrokeredRdpEntitlement
 type BrokeredRdpEntitlement struct {
@@ -74,6 +79,8 @@ type BrokeredRdpEntitlement struct {
 	// Whether audio redirection from the remote host to the Client is permitted for this Entitlement.
 	AudioRedirection *bool `json:"audioRedirection,omitempty"`
 }
+
+type _BrokeredRdpEntitlement BrokeredRdpEntitlement
 
 // NewBrokeredRdpEntitlement instantiates a new BrokeredRdpEntitlement object
 // This constructor will assign default values to properties that have it defined,
@@ -136,7 +143,7 @@ func NewBrokeredRdpEntitlementWithDefaults() *BrokeredRdpEntitlement {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -146,7 +153,7 @@ func (o *BrokeredRdpEntitlement) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -154,7 +161,7 @@ func (o *BrokeredRdpEntitlement) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -192,7 +199,7 @@ func (o *BrokeredRdpEntitlement) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -202,7 +209,7 @@ func (o *BrokeredRdpEntitlement) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -210,7 +217,7 @@ func (o *BrokeredRdpEntitlement) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -224,7 +231,7 @@ func (o *BrokeredRdpEntitlement) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -234,7 +241,7 @@ func (o *BrokeredRdpEntitlement) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -242,7 +249,7 @@ func (o *BrokeredRdpEntitlement) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -256,7 +263,7 @@ func (o *BrokeredRdpEntitlement) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -266,7 +273,7 @@ func (o *BrokeredRdpEntitlement) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -274,7 +281,7 @@ func (o *BrokeredRdpEntitlement) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -288,7 +295,7 @@ func (o *BrokeredRdpEntitlement) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -298,7 +305,7 @@ func (o *BrokeredRdpEntitlement) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -306,7 +313,7 @@ func (o *BrokeredRdpEntitlement) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -320,7 +327,7 @@ func (o *BrokeredRdpEntitlement) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -330,7 +337,7 @@ func (o *BrokeredRdpEntitlement) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -338,7 +345,7 @@ func (o *BrokeredRdpEntitlement) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -352,7 +359,7 @@ func (o *BrokeredRdpEntitlement) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -362,7 +369,7 @@ func (o *BrokeredRdpEntitlement) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -370,7 +377,7 @@ func (o *BrokeredRdpEntitlement) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -384,7 +391,7 @@ func (o *BrokeredRdpEntitlement) SetType(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -394,7 +401,7 @@ func (o *BrokeredRdpEntitlement) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -402,7 +409,7 @@ func (o *BrokeredRdpEntitlement) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -440,7 +447,7 @@ func (o *BrokeredRdpEntitlement) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -450,7 +457,7 @@ func (o *BrokeredRdpEntitlement) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -458,7 +465,7 @@ func (o *BrokeredRdpEntitlement) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -472,7 +479,7 @@ func (o *BrokeredRdpEntitlement) SetSiteName(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -482,7 +489,7 @@ func (o *BrokeredRdpEntitlement) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -490,7 +497,7 @@ func (o *BrokeredRdpEntitlement) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -528,7 +535,7 @@ func (o *BrokeredRdpEntitlement) SetConditions(v []string) {
 
 // GetOptimizationScore returns the OptimizationScore field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetOptimizationScore() string {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		var ret string
 		return ret
 	}
@@ -538,7 +545,7 @@ func (o *BrokeredRdpEntitlement) GetOptimizationScore() string {
 // GetOptimizationScoreOk returns a tuple with the OptimizationScore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetOptimizationScoreOk() (*string, bool) {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		return nil, false
 	}
 	return o.OptimizationScore, true
@@ -546,7 +553,7 @@ func (o *BrokeredRdpEntitlement) GetOptimizationScoreOk() (*string, bool) {
 
 // HasOptimizationScore returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasOptimizationScore() bool {
-	if o != nil && o.OptimizationScore != nil {
+	if o != nil && !IsNil(o.OptimizationScore) {
 		return true
 	}
 
@@ -560,7 +567,7 @@ func (o *BrokeredRdpEntitlement) SetOptimizationScore(v string) {
 
 // GetOptimizationScorePercentage returns the OptimizationScorePercentage field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetOptimizationScorePercentage() int32 {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		var ret int32
 		return ret
 	}
@@ -570,7 +577,7 @@ func (o *BrokeredRdpEntitlement) GetOptimizationScorePercentage() int32 {
 // GetOptimizationScorePercentageOk returns a tuple with the OptimizationScorePercentage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetOptimizationScorePercentageOk() (*int32, bool) {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		return nil, false
 	}
 	return o.OptimizationScorePercentage, true
@@ -578,7 +585,7 @@ func (o *BrokeredRdpEntitlement) GetOptimizationScorePercentageOk() (*int32, boo
 
 // HasOptimizationScorePercentage returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasOptimizationScorePercentage() bool {
-	if o != nil && o.OptimizationScorePercentage != nil {
+	if o != nil && !IsNil(o.OptimizationScorePercentage) {
 		return true
 	}
 
@@ -640,7 +647,7 @@ func (o *BrokeredRdpEntitlement) SetPort(v int32) {
 
 // GetSessionRecording returns the SessionRecording field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetSessionRecording() SessionRecording {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		var ret SessionRecording
 		return ret
 	}
@@ -650,7 +657,7 @@ func (o *BrokeredRdpEntitlement) GetSessionRecording() SessionRecording {
 // GetSessionRecordingOk returns a tuple with the SessionRecording field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetSessionRecordingOk() (*SessionRecording, bool) {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		return nil, false
 	}
 	return o.SessionRecording, true
@@ -658,7 +665,7 @@ func (o *BrokeredRdpEntitlement) GetSessionRecordingOk() (*SessionRecording, boo
 
 // HasSessionRecording returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasSessionRecording() bool {
-	if o != nil && o.SessionRecording != nil {
+	if o != nil && !IsNil(o.SessionRecording) {
 		return true
 	}
 
@@ -672,7 +679,7 @@ func (o *BrokeredRdpEntitlement) SetSessionRecording(v SessionRecording) {
 
 // GetCredentials returns the Credentials field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetCredentials() string {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		var ret string
 		return ret
 	}
@@ -682,7 +689,7 @@ func (o *BrokeredRdpEntitlement) GetCredentials() string {
 // GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetCredentialsOk() (*string, bool) {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		return nil, false
 	}
 	return o.Credentials, true
@@ -690,7 +697,7 @@ func (o *BrokeredRdpEntitlement) GetCredentialsOk() (*string, bool) {
 
 // HasCredentials returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasCredentials() bool {
-	if o != nil && o.Credentials != nil {
+	if o != nil && !IsNil(o.Credentials) {
 		return true
 	}
 
@@ -728,7 +735,7 @@ func (o *BrokeredRdpEntitlement) SetAppShortcut(v BrokeredShortcut) {
 
 // GetClipboardSharing returns the ClipboardSharing field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetClipboardSharing() bool {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		var ret bool
 		return ret
 	}
@@ -738,7 +745,7 @@ func (o *BrokeredRdpEntitlement) GetClipboardSharing() bool {
 // GetClipboardSharingOk returns a tuple with the ClipboardSharing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetClipboardSharingOk() (*bool, bool) {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		return nil, false
 	}
 	return o.ClipboardSharing, true
@@ -746,7 +753,7 @@ func (o *BrokeredRdpEntitlement) GetClipboardSharingOk() (*bool, bool) {
 
 // HasClipboardSharing returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasClipboardSharing() bool {
-	if o != nil && o.ClipboardSharing != nil {
+	if o != nil && !IsNil(o.ClipboardSharing) {
 		return true
 	}
 
@@ -760,7 +767,7 @@ func (o *BrokeredRdpEntitlement) SetClipboardSharing(v bool) {
 
 // GetFileTransfer returns the FileTransfer field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetFileTransfer() bool {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		var ret bool
 		return ret
 	}
@@ -770,7 +777,7 @@ func (o *BrokeredRdpEntitlement) GetFileTransfer() bool {
 // GetFileTransferOk returns a tuple with the FileTransfer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetFileTransferOk() (*bool, bool) {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		return nil, false
 	}
 	return o.FileTransfer, true
@@ -778,7 +785,7 @@ func (o *BrokeredRdpEntitlement) GetFileTransferOk() (*bool, bool) {
 
 // HasFileTransfer returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasFileTransfer() bool {
-	if o != nil && o.FileTransfer != nil {
+	if o != nil && !IsNil(o.FileTransfer) {
 		return true
 	}
 
@@ -792,7 +799,7 @@ func (o *BrokeredRdpEntitlement) SetFileTransfer(v bool) {
 
 // GetIdleTimeoutMinutes returns the IdleTimeoutMinutes field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetIdleTimeoutMinutes() int32 {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -802,7 +809,7 @@ func (o *BrokeredRdpEntitlement) GetIdleTimeoutMinutes() int32 {
 // GetIdleTimeoutMinutesOk returns a tuple with the IdleTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetIdleTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		return nil, false
 	}
 	return o.IdleTimeoutMinutes, true
@@ -810,7 +817,7 @@ func (o *BrokeredRdpEntitlement) GetIdleTimeoutMinutesOk() (*int32, bool) {
 
 // HasIdleTimeoutMinutes returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasIdleTimeoutMinutes() bool {
-	if o != nil && o.IdleTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.IdleTimeoutMinutes) {
 		return true
 	}
 
@@ -824,7 +831,7 @@ func (o *BrokeredRdpEntitlement) SetIdleTimeoutMinutes(v int32) {
 
 // GetResolution returns the Resolution field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetResolution() string {
-	if o == nil || o.Resolution == nil {
+	if o == nil || IsNil(o.Resolution) {
 		var ret string
 		return ret
 	}
@@ -834,7 +841,7 @@ func (o *BrokeredRdpEntitlement) GetResolution() string {
 // GetResolutionOk returns a tuple with the Resolution field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetResolutionOk() (*string, bool) {
-	if o == nil || o.Resolution == nil {
+	if o == nil || IsNil(o.Resolution) {
 		return nil, false
 	}
 	return o.Resolution, true
@@ -842,7 +849,7 @@ func (o *BrokeredRdpEntitlement) GetResolutionOk() (*string, bool) {
 
 // HasResolution returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasResolution() bool {
-	if o != nil && o.Resolution != nil {
+	if o != nil && !IsNil(o.Resolution) {
 		return true
 	}
 
@@ -856,7 +863,7 @@ func (o *BrokeredRdpEntitlement) SetResolution(v string) {
 
 // GetColorDepth returns the ColorDepth field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetColorDepth() int32 {
-	if o == nil || o.ColorDepth == nil {
+	if o == nil || IsNil(o.ColorDepth) {
 		var ret int32
 		return ret
 	}
@@ -866,7 +873,7 @@ func (o *BrokeredRdpEntitlement) GetColorDepth() int32 {
 // GetColorDepthOk returns a tuple with the ColorDepth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetColorDepthOk() (*int32, bool) {
-	if o == nil || o.ColorDepth == nil {
+	if o == nil || IsNil(o.ColorDepth) {
 		return nil, false
 	}
 	return o.ColorDepth, true
@@ -874,7 +881,7 @@ func (o *BrokeredRdpEntitlement) GetColorDepthOk() (*int32, bool) {
 
 // HasColorDepth returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasColorDepth() bool {
-	if o != nil && o.ColorDepth != nil {
+	if o != nil && !IsNil(o.ColorDepth) {
 		return true
 	}
 
@@ -888,7 +895,7 @@ func (o *BrokeredRdpEntitlement) SetColorDepth(v int32) {
 
 // GetKeyboardLayout returns the KeyboardLayout field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetKeyboardLayout() string {
-	if o == nil || o.KeyboardLayout == nil {
+	if o == nil || IsNil(o.KeyboardLayout) {
 		var ret string
 		return ret
 	}
@@ -898,7 +905,7 @@ func (o *BrokeredRdpEntitlement) GetKeyboardLayout() string {
 // GetKeyboardLayoutOk returns a tuple with the KeyboardLayout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetKeyboardLayoutOk() (*string, bool) {
-	if o == nil || o.KeyboardLayout == nil {
+	if o == nil || IsNil(o.KeyboardLayout) {
 		return nil, false
 	}
 	return o.KeyboardLayout, true
@@ -906,7 +913,7 @@ func (o *BrokeredRdpEntitlement) GetKeyboardLayoutOk() (*string, bool) {
 
 // HasKeyboardLayout returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasKeyboardLayout() bool {
-	if o != nil && o.KeyboardLayout != nil {
+	if o != nil && !IsNil(o.KeyboardLayout) {
 		return true
 	}
 
@@ -920,7 +927,7 @@ func (o *BrokeredRdpEntitlement) SetKeyboardLayout(v string) {
 
 // GetWindowsDomain returns the WindowsDomain field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetWindowsDomain() string {
-	if o == nil || o.WindowsDomain == nil {
+	if o == nil || IsNil(o.WindowsDomain) {
 		var ret string
 		return ret
 	}
@@ -930,7 +937,7 @@ func (o *BrokeredRdpEntitlement) GetWindowsDomain() string {
 // GetWindowsDomainOk returns a tuple with the WindowsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetWindowsDomainOk() (*string, bool) {
-	if o == nil || o.WindowsDomain == nil {
+	if o == nil || IsNil(o.WindowsDomain) {
 		return nil, false
 	}
 	return o.WindowsDomain, true
@@ -938,7 +945,7 @@ func (o *BrokeredRdpEntitlement) GetWindowsDomainOk() (*string, bool) {
 
 // HasWindowsDomain returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasWindowsDomain() bool {
-	if o != nil && o.WindowsDomain != nil {
+	if o != nil && !IsNil(o.WindowsDomain) {
 		return true
 	}
 
@@ -952,7 +959,7 @@ func (o *BrokeredRdpEntitlement) SetWindowsDomain(v string) {
 
 // GetSecurityMode returns the SecurityMode field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetSecurityMode() string {
-	if o == nil || o.SecurityMode == nil {
+	if o == nil || IsNil(o.SecurityMode) {
 		var ret string
 		return ret
 	}
@@ -962,7 +969,7 @@ func (o *BrokeredRdpEntitlement) GetSecurityMode() string {
 // GetSecurityModeOk returns a tuple with the SecurityMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetSecurityModeOk() (*string, bool) {
-	if o == nil || o.SecurityMode == nil {
+	if o == nil || IsNil(o.SecurityMode) {
 		return nil, false
 	}
 	return o.SecurityMode, true
@@ -970,7 +977,7 @@ func (o *BrokeredRdpEntitlement) GetSecurityModeOk() (*string, bool) {
 
 // HasSecurityMode returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasSecurityMode() bool {
-	if o != nil && o.SecurityMode != nil {
+	if o != nil && !IsNil(o.SecurityMode) {
 		return true
 	}
 
@@ -984,7 +991,7 @@ func (o *BrokeredRdpEntitlement) SetSecurityMode(v string) {
 
 // GetAudioRedirection returns the AudioRedirection field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlement) GetAudioRedirection() bool {
-	if o == nil || o.AudioRedirection == nil {
+	if o == nil || IsNil(o.AudioRedirection) {
 		var ret bool
 		return ret
 	}
@@ -994,7 +1001,7 @@ func (o *BrokeredRdpEntitlement) GetAudioRedirection() bool {
 // GetAudioRedirectionOk returns a tuple with the AudioRedirection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlement) GetAudioRedirectionOk() (*bool, bool) {
-	if o == nil || o.AudioRedirection == nil {
+	if o == nil || IsNil(o.AudioRedirection) {
 		return nil, false
 	}
 	return o.AudioRedirection, true
@@ -1002,7 +1009,7 @@ func (o *BrokeredRdpEntitlement) GetAudioRedirectionOk() (*bool, bool) {
 
 // HasAudioRedirection returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlement) HasAudioRedirection() bool {
-	if o != nil && o.AudioRedirection != nil {
+	if o != nil && !IsNil(o.AudioRedirection) {
 		return true
 	}
 
@@ -1015,95 +1022,133 @@ func (o *BrokeredRdpEntitlement) SetAudioRedirection(v bool) {
 }
 
 func (o BrokeredRdpEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if o.OptimizationScore != nil {
-		toSerialize["optimizationScore"] = o.OptimizationScore
-	}
-	if o.OptimizationScorePercentage != nil {
-		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
-	}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SessionRecording != nil {
-		toSerialize["sessionRecording"] = o.SessionRecording
-	}
-	if o.Credentials != nil {
-		toSerialize["credentials"] = o.Credentials
-	}
-	if true {
-		toSerialize["appShortcut"] = o.AppShortcut
-	}
-	if o.ClipboardSharing != nil {
-		toSerialize["clipboardSharing"] = o.ClipboardSharing
-	}
-	if o.FileTransfer != nil {
-		toSerialize["fileTransfer"] = o.FileTransfer
-	}
-	if o.IdleTimeoutMinutes != nil {
-		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
-	}
-	if o.Resolution != nil {
-		toSerialize["resolution"] = o.Resolution
-	}
-	if o.ColorDepth != nil {
-		toSerialize["colorDepth"] = o.ColorDepth
-	}
-	if o.KeyboardLayout != nil {
-		toSerialize["keyboardLayout"] = o.KeyboardLayout
-	}
-	if o.WindowsDomain != nil {
-		toSerialize["windowsDomain"] = o.WindowsDomain
-	}
-	if o.SecurityMode != nil {
-		toSerialize["securityMode"] = o.SecurityMode
-	}
-	if o.AudioRedirection != nil {
-		toSerialize["audioRedirection"] = o.AudioRedirection
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredRdpEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	if !IsNil(o.OptimizationScore) {
+		toSerialize["optimizationScore"] = o.OptimizationScore
+	}
+	if !IsNil(o.OptimizationScorePercentage) {
+		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
+	}
+	toSerialize["host"] = o.Host
+	toSerialize["port"] = o.Port
+	if !IsNil(o.SessionRecording) {
+		toSerialize["sessionRecording"] = o.SessionRecording
+	}
+	if !IsNil(o.Credentials) {
+		toSerialize["credentials"] = o.Credentials
+	}
+	toSerialize["appShortcut"] = o.AppShortcut
+	if !IsNil(o.ClipboardSharing) {
+		toSerialize["clipboardSharing"] = o.ClipboardSharing
+	}
+	if !IsNil(o.FileTransfer) {
+		toSerialize["fileTransfer"] = o.FileTransfer
+	}
+	if !IsNil(o.IdleTimeoutMinutes) {
+		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	}
+	if !IsNil(o.Resolution) {
+		toSerialize["resolution"] = o.Resolution
+	}
+	if !IsNil(o.ColorDepth) {
+		toSerialize["colorDepth"] = o.ColorDepth
+	}
+	if !IsNil(o.KeyboardLayout) {
+		toSerialize["keyboardLayout"] = o.KeyboardLayout
+	}
+	if !IsNil(o.WindowsDomain) {
+		toSerialize["windowsDomain"] = o.WindowsDomain
+	}
+	if !IsNil(o.SecurityMode) {
+		toSerialize["securityMode"] = o.SecurityMode
+	}
+	if !IsNil(o.AudioRedirection) {
+		toSerialize["audioRedirection"] = o.AudioRedirection
+	}
+	return toSerialize, nil
+}
+
+func (o *BrokeredRdpEntitlement) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"site",
+		"conditions",
+		"host",
+		"port",
+		"appShortcut",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBrokeredRdpEntitlement := _BrokeredRdpEntitlement{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBrokeredRdpEntitlement)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BrokeredRdpEntitlement(varBrokeredRdpEntitlement)
+
+	return err
 }
 
 type NullableBrokeredRdpEntitlement struct {

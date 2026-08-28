@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppShortcut type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppShortcut{}
 
 // AppShortcut Publishes the configured URL as an app on the client using the display name as the app name.
 type AppShortcut struct {
@@ -26,6 +31,8 @@ type AppShortcut struct {
 	// The code of the published app on the client. - 1: Light Green - 2: Green - 3: Indigo - 4: Deep Purple - 5: Yellow - 6: Lime - 7: Light Blue - 8: Blue - 9: Amber - 10: Orange - 11: Cyan - 12: Teal - 13: Deep Orange - 14: Red - 15: Gray - 16: Brown - 17: Pink - 18: Purple - 19: Blue Gray - 20: Near Black
 	ColorCode *int32 `json:"colorCode,omitempty"`
 }
+
+type _AppShortcut AppShortcut
 
 // NewAppShortcut instantiates a new AppShortcut object
 // This constructor will assign default values to properties that have it defined,
@@ -76,7 +83,7 @@ func (o *AppShortcut) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *AppShortcut) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -86,7 +93,7 @@ func (o *AppShortcut) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppShortcut) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -94,7 +101,7 @@ func (o *AppShortcut) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *AppShortcut) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -132,7 +139,7 @@ func (o *AppShortcut) SetUrl(v string) {
 
 // GetColorCode returns the ColorCode field value if set, zero value otherwise.
 func (o *AppShortcut) GetColorCode() int32 {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		var ret int32
 		return ret
 	}
@@ -142,7 +149,7 @@ func (o *AppShortcut) GetColorCode() int32 {
 // GetColorCodeOk returns a tuple with the ColorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppShortcut) GetColorCodeOk() (*int32, bool) {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		return nil, false
 	}
 	return o.ColorCode, true
@@ -150,7 +157,7 @@ func (o *AppShortcut) GetColorCodeOk() (*int32, bool) {
 
 // HasColorCode returns a boolean if a field has been set.
 func (o *AppShortcut) HasColorCode() bool {
-	if o != nil && o.ColorCode != nil {
+	if o != nil && !IsNil(o.ColorCode) {
 		return true
 	}
 
@@ -163,20 +170,62 @@ func (o *AppShortcut) SetColorCode(v int32) {
 }
 
 func (o AppShortcut) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if o.ColorCode != nil {
-		toSerialize["colorCode"] = o.ColorCode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppShortcut) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	toSerialize["url"] = o.Url
+	if !IsNil(o.ColorCode) {
+		toSerialize["colorCode"] = o.ColorCode
+	}
+	return toSerialize, nil
+}
+
+func (o *AppShortcut) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"url",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppShortcut := _AppShortcut{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppShortcut)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppShortcut(varAppShortcut)
+
+	return err
 }
 
 type NullableAppShortcut struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpSettingsApplicationDiscovery type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpSettingsApplicationDiscovery{}
+
 // ZtpSettingsApplicationDiscovery Settings for Application Discovery integration.
 type ZtpSettingsApplicationDiscovery struct {
 	// Whether the Application Discovery integration is enabled or not.
@@ -44,7 +47,7 @@ func NewZtpSettingsApplicationDiscoveryWithDefaults() *ZtpSettingsApplicationDis
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ZtpSettingsApplicationDiscovery) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ZtpSettingsApplicationDiscovery) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsApplicationDiscovery) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -62,7 +65,7 @@ func (o *ZtpSettingsApplicationDiscovery) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ZtpSettingsApplicationDiscovery) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *ZtpSettingsApplicationDiscovery) SetEnabled(v bool) {
 }
 
 func (o ZtpSettingsApplicationDiscovery) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpSettingsApplicationDiscovery) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpSettingsApplicationDiscovery struct {

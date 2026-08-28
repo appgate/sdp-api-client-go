@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeleteExportResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeleteExportResponse{}
+
 // DeleteExportResponse struct for DeleteExportResponse
 type DeleteExportResponse struct {
 	// The delete result reported by the Gateway. \"deleted\" if the MP4 export was removed; \"converting\" if a conversion was in progress and could not be interrupted.
@@ -40,7 +43,7 @@ func NewDeleteExportResponseWithDefaults() *DeleteExportResponse {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *DeleteExportResponse) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *DeleteExportResponse) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeleteExportResponse) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -58,7 +61,7 @@ func (o *DeleteExportResponse) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *DeleteExportResponse) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *DeleteExportResponse) SetStatus(v string) {
 }
 
 func (o DeleteExportResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeleteExportResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableDeleteExportResponse struct {

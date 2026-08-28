@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the DiscoveredAppsIdAccessPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DiscoveredAppsIdAccessPostRequest{}
 
 // DiscoveredAppsIdAccessPostRequest Access details.
 type DiscoveredAppsIdAccessPostRequest struct {
@@ -26,6 +31,8 @@ type DiscoveredAppsIdAccessPostRequest struct {
 	// Applied action to the app.
 	Action *string `json:"action,omitempty"`
 }
+
+type _DiscoveredAppsIdAccessPostRequest DiscoveredAppsIdAccessPostRequest
 
 // NewDiscoveredAppsIdAccessPostRequest instantiates a new DiscoveredAppsIdAccessPostRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -75,7 +82,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) SetName(v string) {
 
 // GetGroup returns the Group field value if set, zero value otherwise.
 func (o *DiscoveredAppsIdAccessPostRequest) GetGroup() string {
-	if o == nil || o.Group == nil {
+	if o == nil || IsNil(o.Group) {
 		var ret string
 		return ret
 	}
@@ -85,7 +92,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetGroup() string {
 // GetGroupOk returns a tuple with the Group field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) GetGroupOk() (*string, bool) {
-	if o == nil || o.Group == nil {
+	if o == nil || IsNil(o.Group) {
 		return nil, false
 	}
 	return o.Group, true
@@ -93,7 +100,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetGroupOk() (*string, bool) {
 
 // HasGroup returns a boolean if a field has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) HasGroup() bool {
-	if o != nil && o.Group != nil {
+	if o != nil && !IsNil(o.Group) {
 		return true
 	}
 
@@ -107,7 +114,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) SetGroup(v string) {
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *DiscoveredAppsIdAccessPostRequest) GetProvider() string {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret string
 		return ret
 	}
@@ -117,7 +124,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetProvider() string {
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) GetProviderOk() (*string, bool) {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
 	return o.Provider, true
@@ -125,7 +132,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetProviderOk() (*string, bool) {
 
 // HasProvider returns a boolean if a field has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) HasProvider() bool {
-	if o != nil && o.Provider != nil {
+	if o != nil && !IsNil(o.Provider) {
 		return true
 	}
 
@@ -139,7 +146,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) SetProvider(v string) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *DiscoveredAppsIdAccessPostRequest) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -149,7 +156,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -157,7 +164,7 @@ func (o *DiscoveredAppsIdAccessPostRequest) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *DiscoveredAppsIdAccessPostRequest) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -170,20 +177,63 @@ func (o *DiscoveredAppsIdAccessPostRequest) SetAction(v string) {
 }
 
 func (o DiscoveredAppsIdAccessPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Group != nil {
-		toSerialize["group"] = o.Group
-	}
-	if o.Provider != nil {
-		toSerialize["provider"] = o.Provider
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DiscoveredAppsIdAccessPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Group) {
+		toSerialize["group"] = o.Group
+	}
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	return toSerialize, nil
+}
+
+func (o *DiscoveredAppsIdAccessPostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDiscoveredAppsIdAccessPostRequest := _DiscoveredAppsIdAccessPostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDiscoveredAppsIdAccessPostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DiscoveredAppsIdAccessPostRequest(varDiscoveredAppsIdAccessPostRequest)
+
+	return err
 }
 
 type NullableDiscoveredAppsIdAccessPostRequest struct {

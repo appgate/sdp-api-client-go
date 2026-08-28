@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the IdentityProvidersIdAttributesPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersIdAttributesPostRequest{}
 
 // IdentityProvidersIdAttributesPostRequest struct for IdentityProvidersIdAttributesPostRequest
 type IdentityProvidersIdAttributesPostRequest struct {
@@ -44,7 +47,7 @@ func NewIdentityProvidersIdAttributesPostRequestWithDefaults() *IdentityProvider
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -62,7 +65,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetUsernameOk() (*string, boo
 
 // HasUsername returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -94,7 +97,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetPasswordOk() (*string, boo
 
 // HasPassword returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetPassword(v string) {
 
 // GetSamlResponse returns the SamlResponse field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponse() string {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponse() string {
 // GetSamlResponseOk returns a tuple with the SamlResponse field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponseOk() (*string, bool) {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		return nil, false
 	}
 	return o.SamlResponse, true
@@ -126,7 +129,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponseOk() (*string,
 
 // HasSamlResponse returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasSamlResponse() bool {
-	if o != nil && o.SamlResponse != nil {
+	if o != nil && !IsNil(o.SamlResponse) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetSamlResponse(v string) {
 }
 
 func (o IdentityProvidersIdAttributesPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.SamlResponse != nil {
-		toSerialize["samlResponse"] = o.SamlResponse
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersIdAttributesPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.SamlResponse) {
+		toSerialize["samlResponse"] = o.SamlResponse
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersIdAttributesPostRequest struct {

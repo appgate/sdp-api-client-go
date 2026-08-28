@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the LocalDatabaseProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LocalDatabaseProvider{}
 
 // LocalDatabaseProvider struct for LocalDatabaseProvider
 type LocalDatabaseProvider struct {
@@ -66,6 +71,8 @@ type LocalDatabaseProvider struct {
 	// Minimum password length requirement for local users.
 	MinPasswordLength *int32 `json:"minPasswordLength,omitempty"`
 }
+
+type _LocalDatabaseProvider LocalDatabaseProvider
 
 // NewLocalDatabaseProvider instantiates a new LocalDatabaseProvider object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +127,7 @@ func NewLocalDatabaseProviderWithDefaults() *LocalDatabaseProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -130,7 +137,7 @@ func (o *LocalDatabaseProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -138,7 +145,7 @@ func (o *LocalDatabaseProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -176,7 +183,7 @@ func (o *LocalDatabaseProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -186,7 +193,7 @@ func (o *LocalDatabaseProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -194,7 +201,7 @@ func (o *LocalDatabaseProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -208,7 +215,7 @@ func (o *LocalDatabaseProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -218,7 +225,7 @@ func (o *LocalDatabaseProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -226,7 +233,7 @@ func (o *LocalDatabaseProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -240,7 +247,7 @@ func (o *LocalDatabaseProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -250,7 +257,7 @@ func (o *LocalDatabaseProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -258,7 +265,7 @@ func (o *LocalDatabaseProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -272,7 +279,7 @@ func (o *LocalDatabaseProvider) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -282,7 +289,7 @@ func (o *LocalDatabaseProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -290,7 +297,7 @@ func (o *LocalDatabaseProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -328,7 +335,7 @@ func (o *LocalDatabaseProvider) SetType(v string) {
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetIpPoolV4() string {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		var ret string
 		return ret
 	}
@@ -338,7 +345,7 @@ func (o *LocalDatabaseProvider) GetIpPoolV4() string {
 // GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetIpPoolV4Ok() (*string, bool) {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		return nil, false
 	}
 	return o.IpPoolV4, true
@@ -346,7 +353,7 @@ func (o *LocalDatabaseProvider) GetIpPoolV4Ok() (*string, bool) {
 
 // HasIpPoolV4 returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasIpPoolV4() bool {
-	if o != nil && o.IpPoolV4 != nil {
+	if o != nil && !IsNil(o.IpPoolV4) {
 		return true
 	}
 
@@ -360,7 +367,7 @@ func (o *LocalDatabaseProvider) SetIpPoolV4(v string) {
 
 // GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetIpPoolV6() string {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		var ret string
 		return ret
 	}
@@ -370,7 +377,7 @@ func (o *LocalDatabaseProvider) GetIpPoolV6() string {
 // GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetIpPoolV6Ok() (*string, bool) {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		return nil, false
 	}
 	return o.IpPoolV6, true
@@ -378,7 +385,7 @@ func (o *LocalDatabaseProvider) GetIpPoolV6Ok() (*string, bool) {
 
 // HasIpPoolV6 returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasIpPoolV6() bool {
-	if o != nil && o.IpPoolV6 != nil {
+	if o != nil && !IsNil(o.IpPoolV6) {
 		return true
 	}
 
@@ -392,7 +399,7 @@ func (o *LocalDatabaseProvider) SetIpPoolV6(v string) {
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetClaimMappings() []ClaimMappingsInner {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		var ret []ClaimMappingsInner
 		return ret
 	}
@@ -402,7 +409,7 @@ func (o *LocalDatabaseProvider) GetClaimMappings() []ClaimMappingsInner {
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		return nil, false
 	}
 	return o.ClaimMappings, true
@@ -410,7 +417,7 @@ func (o *LocalDatabaseProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool
 
 // HasClaimMappings returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
+	if o != nil && !IsNil(o.ClaimMappings) {
 		return true
 	}
 
@@ -424,7 +431,7 @@ func (o *LocalDatabaseProvider) SetClaimMappings(v []ClaimMappingsInner) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetUserScripts() []string {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret []string
 		return ret
 	}
@@ -434,7 +441,7 @@ func (o *LocalDatabaseProvider) GetUserScripts() []string {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetUserScriptsOk() ([]string, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -442,7 +449,7 @@ func (o *LocalDatabaseProvider) GetUserScriptsOk() ([]string, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -456,7 +463,7 @@ func (o *LocalDatabaseProvider) SetUserScripts(v []string) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -466,7 +473,7 @@ func (o *LocalDatabaseProvider) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -474,7 +481,7 @@ func (o *LocalDatabaseProvider) GetDnsServersOk() ([]string, bool) {
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -488,7 +495,7 @@ func (o *LocalDatabaseProvider) SetDnsServers(v []string) {
 
 // GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetDnsSearchDomains() []string {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		var ret []string
 		return ret
 	}
@@ -498,7 +505,7 @@ func (o *LocalDatabaseProvider) GetDnsSearchDomains() []string {
 // GetDnsSearchDomainsOk returns a tuple with the DnsSearchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetDnsSearchDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		return nil, false
 	}
 	return o.DnsSearchDomains, true
@@ -506,7 +513,7 @@ func (o *LocalDatabaseProvider) GetDnsSearchDomainsOk() ([]string, bool) {
 
 // HasDnsSearchDomains returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasDnsSearchDomains() bool {
-	if o != nil && o.DnsSearchDomains != nil {
+	if o != nil && !IsNil(o.DnsSearchDomains) {
 		return true
 	}
 
@@ -520,7 +527,7 @@ func (o *LocalDatabaseProvider) SetDnsSearchDomains(v []string) {
 
 // GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetDeviceLimitPerUser() int32 {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		var ret int32
 		return ret
 	}
@@ -530,7 +537,7 @@ func (o *LocalDatabaseProvider) GetDeviceLimitPerUser() int32 {
 // GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		return nil, false
 	}
 	return o.DeviceLimitPerUser, true
@@ -538,7 +545,7 @@ func (o *LocalDatabaseProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
 
 // HasDeviceLimitPerUser returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasDeviceLimitPerUser() bool {
-	if o != nil && o.DeviceLimitPerUser != nil {
+	if o != nil && !IsNil(o.DeviceLimitPerUser) {
 		return true
 	}
 
@@ -552,7 +559,7 @@ func (o *LocalDatabaseProvider) SetDeviceLimitPerUser(v int32) {
 
 // GetAdminProvider returns the AdminProvider field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetAdminProvider() bool {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		var ret bool
 		return ret
 	}
@@ -562,7 +569,7 @@ func (o *LocalDatabaseProvider) GetAdminProvider() bool {
 // GetAdminProviderOk returns a tuple with the AdminProvider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetAdminProviderOk() (*bool, bool) {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		return nil, false
 	}
 	return o.AdminProvider, true
@@ -570,7 +577,7 @@ func (o *LocalDatabaseProvider) GetAdminProviderOk() (*bool, bool) {
 
 // HasAdminProvider returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasAdminProvider() bool {
-	if o != nil && o.AdminProvider != nil {
+	if o != nil && !IsNil(o.AdminProvider) {
 		return true
 	}
 
@@ -584,7 +591,7 @@ func (o *LocalDatabaseProvider) SetAdminProvider(v bool) {
 
 // GetOnBoarding2FA returns the OnBoarding2FA field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoarding2FA {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		var ret ConfigurableIdentityProviderAllOfOnBoarding2FA
 		return ret
 	}
@@ -594,7 +601,7 @@ func (o *LocalDatabaseProvider) GetOnBoarding2FA() ConfigurableIdentityProviderA
 // GetOnBoarding2FAOk returns a tuple with the OnBoarding2FA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfOnBoarding2FA, bool) {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		return nil, false
 	}
 	return o.OnBoarding2FA, true
@@ -602,7 +609,7 @@ func (o *LocalDatabaseProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProvi
 
 // HasOnBoarding2FA returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasOnBoarding2FA() bool {
-	if o != nil && o.OnBoarding2FA != nil {
+	if o != nil && !IsNil(o.OnBoarding2FA) {
 		return true
 	}
 
@@ -616,7 +623,7 @@ func (o *LocalDatabaseProvider) SetOnBoarding2FA(v ConfigurableIdentityProviderA
 
 // GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetInactivityTimeoutMinutes() int32 {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -626,7 +633,7 @@ func (o *LocalDatabaseProvider) GetInactivityTimeoutMinutes() int32 {
 // GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		return nil, false
 	}
 	return o.InactivityTimeoutMinutes, true
@@ -634,7 +641,7 @@ func (o *LocalDatabaseProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
 
 // HasInactivityTimeoutMinutes returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasInactivityTimeoutMinutes() bool {
-	if o != nil && o.InactivityTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutMinutes) {
 		return true
 	}
 
@@ -648,7 +655,7 @@ func (o *LocalDatabaseProvider) SetInactivityTimeoutMinutes(v int32) {
 
 // GetNetworkInactivityTimeoutEnabled returns the NetworkInactivityTimeoutEnabled field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetNetworkInactivityTimeoutEnabled() bool {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		var ret bool
 		return ret
 	}
@@ -658,7 +665,7 @@ func (o *LocalDatabaseProvider) GetNetworkInactivityTimeoutEnabled() bool {
 // GetNetworkInactivityTimeoutEnabledOk returns a tuple with the NetworkInactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return nil, false
 	}
 	return o.NetworkInactivityTimeoutEnabled, true
@@ -666,7 +673,7 @@ func (o *LocalDatabaseProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, b
 
 // HasNetworkInactivityTimeoutEnabled returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasNetworkInactivityTimeoutEnabled() bool {
-	if o != nil && o.NetworkInactivityTimeoutEnabled != nil {
+	if o != nil && !IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return true
 	}
 
@@ -680,7 +687,7 @@ func (o *LocalDatabaseProvider) SetNetworkInactivityTimeoutEnabled(v bool) {
 
 // GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		var ret bool
 		return ret
 	}
@@ -690,7 +697,7 @@ func (o *LocalDatabaseProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
 // GetEnforceWindowsNetworkProfileAsDomainOk returns a tuple with the EnforceWindowsNetworkProfileAsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool) {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return nil, false
 	}
 	return o.EnforceWindowsNetworkProfileAsDomain, true
@@ -698,7 +705,7 @@ func (o *LocalDatabaseProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bo
 
 // HasEnforceWindowsNetworkProfileAsDomain returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasEnforceWindowsNetworkProfileAsDomain() bool {
-	if o != nil && o.EnforceWindowsNetworkProfileAsDomain != nil {
+	if o != nil && !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return true
 	}
 
@@ -712,7 +719,7 @@ func (o *LocalDatabaseProvider) SetEnforceWindowsNetworkProfileAsDomain(v bool) 
 
 // GetBlockLocalDnsRequests returns the BlockLocalDnsRequests field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetBlockLocalDnsRequests() bool {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		var ret bool
 		return ret
 	}
@@ -722,7 +729,7 @@ func (o *LocalDatabaseProvider) GetBlockLocalDnsRequests() bool {
 // GetBlockLocalDnsRequestsOk returns a tuple with the BlockLocalDnsRequests field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		return nil, false
 	}
 	return o.BlockLocalDnsRequests, true
@@ -730,7 +737,7 @@ func (o *LocalDatabaseProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
 
 // HasBlockLocalDnsRequests returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasBlockLocalDnsRequests() bool {
-	if o != nil && o.BlockLocalDnsRequests != nil {
+	if o != nil && !IsNil(o.BlockLocalDnsRequests) {
 		return true
 	}
 
@@ -744,7 +751,7 @@ func (o *LocalDatabaseProvider) SetBlockLocalDnsRequests(v bool) {
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		var ret []OnDemandClaimMappingsInner
 		return ret
 	}
@@ -754,7 +761,7 @@ func (o *LocalDatabaseProvider) GetOnDemandClaimMappings() []OnDemandClaimMappin
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInner, bool) {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		return nil, false
 	}
 	return o.OnDemandClaimMappings, true
@@ -762,7 +769,7 @@ func (o *LocalDatabaseProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMap
 
 // HasOnDemandClaimMappings returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasOnDemandClaimMappings() bool {
-	if o != nil && o.OnDemandClaimMappings != nil {
+	if o != nil && !IsNil(o.OnDemandClaimMappings) {
 		return true
 	}
 
@@ -776,7 +783,7 @@ func (o *LocalDatabaseProvider) SetOnDemandClaimMappings(v []OnDemandClaimMappin
 
 // GetUserLockoutThreshold returns the UserLockoutThreshold field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetUserLockoutThreshold() int32 {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		var ret int32
 		return ret
 	}
@@ -786,7 +793,7 @@ func (o *LocalDatabaseProvider) GetUserLockoutThreshold() int32 {
 // GetUserLockoutThresholdOk returns a tuple with the UserLockoutThreshold field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetUserLockoutThresholdOk() (*int32, bool) {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		return nil, false
 	}
 	return o.UserLockoutThreshold, true
@@ -794,7 +801,7 @@ func (o *LocalDatabaseProvider) GetUserLockoutThresholdOk() (*int32, bool) {
 
 // HasUserLockoutThreshold returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasUserLockoutThreshold() bool {
-	if o != nil && o.UserLockoutThreshold != nil {
+	if o != nil && !IsNil(o.UserLockoutThreshold) {
 		return true
 	}
 
@@ -808,7 +815,7 @@ func (o *LocalDatabaseProvider) SetUserLockoutThreshold(v int32) {
 
 // GetUserLockoutDurationMinutes returns the UserLockoutDurationMinutes field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetUserLockoutDurationMinutes() int32 {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		var ret int32
 		return ret
 	}
@@ -818,7 +825,7 @@ func (o *LocalDatabaseProvider) GetUserLockoutDurationMinutes() int32 {
 // GetUserLockoutDurationMinutesOk returns a tuple with the UserLockoutDurationMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetUserLockoutDurationMinutesOk() (*int32, bool) {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		return nil, false
 	}
 	return o.UserLockoutDurationMinutes, true
@@ -826,7 +833,7 @@ func (o *LocalDatabaseProvider) GetUserLockoutDurationMinutesOk() (*int32, bool)
 
 // HasUserLockoutDurationMinutes returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasUserLockoutDurationMinutes() bool {
-	if o != nil && o.UserLockoutDurationMinutes != nil {
+	if o != nil && !IsNil(o.UserLockoutDurationMinutes) {
 		return true
 	}
 
@@ -840,7 +847,7 @@ func (o *LocalDatabaseProvider) SetUserLockoutDurationMinutes(v int32) {
 
 // GetMinPasswordLength returns the MinPasswordLength field value if set, zero value otherwise.
 func (o *LocalDatabaseProvider) GetMinPasswordLength() int32 {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		var ret int32
 		return ret
 	}
@@ -850,7 +857,7 @@ func (o *LocalDatabaseProvider) GetMinPasswordLength() int32 {
 // GetMinPasswordLengthOk returns a tuple with the MinPasswordLength field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalDatabaseProvider) GetMinPasswordLengthOk() (*int32, bool) {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		return nil, false
 	}
 	return o.MinPasswordLength, true
@@ -858,7 +865,7 @@ func (o *LocalDatabaseProvider) GetMinPasswordLengthOk() (*int32, bool) {
 
 // HasMinPasswordLength returns a boolean if a field has been set.
 func (o *LocalDatabaseProvider) HasMinPasswordLength() bool {
-	if o != nil && o.MinPasswordLength != nil {
+	if o != nil && !IsNil(o.MinPasswordLength) {
 		return true
 	}
 
@@ -871,80 +878,122 @@ func (o *LocalDatabaseProvider) SetMinPasswordLength(v int32) {
 }
 
 func (o LocalDatabaseProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.IpPoolV4 != nil {
-		toSerialize["ipPoolV4"] = o.IpPoolV4
-	}
-	if o.IpPoolV6 != nil {
-		toSerialize["ipPoolV6"] = o.IpPoolV6
-	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if o.DnsSearchDomains != nil {
-		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
-	}
-	if o.DeviceLimitPerUser != nil {
-		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
-	}
-	if o.AdminProvider != nil {
-		toSerialize["adminProvider"] = o.AdminProvider
-	}
-	if o.OnBoarding2FA != nil {
-		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
-	}
-	if o.InactivityTimeoutMinutes != nil {
-		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
-	}
-	if o.NetworkInactivityTimeoutEnabled != nil {
-		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
-	}
-	if o.EnforceWindowsNetworkProfileAsDomain != nil {
-		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
-	}
-	if o.BlockLocalDnsRequests != nil {
-		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
-	}
-	if o.OnDemandClaimMappings != nil {
-		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
-	}
-	if o.UserLockoutThreshold != nil {
-		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
-	}
-	if o.UserLockoutDurationMinutes != nil {
-		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
-	}
-	if o.MinPasswordLength != nil {
-		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LocalDatabaseProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IpPoolV4) {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if !IsNil(o.IpPoolV6) {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if !IsNil(o.ClaimMappings) {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if !IsNil(o.DnsSearchDomains) {
+		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	}
+	if !IsNil(o.DeviceLimitPerUser) {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
+	}
+	if !IsNil(o.AdminProvider) {
+		toSerialize["adminProvider"] = o.AdminProvider
+	}
+	if !IsNil(o.OnBoarding2FA) {
+		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
+	}
+	if !IsNil(o.InactivityTimeoutMinutes) {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	if !IsNil(o.NetworkInactivityTimeoutEnabled) {
+		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
+	}
+	if !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
+		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
+	}
+	if !IsNil(o.BlockLocalDnsRequests) {
+		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
+	}
+	if !IsNil(o.OnDemandClaimMappings) {
+		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	if !IsNil(o.UserLockoutThreshold) {
+		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
+	}
+	if !IsNil(o.UserLockoutDurationMinutes) {
+		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
+	}
+	if !IsNil(o.MinPasswordLength) {
+		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	}
+	return toSerialize, nil
+}
+
+func (o *LocalDatabaseProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varLocalDatabaseProvider := _LocalDatabaseProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varLocalDatabaseProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = LocalDatabaseProvider(varLocalDatabaseProvider)
+
+	return err
 }
 
 type NullableLocalDatabaseProvider struct {

@@ -12,14 +12,21 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ResetAppRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ResetAppRequest{}
 
 // ResetAppRequest Request body for resetting a discovered app.
 type ResetAppRequest struct {
 	// List of ports to reset; each entry can be a single port or a range.
 	Ports []string `json:"ports"`
 }
+
+type _ResetAppRequest ResetAppRequest
 
 // NewResetAppRequest instantiates a new ResetAppRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -64,11 +71,54 @@ func (o *ResetAppRequest) SetPorts(v []string) {
 }
 
 func (o ResetAppRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["ports"] = o.Ports
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ResetAppRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["ports"] = o.Ports
+	return toSerialize, nil
+}
+
+func (o *ResetAppRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"ports",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varResetAppRequest := _ResetAppRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varResetAppRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ResetAppRequest(varResetAppRequest)
+
+	return err
 }
 
 type NullableResetAppRequest struct {

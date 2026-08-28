@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpSettingsRiskEngineFallbackValues type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpSettingsRiskEngineFallbackValues{}
+
 // ZtpSettingsRiskEngineFallbackValues Configure fallback risk values when certain scenarios occur.
 type ZtpSettingsRiskEngineFallbackValues struct {
 	// Fallback risk value when the relevant rule or adapter is not working. 1 - LOW, 2 - MEDIUM, 3 - HIGH
@@ -56,7 +59,7 @@ func NewZtpSettingsRiskEngineFallbackValuesWithDefaults() *ZtpSettingsRiskEngine
 
 // GetRuleNotWorking returns the RuleNotWorking field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetRuleNotWorking() float32 {
-	if o == nil || o.RuleNotWorking == nil {
+	if o == nil || IsNil(o.RuleNotWorking) {
 		var ret float32
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetRuleNotWorking() float32 {
 // GetRuleNotWorkingOk returns a tuple with the RuleNotWorking field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetRuleNotWorkingOk() (*float32, bool) {
-	if o == nil || o.RuleNotWorking == nil {
+	if o == nil || IsNil(o.RuleNotWorking) {
 		return nil, false
 	}
 	return o.RuleNotWorking, true
@@ -74,7 +77,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetRuleNotWorkingOk() (*float32, b
 
 // HasRuleNotWorking returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) HasRuleNotWorking() bool {
-	if o != nil && o.RuleNotWorking != nil {
+	if o != nil && !IsNil(o.RuleNotWorking) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) SetRuleNotWorking(v float32) {
 
 // GetDeviceInfoNotAvailable returns the DeviceInfoNotAvailable field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetDeviceInfoNotAvailable() float32 {
-	if o == nil || o.DeviceInfoNotAvailable == nil {
+	if o == nil || IsNil(o.DeviceInfoNotAvailable) {
 		var ret float32
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetDeviceInfoNotAvailable() float3
 // GetDeviceInfoNotAvailableOk returns a tuple with the DeviceInfoNotAvailable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetDeviceInfoNotAvailableOk() (*float32, bool) {
-	if o == nil || o.DeviceInfoNotAvailable == nil {
+	if o == nil || IsNil(o.DeviceInfoNotAvailable) {
 		return nil, false
 	}
 	return o.DeviceInfoNotAvailable, true
@@ -106,7 +109,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetDeviceInfoNotAvailableOk() (*fl
 
 // HasDeviceInfoNotAvailable returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) HasDeviceInfoNotAvailable() bool {
-	if o != nil && o.DeviceInfoNotAvailable != nil {
+	if o != nil && !IsNil(o.DeviceInfoNotAvailable) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) SetDeviceInfoNotAvailable(v float3
 
 // GetZtpUnreachable returns the ZtpUnreachable field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetZtpUnreachable() float32 {
-	if o == nil || o.ZtpUnreachable == nil {
+	if o == nil || IsNil(o.ZtpUnreachable) {
 		var ret float32
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetZtpUnreachable() float32 {
 // GetZtpUnreachableOk returns a tuple with the ZtpUnreachable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) GetZtpUnreachableOk() (*float32, bool) {
-	if o == nil || o.ZtpUnreachable == nil {
+	if o == nil || IsNil(o.ZtpUnreachable) {
 		return nil, false
 	}
 	return o.ZtpUnreachable, true
@@ -138,7 +141,7 @@ func (o *ZtpSettingsRiskEngineFallbackValues) GetZtpUnreachableOk() (*float32, b
 
 // HasZtpUnreachable returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngineFallbackValues) HasZtpUnreachable() bool {
-	if o != nil && o.ZtpUnreachable != nil {
+	if o != nil && !IsNil(o.ZtpUnreachable) {
 		return true
 	}
 
@@ -151,17 +154,25 @@ func (o *ZtpSettingsRiskEngineFallbackValues) SetZtpUnreachable(v float32) {
 }
 
 func (o ZtpSettingsRiskEngineFallbackValues) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RuleNotWorking != nil {
-		toSerialize["ruleNotWorking"] = o.RuleNotWorking
-	}
-	if o.DeviceInfoNotAvailable != nil {
-		toSerialize["deviceInfoNotAvailable"] = o.DeviceInfoNotAvailable
-	}
-	if o.ZtpUnreachable != nil {
-		toSerialize["ztpUnreachable"] = o.ZtpUnreachable
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpSettingsRiskEngineFallbackValues) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RuleNotWorking) {
+		toSerialize["ruleNotWorking"] = o.RuleNotWorking
+	}
+	if !IsNil(o.DeviceInfoNotAvailable) {
+		toSerialize["deviceInfoNotAvailable"] = o.DeviceInfoNotAvailable
+	}
+	if !IsNil(o.ZtpUnreachable) {
+		toSerialize["ztpUnreachable"] = o.ZtpUnreachable
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpSettingsRiskEngineFallbackValues struct {

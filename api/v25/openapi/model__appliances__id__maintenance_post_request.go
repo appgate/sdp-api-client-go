@@ -12,14 +12,21 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppliancesIdMaintenancePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdMaintenancePostRequest{}
 
 // AppliancesIdMaintenancePostRequest struct for AppliancesIdMaintenancePostRequest
 type AppliancesIdMaintenancePostRequest struct {
 	// Flag to enable or disable the maintenance mode.
 	Enabled bool `json:"enabled"`
 }
+
+type _AppliancesIdMaintenancePostRequest AppliancesIdMaintenancePostRequest
 
 // NewAppliancesIdMaintenancePostRequest instantiates a new AppliancesIdMaintenancePostRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -64,11 +71,54 @@ func (o *AppliancesIdMaintenancePostRequest) SetEnabled(v bool) {
 }
 
 func (o AppliancesIdMaintenancePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["enabled"] = o.Enabled
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdMaintenancePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["enabled"] = o.Enabled
+	return toSerialize, nil
+}
+
+func (o *AppliancesIdMaintenancePostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"enabled",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppliancesIdMaintenancePostRequest := _AppliancesIdMaintenancePostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppliancesIdMaintenancePostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppliancesIdMaintenancePostRequest(varAppliancesIdMaintenancePostRequest)
+
+	return err
 }
 
 type NullableAppliancesIdMaintenancePostRequest struct {

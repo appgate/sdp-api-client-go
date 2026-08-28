@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdBackupPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdBackupPostRequest{}
+
 // AppliancesIdBackupPostRequest struct for AppliancesIdBackupPostRequest
 type AppliancesIdBackupPostRequest struct {
 	// Whether the Appliance Backup should include syslog or not.
@@ -44,7 +47,7 @@ func NewAppliancesIdBackupPostRequestWithDefaults() *AppliancesIdBackupPostReque
 
 // GetLogs returns the Logs field value if set, zero value otherwise.
 func (o *AppliancesIdBackupPostRequest) GetLogs() bool {
-	if o == nil || o.Logs == nil {
+	if o == nil || IsNil(o.Logs) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AppliancesIdBackupPostRequest) GetLogs() bool {
 // GetLogsOk returns a tuple with the Logs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupPostRequest) GetLogsOk() (*bool, bool) {
-	if o == nil || o.Logs == nil {
+	if o == nil || IsNil(o.Logs) {
 		return nil, false
 	}
 	return o.Logs, true
@@ -62,7 +65,7 @@ func (o *AppliancesIdBackupPostRequest) GetLogsOk() (*bool, bool) {
 
 // HasLogs returns a boolean if a field has been set.
 func (o *AppliancesIdBackupPostRequest) HasLogs() bool {
-	if o != nil && o.Logs != nil {
+	if o != nil && !IsNil(o.Logs) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AppliancesIdBackupPostRequest) SetLogs(v bool) {
 
 // GetAudit returns the Audit field value if set, zero value otherwise.
 func (o *AppliancesIdBackupPostRequest) GetAudit() bool {
-	if o == nil || o.Audit == nil {
+	if o == nil || IsNil(o.Audit) {
 		var ret bool
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AppliancesIdBackupPostRequest) GetAudit() bool {
 // GetAuditOk returns a tuple with the Audit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupPostRequest) GetAuditOk() (*bool, bool) {
-	if o == nil || o.Audit == nil {
+	if o == nil || IsNil(o.Audit) {
 		return nil, false
 	}
 	return o.Audit, true
@@ -94,7 +97,7 @@ func (o *AppliancesIdBackupPostRequest) GetAuditOk() (*bool, bool) {
 
 // HasAudit returns a boolean if a field has been set.
 func (o *AppliancesIdBackupPostRequest) HasAudit() bool {
-	if o != nil && o.Audit != nil {
+	if o != nil && !IsNil(o.Audit) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AppliancesIdBackupPostRequest) SetAudit(v bool) {
 
 // GetNotifyUrl returns the NotifyUrl field value if set, zero value otherwise.
 func (o *AppliancesIdBackupPostRequest) GetNotifyUrl() string {
-	if o == nil || o.NotifyUrl == nil {
+	if o == nil || IsNil(o.NotifyUrl) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AppliancesIdBackupPostRequest) GetNotifyUrl() string {
 // GetNotifyUrlOk returns a tuple with the NotifyUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupPostRequest) GetNotifyUrlOk() (*string, bool) {
-	if o == nil || o.NotifyUrl == nil {
+	if o == nil || IsNil(o.NotifyUrl) {
 		return nil, false
 	}
 	return o.NotifyUrl, true
@@ -126,7 +129,7 @@ func (o *AppliancesIdBackupPostRequest) GetNotifyUrlOk() (*string, bool) {
 
 // HasNotifyUrl returns a boolean if a field has been set.
 func (o *AppliancesIdBackupPostRequest) HasNotifyUrl() bool {
-	if o != nil && o.NotifyUrl != nil {
+	if o != nil && !IsNil(o.NotifyUrl) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *AppliancesIdBackupPostRequest) SetNotifyUrl(v string) {
 }
 
 func (o AppliancesIdBackupPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Logs != nil {
-		toSerialize["logs"] = o.Logs
-	}
-	if o.Audit != nil {
-		toSerialize["audit"] = o.Audit
-	}
-	if o.NotifyUrl != nil {
-		toSerialize["notifyUrl"] = o.NotifyUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdBackupPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Logs) {
+		toSerialize["logs"] = o.Logs
+	}
+	if !IsNil(o.Audit) {
+		toSerialize["audit"] = o.Audit
+	}
+	if !IsNil(o.NotifyUrl) {
+		toSerialize["notifyUrl"] = o.NotifyUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdBackupPostRequest struct {

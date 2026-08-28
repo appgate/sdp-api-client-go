@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// LoginApiService LoginApi service
-type LoginApiService service
+// LoginAPIService LoginAPI service
+type LoginAPIService service
 
 type ApiAuthenticationLogoutPostRequest struct {
 	ctx        context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 }
 
 func (r ApiAuthenticationLogoutPostRequest) Execute() (*http.Response, error) {
@@ -39,7 +39,7 @@ The tokens for this session will be revoked
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAuthenticationLogoutPostRequest
 */
-func (a *LoginApiService) AuthenticationLogoutPost(ctx context.Context) ApiAuthenticationLogoutPostRequest {
+func (a *LoginAPIService) AuthenticationLogoutPost(ctx context.Context) ApiAuthenticationLogoutPostRequest {
 	return ApiAuthenticationLogoutPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -47,14 +47,14 @@ func (a *LoginApiService) AuthenticationLogoutPost(ctx context.Context) ApiAuthe
 }
 
 // Execute executes the request
-func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLogoutPostRequest) (*http.Response, error) {
+func (a *LoginAPIService) AuthenticationLogoutPostExecute(r ApiAuthenticationLogoutPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationLogoutPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AuthenticationLogoutPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -92,9 +92,9 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -111,6 +111,7 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -121,6 +122,7 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -131,6 +133,7 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -141,7 +144,7 @@ func (a *LoginApiService) AuthenticationLogoutPostExecute(r ApiAuthenticationLog
 
 type ApiAuthenticationOtpInitializePostRequest struct {
 	ctx                                    context.Context
-	ApiService                             *LoginApiService
+	ApiService                             *LoginAPIService
 	authenticationOtpInitializePostRequest *AuthenticationOtpInitializePostRequest
 }
 
@@ -163,7 +166,7 @@ This API starts the Multi-Factor Authentication process. It requires the partial
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAuthenticationOtpInitializePostRequest
 */
-func (a *LoginApiService) AuthenticationOtpInitializePost(ctx context.Context) ApiAuthenticationOtpInitializePostRequest {
+func (a *LoginAPIService) AuthenticationOtpInitializePost(ctx context.Context) ApiAuthenticationOtpInitializePostRequest {
 	return ApiAuthenticationOtpInitializePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -173,7 +176,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePost(ctx context.Context) A
 // Execute executes the request
 //
 //	@return AuthenticationOtpInitializePost200Response
-func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthenticationOtpInitializePostRequest) (*AuthenticationOtpInitializePost200Response, *http.Response, error) {
+func (a *LoginAPIService) AuthenticationOtpInitializePostExecute(r ApiAuthenticationOtpInitializePostRequest) (*AuthenticationOtpInitializePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -181,7 +184,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 		localVarReturnValue *AuthenticationOtpInitializePost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationOtpInitializePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AuthenticationOtpInitializePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -221,9 +224,9 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -240,6 +243,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -250,6 +254,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -260,6 +265,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -270,6 +276,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -280,6 +287,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -299,7 +307,7 @@ func (a *LoginApiService) AuthenticationOtpInitializePostExecute(r ApiAuthentica
 
 type ApiAuthenticationOtpPostRequest struct {
 	ctx                          context.Context
-	ApiService                   *LoginApiService
+	ApiService                   *LoginAPIService
 	authenticationOtpPostRequest *AuthenticationOtpPostRequest
 }
 
@@ -321,7 +329,7 @@ This API starts the Multi-Factor Authentication process. It requires the partial
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAuthenticationOtpPostRequest
 */
-func (a *LoginApiService) AuthenticationOtpPost(ctx context.Context) ApiAuthenticationOtpPostRequest {
+func (a *LoginAPIService) AuthenticationOtpPost(ctx context.Context) ApiAuthenticationOtpPostRequest {
 	return ApiAuthenticationOtpPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -331,7 +339,7 @@ func (a *LoginApiService) AuthenticationOtpPost(ctx context.Context) ApiAuthenti
 // Execute executes the request
 //
 //	@return LoginResponse
-func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPostRequest) (*LoginResponse, *http.Response, error) {
+func (a *LoginAPIService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -339,7 +347,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 		localVarReturnValue *LoginResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationOtpPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AuthenticationOtpPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -382,9 +390,9 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -401,6 +409,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -411,6 +420,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -421,6 +431,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -431,6 +442,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -441,6 +453,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -460,7 +473,7 @@ func (a *LoginApiService) AuthenticationOtpPostExecute(r ApiAuthenticationOtpPos
 
 type ApiAuthenticationPostRequest struct {
 	ctx          context.Context
-	ApiService   *LoginApiService
+	ApiService   *LoginAPIService
 	loginRequest *LoginRequest
 }
 
@@ -486,7 +499,7 @@ MFA process must be completed before Authorization.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAuthenticationPostRequest
 */
-func (a *LoginApiService) AuthenticationPost(ctx context.Context) ApiAuthenticationPostRequest {
+func (a *LoginAPIService) AuthenticationPost(ctx context.Context) ApiAuthenticationPostRequest {
 	return ApiAuthenticationPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -496,7 +509,7 @@ func (a *LoginApiService) AuthenticationPost(ctx context.Context) ApiAuthenticat
 // Execute executes the request
 //
 //	@return LoginResponse
-func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostRequest) (*LoginResponse, *http.Response, error) {
+func (a *LoginAPIService) AuthenticationPostExecute(r ApiAuthenticationPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -504,7 +517,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 		localVarReturnValue *LoginResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthenticationPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AuthenticationPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -547,9 +560,9 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -566,6 +579,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -576,6 +590,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -586,6 +601,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -596,6 +612,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -606,6 +623,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -625,7 +643,7 @@ func (a *LoginApiService) AuthenticationPostExecute(r ApiAuthenticationPostReque
 
 type ApiAuthorizationGetRequest struct {
 	ctx        context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 }
 
 func (r ApiAuthorizationGetRequest) Execute() (*LoginResponse, *http.Response, error) {
@@ -641,7 +659,7 @@ Last step for logging in is sending the partial AuthToken for authorization and 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAuthorizationGetRequest
 */
-func (a *LoginApiService) AuthorizationGet(ctx context.Context) ApiAuthorizationGetRequest {
+func (a *LoginAPIService) AuthorizationGet(ctx context.Context) ApiAuthorizationGetRequest {
 	return ApiAuthorizationGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -651,7 +669,7 @@ func (a *LoginApiService) AuthorizationGet(ctx context.Context) ApiAuthorization
 // Execute executes the request
 //
 //	@return LoginResponse
-func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) (*LoginResponse, *http.Response, error) {
+func (a *LoginAPIService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -659,7 +677,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 		localVarReturnValue *LoginResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.AuthorizationGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.AuthorizationGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -697,9 +715,9 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -716,6 +734,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -726,6 +745,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -736,6 +756,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -746,6 +767,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -756,6 +778,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -766,6 +789,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -785,7 +809,7 @@ func (a *LoginApiService) AuthorizationGetExecute(r ApiAuthorizationGetRequest) 
 
 type ApiIdentityProvidersNamesGetRequest struct {
 	ctx        context.Context
-	ApiService *LoginApiService
+	ApiService *LoginAPIService
 }
 
 func (r ApiIdentityProvidersNamesGetRequest) Execute() (*IdentityProvidersNamesGet200Response, *http.Response, error) {
@@ -800,7 +824,7 @@ Get the list of identity providers available for admin login.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIdentityProvidersNamesGetRequest
 */
-func (a *LoginApiService) IdentityProvidersNamesGet(ctx context.Context) ApiIdentityProvidersNamesGetRequest {
+func (a *LoginAPIService) IdentityProvidersNamesGet(ctx context.Context) ApiIdentityProvidersNamesGetRequest {
 	return ApiIdentityProvidersNamesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -810,7 +834,7 @@ func (a *LoginApiService) IdentityProvidersNamesGet(ctx context.Context) ApiIden
 // Execute executes the request
 //
 //	@return IdentityProvidersNamesGet200Response
-func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvidersNamesGetRequest) (*IdentityProvidersNamesGet200Response, *http.Response, error) {
+func (a *LoginAPIService) IdentityProvidersNamesGetExecute(r ApiIdentityProvidersNamesGetRequest) (*IdentityProvidersNamesGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -818,7 +842,7 @@ func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvider
 		localVarReturnValue *IdentityProvidersNamesGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.IdentityProvidersNamesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.IdentityProvidersNamesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -856,9 +880,9 @@ func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvider
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -875,6 +899,7 @@ func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvider
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -894,7 +919,7 @@ func (a *LoginApiService) IdentityProvidersNamesGetExecute(r ApiIdentityProvider
 
 type ApiLoginPostRequest struct {
 	ctx          context.Context
-	ApiService   *LoginApiService
+	ApiService   *LoginAPIService
 	loginRequest *LoginRequest
 }
 
@@ -916,7 +941,7 @@ First step for any API call is retrieving AuthToken using Login API. All other c
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiLoginPostRequest
 */
-func (a *LoginApiService) LoginPost(ctx context.Context) ApiLoginPostRequest {
+func (a *LoginAPIService) LoginPost(ctx context.Context) ApiLoginPostRequest {
 	return ApiLoginPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -926,7 +951,7 @@ func (a *LoginApiService) LoginPost(ctx context.Context) ApiLoginPostRequest {
 // Execute executes the request
 //
 //	@return LoginResponse
-func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginResponse, *http.Response, error) {
+func (a *LoginAPIService) LoginPostExecute(r ApiLoginPostRequest) (*LoginResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -934,7 +959,7 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 		localVarReturnValue *LoginResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginApiService.LoginPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoginAPIService.LoginPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -977,9 +1002,9 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -996,6 +1021,7 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1006,16 +1032,18 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1026,6 +1054,7 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1036,6 +1065,7 @@ func (a *LoginApiService) LoginPostExecute(r ApiLoginPostRequest) (*LoginRespons
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

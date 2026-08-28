@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdBackupBackupIdStatusGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdBackupBackupIdStatusGet200Response{}
+
 // AppliancesIdBackupBackupIdStatusGet200Response Backups status.
 type AppliancesIdBackupBackupIdStatusGet200Response struct {
 	// Encoding used for the output field
@@ -48,7 +51,7 @@ func NewAppliancesIdBackupBackupIdStatusGet200ResponseWithDefaults() *Appliances
 
 // GetEncoding returns the Encoding field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetEncoding() string {
-	if o == nil || o.Encoding == nil {
+	if o == nil || IsNil(o.Encoding) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetEncoding() string {
 // GetEncodingOk returns a tuple with the Encoding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetEncodingOk() (*string, bool) {
-	if o == nil || o.Encoding == nil {
+	if o == nil || IsNil(o.Encoding) {
 		return nil, false
 	}
 	return o.Encoding, true
@@ -66,7 +69,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetEncodingOk() (*strin
 
 // HasEncoding returns a boolean if a field has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasEncoding() bool {
-	if o != nil && o.Encoding != nil {
+	if o != nil && !IsNil(o.Encoding) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetEncoding(v string) {
 
 // GetOutput returns the Output field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetOutput() string {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetOutput() string {
 // GetOutputOk returns a tuple with the Output field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetOutputOk() (*string, bool) {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		return nil, false
 	}
 	return o.Output, true
@@ -98,7 +101,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetOutputOk() (*string,
 
 // HasOutput returns a boolean if a field has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasOutput() bool {
-	if o != nil && o.Output != nil {
+	if o != nil && !IsNil(o.Output) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetOutput(v string) {
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetResult() string {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetResult() string {
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetResultOk() (*string, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -130,7 +133,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetResultOk() (*string,
 
 // HasResult returns a boolean if a field has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetResult(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -162,7 +165,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetMessageOk() (*string
 
 // HasMessage returns a boolean if a field has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetMessage(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -194,7 +197,7 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) GetStatusOk() (*string,
 
 // HasStatus returns a boolean if a field has been set.
 func (o *AppliancesIdBackupBackupIdStatusGet200Response) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *AppliancesIdBackupBackupIdStatusGet200Response) SetStatus(v string) {
 }
 
 func (o AppliancesIdBackupBackupIdStatusGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Encoding != nil {
-		toSerialize["encoding"] = o.Encoding
-	}
-	if o.Output != nil {
-		toSerialize["output"] = o.Output
-	}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdBackupBackupIdStatusGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Encoding) {
+		toSerialize["encoding"] = o.Encoding
+	}
+	if !IsNil(o.Output) {
+		toSerialize["output"] = o.Output
+	}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdBackupBackupIdStatusGet200Response struct {

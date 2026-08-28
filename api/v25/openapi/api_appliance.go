@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ApplianceApiService ApplianceApi service
-type ApplianceApiService service
+// ApplianceAPIService ApplianceAPI service
+type ApplianceAPIService service
 
 type ApiAppliancesIdSwitchPartitionPostRequest struct {
 	ctx        context.Context
-	ApiService *ApplianceApiService
+	ApiService *ApplianceAPIService
 	id         string
 }
 
@@ -42,7 +42,7 @@ Reboot and switch partition on the Appliance.
 	@param id ID of the object.
 	@return ApiAppliancesIdSwitchPartitionPostRequest
 */
-func (a *ApplianceApiService) AppliancesIdSwitchPartitionPost(ctx context.Context, id string) ApiAppliancesIdSwitchPartitionPostRequest {
+func (a *ApplianceAPIService) AppliancesIdSwitchPartitionPost(ctx context.Context, id string) ApiAppliancesIdSwitchPartitionPostRequest {
 	return ApiAppliancesIdSwitchPartitionPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -53,7 +53,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return AppliancesRepartitionIpAllocationsPost202Response
-func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiAppliancesIdSwitchPartitionPostRequest) (*AppliancesRepartitionIpAllocationsPost202Response, *http.Response, error) {
+func (a *ApplianceAPIService) AppliancesIdSwitchPartitionPostExecute(r ApiAppliancesIdSwitchPartitionPostRequest) (*AppliancesRepartitionIpAllocationsPost202Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -61,13 +61,13 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 		localVarReturnValue *AppliancesRepartitionIpAllocationsPost202Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceApiService.AppliancesIdSwitchPartitionPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceAPIService.AppliancesIdSwitchPartitionPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/switch-partition"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,9 +100,9 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -119,6 +119,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -129,6 +130,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -139,6 +141,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -149,6 +152,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -159,6 +163,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -169,6 +174,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -179,6 +185,7 @@ func (a *ApplianceApiService) AppliancesIdSwitchPartitionPostExecute(r ApiApplia
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

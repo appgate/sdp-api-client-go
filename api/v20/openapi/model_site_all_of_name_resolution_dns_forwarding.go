@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the SiteAllOfNameResolutionDnsForwarding type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionDnsForwarding{}
 
 // SiteAllOfNameResolutionDnsForwarding Enable DNS Forwarding feature.
 type SiteAllOfNameResolutionDnsForwarding struct {
@@ -28,6 +33,8 @@ type SiteAllOfNameResolutionDnsForwarding struct {
 	// This will apply whenever Gateway gets a DNS response which has no TTL set.
 	DefaultTtlSeconds *int32 `json:"defaultTtlSeconds,omitempty"`
 }
+
+type _SiteAllOfNameResolutionDnsForwarding SiteAllOfNameResolutionDnsForwarding
 
 // NewSiteAllOfNameResolutionDnsForwarding instantiates a new SiteAllOfNameResolutionDnsForwarding object
 // This constructor will assign default values to properties that have it defined,
@@ -54,7 +61,7 @@ func NewSiteAllOfNameResolutionDnsForwardingWithDefaults() *SiteAllOfNameResolut
 
 // GetSiteIpv4 returns the SiteIpv4 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		var ret string
 		return ret
 	}
@@ -64,7 +71,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
 // GetSiteIpv4Ok returns a tuple with the SiteIpv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		return nil, false
 	}
 	return o.SiteIpv4, true
@@ -72,7 +79,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
 
 // HasSiteIpv4 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv4() bool {
-	if o != nil && o.SiteIpv4 != nil {
+	if o != nil && !IsNil(o.SiteIpv4) {
 		return true
 	}
 
@@ -86,7 +93,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetSiteIpv4(v string) {
 
 // GetSiteIpv6 returns the SiteIpv6 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		var ret string
 		return ret
 	}
@@ -96,7 +103,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
 // GetSiteIpv6Ok returns a tuple with the SiteIpv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		return nil, false
 	}
 	return o.SiteIpv6, true
@@ -104,7 +111,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
 
 // HasSiteIpv6 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv6() bool {
-	if o != nil && o.SiteIpv6 != nil {
+	if o != nil && !IsNil(o.SiteIpv6) {
 		return true
 	}
 
@@ -166,7 +173,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []AllowRes
 
 // GetDefaultTtlSeconds returns the DefaultTtlSeconds field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSeconds() int32 {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		var ret int32
 		return ret
 	}
@@ -176,7 +183,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSeconds() int32 {
 // GetDefaultTtlSecondsOk returns a tuple with the DefaultTtlSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSecondsOk() (*int32, bool) {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		return nil, false
 	}
 	return o.DefaultTtlSeconds, true
@@ -184,7 +191,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSecondsOk() (*int32,
 
 // HasDefaultTtlSeconds returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasDefaultTtlSeconds() bool {
-	if o != nil && o.DefaultTtlSeconds != nil {
+	if o != nil && !IsNil(o.DefaultTtlSeconds) {
 		return true
 	}
 
@@ -197,23 +204,65 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetDefaultTtlSeconds(v int32) {
 }
 
 func (o SiteAllOfNameResolutionDnsForwarding) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SiteIpv4 != nil {
-		toSerialize["siteIpv4"] = o.SiteIpv4
-	}
-	if o.SiteIpv6 != nil {
-		toSerialize["siteIpv6"] = o.SiteIpv6
-	}
-	if true {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if true {
-		toSerialize["allowDestinations"] = o.AllowDestinations
-	}
-	if o.DefaultTtlSeconds != nil {
-		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionDnsForwarding) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SiteIpv4) {
+		toSerialize["siteIpv4"] = o.SiteIpv4
+	}
+	if !IsNil(o.SiteIpv6) {
+		toSerialize["siteIpv6"] = o.SiteIpv6
+	}
+	toSerialize["dnsServers"] = o.DnsServers
+	toSerialize["allowDestinations"] = o.AllowDestinations
+	if !IsNil(o.DefaultTtlSeconds) {
+		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteAllOfNameResolutionDnsForwarding) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"dnsServers",
+		"allowDestinations",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteAllOfNameResolutionDnsForwarding := _SiteAllOfNameResolutionDnsForwarding{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteAllOfNameResolutionDnsForwarding)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteAllOfNameResolutionDnsForwarding(varSiteAllOfNameResolutionDnsForwarding)
+
+	return err
 }
 
 type NullableSiteAllOfNameResolutionDnsForwarding struct {

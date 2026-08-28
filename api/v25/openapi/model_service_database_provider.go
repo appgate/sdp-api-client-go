@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the ServiceDatabaseProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServiceDatabaseProvider{}
 
 // ServiceDatabaseProvider struct for ServiceDatabaseProvider
 type ServiceDatabaseProvider struct {
@@ -51,6 +56,8 @@ type ServiceDatabaseProvider struct {
 	// Minimum password length requirement for local users.
 	MinPasswordLength *int32 `json:"minPasswordLength,omitempty"`
 }
+
+type _ServiceDatabaseProvider ServiceDatabaseProvider
 
 // NewServiceDatabaseProvider instantiates a new ServiceDatabaseProvider object
 // This constructor will assign default values to properties that have it defined,
@@ -89,7 +96,7 @@ func NewServiceDatabaseProviderWithDefaults() *ServiceDatabaseProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -99,7 +106,7 @@ func (o *ServiceDatabaseProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -107,7 +114,7 @@ func (o *ServiceDatabaseProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -145,7 +152,7 @@ func (o *ServiceDatabaseProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -155,7 +162,7 @@ func (o *ServiceDatabaseProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -163,7 +170,7 @@ func (o *ServiceDatabaseProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -177,7 +184,7 @@ func (o *ServiceDatabaseProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -187,7 +194,7 @@ func (o *ServiceDatabaseProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -195,7 +202,7 @@ func (o *ServiceDatabaseProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -209,7 +216,7 @@ func (o *ServiceDatabaseProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -219,7 +226,7 @@ func (o *ServiceDatabaseProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -227,7 +234,7 @@ func (o *ServiceDatabaseProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -241,7 +248,7 @@ func (o *ServiceDatabaseProvider) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -251,7 +258,7 @@ func (o *ServiceDatabaseProvider) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -259,7 +266,7 @@ func (o *ServiceDatabaseProvider) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -273,7 +280,7 @@ func (o *ServiceDatabaseProvider) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -283,7 +290,7 @@ func (o *ServiceDatabaseProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -291,7 +298,7 @@ func (o *ServiceDatabaseProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -329,7 +336,7 @@ func (o *ServiceDatabaseProvider) SetType(v string) {
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetIpPoolV4() string {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		var ret string
 		return ret
 	}
@@ -339,7 +346,7 @@ func (o *ServiceDatabaseProvider) GetIpPoolV4() string {
 // GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetIpPoolV4Ok() (*string, bool) {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		return nil, false
 	}
 	return o.IpPoolV4, true
@@ -347,7 +354,7 @@ func (o *ServiceDatabaseProvider) GetIpPoolV4Ok() (*string, bool) {
 
 // HasIpPoolV4 returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasIpPoolV4() bool {
-	if o != nil && o.IpPoolV4 != nil {
+	if o != nil && !IsNil(o.IpPoolV4) {
 		return true
 	}
 
@@ -361,7 +368,7 @@ func (o *ServiceDatabaseProvider) SetIpPoolV4(v string) {
 
 // GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetIpPoolV6() string {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		var ret string
 		return ret
 	}
@@ -371,7 +378,7 @@ func (o *ServiceDatabaseProvider) GetIpPoolV6() string {
 // GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetIpPoolV6Ok() (*string, bool) {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		return nil, false
 	}
 	return o.IpPoolV6, true
@@ -379,7 +386,7 @@ func (o *ServiceDatabaseProvider) GetIpPoolV6Ok() (*string, bool) {
 
 // HasIpPoolV6 returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasIpPoolV6() bool {
-	if o != nil && o.IpPoolV6 != nil {
+	if o != nil && !IsNil(o.IpPoolV6) {
 		return true
 	}
 
@@ -393,7 +400,7 @@ func (o *ServiceDatabaseProvider) SetIpPoolV6(v string) {
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetClaimMappings() []ClaimMappingsInner {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		var ret []ClaimMappingsInner
 		return ret
 	}
@@ -403,7 +410,7 @@ func (o *ServiceDatabaseProvider) GetClaimMappings() []ClaimMappingsInner {
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		return nil, false
 	}
 	return o.ClaimMappings, true
@@ -411,7 +418,7 @@ func (o *ServiceDatabaseProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bo
 
 // HasClaimMappings returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
+	if o != nil && !IsNil(o.ClaimMappings) {
 		return true
 	}
 
@@ -425,7 +432,7 @@ func (o *ServiceDatabaseProvider) SetClaimMappings(v []ClaimMappingsInner) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetUserScripts() []string {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret []string
 		return ret
 	}
@@ -435,7 +442,7 @@ func (o *ServiceDatabaseProvider) GetUserScripts() []string {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetUserScriptsOk() ([]string, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -443,7 +450,7 @@ func (o *ServiceDatabaseProvider) GetUserScriptsOk() ([]string, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -457,7 +464,7 @@ func (o *ServiceDatabaseProvider) SetUserScripts(v []string) {
 
 // GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetDeviceLimitPerUser() int32 {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		var ret int32
 		return ret
 	}
@@ -467,7 +474,7 @@ func (o *ServiceDatabaseProvider) GetDeviceLimitPerUser() int32 {
 // GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		return nil, false
 	}
 	return o.DeviceLimitPerUser, true
@@ -475,7 +482,7 @@ func (o *ServiceDatabaseProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
 
 // HasDeviceLimitPerUser returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasDeviceLimitPerUser() bool {
-	if o != nil && o.DeviceLimitPerUser != nil {
+	if o != nil && !IsNil(o.DeviceLimitPerUser) {
 		return true
 	}
 
@@ -489,7 +496,7 @@ func (o *ServiceDatabaseProvider) SetDeviceLimitPerUser(v int32) {
 
 // GetUserLockoutThreshold returns the UserLockoutThreshold field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetUserLockoutThreshold() int32 {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		var ret int32
 		return ret
 	}
@@ -499,7 +506,7 @@ func (o *ServiceDatabaseProvider) GetUserLockoutThreshold() int32 {
 // GetUserLockoutThresholdOk returns a tuple with the UserLockoutThreshold field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetUserLockoutThresholdOk() (*int32, bool) {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		return nil, false
 	}
 	return o.UserLockoutThreshold, true
@@ -507,7 +514,7 @@ func (o *ServiceDatabaseProvider) GetUserLockoutThresholdOk() (*int32, bool) {
 
 // HasUserLockoutThreshold returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasUserLockoutThreshold() bool {
-	if o != nil && o.UserLockoutThreshold != nil {
+	if o != nil && !IsNil(o.UserLockoutThreshold) {
 		return true
 	}
 
@@ -521,7 +528,7 @@ func (o *ServiceDatabaseProvider) SetUserLockoutThreshold(v int32) {
 
 // GetUserLockoutDurationMinutes returns the UserLockoutDurationMinutes field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetUserLockoutDurationMinutes() int32 {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		var ret int32
 		return ret
 	}
@@ -531,7 +538,7 @@ func (o *ServiceDatabaseProvider) GetUserLockoutDurationMinutes() int32 {
 // GetUserLockoutDurationMinutesOk returns a tuple with the UserLockoutDurationMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetUserLockoutDurationMinutesOk() (*int32, bool) {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		return nil, false
 	}
 	return o.UserLockoutDurationMinutes, true
@@ -539,7 +546,7 @@ func (o *ServiceDatabaseProvider) GetUserLockoutDurationMinutesOk() (*int32, boo
 
 // HasUserLockoutDurationMinutes returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasUserLockoutDurationMinutes() bool {
-	if o != nil && o.UserLockoutDurationMinutes != nil {
+	if o != nil && !IsNil(o.UserLockoutDurationMinutes) {
 		return true
 	}
 
@@ -553,7 +560,7 @@ func (o *ServiceDatabaseProvider) SetUserLockoutDurationMinutes(v int32) {
 
 // GetMinPasswordLength returns the MinPasswordLength field value if set, zero value otherwise.
 func (o *ServiceDatabaseProvider) GetMinPasswordLength() int32 {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		var ret int32
 		return ret
 	}
@@ -563,7 +570,7 @@ func (o *ServiceDatabaseProvider) GetMinPasswordLength() int32 {
 // GetMinPasswordLengthOk returns a tuple with the MinPasswordLength field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceDatabaseProvider) GetMinPasswordLengthOk() (*int32, bool) {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		return nil, false
 	}
 	return o.MinPasswordLength, true
@@ -571,7 +578,7 @@ func (o *ServiceDatabaseProvider) GetMinPasswordLengthOk() (*int32, bool) {
 
 // HasMinPasswordLength returns a boolean if a field has been set.
 func (o *ServiceDatabaseProvider) HasMinPasswordLength() bool {
-	if o != nil && o.MinPasswordLength != nil {
+	if o != nil && !IsNil(o.MinPasswordLength) {
 		return true
 	}
 
@@ -584,56 +591,98 @@ func (o *ServiceDatabaseProvider) SetMinPasswordLength(v int32) {
 }
 
 func (o ServiceDatabaseProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.IpPoolV4 != nil {
-		toSerialize["ipPoolV4"] = o.IpPoolV4
-	}
-	if o.IpPoolV6 != nil {
-		toSerialize["ipPoolV6"] = o.IpPoolV6
-	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
-	}
-	if o.DeviceLimitPerUser != nil {
-		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
-	}
-	if o.UserLockoutThreshold != nil {
-		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
-	}
-	if o.UserLockoutDurationMinutes != nil {
-		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
-	}
-	if o.MinPasswordLength != nil {
-		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServiceDatabaseProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IpPoolV4) {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if !IsNil(o.IpPoolV6) {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if !IsNil(o.ClaimMappings) {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if !IsNil(o.DeviceLimitPerUser) {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
+	}
+	if !IsNil(o.UserLockoutThreshold) {
+		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
+	}
+	if !IsNil(o.UserLockoutDurationMinutes) {
+		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
+	}
+	if !IsNil(o.MinPasswordLength) {
+		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	}
+	return toSerialize, nil
+}
+
+func (o *ServiceDatabaseProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varServiceDatabaseProvider := _ServiceDatabaseProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varServiceDatabaseProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ServiceDatabaseProvider(varServiceDatabaseProvider)
+
+	return err
 }
 
 type NullableServiceDatabaseProvider struct {

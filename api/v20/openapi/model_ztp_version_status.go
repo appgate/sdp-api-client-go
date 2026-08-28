@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpVersionStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpVersionStatus{}
+
 // ZtpVersionStatus struct for ZtpVersionStatus
 type ZtpVersionStatus struct {
 	// Latest Appgate SDP Appliance version available.
@@ -44,7 +47,7 @@ func NewZtpVersionStatusWithDefaults() *ZtpVersionStatus {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *ZtpVersionStatus) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ZtpVersionStatus) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpVersionStatus) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -62,7 +65,7 @@ func (o *ZtpVersionStatus) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *ZtpVersionStatus) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ZtpVersionStatus) SetVersion(v string) {
 
 // GetReleaseNotesUrl returns the ReleaseNotesUrl field value if set, zero value otherwise.
 func (o *ZtpVersionStatus) GetReleaseNotesUrl() string {
-	if o == nil || o.ReleaseNotesUrl == nil {
+	if o == nil || IsNil(o.ReleaseNotesUrl) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ZtpVersionStatus) GetReleaseNotesUrl() string {
 // GetReleaseNotesUrlOk returns a tuple with the ReleaseNotesUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpVersionStatus) GetReleaseNotesUrlOk() (*string, bool) {
-	if o == nil || o.ReleaseNotesUrl == nil {
+	if o == nil || IsNil(o.ReleaseNotesUrl) {
 		return nil, false
 	}
 	return o.ReleaseNotesUrl, true
@@ -94,7 +97,7 @@ func (o *ZtpVersionStatus) GetReleaseNotesUrlOk() (*string, bool) {
 
 // HasReleaseNotesUrl returns a boolean if a field has been set.
 func (o *ZtpVersionStatus) HasReleaseNotesUrl() bool {
-	if o != nil && o.ReleaseNotesUrl != nil {
+	if o != nil && !IsNil(o.ReleaseNotesUrl) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ZtpVersionStatus) SetReleaseNotesUrl(v string) {
 
 // GetUpgradableApplianceCount returns the UpgradableApplianceCount field value if set, zero value otherwise.
 func (o *ZtpVersionStatus) GetUpgradableApplianceCount() float32 {
-	if o == nil || o.UpgradableApplianceCount == nil {
+	if o == nil || IsNil(o.UpgradableApplianceCount) {
 		var ret float32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ZtpVersionStatus) GetUpgradableApplianceCount() float32 {
 // GetUpgradableApplianceCountOk returns a tuple with the UpgradableApplianceCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpVersionStatus) GetUpgradableApplianceCountOk() (*float32, bool) {
-	if o == nil || o.UpgradableApplianceCount == nil {
+	if o == nil || IsNil(o.UpgradableApplianceCount) {
 		return nil, false
 	}
 	return o.UpgradableApplianceCount, true
@@ -126,7 +129,7 @@ func (o *ZtpVersionStatus) GetUpgradableApplianceCountOk() (*float32, bool) {
 
 // HasUpgradableApplianceCount returns a boolean if a field has been set.
 func (o *ZtpVersionStatus) HasUpgradableApplianceCount() bool {
-	if o != nil && o.UpgradableApplianceCount != nil {
+	if o != nil && !IsNil(o.UpgradableApplianceCount) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ZtpVersionStatus) SetUpgradableApplianceCount(v float32) {
 }
 
 func (o ZtpVersionStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.ReleaseNotesUrl != nil {
-		toSerialize["releaseNotesUrl"] = o.ReleaseNotesUrl
-	}
-	if o.UpgradableApplianceCount != nil {
-		toSerialize["upgradableApplianceCount"] = o.UpgradableApplianceCount
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpVersionStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.ReleaseNotesUrl) {
+		toSerialize["releaseNotesUrl"] = o.ReleaseNotesUrl
+	}
+	if !IsNil(o.UpgradableApplianceCount) {
+		toSerialize["upgradableApplianceCount"] = o.UpgradableApplianceCount
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpVersionStatus struct {

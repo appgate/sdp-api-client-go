@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ApplianceMetricsApiService ApplianceMetricsApi service
-type ApplianceMetricsApiService service
+// ApplianceMetricsAPIService ApplianceMetricsAPI service
+type ApplianceMetricsAPIService service
 
 type ApiAppliancesIdMetricsGetRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceMetricsApiService
+	ApiService    *ApplianceMetricsAPIService
 	authorization *string
 	id            string
 }
@@ -49,7 +49,7 @@ Get all the Prometheus metrics for the given Appliance. This API call must be ma
 	@param id ID of the object.
 	@return ApiAppliancesIdMetricsGetRequest
 */
-func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx context.Context, id string) ApiAppliancesIdMetricsGetRequest {
+func (a *ApplianceMetricsAPIService) AppliancesIdMetricsGet(ctx context.Context, id string) ApiAppliancesIdMetricsGetRequest {
 	return ApiAppliancesIdMetricsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -60,7 +60,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGet(ctx context.Context,
 // Execute executes the request
 //
 //	@return string
-func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiAppliancesIdMetricsGetRequest) (string, *http.Response, error) {
+func (a *ApplianceMetricsAPIService) AppliancesIdMetricsGetExecute(r ApiAppliancesIdMetricsGetRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -68,13 +68,13 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 		localVarReturnValue string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMetricsApiService.AppliancesIdMetricsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMetricsAPIService.AppliancesIdMetricsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/metrics"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,7 +100,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -111,9 +111,9 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -130,6 +130,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -140,6 +141,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -150,6 +152,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -160,6 +163,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -170,6 +174,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -180,6 +185,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -199,7 +205,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsGetExecute(r ApiApplianc
 
 type ApiAppliancesIdMetricsNameGetRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceMetricsApiService
+	ApiService    *ApplianceMetricsAPIService
 	authorization *string
 	id            string
 	name          string
@@ -225,7 +231,7 @@ Get a specific Prometheus metrics for the given Appliance. This API call must be
 	@param name Metric name
 	@return ApiAppliancesIdMetricsNameGetRequest
 */
-func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx context.Context, id string, name string) ApiAppliancesIdMetricsNameGetRequest {
+func (a *ApplianceMetricsAPIService) AppliancesIdMetricsNameGet(ctx context.Context, id string, name string) ApiAppliancesIdMetricsNameGetRequest {
 	return ApiAppliancesIdMetricsNameGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -237,7 +243,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGet(ctx context.Cont
 // Execute executes the request
 //
 //	@return string
-func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppliancesIdMetricsNameGetRequest) (string, *http.Response, error) {
+func (a *ApplianceMetricsAPIService) AppliancesIdMetricsNameGetExecute(r ApiAppliancesIdMetricsNameGetRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -245,14 +251,14 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 		localVarReturnValue string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMetricsApiService.AppliancesIdMetricsNameGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceMetricsAPIService.AppliancesIdMetricsNameGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/metrics/{name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterToString(r.name, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -278,7 +284,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -289,9 +295,9 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -308,6 +314,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -318,6 +325,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -328,6 +336,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -338,6 +347,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -348,6 +358,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -358,6 +369,7 @@ func (a *ApplianceMetricsApiService) AppliancesIdMetricsNameGetExecute(r ApiAppl
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

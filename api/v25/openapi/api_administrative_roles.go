@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// AdministrativeRolesApiService AdministrativeRolesApi service
-type AdministrativeRolesApiService service
+// AdministrativeRolesAPIService AdministrativeRolesAPI service
+type AdministrativeRolesAPIService service
 
 type ApiAdministrativeRolesBulkUpsertPostRequest struct {
 	ctx                                      context.Context
-	ApiService                               *AdministrativeRolesApiService
+	ApiService                               *AdministrativeRolesAPIService
 	administrativeRolesBulkUpsertPostRequest *AdministrativeRolesBulkUpsertPostRequest
 }
 
@@ -46,7 +46,7 @@ Create or update multiple administrative roles in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdministrativeRolesBulkUpsertPostRequest
 */
-func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPost(ctx context.Context) ApiAdministrativeRolesBulkUpsertPostRequest {
+func (a *AdministrativeRolesAPIService) AdministrativeRolesBulkUpsertPost(ctx context.Context) ApiAdministrativeRolesBulkUpsertPostRequest {
 	return ApiAdministrativeRolesBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPost(ctx co
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute(r ApiAdministrativeRolesBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *AdministrativeRolesAPIService) AdministrativeRolesBulkUpsertPostExecute(r ApiAdministrativeRolesBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesApiService.AdministrativeRolesBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdministrativeRolesAPIService.AdministrativeRolesBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -107,9 +107,9 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -126,6 +126,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -136,6 +137,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -146,6 +148,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -156,6 +159,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -166,6 +170,7 @@ func (a *AdministrativeRolesApiService) AdministrativeRolesBulkUpsertPostExecute
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

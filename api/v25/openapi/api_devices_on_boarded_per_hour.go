@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// DevicesOnBoardedPerHourApiService DevicesOnBoardedPerHourApi service
-type DevicesOnBoardedPerHourApiService service
+// DevicesOnBoardedPerHourAPIService DevicesOnBoardedPerHourAPI service
+type DevicesOnBoardedPerHourAPIService service
 
 type ApiStatsOnBoardedDevicesGetRequest struct {
 	ctx        context.Context
-	ApiService *DevicesOnBoardedPerHourApiService
+	ApiService *DevicesOnBoardedPerHourAPIService
 }
 
 func (r ApiStatsOnBoardedDevicesGetRequest) Execute() (*OnBoardedDevices, *http.Response, error) {
@@ -39,7 +39,7 @@ Get the Device On-Boardings Per Hour for the last 24 hours.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsOnBoardedDevicesGetRequest
 */
-func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGet(ctx context.Context) ApiStatsOnBoardedDevicesGetRequest {
+func (a *DevicesOnBoardedPerHourAPIService) StatsOnBoardedDevicesGet(ctx context.Context) ApiStatsOnBoardedDevicesGetRequest {
 	return ApiStatsOnBoardedDevicesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -49,7 +49,7 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGet(ctx context
 // Execute executes the request
 //
 //	@return OnBoardedDevices
-func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r ApiStatsOnBoardedDevicesGetRequest) (*OnBoardedDevices, *http.Response, error) {
+func (a *DevicesOnBoardedPerHourAPIService) StatsOnBoardedDevicesGetExecute(r ApiStatsOnBoardedDevicesGetRequest) (*OnBoardedDevices, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -57,7 +57,7 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r Ap
 		localVarReturnValue *OnBoardedDevices
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevicesOnBoardedPerHourApiService.StatsOnBoardedDevicesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevicesOnBoardedPerHourAPIService.StatsOnBoardedDevicesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,9 +95,9 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -114,6 +114,7 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -124,16 +125,18 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -144,6 +147,7 @@ func (a *DevicesOnBoardedPerHourApiService) StatsOnBoardedDevicesGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

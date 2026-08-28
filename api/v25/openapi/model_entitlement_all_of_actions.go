@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the EntitlementAllOfActions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOfActions{}
 
 // EntitlementAllOfActions IP Access action.
 type EntitlementAllOfActions struct {
@@ -38,6 +43,8 @@ type EntitlementAllOfActions struct {
 	OptimizationExemptMethods []HttpMethod `json:"optimizationExemptMethods,omitempty"`
 }
 
+type _EntitlementAllOfActions EntitlementAllOfActions
+
 // NewEntitlementAllOfActions instantiates a new EntitlementAllOfActions object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -59,7 +66,7 @@ func NewEntitlementAllOfActionsWithDefaults() *EntitlementAllOfActions {
 
 // GetSubtype returns the Subtype field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetSubtype() IpAccessSubtype {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		var ret IpAccessSubtype
 		return ret
 	}
@@ -69,7 +76,7 @@ func (o *EntitlementAllOfActions) GetSubtype() IpAccessSubtype {
 // GetSubtypeOk returns a tuple with the Subtype field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetSubtypeOk() (*IpAccessSubtype, bool) {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		return nil, false
 	}
 	return o.Subtype, true
@@ -77,7 +84,7 @@ func (o *EntitlementAllOfActions) GetSubtypeOk() (*IpAccessSubtype, bool) {
 
 // HasSubtype returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasSubtype() bool {
-	if o != nil && o.Subtype != nil {
+	if o != nil && !IsNil(o.Subtype) {
 		return true
 	}
 
@@ -139,7 +146,7 @@ func (o *EntitlementAllOfActions) SetHosts(v []string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -149,7 +156,7 @@ func (o *EntitlementAllOfActions) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -157,7 +164,7 @@ func (o *EntitlementAllOfActions) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -171,7 +178,7 @@ func (o *EntitlementAllOfActions) SetPorts(v []string) {
 
 // GetTypes returns the Types field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetTypes() []string {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		var ret []string
 		return ret
 	}
@@ -181,7 +188,7 @@ func (o *EntitlementAllOfActions) GetTypes() []string {
 // GetTypesOk returns a tuple with the Types field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetTypesOk() ([]string, bool) {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		return nil, false
 	}
 	return o.Types, true
@@ -189,7 +196,7 @@ func (o *EntitlementAllOfActions) GetTypesOk() ([]string, bool) {
 
 // HasTypes returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasTypes() bool {
-	if o != nil && o.Types != nil {
+	if o != nil && !IsNil(o.Types) {
 		return true
 	}
 
@@ -203,7 +210,7 @@ func (o *EntitlementAllOfActions) SetTypes(v []string) {
 
 // GetMethods returns the Methods field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetMethods() []HttpMethod {
-	if o == nil || o.Methods == nil {
+	if o == nil || IsNil(o.Methods) {
 		var ret []HttpMethod
 		return ret
 	}
@@ -213,7 +220,7 @@ func (o *EntitlementAllOfActions) GetMethods() []HttpMethod {
 // GetMethodsOk returns a tuple with the Methods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetMethodsOk() ([]HttpMethod, bool) {
-	if o == nil || o.Methods == nil {
+	if o == nil || IsNil(o.Methods) {
 		return nil, false
 	}
 	return o.Methods, true
@@ -221,7 +228,7 @@ func (o *EntitlementAllOfActions) GetMethodsOk() ([]HttpMethod, bool) {
 
 // HasMethods returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasMethods() bool {
-	if o != nil && o.Methods != nil {
+	if o != nil && !IsNil(o.Methods) {
 		return true
 	}
 
@@ -235,7 +242,7 @@ func (o *EntitlementAllOfActions) SetMethods(v []HttpMethod) {
 
 // GetMonitor returns the Monitor field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetMonitor() EntitlementAllOfMonitor {
-	if o == nil || o.Monitor == nil {
+	if o == nil || IsNil(o.Monitor) {
 		var ret EntitlementAllOfMonitor
 		return ret
 	}
@@ -245,7 +252,7 @@ func (o *EntitlementAllOfActions) GetMonitor() EntitlementAllOfMonitor {
 // GetMonitorOk returns a tuple with the Monitor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetMonitorOk() (*EntitlementAllOfMonitor, bool) {
-	if o == nil || o.Monitor == nil {
+	if o == nil || IsNil(o.Monitor) {
 		return nil, false
 	}
 	return o.Monitor, true
@@ -253,7 +260,7 @@ func (o *EntitlementAllOfActions) GetMonitorOk() (*EntitlementAllOfMonitor, bool
 
 // HasMonitor returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasMonitor() bool {
-	if o != nil && o.Monitor != nil {
+	if o != nil && !IsNil(o.Monitor) {
 		return true
 	}
 
@@ -267,7 +274,7 @@ func (o *EntitlementAllOfActions) SetMonitor(v EntitlementAllOfMonitor) {
 
 // GetOptimizationExemptHosts returns the OptimizationExemptHosts field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetOptimizationExemptHosts() []string {
-	if o == nil || o.OptimizationExemptHosts == nil {
+	if o == nil || IsNil(o.OptimizationExemptHosts) {
 		var ret []string
 		return ret
 	}
@@ -277,7 +284,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptHosts() []string {
 // GetOptimizationExemptHostsOk returns a tuple with the OptimizationExemptHosts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetOptimizationExemptHostsOk() ([]string, bool) {
-	if o == nil || o.OptimizationExemptHosts == nil {
+	if o == nil || IsNil(o.OptimizationExemptHosts) {
 		return nil, false
 	}
 	return o.OptimizationExemptHosts, true
@@ -285,7 +292,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptHostsOk() ([]string, bool
 
 // HasOptimizationExemptHosts returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasOptimizationExemptHosts() bool {
-	if o != nil && o.OptimizationExemptHosts != nil {
+	if o != nil && !IsNil(o.OptimizationExemptHosts) {
 		return true
 	}
 
@@ -299,7 +306,7 @@ func (o *EntitlementAllOfActions) SetOptimizationExemptHosts(v []string) {
 
 // GetOptimizationExemptPorts returns the OptimizationExemptPorts field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetOptimizationExemptPorts() []string {
-	if o == nil || o.OptimizationExemptPorts == nil {
+	if o == nil || IsNil(o.OptimizationExemptPorts) {
 		var ret []string
 		return ret
 	}
@@ -309,7 +316,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptPorts() []string {
 // GetOptimizationExemptPortsOk returns a tuple with the OptimizationExemptPorts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetOptimizationExemptPortsOk() ([]string, bool) {
-	if o == nil || o.OptimizationExemptPorts == nil {
+	if o == nil || IsNil(o.OptimizationExemptPorts) {
 		return nil, false
 	}
 	return o.OptimizationExemptPorts, true
@@ -317,7 +324,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptPortsOk() ([]string, bool
 
 // HasOptimizationExemptPorts returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasOptimizationExemptPorts() bool {
-	if o != nil && o.OptimizationExemptPorts != nil {
+	if o != nil && !IsNil(o.OptimizationExemptPorts) {
 		return true
 	}
 
@@ -331,7 +338,7 @@ func (o *EntitlementAllOfActions) SetOptimizationExemptPorts(v []string) {
 
 // GetOptimizationExemptTypes returns the OptimizationExemptTypes field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetOptimizationExemptTypes() []string {
-	if o == nil || o.OptimizationExemptTypes == nil {
+	if o == nil || IsNil(o.OptimizationExemptTypes) {
 		var ret []string
 		return ret
 	}
@@ -341,7 +348,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptTypes() []string {
 // GetOptimizationExemptTypesOk returns a tuple with the OptimizationExemptTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetOptimizationExemptTypesOk() ([]string, bool) {
-	if o == nil || o.OptimizationExemptTypes == nil {
+	if o == nil || IsNil(o.OptimizationExemptTypes) {
 		return nil, false
 	}
 	return o.OptimizationExemptTypes, true
@@ -349,7 +356,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptTypesOk() ([]string, bool
 
 // HasOptimizationExemptTypes returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasOptimizationExemptTypes() bool {
-	if o != nil && o.OptimizationExemptTypes != nil {
+	if o != nil && !IsNil(o.OptimizationExemptTypes) {
 		return true
 	}
 
@@ -363,7 +370,7 @@ func (o *EntitlementAllOfActions) SetOptimizationExemptTypes(v []string) {
 
 // GetOptimizationExemptMethods returns the OptimizationExemptMethods field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetOptimizationExemptMethods() []HttpMethod {
-	if o == nil || o.OptimizationExemptMethods == nil {
+	if o == nil || IsNil(o.OptimizationExemptMethods) {
 		var ret []HttpMethod
 		return ret
 	}
@@ -373,7 +380,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptMethods() []HttpMethod {
 // GetOptimizationExemptMethodsOk returns a tuple with the OptimizationExemptMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetOptimizationExemptMethodsOk() ([]HttpMethod, bool) {
-	if o == nil || o.OptimizationExemptMethods == nil {
+	if o == nil || IsNil(o.OptimizationExemptMethods) {
 		return nil, false
 	}
 	return o.OptimizationExemptMethods, true
@@ -381,7 +388,7 @@ func (o *EntitlementAllOfActions) GetOptimizationExemptMethodsOk() ([]HttpMethod
 
 // HasOptimizationExemptMethods returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasOptimizationExemptMethods() bool {
-	if o != nil && o.OptimizationExemptMethods != nil {
+	if o != nil && !IsNil(o.OptimizationExemptMethods) {
 		return true
 	}
 
@@ -394,41 +401,83 @@ func (o *EntitlementAllOfActions) SetOptimizationExemptMethods(v []HttpMethod) {
 }
 
 func (o EntitlementAllOfActions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Subtype != nil {
-		toSerialize["subtype"] = o.Subtype
-	}
-	if true {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Types != nil {
-		toSerialize["types"] = o.Types
-	}
-	if o.Methods != nil {
-		toSerialize["methods"] = o.Methods
-	}
-	if o.Monitor != nil {
-		toSerialize["monitor"] = o.Monitor
-	}
-	if o.OptimizationExemptHosts != nil {
-		toSerialize["optimizationExemptHosts"] = o.OptimizationExemptHosts
-	}
-	if o.OptimizationExemptPorts != nil {
-		toSerialize["optimizationExemptPorts"] = o.OptimizationExemptPorts
-	}
-	if o.OptimizationExemptTypes != nil {
-		toSerialize["optimizationExemptTypes"] = o.OptimizationExemptTypes
-	}
-	if o.OptimizationExemptMethods != nil {
-		toSerialize["optimizationExemptMethods"] = o.OptimizationExemptMethods
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOfActions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Subtype) {
+		toSerialize["subtype"] = o.Subtype
+	}
+	toSerialize["action"] = o.Action
+	toSerialize["hosts"] = o.Hosts
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Types) {
+		toSerialize["types"] = o.Types
+	}
+	if !IsNil(o.Methods) {
+		toSerialize["methods"] = o.Methods
+	}
+	if !IsNil(o.Monitor) {
+		toSerialize["monitor"] = o.Monitor
+	}
+	if !IsNil(o.OptimizationExemptHosts) {
+		toSerialize["optimizationExemptHosts"] = o.OptimizationExemptHosts
+	}
+	if !IsNil(o.OptimizationExemptPorts) {
+		toSerialize["optimizationExemptPorts"] = o.OptimizationExemptPorts
+	}
+	if !IsNil(o.OptimizationExemptTypes) {
+		toSerialize["optimizationExemptTypes"] = o.OptimizationExemptTypes
+	}
+	if !IsNil(o.OptimizationExemptMethods) {
+		toSerialize["optimizationExemptMethods"] = o.OptimizationExemptMethods
+	}
+	return toSerialize, nil
+}
+
+func (o *EntitlementAllOfActions) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"action",
+		"hosts",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varEntitlementAllOfActions := _EntitlementAllOfActions{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varEntitlementAllOfActions)
+
+	if err != nil {
+		return err
+	}
+
+	*o = EntitlementAllOfActions(varEntitlementAllOfActions)
+
+	return err
 }
 
 type NullableEntitlementAllOfActions struct {

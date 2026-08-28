@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// FIDO2DevicesApiService FIDO2DevicesApi service
-type FIDO2DevicesApiService service
+// FIDO2DevicesAPIService FIDO2DevicesAPI service
+type FIDO2DevicesAPIService service
 
 type ApiFido2DevicesDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
-	ApiService        *FIDO2DevicesApiService
+	ApiService        *FIDO2DevicesAPIService
 	distinguishedName string
 }
 
@@ -42,7 +42,7 @@ Delete a registered FIDO2 Device for the given Distinguished Name.
 	@param distinguishedName 'Distinguished name of the user whose registered FIDO2 Device to be deleted. Format: \"CN=,OU=\"'
 	@return ApiFido2DevicesDistinguishedNameDeleteRequest
 */
-func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiFido2DevicesDistinguishedNameDeleteRequest {
+func (a *FIDO2DevicesAPIService) Fido2DevicesDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiFido2DevicesDistinguishedNameDeleteRequest {
 	return ApiFido2DevicesDistinguishedNameDeleteRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -51,20 +51,20 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDelete(ctx context
 }
 
 // Execute executes the request
-func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r ApiFido2DevicesDistinguishedNameDeleteRequest) (*http.Response, error) {
+func (a *FIDO2DevicesAPIService) Fido2DevicesDistinguishedNameDeleteExecute(r ApiFido2DevicesDistinguishedNameDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FIDO2DevicesApiService.Fido2DevicesDistinguishedNameDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FIDO2DevicesAPIService.Fido2DevicesDistinguishedNameDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/fido2-devices/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -97,9 +97,9 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -116,6 +116,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -126,6 +127,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -136,6 +138,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -146,6 +149,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -156,6 +160,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -166,7 +171,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesDistinguishedNameDeleteExecute(r Ap
 
 type ApiFido2DevicesGetRequest struct {
 	ctx        context.Context
-	ApiService *FIDO2DevicesApiService
+	ApiService *FIDO2DevicesAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -216,7 +221,7 @@ List all registered FIDO2 Devices.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiFido2DevicesGetRequest
 */
-func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx context.Context) ApiFido2DevicesGetRequest {
+func (a *FIDO2DevicesAPIService) Fido2DevicesGet(ctx context.Context) ApiFido2DevicesGetRequest {
 	return ApiFido2DevicesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -226,7 +231,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGet(ctx context.Context) ApiFido2De
 // Execute executes the request
 //
 //	@return Fido2DeviceList
-func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequest) (*Fido2DeviceList, *http.Response, error) {
+func (a *FIDO2DevicesAPIService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequest) (*Fido2DeviceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -234,7 +239,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 		localVarReturnValue *Fido2DeviceList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FIDO2DevicesApiService.Fido2DevicesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FIDO2DevicesAPIService.Fido2DevicesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -246,19 +251,19 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -287,9 +292,9 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -306,6 +311,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -316,6 +322,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -326,6 +333,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,6 +344,7 @@ func (a *FIDO2DevicesApiService) Fido2DevicesGetExecute(r ApiFido2DevicesGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

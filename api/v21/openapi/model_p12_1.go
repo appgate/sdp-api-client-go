@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the P121 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &P121{}
+
 // P121 struct for P121
 type P121 struct {
 	// P12 binary in Base64 format.
@@ -46,7 +49,7 @@ func NewP121WithDefaults() *P121 {
 
 // GetP12 returns the P12 field value if set, zero value otherwise.
 func (o *P121) GetP12() string {
-	if o == nil || o.P12 == nil {
+	if o == nil || IsNil(o.P12) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *P121) GetP12() string {
 // GetP12Ok returns a tuple with the P12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P121) GetP12Ok() (*string, bool) {
-	if o == nil || o.P12 == nil {
+	if o == nil || IsNil(o.P12) {
 		return nil, false
 	}
 	return o.P12, true
@@ -64,7 +67,7 @@ func (o *P121) GetP12Ok() (*string, bool) {
 
 // HasP12 returns a boolean if a field has been set.
 func (o *P121) HasP12() bool {
-	if o != nil && o.P12 != nil {
+	if o != nil && !IsNil(o.P12) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *P121) SetP12(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *P121) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *P121) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P121) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -96,7 +99,7 @@ func (o *P121) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *P121) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *P121) SetPassword(v string) {
 }
 
 func (o P121) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.P12 != nil {
-		toSerialize["p12"] = o.P12
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o P121) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.P12) {
+		toSerialize["p12"] = o.P12
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
 }
 
 type NullableP121 struct {

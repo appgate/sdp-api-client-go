@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ConditionsApiService ConditionsApi service
-type ConditionsApiService service
+// ConditionsAPIService ConditionsAPI service
+type ConditionsAPIService service
 
 type ApiClaimsNamesGetRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 }
 
 func (r ApiClaimsNamesGetRequest) Execute() (*ClaimNamesList, *http.Response, error) {
@@ -40,7 +40,7 @@ Claim Names list includes available User, Device and System claims. Some of thes
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiClaimsNamesGetRequest
 */
-func (a *ConditionsApiService) ClaimsNamesGet(ctx context.Context) ApiClaimsNamesGetRequest {
+func (a *ConditionsAPIService) ClaimsNamesGet(ctx context.Context) ApiClaimsNamesGetRequest {
 	return ApiClaimsNamesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -50,7 +50,7 @@ func (a *ConditionsApiService) ClaimsNamesGet(ctx context.Context) ApiClaimsName
 // Execute executes the request
 //
 //	@return ClaimNamesList
-func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest) (*ClaimNamesList, *http.Response, error) {
+func (a *ConditionsAPIService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest) (*ClaimNamesList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -58,7 +58,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 		localVarReturnValue *ClaimNamesList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ClaimsNamesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ClaimsNamesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -96,9 +96,9 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -115,6 +115,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -125,6 +126,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -135,6 +137,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -145,6 +148,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -164,7 +168,7 @@ func (a *ConditionsApiService) ClaimsNamesGetExecute(r ApiClaimsNamesGetRequest)
 
 type ApiConditionsBulkUpsertPostRequest struct {
 	ctx                             context.Context
-	ApiService                      *ConditionsApiService
+	ApiService                      *ConditionsAPIService
 	conditionsBulkUpsertPostRequest *ConditionsBulkUpsertPostRequest
 }
 
@@ -186,7 +190,7 @@ Create or update multiple conditions in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiConditionsBulkUpsertPostRequest
 */
-func (a *ConditionsApiService) ConditionsBulkUpsertPost(ctx context.Context) ApiConditionsBulkUpsertPostRequest {
+func (a *ConditionsAPIService) ConditionsBulkUpsertPost(ctx context.Context) ApiConditionsBulkUpsertPostRequest {
 	return ApiConditionsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -196,7 +200,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPost(ctx context.Context) Api
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsBulkUpsertPostExecute(r ApiConditionsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -204,7 +208,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -247,9 +251,9 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -266,6 +270,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -276,6 +281,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -286,6 +292,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -296,6 +303,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -306,6 +314,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -325,7 +334,7 @@ func (a *ConditionsApiService) ConditionsBulkUpsertPostExecute(r ApiConditionsBu
 
 type ApiConditionsGetRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -375,7 +384,7 @@ List all Conditions visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiConditionsGetRequest
 */
-func (a *ConditionsApiService) ConditionsGet(ctx context.Context) ApiConditionsGetRequest {
+func (a *ConditionsAPIService) ConditionsGet(ctx context.Context) ApiConditionsGetRequest {
 	return ApiConditionsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -385,7 +394,7 @@ func (a *ConditionsApiService) ConditionsGet(ctx context.Context) ApiConditionsG
 // Execute executes the request
 //
 //	@return ConditionList
-func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (*ConditionList, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsGetExecute(r ApiConditionsGetRequest) (*ConditionList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -393,7 +402,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 		localVarReturnValue *ConditionList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -405,19 +414,19 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -446,9 +455,9 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -465,6 +474,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -475,6 +485,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -485,6 +496,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -495,6 +507,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -514,7 +527,7 @@ func (a *ConditionsApiService) ConditionsGetExecute(r ApiConditionsGetRequest) (
 
 type ApiConditionsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 	id         string
 }
 
@@ -531,7 +544,7 @@ Delete a specific Condition.
 	@param id ID of the object.
 	@return ApiConditionsIdDeleteRequest
 */
-func (a *ConditionsApiService) ConditionsIdDelete(ctx context.Context, id string) ApiConditionsIdDeleteRequest {
+func (a *ConditionsAPIService) ConditionsIdDelete(ctx context.Context, id string) ApiConditionsIdDeleteRequest {
 	return ApiConditionsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -540,20 +553,20 @@ func (a *ConditionsApiService) ConditionsIdDelete(ctx context.Context, id string
 }
 
 // Execute executes the request
-func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDeleteRequest) (*http.Response, error) {
+func (a *ConditionsAPIService) ConditionsIdDeleteExecute(r ApiConditionsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -586,9 +599,9 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -605,6 +618,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -615,6 +629,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -625,6 +640,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -635,6 +651,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -645,6 +662,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -655,7 +673,7 @@ func (a *ConditionsApiService) ConditionsIdDeleteExecute(r ApiConditionsIdDelete
 
 type ApiConditionsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 	id         string
 }
 
@@ -672,7 +690,7 @@ Get a specific Condition.
 	@param id ID of the object.
 	@return ApiConditionsIdGetRequest
 */
-func (a *ConditionsApiService) ConditionsIdGet(ctx context.Context, id string) ApiConditionsIdGetRequest {
+func (a *ConditionsAPIService) ConditionsIdGet(ctx context.Context, id string) ApiConditionsIdGetRequest {
 	return ApiConditionsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -683,7 +701,7 @@ func (a *ConditionsApiService) ConditionsIdGet(ctx context.Context, id string) A
 // Execute executes the request
 //
 //	@return Condition
-func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetRequest) (*Condition, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsIdGetExecute(r ApiConditionsIdGetRequest) (*Condition, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -691,13 +709,13 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 		localVarReturnValue *Condition
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -730,9 +748,9 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -749,6 +767,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -759,6 +778,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -769,6 +789,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -779,6 +800,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -789,6 +811,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -808,7 +831,7 @@ func (a *ConditionsApiService) ConditionsIdGetExecute(r ApiConditionsIdGetReques
 
 type ApiConditionsIdPutRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 	id         string
 	condition  *Condition
 }
@@ -832,7 +855,7 @@ Update an existing Condition.
 	@param id ID of the object.
 	@return ApiConditionsIdPutRequest
 */
-func (a *ConditionsApiService) ConditionsIdPut(ctx context.Context, id string) ApiConditionsIdPutRequest {
+func (a *ConditionsAPIService) ConditionsIdPut(ctx context.Context, id string) ApiConditionsIdPutRequest {
 	return ApiConditionsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -843,7 +866,7 @@ func (a *ConditionsApiService) ConditionsIdPut(ctx context.Context, id string) A
 // Execute executes the request
 //
 //	@return Condition
-func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutRequest) (*Condition, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsIdPutExecute(r ApiConditionsIdPutRequest) (*Condition, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -851,13 +874,13 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 		localVarReturnValue *Condition
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/conditions/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -895,9 +918,9 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -914,6 +937,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -924,6 +948,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -934,6 +959,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -944,6 +970,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -954,6 +981,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -964,6 +992,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -974,6 +1003,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -993,7 +1023,7 @@ func (a *ConditionsApiService) ConditionsIdPutExecute(r ApiConditionsIdPutReques
 
 type ApiConditionsPostRequest struct {
 	ctx        context.Context
-	ApiService *ConditionsApiService
+	ApiService *ConditionsAPIService
 	condition  *Condition
 }
 
@@ -1015,7 +1045,7 @@ Create a new Condition.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiConditionsPostRequest
 */
-func (a *ConditionsApiService) ConditionsPost(ctx context.Context) ApiConditionsPostRequest {
+func (a *ConditionsAPIService) ConditionsPost(ctx context.Context) ApiConditionsPostRequest {
 	return ApiConditionsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1025,7 +1055,7 @@ func (a *ConditionsApiService) ConditionsPost(ctx context.Context) ApiConditions
 // Execute executes the request
 //
 //	@return Condition
-func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest) (*Condition, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsPostExecute(r ApiConditionsPostRequest) (*Condition, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1033,7 +1063,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 		localVarReturnValue *Condition
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1076,9 +1106,9 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1095,6 +1125,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1105,6 +1136,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1115,6 +1147,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1125,6 +1158,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1135,6 +1169,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1145,6 +1180,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1155,6 +1191,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1174,7 +1211,7 @@ func (a *ConditionsApiService) ConditionsPostExecute(r ApiConditionsPostRequest)
 
 type ApiConditionsTestPostRequest struct {
 	ctx         context.Context
-	ApiService  *ConditionsApiService
+	ApiService  *ConditionsAPIService
 	testRequest *TestRequest
 }
 
@@ -1196,7 +1233,7 @@ Simulate a given expression for a Condition, Policy or Criteria Script.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiConditionsTestPostRequest
 */
-func (a *ConditionsApiService) ConditionsTestPost(ctx context.Context) ApiConditionsTestPostRequest {
+func (a *ConditionsAPIService) ConditionsTestPost(ctx context.Context) ApiConditionsTestPostRequest {
 	return ApiConditionsTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1206,7 +1243,7 @@ func (a *ConditionsApiService) ConditionsTestPost(ctx context.Context) ApiCondit
 // Execute executes the request
 //
 //	@return ConditionsTestPost200Response
-func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPostRequest) (*ConditionsTestPost200Response, *http.Response, error) {
+func (a *ConditionsAPIService) ConditionsTestPostExecute(r ApiConditionsTestPostRequest) (*ConditionsTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1214,7 +1251,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 		localVarReturnValue *ConditionsTestPost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsApiService.ConditionsTestPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsTestPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1257,9 +1294,9 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1276,6 +1313,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1286,6 +1324,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1296,6 +1335,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1306,6 +1346,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1316,6 +1357,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1326,6 +1368,7 @@ func (a *ConditionsApiService) ConditionsTestPostExecute(r ApiConditionsTestPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

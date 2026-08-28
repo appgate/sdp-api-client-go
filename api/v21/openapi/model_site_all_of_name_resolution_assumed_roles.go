@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolutionAssumedRoles type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionAssumedRoles{}
+
 // SiteAllOfNameResolutionAssumedRoles struct for SiteAllOfNameResolutionAssumedRoles
 type SiteAllOfNameResolutionAssumedRoles struct {
 	// AWS account ID.
@@ -46,7 +49,7 @@ func NewSiteAllOfNameResolutionAssumedRolesWithDefaults() *SiteAllOfNameResoluti
 
 // GetAccountId returns the AccountId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetAccountId() string {
-	if o == nil || o.AccountId == nil {
+	if o == nil || IsNil(o.AccountId) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetAccountId() string {
 // GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetAccountIdOk() (*string, bool) {
-	if o == nil || o.AccountId == nil {
+	if o == nil || IsNil(o.AccountId) {
 		return nil, false
 	}
 	return o.AccountId, true
@@ -64,7 +67,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetAccountIdOk() (*string, bool) {
 
 // HasAccountId returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) HasAccountId() bool {
-	if o != nil && o.AccountId != nil {
+	if o != nil && !IsNil(o.AccountId) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) SetAccountId(v string) {
 
 // GetRoleName returns the RoleName field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetRoleName() string {
-	if o == nil || o.RoleName == nil {
+	if o == nil || IsNil(o.RoleName) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetRoleName() string {
 // GetRoleNameOk returns a tuple with the RoleName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetRoleNameOk() (*string, bool) {
-	if o == nil || o.RoleName == nil {
+	if o == nil || IsNil(o.RoleName) {
 		return nil, false
 	}
 	return o.RoleName, true
@@ -96,7 +99,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetRoleNameOk() (*string, bool) {
 
 // HasRoleName returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) HasRoleName() bool {
-	if o != nil && o.RoleName != nil {
+	if o != nil && !IsNil(o.RoleName) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) SetRoleName(v string) {
 
 // GetExternalId returns the ExternalId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetExternalId() string {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetExternalId() string {
 // GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetExternalIdOk() (*string, bool) {
-	if o == nil || o.ExternalId == nil {
+	if o == nil || IsNil(o.ExternalId) {
 		return nil, false
 	}
 	return o.ExternalId, true
@@ -128,7 +131,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetExternalIdOk() (*string, bool) 
 
 // HasExternalId returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) HasExternalId() bool {
-	if o != nil && o.ExternalId != nil {
+	if o != nil && !IsNil(o.ExternalId) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) SetExternalId(v string) {
 
 // GetRegions returns the Regions field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetRegions() []string {
-	if o == nil || o.Regions == nil {
+	if o == nil || IsNil(o.Regions) {
 		var ret []string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetRegions() []string {
 // GetRegionsOk returns a tuple with the Regions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) GetRegionsOk() ([]string, bool) {
-	if o == nil || o.Regions == nil {
+	if o == nil || IsNil(o.Regions) {
 		return nil, false
 	}
 	return o.Regions, true
@@ -160,7 +163,7 @@ func (o *SiteAllOfNameResolutionAssumedRoles) GetRegionsOk() ([]string, bool) {
 
 // HasRegions returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAssumedRoles) HasRegions() bool {
-	if o != nil && o.Regions != nil {
+	if o != nil && !IsNil(o.Regions) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *SiteAllOfNameResolutionAssumedRoles) SetRegions(v []string) {
 }
 
 func (o SiteAllOfNameResolutionAssumedRoles) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccountId != nil {
-		toSerialize["accountId"] = o.AccountId
-	}
-	if o.RoleName != nil {
-		toSerialize["roleName"] = o.RoleName
-	}
-	if o.ExternalId != nil {
-		toSerialize["externalId"] = o.ExternalId
-	}
-	if o.Regions != nil {
-		toSerialize["regions"] = o.Regions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionAssumedRoles) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccountId) {
+		toSerialize["accountId"] = o.AccountId
+	}
+	if !IsNil(o.RoleName) {
+		toSerialize["roleName"] = o.RoleName
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["externalId"] = o.ExternalId
+	}
+	if !IsNil(o.Regions) {
+		toSerialize["regions"] = o.Regions
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionAssumedRoles struct {

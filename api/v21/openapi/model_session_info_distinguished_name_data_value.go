@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SessionInfoDistinguishedNameDataValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionInfoDistinguishedNameDataValue{}
+
 // SessionInfoDistinguishedNameDataValue Session Details reported by the Gateway.
 type SessionInfoDistinguishedNameDataValue struct {
 	UserClaims   map[string]interface{} `json:"userClaims,omitempty"`
@@ -49,7 +52,7 @@ func NewSessionInfoDistinguishedNameDataValueWithDefaults() *SessionInfoDistingu
 
 // GetUserClaims returns the UserClaims field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetUserClaims() map[string]interface{} {
-	if o == nil || o.UserClaims == nil {
+	if o == nil || IsNil(o.UserClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -59,15 +62,15 @@ func (o *SessionInfoDistinguishedNameDataValue) GetUserClaims() map[string]inter
 // GetUserClaimsOk returns a tuple with the UserClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetUserClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.UserClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.UserClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.UserClaims, true
 }
 
 // HasUserClaims returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasUserClaims() bool {
-	if o != nil && o.UserClaims != nil {
+	if o != nil && !IsNil(o.UserClaims) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetUserClaims(v map[string]inter
 
 // GetDeviceClaims returns the DeviceClaims field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetDeviceClaims() map[string]interface{} {
-	if o == nil || o.DeviceClaims == nil {
+	if o == nil || IsNil(o.DeviceClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -91,15 +94,15 @@ func (o *SessionInfoDistinguishedNameDataValue) GetDeviceClaims() map[string]int
 // GetDeviceClaimsOk returns a tuple with the DeviceClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetDeviceClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.DeviceClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.DeviceClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.DeviceClaims, true
 }
 
 // HasDeviceClaims returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasDeviceClaims() bool {
-	if o != nil && o.DeviceClaims != nil {
+	if o != nil && !IsNil(o.DeviceClaims) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetDeviceClaims(v map[string]int
 
 // GetSystemClaims returns the SystemClaims field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetSystemClaims() map[string]interface{} {
-	if o == nil || o.SystemClaims == nil {
+	if o == nil || IsNil(o.SystemClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -123,15 +126,15 @@ func (o *SessionInfoDistinguishedNameDataValue) GetSystemClaims() map[string]int
 // GetSystemClaimsOk returns a tuple with the SystemClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetSystemClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.SystemClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.SystemClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.SystemClaims, true
 }
 
 // HasSystemClaims returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasSystemClaims() bool {
-	if o != nil && o.SystemClaims != nil {
+	if o != nil && !IsNil(o.SystemClaims) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetSystemClaims(v map[string]int
 
 // GetEntitlementInfos returns the EntitlementInfos field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetEntitlementInfos() map[string]SessionInfoDistinguishedNameDataValueEntitlementInfosValue {
-	if o == nil || o.EntitlementInfos == nil {
+	if o == nil || IsNil(o.EntitlementInfos) {
 		var ret map[string]SessionInfoDistinguishedNameDataValueEntitlementInfosValue
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetEntitlementInfos() map[string
 // GetEntitlementInfosOk returns a tuple with the EntitlementInfos field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetEntitlementInfosOk() (*map[string]SessionInfoDistinguishedNameDataValueEntitlementInfosValue, bool) {
-	if o == nil || o.EntitlementInfos == nil {
+	if o == nil || IsNil(o.EntitlementInfos) {
 		return nil, false
 	}
 	return o.EntitlementInfos, true
@@ -163,7 +166,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetEntitlementInfosOk() (*map[st
 
 // HasEntitlementInfos returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasEntitlementInfos() bool {
-	if o != nil && o.EntitlementInfos != nil {
+	if o != nil && !IsNil(o.EntitlementInfos) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetEntitlementInfos(v map[string
 
 // GetDiscoveredApps returns the DiscoveredApps field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetDiscoveredApps() []string {
-	if o == nil || o.DiscoveredApps == nil {
+	if o == nil || IsNil(o.DiscoveredApps) {
 		var ret []string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetDiscoveredApps() []string {
 // GetDiscoveredAppsOk returns a tuple with the DiscoveredApps field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetDiscoveredAppsOk() ([]string, bool) {
-	if o == nil || o.DiscoveredApps == nil {
+	if o == nil || IsNil(o.DiscoveredApps) {
 		return nil, false
 	}
 	return o.DiscoveredApps, true
@@ -195,7 +198,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetDiscoveredAppsOk() ([]string,
 
 // HasDiscoveredApps returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasDiscoveredApps() bool {
-	if o != nil && o.DiscoveredApps != nil {
+	if o != nil && !IsNil(o.DiscoveredApps) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetDiscoveredApps(v []string) {
 
 // GetVpn returns the Vpn field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetVpn() map[string]interface{} {
-	if o == nil || o.Vpn == nil {
+	if o == nil || IsNil(o.Vpn) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -219,15 +222,15 @@ func (o *SessionInfoDistinguishedNameDataValue) GetVpn() map[string]interface{} 
 // GetVpnOk returns a tuple with the Vpn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetVpnOk() (map[string]interface{}, bool) {
-	if o == nil || o.Vpn == nil {
-		return nil, false
+	if o == nil || IsNil(o.Vpn) {
+		return map[string]interface{}{}, false
 	}
 	return o.Vpn, true
 }
 
 // HasVpn returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasVpn() bool {
-	if o != nil && o.Vpn != nil {
+	if o != nil && !IsNil(o.Vpn) {
 		return true
 	}
 
@@ -241,7 +244,7 @@ func (o *SessionInfoDistinguishedNameDataValue) SetVpn(v map[string]interface{})
 
 // GetSite returns the Site field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValue) GetSite() string {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		var ret string
 		return ret
 	}
@@ -251,7 +254,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetSite() string {
 // GetSiteOk returns a tuple with the Site field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValue) GetSiteOk() (*string, bool) {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		return nil, false
 	}
 	return o.Site, true
@@ -259,7 +262,7 @@ func (o *SessionInfoDistinguishedNameDataValue) GetSiteOk() (*string, bool) {
 
 // HasSite returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValue) HasSite() bool {
-	if o != nil && o.Site != nil {
+	if o != nil && !IsNil(o.Site) {
 		return true
 	}
 
@@ -272,29 +275,37 @@ func (o *SessionInfoDistinguishedNameDataValue) SetSite(v string) {
 }
 
 func (o SessionInfoDistinguishedNameDataValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserClaims != nil {
-		toSerialize["userClaims"] = o.UserClaims
-	}
-	if o.DeviceClaims != nil {
-		toSerialize["deviceClaims"] = o.DeviceClaims
-	}
-	if o.SystemClaims != nil {
-		toSerialize["systemClaims"] = o.SystemClaims
-	}
-	if o.EntitlementInfos != nil {
-		toSerialize["entitlementInfos"] = o.EntitlementInfos
-	}
-	if o.DiscoveredApps != nil {
-		toSerialize["discoveredApps"] = o.DiscoveredApps
-	}
-	if o.Vpn != nil {
-		toSerialize["vpn"] = o.Vpn
-	}
-	if o.Site != nil {
-		toSerialize["site"] = o.Site
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionInfoDistinguishedNameDataValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserClaims) {
+		toSerialize["userClaims"] = o.UserClaims
+	}
+	if !IsNil(o.DeviceClaims) {
+		toSerialize["deviceClaims"] = o.DeviceClaims
+	}
+	if !IsNil(o.SystemClaims) {
+		toSerialize["systemClaims"] = o.SystemClaims
+	}
+	if !IsNil(o.EntitlementInfos) {
+		toSerialize["entitlementInfos"] = o.EntitlementInfos
+	}
+	if !IsNil(o.DiscoveredApps) {
+		toSerialize["discoveredApps"] = o.DiscoveredApps
+	}
+	if !IsNil(o.Vpn) {
+		toSerialize["vpn"] = o.Vpn
+	}
+	if !IsNil(o.Site) {
+		toSerialize["site"] = o.Site
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionInfoDistinguishedNameDataValue struct {

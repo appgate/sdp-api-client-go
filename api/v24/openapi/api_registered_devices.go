@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// RegisteredDevicesApiService RegisteredDevicesApi service
-type RegisteredDevicesApiService service
+// RegisteredDevicesAPIService RegisteredDevicesAPI service
+type RegisteredDevicesAPIService service
 
 type ApiOnBoardedDevicesDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
-	ApiService        *RegisteredDevicesApiService
+	ApiService        *RegisteredDevicesAPIService
 	distinguishedName string
 }
 
@@ -42,7 +42,7 @@ OnBoardedDevicesDistinguishedNameDelete Remove a Registered Device for the given
 	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
 	@return ApiOnBoardedDevicesDistinguishedNameDeleteRequest
 */
-func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiOnBoardedDevicesDistinguishedNameDeleteRequest {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiOnBoardedDevicesDistinguishedNameDeleteRequest {
 	return ApiOnBoardedDevicesDistinguishedNameDeleteRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -51,20 +51,20 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDelete(ct
 }
 
 // Execute executes the request
-func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExecute(r ApiOnBoardedDevicesDistinguishedNameDeleteRequest) (*http.Response, error) {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesDistinguishedNameDeleteExecute(r ApiOnBoardedDevicesDistinguishedNameDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesApiService.OnBoardedDevicesDistinguishedNameDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesAPIService.OnBoardedDevicesDistinguishedNameDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/on-boarded-devices/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -97,9 +97,9 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -116,6 +116,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -126,6 +127,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -136,16 +138,18 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -156,6 +160,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -166,7 +171,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesDistinguishedNameDeleteExe
 
 type ApiOnBoardedDevicesGetRequest struct {
 	ctx        context.Context
-	ApiService *RegisteredDevicesApiService
+	ApiService *RegisteredDevicesAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -216,7 +221,7 @@ List all Registered Devices.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiOnBoardedDevicesGetRequest
 */
-func (a *RegisteredDevicesApiService) OnBoardedDevicesGet(ctx context.Context) ApiOnBoardedDevicesGetRequest {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesGet(ctx context.Context) ApiOnBoardedDevicesGetRequest {
 	return ApiOnBoardedDevicesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -226,7 +231,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGet(ctx context.Context) A
 // Execute executes the request
 //
 //	@return OnBoardedDeviceList
-func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedDevicesGetRequest) (*OnBoardedDeviceList, *http.Response, error) {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesGetExecute(r ApiOnBoardedDevicesGetRequest) (*OnBoardedDeviceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -234,7 +239,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 		localVarReturnValue *OnBoardedDeviceList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesApiService.OnBoardedDevicesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesAPIService.OnBoardedDevicesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -246,19 +251,19 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -287,9 +292,9 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -306,6 +311,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -316,16 +322,18 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,6 +344,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesGetExecute(r ApiOnBoardedD
 
 type ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest struct {
 	ctx               context.Context
-	ApiService        *RegisteredDevicesApiService
+	ApiService        *RegisteredDevicesAPIService
 	distinguishedName string
 }
 
@@ -372,7 +381,7 @@ Reevaluate all sessions belongs to the user&devices ending with the given Distin
 	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
 	@return ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest
 */
-func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesReevaluateDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest {
 	return ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -383,7 +392,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 // Execute executes the request
 //
 //	@return OnBoardedDevicesReevaluateDistinguishedNamePost200Response
-func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNamePostExecute(r ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest) (*OnBoardedDevicesReevaluateDistinguishedNamePost200Response, *http.Response, error) {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesReevaluateDistinguishedNamePostExecute(r ApiOnBoardedDevicesReevaluateDistinguishedNamePostRequest) (*OnBoardedDevicesReevaluateDistinguishedNamePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 		localVarReturnValue *OnBoardedDevicesReevaluateDistinguishedNamePost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesApiService.OnBoardedDevicesReevaluateDistinguishedNamePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesAPIService.OnBoardedDevicesReevaluateDistinguishedNamePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/on-boarded-devices/reevaluate/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,16 +480,18 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesReevaluateDistinguishedNam
 
 type ApiOnBoardedDevicesRevokeTokensPostRequest struct {
 	ctx                     context.Context
-	ApiService              *RegisteredDevicesApiService
+	ApiService              *RegisteredDevicesAPIService
 	deviceRevocationRequest *DeviceRevocationRequest
 }
 
@@ -530,7 +544,7 @@ Revoke tokens for devices according to the request parameters.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiOnBoardedDevicesRevokeTokensPostRequest
 */
-func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPost(ctx context.Context) ApiOnBoardedDevicesRevokeTokensPostRequest {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesRevokeTokensPost(ctx context.Context) ApiOnBoardedDevicesRevokeTokensPostRequest {
 	return ApiOnBoardedDevicesRevokeTokensPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -540,7 +554,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPost(ctx conte
 // Execute executes the request
 //
 //	@return OnBoardedDeviceList
-func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r ApiOnBoardedDevicesRevokeTokensPostRequest) (*OnBoardedDeviceList, *http.Response, error) {
+func (a *RegisteredDevicesAPIService) OnBoardedDevicesRevokeTokensPostExecute(r ApiOnBoardedDevicesRevokeTokensPostRequest) (*OnBoardedDeviceList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -548,7 +562,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 		localVarReturnValue *OnBoardedDeviceList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesApiService.OnBoardedDevicesRevokeTokensPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RegisteredDevicesAPIService.OnBoardedDevicesRevokeTokensPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -588,9 +602,9 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -607,6 +621,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -617,6 +632,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -627,16 +643,18 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -647,6 +665,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -657,6 +676,7 @@ func (a *RegisteredDevicesApiService) OnBoardedDevicesRevokeTokensPostExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

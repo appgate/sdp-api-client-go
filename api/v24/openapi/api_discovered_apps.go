@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// DiscoveredAppsApiService DiscoveredAppsApi service
-type DiscoveredAppsApiService service
+// DiscoveredAppsAPIService DiscoveredAppsAPI service
+type DiscoveredAppsAPIService service
 
 type ApiDiscoveredAppsConfigurationGetRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 }
 
 func (r ApiDiscoveredAppsConfigurationGetRequest) Execute() (*DiscoveredAppsConfiguration, *http.Response, error) {
@@ -40,7 +40,7 @@ Get Application Discovery configuration from the Advisor.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDiscoveredAppsConfigurationGetRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGet(ctx context.Context) ApiDiscoveredAppsConfigurationGetRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsConfigurationGet(ctx context.Context) ApiDiscoveredAppsConfigurationGetRequest {
 	return ApiDiscoveredAppsConfigurationGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -50,7 +50,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGet(ctx context.Co
 // Execute executes the request
 //
 //	@return DiscoveredAppsConfiguration
-func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDiscoveredAppsConfigurationGetRequest) (*DiscoveredAppsConfiguration, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsConfigurationGetExecute(r ApiDiscoveredAppsConfigurationGetRequest) (*DiscoveredAppsConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -58,7 +58,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 		localVarReturnValue *DiscoveredAppsConfiguration
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsConfigurationGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsConfigurationGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -96,9 +96,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -115,6 +115,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -125,6 +126,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -135,6 +137,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -145,6 +148,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -155,6 +159,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -174,7 +179,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationGetExecute(r ApiDi
 
 type ApiDiscoveredAppsConfigurationPutRequest struct {
 	ctx                         context.Context
-	ApiService                  *DiscoveredAppsApiService
+	ApiService                  *DiscoveredAppsAPIService
 	discoveredAppsConfiguration *DiscoveredAppsConfiguration
 }
 
@@ -195,7 +200,7 @@ Update Application Discovery configuration in the Advisor.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDiscoveredAppsConfigurationPutRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPut(ctx context.Context) ApiDiscoveredAppsConfigurationPutRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsConfigurationPut(ctx context.Context) ApiDiscoveredAppsConfigurationPutRequest {
 	return ApiDiscoveredAppsConfigurationPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -205,7 +210,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPut(ctx context.Co
 // Execute executes the request
 //
 //	@return DiscoveredAppsConfiguration
-func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDiscoveredAppsConfigurationPutRequest) (*DiscoveredAppsConfiguration, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsConfigurationPutExecute(r ApiDiscoveredAppsConfigurationPutRequest) (*DiscoveredAppsConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -213,7 +218,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 		localVarReturnValue *DiscoveredAppsConfiguration
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsConfigurationPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsConfigurationPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -256,9 +261,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -275,6 +280,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -285,6 +291,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -295,6 +302,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -305,6 +313,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -315,6 +324,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -325,6 +335,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -344,7 +355,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsConfigurationPutExecute(r ApiDi
 
 type ApiDiscoveredAppsGetRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -394,7 +405,7 @@ Get a list of discovered apps from the Advisor. Requires a license.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDiscoveredAppsGetRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsGet(ctx context.Context) ApiDiscoveredAppsGetRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsGet(ctx context.Context) ApiDiscoveredAppsGetRequest {
 	return ApiDiscoveredAppsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -404,7 +415,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGet(ctx context.Context) ApiDis
 // Execute executes the request
 //
 //	@return AppList
-func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsGetRequest) (*AppList, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsGetRequest) (*AppList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -412,7 +423,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 		localVarReturnValue *AppList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -424,19 +435,19 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -465,9 +476,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -484,6 +495,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -494,6 +506,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -504,6 +517,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -514,6 +528,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -533,7 +548,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsGetExecute(r ApiDiscoveredAppsG
 
 type ApiDiscoveredAppsIdAccessEntitlementPostRequest struct {
 	ctx                                          context.Context
-	ApiService                                   *DiscoveredAppsApiService
+	ApiService                                   *DiscoveredAppsAPIService
 	id                                           string
 	discoveredAppsIdAccessEntitlementPostRequest *DiscoveredAppsIdAccessEntitlementPostRequest
 }
@@ -556,7 +571,7 @@ Configure entitlement access to a discovered app.
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdAccessEntitlementPostRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPost(ctx context.Context, id string) ApiDiscoveredAppsIdAccessEntitlementPostRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdAccessEntitlementPost(ctx context.Context, id string) ApiDiscoveredAppsIdAccessEntitlementPostRequest {
 	return ApiDiscoveredAppsIdAccessEntitlementPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -567,7 +582,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPost(ctx con
 // Execute executes the request
 //
 //	@return AppDetails
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(r ApiDiscoveredAppsIdAccessEntitlementPostRequest) (*AppDetails, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdAccessEntitlementPostExecute(r ApiDiscoveredAppsIdAccessEntitlementPostRequest) (*AppDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -575,13 +590,13 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 		localVarReturnValue *AppDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdAccessEntitlementPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdAccessEntitlementPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}/access/entitlement"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -619,9 +634,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -638,6 +653,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -648,6 +664,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -658,6 +675,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -668,6 +686,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +697,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,6 +708,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -707,7 +728,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessEntitlementPostExecute(
 
 type ApiDiscoveredAppsIdAccessPolicyPostRequest struct {
 	ctx                                     context.Context
-	ApiService                              *DiscoveredAppsApiService
+	ApiService                              *DiscoveredAppsAPIService
 	id                                      string
 	discoveredAppsIdAccessPolicyPostRequest *DiscoveredAppsIdAccessPolicyPostRequest
 }
@@ -730,7 +751,7 @@ Configure policy access to a discovered app.
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdAccessPolicyPostRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPost(ctx context.Context, id string) ApiDiscoveredAppsIdAccessPolicyPostRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdAccessPolicyPost(ctx context.Context, id string) ApiDiscoveredAppsIdAccessPolicyPostRequest {
 	return ApiDiscoveredAppsIdAccessPolicyPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -741,7 +762,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPost(ctx context.
 // Execute executes the request
 //
 //	@return AppDetails
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r ApiDiscoveredAppsIdAccessPolicyPostRequest) (*AppDetails, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdAccessPolicyPostExecute(r ApiDiscoveredAppsIdAccessPolicyPostRequest) (*AppDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -749,13 +770,13 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 		localVarReturnValue *AppDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdAccessPolicyPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdAccessPolicyPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}/access/policy"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -793,9 +814,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -812,6 +833,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -822,6 +844,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -832,6 +855,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -842,6 +866,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -852,6 +877,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -862,6 +888,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -881,7 +908,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdAccessPolicyPostExecute(r Api
 
 type ApiDiscoveredAppsIdCommonGroupsCountPostRequest struct {
 	ctx                      context.Context
-	ApiService               *DiscoveredAppsApiService
+	ApiService               *DiscoveredAppsAPIService
 	id                       string
 	commonGroupsCountRequest *CommonGroupsCountRequest
 }
@@ -904,7 +931,7 @@ Get count of common user groups across discovered apps from the Advisor.
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdCommonGroupsCountPostRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPost(ctx context.Context, id string) ApiDiscoveredAppsIdCommonGroupsCountPostRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdCommonGroupsCountPost(ctx context.Context, id string) ApiDiscoveredAppsIdCommonGroupsCountPostRequest {
 	return ApiDiscoveredAppsIdCommonGroupsCountPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -915,7 +942,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPost(ctx con
 // Execute executes the request
 //
 //	@return CommonGroupsCountResponse
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(r ApiDiscoveredAppsIdCommonGroupsCountPostRequest) (*CommonGroupsCountResponse, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdCommonGroupsCountPostExecute(r ApiDiscoveredAppsIdCommonGroupsCountPostRequest) (*CommonGroupsCountResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -923,13 +950,13 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 		localVarReturnValue *CommonGroupsCountResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdCommonGroupsCountPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdCommonGroupsCountPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}/common-groups-count"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -967,9 +994,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -986,6 +1013,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -996,6 +1024,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1006,6 +1035,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1016,6 +1046,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1035,7 +1066,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdCommonGroupsCountPostExecute(
 
 type ApiDiscoveredAppsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 	id         string
 	ports      *string
 }
@@ -1059,7 +1090,7 @@ Delete a discovered app. All data of that discovered data will be removed and it
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdDeleteRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdDelete(ctx context.Context, id string) ApiDiscoveredAppsIdDeleteRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdDelete(ctx context.Context, id string) ApiDiscoveredAppsIdDeleteRequest {
 	return ApiDiscoveredAppsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1068,20 +1099,20 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDelete(ctx context.Context, i
 }
 
 // Execute executes the request
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscoveredAppsIdDeleteRequest) (*http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdDeleteExecute(r ApiDiscoveredAppsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1090,7 +1121,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 		return nil, reportError("ports is required and must be specified")
 	}
 
-	localVarQueryParams.Add("ports", parameterToString(*r.ports, ""))
+	parameterAddToHeaderOrQuery(localVarQueryParams, "ports", r.ports, "", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1118,9 +1149,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1137,6 +1168,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1147,6 +1179,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1157,6 +1190,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1167,6 +1201,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1177,6 +1212,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -1187,7 +1223,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdDeleteExecute(r ApiDiscovered
 
 type ApiDiscoveredAppsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 	id         string
 }
 
@@ -1204,7 +1240,7 @@ Get the details of a discovered app.
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdGetRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdGet(ctx context.Context, id string) ApiDiscoveredAppsIdGetRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdGet(ctx context.Context, id string) ApiDiscoveredAppsIdGetRequest {
 	return ApiDiscoveredAppsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1215,7 +1251,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGet(ctx context.Context, id s
 // Execute executes the request
 //
 //	@return AppDetails
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredAppsIdGetRequest) (*AppDetails, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdGetExecute(r ApiDiscoveredAppsIdGetRequest) (*AppDetails, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1223,13 +1259,13 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 		localVarReturnValue *AppDetails
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1262,9 +1298,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1281,6 +1317,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1291,6 +1328,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1301,6 +1339,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1311,6 +1350,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1321,6 +1361,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1340,7 +1381,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdGetExecute(r ApiDiscoveredApp
 
 type ApiDiscoveredAppsIdResetPostRequest struct {
 	ctx             context.Context
-	ApiService      *DiscoveredAppsApiService
+	ApiService      *DiscoveredAppsAPIService
 	id              string
 	resetAppRequest *ResetAppRequest
 }
@@ -1363,7 +1404,7 @@ Resets a discovered app
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdResetPostRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPost(ctx context.Context, id string) ApiDiscoveredAppsIdResetPostRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdResetPost(ctx context.Context, id string) ApiDiscoveredAppsIdResetPostRequest {
 	return ApiDiscoveredAppsIdResetPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1372,20 +1413,20 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPost(ctx context.Context
 }
 
 // Execute executes the request
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscoveredAppsIdResetPostRequest) (*http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdResetPostExecute(r ApiDiscoveredAppsIdResetPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdResetPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdResetPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}/reset"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1423,9 +1464,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1442,6 +1483,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1452,6 +1494,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1462,6 +1505,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1472,6 +1516,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1482,6 +1527,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1492,6 +1538,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -1502,7 +1549,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdResetPostExecute(r ApiDiscove
 
 type ApiDiscoveredAppsIdTopGroupsGetRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 	id         string
 }
 
@@ -1519,7 +1566,7 @@ Get top user groups accessing discovered apps from the Advisor.
 	@param id ID of the object.
 	@return ApiDiscoveredAppsIdTopGroupsGetRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGet(ctx context.Context, id string) ApiDiscoveredAppsIdTopGroupsGetRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdTopGroupsGet(ctx context.Context, id string) ApiDiscoveredAppsIdTopGroupsGetRequest {
 	return ApiDiscoveredAppsIdTopGroupsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1530,7 +1577,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGet(ctx context.Cont
 // Execute executes the request
 //
 //	@return TopGroups
-func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDiscoveredAppsIdTopGroupsGetRequest) (*TopGroups, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDiscoveredAppsIdTopGroupsGetRequest) (*TopGroups, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1538,13 +1585,13 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 		localVarReturnValue *TopGroups
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsIdTopGroupsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsIdTopGroupsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/discovered-apps/{id}/top-groups"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1577,9 +1624,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1596,6 +1643,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1606,6 +1654,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1616,6 +1665,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1626,6 +1676,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1645,7 +1696,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsIdTopGroupsGetExecute(r ApiDisc
 
 type ApiDiscoveredAppsStartAnalysisPostRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 }
 
 func (r ApiDiscoveredAppsStartAnalysisPostRequest) Execute() (*http.Response, error) {
@@ -1660,7 +1711,7 @@ Initiates an on-demand analysis of the current Application Discovery status.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDiscoveredAppsStartAnalysisPostRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPost(ctx context.Context) ApiDiscoveredAppsStartAnalysisPostRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsStartAnalysisPost(ctx context.Context) ApiDiscoveredAppsStartAnalysisPostRequest {
 	return ApiDiscoveredAppsStartAnalysisPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1668,14 +1719,14 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPost(ctx context.C
 }
 
 // Execute executes the request
-func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiDiscoveredAppsStartAnalysisPostRequest) (*http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsStartAnalysisPostExecute(r ApiDiscoveredAppsStartAnalysisPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsStartAnalysisPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsStartAnalysisPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1713,9 +1764,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1732,6 +1783,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1742,6 +1794,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1752,6 +1805,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1762,6 +1816,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1772,6 +1827,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -1782,7 +1838,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStartAnalysisPostExecute(r ApiD
 
 type ApiDiscoveredAppsStatsGetRequest struct {
 	ctx        context.Context
-	ApiService *DiscoveredAppsApiService
+	ApiService *DiscoveredAppsAPIService
 }
 
 func (r ApiDiscoveredAppsStatsGetRequest) Execute() (*AppStats, *http.Response, error) {
@@ -1797,7 +1853,7 @@ Get Application Discovery stats from the Advisor.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDiscoveredAppsStatsGetRequest
 */
-func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGet(ctx context.Context) ApiDiscoveredAppsStatsGetRequest {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsStatsGet(ctx context.Context) ApiDiscoveredAppsStatsGetRequest {
 	return ApiDiscoveredAppsStatsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1807,7 +1863,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGet(ctx context.Context) A
 // Execute executes the request
 //
 //	@return AppStats
-func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscoveredAppsStatsGetRequest) (*AppStats, *http.Response, error) {
+func (a *DiscoveredAppsAPIService) DiscoveredAppsStatsGetExecute(r ApiDiscoveredAppsStatsGetRequest) (*AppStats, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1815,7 +1871,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 		localVarReturnValue *AppStats
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsApiService.DiscoveredAppsStatsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DiscoveredAppsAPIService.DiscoveredAppsStatsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1853,9 +1909,9 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1872,6 +1928,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1882,6 +1939,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1892,6 +1950,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1902,6 +1961,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1912,6 +1972,7 @@ func (a *DiscoveredAppsApiService) DiscoveredAppsStatsGetExecute(r ApiDiscovered
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

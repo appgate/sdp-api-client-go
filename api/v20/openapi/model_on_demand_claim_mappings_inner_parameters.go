@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OnDemandClaimMappingsInnerParameters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnDemandClaimMappingsInnerParameters{}
+
 // OnDemandClaimMappingsInnerParameters Depending on the command type, extra parameters to pass to the on-demand claim.
 type OnDemandClaimMappingsInnerParameters struct {
 	// 'Used for the following commands: \"serviceRunning\", \"processRunning\", \"runScript\". Name of the service, process or device claim script respectively.'
@@ -44,7 +47,7 @@ func NewOnDemandClaimMappingsInnerParametersWithDefaults() *OnDemandClaimMapping
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInnerParameters) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInnerParameters) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -62,7 +65,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInnerParameters) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *OnDemandClaimMappingsInnerParameters) SetName(v string) {
 
 // GetPath returns the Path field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInnerParameters) GetPath() string {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetPath() string {
 // GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInnerParameters) GetPathOk() (*string, bool) {
-	if o == nil || o.Path == nil {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
 	return o.Path, true
@@ -94,7 +97,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetPathOk() (*string, bool) {
 
 // HasPath returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInnerParameters) HasPath() bool {
-	if o != nil && o.Path != nil {
+	if o != nil && !IsNil(o.Path) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *OnDemandClaimMappingsInnerParameters) SetPath(v string) {
 
 // GetArgs returns the Args field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInnerParameters) GetArgs() string {
-	if o == nil || o.Args == nil {
+	if o == nil || IsNil(o.Args) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetArgs() string {
 // GetArgsOk returns a tuple with the Args field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInnerParameters) GetArgsOk() (*string, bool) {
-	if o == nil || o.Args == nil {
+	if o == nil || IsNil(o.Args) {
 		return nil, false
 	}
 	return o.Args, true
@@ -126,7 +129,7 @@ func (o *OnDemandClaimMappingsInnerParameters) GetArgsOk() (*string, bool) {
 
 // HasArgs returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInnerParameters) HasArgs() bool {
-	if o != nil && o.Args != nil {
+	if o != nil && !IsNil(o.Args) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *OnDemandClaimMappingsInnerParameters) SetArgs(v string) {
 }
 
 func (o OnDemandClaimMappingsInnerParameters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Path != nil {
-		toSerialize["path"] = o.Path
-	}
-	if o.Args != nil {
-		toSerialize["args"] = o.Args
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnDemandClaimMappingsInnerParameters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Args) {
+		toSerialize["args"] = o.Args
+	}
+	return toSerialize, nil
 }
 
 type NullableOnDemandClaimMappingsInnerParameters struct {

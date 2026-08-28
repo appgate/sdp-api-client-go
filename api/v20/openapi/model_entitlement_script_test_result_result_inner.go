@@ -19,7 +19,7 @@ import (
 // EntitlementScriptTestResultResultInner struct for EntitlementScriptTestResultResultInner
 type EntitlementScriptTestResultResultInner struct {
 	AppShortcut *AppShortcut
-	string      *string
+	String      *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
@@ -38,20 +38,20 @@ func (dst *EntitlementScriptTestResultResultInner) UnmarshalJSON(data []byte) er
 		dst.AppShortcut = nil
 	}
 
-	// try to unmarshal JSON data into string
-	err = json.Unmarshal(data, &dst.string)
+	// try to unmarshal JSON data into String
+	err = json.Unmarshal(data, &dst.String)
 	if err == nil {
-		jsonstring, _ := json.Marshal(dst.string)
-		if string(jsonstring) == "{}" { // empty struct
-			dst.string = nil
+		jsonString, _ := json.Marshal(dst.String)
+		if string(jsonString) == "{}" { // empty struct
+			dst.String = nil
 		} else {
-			return nil // data stored in dst.string, return on the first match
+			return nil // data stored in dst.String, return on the first match
 		}
 	} else {
-		dst.string = nil
+		dst.String = nil
 	}
 
-	return fmt.Errorf("Data failed to match schemas in anyOf(EntitlementScriptTestResultResultInner)")
+	return fmt.Errorf("data failed to match schemas in anyOf(EntitlementScriptTestResultResultInner)")
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
@@ -60,8 +60,8 @@ func (src *EntitlementScriptTestResultResultInner) MarshalJSON() ([]byte, error)
 		return json.Marshal(&src.AppShortcut)
 	}
 
-	if src.string != nil {
-		return json.Marshal(&src.string)
+	if src.String != nil {
+		return json.Marshal(&src.String)
 	}
 
 	return nil, nil // no data in anyOf schemas

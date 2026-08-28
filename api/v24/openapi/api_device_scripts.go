@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// DeviceScriptsApiService DeviceScriptsApi service
-type DeviceScriptsApiService service
+// DeviceScriptsAPIService DeviceScriptsAPI service
+type DeviceScriptsAPIService service
 
 type ApiDeviceScriptsBulkUpsertPostRequest struct {
 	ctx                                context.Context
-	ApiService                         *DeviceScriptsApiService
+	ApiService                         *DeviceScriptsAPIService
 	deviceScriptsBulkUpsertPostRequest *DeviceScriptsBulkUpsertPostRequest
 }
 
@@ -46,7 +46,7 @@ Create or update multiple device scripts in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiDeviceScriptsBulkUpsertPostRequest
 */
-func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPost(ctx context.Context) ApiDeviceScriptsBulkUpsertPostRequest {
+func (a *DeviceScriptsAPIService) DeviceScriptsBulkUpsertPost(ctx context.Context) ApiDeviceScriptsBulkUpsertPostRequest {
 	return ApiDeviceScriptsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDeviceScriptsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *DeviceScriptsAPIService) DeviceScriptsBulkUpsertPostExecute(r ApiDeviceScriptsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceScriptsApiService.DeviceScriptsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DeviceScriptsAPIService.DeviceScriptsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -107,9 +107,9 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -126,6 +126,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -136,6 +137,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -146,6 +148,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -156,6 +159,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -166,6 +170,7 @@ func (a *DeviceScriptsApiService) DeviceScriptsBulkUpsertPostExecute(r ApiDevice
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

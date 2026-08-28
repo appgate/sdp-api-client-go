@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfTelemetryAggregatorDatadogExporters type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfTelemetryAggregatorDatadogExporters{}
 
 // ApplianceAllOfTelemetryAggregatorDatadogExporters struct for ApplianceAllOfTelemetryAggregatorDatadogExporters
 type ApplianceAllOfTelemetryAggregatorDatadogExporters struct {
@@ -24,6 +29,8 @@ type ApplianceAllOfTelemetryAggregatorDatadogExporters struct {
 	// The Datadog API key.
 	ApiKey *string `json:"apiKey,omitempty"`
 }
+
+type _ApplianceAllOfTelemetryAggregatorDatadogExporters ApplianceAllOfTelemetryAggregatorDatadogExporters
 
 // NewApplianceAllOfTelemetryAggregatorDatadogExporters instantiates a new ApplianceAllOfTelemetryAggregatorDatadogExporters object
 // This constructor will assign default values to properties that have it defined,
@@ -94,7 +101,7 @@ func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) SetSite(v string) {
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) GetApiKey() string {
-	if o == nil || o.ApiKey == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		var ret string
 		return ret
 	}
@@ -104,7 +111,7 @@ func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) GetApiKey() string {
 // GetApiKeyOk returns a tuple with the ApiKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) GetApiKeyOk() (*string, bool) {
-	if o == nil || o.ApiKey == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		return nil, false
 	}
 	return o.ApiKey, true
@@ -112,7 +119,7 @@ func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) GetApiKeyOk() (*stri
 
 // HasApiKey returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) HasApiKey() bool {
-	if o != nil && o.ApiKey != nil {
+	if o != nil && !IsNil(o.ApiKey) {
 		return true
 	}
 
@@ -125,17 +132,59 @@ func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) SetApiKey(v string) 
 }
 
 func (o ApplianceAllOfTelemetryAggregatorDatadogExporters) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.ApiKey != nil {
-		toSerialize["apiKey"] = o.ApiKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfTelemetryAggregatorDatadogExporters) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["site"] = o.Site
+	if !IsNil(o.ApiKey) {
+		toSerialize["apiKey"] = o.ApiKey
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfTelemetryAggregatorDatadogExporters) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"site",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfTelemetryAggregatorDatadogExporters := _ApplianceAllOfTelemetryAggregatorDatadogExporters{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfTelemetryAggregatorDatadogExporters)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfTelemetryAggregatorDatadogExporters(varApplianceAllOfTelemetryAggregatorDatadogExporters)
+
+	return err
 }
 
 type NullableApplianceAllOfTelemetryAggregatorDatadogExporters struct {

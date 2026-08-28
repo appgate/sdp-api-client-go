@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityCaNextSwitchPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityCaNextSwitchPostRequest{}
+
 // CertificateAuthorityCaNextSwitchPostRequest struct for CertificateAuthorityCaNextSwitchPostRequest
 type CertificateAuthorityCaNextSwitchPostRequest struct {
 	// Force the CA switch without making sure all Appliances are ready.
@@ -44,7 +47,7 @@ func NewCertificateAuthorityCaNextSwitchPostRequestWithDefaults() *CertificateAu
 
 // GetForce returns the Force field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextSwitchPostRequest) GetForce() bool {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *CertificateAuthorityCaNextSwitchPostRequest) GetForce() bool {
 // GetForceOk returns a tuple with the Force field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextSwitchPostRequest) GetForceOk() (*bool, bool) {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		return nil, false
 	}
 	return o.Force, true
@@ -62,7 +65,7 @@ func (o *CertificateAuthorityCaNextSwitchPostRequest) GetForceOk() (*bool, bool)
 
 // HasForce returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextSwitchPostRequest) HasForce() bool {
-	if o != nil && o.Force != nil {
+	if o != nil && !IsNil(o.Force) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *CertificateAuthorityCaNextSwitchPostRequest) SetForce(v bool) {
 }
 
 func (o CertificateAuthorityCaNextSwitchPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Force != nil {
-		toSerialize["force"] = o.Force
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityCaNextSwitchPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Force) {
+		toSerialize["force"] = o.Force
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityCaNextSwitchPostRequest struct {

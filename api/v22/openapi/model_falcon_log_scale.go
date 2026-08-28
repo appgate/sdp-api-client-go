@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the FalconLogScale type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FalconLogScale{}
 
 // FalconLogScale struct for FalconLogScale
 type FalconLogScale struct {
@@ -28,6 +33,8 @@ type FalconLogScale struct {
 	// Translated to the @source field in Humio.
 	Source *string `json:"source,omitempty"`
 }
+
+type _FalconLogScale FalconLogScale
 
 // NewFalconLogScale instantiates a new FalconLogScale object
 // This constructor will assign default values to properties that have it defined,
@@ -73,7 +80,7 @@ func (o *FalconLogScale) SetCollectorUrl(v string) {
 
 // GetToken returns the Token field value if set, zero value otherwise.
 func (o *FalconLogScale) GetToken() string {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
@@ -83,7 +90,7 @@ func (o *FalconLogScale) GetToken() string {
 // GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FalconLogScale) GetTokenOk() (*string, bool) {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
 	return o.Token, true
@@ -91,7 +98,7 @@ func (o *FalconLogScale) GetTokenOk() (*string, bool) {
 
 // HasToken returns a boolean if a field has been set.
 func (o *FalconLogScale) HasToken() bool {
-	if o != nil && o.Token != nil {
+	if o != nil && !IsNil(o.Token) {
 		return true
 	}
 
@@ -105,7 +112,7 @@ func (o *FalconLogScale) SetToken(v string) {
 
 // GetIndex returns the Index field value if set, zero value otherwise.
 func (o *FalconLogScale) GetIndex() string {
-	if o == nil || o.Index == nil {
+	if o == nil || IsNil(o.Index) {
 		var ret string
 		return ret
 	}
@@ -115,7 +122,7 @@ func (o *FalconLogScale) GetIndex() string {
 // GetIndexOk returns a tuple with the Index field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FalconLogScale) GetIndexOk() (*string, bool) {
-	if o == nil || o.Index == nil {
+	if o == nil || IsNil(o.Index) {
 		return nil, false
 	}
 	return o.Index, true
@@ -123,7 +130,7 @@ func (o *FalconLogScale) GetIndexOk() (*string, bool) {
 
 // HasIndex returns a boolean if a field has been set.
 func (o *FalconLogScale) HasIndex() bool {
-	if o != nil && o.Index != nil {
+	if o != nil && !IsNil(o.Index) {
 		return true
 	}
 
@@ -137,7 +144,7 @@ func (o *FalconLogScale) SetIndex(v string) {
 
 // GetSourceType returns the SourceType field value if set, zero value otherwise.
 func (o *FalconLogScale) GetSourceType() string {
-	if o == nil || o.SourceType == nil {
+	if o == nil || IsNil(o.SourceType) {
 		var ret string
 		return ret
 	}
@@ -147,7 +154,7 @@ func (o *FalconLogScale) GetSourceType() string {
 // GetSourceTypeOk returns a tuple with the SourceType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FalconLogScale) GetSourceTypeOk() (*string, bool) {
-	if o == nil || o.SourceType == nil {
+	if o == nil || IsNil(o.SourceType) {
 		return nil, false
 	}
 	return o.SourceType, true
@@ -155,7 +162,7 @@ func (o *FalconLogScale) GetSourceTypeOk() (*string, bool) {
 
 // HasSourceType returns a boolean if a field has been set.
 func (o *FalconLogScale) HasSourceType() bool {
-	if o != nil && o.SourceType != nil {
+	if o != nil && !IsNil(o.SourceType) {
 		return true
 	}
 
@@ -169,7 +176,7 @@ func (o *FalconLogScale) SetSourceType(v string) {
 
 // GetSource returns the Source field value if set, zero value otherwise.
 func (o *FalconLogScale) GetSource() string {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		var ret string
 		return ret
 	}
@@ -179,7 +186,7 @@ func (o *FalconLogScale) GetSource() string {
 // GetSourceOk returns a tuple with the Source field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FalconLogScale) GetSourceOk() (*string, bool) {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		return nil, false
 	}
 	return o.Source, true
@@ -187,7 +194,7 @@ func (o *FalconLogScale) GetSourceOk() (*string, bool) {
 
 // HasSource returns a boolean if a field has been set.
 func (o *FalconLogScale) HasSource() bool {
-	if o != nil && o.Source != nil {
+	if o != nil && !IsNil(o.Source) {
 		return true
 	}
 
@@ -200,23 +207,66 @@ func (o *FalconLogScale) SetSource(v string) {
 }
 
 func (o FalconLogScale) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["collectorUrl"] = o.CollectorUrl
-	}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
-	}
-	if o.Index != nil {
-		toSerialize["index"] = o.Index
-	}
-	if o.SourceType != nil {
-		toSerialize["sourceType"] = o.SourceType
-	}
-	if o.Source != nil {
-		toSerialize["source"] = o.Source
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FalconLogScale) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["collectorUrl"] = o.CollectorUrl
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.Index) {
+		toSerialize["index"] = o.Index
+	}
+	if !IsNil(o.SourceType) {
+		toSerialize["sourceType"] = o.SourceType
+	}
+	if !IsNil(o.Source) {
+		toSerialize["source"] = o.Source
+	}
+	return toSerialize, nil
+}
+
+func (o *FalconLogScale) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"collectorUrl",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFalconLogScale := _FalconLogScale{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFalconLogScale)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FalconLogScale(varFalconLogScale)
+
+	return err
 }
 
 type NullableFalconLogScale struct {

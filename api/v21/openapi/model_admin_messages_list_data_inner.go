@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AdminMessagesListDataInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMessagesListDataInner{}
+
 // AdminMessagesListDataInner struct for AdminMessagesListDataInner
 type AdminMessagesListDataInner struct {
 	// Randomly generated UUID.
@@ -51,7 +54,7 @@ func NewAdminMessagesListDataInnerWithDefaults() *AdminMessagesListDataInner {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *AdminMessagesListDataInner) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -69,7 +72,7 @@ func (o *AdminMessagesListDataInner) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *AdminMessagesListDataInner) SetId(v string) {
 
 // GetLevel returns the Level field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetLevel() string {
-	if o == nil || o.Level == nil {
+	if o == nil || IsNil(o.Level) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *AdminMessagesListDataInner) GetLevel() string {
 // GetLevelOk returns a tuple with the Level field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetLevelOk() (*string, bool) {
-	if o == nil || o.Level == nil {
+	if o == nil || IsNil(o.Level) {
 		return nil, false
 	}
 	return o.Level, true
@@ -101,7 +104,7 @@ func (o *AdminMessagesListDataInner) GetLevelOk() (*string, bool) {
 
 // HasLevel returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasLevel() bool {
-	if o != nil && o.Level != nil {
+	if o != nil && !IsNil(o.Level) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *AdminMessagesListDataInner) SetLevel(v string) {
 
 // GetCategory returns the Category field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetCategory() string {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *AdminMessagesListDataInner) GetCategory() string {
 // GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetCategoryOk() (*string, bool) {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		return nil, false
 	}
 	return o.Category, true
@@ -133,7 +136,7 @@ func (o *AdminMessagesListDataInner) GetCategoryOk() (*string, bool) {
 
 // HasCategory returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasCategory() bool {
-	if o != nil && o.Category != nil {
+	if o != nil && !IsNil(o.Category) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *AdminMessagesListDataInner) SetCategory(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *AdminMessagesListDataInner) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -165,7 +168,7 @@ func (o *AdminMessagesListDataInner) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *AdminMessagesListDataInner) SetMessage(v string) {
 
 // GetSource returns the Source field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetSource() string {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		var ret string
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *AdminMessagesListDataInner) GetSource() string {
 // GetSourceOk returns a tuple with the Source field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetSourceOk() (*string, bool) {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		return nil, false
 	}
 	return o.Source, true
@@ -197,7 +200,7 @@ func (o *AdminMessagesListDataInner) GetSourceOk() (*string, bool) {
 
 // HasSource returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasSource() bool {
-	if o != nil && o.Source != nil {
+	if o != nil && !IsNil(o.Source) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *AdminMessagesListDataInner) SetSource(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *AdminMessagesListDataInner) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *AdminMessagesListDataInner) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesListDataInner) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -229,7 +232,7 @@ func (o *AdminMessagesListDataInner) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *AdminMessagesListDataInner) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *AdminMessagesListDataInner) SetCreated(v time.Time) {
 }
 
 func (o AdminMessagesListDataInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Level != nil {
-		toSerialize["level"] = o.Level
-	}
-	if o.Category != nil {
-		toSerialize["category"] = o.Category
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Source != nil {
-		toSerialize["source"] = o.Source
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMessagesListDataInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Level) {
+		toSerialize["level"] = o.Level
+	}
+	if !IsNil(o.Category) {
+		toSerialize["category"] = o.Category
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Source) {
+		toSerialize["source"] = o.Source
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMessagesListDataInner struct {

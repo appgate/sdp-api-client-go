@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// AdminMessagesApiService AdminMessagesApi service
-type AdminMessagesApiService service
+// AdminMessagesAPIService AdminMessagesAPI service
+type AdminMessagesAPIService service
 
 type ApiAdminMessagesDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *AdminMessagesApiService
+	ApiService    *AdminMessagesAPIService
 	authorization *string
 	message       *string
 	source        *string
@@ -62,7 +62,7 @@ Deletes all Admin Messages by default. If **both** `message` and `source`  query
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMessagesDeleteRequest
 */
-func (a *AdminMessagesApiService) AdminMessagesDelete(ctx context.Context) ApiAdminMessagesDeleteRequest {
+func (a *AdminMessagesAPIService) AdminMessagesDelete(ctx context.Context) ApiAdminMessagesDeleteRequest {
 	return ApiAdminMessagesDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -70,14 +70,14 @@ func (a *AdminMessagesApiService) AdminMessagesDelete(ctx context.Context) ApiAd
 }
 
 // Execute executes the request
-func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesDeleteRequest) (*http.Response, error) {
+func (a *AdminMessagesAPIService) AdminMessagesDeleteExecute(r ApiAdminMessagesDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesAPIService.AdminMessagesDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -92,10 +92,10 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 	}
 
 	if r.message != nil {
-		localVarQueryParams.Add("message", parameterToString(*r.message, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "message", r.message, "", "")
 	}
 	if r.source != nil {
-		localVarQueryParams.Add("source", parameterToString(*r.source, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "source", r.source, "", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -114,7 +114,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -125,9 +125,9 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -144,6 +144,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -154,6 +155,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -164,6 +166,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -174,6 +177,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -184,7 +188,7 @@ func (a *AdminMessagesApiService) AdminMessagesDeleteExecute(r ApiAdminMessagesD
 
 type ApiAdminMessagesGetRequest struct {
 	ctx           context.Context
-	ApiService    *AdminMessagesApiService
+	ApiService    *AdminMessagesAPIService
 	authorization *string
 }
 
@@ -206,7 +210,7 @@ Get a list of all Admin Messages generated by the system. It includes duplicate 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMessagesGetRequest
 */
-func (a *AdminMessagesApiService) AdminMessagesGet(ctx context.Context) ApiAdminMessagesGetRequest {
+func (a *AdminMessagesAPIService) AdminMessagesGet(ctx context.Context) ApiAdminMessagesGetRequest {
 	return ApiAdminMessagesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -216,7 +220,7 @@ func (a *AdminMessagesApiService) AdminMessagesGet(ctx context.Context) ApiAdmin
 // Execute executes the request
 //
 //	@return AdminMessagesList
-func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetRequest) (*AdminMessagesList, *http.Response, error) {
+func (a *AdminMessagesAPIService) AdminMessagesGetExecute(r ApiAdminMessagesGetRequest) (*AdminMessagesList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -224,7 +228,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 		localVarReturnValue *AdminMessagesList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesAPIService.AdminMessagesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -255,7 +259,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -266,9 +270,9 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -285,6 +289,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -295,6 +300,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -305,6 +311,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -315,6 +322,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -334,7 +342,7 @@ func (a *AdminMessagesApiService) AdminMessagesGetExecute(r ApiAdminMessagesGetR
 
 type ApiAdminMessagesIdPutRequest struct {
 	ctx                  context.Context
-	ApiService           *AdminMessagesApiService
+	ApiService           *AdminMessagesAPIService
 	authorization        *string
 	id                   string
 	adminMessageMetadata *AdminMessageMetadata
@@ -364,7 +372,7 @@ Update the metadata of an Admin Message.
 	@param id The UUID of the Admin Message Metadata.
 	@return ApiAdminMessagesIdPutRequest
 */
-func (a *AdminMessagesApiService) AdminMessagesIdPut(ctx context.Context, id string) ApiAdminMessagesIdPutRequest {
+func (a *AdminMessagesAPIService) AdminMessagesIdPut(ctx context.Context, id string) ApiAdminMessagesIdPutRequest {
 	return ApiAdminMessagesIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -375,7 +383,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPut(ctx context.Context, id str
 // Execute executes the request
 //
 //	@return AdminMessageMetadata
-func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesIdPutRequest) (*AdminMessageMetadata, *http.Response, error) {
+func (a *AdminMessagesAPIService) AdminMessagesIdPutExecute(r ApiAdminMessagesIdPutRequest) (*AdminMessageMetadata, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -383,13 +391,13 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 		localVarReturnValue *AdminMessageMetadata
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesAPIService.AdminMessagesIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/admin-messages/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -415,7 +423,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.adminMessageMetadata
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -428,9 +436,9 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -447,6 +455,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -457,6 +466,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -467,6 +477,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -477,6 +488,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -496,7 +508,7 @@ func (a *AdminMessagesApiService) AdminMessagesIdPutExecute(r ApiAdminMessagesId
 
 type ApiAdminMessagesSummarizeGetRequest struct {
 	ctx           context.Context
-	ApiService    *AdminMessagesApiService
+	ApiService    *AdminMessagesAPIService
 	authorization *string
 }
 
@@ -518,7 +530,7 @@ List all summarized Admin Messages generated by the system. This API call is rec
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdminMessagesSummarizeGetRequest
 */
-func (a *AdminMessagesApiService) AdminMessagesSummarizeGet(ctx context.Context) ApiAdminMessagesSummarizeGetRequest {
+func (a *AdminMessagesAPIService) AdminMessagesSummarizeGet(ctx context.Context) ApiAdminMessagesSummarizeGetRequest {
 	return ApiAdminMessagesSummarizeGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -528,7 +540,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGet(ctx context.Context)
 // Execute executes the request
 //
 //	@return AdminMessagesSummarize
-func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) (*AdminMessagesSummarize, *http.Response, error) {
+func (a *AdminMessagesAPIService) AdminMessagesSummarizeGetExecute(r ApiAdminMessagesSummarizeGetRequest) (*AdminMessagesSummarize, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -536,7 +548,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 		localVarReturnValue *AdminMessagesSummarize
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesApiService.AdminMessagesSummarizeGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMessagesAPIService.AdminMessagesSummarizeGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -567,7 +579,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -578,9 +590,9 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -597,6 +609,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -607,6 +620,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -617,6 +631,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -627,6 +642,7 @@ func (a *AdminMessagesApiService) AdminMessagesSummarizeGetExecute(r ApiAdminMes
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

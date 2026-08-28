@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfNetworkingHosts type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingHosts{}
 
 // ApplianceAllOfNetworkingHosts struct for ApplianceAllOfNetworkingHosts
 type ApplianceAllOfNetworkingHosts struct {
@@ -22,6 +27,8 @@ type ApplianceAllOfNetworkingHosts struct {
 	// IP for the given hostname for appliance to resolve.
 	Address string `json:"address"`
 }
+
+type _ApplianceAllOfNetworkingHosts ApplianceAllOfNetworkingHosts
 
 // NewApplianceAllOfNetworkingHosts instantiates a new ApplianceAllOfNetworkingHosts object
 // This constructor will assign default values to properties that have it defined,
@@ -91,14 +98,56 @@ func (o *ApplianceAllOfNetworkingHosts) SetAddress(v string) {
 }
 
 func (o ApplianceAllOfNetworkingHosts) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if true {
-		toSerialize["address"] = o.Address
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingHosts) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	toSerialize["address"] = o.Address
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfNetworkingHosts) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"hostname",
+		"address",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfNetworkingHosts := _ApplianceAllOfNetworkingHosts{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfNetworkingHosts)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfNetworkingHosts(varApplianceAllOfNetworkingHosts)
+
+	return err
 }
 
 type NullableApplianceAllOfNetworkingHosts struct {

@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// SecretsManagerApiService SecretsManagerApi service
-type SecretsManagerApiService service
+// SecretsManagerAPIService SecretsManagerAPI service
+type SecretsManagerAPIService service
 
 type ApiSecretsGetRequest struct {
 	ctx           context.Context
-	ApiService    *SecretsManagerApiService
+	ApiService    *SecretsManagerAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -82,7 +82,7 @@ List all Secrets visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSecretsGetRequest
 */
-func (a *SecretsManagerApiService) SecretsGet(ctx context.Context) ApiSecretsGetRequest {
+func (a *SecretsManagerAPIService) SecretsGet(ctx context.Context) ApiSecretsGetRequest {
 	return ApiSecretsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *SecretsManagerApiService) SecretsGet(ctx context.Context) ApiSecretsGet
 // Execute executes the request
 //
 //	@return SecretList
-func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*SecretList, *http.Response, error) {
+func (a *SecretsManagerAPIService) SecretsGetExecute(r ApiSecretsGetRequest) (*SecretList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 		localVarReturnValue *SecretList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerApiService.SecretsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerAPIService.SecretsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -115,19 +115,19 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +146,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -157,9 +157,9 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,16 +187,18 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *SecretsManagerApiService) SecretsGetExecute(r ApiSecretsGetRequest) (*S
 
 type ApiSecretsIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *SecretsManagerApiService
+	ApiService    *SecretsManagerAPIService
 	authorization *string
 	id            string
 }
@@ -249,7 +253,7 @@ Delete a specific Secret.
 	@param id ID of the object.
 	@return ApiSecretsIdDeleteRequest
 */
-func (a *SecretsManagerApiService) SecretsIdDelete(ctx context.Context, id string) ApiSecretsIdDeleteRequest {
+func (a *SecretsManagerAPIService) SecretsIdDelete(ctx context.Context, id string) ApiSecretsIdDeleteRequest {
 	return ApiSecretsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -258,20 +262,20 @@ func (a *SecretsManagerApiService) SecretsIdDelete(ctx context.Context, id strin
 }
 
 // Execute executes the request
-func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRequest) (*http.Response, error) {
+func (a *SecretsManagerAPIService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerApiService.SecretsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerAPIService.SecretsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/secrets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -297,7 +301,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -308,9 +312,9 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -327,6 +331,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -337,6 +342,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -347,16 +353,18 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -367,6 +375,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -377,7 +386,7 @@ func (a *SecretsManagerApiService) SecretsIdDeleteExecute(r ApiSecretsIdDeleteRe
 
 type ApiSecretsIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *SecretsManagerApiService
+	ApiService    *SecretsManagerAPIService
 	authorization *string
 	id            string
 }
@@ -401,7 +410,7 @@ Get a specific Secret.
 	@param id ID of the object.
 	@return ApiSecretsIdGetRequest
 */
-func (a *SecretsManagerApiService) SecretsIdGet(ctx context.Context, id string) ApiSecretsIdGetRequest {
+func (a *SecretsManagerAPIService) SecretsIdGet(ctx context.Context, id string) ApiSecretsIdGetRequest {
 	return ApiSecretsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -412,7 +421,7 @@ func (a *SecretsManagerApiService) SecretsIdGet(ctx context.Context, id string) 
 // Execute executes the request
 //
 //	@return Secret
-func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest) (*Secret, *http.Response, error) {
+func (a *SecretsManagerAPIService) SecretsIdGetExecute(r ApiSecretsIdGetRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -420,13 +429,13 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 		localVarReturnValue *Secret
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerApiService.SecretsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerAPIService.SecretsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/secrets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -452,7 +461,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -463,9 +472,9 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -482,6 +491,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -492,6 +502,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -502,16 +513,18 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -522,6 +535,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -541,7 +555,7 @@ func (a *SecretsManagerApiService) SecretsIdGetExecute(r ApiSecretsIdGetRequest)
 
 type ApiSecretsIdPutRequest struct {
 	ctx           context.Context
-	ApiService    *SecretsManagerApiService
+	ApiService    *SecretsManagerAPIService
 	authorization *string
 	id            string
 	secret        *Secret
@@ -572,7 +586,7 @@ Update an existing Secret.
 	@param id ID of the object.
 	@return ApiSecretsIdPutRequest
 */
-func (a *SecretsManagerApiService) SecretsIdPut(ctx context.Context, id string) ApiSecretsIdPutRequest {
+func (a *SecretsManagerAPIService) SecretsIdPut(ctx context.Context, id string) ApiSecretsIdPutRequest {
 	return ApiSecretsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -583,7 +597,7 @@ func (a *SecretsManagerApiService) SecretsIdPut(ctx context.Context, id string) 
 // Execute executes the request
 //
 //	@return Secret
-func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest) (*Secret, *http.Response, error) {
+func (a *SecretsManagerAPIService) SecretsIdPutExecute(r ApiSecretsIdPutRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -591,13 +605,13 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 		localVarReturnValue *Secret
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerApiService.SecretsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerAPIService.SecretsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/secrets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -626,7 +640,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.secret
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -639,9 +653,9 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -658,6 +672,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -668,6 +683,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +694,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,16 +705,18 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -708,6 +727,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -718,6 +738,7 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -736,14 +757,14 @@ func (a *SecretsManagerApiService) SecretsIdPutExecute(r ApiSecretsIdPutRequest)
 }
 
 type ApiSecretsPostRequest struct {
-	ctx               context.Context
-	ApiService        *SecretsManagerApiService
-	secretsGetRequest *SecretsGetRequest
+	ctx                context.Context
+	ApiService         *SecretsManagerAPIService
+	secretsPostRequest *SecretsPostRequest
 }
 
 // Secret object.
-func (r ApiSecretsPostRequest) SecretsGetRequest(secretsGetRequest SecretsGetRequest) ApiSecretsPostRequest {
-	r.secretsGetRequest = &secretsGetRequest
+func (r ApiSecretsPostRequest) SecretsPostRequest(secretsPostRequest SecretsPostRequest) ApiSecretsPostRequest {
+	r.secretsPostRequest = &secretsPostRequest
 	return r
 }
 
@@ -759,7 +780,7 @@ Create a new Secret.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSecretsPostRequest
 */
-func (a *SecretsManagerApiService) SecretsPost(ctx context.Context) ApiSecretsPostRequest {
+func (a *SecretsManagerAPIService) SecretsPost(ctx context.Context) ApiSecretsPostRequest {
 	return ApiSecretsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -769,7 +790,7 @@ func (a *SecretsManagerApiService) SecretsPost(ctx context.Context) ApiSecretsPo
 // Execute executes the request
 //
 //	@return Secret
-func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (*Secret, *http.Response, error) {
+func (a *SecretsManagerAPIService) SecretsPostExecute(r ApiSecretsPostRequest) (*Secret, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -777,7 +798,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 		localVarReturnValue *Secret
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerApiService.SecretsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsManagerAPIService.SecretsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -787,8 +808,8 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.secretsGetRequest == nil {
-		return localVarReturnValue, nil, reportError("secretsGetRequest is required and must be specified")
+	if r.secretsPostRequest == nil {
+		return localVarReturnValue, nil, reportError("secretsPostRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -809,7 +830,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.secretsGetRequest
+	localVarPostBody = r.secretsPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -820,9 +841,9 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -839,6 +860,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -849,6 +871,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -859,16 +882,18 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -879,6 +904,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -889,6 +915,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -899,6 +926,7 @@ func (a *SecretsManagerApiService) SecretsPostExecute(r ApiSecretsPostRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

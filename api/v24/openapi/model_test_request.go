@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the TestRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TestRequest{}
 
 // TestRequest struct for TestRequest
 type TestRequest struct {
@@ -25,6 +30,8 @@ type TestRequest struct {
 	SystemClaims map[string]interface{} `json:"systemClaims,omitempty"`
 	Time         *time.Time             `json:"time,omitempty"`
 }
+
+type _TestRequest TestRequest
 
 // NewTestRequest instantiates a new TestRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -70,7 +77,7 @@ func (o *TestRequest) SetExpression(v string) {
 
 // GetUserClaims returns the UserClaims field value if set, zero value otherwise.
 func (o *TestRequest) GetUserClaims() map[string]interface{} {
-	if o == nil || o.UserClaims == nil {
+	if o == nil || IsNil(o.UserClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -80,15 +87,15 @@ func (o *TestRequest) GetUserClaims() map[string]interface{} {
 // GetUserClaimsOk returns a tuple with the UserClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TestRequest) GetUserClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.UserClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.UserClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.UserClaims, true
 }
 
 // HasUserClaims returns a boolean if a field has been set.
 func (o *TestRequest) HasUserClaims() bool {
-	if o != nil && o.UserClaims != nil {
+	if o != nil && !IsNil(o.UserClaims) {
 		return true
 	}
 
@@ -102,7 +109,7 @@ func (o *TestRequest) SetUserClaims(v map[string]interface{}) {
 
 // GetDeviceClaims returns the DeviceClaims field value if set, zero value otherwise.
 func (o *TestRequest) GetDeviceClaims() map[string]interface{} {
-	if o == nil || o.DeviceClaims == nil {
+	if o == nil || IsNil(o.DeviceClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -112,15 +119,15 @@ func (o *TestRequest) GetDeviceClaims() map[string]interface{} {
 // GetDeviceClaimsOk returns a tuple with the DeviceClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TestRequest) GetDeviceClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.DeviceClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.DeviceClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.DeviceClaims, true
 }
 
 // HasDeviceClaims returns a boolean if a field has been set.
 func (o *TestRequest) HasDeviceClaims() bool {
-	if o != nil && o.DeviceClaims != nil {
+	if o != nil && !IsNil(o.DeviceClaims) {
 		return true
 	}
 
@@ -134,7 +141,7 @@ func (o *TestRequest) SetDeviceClaims(v map[string]interface{}) {
 
 // GetSystemClaims returns the SystemClaims field value if set, zero value otherwise.
 func (o *TestRequest) GetSystemClaims() map[string]interface{} {
-	if o == nil || o.SystemClaims == nil {
+	if o == nil || IsNil(o.SystemClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -144,15 +151,15 @@ func (o *TestRequest) GetSystemClaims() map[string]interface{} {
 // GetSystemClaimsOk returns a tuple with the SystemClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TestRequest) GetSystemClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.SystemClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.SystemClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.SystemClaims, true
 }
 
 // HasSystemClaims returns a boolean if a field has been set.
 func (o *TestRequest) HasSystemClaims() bool {
-	if o != nil && o.SystemClaims != nil {
+	if o != nil && !IsNil(o.SystemClaims) {
 		return true
 	}
 
@@ -166,7 +173,7 @@ func (o *TestRequest) SetSystemClaims(v map[string]interface{}) {
 
 // GetTime returns the Time field value if set, zero value otherwise.
 func (o *TestRequest) GetTime() time.Time {
-	if o == nil || o.Time == nil {
+	if o == nil || IsNil(o.Time) {
 		var ret time.Time
 		return ret
 	}
@@ -176,7 +183,7 @@ func (o *TestRequest) GetTime() time.Time {
 // GetTimeOk returns a tuple with the Time field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TestRequest) GetTimeOk() (*time.Time, bool) {
-	if o == nil || o.Time == nil {
+	if o == nil || IsNil(o.Time) {
 		return nil, false
 	}
 	return o.Time, true
@@ -184,7 +191,7 @@ func (o *TestRequest) GetTimeOk() (*time.Time, bool) {
 
 // HasTime returns a boolean if a field has been set.
 func (o *TestRequest) HasTime() bool {
-	if o != nil && o.Time != nil {
+	if o != nil && !IsNil(o.Time) {
 		return true
 	}
 
@@ -197,23 +204,66 @@ func (o *TestRequest) SetTime(v time.Time) {
 }
 
 func (o TestRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.UserClaims != nil {
-		toSerialize["userClaims"] = o.UserClaims
-	}
-	if o.DeviceClaims != nil {
-		toSerialize["deviceClaims"] = o.DeviceClaims
-	}
-	if o.SystemClaims != nil {
-		toSerialize["systemClaims"] = o.SystemClaims
-	}
-	if o.Time != nil {
-		toSerialize["time"] = o.Time
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TestRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.UserClaims) {
+		toSerialize["userClaims"] = o.UserClaims
+	}
+	if !IsNil(o.DeviceClaims) {
+		toSerialize["deviceClaims"] = o.DeviceClaims
+	}
+	if !IsNil(o.SystemClaims) {
+		toSerialize["systemClaims"] = o.SystemClaims
+	}
+	if !IsNil(o.Time) {
+		toSerialize["time"] = o.Time
+	}
+	return toSerialize, nil
+}
+
+func (o *TestRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"expression",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTestRequest := _TestRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTestRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TestRequest(varTestRequest)
+
+	return err
 }
 
 type NullableTestRequest struct {

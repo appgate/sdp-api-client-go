@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppliancesIdCommandTraceroutePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandTraceroutePostRequest{}
 
 // AppliancesIdCommandTraceroutePostRequest struct for AppliancesIdCommandTraceroutePostRequest
 type AppliancesIdCommandTraceroutePostRequest struct {
@@ -22,6 +27,8 @@ type AppliancesIdCommandTraceroutePostRequest struct {
 	// The number of seconds to run/wait before timing out.
 	ProcessTimeout *int32 `json:"processTimeout,omitempty"`
 }
+
+type _AppliancesIdCommandTraceroutePostRequest AppliancesIdCommandTraceroutePostRequest
 
 // NewAppliancesIdCommandTraceroutePostRequest instantiates a new AppliancesIdCommandTraceroutePostRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -71,7 +78,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) SetDestination(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -81,7 +88,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -89,7 +96,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeoutOk() (*int32
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandTraceroutePostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -102,14 +109,57 @@ func (o *AppliancesIdCommandTraceroutePostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandTraceroutePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["destination"] = o.Destination
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandTraceroutePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["destination"] = o.Destination
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
+}
+
+func (o *AppliancesIdCommandTraceroutePostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"destination",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppliancesIdCommandTraceroutePostRequest := _AppliancesIdCommandTraceroutePostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppliancesIdCommandTraceroutePostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppliancesIdCommandTraceroutePostRequest(varAppliancesIdCommandTraceroutePostRequest)
+
+	return err
 }
 
 type NullableAppliancesIdCommandTraceroutePostRequest struct {

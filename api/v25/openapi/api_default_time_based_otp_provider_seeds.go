@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// DefaultTimeBasedOTPProviderSeedsApiService DefaultTimeBasedOTPProviderSeedsApi service
-type DefaultTimeBasedOTPProviderSeedsApiService service
+// DefaultTimeBasedOTPProviderSeedsAPIService DefaultTimeBasedOTPProviderSeedsAPI service
+type DefaultTimeBasedOTPProviderSeedsAPIService service
 
 type ApiOtpSeedsDistinguishedNameDeleteRequest struct {
 	ctx               context.Context
-	ApiService        *DefaultTimeBasedOTPProviderSeedsApiService
+	ApiService        *DefaultTimeBasedOTPProviderSeedsAPIService
 	distinguishedName string
 }
 
@@ -42,7 +42,7 @@ Delete a Default Time-Based OTP Provider Seed for the given Distinguished Name.
 	@param distinguishedName 'Distinguished name of the user whose Default Time-Based OTP Provider Seed to be deleted. Format: \"CN=,OU=\"'
 	@return ApiOtpSeedsDistinguishedNameDeleteRequest
 */
-func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiOtpSeedsDistinguishedNameDeleteRequest {
+func (a *DefaultTimeBasedOTPProviderSeedsAPIService) OtpSeedsDistinguishedNameDelete(ctx context.Context, distinguishedName string) ApiOtpSeedsDistinguishedNameDeleteRequest {
 	return ApiOtpSeedsDistinguishedNameDeleteRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -51,20 +51,20 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 }
 
 // Execute executes the request
-func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDeleteExecute(r ApiOtpSeedsDistinguishedNameDeleteRequest) (*http.Response, error) {
+func (a *DefaultTimeBasedOTPProviderSeedsAPIService) OtpSeedsDistinguishedNameDeleteExecute(r ApiOtpSeedsDistinguishedNameDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultTimeBasedOTPProviderSeedsApiService.OtpSeedsDistinguishedNameDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultTimeBasedOTPProviderSeedsAPIService.OtpSeedsDistinguishedNameDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/otp/seeds/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -97,9 +97,9 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -116,6 +116,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -126,6 +127,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -136,16 +138,18 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -156,6 +160,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -166,7 +171,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsDistinguishedNameDe
 
 type ApiOtpSeedsGetRequest struct {
 	ctx        context.Context
-	ApiService *DefaultTimeBasedOTPProviderSeedsApiService
+	ApiService *DefaultTimeBasedOTPProviderSeedsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -216,7 +221,7 @@ List all Default Time-Based OTP Provider Seeds.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiOtpSeedsGetRequest
 */
-func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGet(ctx context.Context) ApiOtpSeedsGetRequest {
+func (a *DefaultTimeBasedOTPProviderSeedsAPIService) OtpSeedsGet(ctx context.Context) ApiOtpSeedsGetRequest {
 	return ApiOtpSeedsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -226,7 +231,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGet(ctx context.Con
 // Execute executes the request
 //
 //	@return OtpSeedList
-func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtpSeedsGetRequest) (*OtpSeedList, *http.Response, error) {
+func (a *DefaultTimeBasedOTPProviderSeedsAPIService) OtpSeedsGetExecute(r ApiOtpSeedsGetRequest) (*OtpSeedList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -234,7 +239,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 		localVarReturnValue *OtpSeedList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultTimeBasedOTPProviderSeedsApiService.OtpSeedsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultTimeBasedOTPProviderSeedsAPIService.OtpSeedsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -246,19 +251,19 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -287,9 +292,9 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -306,6 +311,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -316,16 +322,18 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,6 +344,7 @@ func (a *DefaultTimeBasedOTPProviderSeedsApiService) OtpSeedsGetExecute(r ApiOtp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

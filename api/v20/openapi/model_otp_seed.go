@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OtpSeed type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OtpSeed{}
+
 // OtpSeed struct for OtpSeed
 type OtpSeed struct {
 	// Distinguished name of a user. Format: \"CN=,OU=\"
@@ -46,7 +49,7 @@ func NewOtpSeedWithDefaults() *OtpSeed {
 
 // GetUserDistinguishedName returns the UserDistinguishedName field value if set, zero value otherwise.
 func (o *OtpSeed) GetUserDistinguishedName() string {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *OtpSeed) GetUserDistinguishedName() string {
 // GetUserDistinguishedNameOk returns a tuple with the UserDistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OtpSeed) GetUserDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		return nil, false
 	}
 	return o.UserDistinguishedName, true
@@ -64,7 +67,7 @@ func (o *OtpSeed) GetUserDistinguishedNameOk() (*string, bool) {
 
 // HasUserDistinguishedName returns a boolean if a field has been set.
 func (o *OtpSeed) HasUserDistinguishedName() bool {
-	if o != nil && o.UserDistinguishedName != nil {
+	if o != nil && !IsNil(o.UserDistinguishedName) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *OtpSeed) SetUserDistinguishedName(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *OtpSeed) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *OtpSeed) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OtpSeed) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -96,7 +99,7 @@ func (o *OtpSeed) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *OtpSeed) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *OtpSeed) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *OtpSeed) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *OtpSeed) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OtpSeed) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -128,7 +131,7 @@ func (o *OtpSeed) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *OtpSeed) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *OtpSeed) SetProviderName(v string) {
 
 // GetVerified returns the Verified field value if set, zero value otherwise.
 func (o *OtpSeed) GetVerified() bool {
-	if o == nil || o.Verified == nil {
+	if o == nil || IsNil(o.Verified) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *OtpSeed) GetVerified() bool {
 // GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OtpSeed) GetVerifiedOk() (*bool, bool) {
-	if o == nil || o.Verified == nil {
+	if o == nil || IsNil(o.Verified) {
 		return nil, false
 	}
 	return o.Verified, true
@@ -160,7 +163,7 @@ func (o *OtpSeed) GetVerifiedOk() (*bool, bool) {
 
 // HasVerified returns a boolean if a field has been set.
 func (o *OtpSeed) HasVerified() bool {
-	if o != nil && o.Verified != nil {
+	if o != nil && !IsNil(o.Verified) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *OtpSeed) SetVerified(v bool) {
 }
 
 func (o OtpSeed) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserDistinguishedName != nil {
-		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.Verified != nil {
-		toSerialize["verified"] = o.Verified
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OtpSeed) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserDistinguishedName) {
+		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.Verified) {
+		toSerialize["verified"] = o.Verified
+	}
+	return toSerialize, nil
 }
 
 type NullableOtpSeed struct {

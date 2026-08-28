@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// CertificateAuthorityApiService CertificateAuthorityApi service
-type CertificateAuthorityApiService service
+// CertificateAuthorityAPIService CertificateAuthorityAPI service
+type CertificateAuthorityAPIService service
 
 type ApiCertificateAuthorityCaGetRequest struct {
 	ctx        context.Context
-	ApiService *CertificateAuthorityApiService
+	ApiService *CertificateAuthorityAPIService
 }
 
 func (r ApiCertificateAuthorityCaGetRequest) Execute() (*CaConfig, *http.Response, error) {
@@ -39,7 +39,7 @@ Get the current CA Certificate.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaGetRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaGet(ctx context.Context) ApiCertificateAuthorityCaGetRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaGet(ctx context.Context) ApiCertificateAuthorityCaGetRequest {
 	return ApiCertificateAuthorityCaGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -49,7 +49,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGet(ctx context.C
 // Execute executes the request
 //
 //	@return CaConfig
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiCertificateAuthorityCaGetRequest) (*CaConfig, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaGetExecute(r ApiCertificateAuthorityCaGetRequest) (*CaConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -57,7 +57,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiC
 		localVarReturnValue *CaConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,9 +95,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiC
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -114,6 +114,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiC
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -124,6 +125,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiC
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -143,7 +145,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaGetExecute(r ApiC
 
 type ApiCertificateAuthorityCaNextDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *CertificateAuthorityApiService
+	ApiService    *CertificateAuthorityAPIService
 	authorization *string
 }
 
@@ -165,7 +167,7 @@ Delete the next CA certificate in order to be able to generate a new one.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaNextDeleteRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDelete(ctx context.Context) ApiCertificateAuthorityCaNextDeleteRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextDelete(ctx context.Context) ApiCertificateAuthorityCaNextDeleteRequest {
 	return ApiCertificateAuthorityCaNextDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -173,14 +175,14 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDelete(ctx co
 }
 
 // Execute executes the request
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute(r ApiCertificateAuthorityCaNextDeleteRequest) (*http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextDeleteExecute(r ApiCertificateAuthorityCaNextDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaNextDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaNextDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -211,7 +213,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -222,9 +224,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -241,6 +243,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -251,6 +254,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -261,6 +265,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -271,6 +276,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -281,6 +287,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -291,7 +298,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextDeleteExecute
 
 type ApiCertificateAuthorityCaNextGeneratePostRequest struct {
 	ctx                                           context.Context
-	ApiService                                    *CertificateAuthorityApiService
+	ApiService                                    *CertificateAuthorityAPIService
 	authorization                                 *string
 	certificateAuthorityCaNextGeneratePostRequest *CertificateAuthorityCaNextGeneratePostRequest
 }
@@ -320,7 +327,7 @@ Generate a new self-signed next CA certificate for migration.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaNextGeneratePostRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePost(ctx context.Context) ApiCertificateAuthorityCaNextGeneratePostRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextGeneratePost(ctx context.Context) ApiCertificateAuthorityCaNextGeneratePostRequest {
 	return ApiCertificateAuthorityCaNextGeneratePostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -330,7 +337,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePost(
 // Execute executes the request
 //
 //	@return CaConfig
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostExecute(r ApiCertificateAuthorityCaNextGeneratePostRequest) (*CaConfig, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextGeneratePostExecute(r ApiCertificateAuthorityCaNextGeneratePostRequest) (*CaConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -338,7 +345,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 		localVarReturnValue *CaConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaNextGeneratePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaNextGeneratePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -369,7 +376,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.certificateAuthorityCaNextGeneratePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -382,9 +389,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -401,6 +408,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -411,6 +419,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -421,6 +430,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -431,6 +441,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -450,7 +461,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGeneratePostE
 
 type ApiCertificateAuthorityCaNextGetRequest struct {
 	ctx           context.Context
-	ApiService    *CertificateAuthorityApiService
+	ApiService    *CertificateAuthorityAPIService
 	authorization *string
 }
 
@@ -472,7 +483,7 @@ Get the next CA Certificate which will be migrated.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaNextGetRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGet(ctx context.Context) ApiCertificateAuthorityCaNextGetRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextGet(ctx context.Context) ApiCertificateAuthorityCaNextGetRequest {
 	return ApiCertificateAuthorityCaNextGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -482,7 +493,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGet(ctx conte
 // Execute executes the request
 //
 //	@return CaConfig
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r ApiCertificateAuthorityCaNextGetRequest) (*CaConfig, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextGetExecute(r ApiCertificateAuthorityCaNextGetRequest) (*CaConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -490,7 +501,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 		localVarReturnValue *CaConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaNextGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaNextGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -521,7 +532,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -532,9 +543,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -551,6 +562,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -561,6 +573,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -571,6 +584,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -581,6 +595,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -591,6 +606,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -610,7 +626,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextGetExecute(r 
 
 type ApiCertificateAuthorityCaNextSwitchPostRequest struct {
 	ctx                                         context.Context
-	ApiService                                  *CertificateAuthorityApiService
+	ApiService                                  *CertificateAuthorityAPIService
 	authorization                               *string
 	certificateAuthorityCaNextSwitchPostRequest *CertificateAuthorityCaNextSwitchPostRequest
 }
@@ -639,7 +655,7 @@ Switch to the next CA certificate. Note that this is a highly disruptive action.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaNextSwitchPostRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPost(ctx context.Context) ApiCertificateAuthorityCaNextSwitchPostRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextSwitchPost(ctx context.Context) ApiCertificateAuthorityCaNextSwitchPostRequest {
 	return ApiCertificateAuthorityCaNextSwitchPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -647,14 +663,14 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPost(ct
 }
 
 // Execute executes the request
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExecute(r ApiCertificateAuthorityCaNextSwitchPostRequest) (*http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextSwitchPostExecute(r ApiCertificateAuthorityCaNextSwitchPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaNextSwitchPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaNextSwitchPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -685,7 +701,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.certificateAuthorityCaNextSwitchPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -698,9 +714,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -717,6 +733,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -727,6 +744,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -737,6 +755,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -747,6 +766,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -757,6 +777,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -767,6 +788,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -777,7 +799,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextSwitchPostExe
 
 type ApiCertificateAuthorityCaNextUploadPostRequest struct {
 	ctx           context.Context
-	ApiService    *CertificateAuthorityApiService
+	ApiService    *CertificateAuthorityAPIService
 	authorization *string
 	uploadCa      *UploadCa
 }
@@ -805,7 +827,7 @@ Upload your own next CA certificate and private key for migration. The certifica
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaNextUploadPostRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPost(ctx context.Context) ApiCertificateAuthorityCaNextUploadPostRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextUploadPost(ctx context.Context) ApiCertificateAuthorityCaNextUploadPostRequest {
 	return ApiCertificateAuthorityCaNextUploadPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -815,7 +837,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPost(ct
 // Execute executes the request
 //
 //	@return CaConfig
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExecute(r ApiCertificateAuthorityCaNextUploadPostRequest) (*CaConfig, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaNextUploadPostExecute(r ApiCertificateAuthorityCaNextUploadPostRequest) (*CaConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -823,7 +845,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 		localVarReturnValue *CaConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaNextUploadPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaNextUploadPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -857,7 +879,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.uploadCa
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -870,9 +892,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -889,6 +911,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -899,6 +922,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -909,6 +933,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -919,6 +944,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -929,6 +955,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -948,7 +975,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaNextUploadPostExe
 
 type ApiCertificateAuthorityCaPemGetRequest struct {
 	ctx        context.Context
-	ApiService *CertificateAuthorityApiService
+	ApiService *CertificateAuthorityAPIService
 }
 
 func (r ApiCertificateAuthorityCaPemGetRequest) Execute() (*CaConfig, *http.Response, error) {
@@ -963,7 +990,7 @@ Get the current CA Certificate in PEM format.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCaPemGetRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGet(ctx context.Context) ApiCertificateAuthorityCaPemGetRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaPemGet(ctx context.Context) ApiCertificateAuthorityCaPemGetRequest {
 	return ApiCertificateAuthorityCaPemGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -973,7 +1000,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGet(ctx contex
 // Execute executes the request
 //
 //	@return CaConfig
-func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r ApiCertificateAuthorityCaPemGetRequest) (*CaConfig, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCaPemGetExecute(r ApiCertificateAuthorityCaPemGetRequest) (*CaConfig, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -981,7 +1008,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r A
 		localVarReturnValue *CaConfig
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCaPemGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCaPemGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1019,9 +1046,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r A
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1038,6 +1065,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1048,6 +1076,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1067,7 +1096,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCaPemGetExecute(r A
 
 type ApiCertificateAuthorityCrlGetRequest struct {
 	ctx           context.Context
-	ApiService    *CertificateAuthorityApiService
+	ApiService    *CertificateAuthorityAPIService
 	authorization *string
 }
 
@@ -1089,7 +1118,7 @@ Generate and download CRL file for revoked certificates. Valid for a day.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCrlGetRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGet(ctx context.Context) ApiCertificateAuthorityCrlGetRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCrlGet(ctx context.Context) ApiCertificateAuthorityCrlGetRequest {
 	return ApiCertificateAuthorityCrlGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1099,7 +1128,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGet(ctx context.
 // Execute executes the request
 //
 //	@return CertificateAuthorityCrlGet200Response
-func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r ApiCertificateAuthorityCrlGetRequest) (*CertificateAuthorityCrlGet200Response, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCrlGetExecute(r ApiCertificateAuthorityCrlGetRequest) (*CertificateAuthorityCrlGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1107,7 +1136,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 		localVarReturnValue *CertificateAuthorityCrlGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCrlGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCrlGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1138,7 +1167,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1149,9 +1178,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1168,6 +1197,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1178,6 +1208,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1188,6 +1219,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1198,6 +1230,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1217,7 +1250,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlGetExecute(r Api
 
 type ApiCertificateAuthorityCrlNextGetRequest struct {
 	ctx           context.Context
-	ApiService    *CertificateAuthorityApiService
+	ApiService    *CertificateAuthorityAPIService
 	authorization *string
 }
 
@@ -1239,7 +1272,7 @@ Generate and download an empty CRL file signed by the next CA. The file needs to
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCertificateAuthorityCrlNextGetRequest
 */
-func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGet(ctx context.Context) ApiCertificateAuthorityCrlNextGetRequest {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCrlNextGet(ctx context.Context) ApiCertificateAuthorityCrlNextGetRequest {
 	return ApiCertificateAuthorityCrlNextGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1249,7 +1282,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGet(ctx cont
 // Execute executes the request
 //
 //	@return CertificateAuthorityCrlGet200Response
-func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r ApiCertificateAuthorityCrlNextGetRequest) (*CertificateAuthorityCrlGet200Response, *http.Response, error) {
+func (a *CertificateAuthorityAPIService) CertificateAuthorityCrlNextGetExecute(r ApiCertificateAuthorityCrlNextGetRequest) (*CertificateAuthorityCrlGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1257,7 +1290,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 		localVarReturnValue *CertificateAuthorityCrlGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityApiService.CertificateAuthorityCrlNextGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CertificateAuthorityAPIService.CertificateAuthorityCrlNextGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1288,7 +1321,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1299,9 +1332,9 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1318,6 +1351,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1328,6 +1362,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1338,6 +1373,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1348,6 +1384,7 @@ func (a *CertificateAuthorityApiService) CertificateAuthorityCrlNextGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

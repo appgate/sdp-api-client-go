@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the OnDemandClaimMappingsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnDemandClaimMappingsInner{}
 
 // OnDemandClaimMappingsInner struct for OnDemandClaimMappingsInner
 type OnDemandClaimMappingsInner struct {
@@ -25,6 +30,8 @@ type OnDemandClaimMappingsInner struct {
 	// The platform(s) to run the on-demand claim.
 	Platform string `json:"platform"`
 }
+
+type _OnDemandClaimMappingsInner OnDemandClaimMappingsInner
 
 // NewOnDemandClaimMappingsInner instantiates a new OnDemandClaimMappingsInner object
 // This constructor will assign default values to properties that have it defined,
@@ -96,7 +103,7 @@ func (o *OnDemandClaimMappingsInner) SetClaimName(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerParameters {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret OnDemandClaimMappingsInnerParameters
 		return ret
 	}
@@ -106,7 +113,7 @@ func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerP
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsInnerParameters, bool) {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		return nil, false
 	}
 	return o.Parameters, true
@@ -114,7 +121,7 @@ func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsIn
 
 // HasParameters returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInner) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -151,20 +158,61 @@ func (o *OnDemandClaimMappingsInner) SetPlatform(v string) {
 }
 
 func (o OnDemandClaimMappingsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["command"] = o.Command
-	}
-	if true {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if true {
-		toSerialize["platform"] = o.Platform
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnDemandClaimMappingsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["command"] = o.Command
+	toSerialize["claimName"] = o.ClaimName
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	toSerialize["platform"] = o.Platform
+	return toSerialize, nil
+}
+
+func (o *OnDemandClaimMappingsInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"command",
+		"claimName",
+		"platform",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varOnDemandClaimMappingsInner := _OnDemandClaimMappingsInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varOnDemandClaimMappingsInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = OnDemandClaimMappingsInner(varOnDemandClaimMappingsInner)
+
+	return err
 }
 
 type NullableOnDemandClaimMappingsInner struct {

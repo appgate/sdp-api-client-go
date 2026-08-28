@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ReplicationTargetsApiService ReplicationTargetsApi service
-type ReplicationTargetsApiService service
+// ReplicationTargetsAPIService ReplicationTargetsAPI service
+type ReplicationTargetsAPIService service
 
 type ApiReplicationTargetsBulkUpsertPostRequest struct {
 	ctx                                     context.Context
-	ApiService                              *ReplicationTargetsApiService
+	ApiService                              *ReplicationTargetsAPIService
 	replicationTargetsBulkUpsertPostRequest *ReplicationTargetsBulkUpsertPostRequest
 }
 
@@ -47,7 +47,7 @@ Create or update multiple replication targets in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsBulkUpsertPostRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPost(ctx context.Context) ApiReplicationTargetsBulkUpsertPostRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsBulkUpsertPost(ctx context.Context) ApiReplicationTargetsBulkUpsertPostRequest {
 	return ApiReplicationTargetsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -57,7 +57,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPost(ctx cont
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r ApiReplicationTargetsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsBulkUpsertPostExecute(r ApiReplicationTargetsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -65,7 +65,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -108,9 +108,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -127,6 +127,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -137,6 +138,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -147,16 +149,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -167,6 +171,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -186,7 +191,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsBulkUpsertPostExecute(r
 
 type ApiReplicationTargetsGetRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationTargetsApiService
+	ApiService *ReplicationTargetsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -236,7 +241,7 @@ List all Replication Targets visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsGetRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsGet(ctx context.Context) ApiReplicationTargetsGetRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsGet(ctx context.Context) ApiReplicationTargetsGetRequest {
 	return ApiReplicationTargetsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -246,7 +251,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGet(ctx context.Context
 // Execute executes the request
 //
 //	@return ReplicationTargetList
-func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplicationTargetsGetRequest) (*ReplicationTargetList, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsGetExecute(r ApiReplicationTargetsGetRequest) (*ReplicationTargetList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -254,7 +259,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 		localVarReturnValue *ReplicationTargetList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,19 +271,19 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -307,9 +312,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -326,6 +331,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,16 +342,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -356,6 +364,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -375,7 +384,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsGetExecute(r ApiReplica
 
 type ApiReplicationTargetsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationTargetsApiService
+	ApiService *ReplicationTargetsAPIService
 	id         string
 }
 
@@ -392,7 +401,7 @@ Delete a specific Replication Target.
 	@param id ID of the object.
 	@return ApiReplicationTargetsIdDeleteRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdDelete(ctx context.Context, id string) ApiReplicationTargetsIdDeleteRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdDelete(ctx context.Context, id string) ApiReplicationTargetsIdDeleteRequest {
 	return ApiReplicationTargetsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -401,20 +410,20 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDelete(ctx context.Co
 }
 
 // Execute executes the request
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiReplicationTargetsIdDeleteRequest) (*http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdDeleteExecute(r ApiReplicationTargetsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/replication-targets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,9 +456,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -466,6 +475,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -476,6 +486,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -486,16 +497,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -506,6 +519,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -516,7 +530,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdDeleteExecute(r ApiRe
 
 type ApiReplicationTargetsIdExportGetRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationTargetsApiService
+	ApiService *ReplicationTargetsAPIService
 	id         string
 }
 
@@ -533,7 +547,7 @@ Export a registration token for a replication target that is not connected.
 	@param id ID of the object.
 	@return ApiReplicationTargetsIdExportGetRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGet(ctx context.Context, id string) ApiReplicationTargetsIdExportGetRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdExportGet(ctx context.Context, id string) ApiReplicationTargetsIdExportGetRequest {
 	return ApiReplicationTargetsIdExportGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -544,7 +558,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGet(ctx context
 // Execute executes the request
 //
 //	@return ReplicationTargetRegistrationToken
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r ApiReplicationTargetsIdExportGetRequest) (*ReplicationTargetRegistrationToken, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdExportGetExecute(r ApiReplicationTargetsIdExportGetRequest) (*ReplicationTargetRegistrationToken, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -552,13 +566,13 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 		localVarReturnValue *ReplicationTargetRegistrationToken
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsIdExportGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsIdExportGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/replication-targets/{id}/export"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -591,9 +605,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -610,6 +624,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -620,6 +635,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -630,16 +646,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -650,6 +668,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -660,6 +679,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -679,7 +699,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdExportGetExecute(r Ap
 
 type ApiReplicationTargetsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationTargetsApiService
+	ApiService *ReplicationTargetsAPIService
 	id         string
 }
 
@@ -696,7 +716,7 @@ Get a specific Replication Target.
 	@param id ID of the object.
 	@return ApiReplicationTargetsIdGetRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdGet(ctx context.Context, id string) ApiReplicationTargetsIdGetRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdGet(ctx context.Context, id string) ApiReplicationTargetsIdGetRequest {
 	return ApiReplicationTargetsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -707,7 +727,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGet(ctx context.Conte
 // Execute executes the request
 //
 //	@return ReplicationTarget
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiReplicationTargetsIdGetRequest) (*ReplicationTarget, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdGetExecute(r ApiReplicationTargetsIdGetRequest) (*ReplicationTarget, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -715,13 +735,13 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 		localVarReturnValue *ReplicationTarget
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/replication-targets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -754,9 +774,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -773,6 +793,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -783,6 +804,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -793,16 +815,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -813,6 +837,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -832,7 +857,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdGetExecute(r ApiRepli
 
 type ApiReplicationTargetsIdPutRequest struct {
 	ctx               context.Context
-	ApiService        *ReplicationTargetsApiService
+	ApiService        *ReplicationTargetsAPIService
 	id                string
 	replicationTarget *ReplicationTarget
 }
@@ -856,7 +881,7 @@ Update an existing Replication Target.
 	@param id ID of the object.
 	@return ApiReplicationTargetsIdPutRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdPut(ctx context.Context, id string) ApiReplicationTargetsIdPutRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdPut(ctx context.Context, id string) ApiReplicationTargetsIdPutRequest {
 	return ApiReplicationTargetsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -867,7 +892,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPut(ctx context.Conte
 // Execute executes the request
 //
 //	@return ReplicationTarget
-func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiReplicationTargetsIdPutRequest) (*ReplicationTarget, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsIdPutExecute(r ApiReplicationTargetsIdPutRequest) (*ReplicationTarget, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -875,13 +900,13 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 		localVarReturnValue *ReplicationTarget
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/replication-targets/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -919,9 +944,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -938,6 +963,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -948,6 +974,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -958,6 +985,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -968,16 +996,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -988,6 +1018,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -998,6 +1029,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1017,7 +1049,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsIdPutExecute(r ApiRepli
 
 type ApiReplicationTargetsPostRequest struct {
 	ctx               context.Context
-	ApiService        *ReplicationTargetsApiService
+	ApiService        *ReplicationTargetsAPIService
 	replicationTarget *ReplicationTarget
 }
 
@@ -1039,7 +1071,7 @@ Create a new Replication Target.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsPostRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsPost(ctx context.Context) ApiReplicationTargetsPostRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsPost(ctx context.Context) ApiReplicationTargetsPostRequest {
 	return ApiReplicationTargetsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1049,7 +1081,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return ReplicationTarget
-func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplicationTargetsPostRequest) (*ReplicationTarget, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsPostExecute(r ApiReplicationTargetsPostRequest) (*ReplicationTarget, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1057,7 +1089,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 		localVarReturnValue *ReplicationTarget
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1100,9 +1132,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1119,6 +1151,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1129,6 +1162,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1139,16 +1173,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1159,6 +1195,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1169,6 +1206,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1179,6 +1217,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1198,7 +1237,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsPostExecute(r ApiReplic
 
 type ApiReplicationTargetsRegisterPostRequest struct {
 	ctx                                context.Context
-	ApiService                         *ReplicationTargetsApiService
+	ApiService                         *ReplicationTargetsAPIService
 	replicationTargetRegistrationToken *ReplicationTargetRegistrationToken
 }
 
@@ -1220,7 +1259,7 @@ Register a replication target using a provided registration token.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsRegisterPostRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPost(ctx context.Context) ApiReplicationTargetsRegisterPostRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsRegisterPost(ctx context.Context) ApiReplicationTargetsRegisterPostRequest {
 	return ApiReplicationTargetsRegisterPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1230,7 +1269,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPost(ctx contex
 // Execute executes the request
 //
 //	@return ReplicationTargetRegistrationResponse
-func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r ApiReplicationTargetsRegisterPostRequest) (*ReplicationTargetRegistrationResponse, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsRegisterPostExecute(r ApiReplicationTargetsRegisterPostRequest) (*ReplicationTargetRegistrationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1238,7 +1277,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 		localVarReturnValue *ReplicationTargetRegistrationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsRegisterPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsRegisterPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1281,9 +1320,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1300,6 +1339,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1310,16 +1350,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1330,6 +1372,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1340,6 +1383,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1350,6 +1394,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1369,7 +1414,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsRegisterPostExecute(r A
 
 type ApiReplicationTargetsStatusPostRequest struct {
 	ctx                     context.Context
-	ApiService              *ReplicationTargetsApiService
+	ApiService              *ReplicationTargetsAPIService
 	replicationStatusUpdate *ReplicationStatusUpdate
 }
 
@@ -1391,7 +1436,7 @@ Update replication status and/or last replication timestamp for a Replication Ta
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsStatusPostRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPost(ctx context.Context) ApiReplicationTargetsStatusPostRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsStatusPost(ctx context.Context) ApiReplicationTargetsStatusPostRequest {
 	return ApiReplicationTargetsStatusPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1401,7 +1446,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPost(ctx context.
 // Execute executes the request
 //
 //	@return ReplicationTarget
-func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r ApiReplicationTargetsStatusPostRequest) (*ReplicationTarget, *http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsStatusPostExecute(r ApiReplicationTargetsStatusPostRequest) (*ReplicationTarget, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1409,7 +1454,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 		localVarReturnValue *ReplicationTarget
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsStatusPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsStatusPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1452,9 +1497,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1471,6 +1516,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1481,6 +1527,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1491,16 +1538,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1511,6 +1560,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1521,6 +1571,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1540,7 +1591,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsStatusPostExecute(r Api
 
 type ApiReplicationTargetsUnregisterPostRequest struct {
 	ctx        context.Context
-	ApiService *ReplicationTargetsApiService
+	ApiService *ReplicationTargetsAPIService
 }
 
 func (r ApiReplicationTargetsUnregisterPostRequest) Execute() (*http.Response, error) {
@@ -1555,7 +1606,7 @@ Unregister a replication target setting its status to Not Connected. This API en
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiReplicationTargetsUnregisterPostRequest
 */
-func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPost(ctx context.Context) ApiReplicationTargetsUnregisterPostRequest {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsUnregisterPost(ctx context.Context) ApiReplicationTargetsUnregisterPostRequest {
 	return ApiReplicationTargetsUnregisterPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1563,14 +1614,14 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPost(ctx cont
 }
 
 // Execute executes the request
-func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r ApiReplicationTargetsUnregisterPostRequest) (*http.Response, error) {
+func (a *ReplicationTargetsAPIService) ReplicationTargetsUnregisterPostExecute(r ApiReplicationTargetsUnregisterPostRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsApiService.ReplicationTargetsUnregisterPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReplicationTargetsAPIService.ReplicationTargetsUnregisterPost")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1608,9 +1659,9 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1627,6 +1678,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1637,6 +1689,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1647,16 +1700,18 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1667,6 +1722,7 @@ func (a *ReplicationTargetsApiService) ReplicationTargetsUnregisterPostExecute(r
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

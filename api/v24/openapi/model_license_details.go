@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetails{}
+
 // LicenseDetails License details and current usage.
 type LicenseDetails struct {
 	Licenses []License           `json:"licenses,omitempty"`
@@ -43,7 +46,7 @@ func NewLicenseDetailsWithDefaults() *LicenseDetails {
 
 // GetLicenses returns the Licenses field value if set, zero value otherwise.
 func (o *LicenseDetails) GetLicenses() []License {
-	if o == nil || o.Licenses == nil {
+	if o == nil || IsNil(o.Licenses) {
 		var ret []License
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *LicenseDetails) GetLicenses() []License {
 // GetLicensesOk returns a tuple with the Licenses field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetails) GetLicensesOk() ([]License, bool) {
-	if o == nil || o.Licenses == nil {
+	if o == nil || IsNil(o.Licenses) {
 		return nil, false
 	}
 	return o.Licenses, true
@@ -61,7 +64,7 @@ func (o *LicenseDetails) GetLicensesOk() ([]License, bool) {
 
 // HasLicenses returns a boolean if a field has been set.
 func (o *LicenseDetails) HasLicenses() bool {
-	if o != nil && o.Licenses != nil {
+	if o != nil && !IsNil(o.Licenses) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *LicenseDetails) SetLicenses(v []License) {
 
 // GetEntitled returns the Entitled field value if set, zero value otherwise.
 func (o *LicenseDetails) GetEntitled() LicenseEntitlement {
-	if o == nil || o.Entitled == nil {
+	if o == nil || IsNil(o.Entitled) {
 		var ret LicenseEntitlement
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *LicenseDetails) GetEntitled() LicenseEntitlement {
 // GetEntitledOk returns a tuple with the Entitled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetails) GetEntitledOk() (*LicenseEntitlement, bool) {
-	if o == nil || o.Entitled == nil {
+	if o == nil || IsNil(o.Entitled) {
 		return nil, false
 	}
 	return o.Entitled, true
@@ -93,7 +96,7 @@ func (o *LicenseDetails) GetEntitledOk() (*LicenseEntitlement, bool) {
 
 // HasEntitled returns a boolean if a field has been set.
 func (o *LicenseDetails) HasEntitled() bool {
-	if o != nil && o.Entitled != nil {
+	if o != nil && !IsNil(o.Entitled) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *LicenseDetails) SetEntitled(v LicenseEntitlement) {
 
 // GetRequestCode returns the RequestCode field value if set, zero value otherwise.
 func (o *LicenseDetails) GetRequestCode() string {
-	if o == nil || o.RequestCode == nil {
+	if o == nil || IsNil(o.RequestCode) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *LicenseDetails) GetRequestCode() string {
 // GetRequestCodeOk returns a tuple with the RequestCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetails) GetRequestCodeOk() (*string, bool) {
-	if o == nil || o.RequestCode == nil {
+	if o == nil || IsNil(o.RequestCode) {
 		return nil, false
 	}
 	return o.RequestCode, true
@@ -125,7 +128,7 @@ func (o *LicenseDetails) GetRequestCodeOk() (*string, bool) {
 
 // HasRequestCode returns a boolean if a field has been set.
 func (o *LicenseDetails) HasRequestCode() bool {
-	if o != nil && o.RequestCode != nil {
+	if o != nil && !IsNil(o.RequestCode) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *LicenseDetails) SetRequestCode(v string) {
 
 // GetUsage returns the Usage field value if set, zero value otherwise.
 func (o *LicenseDetails) GetUsage() LicenseDetailsUsage {
-	if o == nil || o.Usage == nil {
+	if o == nil || IsNil(o.Usage) {
 		var ret LicenseDetailsUsage
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *LicenseDetails) GetUsage() LicenseDetailsUsage {
 // GetUsageOk returns a tuple with the Usage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetails) GetUsageOk() (*LicenseDetailsUsage, bool) {
-	if o == nil || o.Usage == nil {
+	if o == nil || IsNil(o.Usage) {
 		return nil, false
 	}
 	return o.Usage, true
@@ -157,7 +160,7 @@ func (o *LicenseDetails) GetUsageOk() (*LicenseDetailsUsage, bool) {
 
 // HasUsage returns a boolean if a field has been set.
 func (o *LicenseDetails) HasUsage() bool {
-	if o != nil && o.Usage != nil {
+	if o != nil && !IsNil(o.Usage) {
 		return true
 	}
 
@@ -170,20 +173,28 @@ func (o *LicenseDetails) SetUsage(v LicenseDetailsUsage) {
 }
 
 func (o LicenseDetails) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Licenses != nil {
-		toSerialize["licenses"] = o.Licenses
-	}
-	if o.Entitled != nil {
-		toSerialize["entitled"] = o.Entitled
-	}
-	if o.RequestCode != nil {
-		toSerialize["requestCode"] = o.RequestCode
-	}
-	if o.Usage != nil {
-		toSerialize["usage"] = o.Usage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetails) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Licenses) {
+		toSerialize["licenses"] = o.Licenses
+	}
+	if !IsNil(o.Entitled) {
+		toSerialize["entitled"] = o.Entitled
+	}
+	if !IsNil(o.RequestCode) {
+		toSerialize["requestCode"] = o.RequestCode
+	}
+	if !IsNil(o.Usage) {
+		toSerialize["usage"] = o.Usage
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetails struct {

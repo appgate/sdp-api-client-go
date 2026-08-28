@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the TrustedCertificate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TrustedCertificate{}
 
 // TrustedCertificate struct for TrustedCertificate
 type TrustedCertificate struct {
@@ -34,6 +39,8 @@ type TrustedCertificate struct {
 	Pem     string              `json:"pem"`
 	Details *CertificateDetails `json:"details,omitempty"`
 }
+
+type _TrustedCertificate TrustedCertificate
 
 // NewTrustedCertificate instantiates a new TrustedCertificate object
 // This constructor will assign default values to properties that have it defined,
@@ -56,7 +63,7 @@ func NewTrustedCertificateWithDefaults() *TrustedCertificate {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +73,7 @@ func (o *TrustedCertificate) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +81,7 @@ func (o *TrustedCertificate) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -112,7 +119,7 @@ func (o *TrustedCertificate) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -122,7 +129,7 @@ func (o *TrustedCertificate) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -130,7 +137,7 @@ func (o *TrustedCertificate) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -144,7 +151,7 @@ func (o *TrustedCertificate) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -154,7 +161,7 @@ func (o *TrustedCertificate) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -162,7 +169,7 @@ func (o *TrustedCertificate) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -176,7 +183,7 @@ func (o *TrustedCertificate) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -186,7 +193,7 @@ func (o *TrustedCertificate) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -194,7 +201,7 @@ func (o *TrustedCertificate) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -208,7 +215,7 @@ func (o *TrustedCertificate) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -218,7 +225,7 @@ func (o *TrustedCertificate) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -226,7 +233,7 @@ func (o *TrustedCertificate) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -264,7 +271,7 @@ func (o *TrustedCertificate) SetPem(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *TrustedCertificate) GetDetails() CertificateDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret CertificateDetails
 		return ret
 	}
@@ -274,7 +281,7 @@ func (o *TrustedCertificate) GetDetails() CertificateDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificate) GetDetailsOk() (*CertificateDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -282,7 +289,7 @@ func (o *TrustedCertificate) GetDetailsOk() (*CertificateDetails, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *TrustedCertificate) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -295,32 +302,74 @@ func (o *TrustedCertificate) SetDetails(v CertificateDetails) {
 }
 
 func (o TrustedCertificate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["pem"] = o.Pem
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TrustedCertificate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["pem"] = o.Pem
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
+}
+
+func (o *TrustedCertificate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"pem",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTrustedCertificate := _TrustedCertificate{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTrustedCertificate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TrustedCertificate(varTrustedCertificate)
+
+	return err
 }
 
 type NullableTrustedCertificate struct {

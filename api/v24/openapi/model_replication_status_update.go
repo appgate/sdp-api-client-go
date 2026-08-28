@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the ReplicationStatusUpdate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationStatusUpdate{}
 
 // ReplicationStatusUpdate Update status and details for the last replication attempt.
 type ReplicationStatusUpdate struct {
@@ -26,6 +31,8 @@ type ReplicationStatusUpdate struct {
 	NextReplicationTime    time.Time           `json:"nextReplicationTime"`
 	LastReplicationDetails *ReplicationDetails `json:"lastReplicationDetails,omitempty"`
 }
+
+type _ReplicationStatusUpdate ReplicationStatusUpdate
 
 // NewReplicationStatusUpdate instantiates a new ReplicationStatusUpdate object
 // This constructor will assign default values to properties that have it defined,
@@ -121,7 +128,7 @@ func (o *ReplicationStatusUpdate) SetNextReplicationTime(v time.Time) {
 
 // GetLastReplicationDetails returns the LastReplicationDetails field value if set, zero value otherwise.
 func (o *ReplicationStatusUpdate) GetLastReplicationDetails() ReplicationDetails {
-	if o == nil || o.LastReplicationDetails == nil {
+	if o == nil || IsNil(o.LastReplicationDetails) {
 		var ret ReplicationDetails
 		return ret
 	}
@@ -131,7 +138,7 @@ func (o *ReplicationStatusUpdate) GetLastReplicationDetails() ReplicationDetails
 // GetLastReplicationDetailsOk returns a tuple with the LastReplicationDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationStatusUpdate) GetLastReplicationDetailsOk() (*ReplicationDetails, bool) {
-	if o == nil || o.LastReplicationDetails == nil {
+	if o == nil || IsNil(o.LastReplicationDetails) {
 		return nil, false
 	}
 	return o.LastReplicationDetails, true
@@ -139,7 +146,7 @@ func (o *ReplicationStatusUpdate) GetLastReplicationDetailsOk() (*ReplicationDet
 
 // HasLastReplicationDetails returns a boolean if a field has been set.
 func (o *ReplicationStatusUpdate) HasLastReplicationDetails() bool {
-	if o != nil && o.LastReplicationDetails != nil {
+	if o != nil && !IsNil(o.LastReplicationDetails) {
 		return true
 	}
 
@@ -152,20 +159,61 @@ func (o *ReplicationStatusUpdate) SetLastReplicationDetails(v ReplicationDetails
 }
 
 func (o ReplicationStatusUpdate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["status"] = o.Status
-	}
-	if true {
-		toSerialize["lastReplicationTime"] = o.LastReplicationTime
-	}
-	if true {
-		toSerialize["nextReplicationTime"] = o.NextReplicationTime
-	}
-	if o.LastReplicationDetails != nil {
-		toSerialize["lastReplicationDetails"] = o.LastReplicationDetails
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationStatusUpdate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["status"] = o.Status
+	toSerialize["lastReplicationTime"] = o.LastReplicationTime
+	toSerialize["nextReplicationTime"] = o.NextReplicationTime
+	if !IsNil(o.LastReplicationDetails) {
+		toSerialize["lastReplicationDetails"] = o.LastReplicationDetails
+	}
+	return toSerialize, nil
+}
+
+func (o *ReplicationStatusUpdate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"status",
+		"lastReplicationTime",
+		"nextReplicationTime",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReplicationStatusUpdate := _ReplicationStatusUpdate{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReplicationStatusUpdate)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReplicationStatusUpdate(varReplicationStatusUpdate)
+
+	return err
 }
 
 type NullableReplicationStatusUpdate struct {

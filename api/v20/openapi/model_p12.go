@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the P12 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &P12{}
+
 // P12 PKCS12 object with X.509 certificate and private key.
 type P12 struct {
 	// Identifier to track the object on update since all the other fields are write-only. A random one will be assigned if left empty.
@@ -46,7 +49,7 @@ func NewP12WithDefaults() *P12 {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *P12) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *P12) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P12) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -64,7 +67,7 @@ func (o *P12) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *P12) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *P12) SetId(v string) {
 
 // GetContent returns the Content field value if set, zero value otherwise.
 func (o *P12) GetContent() string {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *P12) GetContent() string {
 // GetContentOk returns a tuple with the Content field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P12) GetContentOk() (*string, bool) {
-	if o == nil || o.Content == nil {
+	if o == nil || IsNil(o.Content) {
 		return nil, false
 	}
 	return o.Content, true
@@ -96,7 +99,7 @@ func (o *P12) GetContentOk() (*string, bool) {
 
 // HasContent returns a boolean if a field has been set.
 func (o *P12) HasContent() bool {
-	if o != nil && o.Content != nil {
+	if o != nil && !IsNil(o.Content) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *P12) SetContent(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *P12) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *P12) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P12) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -128,7 +131,7 @@ func (o *P12) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *P12) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *P12) SetPassword(v string) {
 
 // GetSubjectName returns the SubjectName field value if set, zero value otherwise.
 func (o *P12) GetSubjectName() string {
-	if o == nil || o.SubjectName == nil {
+	if o == nil || IsNil(o.SubjectName) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *P12) GetSubjectName() string {
 // GetSubjectNameOk returns a tuple with the SubjectName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *P12) GetSubjectNameOk() (*string, bool) {
-	if o == nil || o.SubjectName == nil {
+	if o == nil || IsNil(o.SubjectName) {
 		return nil, false
 	}
 	return o.SubjectName, true
@@ -160,7 +163,7 @@ func (o *P12) GetSubjectNameOk() (*string, bool) {
 
 // HasSubjectName returns a boolean if a field has been set.
 func (o *P12) HasSubjectName() bool {
-	if o != nil && o.SubjectName != nil {
+	if o != nil && !IsNil(o.SubjectName) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *P12) SetSubjectName(v string) {
 }
 
 func (o P12) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Content != nil {
-		toSerialize["content"] = o.Content
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.SubjectName != nil {
-		toSerialize["subjectName"] = o.SubjectName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o P12) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Content) {
+		toSerialize["content"] = o.Content
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.SubjectName) {
+		toSerialize["subjectName"] = o.SubjectName
+	}
+	return toSerialize, nil
 }
 
 type NullableP12 struct {

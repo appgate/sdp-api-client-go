@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Portal type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Portal{}
+
 // Portal Portal settings.
 type Portal struct {
 	// Whether the Portal is enabled on this appliance or not.
@@ -62,7 +65,7 @@ func NewPortalWithDefaults() *Portal {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Portal) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -72,7 +75,7 @@ func (o *Portal) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -80,7 +83,7 @@ func (o *Portal) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *Portal) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -94,7 +97,7 @@ func (o *Portal) SetEnabled(v bool) {
 
 // GetHttpsP12 returns the HttpsP12 field value if set, zero value otherwise.
 func (o *Portal) GetHttpsP12() P12 {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		var ret P12
 		return ret
 	}
@@ -104,7 +107,7 @@ func (o *Portal) GetHttpsP12() P12 {
 // GetHttpsP12Ok returns a tuple with the HttpsP12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetHttpsP12Ok() (*P12, bool) {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		return nil, false
 	}
 	return o.HttpsP12, true
@@ -112,7 +115,7 @@ func (o *Portal) GetHttpsP12Ok() (*P12, bool) {
 
 // HasHttpsP12 returns a boolean if a field has been set.
 func (o *Portal) HasHttpsP12() bool {
-	if o != nil && o.HttpsP12 != nil {
+	if o != nil && !IsNil(o.HttpsP12) {
 		return true
 	}
 
@@ -126,7 +129,7 @@ func (o *Portal) SetHttpsP12(v P12) {
 
 // GetHttpsCiphers returns the HttpsCiphers field value if set, zero value otherwise.
 func (o *Portal) GetHttpsCiphers() []string {
-	if o == nil || o.HttpsCiphers == nil {
+	if o == nil || IsNil(o.HttpsCiphers) {
 		var ret []string
 		return ret
 	}
@@ -136,7 +139,7 @@ func (o *Portal) GetHttpsCiphers() []string {
 // GetHttpsCiphersOk returns a tuple with the HttpsCiphers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetHttpsCiphersOk() ([]string, bool) {
-	if o == nil || o.HttpsCiphers == nil {
+	if o == nil || IsNil(o.HttpsCiphers) {
 		return nil, false
 	}
 	return o.HttpsCiphers, true
@@ -144,7 +147,7 @@ func (o *Portal) GetHttpsCiphersOk() ([]string, bool) {
 
 // HasHttpsCiphers returns a boolean if a field has been set.
 func (o *Portal) HasHttpsCiphers() bool {
-	if o != nil && o.HttpsCiphers != nil {
+	if o != nil && !IsNil(o.HttpsCiphers) {
 		return true
 	}
 
@@ -158,7 +161,7 @@ func (o *Portal) SetHttpsCiphers(v []string) {
 
 // GetHttpRedirect returns the HttpRedirect field value if set, zero value otherwise.
 func (o *Portal) GetHttpRedirect() bool {
-	if o == nil || o.HttpRedirect == nil {
+	if o == nil || IsNil(o.HttpRedirect) {
 		var ret bool
 		return ret
 	}
@@ -168,7 +171,7 @@ func (o *Portal) GetHttpRedirect() bool {
 // GetHttpRedirectOk returns a tuple with the HttpRedirect field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetHttpRedirectOk() (*bool, bool) {
-	if o == nil || o.HttpRedirect == nil {
+	if o == nil || IsNil(o.HttpRedirect) {
 		return nil, false
 	}
 	return o.HttpRedirect, true
@@ -176,7 +179,7 @@ func (o *Portal) GetHttpRedirectOk() (*bool, bool) {
 
 // HasHttpRedirect returns a boolean if a field has been set.
 func (o *Portal) HasHttpRedirect() bool {
-	if o != nil && o.HttpRedirect != nil {
+	if o != nil && !IsNil(o.HttpRedirect) {
 		return true
 	}
 
@@ -190,7 +193,7 @@ func (o *Portal) SetHttpRedirect(v bool) {
 
 // GetProxyPorts returns the ProxyPorts field value if set, zero value otherwise.
 func (o *Portal) GetProxyPorts() []int32 {
-	if o == nil || o.ProxyPorts == nil {
+	if o == nil || IsNil(o.ProxyPorts) {
 		var ret []int32
 		return ret
 	}
@@ -200,7 +203,7 @@ func (o *Portal) GetProxyPorts() []int32 {
 // GetProxyPortsOk returns a tuple with the ProxyPorts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetProxyPortsOk() ([]int32, bool) {
-	if o == nil || o.ProxyPorts == nil {
+	if o == nil || IsNil(o.ProxyPorts) {
 		return nil, false
 	}
 	return o.ProxyPorts, true
@@ -208,7 +211,7 @@ func (o *Portal) GetProxyPortsOk() ([]int32, bool) {
 
 // HasProxyPorts returns a boolean if a field has been set.
 func (o *Portal) HasProxyPorts() bool {
-	if o != nil && o.ProxyPorts != nil {
+	if o != nil && !IsNil(o.ProxyPorts) {
 		return true
 	}
 
@@ -222,7 +225,7 @@ func (o *Portal) SetProxyPorts(v []int32) {
 
 // GetProxyP12s returns the ProxyP12s field value if set, zero value otherwise.
 func (o *Portal) GetProxyP12s() []Portal12 {
-	if o == nil || o.ProxyP12s == nil {
+	if o == nil || IsNil(o.ProxyP12s) {
 		var ret []Portal12
 		return ret
 	}
@@ -232,7 +235,7 @@ func (o *Portal) GetProxyP12s() []Portal12 {
 // GetProxyP12sOk returns a tuple with the ProxyP12s field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetProxyP12sOk() ([]Portal12, bool) {
-	if o == nil || o.ProxyP12s == nil {
+	if o == nil || IsNil(o.ProxyP12s) {
 		return nil, false
 	}
 	return o.ProxyP12s, true
@@ -240,7 +243,7 @@ func (o *Portal) GetProxyP12sOk() ([]Portal12, bool) {
 
 // HasProxyP12s returns a boolean if a field has been set.
 func (o *Portal) HasProxyP12s() bool {
-	if o != nil && o.ProxyP12s != nil {
+	if o != nil && !IsNil(o.ProxyP12s) {
 		return true
 	}
 
@@ -254,7 +257,7 @@ func (o *Portal) SetProxyP12s(v []Portal12) {
 
 // GetProfiles returns the Profiles field value if set, zero value otherwise.
 func (o *Portal) GetProfiles() []string {
-	if o == nil || o.Profiles == nil {
+	if o == nil || IsNil(o.Profiles) {
 		var ret []string
 		return ret
 	}
@@ -264,7 +267,7 @@ func (o *Portal) GetProfiles() []string {
 // GetProfilesOk returns a tuple with the Profiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetProfilesOk() ([]string, bool) {
-	if o == nil || o.Profiles == nil {
+	if o == nil || IsNil(o.Profiles) {
 		return nil, false
 	}
 	return o.Profiles, true
@@ -272,7 +275,7 @@ func (o *Portal) GetProfilesOk() ([]string, bool) {
 
 // HasProfiles returns a boolean if a field has been set.
 func (o *Portal) HasProfiles() bool {
-	if o != nil && o.Profiles != nil {
+	if o != nil && !IsNil(o.Profiles) {
 		return true
 	}
 
@@ -286,7 +289,7 @@ func (o *Portal) SetProfiles(v []string) {
 
 // GetExternalProfiles returns the ExternalProfiles field value if set, zero value otherwise.
 func (o *Portal) GetExternalProfiles() []ExternalProfile {
-	if o == nil || o.ExternalProfiles == nil {
+	if o == nil || IsNil(o.ExternalProfiles) {
 		var ret []ExternalProfile
 		return ret
 	}
@@ -296,7 +299,7 @@ func (o *Portal) GetExternalProfiles() []ExternalProfile {
 // GetExternalProfilesOk returns a tuple with the ExternalProfiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetExternalProfilesOk() ([]ExternalProfile, bool) {
-	if o == nil || o.ExternalProfiles == nil {
+	if o == nil || IsNil(o.ExternalProfiles) {
 		return nil, false
 	}
 	return o.ExternalProfiles, true
@@ -304,7 +307,7 @@ func (o *Portal) GetExternalProfilesOk() ([]ExternalProfile, bool) {
 
 // HasExternalProfiles returns a boolean if a field has been set.
 func (o *Portal) HasExternalProfiles() bool {
-	if o != nil && o.ExternalProfiles != nil {
+	if o != nil && !IsNil(o.ExternalProfiles) {
 		return true
 	}
 
@@ -318,7 +321,7 @@ func (o *Portal) SetExternalProfiles(v []ExternalProfile) {
 
 // GetSignInCustomization returns the SignInCustomization field value if set, zero value otherwise.
 func (o *Portal) GetSignInCustomization() PortalSignInCustomization {
-	if o == nil || o.SignInCustomization == nil {
+	if o == nil || IsNil(o.SignInCustomization) {
 		var ret PortalSignInCustomization
 		return ret
 	}
@@ -328,7 +331,7 @@ func (o *Portal) GetSignInCustomization() PortalSignInCustomization {
 // GetSignInCustomizationOk returns a tuple with the SignInCustomization field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal) GetSignInCustomizationOk() (*PortalSignInCustomization, bool) {
-	if o == nil || o.SignInCustomization == nil {
+	if o == nil || IsNil(o.SignInCustomization) {
 		return nil, false
 	}
 	return o.SignInCustomization, true
@@ -336,7 +339,7 @@ func (o *Portal) GetSignInCustomizationOk() (*PortalSignInCustomization, bool) {
 
 // HasSignInCustomization returns a boolean if a field has been set.
 func (o *Portal) HasSignInCustomization() bool {
-	if o != nil && o.SignInCustomization != nil {
+	if o != nil && !IsNil(o.SignInCustomization) {
 		return true
 	}
 
@@ -349,35 +352,43 @@ func (o *Portal) SetSignInCustomization(v PortalSignInCustomization) {
 }
 
 func (o Portal) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.HttpsP12 != nil {
-		toSerialize["httpsP12"] = o.HttpsP12
-	}
-	if o.HttpsCiphers != nil {
-		toSerialize["httpsCiphers"] = o.HttpsCiphers
-	}
-	if o.HttpRedirect != nil {
-		toSerialize["httpRedirect"] = o.HttpRedirect
-	}
-	if o.ProxyPorts != nil {
-		toSerialize["proxyPorts"] = o.ProxyPorts
-	}
-	if o.ProxyP12s != nil {
-		toSerialize["proxyP12s"] = o.ProxyP12s
-	}
-	if o.Profiles != nil {
-		toSerialize["profiles"] = o.Profiles
-	}
-	if o.ExternalProfiles != nil {
-		toSerialize["externalProfiles"] = o.ExternalProfiles
-	}
-	if o.SignInCustomization != nil {
-		toSerialize["signInCustomization"] = o.SignInCustomization
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Portal) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.HttpsP12) {
+		toSerialize["httpsP12"] = o.HttpsP12
+	}
+	if !IsNil(o.HttpsCiphers) {
+		toSerialize["httpsCiphers"] = o.HttpsCiphers
+	}
+	if !IsNil(o.HttpRedirect) {
+		toSerialize["httpRedirect"] = o.HttpRedirect
+	}
+	if !IsNil(o.ProxyPorts) {
+		toSerialize["proxyPorts"] = o.ProxyPorts
+	}
+	if !IsNil(o.ProxyP12s) {
+		toSerialize["proxyP12s"] = o.ProxyP12s
+	}
+	if !IsNil(o.Profiles) {
+		toSerialize["profiles"] = o.Profiles
+	}
+	if !IsNil(o.ExternalProfiles) {
+		toSerialize["externalProfiles"] = o.ExternalProfiles
+	}
+	if !IsNil(o.SignInCustomization) {
+		toSerialize["signInCustomization"] = o.SignInCustomization
+	}
+	return toSerialize, nil
 }
 
 type NullablePortal struct {

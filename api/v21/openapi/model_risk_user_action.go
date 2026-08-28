@@ -12,12 +12,17 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the RiskUserAction type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RiskUserAction{}
 
 // RiskUserAction struct for RiskUserAction
 type RiskUserAction struct {
-	// User Action type.
+	// User Action type. May not be DisplayMessage or Reason for Risk Access.
 	Type string `json:"type"`
 	// Message to be shown to the user. Required for all remedy method.
 	Message string `json:"message"`
@@ -26,6 +31,8 @@ type RiskUserAction struct {
 	// MFA Provider Id or Identity Provider Id. Required for some remedy method.
 	ProviderId *string `json:"providerId,omitempty"`
 }
+
+type _RiskUserAction RiskUserAction
 
 // NewRiskUserAction instantiates a new RiskUserAction object
 // This constructor will assign default values to properties that have it defined,
@@ -96,7 +103,7 @@ func (o *RiskUserAction) SetMessage(v string) {
 
 // GetClaimSuffix returns the ClaimSuffix field value if set, zero value otherwise.
 func (o *RiskUserAction) GetClaimSuffix() string {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		var ret string
 		return ret
 	}
@@ -106,7 +113,7 @@ func (o *RiskUserAction) GetClaimSuffix() string {
 // GetClaimSuffixOk returns a tuple with the ClaimSuffix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskUserAction) GetClaimSuffixOk() (*string, bool) {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		return nil, false
 	}
 	return o.ClaimSuffix, true
@@ -114,7 +121,7 @@ func (o *RiskUserAction) GetClaimSuffixOk() (*string, bool) {
 
 // HasClaimSuffix returns a boolean if a field has been set.
 func (o *RiskUserAction) HasClaimSuffix() bool {
-	if o != nil && o.ClaimSuffix != nil {
+	if o != nil && !IsNil(o.ClaimSuffix) {
 		return true
 	}
 
@@ -128,7 +135,7 @@ func (o *RiskUserAction) SetClaimSuffix(v string) {
 
 // GetProviderId returns the ProviderId field value if set, zero value otherwise.
 func (o *RiskUserAction) GetProviderId() string {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		var ret string
 		return ret
 	}
@@ -138,7 +145,7 @@ func (o *RiskUserAction) GetProviderId() string {
 // GetProviderIdOk returns a tuple with the ProviderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskUserAction) GetProviderIdOk() (*string, bool) {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		return nil, false
 	}
 	return o.ProviderId, true
@@ -146,7 +153,7 @@ func (o *RiskUserAction) GetProviderIdOk() (*string, bool) {
 
 // HasProviderId returns a boolean if a field has been set.
 func (o *RiskUserAction) HasProviderId() bool {
-	if o != nil && o.ProviderId != nil {
+	if o != nil && !IsNil(o.ProviderId) {
 		return true
 	}
 
@@ -159,20 +166,62 @@ func (o *RiskUserAction) SetProviderId(v string) {
 }
 
 func (o RiskUserAction) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["message"] = o.Message
-	}
-	if o.ClaimSuffix != nil {
-		toSerialize["claimSuffix"] = o.ClaimSuffix
-	}
-	if o.ProviderId != nil {
-		toSerialize["providerId"] = o.ProviderId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RiskUserAction) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["message"] = o.Message
+	if !IsNil(o.ClaimSuffix) {
+		toSerialize["claimSuffix"] = o.ClaimSuffix
+	}
+	if !IsNil(o.ProviderId) {
+		toSerialize["providerId"] = o.ProviderId
+	}
+	return toSerialize, nil
+}
+
+func (o *RiskUserAction) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"type",
+		"message",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varRiskUserAction := _RiskUserAction{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varRiskUserAction)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RiskUserAction(varRiskUserAction)
+
+	return err
 }
 
 type NullableRiskUserAction struct {

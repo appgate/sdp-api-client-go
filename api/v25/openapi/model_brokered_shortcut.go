@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the BrokeredShortcut type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredShortcut{}
 
 // BrokeredShortcut Shortcut configuration for the brokered session, displayed to the user in the client.
 type BrokeredShortcut struct {
@@ -26,6 +31,8 @@ type BrokeredShortcut struct {
 	// The color code of the shortcut on the client. - 1: Light Green - 2: Green - 3: Indigo - 4: Deep Purple - 5: Yellow - 6: Lime - 7: Light Blue - 8: Blue - 9: Amber - 10: Orange - 11: Cyan - 12: Teal - 13: Deep Orange - 14: Red - 15: Gray - 16: Brown - 17: Pink - 18: Purple - 19: Blue Gray - 20: Near Black
 	ColorCode *int32 `json:"colorCode,omitempty"`
 }
+
+type _BrokeredShortcut BrokeredShortcut
 
 // NewBrokeredShortcut instantiates a new BrokeredShortcut object
 // This constructor will assign default values to properties that have it defined,
@@ -79,7 +86,7 @@ func (o *BrokeredShortcut) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -89,7 +96,7 @@ func (o *BrokeredShortcut) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -97,7 +104,7 @@ func (o *BrokeredShortcut) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -111,7 +118,7 @@ func (o *BrokeredShortcut) SetDescription(v string) {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -121,7 +128,7 @@ func (o *BrokeredShortcut) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -129,7 +136,7 @@ func (o *BrokeredShortcut) GetGroupNameOk() (*string, bool) {
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -143,7 +150,7 @@ func (o *BrokeredShortcut) SetGroupName(v string) {
 
 // GetColorCode returns the ColorCode field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetColorCode() int32 {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		var ret int32
 		return ret
 	}
@@ -153,7 +160,7 @@ func (o *BrokeredShortcut) GetColorCode() int32 {
 // GetColorCodeOk returns a tuple with the ColorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetColorCodeOk() (*int32, bool) {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		return nil, false
 	}
 	return o.ColorCode, true
@@ -161,7 +168,7 @@ func (o *BrokeredShortcut) GetColorCodeOk() (*int32, bool) {
 
 // HasColorCode returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasColorCode() bool {
-	if o != nil && o.ColorCode != nil {
+	if o != nil && !IsNil(o.ColorCode) {
 		return true
 	}
 
@@ -174,20 +181,63 @@ func (o *BrokeredShortcut) SetColorCode(v int32) {
 }
 
 func (o BrokeredShortcut) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.GroupName != nil {
-		toSerialize["groupName"] = o.GroupName
-	}
-	if o.ColorCode != nil {
-		toSerialize["colorCode"] = o.ColorCode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredShortcut) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.GroupName) {
+		toSerialize["groupName"] = o.GroupName
+	}
+	if !IsNil(o.ColorCode) {
+		toSerialize["colorCode"] = o.ColorCode
+	}
+	return toSerialize, nil
+}
+
+func (o *BrokeredShortcut) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBrokeredShortcut := _BrokeredShortcut{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBrokeredShortcut)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BrokeredShortcut(varBrokeredShortcut)
+
+	return err
 }
 
 type NullableBrokeredShortcut struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ServiceUsersApiService ServiceUsersApi service
-type ServiceUsersApiService service
+// ServiceUsersAPIService ServiceUsersAPI service
+type ServiceUsersAPIService service
 
 type ApiServiceUsersGetRequest struct {
 	ctx        context.Context
-	ApiService *ServiceUsersApiService
+	ApiService *ServiceUsersAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all Service Users visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiServiceUsersGetRequest
 */
-func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiServiceUsersGetRequest {
+func (a *ServiceUsersAPIService) ServiceUsersGet(ctx context.Context) ApiServiceUsersGetRequest {
 	return ApiServiceUsersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiService
 // Execute executes the request
 //
 //	@return ServiceUserList
-func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequest) (*ServiceUserList, *http.Response, error) {
+func (a *ServiceUsersAPIService) ServiceUsersGetExecute(r ApiServiceUsersGetRequest) (*ServiceUserList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 		localVarReturnValue *ServiceUserList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersAPIService.ServiceUsersGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,16 +176,18 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequ
 
 type ApiServiceUsersIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *ServiceUsersApiService
+	ApiService *ServiceUsersAPIService
 	id         string
 }
 
@@ -231,7 +235,7 @@ Delete a specific Service User.
 	@param id ID of the object.
 	@return ApiServiceUsersIdDeleteRequest
 */
-func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx context.Context, id string) ApiServiceUsersIdDeleteRequest {
+func (a *ServiceUsersAPIService) ServiceUsersIdDelete(ctx context.Context, id string) ApiServiceUsersIdDeleteRequest {
 	return ApiServiceUsersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -240,20 +244,20 @@ func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx context.Context, id st
 }
 
 // Execute executes the request
-func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersIdDeleteRequest) (*http.Response, error) {
+func (a *ServiceUsersAPIService) ServiceUsersIdDeleteExecute(r ApiServiceUsersIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersAPIService.ServiceUsersIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/service-users/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -286,9 +290,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -305,6 +309,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -315,6 +320,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -325,16 +331,18 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -345,6 +353,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersId
 
 type ApiServiceUsersIdGetRequest struct {
 	ctx        context.Context
-	ApiService *ServiceUsersApiService
+	ApiService *ServiceUsersAPIService
 	id         string
 }
 
@@ -372,7 +381,7 @@ Get a specific Service User.
 	@param id ID of the object.
 	@return ApiServiceUsersIdGetRequest
 */
-func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id string) ApiServiceUsersIdGetRequest {
+func (a *ServiceUsersAPIService) ServiceUsersIdGet(ctx context.Context, id string) ApiServiceUsersIdGetRequest {
 	return ApiServiceUsersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -383,7 +392,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return ServiceUser
-func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGetRequest) (*ServiceUser, *http.Response, error) {
+func (a *ServiceUsersAPIService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGetRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 		localVarReturnValue *ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersAPIService.ServiceUsersIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/service-users/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,16 +480,18 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGet
 
 type ApiServiceUsersIdPutRequest struct {
 	ctx         context.Context
-	ApiService  *ServiceUsersApiService
+	ApiService  *ServiceUsersAPIService
 	id          string
 	serviceUser *ServiceUser
 }
@@ -532,7 +546,7 @@ Update an existing Service User.
 	@param id ID of the object.
 	@return ApiServiceUsersIdPutRequest
 */
-func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id string) ApiServiceUsersIdPutRequest {
+func (a *ServiceUsersAPIService) ServiceUsersIdPut(ctx context.Context, id string) ApiServiceUsersIdPutRequest {
 	return ApiServiceUsersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -543,7 +557,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return ServiceUser
-func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPutRequest) (*ServiceUser, *http.Response, error) {
+func (a *ServiceUsersAPIService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPutRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -551,13 +565,13 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 		localVarReturnValue *ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersAPIService.ServiceUsersIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/service-users/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -595,9 +609,9 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -614,6 +628,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -624,6 +639,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -634,6 +650,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -644,16 +661,18 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -664,6 +683,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -674,6 +694,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -692,14 +713,14 @@ func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPut
 }
 
 type ApiServiceUsersPostRequest struct {
-	ctx                    context.Context
-	ApiService             *ServiceUsersApiService
-	serviceUsersGetRequest *ServiceUsersGetRequest
+	ctx                     context.Context
+	ApiService              *ServiceUsersAPIService
+	serviceUsersPostRequest *ServiceUsersPostRequest
 }
 
 // Service User object.
-func (r ApiServiceUsersPostRequest) ServiceUsersGetRequest(serviceUsersGetRequest ServiceUsersGetRequest) ApiServiceUsersPostRequest {
-	r.serviceUsersGetRequest = &serviceUsersGetRequest
+func (r ApiServiceUsersPostRequest) ServiceUsersPostRequest(serviceUsersPostRequest ServiceUsersPostRequest) ApiServiceUsersPostRequest {
+	r.serviceUsersPostRequest = &serviceUsersPostRequest
 	return r
 }
 
@@ -715,7 +736,7 @@ Create a new Service User.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiServiceUsersPostRequest
 */
-func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServiceUsersPostRequest {
+func (a *ServiceUsersAPIService) ServiceUsersPost(ctx context.Context) ApiServiceUsersPostRequest {
 	return ApiServiceUsersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -725,7 +746,7 @@ func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServic
 // Execute executes the request
 //
 //	@return ServiceUser
-func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRequest) (*ServiceUser, *http.Response, error) {
+func (a *ServiceUsersAPIService) ServiceUsersPostExecute(r ApiServiceUsersPostRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -733,7 +754,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 		localVarReturnValue *ServiceUser
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersApiService.ServiceUsersPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceUsersAPIService.ServiceUsersPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -743,8 +764,8 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.serviceUsersGetRequest == nil {
-		return localVarReturnValue, nil, reportError("serviceUsersGetRequest is required and must be specified")
+	if r.serviceUsersPostRequest == nil {
+		return localVarReturnValue, nil, reportError("serviceUsersPostRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -765,7 +786,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.serviceUsersGetRequest
+	localVarPostBody = r.serviceUsersPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -776,9 +797,9 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -795,6 +816,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,16 +838,18 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -845,6 +871,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -855,6 +882,7 @@ func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

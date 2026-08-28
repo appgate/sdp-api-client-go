@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfGeolocation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfGeolocation{}
+
 // SiteAllOfGeolocation Geolocation of the Site.
 type SiteAllOfGeolocation struct {
 	Latitude  *float32 `json:"latitude,omitempty"`
@@ -40,7 +43,7 @@ func NewSiteAllOfGeolocationWithDefaults() *SiteAllOfGeolocation {
 
 // GetLatitude returns the Latitude field value if set, zero value otherwise.
 func (o *SiteAllOfGeolocation) GetLatitude() float32 {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		var ret float32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *SiteAllOfGeolocation) GetLatitude() float32 {
 // GetLatitudeOk returns a tuple with the Latitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfGeolocation) GetLatitudeOk() (*float32, bool) {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		return nil, false
 	}
 	return o.Latitude, true
@@ -58,7 +61,7 @@ func (o *SiteAllOfGeolocation) GetLatitudeOk() (*float32, bool) {
 
 // HasLatitude returns a boolean if a field has been set.
 func (o *SiteAllOfGeolocation) HasLatitude() bool {
-	if o != nil && o.Latitude != nil {
+	if o != nil && !IsNil(o.Latitude) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *SiteAllOfGeolocation) SetLatitude(v float32) {
 
 // GetLongitude returns the Longitude field value if set, zero value otherwise.
 func (o *SiteAllOfGeolocation) GetLongitude() float32 {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		var ret float32
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *SiteAllOfGeolocation) GetLongitude() float32 {
 // GetLongitudeOk returns a tuple with the Longitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfGeolocation) GetLongitudeOk() (*float32, bool) {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		return nil, false
 	}
 	return o.Longitude, true
@@ -90,7 +93,7 @@ func (o *SiteAllOfGeolocation) GetLongitudeOk() (*float32, bool) {
 
 // HasLongitude returns a boolean if a field has been set.
 func (o *SiteAllOfGeolocation) HasLongitude() bool {
-	if o != nil && o.Longitude != nil {
+	if o != nil && !IsNil(o.Longitude) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *SiteAllOfGeolocation) SetLongitude(v float32) {
 }
 
 func (o SiteAllOfGeolocation) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Latitude != nil {
-		toSerialize["latitude"] = o.Latitude
-	}
-	if o.Longitude != nil {
-		toSerialize["longitude"] = o.Longitude
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfGeolocation) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Latitude) {
+		toSerialize["latitude"] = o.Latitude
+	}
+	if !IsNil(o.Longitude) {
+		toSerialize["longitude"] = o.Longitude
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfGeolocation struct {

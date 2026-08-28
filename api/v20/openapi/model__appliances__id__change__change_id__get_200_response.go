@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppliancesIdChangeChangeIdGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdChangeChangeIdGet200Response{}
 
 // AppliancesIdChangeChangeIdGet200Response Appliance Change information
 type AppliancesIdChangeChangeIdGet200Response struct {
@@ -26,6 +31,8 @@ type AppliancesIdChangeChangeIdGet200Response struct {
 	// Description of the requested change
 	Details *string `json:"details,omitempty"`
 }
+
+type _AppliancesIdChangeChangeIdGet200Response AppliancesIdChangeChangeIdGet200Response
 
 // NewAppliancesIdChangeChangeIdGet200Response instantiates a new AppliancesIdChangeChangeIdGet200Response object
 // This constructor will assign default values to properties that have it defined,
@@ -72,7 +79,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) SetId(v string) {
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *AppliancesIdChangeChangeIdGet200Response) GetResult() string {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret string
 		return ret
 	}
@@ -82,7 +89,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) GetResult() string {
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdChangeChangeIdGet200Response) GetResultOk() (*string, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -90,7 +97,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) GetResultOk() (*string, bool)
 
 // HasResult returns a boolean if a field has been set.
 func (o *AppliancesIdChangeChangeIdGet200Response) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -128,7 +135,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *AppliancesIdChangeChangeIdGet200Response) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -138,7 +145,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdChangeChangeIdGet200Response) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -146,7 +153,7 @@ func (o *AppliancesIdChangeChangeIdGet200Response) GetDetailsOk() (*string, bool
 
 // HasDetails returns a boolean if a field has been set.
 func (o *AppliancesIdChangeChangeIdGet200Response) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -159,20 +166,62 @@ func (o *AppliancesIdChangeChangeIdGet200Response) SetDetails(v string) {
 }
 
 func (o AppliancesIdChangeChangeIdGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if true {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdChangeChangeIdGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	toSerialize["status"] = o.Status
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
+}
+
+func (o *AppliancesIdChangeChangeIdGet200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"status",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppliancesIdChangeChangeIdGet200Response := _AppliancesIdChangeChangeIdGet200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppliancesIdChangeChangeIdGet200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppliancesIdChangeChangeIdGet200Response(varAppliancesIdChangeChangeIdGet200Response)
+
+	return err
 }
 
 type NullableAppliancesIdChangeChangeIdGet200Response struct {

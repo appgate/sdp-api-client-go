@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RecordedSessionList type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RecordedSessionList{}
+
 // RecordedSessionList struct for RecordedSessionList
 type RecordedSessionList struct {
 	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.
@@ -53,7 +56,7 @@ func NewRecordedSessionListWithDefaults() *RecordedSessionList {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *RecordedSessionList) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -71,7 +74,7 @@ func (o *RecordedSessionList) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -85,7 +88,7 @@ func (o *RecordedSessionList) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *RecordedSessionList) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -103,7 +106,7 @@ func (o *RecordedSessionList) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *RecordedSessionList) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *RecordedSessionList) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -135,7 +138,7 @@ func (o *RecordedSessionList) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *RecordedSessionList) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *RecordedSessionList) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -167,7 +170,7 @@ func (o *RecordedSessionList) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *RecordedSessionList) SetQueries(v []string) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *RecordedSessionList) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -199,7 +202,7 @@ func (o *RecordedSessionList) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *RecordedSessionList) SetTotalCount(v int32) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *RecordedSessionList) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -231,7 +234,7 @@ func (o *RecordedSessionList) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *RecordedSessionList) SetFilterBy(v []FilterBy) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *RecordedSessionList) GetData() []RecordedSession {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []RecordedSession
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *RecordedSessionList) GetData() []RecordedSession {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionList) GetDataOk() ([]RecordedSession, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -263,7 +266,7 @@ func (o *RecordedSessionList) GetDataOk() ([]RecordedSession, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *RecordedSessionList) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -277,7 +280,7 @@ func (o *RecordedSessionList) SetData(v []RecordedSession) {
 
 // GetDiskUsage returns the DiskUsage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RecordedSessionList) GetDiskUsage() RecordingDiskUsage {
-	if o == nil || o.DiskUsage.Get() == nil {
+	if o == nil || IsNil(o.DiskUsage.Get()) {
 		var ret RecordingDiskUsage
 		return ret
 	}
@@ -319,32 +322,40 @@ func (o *RecordedSessionList) UnsetDiskUsage() {
 }
 
 func (o RecordedSessionList) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o RecordedSessionList) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
+	if !IsNil(o.Range) {
 		toSerialize["range"] = o.Range
 	}
-	if o.OrderBy != nil {
+	if !IsNil(o.OrderBy) {
 		toSerialize["orderBy"] = o.OrderBy
 	}
-	if o.Descending != nil {
+	if !IsNil(o.Descending) {
 		toSerialize["descending"] = o.Descending
 	}
-	if o.Queries != nil {
+	if !IsNil(o.Queries) {
 		toSerialize["queries"] = o.Queries
 	}
-	if o.TotalCount != nil {
+	if !IsNil(o.TotalCount) {
 		toSerialize["totalCount"] = o.TotalCount
 	}
-	if o.FilterBy != nil {
+	if !IsNil(o.FilterBy) {
 		toSerialize["filterBy"] = o.FilterBy
 	}
-	if o.Data != nil {
+	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
 	if o.DiskUsage.IsSet() {
 		toSerialize["diskUsage"] = o.DiskUsage.Get()
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableRecordedSessionList struct {

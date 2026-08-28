@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the NewAppEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NewAppEntitlement{}
 
 // NewAppEntitlement struct for NewAppEntitlement
 type NewAppEntitlement struct {
@@ -29,6 +34,8 @@ type NewAppEntitlement struct {
 	// Array of tags.
 	Tags []string `json:"tags,omitempty"`
 }
+
+type _NewAppEntitlement NewAppEntitlement
 
 // NewNewAppEntitlement instantiates a new NewAppEntitlement object
 // This constructor will assign default values to properties that have it defined,
@@ -58,7 +65,7 @@ func NewNewAppEntitlementWithDefaults() *NewAppEntitlement {
 
 // GetAccessAction returns the AccessAction field value if set, zero value otherwise.
 func (o *NewAppEntitlement) GetAccessAction() string {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		var ret string
 		return ret
 	}
@@ -68,7 +75,7 @@ func (o *NewAppEntitlement) GetAccessAction() string {
 // GetAccessActionOk returns a tuple with the AccessAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlement) GetAccessActionOk() (*string, bool) {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		return nil, false
 	}
 	return o.AccessAction, true
@@ -76,7 +83,7 @@ func (o *NewAppEntitlement) GetAccessActionOk() (*string, bool) {
 
 // HasAccessAction returns a boolean if a field has been set.
 func (o *NewAppEntitlement) HasAccessAction() bool {
-	if o != nil && o.AccessAction != nil {
+	if o != nil && !IsNil(o.AccessAction) {
 		return true
 	}
 
@@ -90,7 +97,7 @@ func (o *NewAppEntitlement) SetAccessAction(v string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *NewAppEntitlement) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -100,7 +107,7 @@ func (o *NewAppEntitlement) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlement) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -108,7 +115,7 @@ func (o *NewAppEntitlement) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *NewAppEntitlement) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -122,7 +129,7 @@ func (o *NewAppEntitlement) SetPorts(v []string) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *NewAppEntitlement) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -132,7 +139,7 @@ func (o *NewAppEntitlement) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlement) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -140,7 +147,7 @@ func (o *NewAppEntitlement) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *NewAppEntitlement) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -178,7 +185,7 @@ func (o *NewAppEntitlement) SetName(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *NewAppEntitlement) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -188,7 +195,7 @@ func (o *NewAppEntitlement) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlement) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -196,7 +203,7 @@ func (o *NewAppEntitlement) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *NewAppEntitlement) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -210,7 +217,7 @@ func (o *NewAppEntitlement) SetDisabled(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *NewAppEntitlement) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -220,7 +227,7 @@ func (o *NewAppEntitlement) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlement) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -228,7 +235,7 @@ func (o *NewAppEntitlement) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *NewAppEntitlement) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -241,26 +248,69 @@ func (o *NewAppEntitlement) SetTags(v []string) {
 }
 
 func (o NewAppEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccessAction != nil {
-		toSerialize["accessAction"] = o.AccessAction
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NewAppEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccessAction) {
+		toSerialize["accessAction"] = o.AccessAction
+	}
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
+}
+
+func (o *NewAppEntitlement) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varNewAppEntitlement := _NewAppEntitlement{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varNewAppEntitlement)
+
+	if err != nil {
+		return err
+	}
+
+	*o = NewAppEntitlement(varNewAppEntitlement)
+
+	return err
 }
 
 type NullableNewAppEntitlement struct {

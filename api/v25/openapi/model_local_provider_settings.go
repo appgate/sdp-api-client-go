@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LocalProviderSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LocalProviderSettings{}
+
 // LocalProviderSettings struct for LocalProviderSettings
 type LocalProviderSettings struct {
 	// After how many failed authentication attempts will a local user be locked out from authenticating again.
@@ -56,7 +59,7 @@ func NewLocalProviderSettingsWithDefaults() *LocalProviderSettings {
 
 // GetUserLockoutThreshold returns the UserLockoutThreshold field value if set, zero value otherwise.
 func (o *LocalProviderSettings) GetUserLockoutThreshold() int32 {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		var ret int32
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *LocalProviderSettings) GetUserLockoutThreshold() int32 {
 // GetUserLockoutThresholdOk returns a tuple with the UserLockoutThreshold field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalProviderSettings) GetUserLockoutThresholdOk() (*int32, bool) {
-	if o == nil || o.UserLockoutThreshold == nil {
+	if o == nil || IsNil(o.UserLockoutThreshold) {
 		return nil, false
 	}
 	return o.UserLockoutThreshold, true
@@ -74,7 +77,7 @@ func (o *LocalProviderSettings) GetUserLockoutThresholdOk() (*int32, bool) {
 
 // HasUserLockoutThreshold returns a boolean if a field has been set.
 func (o *LocalProviderSettings) HasUserLockoutThreshold() bool {
-	if o != nil && o.UserLockoutThreshold != nil {
+	if o != nil && !IsNil(o.UserLockoutThreshold) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *LocalProviderSettings) SetUserLockoutThreshold(v int32) {
 
 // GetUserLockoutDurationMinutes returns the UserLockoutDurationMinutes field value if set, zero value otherwise.
 func (o *LocalProviderSettings) GetUserLockoutDurationMinutes() int32 {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		var ret int32
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *LocalProviderSettings) GetUserLockoutDurationMinutes() int32 {
 // GetUserLockoutDurationMinutesOk returns a tuple with the UserLockoutDurationMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalProviderSettings) GetUserLockoutDurationMinutesOk() (*int32, bool) {
-	if o == nil || o.UserLockoutDurationMinutes == nil {
+	if o == nil || IsNil(o.UserLockoutDurationMinutes) {
 		return nil, false
 	}
 	return o.UserLockoutDurationMinutes, true
@@ -106,7 +109,7 @@ func (o *LocalProviderSettings) GetUserLockoutDurationMinutesOk() (*int32, bool)
 
 // HasUserLockoutDurationMinutes returns a boolean if a field has been set.
 func (o *LocalProviderSettings) HasUserLockoutDurationMinutes() bool {
-	if o != nil && o.UserLockoutDurationMinutes != nil {
+	if o != nil && !IsNil(o.UserLockoutDurationMinutes) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *LocalProviderSettings) SetUserLockoutDurationMinutes(v int32) {
 
 // GetMinPasswordLength returns the MinPasswordLength field value if set, zero value otherwise.
 func (o *LocalProviderSettings) GetMinPasswordLength() int32 {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		var ret int32
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *LocalProviderSettings) GetMinPasswordLength() int32 {
 // GetMinPasswordLengthOk returns a tuple with the MinPasswordLength field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalProviderSettings) GetMinPasswordLengthOk() (*int32, bool) {
-	if o == nil || o.MinPasswordLength == nil {
+	if o == nil || IsNil(o.MinPasswordLength) {
 		return nil, false
 	}
 	return o.MinPasswordLength, true
@@ -138,7 +141,7 @@ func (o *LocalProviderSettings) GetMinPasswordLengthOk() (*int32, bool) {
 
 // HasMinPasswordLength returns a boolean if a field has been set.
 func (o *LocalProviderSettings) HasMinPasswordLength() bool {
-	if o != nil && o.MinPasswordLength != nil {
+	if o != nil && !IsNil(o.MinPasswordLength) {
 		return true
 	}
 
@@ -151,17 +154,25 @@ func (o *LocalProviderSettings) SetMinPasswordLength(v int32) {
 }
 
 func (o LocalProviderSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserLockoutThreshold != nil {
-		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
-	}
-	if o.UserLockoutDurationMinutes != nil {
-		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
-	}
-	if o.MinPasswordLength != nil {
-		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LocalProviderSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserLockoutThreshold) {
+		toSerialize["userLockoutThreshold"] = o.UserLockoutThreshold
+	}
+	if !IsNil(o.UserLockoutDurationMinutes) {
+		toSerialize["userLockoutDurationMinutes"] = o.UserLockoutDurationMinutes
+	}
+	if !IsNil(o.MinPasswordLength) {
+		toSerialize["minPasswordLength"] = o.MinPasswordLength
+	}
+	return toSerialize, nil
 }
 
 type NullableLocalProviderSettings struct {

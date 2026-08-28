@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// AdminRolesApiService AdminRolesApi service
-type AdminRolesApiService service
+// AdminRolesAPIService AdminRolesAPI service
+type AdminRolesAPIService service
 
 type ApiAdministrativeRolesGetRequest struct {
 	ctx        context.Context
-	ApiService *AdminRolesApiService
+	ApiService *AdminRolesAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all Administrative Roles visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdministrativeRolesGetRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesGet(ctx context.Context) ApiAdministrativeRolesGetRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesGet(ctx context.Context) ApiAdministrativeRolesGetRequest {
 	return ApiAdministrativeRolesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGet(ctx context.Context) ApiAd
 // Execute executes the request
 //
 //	@return AdministrativeRoleList
-func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrativeRolesGetRequest) (*AdministrativeRoleList, *http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesGetExecute(r ApiAdministrativeRolesGetRequest) (*AdministrativeRoleList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 		localVarReturnValue *AdministrativeRoleList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,6 +176,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -185,6 +187,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *AdminRolesApiService) AdministrativeRolesGetExecute(r ApiAdministrative
 
 type ApiAdministrativeRolesIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *AdminRolesApiService
+	ApiService *AdminRolesAPIService
 	id         string
 }
 
@@ -231,7 +235,7 @@ Delete a specific Administrative Role.
 	@param id ID of the object.
 	@return ApiAdministrativeRolesIdDeleteRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesIdDelete(ctx context.Context, id string) ApiAdministrativeRolesIdDeleteRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesIdDelete(ctx context.Context, id string) ApiAdministrativeRolesIdDeleteRequest {
 	return ApiAdministrativeRolesIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -240,20 +244,20 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDelete(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministrativeRolesIdDeleteRequest) (*http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesIdDeleteExecute(r ApiAdministrativeRolesIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/administrative-roles/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -286,9 +290,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -305,6 +309,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -315,6 +320,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -325,6 +331,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -335,6 +342,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -345,6 +353,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdDeleteExecute(r ApiAdministr
 
 type ApiAdministrativeRolesIdGetRequest struct {
 	ctx        context.Context
-	ApiService *AdminRolesApiService
+	ApiService *AdminRolesAPIService
 	id         string
 }
 
@@ -372,7 +381,7 @@ Get a specific Administrative Role.
 	@param id ID of the object.
 	@return ApiAdministrativeRolesIdGetRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesIdGet(ctx context.Context, id string) ApiAdministrativeRolesIdGetRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesIdGet(ctx context.Context, id string) ApiAdministrativeRolesIdGetRequest {
 	return ApiAdministrativeRolesIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -383,7 +392,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGet(ctx context.Context, id 
 // Execute executes the request
 //
 //	@return AdministrativeRole
-func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrativeRolesIdGetRequest) (*AdministrativeRole, *http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesIdGetExecute(r ApiAdministrativeRolesIdGetRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 		localVarReturnValue *AdministrativeRole
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/administrative-roles/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,6 +480,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -479,6 +491,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdGetExecute(r ApiAdministrati
 
 type ApiAdministrativeRolesIdPutRequest struct {
 	ctx                context.Context
-	ApiService         *AdminRolesApiService
+	ApiService         *AdminRolesAPIService
 	id                 string
 	administrativeRole *AdministrativeRole
 }
@@ -532,7 +546,7 @@ Update an existing Administrative Role.
 	@param id ID of the object.
 	@return ApiAdministrativeRolesIdPutRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesIdPut(ctx context.Context, id string) ApiAdministrativeRolesIdPutRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesIdPut(ctx context.Context, id string) ApiAdministrativeRolesIdPutRequest {
 	return ApiAdministrativeRolesIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -543,7 +557,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPut(ctx context.Context, id 
 // Execute executes the request
 //
 //	@return AdministrativeRole
-func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrativeRolesIdPutRequest) (*AdministrativeRole, *http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesIdPutExecute(r ApiAdministrativeRolesIdPutRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -551,13 +565,13 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 		localVarReturnValue *AdministrativeRole
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/administrative-roles/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -595,9 +609,9 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -614,6 +628,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -624,6 +639,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -634,6 +650,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -644,6 +661,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -654,6 +672,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -664,6 +683,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -674,6 +694,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -693,7 +714,7 @@ func (a *AdminRolesApiService) AdministrativeRolesIdPutExecute(r ApiAdministrati
 
 type ApiAdministrativeRolesPostRequest struct {
 	ctx                context.Context
-	ApiService         *AdminRolesApiService
+	ApiService         *AdminRolesAPIService
 	administrativeRole *AdministrativeRole
 }
 
@@ -715,7 +736,7 @@ Create a new Administrative Role.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdministrativeRolesPostRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesPost(ctx context.Context) ApiAdministrativeRolesPostRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesPost(ctx context.Context) ApiAdministrativeRolesPostRequest {
 	return ApiAdministrativeRolesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -725,7 +746,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPost(ctx context.Context) ApiA
 // Execute executes the request
 //
 //	@return AdministrativeRole
-func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativeRolesPostRequest) (*AdministrativeRole, *http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesPostExecute(r ApiAdministrativeRolesPostRequest) (*AdministrativeRole, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -733,7 +754,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 		localVarReturnValue *AdministrativeRole
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -776,9 +797,9 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -795,6 +816,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,6 +838,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -825,6 +849,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -845,6 +871,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -855,6 +882,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -874,7 +902,7 @@ func (a *AdminRolesApiService) AdministrativeRolesPostExecute(r ApiAdministrativ
 
 type ApiAdministrativeRolesTypeTargetMapGetRequest struct {
 	ctx        context.Context
-	ApiService *AdminRolesApiService
+	ApiService *AdminRolesAPIService
 }
 
 func (r ApiAdministrativeRolesTypeTargetMapGetRequest) Execute() (*AdministrativeRolesTypeTargetMapGet200Response, *http.Response, error) {
@@ -889,7 +917,7 @@ The type target map summarizes what kind of Privileges one can create.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAdministrativeRolesTypeTargetMapGetRequest
 */
-func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGet(ctx context.Context) ApiAdministrativeRolesTypeTargetMapGetRequest {
+func (a *AdminRolesAPIService) AdministrativeRolesTypeTargetMapGet(ctx context.Context) ApiAdministrativeRolesTypeTargetMapGetRequest {
 	return ApiAdministrativeRolesTypeTargetMapGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -899,7 +927,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGet(ctx context.C
 // Execute executes the request
 //
 //	@return AdministrativeRolesTypeTargetMapGet200Response
-func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiAdministrativeRolesTypeTargetMapGetRequest) (*AdministrativeRolesTypeTargetMapGet200Response, *http.Response, error) {
+func (a *AdminRolesAPIService) AdministrativeRolesTypeTargetMapGetExecute(r ApiAdministrativeRolesTypeTargetMapGetRequest) (*AdministrativeRolesTypeTargetMapGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -907,7 +935,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 		localVarReturnValue *AdministrativeRolesTypeTargetMapGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesApiService.AdministrativeRolesTypeTargetMapGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdministrativeRolesTypeTargetMapGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -945,9 +973,9 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -964,6 +992,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -974,6 +1003,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -984,6 +1014,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -994,6 +1025,7 @@ func (a *AdminRolesApiService) AdministrativeRolesTypeTargetMapGetExecute(r ApiA
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// SitesApiService SitesApi service
-type SitesApiService service
+// SitesAPIService SitesAPI service
+type SitesAPIService service
 
 type ApiSitesBulkUpsertPostRequest struct {
 	ctx                        context.Context
-	ApiService                 *SitesApiService
+	ApiService                 *SitesAPIService
 	sitesBulkUpsertPostRequest *SitesBulkUpsertPostRequest
 }
 
@@ -47,7 +47,7 @@ Create or update multiple sites in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSitesBulkUpsertPostRequest
 */
-func (a *SitesApiService) SitesBulkUpsertPost(ctx context.Context) ApiSitesBulkUpsertPostRequest {
+func (a *SitesAPIService) SitesBulkUpsertPost(ctx context.Context) ApiSitesBulkUpsertPostRequest {
 	return ApiSitesBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -57,7 +57,7 @@ func (a *SitesApiService) SitesBulkUpsertPost(ctx context.Context) ApiSitesBulkU
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *SitesAPIService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -65,7 +65,7 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -108,9 +108,9 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -127,6 +127,7 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -137,6 +138,7 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -147,16 +149,18 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -167,6 +171,7 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -186,7 +191,7 @@ func (a *SitesApiService) SitesBulkUpsertPostExecute(r ApiSitesBulkUpsertPostReq
 
 type ApiSitesGetRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -236,7 +241,7 @@ List all Sites visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSitesGetRequest
 */
-func (a *SitesApiService) SitesGet(ctx context.Context) ApiSitesGetRequest {
+func (a *SitesAPIService) SitesGet(ctx context.Context) ApiSitesGetRequest {
 	return ApiSitesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -246,7 +251,7 @@ func (a *SitesApiService) SitesGet(ctx context.Context) ApiSitesGetRequest {
 // Execute executes the request
 //
 //	@return SiteList
-func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *http.Response, error) {
+func (a *SitesAPIService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -254,7 +259,7 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 		localVarReturnValue *SiteList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,19 +271,19 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -307,9 +312,9 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -326,6 +331,7 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,16 +342,18 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -356,6 +364,7 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -375,7 +384,7 @@ func (a *SitesApiService) SitesGetExecute(r ApiSitesGetRequest) (*SiteList, *htt
 
 type ApiSitesIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	id         string
 }
 
@@ -392,7 +401,7 @@ Delete a specific Site.
 	@param id ID of the object.
 	@return ApiSitesIdDeleteRequest
 */
-func (a *SitesApiService) SitesIdDelete(ctx context.Context, id string) ApiSitesIdDeleteRequest {
+func (a *SitesAPIService) SitesIdDelete(ctx context.Context, id string) ApiSitesIdDeleteRequest {
 	return ApiSitesIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -401,20 +410,20 @@ func (a *SitesApiService) SitesIdDelete(ctx context.Context, id string) ApiSites
 }
 
 // Execute executes the request
-func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http.Response, error) {
+func (a *SitesAPIService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/sites/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,9 +456,9 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -466,6 +475,7 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -476,6 +486,7 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -486,16 +497,18 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -506,6 +519,7 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -516,7 +530,7 @@ func (a *SitesApiService) SitesIdDeleteExecute(r ApiSitesIdDeleteRequest) (*http
 
 type ApiSitesIdGetRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	id         string
 }
 
@@ -533,7 +547,7 @@ Get a specific Site.
 	@param id ID of the object.
 	@return ApiSitesIdGetRequest
 */
-func (a *SitesApiService) SitesIdGet(ctx context.Context, id string) ApiSitesIdGetRequest {
+func (a *SitesAPIService) SitesIdGet(ctx context.Context, id string) ApiSitesIdGetRequest {
 	return ApiSitesIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -544,7 +558,7 @@ func (a *SitesApiService) SitesIdGet(ctx context.Context, id string) ApiSitesIdG
 // Execute executes the request
 //
 //	@return Site
-func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *http.Response, error) {
+func (a *SitesAPIService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -552,13 +566,13 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 		localVarReturnValue *Site
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/sites/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -591,9 +605,9 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -610,6 +624,7 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -620,6 +635,7 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -630,16 +646,18 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -650,6 +668,7 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -669,7 +688,7 @@ func (a *SitesApiService) SitesIdGetExecute(r ApiSitesIdGetRequest) (*Site, *htt
 
 type ApiSitesIdPutRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	id         string
 	site       *Site
 }
@@ -693,7 +712,7 @@ Update an existing Site.
 	@param id ID of the object.
 	@return ApiSitesIdPutRequest
 */
-func (a *SitesApiService) SitesIdPut(ctx context.Context, id string) ApiSitesIdPutRequest {
+func (a *SitesAPIService) SitesIdPut(ctx context.Context, id string) ApiSitesIdPutRequest {
 	return ApiSitesIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -704,7 +723,7 @@ func (a *SitesApiService) SitesIdPut(ctx context.Context, id string) ApiSitesIdP
 // Execute executes the request
 //
 //	@return Site
-func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *http.Response, error) {
+func (a *SitesAPIService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -712,13 +731,13 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 		localVarReturnValue *Site
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/sites/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -756,9 +775,9 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -775,6 +794,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -785,6 +805,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -795,6 +816,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,16 +827,18 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -825,6 +849,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -854,7 +880,7 @@ func (a *SitesApiService) SitesIdPutExecute(r ApiSitesIdPutRequest) (*Site, *htt
 
 type ApiSitesIdResourcesGetRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	id         string
 	resolver   *ResolverType
 	type_      *ResourceType
@@ -906,7 +932,7 @@ Query the resolvers on this Site for available resources.  Controller will make 
 	@param id ID of the object.
 	@return ApiSitesIdResourcesGetRequest
 */
-func (a *SitesApiService) SitesIdResourcesGet(ctx context.Context, id string) ApiSitesIdResourcesGetRequest {
+func (a *SitesAPIService) SitesIdResourcesGet(ctx context.Context, id string) ApiSitesIdResourcesGetRequest {
 	return ApiSitesIdResourcesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -917,7 +943,7 @@ func (a *SitesApiService) SitesIdResourcesGet(ctx context.Context, id string) Ap
 // Execute executes the request
 //
 //	@return ResolverResources
-func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetRequest) (*ResolverResources, *http.Response, error) {
+func (a *SitesAPIService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetRequest) (*ResolverResources, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -925,13 +951,13 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 		localVarReturnValue *ResolverResources
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesIdResourcesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesIdResourcesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/sites/{id}/resources"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -944,15 +970,15 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
-	localVarQueryParams.Add("resolver", parameterToString(*r.resolver, ""))
-	localVarQueryParams.Add("type", parameterToString(*r.type_, ""))
+	parameterAddToHeaderOrQuery(localVarQueryParams, "resolver", r.resolver, "", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "", "")
 	if r.value != nil {
-		localVarQueryParams.Add("value", parameterToString(*r.value, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "value", r.value, "", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -981,9 +1007,9 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1000,6 +1026,7 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1010,16 +1037,18 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1030,6 +1059,7 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1049,7 +1079,7 @@ func (a *SitesApiService) SitesIdResourcesGetExecute(r ApiSitesIdResourcesGetReq
 
 type ApiSitesPostRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	site       *Site
 }
 
@@ -1071,7 +1101,7 @@ Create a new Site.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSitesPostRequest
 */
-func (a *SitesApiService) SitesPost(ctx context.Context) ApiSitesPostRequest {
+func (a *SitesAPIService) SitesPost(ctx context.Context) ApiSitesPostRequest {
 	return ApiSitesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1081,7 +1111,7 @@ func (a *SitesApiService) SitesPost(ctx context.Context) ApiSitesPostRequest {
 // Execute executes the request
 //
 //	@return Site
-func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.Response, error) {
+func (a *SitesAPIService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1089,7 +1119,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 		localVarReturnValue *Site
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1132,9 +1162,9 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1151,6 +1181,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1161,6 +1192,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1171,6 +1203,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1181,16 +1214,18 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1201,6 +1236,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1211,6 +1247,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1221,6 +1258,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1240,7 +1278,7 @@ func (a *SitesApiService) SitesPostExecute(r ApiSitesPostRequest) (*Site, *http.
 
 type ApiSitesStatusGetRequest struct {
 	ctx        context.Context
-	ApiService *SitesApiService
+	ApiService *SitesAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -1290,7 +1328,7 @@ List all Sites with their health status visible to current user. This API is sig
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSitesStatusGetRequest
 */
-func (a *SitesApiService) SitesStatusGet(ctx context.Context) ApiSitesStatusGetRequest {
+func (a *SitesAPIService) SitesStatusGet(ctx context.Context) ApiSitesStatusGetRequest {
 	return ApiSitesStatusGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1300,7 +1338,7 @@ func (a *SitesApiService) SitesStatusGet(ctx context.Context) ApiSitesStatusGetR
 // Execute executes the request
 //
 //	@return SiteWithStatusList
-func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*SiteWithStatusList, *http.Response, error) {
+func (a *SitesAPIService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*SiteWithStatusList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1308,7 +1346,7 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 		localVarReturnValue *SiteWithStatusList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesApiService.SitesStatusGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SitesAPIService.SitesStatusGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1320,19 +1358,19 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1361,9 +1399,9 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1380,6 +1418,7 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1390,16 +1429,18 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1410,6 +1451,7 @@ func (a *SitesApiService) SitesStatusGetExecute(r ApiSitesStatusGetRequest) (*Si
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

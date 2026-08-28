@@ -14,19 +14,19 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 )
 
-// ApplianceBackupApiService ApplianceBackupApi service
-type ApplianceBackupApiService service
+// ApplianceBackupAPIService ApplianceBackupAPI service
+type ApplianceBackupAPIService service
 
 type ApiAppliancesIdBackupBackupIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceBackupApiService
+	ApiService    *ApplianceBackupAPIService
 	authorization *string
 	id            string
 	backupId      string
@@ -52,7 +52,7 @@ Delete an Appliance Backup file from an Appliance. This API call must be made wi
 	@param backupId The Appliance Backup ID given in the initiation response.
 	@return ApiAppliancesIdBackupBackupIdDeleteRequest
 */
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDelete(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdDeleteRequest {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdDelete(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdDeleteRequest {
 	return ApiAppliancesIdBackupBackupIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -62,21 +62,21 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDelete(ctx context
 }
 
 // Execute executes the request
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r ApiAppliancesIdBackupBackupIdDeleteRequest) (*http.Response, error) {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdDeleteExecute(r ApiAppliancesIdBackupBackupIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupBackupIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupAPIService.AppliancesIdBackupBackupIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/backup/{backupId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterToString(r.backupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterValueToString(r.backupId, "backupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -102,7 +102,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -113,9 +113,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -132,6 +132,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -142,6 +143,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -152,6 +154,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -162,6 +165,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -172,6 +176,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -182,6 +187,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -192,7 +198,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdDeleteExecute(r Ap
 
 type ApiAppliancesIdBackupBackupIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceBackupApiService
+	ApiService    *ApplianceBackupAPIService
 	authorization *string
 	id            string
 	backupId      string
@@ -211,7 +217,7 @@ func (r ApiAppliancesIdBackupBackupIdGetRequest) Range_(range_ string) ApiApplia
 	return r
 }
 
-func (r ApiAppliancesIdBackupBackupIdGetRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiAppliancesIdBackupBackupIdGetRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.AppliancesIdBackupBackupIdGetExecute(r)
 }
 
@@ -225,7 +231,7 @@ Download a completed Appliance Backup with the given ID of an Appliance. This AP
 	@param backupId The Appliance Backup ID given in the initiation response.
 	@return ApiAppliancesIdBackupBackupIdGetRequest
 */
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdGetRequest {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdGetRequest {
 	return ApiAppliancesIdBackupBackupIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -237,22 +243,22 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGet(ctx context.Co
 // Execute executes the request
 //
 //	@return *os.File
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAppliancesIdBackupBackupIdGetRequest) (**os.File, *http.Response, error) {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdGetExecute(r ApiAppliancesIdBackupBackupIdGetRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue **os.File
+		localVarReturnValue *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupBackupIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupAPIService.AppliancesIdBackupBackupIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/backup/{backupId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterToString(r.backupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterValueToString(r.backupId, "backupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -281,8 +287,8 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
-	localVarHeaderParams["range"] = parameterToString(*r.range_, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "range", r.range_, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -293,9 +299,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -312,6 +318,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -322,6 +329,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -332,6 +340,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -342,6 +351,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -352,6 +362,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -362,6 +373,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -381,7 +393,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdGetExecute(r ApiAp
 
 type ApiAppliancesIdBackupBackupIdStatusGetRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceBackupApiService
+	ApiService    *ApplianceBackupAPIService
 	authorization *string
 	id            string
 	backupId      string
@@ -407,7 +419,7 @@ Get the status of the given Appliance Backup ID. If the status is "done", it can
 	@param backupId The Appliance Backup ID given in the initiation response.
 	@return ApiAppliancesIdBackupBackupIdStatusGetRequest
 */
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdStatusGetRequest {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdStatusGet(ctx context.Context, id string, backupId string) ApiAppliancesIdBackupBackupIdStatusGetRequest {
 	return ApiAppliancesIdBackupBackupIdStatusGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -419,7 +431,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGet(ctx cont
 // Execute executes the request
 //
 //	@return AppliancesIdBackupBackupIdStatusGet200Response
-func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r ApiAppliancesIdBackupBackupIdStatusGetRequest) (*AppliancesIdBackupBackupIdStatusGet200Response, *http.Response, error) {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupBackupIdStatusGetExecute(r ApiAppliancesIdBackupBackupIdStatusGetRequest) (*AppliancesIdBackupBackupIdStatusGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -427,14 +439,14 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 		localVarReturnValue *AppliancesIdBackupBackupIdStatusGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupBackupIdStatusGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupAPIService.AppliancesIdBackupBackupIdStatusGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/backup/{backupId}/status"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterToString(r.backupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"backupId"+"}", url.PathEscape(parameterValueToString(r.backupId, "backupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -460,7 +472,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -471,9 +483,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -490,6 +502,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -500,6 +513,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -510,6 +524,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -520,6 +535,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -530,6 +546,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -540,6 +557,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -559,7 +577,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupBackupIdStatusGetExecute(r
 
 type ApiAppliancesIdBackupPostRequest struct {
 	ctx                           context.Context
-	ApiService                    *ApplianceBackupApiService
+	ApiService                    *ApplianceBackupAPIService
 	authorization                 *string
 	id                            string
 	appliancesIdBackupPostRequest *AppliancesIdBackupPostRequest
@@ -590,7 +608,7 @@ Initiate an Appliance Backup. The progress can be followed by polling the Applia
 	@param id ID of the object.
 	@return ApiAppliancesIdBackupPostRequest
 */
-func (a *ApplianceBackupApiService) AppliancesIdBackupPost(ctx context.Context, id string) ApiAppliancesIdBackupPostRequest {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupPost(ctx context.Context, id string) ApiAppliancesIdBackupPostRequest {
 	return ApiAppliancesIdBackupPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -601,7 +619,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPost(ctx context.Context, 
 // Execute executes the request
 //
 //	@return AppliancesIdBackupPost202Response
-func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliancesIdBackupPostRequest) (*AppliancesIdBackupPost202Response, *http.Response, error) {
+func (a *ApplianceBackupAPIService) AppliancesIdBackupPostExecute(r ApiAppliancesIdBackupPostRequest) (*AppliancesIdBackupPost202Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -609,13 +627,13 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 		localVarReturnValue *AppliancesIdBackupPost202Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupApiService.AppliancesIdBackupPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceBackupAPIService.AppliancesIdBackupPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/backup"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -641,7 +659,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.appliancesIdBackupPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -654,9 +672,9 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -673,6 +691,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -683,6 +702,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -693,6 +713,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -703,6 +724,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -713,6 +735,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -723,6 +746,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -733,6 +757,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -743,6 +768,7 @@ func (a *ApplianceBackupApiService) AppliancesIdBackupPostExecute(r ApiAppliance
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

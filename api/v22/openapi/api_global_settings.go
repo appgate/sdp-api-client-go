@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// GlobalSettingsApiService GlobalSettingsApi service
-type GlobalSettingsApiService service
+// GlobalSettingsAPIService GlobalSettingsAPI service
+type GlobalSettingsAPIService service
 
 type ApiGlobalSettingsDeleteRequest struct {
 	ctx        context.Context
-	ApiService *GlobalSettingsApiService
+	ApiService *GlobalSettingsAPIService
 }
 
 func (r ApiGlobalSettingsDeleteRequest) Execute() (*http.Response, error) {
@@ -39,7 +39,7 @@ Reset all Global Settings to the default values.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGlobalSettingsDeleteRequest
 */
-func (a *GlobalSettingsApiService) GlobalSettingsDelete(ctx context.Context) ApiGlobalSettingsDeleteRequest {
+func (a *GlobalSettingsAPIService) GlobalSettingsDelete(ctx context.Context) ApiGlobalSettingsDeleteRequest {
 	return ApiGlobalSettingsDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -47,14 +47,14 @@ func (a *GlobalSettingsApiService) GlobalSettingsDelete(ctx context.Context) Api
 }
 
 // Execute executes the request
-func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettingsDeleteRequest) (*http.Response, error) {
+func (a *GlobalSettingsAPIService) GlobalSettingsDeleteExecute(r ApiGlobalSettingsDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsApiService.GlobalSettingsDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsAPIService.GlobalSettingsDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -92,9 +92,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -111,6 +111,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -121,6 +122,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -131,6 +133,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -141,6 +144,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -151,7 +155,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsDeleteExecute(r ApiGlobalSettin
 
 type ApiGlobalSettingsGetRequest struct {
 	ctx        context.Context
-	ApiService *GlobalSettingsApiService
+	ApiService *GlobalSettingsAPIService
 }
 
 func (r ApiGlobalSettingsGetRequest) Execute() (*GlobalSettings, *http.Response, error) {
@@ -166,7 +170,7 @@ View various Global Settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGlobalSettingsGetRequest
 */
-func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx context.Context) ApiGlobalSettingsGetRequest {
+func (a *GlobalSettingsAPIService) GlobalSettingsGet(ctx context.Context) ApiGlobalSettingsGetRequest {
 	return ApiGlobalSettingsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -176,7 +180,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGet(ctx context.Context) ApiGlo
 // Execute executes the request
 //
 //	@return GlobalSettings
-func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsGetRequest) (*GlobalSettings, *http.Response, error) {
+func (a *GlobalSettingsAPIService) GlobalSettingsGetExecute(r ApiGlobalSettingsGetRequest) (*GlobalSettings, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -184,7 +188,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 		localVarReturnValue *GlobalSettings
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsApiService.GlobalSettingsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsAPIService.GlobalSettingsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -222,9 +226,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -241,6 +245,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -251,6 +256,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -261,6 +267,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -271,6 +278,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -290,7 +298,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsGetExecute(r ApiGlobalSettingsG
 
 type ApiGlobalSettingsPutRequest struct {
 	ctx            context.Context
-	ApiService     *GlobalSettingsApiService
+	ApiService     *GlobalSettingsAPIService
 	globalSettings *GlobalSettings
 }
 
@@ -312,7 +320,7 @@ Update all Global Settings.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGlobalSettingsPutRequest
 */
-func (a *GlobalSettingsApiService) GlobalSettingsPut(ctx context.Context) ApiGlobalSettingsPutRequest {
+func (a *GlobalSettingsAPIService) GlobalSettingsPut(ctx context.Context) ApiGlobalSettingsPutRequest {
 	return ApiGlobalSettingsPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -320,14 +328,14 @@ func (a *GlobalSettingsApiService) GlobalSettingsPut(ctx context.Context) ApiGlo
 }
 
 // Execute executes the request
-func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsPutRequest) (*http.Response, error) {
+func (a *GlobalSettingsAPIService) GlobalSettingsPutExecute(r ApiGlobalSettingsPutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPut
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsApiService.GlobalSettingsPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GlobalSettingsAPIService.GlobalSettingsPut")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -370,9 +378,9 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -389,6 +397,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -399,6 +408,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -409,6 +419,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -419,6 +430,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -429,6 +441,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -439,6 +452,7 @@ func (a *GlobalSettingsApiService) GlobalSettingsPutExecute(r ApiGlobalSettingsP
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

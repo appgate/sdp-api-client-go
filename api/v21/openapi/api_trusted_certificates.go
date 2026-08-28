@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// TrustedCertificatesApiService TrustedCertificatesApi service
-type TrustedCertificatesApiService service
+// TrustedCertificatesAPIService TrustedCertificatesAPI service
+type TrustedCertificatesAPIService service
 
 type ApiTrustedCertificatesGetRequest struct {
 	ctx           context.Context
-	ApiService    *TrustedCertificatesApiService
+	ApiService    *TrustedCertificatesAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -82,7 +82,7 @@ List all Trusted Certificates visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiTrustedCertificatesGetRequest
 */
-func (a *TrustedCertificatesApiService) TrustedCertificatesGet(ctx context.Context) ApiTrustedCertificatesGetRequest {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesGet(ctx context.Context) ApiTrustedCertificatesGetRequest {
 	return ApiTrustedCertificatesGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGet(ctx context.Conte
 // Execute executes the request
 //
 //	@return TrustedCertificateList
-func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrustedCertificatesGetRequest) (*TrustedCertificateList, *http.Response, error) {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesGetExecute(r ApiTrustedCertificatesGetRequest) (*TrustedCertificateList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 		localVarReturnValue *TrustedCertificateList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesApiService.TrustedCertificatesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesAPIService.TrustedCertificatesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -115,19 +115,19 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +146,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -157,9 +157,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,16 +187,18 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesGetExecute(r ApiTrust
 
 type ApiTrustedCertificatesIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *TrustedCertificatesApiService
+	ApiService    *TrustedCertificatesAPIService
 	authorization *string
 	id            string
 }
@@ -249,7 +253,7 @@ Delete a specific Trusted Certificate.
 	@param id ID of the object.
 	@return ApiTrustedCertificatesIdDeleteRequest
 */
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdDelete(ctx context.Context, id string) ApiTrustedCertificatesIdDeleteRequest {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdDelete(ctx context.Context, id string) ApiTrustedCertificatesIdDeleteRequest {
 	return ApiTrustedCertificatesIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -258,20 +262,20 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDelete(ctx context.
 }
 
 // Execute executes the request
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r ApiTrustedCertificatesIdDeleteRequest) (*http.Response, error) {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdDeleteExecute(r ApiTrustedCertificatesIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesApiService.TrustedCertificatesIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesAPIService.TrustedCertificatesIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/trusted-certificates/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -297,7 +301,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -308,9 +312,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -327,6 +331,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -337,6 +342,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -347,16 +353,18 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -367,6 +375,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -377,7 +386,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdDeleteExecute(r Api
 
 type ApiTrustedCertificatesIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *TrustedCertificatesApiService
+	ApiService    *TrustedCertificatesAPIService
 	authorization *string
 	id            string
 }
@@ -401,7 +410,7 @@ Get a specific Trusted Certificate.
 	@param id ID of the object.
 	@return ApiTrustedCertificatesIdGetRequest
 */
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdGet(ctx context.Context, id string) ApiTrustedCertificatesIdGetRequest {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdGet(ctx context.Context, id string) ApiTrustedCertificatesIdGetRequest {
 	return ApiTrustedCertificatesIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -412,7 +421,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGet(ctx context.Con
 // Execute executes the request
 //
 //	@return TrustedCertificate
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTrustedCertificatesIdGetRequest) (*TrustedCertificate, *http.Response, error) {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdGetExecute(r ApiTrustedCertificatesIdGetRequest) (*TrustedCertificate, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -420,13 +429,13 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 		localVarReturnValue *TrustedCertificate
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesApiService.TrustedCertificatesIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesAPIService.TrustedCertificatesIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/trusted-certificates/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -452,7 +461,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -463,9 +472,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -482,6 +491,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -492,6 +502,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -502,16 +513,18 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -522,6 +535,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -541,7 +555,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdGetExecute(r ApiTru
 
 type ApiTrustedCertificatesIdPutRequest struct {
 	ctx                context.Context
-	ApiService         *TrustedCertificatesApiService
+	ApiService         *TrustedCertificatesAPIService
 	authorization      *string
 	id                 string
 	trustedCertificate *TrustedCertificate
@@ -572,7 +586,7 @@ Update an existing Trusted Certificate.
 	@param id ID of the object.
 	@return ApiTrustedCertificatesIdPutRequest
 */
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdPut(ctx context.Context, id string) ApiTrustedCertificatesIdPutRequest {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdPut(ctx context.Context, id string) ApiTrustedCertificatesIdPutRequest {
 	return ApiTrustedCertificatesIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -583,7 +597,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPut(ctx context.Con
 // Execute executes the request
 //
 //	@return TrustedCertificate
-func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTrustedCertificatesIdPutRequest) (*TrustedCertificate, *http.Response, error) {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesIdPutExecute(r ApiTrustedCertificatesIdPutRequest) (*TrustedCertificate, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -591,13 +605,13 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 		localVarReturnValue *TrustedCertificate
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesApiService.TrustedCertificatesIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesAPIService.TrustedCertificatesIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/trusted-certificates/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -626,7 +640,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.trustedCertificate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -639,9 +653,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -658,6 +672,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -668,6 +683,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -678,6 +694,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -688,16 +705,18 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -708,6 +727,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -718,6 +738,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -737,7 +758,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesIdPutExecute(r ApiTru
 
 type ApiTrustedCertificatesPostRequest struct {
 	ctx                context.Context
-	ApiService         *TrustedCertificatesApiService
+	ApiService         *TrustedCertificatesAPIService
 	authorization      *string
 	trustedCertificate *TrustedCertificate
 }
@@ -766,7 +787,7 @@ Create a new Trusted Certificate.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiTrustedCertificatesPostRequest
 */
-func (a *TrustedCertificatesApiService) TrustedCertificatesPost(ctx context.Context) ApiTrustedCertificatesPostRequest {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesPost(ctx context.Context) ApiTrustedCertificatesPostRequest {
 	return ApiTrustedCertificatesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -776,7 +797,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPost(ctx context.Cont
 // Execute executes the request
 //
 //	@return TrustedCertificate
-func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrustedCertificatesPostRequest) (*TrustedCertificate, *http.Response, error) {
+func (a *TrustedCertificatesAPIService) TrustedCertificatesPostExecute(r ApiTrustedCertificatesPostRequest) (*TrustedCertificate, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -784,7 +805,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 		localVarReturnValue *TrustedCertificate
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesApiService.TrustedCertificatesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TrustedCertificatesAPIService.TrustedCertificatesPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -818,7 +839,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.trustedCertificate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -831,9 +852,9 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -850,6 +871,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -860,6 +882,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -870,16 +893,18 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -890,6 +915,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -900,6 +926,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -910,6 +937,7 @@ func (a *TrustedCertificatesApiService) TrustedCertificatesPostExecute(r ApiTrus
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

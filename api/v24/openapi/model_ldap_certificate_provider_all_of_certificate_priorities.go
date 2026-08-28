@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the LdapCertificateProviderAllOfCertificatePriorities type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LdapCertificateProviderAllOfCertificatePriorities{}
 
 // LdapCertificateProviderAllOfCertificatePriorities struct for LdapCertificateProviderAllOfCertificatePriorities
 type LdapCertificateProviderAllOfCertificatePriorities struct {
@@ -22,6 +27,8 @@ type LdapCertificateProviderAllOfCertificatePriorities struct {
 	// The value to compare to the certificate attribute.
 	Value string `json:"value"`
 }
+
+type _LdapCertificateProviderAllOfCertificatePriorities LdapCertificateProviderAllOfCertificatePriorities
 
 // NewLdapCertificateProviderAllOfCertificatePriorities instantiates a new LdapCertificateProviderAllOfCertificatePriorities object
 // This constructor will assign default values to properties that have it defined,
@@ -47,7 +54,7 @@ func NewLdapCertificateProviderAllOfCertificatePrioritiesWithDefaults() *LdapCer
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *LdapCertificateProviderAllOfCertificatePriorities) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -57,7 +64,7 @@ func (o *LdapCertificateProviderAllOfCertificatePriorities) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProviderAllOfCertificatePriorities) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -65,7 +72,7 @@ func (o *LdapCertificateProviderAllOfCertificatePriorities) GetTypeOk() (*string
 
 // HasType returns a boolean if a field has been set.
 func (o *LdapCertificateProviderAllOfCertificatePriorities) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -102,14 +109,57 @@ func (o *LdapCertificateProviderAllOfCertificatePriorities) SetValue(v string) {
 }
 
 func (o LdapCertificateProviderAllOfCertificatePriorities) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["value"] = o.Value
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LdapCertificateProviderAllOfCertificatePriorities) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	toSerialize["value"] = o.Value
+	return toSerialize, nil
+}
+
+func (o *LdapCertificateProviderAllOfCertificatePriorities) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"value",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varLdapCertificateProviderAllOfCertificatePriorities := _LdapCertificateProviderAllOfCertificatePriorities{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varLdapCertificateProviderAllOfCertificatePriorities)
+
+	if err != nil {
+		return err
+	}
+
+	*o = LdapCertificateProviderAllOfCertificatePriorities(varLdapCertificateProviderAllOfCertificatePriorities)
+
+	return err
 }
 
 type NullableLdapCertificateProviderAllOfCertificatePriorities struct {

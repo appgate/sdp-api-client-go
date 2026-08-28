@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Client type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Client{}
+
 // Client Client Auto-Update settings for the specified platform.
 type Client struct {
 	// A publicly acceessible URL for Clients to download the installer from.
@@ -42,7 +45,7 @@ func NewClientWithDefaults() *Client {
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *Client) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *Client) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -60,7 +63,7 @@ func (o *Client) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *Client) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *Client) SetUrl(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *Client) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *Client) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -92,7 +95,7 @@ func (o *Client) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *Client) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *Client) SetVersion(v string) {
 }
 
 func (o Client) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Client) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	return toSerialize, nil
 }
 
 type NullableClient struct {

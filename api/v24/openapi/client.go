@@ -19,7 +19,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -33,15 +32,15 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
-
-	"golang.org/x/oauth2"
 )
 
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
-	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
-	redactPW  = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+	JsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?json)`)
+	XmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?xml)`)
+	redact          = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
+	redactPW        = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
+	queryDescape    = strings.NewReplacer("%5B", "[", "%5D", "]")
 )
 
 // APIClient manages communication with the AppGate SDP Controller REST API API vAPI version 24.0
@@ -52,137 +51,131 @@ type APIClient struct {
 
 	// API Services
 
-	ActiveSessionsApi *ActiveSessionsApiService
+	ActiveSessionsAPI *ActiveSessionsAPIService
 
-	AdminMessagesApi *AdminMessagesApiService
+	AdminMessagesAPI *AdminMessagesAPIService
 
-	AdminPreferencesApi *AdminPreferencesApiService
+	AdminPreferencesAPI *AdminPreferencesAPIService
 
-	AdminRolesApi *AdminRolesApiService
+	AdminRolesAPI *AdminRolesAPIService
 
-	AdministrativeRolesApi *AdministrativeRolesApiService
+	AdministrativeRolesAPI *AdministrativeRolesAPIService
 
-	ApplianceApi *ApplianceApiService
+	ApplianceAPI *ApplianceAPIService
 
-	ApplianceBackupApi *ApplianceBackupApiService
+	ApplianceBackupAPI *ApplianceBackupAPIService
 
-	ApplianceChangeApi *ApplianceChangeApiService
+	ApplianceChangeAPI *ApplianceChangeAPIService
 
-	ApplianceCustomizationsApi *ApplianceCustomizationsApiService
+	ApplianceCustomizationsAPI *ApplianceCustomizationsAPIService
 
-	ApplianceMaintenanceApi *ApplianceMaintenanceApiService
+	ApplianceMaintenanceAPI *ApplianceMaintenanceAPIService
 
-	ApplianceMetricsApi *ApplianceMetricsApiService
+	ApplianceMetricsAPI *ApplianceMetricsAPIService
 
-	ApplianceStatsDeprecatedApi *ApplianceStatsDeprecatedApiService
+	ApplianceStatsDeprecatedAPI *ApplianceStatsDeprecatedAPIService
 
-	ApplianceUpgradeApi *ApplianceUpgradeApiService
+	ApplianceUpgradeAPI *ApplianceUpgradeAPIService
 
-	AppliancesApi *AppliancesApiService
+	AppliancesAPI *AppliancesAPIService
 
-	BlacklistedUsersApi *BlacklistedUsersApiService
+	BlacklistedUsersAPI *BlacklistedUsersAPIService
 
-	CertificateAuthorityApi *CertificateAuthorityApiService
+	CertificateAuthorityAPI *CertificateAuthorityAPIService
 
-	ClientAutoUpdateApi *ClientAutoUpdateApiService
+	ClientAutoUpdateAPI *ClientAutoUpdateAPIService
 
-	ClientLogsApi *ClientLogsApiService
+	ClientLogsAPI *ClientLogsAPIService
 
-	ClientProfilesApi *ClientProfilesApiService
+	ClientProfilesAPI *ClientProfilesAPIService
 
-	ColorsApi *ColorsApiService
+	ColorsAPI *ColorsAPIService
 
-	ConditionsApi *ConditionsApiService
+	ConditionsAPI *ConditionsAPIService
 
-	CriteriaScriptsApi *CriteriaScriptsApiService
+	CriteriaScriptsAPI *CriteriaScriptsAPIService
 
-	DefaultTimeBasedOTPProviderSeedsApi *DefaultTimeBasedOTPProviderSeedsApiService
+	DefaultTimeBasedOTPProviderSeedsAPI *DefaultTimeBasedOTPProviderSeedsAPIService
 
-	DeviceClaimScriptsApi *DeviceClaimScriptsApiService
+	DeviceClaimScriptsAPI *DeviceClaimScriptsAPIService
 
-	DeviceScriptsApi *DeviceScriptsApiService
+	DeviceScriptsAPI *DeviceScriptsAPIService
 
-	DevicesOnBoardedPerHourApi *DevicesOnBoardedPerHourApiService
+	DevicesOnBoardedPerHourAPI *DevicesOnBoardedPerHourAPIService
 
-	DiscoveredAppsApi *DiscoveredAppsApiService
+	DiscoveredAppsAPI *DiscoveredAppsAPIService
 
-	EntitlementScriptsApi *EntitlementScriptsApiService
+	EntitlementScriptsAPI *EntitlementScriptsAPIService
 
-	EntitlementsApi *EntitlementsApiService
+	EntitlementsAPI *EntitlementsAPIService
 
-	FIDO2DevicesApi *FIDO2DevicesApiService
+	FIDO2DevicesAPI *FIDO2DevicesAPIService
 
-	GlobalSettingsApi *GlobalSettingsApiService
+	GlobalSettingsAPI *GlobalSettingsAPIService
 
-	HealthApi *HealthApiService
+	HealthAPI *HealthAPIService
 
-	IPPoolsApi *IPPoolsApiService
+	IPPoolsAPI *IPPoolsAPIService
 
-	IdentityProvidersApi *IdentityProvidersApiService
+	IdentityProvidersAPI *IdentityProvidersAPIService
 
-	IssuedCertificatesApi *IssuedCertificatesApiService
+	IssuedCertificatesAPI *IssuedCertificatesAPIService
 
-	LicenseApi *LicenseApiService
+	LicenseAPI *LicenseAPIService
 
-	LicensedUsersApi *LicensedUsersApiService
+	LicensedUsersAPI *LicensedUsersAPIService
 
-	LocalUsersApi *LocalUsersApiService
+	LocalUsersAPI *LocalUsersAPIService
 
-	LoginApi *LoginApiService
+	LoginAPI *LoginAPIService
 
-	MFAForAdminsApi *MFAForAdminsApiService
+	MFAForAdminsAPI *MFAForAdminsAPIService
 
-	MFAProvidersApi *MFAProvidersApiService
+	MFAProvidersAPI *MFAProvidersAPIService
 
-	PoliciesApi *PoliciesApiService
+	PoliciesAPI *PoliciesAPIService
 
-	RegisteredDevicesApi *RegisteredDevicesApiService
+	RegisteredDevicesAPI *RegisteredDevicesAPIService
 
-	ReplicationSourceApi *ReplicationSourceApiService
+	ReplicationSourceAPI *ReplicationSourceAPIService
 
-	ReplicationTargetsApi *ReplicationTargetsApiService
+	ReplicationTargetsAPI *ReplicationTargetsAPIService
 
-	RingfenceRulesApi *RingfenceRulesApiService
+	RingfenceRulesAPI *RingfenceRulesAPIService
 
-	RiskModelApi *RiskModelApiService
+	RiskModelAPI *RiskModelAPIService
 
-	SecretsApi *SecretsApiService
+	SecretsAPI *SecretsAPIService
 
-	SecretsManagerApi *SecretsManagerApiService
+	SecretsManagerAPI *SecretsManagerAPIService
 
-	ServiceUsersApi *ServiceUsersApiService
+	ServiceUsersAPI *ServiceUsersAPIService
 
-	SitesApi *SitesApiService
+	SitesAPI *SitesAPIService
 
-	TagsApi *TagsApiService
+	TagsAPI *TagsAPIService
 
-	TopEntitlementsApi *TopEntitlementsApiService
+	TopEntitlementsAPI *TopEntitlementsAPIService
 
-	TrustedCertificatesApi *TrustedCertificatesApiService
+	TrustedCertificatesAPI *TrustedCertificatesAPIService
 
-	UserClaimScriptsApi *UserClaimScriptsApiService
+	UserClaimScriptsAPI *UserClaimScriptsAPIService
 
-	UserLoginsPerHourApi *UserLoginsPerHourApiService
+	UserLoginsPerHourAPI *UserLoginsPerHourAPIService
 
-	UserScriptsApi *UserScriptsApiService
+	UserScriptsAPI *UserScriptsAPIService
 
-	VersionApi *VersionApiService
+	VersionAPI *VersionAPIService
 
-	ZTPApi *ZTPApiService
+	ZTPAPI *ZTPAPIService
 	// PATCH seperate API services for each discriminator identity provider
-	LdapIdentityProvidersApi *LdapIdentityProvidersApiService
-
-	RadiusIdentityProvidersApi *RadiusIdentityProvidersApiService
-
-	SamlIdentityProvidersApi *SamlIdentityProvidersApiService
-
-	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
-
+	LdapIdentityProvidersApi            *LdapIdentityProvidersApiService
+	RadiusIdentityProvidersApi          *RadiusIdentityProvidersApiService
+	SamlIdentityProvidersApi            *SamlIdentityProvidersApiService
+	LocalDatabaseIdentityProvidersApi   *LocalDatabaseIdentityProvidersApiService
 	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
-
-	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
-
-	OidcIdentityProvidersApi *OidcIdentityProvidersApiService
+	ConnectorIdentityProvidersApi       *ConnectorIdentityProvidersApiService
+	OidcIdentityProvidersApi            *OidcIdentityProvidersApiService
 }
 
 type service struct {
@@ -201,65 +194,65 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.ActiveSessionsApi = (*ActiveSessionsApiService)(&c.common)
-	c.AdminMessagesApi = (*AdminMessagesApiService)(&c.common)
-	c.AdminPreferencesApi = (*AdminPreferencesApiService)(&c.common)
-	c.AdminRolesApi = (*AdminRolesApiService)(&c.common)
-	c.AdministrativeRolesApi = (*AdministrativeRolesApiService)(&c.common)
-	c.ApplianceApi = (*ApplianceApiService)(&c.common)
-	c.ApplianceBackupApi = (*ApplianceBackupApiService)(&c.common)
-	c.ApplianceChangeApi = (*ApplianceChangeApiService)(&c.common)
-	c.ApplianceCustomizationsApi = (*ApplianceCustomizationsApiService)(&c.common)
-	c.ApplianceMaintenanceApi = (*ApplianceMaintenanceApiService)(&c.common)
-	c.ApplianceMetricsApi = (*ApplianceMetricsApiService)(&c.common)
-	c.ApplianceStatsDeprecatedApi = (*ApplianceStatsDeprecatedApiService)(&c.common)
-	c.ApplianceUpgradeApi = (*ApplianceUpgradeApiService)(&c.common)
-	c.AppliancesApi = (*AppliancesApiService)(&c.common)
-	c.BlacklistedUsersApi = (*BlacklistedUsersApiService)(&c.common)
-	c.CertificateAuthorityApi = (*CertificateAuthorityApiService)(&c.common)
-	c.ClientAutoUpdateApi = (*ClientAutoUpdateApiService)(&c.common)
-	c.ClientLogsApi = (*ClientLogsApiService)(&c.common)
-	c.ClientProfilesApi = (*ClientProfilesApiService)(&c.common)
-	c.ColorsApi = (*ColorsApiService)(&c.common)
-	c.ConditionsApi = (*ConditionsApiService)(&c.common)
-	c.CriteriaScriptsApi = (*CriteriaScriptsApiService)(&c.common)
-	c.DefaultTimeBasedOTPProviderSeedsApi = (*DefaultTimeBasedOTPProviderSeedsApiService)(&c.common)
-	c.DeviceClaimScriptsApi = (*DeviceClaimScriptsApiService)(&c.common)
-	c.DeviceScriptsApi = (*DeviceScriptsApiService)(&c.common)
-	c.DevicesOnBoardedPerHourApi = (*DevicesOnBoardedPerHourApiService)(&c.common)
-	c.DiscoveredAppsApi = (*DiscoveredAppsApiService)(&c.common)
-	c.EntitlementScriptsApi = (*EntitlementScriptsApiService)(&c.common)
-	c.EntitlementsApi = (*EntitlementsApiService)(&c.common)
-	c.FIDO2DevicesApi = (*FIDO2DevicesApiService)(&c.common)
-	c.GlobalSettingsApi = (*GlobalSettingsApiService)(&c.common)
-	c.HealthApi = (*HealthApiService)(&c.common)
-	c.IPPoolsApi = (*IPPoolsApiService)(&c.common)
-	c.IdentityProvidersApi = (*IdentityProvidersApiService)(&c.common)
-	c.IssuedCertificatesApi = (*IssuedCertificatesApiService)(&c.common)
-	c.LicenseApi = (*LicenseApiService)(&c.common)
-	c.LicensedUsersApi = (*LicensedUsersApiService)(&c.common)
-	c.LocalUsersApi = (*LocalUsersApiService)(&c.common)
-	c.LoginApi = (*LoginApiService)(&c.common)
-	c.MFAForAdminsApi = (*MFAForAdminsApiService)(&c.common)
-	c.MFAProvidersApi = (*MFAProvidersApiService)(&c.common)
-	c.PoliciesApi = (*PoliciesApiService)(&c.common)
-	c.RegisteredDevicesApi = (*RegisteredDevicesApiService)(&c.common)
-	c.ReplicationSourceApi = (*ReplicationSourceApiService)(&c.common)
-	c.ReplicationTargetsApi = (*ReplicationTargetsApiService)(&c.common)
-	c.RingfenceRulesApi = (*RingfenceRulesApiService)(&c.common)
-	c.RiskModelApi = (*RiskModelApiService)(&c.common)
-	c.SecretsApi = (*SecretsApiService)(&c.common)
-	c.SecretsManagerApi = (*SecretsManagerApiService)(&c.common)
-	c.ServiceUsersApi = (*ServiceUsersApiService)(&c.common)
-	c.SitesApi = (*SitesApiService)(&c.common)
-	c.TagsApi = (*TagsApiService)(&c.common)
-	c.TopEntitlementsApi = (*TopEntitlementsApiService)(&c.common)
-	c.TrustedCertificatesApi = (*TrustedCertificatesApiService)(&c.common)
-	c.UserClaimScriptsApi = (*UserClaimScriptsApiService)(&c.common)
-	c.UserLoginsPerHourApi = (*UserLoginsPerHourApiService)(&c.common)
-	c.UserScriptsApi = (*UserScriptsApiService)(&c.common)
-	c.VersionApi = (*VersionApiService)(&c.common)
-	c.ZTPApi = (*ZTPApiService)(&c.common)
+	c.ActiveSessionsAPI = (*ActiveSessionsAPIService)(&c.common)
+	c.AdminMessagesAPI = (*AdminMessagesAPIService)(&c.common)
+	c.AdminPreferencesAPI = (*AdminPreferencesAPIService)(&c.common)
+	c.AdminRolesAPI = (*AdminRolesAPIService)(&c.common)
+	c.AdministrativeRolesAPI = (*AdministrativeRolesAPIService)(&c.common)
+	c.ApplianceAPI = (*ApplianceAPIService)(&c.common)
+	c.ApplianceBackupAPI = (*ApplianceBackupAPIService)(&c.common)
+	c.ApplianceChangeAPI = (*ApplianceChangeAPIService)(&c.common)
+	c.ApplianceCustomizationsAPI = (*ApplianceCustomizationsAPIService)(&c.common)
+	c.ApplianceMaintenanceAPI = (*ApplianceMaintenanceAPIService)(&c.common)
+	c.ApplianceMetricsAPI = (*ApplianceMetricsAPIService)(&c.common)
+	c.ApplianceStatsDeprecatedAPI = (*ApplianceStatsDeprecatedAPIService)(&c.common)
+	c.ApplianceUpgradeAPI = (*ApplianceUpgradeAPIService)(&c.common)
+	c.AppliancesAPI = (*AppliancesAPIService)(&c.common)
+	c.BlacklistedUsersAPI = (*BlacklistedUsersAPIService)(&c.common)
+	c.CertificateAuthorityAPI = (*CertificateAuthorityAPIService)(&c.common)
+	c.ClientAutoUpdateAPI = (*ClientAutoUpdateAPIService)(&c.common)
+	c.ClientLogsAPI = (*ClientLogsAPIService)(&c.common)
+	c.ClientProfilesAPI = (*ClientProfilesAPIService)(&c.common)
+	c.ColorsAPI = (*ColorsAPIService)(&c.common)
+	c.ConditionsAPI = (*ConditionsAPIService)(&c.common)
+	c.CriteriaScriptsAPI = (*CriteriaScriptsAPIService)(&c.common)
+	c.DefaultTimeBasedOTPProviderSeedsAPI = (*DefaultTimeBasedOTPProviderSeedsAPIService)(&c.common)
+	c.DeviceClaimScriptsAPI = (*DeviceClaimScriptsAPIService)(&c.common)
+	c.DeviceScriptsAPI = (*DeviceScriptsAPIService)(&c.common)
+	c.DevicesOnBoardedPerHourAPI = (*DevicesOnBoardedPerHourAPIService)(&c.common)
+	c.DiscoveredAppsAPI = (*DiscoveredAppsAPIService)(&c.common)
+	c.EntitlementScriptsAPI = (*EntitlementScriptsAPIService)(&c.common)
+	c.EntitlementsAPI = (*EntitlementsAPIService)(&c.common)
+	c.FIDO2DevicesAPI = (*FIDO2DevicesAPIService)(&c.common)
+	c.GlobalSettingsAPI = (*GlobalSettingsAPIService)(&c.common)
+	c.HealthAPI = (*HealthAPIService)(&c.common)
+	c.IPPoolsAPI = (*IPPoolsAPIService)(&c.common)
+	c.IdentityProvidersAPI = (*IdentityProvidersAPIService)(&c.common)
+	c.IssuedCertificatesAPI = (*IssuedCertificatesAPIService)(&c.common)
+	c.LicenseAPI = (*LicenseAPIService)(&c.common)
+	c.LicensedUsersAPI = (*LicensedUsersAPIService)(&c.common)
+	c.LocalUsersAPI = (*LocalUsersAPIService)(&c.common)
+	c.LoginAPI = (*LoginAPIService)(&c.common)
+	c.MFAForAdminsAPI = (*MFAForAdminsAPIService)(&c.common)
+	c.MFAProvidersAPI = (*MFAProvidersAPIService)(&c.common)
+	c.PoliciesAPI = (*PoliciesAPIService)(&c.common)
+	c.RegisteredDevicesAPI = (*RegisteredDevicesAPIService)(&c.common)
+	c.ReplicationSourceAPI = (*ReplicationSourceAPIService)(&c.common)
+	c.ReplicationTargetsAPI = (*ReplicationTargetsAPIService)(&c.common)
+	c.RingfenceRulesAPI = (*RingfenceRulesAPIService)(&c.common)
+	c.RiskModelAPI = (*RiskModelAPIService)(&c.common)
+	c.SecretsAPI = (*SecretsAPIService)(&c.common)
+	c.SecretsManagerAPI = (*SecretsManagerAPIService)(&c.common)
+	c.ServiceUsersAPI = (*ServiceUsersAPIService)(&c.common)
+	c.SitesAPI = (*SitesAPIService)(&c.common)
+	c.TagsAPI = (*TagsAPIService)(&c.common)
+	c.TopEntitlementsAPI = (*TopEntitlementsAPIService)(&c.common)
+	c.TrustedCertificatesAPI = (*TrustedCertificatesAPIService)(&c.common)
+	c.UserClaimScriptsAPI = (*UserClaimScriptsAPIService)(&c.common)
+	c.UserLoginsPerHourAPI = (*UserLoginsPerHourAPIService)(&c.common)
+	c.UserScriptsAPI = (*UserScriptsAPIService)(&c.common)
+	c.VersionAPI = (*VersionAPIService)(&c.common)
+	c.ZTPAPI = (*ZTPAPIService)(&c.common)
 	// PATCH manually added to replace IdentityProvidersApiService
 	// since openapi.generator does not play well with discriminator from the open api spec.
 	c.LdapIdentityProvidersApi = (*LdapIdentityProvidersApiService)(&c.common)
@@ -304,7 +297,7 @@ func selectHeaderAccept(accepts []string) string {
 // contains is a case insensitive match, finding needle in a haystack
 func contains(haystack []string, needle string) bool {
 	for _, a := range haystack {
-		if strings.ToLower(a) == strings.ToLower(needle) {
+		if strings.EqualFold(a, needle) {
 			return true
 		}
 	}
@@ -320,33 +313,115 @@ func typeCheckParameter(obj interface{}, expected string, name string) error {
 
 	// Check the type is as expected.
 	if reflect.TypeOf(obj).String() != expected {
-		return fmt.Errorf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String())
+		return fmt.Errorf("expected %s to be of type %s but received %s", name, expected, reflect.TypeOf(obj).String())
 	}
 	return nil
 }
 
-// parameterToString convert interface{} parameters to string, using a delimiter if format is provided.
-func parameterToString(obj interface{}, collectionFormat string) string {
-	var delimiter string
+func parameterValueToString(obj interface{}, key string) string {
+	if reflect.TypeOf(obj).Kind() != reflect.Ptr {
+		return fmt.Sprintf("%v", obj)
+	}
+	var param, ok = obj.(MappedNullable)
+	if !ok {
+		return ""
+	}
+	dataMap, err := param.ToMap()
+	if err != nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", dataMap[key])
+}
 
-	switch collectionFormat {
-	case "pipes":
-		delimiter = "|"
-	case "ssv":
-		delimiter = " "
-	case "tsv":
-		delimiter = "\t"
-	case "csv":
-		delimiter = ","
+// parameterAddToHeaderOrQuery adds the provided object to the request header or url query
+// supporting deep object syntax
+func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix string, obj interface{}, style string, collectionType string) {
+	var v = reflect.ValueOf(obj)
+	var value = ""
+	if v == reflect.ValueOf(nil) {
+		value = "null"
+	} else {
+		switch v.Kind() {
+		case reflect.Invalid:
+			value = "invalid"
+
+		case reflect.Struct:
+			if t, ok := obj.(MappedNullable); ok {
+				dataMap, err := t.ToMap()
+				if err != nil {
+					return
+				}
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, style, collectionType)
+				return
+			}
+			if t, ok := obj.(time.Time); ok {
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339Nano), style, collectionType)
+				return
+			}
+			value = v.Type().String() + " value"
+		case reflect.Slice:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
+				return
+			}
+			var lenIndValue = indValue.Len()
+			for i := 0; i < lenIndValue; i++ {
+				var arrayValue = indValue.Index(i)
+				var keyPrefixForCollectionType = keyPrefix
+				if style == "deepObject" {
+					keyPrefixForCollectionType = keyPrefix + "[" + strconv.Itoa(i) + "]"
+				}
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefixForCollectionType, arrayValue.Interface(), style, collectionType)
+			}
+			return
+
+		case reflect.Map:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
+				return
+			}
+			iter := indValue.MapRange()
+			for iter.Next() {
+				k, v := iter.Key(), iter.Value()
+				parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), style, collectionType)
+			}
+			return
+
+		case reflect.Interface:
+			fallthrough
+		case reflect.Ptr:
+			parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), style, collectionType)
+			return
+
+		case reflect.Int, reflect.Int8, reflect.Int16,
+			reflect.Int32, reflect.Int64:
+			value = strconv.FormatInt(v.Int(), 10)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16,
+			reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			value = strconv.FormatUint(v.Uint(), 10)
+		case reflect.Float32, reflect.Float64:
+			value = strconv.FormatFloat(v.Float(), 'g', -1, 32)
+		case reflect.Bool:
+			value = strconv.FormatBool(v.Bool())
+		case reflect.String:
+			value = v.String()
+		default:
+			value = v.Type().String() + " value"
+		}
 	}
 
-	if reflect.TypeOf(obj).Kind() == reflect.Slice {
-		return strings.Trim(strings.Replace(fmt.Sprint(obj), " ", delimiter, -1), "[]")
-	} else if t, ok := obj.(time.Time); ok {
-		return t.Format(time.RFC3339)
+	switch valuesMap := headerOrQueryParams.(type) {
+	case url.Values:
+		if collectionType == "csv" && valuesMap.Get(keyPrefix) != "" {
+			valuesMap.Set(keyPrefix, valuesMap.Get(keyPrefix)+","+value)
+		} else {
+			valuesMap.Add(keyPrefix, value)
+		}
+		break
+	case map[string]string:
+		valuesMap[keyPrefix] = value
+		break
 	}
-
-	return fmt.Sprintf("%v", obj)
 }
 
 // helper for converting interface{} parameters to json strings
@@ -498,7 +573,11 @@ func (c *APIClient) prepareRequest(
 	}
 
 	// Encode the parameters.
-	url.RawQuery = query.Encode()
+	url.RawQuery = queryParamSplit.ReplaceAllStringFunc(query.Encode(), func(s string) string {
+		pieces := strings.Split(s, "=")
+		pieces[0] = queryDescape.Replace(pieces[0])
+		return strings.Join(pieces, "=")
+	})
 
 	// Generate a new request
 	if body != nil {
@@ -541,35 +620,21 @@ func (c *APIClient) prepareRequest(
 		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
 		localVarRequest.Header.Set(header, value)
 	}
+
 	if ctx != nil {
 		// add context to the request
 		localVarRequest = localVarRequest.WithContext(ctx)
 
+		// Accept Header, Overwrites any existing Accept headers
+		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
+			localVarRequest.Header.Set("Accept", accept)
+		}
+
 		// Walk through any authentication.
-
-		// OAuth2 authentication
-		if tok, ok := ctx.Value(ContextOAuth2).(oauth2.TokenSource); ok {
-			// We were able to grab an oauth2 token from the context
-			var latestToken *oauth2.Token
-			if latestToken, err = tok.Token(); err != nil {
-				return nil, err
-			}
-
-			latestToken.SetAuthHeader(localVarRequest)
-		}
-
-		// Basic HTTP Authentication
-		if auth, ok := ctx.Value(ContextBasicAuth).(BasicAuth); ok {
-			localVarRequest.SetBasicAuth(auth.UserName, auth.Password)
-		}
 
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
-		}
-		// Accept Header, Overwrites any existing Accept headers
-		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
-			localVarRequest.Header.Set("Accept", accept)
 		}
 
 	}
@@ -585,8 +650,12 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		*s = string(b)
 		return nil
 	}
+	// The single-pointer (*os.File) branch emitted by openapi-generator v7 is a
+	// no-op: it reassigns the local f to a fresh temp file the caller never sees
+	// (and staticcheck flags it as SA4006). Drop it; downloads use the
+	// **os.File / ***os.File branches below, matching pre-v7 behaviour.
 	if f, ok := v.(**os.File); ok {
-		*f, err = ioutil.TempFile("", "HttpClientFile")
+		*f, err = os.CreateTemp("", "HttpClientFile")
 		if err != nil {
 			return
 		}
@@ -600,7 +669,7 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 	// https://github.com/OpenAPITools/openapi-generator/issues/11965
 	if file, ok := v.(***os.File); ok {
 		var tmp *os.File
-		tmp, err = ioutil.TempFile("", "HttpClientFile")
+		tmp, err = os.CreateTemp("", "HttpClientFile")
 		if err != nil {
 			return
 		}
@@ -612,13 +681,13 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		*file = &tmp
 		return
 	}
-	if xmlCheck.MatchString(contentType) {
+	if XmlCheck.MatchString(contentType) {
 		if err = xml.Unmarshal(b, v); err != nil {
 			return err
 		}
 		return nil
 	}
-	if jsonCheck.MatchString(contentType) {
+	if JsonCheck.MatchString(contentType) {
 		if actualObj, ok := v.(interface{ GetActualInstance() interface{} }); ok { // oneOf, anyOf schemas
 			if unmarshalObj, ok := actualObj.(interface{ UnmarshalJSON([]byte) error }); ok { // make sure it has UnmarshalJSON defined
 				if err = unmarshalObj.UnmarshalJSON(b); err != nil {
@@ -637,11 +706,14 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 
 // Add a file to the multipart request
 func addFile(w *multipart.Writer, fieldName, path string) error {
-	file, err := os.Open(path)
+	file, err := os.Open(filepath.Clean(path))
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	err = file.Close()
+	if err != nil {
+		return err
+	}
 
 	part, err := w.CreateFormFile(fieldName, filepath.Base(path))
 	if err != nil {
@@ -652,18 +724,6 @@ func addFile(w *multipart.Writer, fieldName, path string) error {
 	return err
 }
 
-// Prevent trying to import "fmt"
-func reportError(format string, a ...interface{}) error {
-	return fmt.Errorf(format, a...)
-}
-
-// A wrapper for strict JSON decoding
-func newStrictDecoder(data []byte) *json.Decoder {
-	dec := json.NewDecoder(bytes.NewBuffer(data))
-	dec.DisallowUnknownFields()
-	return dec
-}
-
 // Set request body from an interface{}
 func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err error) {
 	if bodyBuf == nil {
@@ -672,18 +732,22 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 
 	if reader, ok := body.(io.Reader); ok {
 		_, err = bodyBuf.ReadFrom(reader)
-	} else if fp, ok := body.(**os.File); ok {
-		_, err = bodyBuf.ReadFrom(*fp)
+	} else if fp, ok := body.(*os.File); ok {
+		_, err = bodyBuf.ReadFrom(fp)
 	} else if b, ok := body.([]byte); ok {
 		_, err = bodyBuf.Write(b)
 	} else if s, ok := body.(string); ok {
 		_, err = bodyBuf.WriteString(s)
 	} else if s, ok := body.(*string); ok {
 		_, err = bodyBuf.WriteString(*s)
-	} else if jsonCheck.MatchString(contentType) {
+	} else if JsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
-	} else if xmlCheck.MatchString(contentType) {
-		err = xml.NewEncoder(bodyBuf).Encode(body)
+	} else if XmlCheck.MatchString(contentType) {
+		var bs []byte
+		bs, err = xml.Marshal(body)
+		if err == nil {
+			bodyBuf.Write(bs)
+		}
 	}
 
 	if err != nil {
@@ -691,7 +755,7 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 	}
 
 	if bodyBuf.Len() == 0 {
-		err = fmt.Errorf("Invalid body type %s\n", contentType)
+		err = fmt.Errorf("invalid body type %s\n", contentType)
 		return nil, err
 	}
 	return bodyBuf, nil
@@ -792,4 +856,24 @@ func (e GenericOpenAPIError) Body() []byte {
 // Model returns the unpacked model of the error
 func (e GenericOpenAPIError) Model() interface{} {
 	return e.model
+}
+
+// format error message using title and detail when model implements rfc7807
+func formatErrorMessage(status string, v interface{}) string {
+	str := ""
+	metaValue := reflect.ValueOf(v).Elem()
+
+	if metaValue.Kind() == reflect.Struct {
+		field := metaValue.FieldByName("Title")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s", field.Interface())
+		}
+
+		field = metaValue.FieldByName("Detail")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s (%s)", str, field.Interface())
+		}
+	}
+
+	return strings.TrimSpace(fmt.Sprintf("%s %s", status, str))
 }

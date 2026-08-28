@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfRsyslogDestinations type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfRsyslogDestinations{}
 
 // ApplianceAllOfRsyslogDestinations struct for ApplianceAllOfRsyslogDestinations
 type ApplianceAllOfRsyslogDestinations struct {
@@ -24,6 +29,8 @@ type ApplianceAllOfRsyslogDestinations struct {
 	// Rsyslog server destination.
 	Destination string `json:"destination"`
 }
+
+type _ApplianceAllOfRsyslogDestinations ApplianceAllOfRsyslogDestinations
 
 // NewApplianceAllOfRsyslogDestinations instantiates a new ApplianceAllOfRsyslogDestinations object
 // This constructor will assign default values to properties that have it defined,
@@ -53,7 +60,7 @@ func NewApplianceAllOfRsyslogDestinationsWithDefaults() *ApplianceAllOfRsyslogDe
 
 // GetSelector returns the Selector field value if set, zero value otherwise.
 func (o *ApplianceAllOfRsyslogDestinations) GetSelector() string {
-	if o == nil || o.Selector == nil {
+	if o == nil || IsNil(o.Selector) {
 		var ret string
 		return ret
 	}
@@ -63,7 +70,7 @@ func (o *ApplianceAllOfRsyslogDestinations) GetSelector() string {
 // GetSelectorOk returns a tuple with the Selector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfRsyslogDestinations) GetSelectorOk() (*string, bool) {
-	if o == nil || o.Selector == nil {
+	if o == nil || IsNil(o.Selector) {
 		return nil, false
 	}
 	return o.Selector, true
@@ -71,7 +78,7 @@ func (o *ApplianceAllOfRsyslogDestinations) GetSelectorOk() (*string, bool) {
 
 // HasSelector returns a boolean if a field has been set.
 func (o *ApplianceAllOfRsyslogDestinations) HasSelector() bool {
-	if o != nil && o.Selector != nil {
+	if o != nil && !IsNil(o.Selector) {
 		return true
 	}
 
@@ -85,7 +92,7 @@ func (o *ApplianceAllOfRsyslogDestinations) SetSelector(v string) {
 
 // GetTemplate returns the Template field value if set, zero value otherwise.
 func (o *ApplianceAllOfRsyslogDestinations) GetTemplate() string {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		var ret string
 		return ret
 	}
@@ -95,7 +102,7 @@ func (o *ApplianceAllOfRsyslogDestinations) GetTemplate() string {
 // GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfRsyslogDestinations) GetTemplateOk() (*string, bool) {
-	if o == nil || o.Template == nil {
+	if o == nil || IsNil(o.Template) {
 		return nil, false
 	}
 	return o.Template, true
@@ -103,7 +110,7 @@ func (o *ApplianceAllOfRsyslogDestinations) GetTemplateOk() (*string, bool) {
 
 // HasTemplate returns a boolean if a field has been set.
 func (o *ApplianceAllOfRsyslogDestinations) HasTemplate() bool {
-	if o != nil && o.Template != nil {
+	if o != nil && !IsNil(o.Template) {
 		return true
 	}
 
@@ -140,17 +147,60 @@ func (o *ApplianceAllOfRsyslogDestinations) SetDestination(v string) {
 }
 
 func (o ApplianceAllOfRsyslogDestinations) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Selector != nil {
-		toSerialize["selector"] = o.Selector
-	}
-	if o.Template != nil {
-		toSerialize["template"] = o.Template
-	}
-	if true {
-		toSerialize["destination"] = o.Destination
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfRsyslogDestinations) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Selector) {
+		toSerialize["selector"] = o.Selector
+	}
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
+	}
+	toSerialize["destination"] = o.Destination
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfRsyslogDestinations) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"destination",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfRsyslogDestinations := _ApplianceAllOfRsyslogDestinations{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfRsyslogDestinations)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfRsyslogDestinations(varApplianceAllOfRsyslogDestinations)
+
+	return err
 }
 
 type NullableApplianceAllOfRsyslogDestinations struct {

@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ReplicationReportError type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationReportError{}
 
 // ReplicationReportError struct for ReplicationReportError
 type ReplicationReportError struct {
@@ -26,6 +31,8 @@ type ReplicationReportError struct {
 	// Optional field name that caused the failure, if applicable.
 	Field *string `json:"field,omitempty"`
 }
+
+type _ReplicationReportError ReplicationReportError
 
 // NewReplicationReportError instantiates a new ReplicationReportError object
 // This constructor will assign default values to properties that have it defined,
@@ -48,7 +55,7 @@ func NewReplicationReportErrorWithDefaults() *ReplicationReportError {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ReplicationReportError) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -58,7 +65,7 @@ func (o *ReplicationReportError) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationReportError) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -66,7 +73,7 @@ func (o *ReplicationReportError) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ReplicationReportError) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -128,7 +135,7 @@ func (o *ReplicationReportError) SetMessage(v string) {
 
 // GetField returns the Field field value if set, zero value otherwise.
 func (o *ReplicationReportError) GetField() string {
-	if o == nil || o.Field == nil {
+	if o == nil || IsNil(o.Field) {
 		var ret string
 		return ret
 	}
@@ -138,7 +145,7 @@ func (o *ReplicationReportError) GetField() string {
 // GetFieldOk returns a tuple with the Field field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationReportError) GetFieldOk() (*string, bool) {
-	if o == nil || o.Field == nil {
+	if o == nil || IsNil(o.Field) {
 		return nil, false
 	}
 	return o.Field, true
@@ -146,7 +153,7 @@ func (o *ReplicationReportError) GetFieldOk() (*string, bool) {
 
 // HasField returns a boolean if a field has been set.
 func (o *ReplicationReportError) HasField() bool {
-	if o != nil && o.Field != nil {
+	if o != nil && !IsNil(o.Field) {
 		return true
 	}
 
@@ -159,20 +166,62 @@ func (o *ReplicationReportError) SetField(v string) {
 }
 
 func (o ReplicationReportError) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["message"] = o.Message
-	}
-	if o.Field != nil {
-		toSerialize["field"] = o.Field
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationReportError) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	toSerialize["message"] = o.Message
+	if !IsNil(o.Field) {
+		toSerialize["field"] = o.Field
+	}
+	return toSerialize, nil
+}
+
+func (o *ReplicationReportError) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"message",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReplicationReportError := _ReplicationReportError{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReplicationReportError)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReplicationReportError(varReplicationReportError)
+
+	return err
 }
 
 type NullableReplicationReportError struct {

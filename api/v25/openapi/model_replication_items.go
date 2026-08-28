@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationItems type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationItems{}
+
 // ReplicationItems struct for ReplicationItems
 type ReplicationItems struct {
 	AdministrativeRoles *ReplicationReportItem `json:"administrativeRoles,omitempty"`
@@ -53,7 +56,7 @@ func NewReplicationItemsWithDefaults() *ReplicationItems {
 
 // GetAdministrativeRoles returns the AdministrativeRoles field value if set, zero value otherwise.
 func (o *ReplicationItems) GetAdministrativeRoles() ReplicationReportItem {
-	if o == nil || o.AdministrativeRoles == nil {
+	if o == nil || IsNil(o.AdministrativeRoles) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *ReplicationItems) GetAdministrativeRoles() ReplicationReportItem {
 // GetAdministrativeRolesOk returns a tuple with the AdministrativeRoles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetAdministrativeRolesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.AdministrativeRoles == nil {
+	if o == nil || IsNil(o.AdministrativeRoles) {
 		return nil, false
 	}
 	return o.AdministrativeRoles, true
@@ -71,7 +74,7 @@ func (o *ReplicationItems) GetAdministrativeRolesOk() (*ReplicationReportItem, b
 
 // HasAdministrativeRoles returns a boolean if a field has been set.
 func (o *ReplicationItems) HasAdministrativeRoles() bool {
-	if o != nil && o.AdministrativeRoles != nil {
+	if o != nil && !IsNil(o.AdministrativeRoles) {
 		return true
 	}
 
@@ -85,7 +88,7 @@ func (o *ReplicationItems) SetAdministrativeRoles(v ReplicationReportItem) {
 
 // GetClientProfiles returns the ClientProfiles field value if set, zero value otherwise.
 func (o *ReplicationItems) GetClientProfiles() ReplicationReportItem {
-	if o == nil || o.ClientProfiles == nil {
+	if o == nil || IsNil(o.ClientProfiles) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *ReplicationItems) GetClientProfiles() ReplicationReportItem {
 // GetClientProfilesOk returns a tuple with the ClientProfiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetClientProfilesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.ClientProfiles == nil {
+	if o == nil || IsNil(o.ClientProfiles) {
 		return nil, false
 	}
 	return o.ClientProfiles, true
@@ -103,7 +106,7 @@ func (o *ReplicationItems) GetClientProfilesOk() (*ReplicationReportItem, bool) 
 
 // HasClientProfiles returns a boolean if a field has been set.
 func (o *ReplicationItems) HasClientProfiles() bool {
-	if o != nil && o.ClientProfiles != nil {
+	if o != nil && !IsNil(o.ClientProfiles) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *ReplicationItems) SetClientProfiles(v ReplicationReportItem) {
 
 // GetConditions returns the Conditions field value if set, zero value otherwise.
 func (o *ReplicationItems) GetConditions() ReplicationReportItem {
-	if o == nil || o.Conditions == nil {
+	if o == nil || IsNil(o.Conditions) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *ReplicationItems) GetConditions() ReplicationReportItem {
 // GetConditionsOk returns a tuple with the Conditions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetConditionsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Conditions == nil {
+	if o == nil || IsNil(o.Conditions) {
 		return nil, false
 	}
 	return o.Conditions, true
@@ -135,7 +138,7 @@ func (o *ReplicationItems) GetConditionsOk() (*ReplicationReportItem, bool) {
 
 // HasConditions returns a boolean if a field has been set.
 func (o *ReplicationItems) HasConditions() bool {
-	if o != nil && o.Conditions != nil {
+	if o != nil && !IsNil(o.Conditions) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *ReplicationItems) SetConditions(v ReplicationReportItem) {
 
 // GetCriteriaScripts returns the CriteriaScripts field value if set, zero value otherwise.
 func (o *ReplicationItems) GetCriteriaScripts() ReplicationReportItem {
-	if o == nil || o.CriteriaScripts == nil {
+	if o == nil || IsNil(o.CriteriaScripts) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *ReplicationItems) GetCriteriaScripts() ReplicationReportItem {
 // GetCriteriaScriptsOk returns a tuple with the CriteriaScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetCriteriaScriptsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.CriteriaScripts == nil {
+	if o == nil || IsNil(o.CriteriaScripts) {
 		return nil, false
 	}
 	return o.CriteriaScripts, true
@@ -167,7 +170,7 @@ func (o *ReplicationItems) GetCriteriaScriptsOk() (*ReplicationReportItem, bool)
 
 // HasCriteriaScripts returns a boolean if a field has been set.
 func (o *ReplicationItems) HasCriteriaScripts() bool {
-	if o != nil && o.CriteriaScripts != nil {
+	if o != nil && !IsNil(o.CriteriaScripts) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *ReplicationItems) SetCriteriaScripts(v ReplicationReportItem) {
 
 // GetDeviceClaimScripts returns the DeviceClaimScripts field value if set, zero value otherwise.
 func (o *ReplicationItems) GetDeviceClaimScripts() ReplicationReportItem {
-	if o == nil || o.DeviceClaimScripts == nil {
+	if o == nil || IsNil(o.DeviceClaimScripts) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *ReplicationItems) GetDeviceClaimScripts() ReplicationReportItem {
 // GetDeviceClaimScriptsOk returns a tuple with the DeviceClaimScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetDeviceClaimScriptsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.DeviceClaimScripts == nil {
+	if o == nil || IsNil(o.DeviceClaimScripts) {
 		return nil, false
 	}
 	return o.DeviceClaimScripts, true
@@ -199,7 +202,7 @@ func (o *ReplicationItems) GetDeviceClaimScriptsOk() (*ReplicationReportItem, bo
 
 // HasDeviceClaimScripts returns a boolean if a field has been set.
 func (o *ReplicationItems) HasDeviceClaimScripts() bool {
-	if o != nil && o.DeviceClaimScripts != nil {
+	if o != nil && !IsNil(o.DeviceClaimScripts) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *ReplicationItems) SetDeviceClaimScripts(v ReplicationReportItem) {
 
 // GetEntitlementScripts returns the EntitlementScripts field value if set, zero value otherwise.
 func (o *ReplicationItems) GetEntitlementScripts() ReplicationReportItem {
-	if o == nil || o.EntitlementScripts == nil {
+	if o == nil || IsNil(o.EntitlementScripts) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *ReplicationItems) GetEntitlementScripts() ReplicationReportItem {
 // GetEntitlementScriptsOk returns a tuple with the EntitlementScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetEntitlementScriptsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.EntitlementScripts == nil {
+	if o == nil || IsNil(o.EntitlementScripts) {
 		return nil, false
 	}
 	return o.EntitlementScripts, true
@@ -231,7 +234,7 @@ func (o *ReplicationItems) GetEntitlementScriptsOk() (*ReplicationReportItem, bo
 
 // HasEntitlementScripts returns a boolean if a field has been set.
 func (o *ReplicationItems) HasEntitlementScripts() bool {
-	if o != nil && o.EntitlementScripts != nil {
+	if o != nil && !IsNil(o.EntitlementScripts) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *ReplicationItems) SetEntitlementScripts(v ReplicationReportItem) {
 
 // GetEntitlements returns the Entitlements field value if set, zero value otherwise.
 func (o *ReplicationItems) GetEntitlements() ReplicationReportItem {
-	if o == nil || o.Entitlements == nil {
+	if o == nil || IsNil(o.Entitlements) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *ReplicationItems) GetEntitlements() ReplicationReportItem {
 // GetEntitlementsOk returns a tuple with the Entitlements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetEntitlementsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Entitlements == nil {
+	if o == nil || IsNil(o.Entitlements) {
 		return nil, false
 	}
 	return o.Entitlements, true
@@ -263,7 +266,7 @@ func (o *ReplicationItems) GetEntitlementsOk() (*ReplicationReportItem, bool) {
 
 // HasEntitlements returns a boolean if a field has been set.
 func (o *ReplicationItems) HasEntitlements() bool {
-	if o != nil && o.Entitlements != nil {
+	if o != nil && !IsNil(o.Entitlements) {
 		return true
 	}
 
@@ -277,7 +280,7 @@ func (o *ReplicationItems) SetEntitlements(v ReplicationReportItem) {
 
 // GetIdentityProviders returns the IdentityProviders field value if set, zero value otherwise.
 func (o *ReplicationItems) GetIdentityProviders() ReplicationReportItem {
-	if o == nil || o.IdentityProviders == nil {
+	if o == nil || IsNil(o.IdentityProviders) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -287,7 +290,7 @@ func (o *ReplicationItems) GetIdentityProviders() ReplicationReportItem {
 // GetIdentityProvidersOk returns a tuple with the IdentityProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetIdentityProvidersOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.IdentityProviders == nil {
+	if o == nil || IsNil(o.IdentityProviders) {
 		return nil, false
 	}
 	return o.IdentityProviders, true
@@ -295,7 +298,7 @@ func (o *ReplicationItems) GetIdentityProvidersOk() (*ReplicationReportItem, boo
 
 // HasIdentityProviders returns a boolean if a field has been set.
 func (o *ReplicationItems) HasIdentityProviders() bool {
-	if o != nil && o.IdentityProviders != nil {
+	if o != nil && !IsNil(o.IdentityProviders) {
 		return true
 	}
 
@@ -309,7 +312,7 @@ func (o *ReplicationItems) SetIdentityProviders(v ReplicationReportItem) {
 
 // GetIpPools returns the IpPools field value if set, zero value otherwise.
 func (o *ReplicationItems) GetIpPools() ReplicationReportItem {
-	if o == nil || o.IpPools == nil {
+	if o == nil || IsNil(o.IpPools) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -319,7 +322,7 @@ func (o *ReplicationItems) GetIpPools() ReplicationReportItem {
 // GetIpPoolsOk returns a tuple with the IpPools field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetIpPoolsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.IpPools == nil {
+	if o == nil || IsNil(o.IpPools) {
 		return nil, false
 	}
 	return o.IpPools, true
@@ -327,7 +330,7 @@ func (o *ReplicationItems) GetIpPoolsOk() (*ReplicationReportItem, bool) {
 
 // HasIpPools returns a boolean if a field has been set.
 func (o *ReplicationItems) HasIpPools() bool {
-	if o != nil && o.IpPools != nil {
+	if o != nil && !IsNil(o.IpPools) {
 		return true
 	}
 
@@ -341,7 +344,7 @@ func (o *ReplicationItems) SetIpPools(v ReplicationReportItem) {
 
 // GetMfaProviders returns the MfaProviders field value if set, zero value otherwise.
 func (o *ReplicationItems) GetMfaProviders() ReplicationReportItem {
-	if o == nil || o.MfaProviders == nil {
+	if o == nil || IsNil(o.MfaProviders) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -351,7 +354,7 @@ func (o *ReplicationItems) GetMfaProviders() ReplicationReportItem {
 // GetMfaProvidersOk returns a tuple with the MfaProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetMfaProvidersOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.MfaProviders == nil {
+	if o == nil || IsNil(o.MfaProviders) {
 		return nil, false
 	}
 	return o.MfaProviders, true
@@ -359,7 +362,7 @@ func (o *ReplicationItems) GetMfaProvidersOk() (*ReplicationReportItem, bool) {
 
 // HasMfaProviders returns a boolean if a field has been set.
 func (o *ReplicationItems) HasMfaProviders() bool {
-	if o != nil && o.MfaProviders != nil {
+	if o != nil && !IsNil(o.MfaProviders) {
 		return true
 	}
 
@@ -373,7 +376,7 @@ func (o *ReplicationItems) SetMfaProviders(v ReplicationReportItem) {
 
 // GetPolicies returns the Policies field value if set, zero value otherwise.
 func (o *ReplicationItems) GetPolicies() ReplicationReportItem {
-	if o == nil || o.Policies == nil {
+	if o == nil || IsNil(o.Policies) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -383,7 +386,7 @@ func (o *ReplicationItems) GetPolicies() ReplicationReportItem {
 // GetPoliciesOk returns a tuple with the Policies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetPoliciesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Policies == nil {
+	if o == nil || IsNil(o.Policies) {
 		return nil, false
 	}
 	return o.Policies, true
@@ -391,7 +394,7 @@ func (o *ReplicationItems) GetPoliciesOk() (*ReplicationReportItem, bool) {
 
 // HasPolicies returns a boolean if a field has been set.
 func (o *ReplicationItems) HasPolicies() bool {
-	if o != nil && o.Policies != nil {
+	if o != nil && !IsNil(o.Policies) {
 		return true
 	}
 
@@ -405,7 +408,7 @@ func (o *ReplicationItems) SetPolicies(v ReplicationReportItem) {
 
 // GetRingfenceRules returns the RingfenceRules field value if set, zero value otherwise.
 func (o *ReplicationItems) GetRingfenceRules() ReplicationReportItem {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -415,7 +418,7 @@ func (o *ReplicationItems) GetRingfenceRules() ReplicationReportItem {
 // GetRingfenceRulesOk returns a tuple with the RingfenceRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetRingfenceRulesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		return nil, false
 	}
 	return o.RingfenceRules, true
@@ -423,7 +426,7 @@ func (o *ReplicationItems) GetRingfenceRulesOk() (*ReplicationReportItem, bool) 
 
 // HasRingfenceRules returns a boolean if a field has been set.
 func (o *ReplicationItems) HasRingfenceRules() bool {
-	if o != nil && o.RingfenceRules != nil {
+	if o != nil && !IsNil(o.RingfenceRules) {
 		return true
 	}
 
@@ -437,7 +440,7 @@ func (o *ReplicationItems) SetRingfenceRules(v ReplicationReportItem) {
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ReplicationItems) GetSites() ReplicationReportItem {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -447,7 +450,7 @@ func (o *ReplicationItems) GetSites() ReplicationReportItem {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetSitesOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -455,7 +458,7 @@ func (o *ReplicationItems) GetSitesOk() (*ReplicationReportItem, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *ReplicationItems) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -469,7 +472,7 @@ func (o *ReplicationItems) SetSites(v ReplicationReportItem) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ReplicationItems) GetTags() ReplicationReportItem {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -479,7 +482,7 @@ func (o *ReplicationItems) GetTags() ReplicationReportItem {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetTagsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -487,7 +490,7 @@ func (o *ReplicationItems) GetTagsOk() (*ReplicationReportItem, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ReplicationItems) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -501,7 +504,7 @@ func (o *ReplicationItems) SetTags(v ReplicationReportItem) {
 
 // GetUserClaimScripts returns the UserClaimScripts field value if set, zero value otherwise.
 func (o *ReplicationItems) GetUserClaimScripts() ReplicationReportItem {
-	if o == nil || o.UserClaimScripts == nil {
+	if o == nil || IsNil(o.UserClaimScripts) {
 		var ret ReplicationReportItem
 		return ret
 	}
@@ -511,7 +514,7 @@ func (o *ReplicationItems) GetUserClaimScripts() ReplicationReportItem {
 // GetUserClaimScriptsOk returns a tuple with the UserClaimScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationItems) GetUserClaimScriptsOk() (*ReplicationReportItem, bool) {
-	if o == nil || o.UserClaimScripts == nil {
+	if o == nil || IsNil(o.UserClaimScripts) {
 		return nil, false
 	}
 	return o.UserClaimScripts, true
@@ -519,7 +522,7 @@ func (o *ReplicationItems) GetUserClaimScriptsOk() (*ReplicationReportItem, bool
 
 // HasUserClaimScripts returns a boolean if a field has been set.
 func (o *ReplicationItems) HasUserClaimScripts() bool {
-	if o != nil && o.UserClaimScripts != nil {
+	if o != nil && !IsNil(o.UserClaimScripts) {
 		return true
 	}
 
@@ -532,53 +535,61 @@ func (o *ReplicationItems) SetUserClaimScripts(v ReplicationReportItem) {
 }
 
 func (o ReplicationItems) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AdministrativeRoles != nil {
-		toSerialize["administrativeRoles"] = o.AdministrativeRoles
-	}
-	if o.ClientProfiles != nil {
-		toSerialize["clientProfiles"] = o.ClientProfiles
-	}
-	if o.Conditions != nil {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if o.CriteriaScripts != nil {
-		toSerialize["criteriaScripts"] = o.CriteriaScripts
-	}
-	if o.DeviceClaimScripts != nil {
-		toSerialize["deviceClaimScripts"] = o.DeviceClaimScripts
-	}
-	if o.EntitlementScripts != nil {
-		toSerialize["entitlementScripts"] = o.EntitlementScripts
-	}
-	if o.Entitlements != nil {
-		toSerialize["entitlements"] = o.Entitlements
-	}
-	if o.IdentityProviders != nil {
-		toSerialize["identityProviders"] = o.IdentityProviders
-	}
-	if o.IpPools != nil {
-		toSerialize["ipPools"] = o.IpPools
-	}
-	if o.MfaProviders != nil {
-		toSerialize["mfaProviders"] = o.MfaProviders
-	}
-	if o.Policies != nil {
-		toSerialize["policies"] = o.Policies
-	}
-	if o.RingfenceRules != nil {
-		toSerialize["ringfenceRules"] = o.RingfenceRules
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.UserClaimScripts != nil {
-		toSerialize["userClaimScripts"] = o.UserClaimScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationItems) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AdministrativeRoles) {
+		toSerialize["administrativeRoles"] = o.AdministrativeRoles
+	}
+	if !IsNil(o.ClientProfiles) {
+		toSerialize["clientProfiles"] = o.ClientProfiles
+	}
+	if !IsNil(o.Conditions) {
+		toSerialize["conditions"] = o.Conditions
+	}
+	if !IsNil(o.CriteriaScripts) {
+		toSerialize["criteriaScripts"] = o.CriteriaScripts
+	}
+	if !IsNil(o.DeviceClaimScripts) {
+		toSerialize["deviceClaimScripts"] = o.DeviceClaimScripts
+	}
+	if !IsNil(o.EntitlementScripts) {
+		toSerialize["entitlementScripts"] = o.EntitlementScripts
+	}
+	if !IsNil(o.Entitlements) {
+		toSerialize["entitlements"] = o.Entitlements
+	}
+	if !IsNil(o.IdentityProviders) {
+		toSerialize["identityProviders"] = o.IdentityProviders
+	}
+	if !IsNil(o.IpPools) {
+		toSerialize["ipPools"] = o.IpPools
+	}
+	if !IsNil(o.MfaProviders) {
+		toSerialize["mfaProviders"] = o.MfaProviders
+	}
+	if !IsNil(o.Policies) {
+		toSerialize["policies"] = o.Policies
+	}
+	if !IsNil(o.RingfenceRules) {
+		toSerialize["ringfenceRules"] = o.RingfenceRules
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.UserClaimScripts) {
+		toSerialize["userClaimScripts"] = o.UserClaimScripts
+	}
+	return toSerialize, nil
 }
 
 type NullableReplicationItems struct {

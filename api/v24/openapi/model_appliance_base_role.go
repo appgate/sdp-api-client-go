@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceBaseRole type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceBaseRole{}
+
 // ApplianceBaseRole struct for ApplianceBaseRole
 type ApplianceBaseRole struct {
 	// Status of the role.
@@ -44,7 +47,7 @@ func NewApplianceBaseRoleWithDefaults() *ApplianceBaseRole {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ApplianceBaseRole) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ApplianceBaseRole) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceBaseRole) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -62,7 +65,7 @@ func (o *ApplianceBaseRole) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ApplianceBaseRole) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ApplianceBaseRole) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *ApplianceBaseRole) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ApplianceBaseRole) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceBaseRole) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -94,7 +97,7 @@ func (o *ApplianceBaseRole) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *ApplianceBaseRole) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ApplianceBaseRole) SetDetails(v string) {
 
 // GetLogDestination returns the LogDestination field value if set, zero value otherwise.
 func (o *ApplianceBaseRole) GetLogDestination() string {
-	if o == nil || o.LogDestination == nil {
+	if o == nil || IsNil(o.LogDestination) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ApplianceBaseRole) GetLogDestination() string {
 // GetLogDestinationOk returns a tuple with the LogDestination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceBaseRole) GetLogDestinationOk() (*string, bool) {
-	if o == nil || o.LogDestination == nil {
+	if o == nil || IsNil(o.LogDestination) {
 		return nil, false
 	}
 	return o.LogDestination, true
@@ -126,7 +129,7 @@ func (o *ApplianceBaseRole) GetLogDestinationOk() (*string, bool) {
 
 // HasLogDestination returns a boolean if a field has been set.
 func (o *ApplianceBaseRole) HasLogDestination() bool {
-	if o != nil && o.LogDestination != nil {
+	if o != nil && !IsNil(o.LogDestination) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ApplianceBaseRole) SetLogDestination(v string) {
 }
 
 func (o ApplianceBaseRole) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.LogDestination != nil {
-		toSerialize["logDestination"] = o.LogDestination
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceBaseRole) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.LogDestination) {
+		toSerialize["logDestination"] = o.LogDestination
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceBaseRole struct {

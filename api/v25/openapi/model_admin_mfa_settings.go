@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdminMfaSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMfaSettings{}
+
 // AdminMfaSettings struct for AdminMfaSettings
 type AdminMfaSettings struct {
 	// The MFA provider ID to use during Multi-Factor Authentication. If null, Admin MFA is disabled.
@@ -42,7 +45,7 @@ func NewAdminMfaSettingsWithDefaults() *AdminMfaSettings {
 
 // GetProviderId returns the ProviderId field value if set, zero value otherwise.
 func (o *AdminMfaSettings) GetProviderId() string {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *AdminMfaSettings) GetProviderId() string {
 // GetProviderIdOk returns a tuple with the ProviderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMfaSettings) GetProviderIdOk() (*string, bool) {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		return nil, false
 	}
 	return o.ProviderId, true
@@ -60,7 +63,7 @@ func (o *AdminMfaSettings) GetProviderIdOk() (*string, bool) {
 
 // HasProviderId returns a boolean if a field has been set.
 func (o *AdminMfaSettings) HasProviderId() bool {
-	if o != nil && o.ProviderId != nil {
+	if o != nil && !IsNil(o.ProviderId) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *AdminMfaSettings) SetProviderId(v string) {
 
 // GetExemptedUsers returns the ExemptedUsers field value if set, zero value otherwise.
 func (o *AdminMfaSettings) GetExemptedUsers() []string {
-	if o == nil || o.ExemptedUsers == nil {
+	if o == nil || IsNil(o.ExemptedUsers) {
 		var ret []string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *AdminMfaSettings) GetExemptedUsers() []string {
 // GetExemptedUsersOk returns a tuple with the ExemptedUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMfaSettings) GetExemptedUsersOk() ([]string, bool) {
-	if o == nil || o.ExemptedUsers == nil {
+	if o == nil || IsNil(o.ExemptedUsers) {
 		return nil, false
 	}
 	return o.ExemptedUsers, true
@@ -92,7 +95,7 @@ func (o *AdminMfaSettings) GetExemptedUsersOk() ([]string, bool) {
 
 // HasExemptedUsers returns a boolean if a field has been set.
 func (o *AdminMfaSettings) HasExemptedUsers() bool {
-	if o != nil && o.ExemptedUsers != nil {
+	if o != nil && !IsNil(o.ExemptedUsers) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *AdminMfaSettings) SetExemptedUsers(v []string) {
 }
 
 func (o AdminMfaSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProviderId != nil {
-		toSerialize["providerId"] = o.ProviderId
-	}
-	if o.ExemptedUsers != nil {
-		toSerialize["exemptedUsers"] = o.ExemptedUsers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMfaSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProviderId) {
+		toSerialize["providerId"] = o.ProviderId
+	}
+	if !IsNil(o.ExemptedUsers) {
+		toSerialize["exemptedUsers"] = o.ExemptedUsers
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMfaSettings struct {

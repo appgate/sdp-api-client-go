@@ -24,20 +24,13 @@ import (
 type OidcIdentityProvidersApiService service
 
 type ApiOidcIdentityProvidersGetRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	query         *string
-	range_        *string
-	orderBy       *string
-	descending    *string
-	filterBy      *map[string]string
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersGetRequest) Authorization(authorization string) ApiOidcIdentityProvidersGetRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	query      *string
+	range_     *string
+	orderBy    *string
+	descending *string
+	filterBy   *map[string]string
 }
 
 // Query string to filter the result list. It&#39;s used for various fields depending on the object type. Send multiple Send multiple query parameters to make the queries more specific.
@@ -110,24 +103,21 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiOidcI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		localVarQueryParams.Add("query", parameterValueToString(*r.query, ""))
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		localVarQueryParams.Add("range", parameterValueToString(*r.range_, ""))
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		localVarQueryParams.Add("orderBy", parameterValueToString(*r.orderBy, ""))
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		localVarQueryParams.Add("descending", parameterValueToString(*r.descending, ""))
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		localVarQueryParams.Add("filterBy", parameterValueToString(*r.filterBy, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +136,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiOidcI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -226,15 +215,8 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiOidcI
 type ApiOidcIdentityProvidersIdAttributesPostRequest struct {
 	ctx                                      context.Context
 	ApiService                               *OidcIdentityProvidersApiService
-	authorization                            *string
 	id                                       string
 	identityProvidersIdAttributesPostRequest *IdentityProvidersIdAttributesPostRequest
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersIdAttributesPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdAttributesPostRequest {
-	r.authorization = &authorization
-	return r
 }
 
 // User details to get attributes for.
@@ -281,14 +263,11 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}/attributes"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -307,7 +286,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.identityProvidersIdAttributesPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -417,16 +395,9 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 }
 
 type ApiOidcIdentityProvidersIdDeleteRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	id            string
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersIdDeleteRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdDeleteRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	id         string
 }
 
 func (r ApiOidcIdentityProvidersIdDeleteRequest) Execute() (*http.Response, error) {
@@ -464,14 +435,11 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -490,7 +458,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -569,16 +536,9 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 }
 
 type ApiOidcIdentityProvidersIdGetRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	id            string
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersIdGetRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdGetRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	id         string
 }
 
 func (r ApiOidcIdentityProvidersIdGetRequest) Execute() (*OidcProvider, *http.Response, error) {
@@ -619,14 +579,11 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiOid
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -645,7 +602,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiOid
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -733,17 +689,10 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiOid
 }
 
 type ApiOidcIdentityProvidersIdPutRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	id            string
-	body          *OidcProvider
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersIdPutRequest) Authorization(authorization string) ApiOidcIdentityProvidersIdPutRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	id         string
+	body       *OidcProvider
 }
 
 // Identity Provider object.
@@ -790,14 +739,11 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiOid
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -819,7 +765,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiOid
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -929,16 +874,9 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiOid
 }
 
 type ApiOidcIdentityProvidersPostRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	body          *OidcProvider
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersPostRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	body       *OidcProvider
 }
 
 // Identity Provider object.
@@ -987,9 +925,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiOidc
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -1011,7 +946,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiOidc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1121,16 +1055,9 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersPostExecute(r ApiOidc
 }
 
 type ApiOidcIdentityProvidersTestPostRequest struct {
-	ctx           context.Context
-	ApiService    *OidcIdentityProvidersApiService
-	authorization *string
-	body          *map[string]interface{}
-}
-
-// The Token from the LoginResponse.
-func (r ApiOidcIdentityProvidersTestPostRequest) Authorization(authorization string) ApiOidcIdentityProvidersTestPostRequest {
-	r.authorization = &authorization
-	return r
+	ctx        context.Context
+	ApiService *OidcIdentityProvidersApiService
+	body       *map[string]interface{}
 }
 
 // Identity Provider object.
@@ -1179,9 +1106,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.authorization == nil {
-		return localVarReturnValue, nil, reportError("authorization is required and must be specified")
-	}
 	if r.body == nil {
 		return localVarReturnValue, nil, reportError("body is required and must be specified")
 	}
@@ -1203,7 +1127,6 @@ func (a *OidcIdentityProvidersApiService) IdentityProvidersTestPostExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IdentityProvidersIdAttributesPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersIdAttributesPostRequest{}
+
 // IdentityProvidersIdAttributesPostRequest struct for IdentityProvidersIdAttributesPostRequest
 type IdentityProvidersIdAttributesPostRequest struct {
 	// Required for Ldap, Radius and LocalDatabase providers.
@@ -44,7 +47,7 @@ func NewIdentityProvidersIdAttributesPostRequestWithDefaults() *IdentityProvider
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -62,7 +65,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetUsernameOk() (*string, boo
 
 // HasUsername returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -94,7 +97,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetPasswordOk() (*string, boo
 
 // HasPassword returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetPassword(v string) {
 
 // GetSamlResponse returns the SamlResponse field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponse() string {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponse() string {
 // GetSamlResponseOk returns a tuple with the SamlResponse field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponseOk() (*string, bool) {
-	if o == nil || o.SamlResponse == nil {
+	if o == nil || IsNil(o.SamlResponse) {
 		return nil, false
 	}
 	return o.SamlResponse, true
@@ -126,7 +129,7 @@ func (o *IdentityProvidersIdAttributesPostRequest) GetSamlResponseOk() (*string,
 
 // HasSamlResponse returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPostRequest) HasSamlResponse() bool {
-	if o != nil && o.SamlResponse != nil {
+	if o != nil && !IsNil(o.SamlResponse) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *IdentityProvidersIdAttributesPostRequest) SetSamlResponse(v string) {
 }
 
 func (o IdentityProvidersIdAttributesPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.SamlResponse != nil {
-		toSerialize["samlResponse"] = o.SamlResponse
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersIdAttributesPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.SamlResponse) {
+		toSerialize["samlResponse"] = o.SamlResponse
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersIdAttributesPostRequest struct {

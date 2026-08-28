@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// MFAProvidersApiService MFAProvidersApi service
-type MFAProvidersApiService service
+// MFAProvidersAPIService MFAProvidersAPI service
+type MFAProvidersAPIService service
 
 type ApiMfaProvidersBulkUpsertPostRequest struct {
 	ctx                               context.Context
-	ApiService                        *MFAProvidersApiService
+	ApiService                        *MFAProvidersAPIService
 	mfaProvidersBulkUpsertPostRequest *MfaProvidersBulkUpsertPostRequest
 }
 
@@ -47,7 +47,7 @@ Create or update multiple mfa providers in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMfaProvidersBulkUpsertPostRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPost(ctx context.Context) ApiMfaProvidersBulkUpsertPostRequest {
+func (a *MFAProvidersAPIService) MfaProvidersBulkUpsertPost(ctx context.Context) ApiMfaProvidersBulkUpsertPostRequest {
 	return ApiMfaProvidersBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -57,7 +57,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPost(ctx context.Context)
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvidersBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvidersBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -65,7 +65,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -108,9 +108,9 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -127,6 +127,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -137,6 +138,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -147,16 +149,18 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -167,6 +171,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -186,7 +191,7 @@ func (a *MFAProvidersApiService) MfaProvidersBulkUpsertPostExecute(r ApiMfaProvi
 
 type ApiMfaProvidersGetRequest struct {
 	ctx        context.Context
-	ApiService *MFAProvidersApiService
+	ApiService *MFAProvidersAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -236,7 +241,7 @@ List all MFA Providers visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMfaProvidersGetRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersGet(ctx context.Context) ApiMfaProvidersGetRequest {
+func (a *MFAProvidersAPIService) MfaProvidersGet(ctx context.Context) ApiMfaProvidersGetRequest {
 	return ApiMfaProvidersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -246,7 +251,7 @@ func (a *MFAProvidersApiService) MfaProvidersGet(ctx context.Context) ApiMfaProv
 // Execute executes the request
 //
 //	@return MfaProviderList
-func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequest) (*MfaProviderList, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequest) (*MfaProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -254,7 +259,7 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 		localVarReturnValue *MfaProviderList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,19 +271,19 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -307,9 +312,9 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -326,6 +331,7 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,16 +342,18 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -356,6 +364,7 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -375,7 +384,7 @@ func (a *MFAProvidersApiService) MfaProvidersGetExecute(r ApiMfaProvidersGetRequ
 
 type ApiMfaProvidersIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *MFAProvidersApiService
+	ApiService *MFAProvidersAPIService
 	id         string
 }
 
@@ -392,7 +401,7 @@ Delete a specific MFA Provider.
 	@param id ID of the object.
 	@return ApiMfaProvidersIdDeleteRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersIdDelete(ctx context.Context, id string) ApiMfaProvidersIdDeleteRequest {
+func (a *MFAProvidersAPIService) MfaProvidersIdDelete(ctx context.Context, id string) ApiMfaProvidersIdDeleteRequest {
 	return ApiMfaProvidersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -401,20 +410,20 @@ func (a *MFAProvidersApiService) MfaProvidersIdDelete(ctx context.Context, id st
 }
 
 // Execute executes the request
-func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersIdDeleteRequest) (*http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/mfa-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,9 +456,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -466,6 +475,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -476,6 +486,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -486,16 +497,18 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -506,6 +519,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -516,7 +530,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdDeleteExecute(r ApiMfaProvidersId
 
 type ApiMfaProvidersIdGetRequest struct {
 	ctx        context.Context
-	ApiService *MFAProvidersApiService
+	ApiService *MFAProvidersAPIService
 	id         string
 }
 
@@ -533,7 +547,7 @@ Get a specific MFA Provider.
 	@param id ID of the object.
 	@return ApiMfaProvidersIdGetRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersIdGet(ctx context.Context, id string) ApiMfaProvidersIdGetRequest {
+func (a *MFAProvidersAPIService) MfaProvidersIdGet(ctx context.Context, id string) ApiMfaProvidersIdGetRequest {
 	return ApiMfaProvidersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -544,7 +558,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGet(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return MfaProvider
-func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGetRequest) (*MfaProvider, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGetRequest) (*MfaProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -552,13 +566,13 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 		localVarReturnValue *MfaProvider
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/mfa-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -591,9 +605,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -610,6 +624,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -620,6 +635,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -630,16 +646,18 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -650,6 +668,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -669,7 +688,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdGetExecute(r ApiMfaProvidersIdGet
 
 type ApiMfaProvidersIdPutRequest struct {
 	ctx         context.Context
-	ApiService  *MFAProvidersApiService
+	ApiService  *MFAProvidersAPIService
 	id          string
 	mfaProvider *MfaProvider
 }
@@ -693,7 +712,7 @@ Update an existing MFA Provider.
 	@param id ID of the object.
 	@return ApiMfaProvidersIdPutRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersIdPut(ctx context.Context, id string) ApiMfaProvidersIdPutRequest {
+func (a *MFAProvidersAPIService) MfaProvidersIdPut(ctx context.Context, id string) ApiMfaProvidersIdPutRequest {
 	return ApiMfaProvidersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -704,7 +723,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPut(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return MfaProvider
-func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPutRequest) (*MfaProvider, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPutRequest) (*MfaProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -712,13 +731,13 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 		localVarReturnValue *MfaProvider
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/mfa-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -756,9 +775,9 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -775,6 +794,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -785,6 +805,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -795,6 +816,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,16 +827,18 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -825,6 +849,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -854,7 +880,7 @@ func (a *MFAProvidersApiService) MfaProvidersIdPutExecute(r ApiMfaProvidersIdPut
 
 type ApiMfaProvidersPostRequest struct {
 	ctx         context.Context
-	ApiService  *MFAProvidersApiService
+	ApiService  *MFAProvidersAPIService
 	mfaProvider *MfaProvider
 }
 
@@ -876,7 +902,7 @@ Create a new MFA Provider.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMfaProvidersPostRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersPost(ctx context.Context) ApiMfaProvidersPostRequest {
+func (a *MFAProvidersAPIService) MfaProvidersPost(ctx context.Context) ApiMfaProvidersPostRequest {
 	return ApiMfaProvidersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -886,7 +912,7 @@ func (a *MFAProvidersApiService) MfaProvidersPost(ctx context.Context) ApiMfaPro
 // Execute executes the request
 //
 //	@return MfaProvider
-func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRequest) (*MfaProvider, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersPostExecute(r ApiMfaProvidersPostRequest) (*MfaProvider, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -894,7 +920,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 		localVarReturnValue *MfaProvider
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -937,9 +963,9 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -956,6 +982,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -966,6 +993,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -976,16 +1004,18 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -996,6 +1026,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1006,6 +1037,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1016,6 +1048,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1035,7 +1068,7 @@ func (a *MFAProvidersApiService) MfaProvidersPostExecute(r ApiMfaProvidersPostRe
 
 type ApiMfaProvidersTestPostRequest struct {
 	ctx         context.Context
-	ApiService  *MFAProvidersApiService
+	ApiService  *MFAProvidersAPIService
 	mfaProvider *MfaProvider
 }
 
@@ -1057,7 +1090,7 @@ Test connection for the given MFA Provider JSON.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiMfaProvidersTestPostRequest
 */
-func (a *MFAProvidersApiService) MfaProvidersTestPost(ctx context.Context) ApiMfaProvidersTestPostRequest {
+func (a *MFAProvidersAPIService) MfaProvidersTestPost(ctx context.Context) ApiMfaProvidersTestPostRequest {
 	return ApiMfaProvidersTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1067,7 +1100,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPost(ctx context.Context) ApiMf
 // Execute executes the request
 //
 //	@return IdentityProvidersTestPost200Response
-func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
+func (a *MFAProvidersAPIService) MfaProvidersTestPostExecute(r ApiMfaProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1075,7 +1108,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 		localVarReturnValue *IdentityProvidersTestPost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersApiService.MfaProvidersTestPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MFAProvidersAPIService.MfaProvidersTestPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1118,9 +1151,9 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1137,6 +1170,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1147,6 +1181,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1157,16 +1192,18 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1177,6 +1214,7 @@ func (a *MFAProvidersApiService) MfaProvidersTestPostExecute(r ApiMfaProvidersTe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

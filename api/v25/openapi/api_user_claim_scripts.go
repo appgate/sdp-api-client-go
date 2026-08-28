@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// UserClaimScriptsApiService UserClaimScriptsApi service
-type UserClaimScriptsApiService service
+// UserClaimScriptsAPIService UserClaimScriptsAPI service
+type UserClaimScriptsAPIService service
 
 type ApiUserScriptsGetRequest struct {
 	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
+	ApiService *UserClaimScriptsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all User Claim Scripts visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiUserScriptsGetRequest
 */
-func (a *UserClaimScriptsApiService) UserScriptsGet(ctx context.Context) ApiUserScriptsGetRequest {
+func (a *UserClaimScriptsAPIService) UserScriptsGet(ctx context.Context) ApiUserScriptsGetRequest {
 	return ApiUserScriptsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGet(ctx context.Context) ApiUser
 // Execute executes the request
 //
 //	@return UserScriptList
-func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRequest) (*UserScriptList, *http.Response, error) {
+func (a *UserClaimScriptsAPIService) UserScriptsGetExecute(r ApiUserScriptsGetRequest) (*UserScriptList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 		localVarReturnValue *UserScriptList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsApiService.UserScriptsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsAPIService.UserScriptsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,16 +176,18 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *UserClaimScriptsApiService) UserScriptsGetExecute(r ApiUserScriptsGetRe
 
 type ApiUserScriptsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
+	ApiService *UserClaimScriptsAPIService
 	id         string
 }
 
@@ -231,7 +235,7 @@ Delete a specific User Claim Script.
 	@param id ID of the object.
 	@return ApiUserScriptsIdDeleteRequest
 */
-func (a *UserClaimScriptsApiService) UserScriptsIdDelete(ctx context.Context, id string) ApiUserScriptsIdDeleteRequest {
+func (a *UserClaimScriptsAPIService) UserScriptsIdDelete(ctx context.Context, id string) ApiUserScriptsIdDeleteRequest {
 	return ApiUserScriptsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -240,20 +244,20 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDelete(ctx context.Context, id
 }
 
 // Execute executes the request
-func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScriptsIdDeleteRequest) (*http.Response, error) {
+func (a *UserClaimScriptsAPIService) UserScriptsIdDeleteExecute(r ApiUserScriptsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsApiService.UserScriptsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsAPIService.UserScriptsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/user-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -286,9 +290,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -305,6 +309,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -315,6 +320,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -325,16 +331,18 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -345,6 +353,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -355,7 +364,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdDeleteExecute(r ApiUserScripts
 
 type ApiUserScriptsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
+	ApiService *UserClaimScriptsAPIService
 	id         string
 }
 
@@ -372,7 +381,7 @@ Get a specific User Claim Script.
 	@param id ID of the object.
 	@return ApiUserScriptsIdGetRequest
 */
-func (a *UserClaimScriptsApiService) UserScriptsIdGet(ctx context.Context, id string) ApiUserScriptsIdGetRequest {
+func (a *UserClaimScriptsAPIService) UserScriptsIdGet(ctx context.Context, id string) ApiUserScriptsIdGetRequest {
 	return ApiUserScriptsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -383,7 +392,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGet(ctx context.Context, id st
 // Execute executes the request
 //
 //	@return UserScript
-func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdGetRequest) (*UserScript, *http.Response, error) {
+func (a *UserClaimScriptsAPIService) UserScriptsIdGetExecute(r ApiUserScriptsIdGetRequest) (*UserScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -391,13 +400,13 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 		localVarReturnValue *UserScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsApiService.UserScriptsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsAPIService.UserScriptsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/user-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -430,9 +439,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -449,6 +458,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -459,6 +469,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -469,16 +480,18 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -489,6 +502,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -508,7 +522,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdGetExecute(r ApiUserScriptsIdG
 
 type ApiUserScriptsIdPutRequest struct {
 	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
+	ApiService *UserClaimScriptsAPIService
 	id         string
 	userScript *UserScript
 }
@@ -532,7 +546,7 @@ Update an existing User Claim Script.
 	@param id ID of the object.
 	@return ApiUserScriptsIdPutRequest
 */
-func (a *UserClaimScriptsApiService) UserScriptsIdPut(ctx context.Context, id string) ApiUserScriptsIdPutRequest {
+func (a *UserClaimScriptsAPIService) UserScriptsIdPut(ctx context.Context, id string) ApiUserScriptsIdPutRequest {
 	return ApiUserScriptsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -543,7 +557,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPut(ctx context.Context, id st
 // Execute executes the request
 //
 //	@return UserScript
-func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdPutRequest) (*UserScript, *http.Response, error) {
+func (a *UserClaimScriptsAPIService) UserScriptsIdPutExecute(r ApiUserScriptsIdPutRequest) (*UserScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -551,13 +565,13 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 		localVarReturnValue *UserScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsApiService.UserScriptsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsAPIService.UserScriptsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/user-scripts/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -595,9 +609,9 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -614,6 +628,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -624,6 +639,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -634,6 +650,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -644,16 +661,18 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -664,6 +683,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -674,6 +694,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -693,7 +714,7 @@ func (a *UserClaimScriptsApiService) UserScriptsIdPutExecute(r ApiUserScriptsIdP
 
 type ApiUserScriptsPostRequest struct {
 	ctx        context.Context
-	ApiService *UserClaimScriptsApiService
+	ApiService *UserClaimScriptsAPIService
 	userScript *UserScript
 }
 
@@ -715,7 +736,7 @@ Create a new User Claim Script.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiUserScriptsPostRequest
 */
-func (a *UserClaimScriptsApiService) UserScriptsPost(ctx context.Context) ApiUserScriptsPostRequest {
+func (a *UserClaimScriptsAPIService) UserScriptsPost(ctx context.Context) ApiUserScriptsPostRequest {
 	return ApiUserScriptsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -725,7 +746,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPost(ctx context.Context) ApiUse
 // Execute executes the request
 //
 //	@return UserScript
-func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPostRequest) (*UserScript, *http.Response, error) {
+func (a *UserClaimScriptsAPIService) UserScriptsPostExecute(r ApiUserScriptsPostRequest) (*UserScript, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -733,7 +754,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 		localVarReturnValue *UserScript
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsApiService.UserScriptsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserClaimScriptsAPIService.UserScriptsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -776,9 +797,9 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -795,6 +816,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,16 +838,18 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -845,6 +871,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -855,6 +882,7 @@ func (a *UserClaimScriptsApiService) UserScriptsPostExecute(r ApiUserScriptsPost
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

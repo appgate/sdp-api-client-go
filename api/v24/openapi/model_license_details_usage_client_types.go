@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetailsUsageClientTypes type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetailsUsageClientTypes{}
+
 // LicenseDetailsUsageClientTypes Counts of the current client types in the system at present.
 type LicenseDetailsUsageClientTypes struct {
 	// The amount of full client types in the system at present.
@@ -58,7 +61,7 @@ func NewLicenseDetailsUsageClientTypesWithDefaults() *LicenseDetailsUsageClientT
 
 // GetFull returns the Full field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetFull() float32 {
-	if o == nil || o.Full == nil {
+	if o == nil || IsNil(o.Full) {
 		var ret float32
 		return ret
 	}
@@ -68,7 +71,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFull() float32 {
 // GetFullOk returns a tuple with the Full field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetFullOk() (*float32, bool) {
-	if o == nil || o.Full == nil {
+	if o == nil || IsNil(o.Full) {
 		return nil, false
 	}
 	return o.Full, true
@@ -76,7 +79,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFullOk() (*float32, bool) {
 
 // HasFull returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasFull() bool {
-	if o != nil && o.Full != nil {
+	if o != nil && !IsNil(o.Full) {
 		return true
 	}
 
@@ -90,7 +93,7 @@ func (o *LicenseDetailsUsageClientTypes) SetFull(v float32) {
 
 // GetFullMulti returns the FullMulti field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetFullMulti() float32 {
-	if o == nil || o.FullMulti == nil {
+	if o == nil || IsNil(o.FullMulti) {
 		var ret float32
 		return ret
 	}
@@ -100,7 +103,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFullMulti() float32 {
 // GetFullMultiOk returns a tuple with the FullMulti field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetFullMultiOk() (*float32, bool) {
-	if o == nil || o.FullMulti == nil {
+	if o == nil || IsNil(o.FullMulti) {
 		return nil, false
 	}
 	return o.FullMulti, true
@@ -108,7 +111,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFullMultiOk() (*float32, bool) {
 
 // HasFullMulti returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasFullMulti() bool {
-	if o != nil && o.FullMulti != nil {
+	if o != nil && !IsNil(o.FullMulti) {
 		return true
 	}
 
@@ -122,7 +125,7 @@ func (o *LicenseDetailsUsageClientTypes) SetFullMulti(v float32) {
 
 // GetFullAlwaysOn returns the FullAlwaysOn field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetFullAlwaysOn() float32 {
-	if o == nil || o.FullAlwaysOn == nil {
+	if o == nil || IsNil(o.FullAlwaysOn) {
 		var ret float32
 		return ret
 	}
@@ -132,7 +135,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFullAlwaysOn() float32 {
 // GetFullAlwaysOnOk returns a tuple with the FullAlwaysOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetFullAlwaysOnOk() (*float32, bool) {
-	if o == nil || o.FullAlwaysOn == nil {
+	if o == nil || IsNil(o.FullAlwaysOn) {
 		return nil, false
 	}
 	return o.FullAlwaysOn, true
@@ -140,7 +143,7 @@ func (o *LicenseDetailsUsageClientTypes) GetFullAlwaysOnOk() (*float32, bool) {
 
 // HasFullAlwaysOn returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasFullAlwaysOn() bool {
-	if o != nil && o.FullAlwaysOn != nil {
+	if o != nil && !IsNil(o.FullAlwaysOn) {
 		return true
 	}
 
@@ -154,7 +157,7 @@ func (o *LicenseDetailsUsageClientTypes) SetFullAlwaysOn(v float32) {
 
 // GetLite returns the Lite field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetLite() float32 {
-	if o == nil || o.Lite == nil {
+	if o == nil || IsNil(o.Lite) {
 		var ret float32
 		return ret
 	}
@@ -164,7 +167,7 @@ func (o *LicenseDetailsUsageClientTypes) GetLite() float32 {
 // GetLiteOk returns a tuple with the Lite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetLiteOk() (*float32, bool) {
-	if o == nil || o.Lite == nil {
+	if o == nil || IsNil(o.Lite) {
 		return nil, false
 	}
 	return o.Lite, true
@@ -172,7 +175,7 @@ func (o *LicenseDetailsUsageClientTypes) GetLiteOk() (*float32, bool) {
 
 // HasLite returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasLite() bool {
-	if o != nil && o.Lite != nil {
+	if o != nil && !IsNil(o.Lite) {
 		return true
 	}
 
@@ -186,7 +189,7 @@ func (o *LicenseDetailsUsageClientTypes) SetLite(v float32) {
 
 // GetHeadless returns the Headless field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetHeadless() float32 {
-	if o == nil || o.Headless == nil {
+	if o == nil || IsNil(o.Headless) {
 		var ret float32
 		return ret
 	}
@@ -196,7 +199,7 @@ func (o *LicenseDetailsUsageClientTypes) GetHeadless() float32 {
 // GetHeadlessOk returns a tuple with the Headless field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetHeadlessOk() (*float32, bool) {
-	if o == nil || o.Headless == nil {
+	if o == nil || IsNil(o.Headless) {
 		return nil, false
 	}
 	return o.Headless, true
@@ -204,7 +207,7 @@ func (o *LicenseDetailsUsageClientTypes) GetHeadlessOk() (*float32, bool) {
 
 // HasHeadless returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasHeadless() bool {
-	if o != nil && o.Headless != nil {
+	if o != nil && !IsNil(o.Headless) {
 		return true
 	}
 
@@ -218,7 +221,7 @@ func (o *LicenseDetailsUsageClientTypes) SetHeadless(v float32) {
 
 // GetHeadlessAlwaysOn returns the HeadlessAlwaysOn field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetHeadlessAlwaysOn() float32 {
-	if o == nil || o.HeadlessAlwaysOn == nil {
+	if o == nil || IsNil(o.HeadlessAlwaysOn) {
 		var ret float32
 		return ret
 	}
@@ -228,7 +231,7 @@ func (o *LicenseDetailsUsageClientTypes) GetHeadlessAlwaysOn() float32 {
 // GetHeadlessAlwaysOnOk returns a tuple with the HeadlessAlwaysOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetHeadlessAlwaysOnOk() (*float32, bool) {
-	if o == nil || o.HeadlessAlwaysOn == nil {
+	if o == nil || IsNil(o.HeadlessAlwaysOn) {
 		return nil, false
 	}
 	return o.HeadlessAlwaysOn, true
@@ -236,7 +239,7 @@ func (o *LicenseDetailsUsageClientTypes) GetHeadlessAlwaysOnOk() (*float32, bool
 
 // HasHeadlessAlwaysOn returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasHeadlessAlwaysOn() bool {
-	if o != nil && o.HeadlessAlwaysOn != nil {
+	if o != nil && !IsNil(o.HeadlessAlwaysOn) {
 		return true
 	}
 
@@ -250,7 +253,7 @@ func (o *LicenseDetailsUsageClientTypes) SetHeadlessAlwaysOn(v float32) {
 
 // GetConnector returns the Connector field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetConnector() float32 {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		var ret float32
 		return ret
 	}
@@ -260,7 +263,7 @@ func (o *LicenseDetailsUsageClientTypes) GetConnector() float32 {
 // GetConnectorOk returns a tuple with the Connector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetConnectorOk() (*float32, bool) {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		return nil, false
 	}
 	return o.Connector, true
@@ -268,7 +271,7 @@ func (o *LicenseDetailsUsageClientTypes) GetConnectorOk() (*float32, bool) {
 
 // HasConnector returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasConnector() bool {
-	if o != nil && o.Connector != nil {
+	if o != nil && !IsNil(o.Connector) {
 		return true
 	}
 
@@ -282,7 +285,7 @@ func (o *LicenseDetailsUsageClientTypes) SetConnector(v float32) {
 
 // GetSso returns the Sso field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetSso() float32 {
-	if o == nil || o.Sso == nil {
+	if o == nil || IsNil(o.Sso) {
 		var ret float32
 		return ret
 	}
@@ -292,7 +295,7 @@ func (o *LicenseDetailsUsageClientTypes) GetSso() float32 {
 // GetSsoOk returns a tuple with the Sso field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetSsoOk() (*float32, bool) {
-	if o == nil || o.Sso == nil {
+	if o == nil || IsNil(o.Sso) {
 		return nil, false
 	}
 	return o.Sso, true
@@ -300,7 +303,7 @@ func (o *LicenseDetailsUsageClientTypes) GetSsoOk() (*float32, bool) {
 
 // HasSso returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasSso() bool {
-	if o != nil && o.Sso != nil {
+	if o != nil && !IsNil(o.Sso) {
 		return true
 	}
 
@@ -314,7 +317,7 @@ func (o *LicenseDetailsUsageClientTypes) SetSso(v float32) {
 
 // GetWeb returns the Web field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetWeb() float32 {
-	if o == nil || o.Web == nil {
+	if o == nil || IsNil(o.Web) {
 		var ret float32
 		return ret
 	}
@@ -324,7 +327,7 @@ func (o *LicenseDetailsUsageClientTypes) GetWeb() float32 {
 // GetWebOk returns a tuple with the Web field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetWebOk() (*float32, bool) {
-	if o == nil || o.Web == nil {
+	if o == nil || IsNil(o.Web) {
 		return nil, false
 	}
 	return o.Web, true
@@ -332,7 +335,7 @@ func (o *LicenseDetailsUsageClientTypes) GetWebOk() (*float32, bool) {
 
 // HasWeb returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasWeb() bool {
-	if o != nil && o.Web != nil {
+	if o != nil && !IsNil(o.Web) {
 		return true
 	}
 
@@ -346,7 +349,7 @@ func (o *LicenseDetailsUsageClientTypes) SetWeb(v float32) {
 
 // GetUnknown returns the Unknown field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageClientTypes) GetUnknown() float32 {
-	if o == nil || o.Unknown == nil {
+	if o == nil || IsNil(o.Unknown) {
 		var ret float32
 		return ret
 	}
@@ -356,7 +359,7 @@ func (o *LicenseDetailsUsageClientTypes) GetUnknown() float32 {
 // GetUnknownOk returns a tuple with the Unknown field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageClientTypes) GetUnknownOk() (*float32, bool) {
-	if o == nil || o.Unknown == nil {
+	if o == nil || IsNil(o.Unknown) {
 		return nil, false
 	}
 	return o.Unknown, true
@@ -364,7 +367,7 @@ func (o *LicenseDetailsUsageClientTypes) GetUnknownOk() (*float32, bool) {
 
 // HasUnknown returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageClientTypes) HasUnknown() bool {
-	if o != nil && o.Unknown != nil {
+	if o != nil && !IsNil(o.Unknown) {
 		return true
 	}
 
@@ -377,38 +380,46 @@ func (o *LicenseDetailsUsageClientTypes) SetUnknown(v float32) {
 }
 
 func (o LicenseDetailsUsageClientTypes) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Full != nil {
-		toSerialize["full"] = o.Full
-	}
-	if o.FullMulti != nil {
-		toSerialize["full_multi"] = o.FullMulti
-	}
-	if o.FullAlwaysOn != nil {
-		toSerialize["full_always_on"] = o.FullAlwaysOn
-	}
-	if o.Lite != nil {
-		toSerialize["lite"] = o.Lite
-	}
-	if o.Headless != nil {
-		toSerialize["headless"] = o.Headless
-	}
-	if o.HeadlessAlwaysOn != nil {
-		toSerialize["headless_always_on"] = o.HeadlessAlwaysOn
-	}
-	if o.Connector != nil {
-		toSerialize["connector"] = o.Connector
-	}
-	if o.Sso != nil {
-		toSerialize["sso"] = o.Sso
-	}
-	if o.Web != nil {
-		toSerialize["web"] = o.Web
-	}
-	if o.Unknown != nil {
-		toSerialize["unknown"] = o.Unknown
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetailsUsageClientTypes) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Full) {
+		toSerialize["full"] = o.Full
+	}
+	if !IsNil(o.FullMulti) {
+		toSerialize["full_multi"] = o.FullMulti
+	}
+	if !IsNil(o.FullAlwaysOn) {
+		toSerialize["full_always_on"] = o.FullAlwaysOn
+	}
+	if !IsNil(o.Lite) {
+		toSerialize["lite"] = o.Lite
+	}
+	if !IsNil(o.Headless) {
+		toSerialize["headless"] = o.Headless
+	}
+	if !IsNil(o.HeadlessAlwaysOn) {
+		toSerialize["headless_always_on"] = o.HeadlessAlwaysOn
+	}
+	if !IsNil(o.Connector) {
+		toSerialize["connector"] = o.Connector
+	}
+	if !IsNil(o.Sso) {
+		toSerialize["sso"] = o.Sso
+	}
+	if !IsNil(o.Web) {
+		toSerialize["web"] = o.Web
+	}
+	if !IsNil(o.Unknown) {
+		toSerialize["unknown"] = o.Unknown
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetailsUsageClientTypes struct {

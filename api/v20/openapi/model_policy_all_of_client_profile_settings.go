@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PolicyAllOfClientProfileSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfClientProfileSettings{}
+
 // PolicyAllOfClientProfileSettings Profiles that admins can apply to the Client.
 type PolicyAllOfClientProfileSettings struct {
 	// Enable Client Profile Settings for this Policy.
@@ -48,7 +51,7 @@ func NewPolicyAllOfClientProfileSettingsWithDefaults() *PolicyAllOfClientProfile
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *PolicyAllOfClientProfileSettings) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *PolicyAllOfClientProfileSettings) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientProfileSettings) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -66,7 +69,7 @@ func (o *PolicyAllOfClientProfileSettings) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *PolicyAllOfClientProfileSettings) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *PolicyAllOfClientProfileSettings) SetEnabled(v bool) {
 
 // GetProfiles returns the Profiles field value if set, zero value otherwise.
 func (o *PolicyAllOfClientProfileSettings) GetProfiles() []string {
-	if o == nil || o.Profiles == nil {
+	if o == nil || IsNil(o.Profiles) {
 		var ret []string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *PolicyAllOfClientProfileSettings) GetProfiles() []string {
 // GetProfilesOk returns a tuple with the Profiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientProfileSettings) GetProfilesOk() ([]string, bool) {
-	if o == nil || o.Profiles == nil {
+	if o == nil || IsNil(o.Profiles) {
 		return nil, false
 	}
 	return o.Profiles, true
@@ -98,7 +101,7 @@ func (o *PolicyAllOfClientProfileSettings) GetProfilesOk() ([]string, bool) {
 
 // HasProfiles returns a boolean if a field has been set.
 func (o *PolicyAllOfClientProfileSettings) HasProfiles() bool {
-	if o != nil && o.Profiles != nil {
+	if o != nil && !IsNil(o.Profiles) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *PolicyAllOfClientProfileSettings) SetProfiles(v []string) {
 
 // GetForce returns the Force field value if set, zero value otherwise.
 func (o *PolicyAllOfClientProfileSettings) GetForce() bool {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		var ret bool
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *PolicyAllOfClientProfileSettings) GetForce() bool {
 // GetForceOk returns a tuple with the Force field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientProfileSettings) GetForceOk() (*bool, bool) {
-	if o == nil || o.Force == nil {
+	if o == nil || IsNil(o.Force) {
 		return nil, false
 	}
 	return o.Force, true
@@ -130,7 +133,7 @@ func (o *PolicyAllOfClientProfileSettings) GetForceOk() (*bool, bool) {
 
 // HasForce returns a boolean if a field has been set.
 func (o *PolicyAllOfClientProfileSettings) HasForce() bool {
-	if o != nil && o.Force != nil {
+	if o != nil && !IsNil(o.Force) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *PolicyAllOfClientProfileSettings) SetForce(v bool) {
 }
 
 func (o PolicyAllOfClientProfileSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Profiles != nil {
-		toSerialize["profiles"] = o.Profiles
-	}
-	if o.Force != nil {
-		toSerialize["force"] = o.Force
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfClientProfileSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Profiles) {
+		toSerialize["profiles"] = o.Profiles
+	}
+	if !IsNil(o.Force) {
+		toSerialize["force"] = o.Force
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfClientProfileSettings struct {

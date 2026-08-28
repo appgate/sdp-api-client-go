@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ActiveDevicesApiService ActiveDevicesApi service
-type ActiveDevicesApiService service
+// ActiveDevicesAPIService ActiveDevicesAPI service
+type ActiveDevicesAPIService service
 
 type ApiTokenRecordsDnGetRequest struct {
 	ctx           context.Context
-	ApiService    *ActiveDevicesApiService
+	ApiService    *ActiveDevicesAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -84,7 +84,7 @@ Deprecated as of 6.3. Please use /on-boarded-devices APIs. List all Distinguishe
 
 Deprecated
 */
-func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx context.Context) ApiTokenRecordsDnGetRequest {
+func (a *ActiveDevicesAPIService) TokenRecordsDnGet(ctx context.Context) ApiTokenRecordsDnGetRequest {
 	return ApiTokenRecordsDnGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -96,7 +96,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGet(ctx context.Context) ApiToke
 //	@return DistinguishedNameList
 //
 // Deprecated
-func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGetRequest) (*DistinguishedNameList, *http.Response, error) {
+func (a *ActiveDevicesAPIService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGetRequest) (*DistinguishedNameList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -104,7 +104,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 		localVarReturnValue *DistinguishedNameList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesApiService.TokenRecordsDnGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesAPIService.TokenRecordsDnGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -119,19 +119,19 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -150,7 +150,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -161,9 +161,9 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -180,6 +180,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -190,16 +191,18 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -210,6 +213,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -229,7 +233,7 @@ func (a *ActiveDevicesApiService) TokenRecordsDnGetExecute(r ApiTokenRecordsDnGe
 
 type ApiTokenRecordsReevalByDnDistinguishedNamePostRequest struct {
 	ctx               context.Context
-	ApiService        *ActiveDevicesApiService
+	ApiService        *ActiveDevicesAPIService
 	authorization     *string
 	distinguishedName string
 }
@@ -255,7 +259,7 @@ Deprecated as of 6.3. Please use /on-boarded-devices APIs. Reevaluate all sessio
 
 Deprecated
 */
-func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiTokenRecordsReevalByDnDistinguishedNamePostRequest {
+func (a *ActiveDevicesAPIService) TokenRecordsReevalByDnDistinguishedNamePost(ctx context.Context, distinguishedName string) ApiTokenRecordsReevalByDnDistinguishedNamePostRequest {
 	return ApiTokenRecordsReevalByDnDistinguishedNamePostRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -268,7 +272,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePost(ct
 //	@return TokenRecordsReevalByDnDistinguishedNamePost200Response
 //
 // Deprecated
-func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (*TokenRecordsReevalByDnDistinguishedNamePost200Response, *http.Response, error) {
+func (a *ActiveDevicesAPIService) TokenRecordsReevalByDnDistinguishedNamePostExecute(r ApiTokenRecordsReevalByDnDistinguishedNamePostRequest) (*TokenRecordsReevalByDnDistinguishedNamePost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -276,13 +280,13 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 		localVarReturnValue *TokenRecordsReevalByDnDistinguishedNamePost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesApiService.TokenRecordsReevalByDnDistinguishedNamePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesAPIService.TokenRecordsReevalByDnDistinguishedNamePost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/token-records/reeval/by-dn/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -308,7 +312,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -319,9 +323,9 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -338,6 +342,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -348,6 +353,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -358,16 +364,18 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -378,6 +386,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -397,7 +406,7 @@ func (a *ActiveDevicesApiService) TokenRecordsReevalByDnDistinguishedNamePostExe
 
 type ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest struct {
 	ctx                    context.Context
-	ApiService             *ActiveDevicesApiService
+	ApiService             *ActiveDevicesAPIService
 	authorization          *string
 	distinguishedName      string
 	siteId                 *string
@@ -444,7 +453,7 @@ Deprecated as of 6.3. Please use /on-boarded-devices APIs. Revoke all Tokens bel
 
 Deprecated
 */
-func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ctx context.Context, distinguishedName string) ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest {
+func (a *ActiveDevicesAPIService) TokenRecordsRevokedByDnDistinguishedNamePut(ctx context.Context, distinguishedName string) ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest {
 	return ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -457,7 +466,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePut(ct
 //	@return TokenRevocationResponse
 //
 // Deprecated
-func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExecute(r ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest) (*TokenRevocationResponse, *http.Response, error) {
+func (a *ActiveDevicesAPIService) TokenRecordsRevokedByDnDistinguishedNamePutExecute(r ApiTokenRecordsRevokedByDnDistinguishedNamePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -465,13 +474,13 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 		localVarReturnValue *TokenRevocationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesApiService.TokenRecordsRevokedByDnDistinguishedNamePut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesAPIService.TokenRecordsRevokedByDnDistinguishedNamePut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/token-records/revoked/by-dn/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -481,10 +490,10 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 	}
 
 	if r.siteId != nil {
-		localVarQueryParams.Add("siteId", parameterToString(*r.siteId, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "siteId", r.siteId, "", "")
 	}
 	if r.tokenType != nil {
-		localVarQueryParams.Add("tokenType", parameterToString(*r.tokenType, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tokenType", r.tokenType, "", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -503,7 +512,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.tokenRevocationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -516,9 +525,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -535,6 +544,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -545,6 +555,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -555,16 +566,18 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -575,6 +588,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -585,6 +599,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -604,7 +619,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByDnDistinguishedNamePutExe
 
 type ApiTokenRecordsRevokedByTypeTokenTypePutRequest struct {
 	ctx                    context.Context
-	ApiService             *ActiveDevicesApiService
+	ApiService             *ActiveDevicesAPIService
 	authorization          *string
 	tokenType              string
 	siteId                 *string
@@ -644,7 +659,7 @@ Deprecated as of 6.3. Please use /on-boarded-devices APIs. Revoke all Tokens wit
 
 Deprecated
 */
-func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx context.Context, tokenType string) ApiTokenRecordsRevokedByTypeTokenTypePutRequest {
+func (a *ActiveDevicesAPIService) TokenRecordsRevokedByTypeTokenTypePut(ctx context.Context, tokenType string) ApiTokenRecordsRevokedByTypeTokenTypePutRequest {
 	return ApiTokenRecordsRevokedByTypeTokenTypePutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -657,7 +672,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePut(ctx cont
 //	@return TokenRevocationResponse
 //
 // Deprecated
-func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r ApiTokenRecordsRevokedByTypeTokenTypePutRequest) (*TokenRevocationResponse, *http.Response, error) {
+func (a *ActiveDevicesAPIService) TokenRecordsRevokedByTypeTokenTypePutExecute(r ApiTokenRecordsRevokedByTypeTokenTypePutRequest) (*TokenRevocationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -665,13 +680,13 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 		localVarReturnValue *TokenRevocationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesApiService.TokenRecordsRevokedByTypeTokenTypePut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveDevicesAPIService.TokenRecordsRevokedByTypeTokenTypePut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/token-records/revoked/by-type/{token-type}"
-	localVarPath = strings.Replace(localVarPath, "{"+"token-type"+"}", url.PathEscape(parameterToString(r.tokenType, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"token-type"+"}", url.PathEscape(parameterValueToString(r.tokenType, "tokenType")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -681,7 +696,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 	}
 
 	if r.siteId != nil {
-		localVarQueryParams.Add("siteId", parameterToString(*r.siteId, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "siteId", r.siteId, "", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -700,7 +715,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.tokenRevocationRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -713,9 +728,9 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -732,6 +747,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -742,6 +758,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -752,16 +769,18 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -772,6 +791,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -782,6 +802,7 @@ func (a *ActiveDevicesApiService) TokenRecordsRevokedByTypeTokenTypePutExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

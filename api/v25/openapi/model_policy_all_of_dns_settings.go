@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the PolicyAllOfDnsSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfDnsSettings{}
 
 // PolicyAllOfDnsSettings A domain name and a list of DNS servers.
 type PolicyAllOfDnsSettings struct {
@@ -23,6 +28,8 @@ type PolicyAllOfDnsSettings struct {
 	// Enables a Windows feature to register Appgate TUN IPs to the Active Directory for this domain.
 	RegisterTunIpsToActiveDirectory *bool `json:"registerTunIpsToActiveDirectory,omitempty"`
 }
+
+type _PolicyAllOfDnsSettings PolicyAllOfDnsSettings
 
 // NewPolicyAllOfDnsSettings instantiates a new PolicyAllOfDnsSettings object
 // This constructor will assign default values to properties that have it defined,
@@ -93,7 +100,7 @@ func (o *PolicyAllOfDnsSettings) SetServers(v []string) {
 
 // GetRegisterTunIpsToActiveDirectory returns the RegisterTunIpsToActiveDirectory field value if set, zero value otherwise.
 func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectory() bool {
-	if o == nil || o.RegisterTunIpsToActiveDirectory == nil {
+	if o == nil || IsNil(o.RegisterTunIpsToActiveDirectory) {
 		var ret bool
 		return ret
 	}
@@ -103,7 +110,7 @@ func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectory() bool {
 // GetRegisterTunIpsToActiveDirectoryOk returns a tuple with the RegisterTunIpsToActiveDirectory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectoryOk() (*bool, bool) {
-	if o == nil || o.RegisterTunIpsToActiveDirectory == nil {
+	if o == nil || IsNil(o.RegisterTunIpsToActiveDirectory) {
 		return nil, false
 	}
 	return o.RegisterTunIpsToActiveDirectory, true
@@ -111,7 +118,7 @@ func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectoryOk() (*bool, 
 
 // HasRegisterTunIpsToActiveDirectory returns a boolean if a field has been set.
 func (o *PolicyAllOfDnsSettings) HasRegisterTunIpsToActiveDirectory() bool {
-	if o != nil && o.RegisterTunIpsToActiveDirectory != nil {
+	if o != nil && !IsNil(o.RegisterTunIpsToActiveDirectory) {
 		return true
 	}
 
@@ -124,17 +131,59 @@ func (o *PolicyAllOfDnsSettings) SetRegisterTunIpsToActiveDirectory(v bool) {
 }
 
 func (o PolicyAllOfDnsSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["domain"] = o.Domain
-	}
-	if true {
-		toSerialize["servers"] = o.Servers
-	}
-	if o.RegisterTunIpsToActiveDirectory != nil {
-		toSerialize["registerTunIpsToActiveDirectory"] = o.RegisterTunIpsToActiveDirectory
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfDnsSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["domain"] = o.Domain
+	toSerialize["servers"] = o.Servers
+	if !IsNil(o.RegisterTunIpsToActiveDirectory) {
+		toSerialize["registerTunIpsToActiveDirectory"] = o.RegisterTunIpsToActiveDirectory
+	}
+	return toSerialize, nil
+}
+
+func (o *PolicyAllOfDnsSettings) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"domain",
+		"servers",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varPolicyAllOfDnsSettings := _PolicyAllOfDnsSettings{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varPolicyAllOfDnsSettings)
+
+	if err != nil {
+		return err
+	}
+
+	*o = PolicyAllOfDnsSettings(varPolicyAllOfDnsSettings)
+
+	return err
 }
 
 type NullablePolicyAllOfDnsSettings struct {

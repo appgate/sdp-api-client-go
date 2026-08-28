@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the SiteWithStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteWithStatus{}
 
 // SiteWithStatus struct for SiteWithStatus
 type SiteWithStatus struct {
@@ -54,6 +59,8 @@ type SiteWithStatus struct {
 	Status *string `json:"status,omitempty"`
 }
 
+type _SiteWithStatus SiteWithStatus
+
 // NewSiteWithStatus instantiates a new SiteWithStatus object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -78,7 +85,7 @@ func NewSiteWithStatusWithDefaults() *SiteWithStatus {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -88,7 +95,7 @@ func (o *SiteWithStatus) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -96,7 +103,7 @@ func (o *SiteWithStatus) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -134,7 +141,7 @@ func (o *SiteWithStatus) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -144,7 +151,7 @@ func (o *SiteWithStatus) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -152,7 +159,7 @@ func (o *SiteWithStatus) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -166,7 +173,7 @@ func (o *SiteWithStatus) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -176,7 +183,7 @@ func (o *SiteWithStatus) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -184,7 +191,7 @@ func (o *SiteWithStatus) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -198,7 +205,7 @@ func (o *SiteWithStatus) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -208,7 +215,7 @@ func (o *SiteWithStatus) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -216,7 +223,7 @@ func (o *SiteWithStatus) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -230,7 +237,7 @@ func (o *SiteWithStatus) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -240,7 +247,7 @@ func (o *SiteWithStatus) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -248,7 +255,7 @@ func (o *SiteWithStatus) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -263,7 +270,7 @@ func (o *SiteWithStatus) SetTags(v []string) {
 // GetShortName returns the ShortName field value if set, zero value otherwise.
 // Deprecated
 func (o *SiteWithStatus) GetShortName() string {
-	if o == nil || o.ShortName == nil {
+	if o == nil || IsNil(o.ShortName) {
 		var ret string
 		return ret
 	}
@@ -274,7 +281,7 @@ func (o *SiteWithStatus) GetShortName() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *SiteWithStatus) GetShortNameOk() (*string, bool) {
-	if o == nil || o.ShortName == nil {
+	if o == nil || IsNil(o.ShortName) {
 		return nil, false
 	}
 	return o.ShortName, true
@@ -282,7 +289,7 @@ func (o *SiteWithStatus) GetShortNameOk() (*string, bool) {
 
 // HasShortName returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasShortName() bool {
-	if o != nil && o.ShortName != nil {
+	if o != nil && !IsNil(o.ShortName) {
 		return true
 	}
 
@@ -297,7 +304,7 @@ func (o *SiteWithStatus) SetShortName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -307,7 +314,7 @@ func (o *SiteWithStatus) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -315,7 +322,7 @@ func (o *SiteWithStatus) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -329,7 +336,7 @@ func (o *SiteWithStatus) SetDescription(v string) {
 
 // GetGeolocation returns the Geolocation field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetGeolocation() SiteAllOfGeolocation {
-	if o == nil || o.Geolocation == nil {
+	if o == nil || IsNil(o.Geolocation) {
 		var ret SiteAllOfGeolocation
 		return ret
 	}
@@ -339,7 +346,7 @@ func (o *SiteWithStatus) GetGeolocation() SiteAllOfGeolocation {
 // GetGeolocationOk returns a tuple with the Geolocation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetGeolocationOk() (*SiteAllOfGeolocation, bool) {
-	if o == nil || o.Geolocation == nil {
+	if o == nil || IsNil(o.Geolocation) {
 		return nil, false
 	}
 	return o.Geolocation, true
@@ -347,7 +354,7 @@ func (o *SiteWithStatus) GetGeolocationOk() (*SiteAllOfGeolocation, bool) {
 
 // HasGeolocation returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasGeolocation() bool {
-	if o != nil && o.Geolocation != nil {
+	if o != nil && !IsNil(o.Geolocation) {
 		return true
 	}
 
@@ -361,7 +368,7 @@ func (o *SiteWithStatus) SetGeolocation(v SiteAllOfGeolocation) {
 
 // GetNetworkSubnets returns the NetworkSubnets field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetNetworkSubnets() []string {
-	if o == nil || o.NetworkSubnets == nil {
+	if o == nil || IsNil(o.NetworkSubnets) {
 		var ret []string
 		return ret
 	}
@@ -371,7 +378,7 @@ func (o *SiteWithStatus) GetNetworkSubnets() []string {
 // GetNetworkSubnetsOk returns a tuple with the NetworkSubnets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetNetworkSubnetsOk() ([]string, bool) {
-	if o == nil || o.NetworkSubnets == nil {
+	if o == nil || IsNil(o.NetworkSubnets) {
 		return nil, false
 	}
 	return o.NetworkSubnets, true
@@ -379,7 +386,7 @@ func (o *SiteWithStatus) GetNetworkSubnetsOk() ([]string, bool) {
 
 // HasNetworkSubnets returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasNetworkSubnets() bool {
-	if o != nil && o.NetworkSubnets != nil {
+	if o != nil && !IsNil(o.NetworkSubnets) {
 		return true
 	}
 
@@ -393,7 +400,7 @@ func (o *SiteWithStatus) SetNetworkSubnets(v []string) {
 
 // GetFallbackSite returns the FallbackSite field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetFallbackSite() string {
-	if o == nil || o.FallbackSite == nil {
+	if o == nil || IsNil(o.FallbackSite) {
 		var ret string
 		return ret
 	}
@@ -403,7 +410,7 @@ func (o *SiteWithStatus) GetFallbackSite() string {
 // GetFallbackSiteOk returns a tuple with the FallbackSite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetFallbackSiteOk() (*string, bool) {
-	if o == nil || o.FallbackSite == nil {
+	if o == nil || IsNil(o.FallbackSite) {
 		return nil, false
 	}
 	return o.FallbackSite, true
@@ -411,7 +418,7 @@ func (o *SiteWithStatus) GetFallbackSiteOk() (*string, bool) {
 
 // HasFallbackSite returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasFallbackSite() bool {
-	if o != nil && o.FallbackSite != nil {
+	if o != nil && !IsNil(o.FallbackSite) {
 		return true
 	}
 
@@ -425,7 +432,7 @@ func (o *SiteWithStatus) SetFallbackSite(v string) {
 
 // GetLocalSiteDetection returns the LocalSiteDetection field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetLocalSiteDetection() SiteAllOfLocalSiteDetection {
-	if o == nil || o.LocalSiteDetection == nil {
+	if o == nil || IsNil(o.LocalSiteDetection) {
 		var ret SiteAllOfLocalSiteDetection
 		return ret
 	}
@@ -435,7 +442,7 @@ func (o *SiteWithStatus) GetLocalSiteDetection() SiteAllOfLocalSiteDetection {
 // GetLocalSiteDetectionOk returns a tuple with the LocalSiteDetection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetLocalSiteDetectionOk() (*SiteAllOfLocalSiteDetection, bool) {
-	if o == nil || o.LocalSiteDetection == nil {
+	if o == nil || IsNil(o.LocalSiteDetection) {
 		return nil, false
 	}
 	return o.LocalSiteDetection, true
@@ -443,7 +450,7 @@ func (o *SiteWithStatus) GetLocalSiteDetectionOk() (*SiteAllOfLocalSiteDetection
 
 // HasLocalSiteDetection returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasLocalSiteDetection() bool {
-	if o != nil && o.LocalSiteDetection != nil {
+	if o != nil && !IsNil(o.LocalSiteDetection) {
 		return true
 	}
 
@@ -457,7 +464,7 @@ func (o *SiteWithStatus) SetLocalSiteDetection(v SiteAllOfLocalSiteDetection) {
 
 // GetUseForNearestSiteSelection returns the UseForNearestSiteSelection field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetUseForNearestSiteSelection() bool {
-	if o == nil || o.UseForNearestSiteSelection == nil {
+	if o == nil || IsNil(o.UseForNearestSiteSelection) {
 		var ret bool
 		return ret
 	}
@@ -467,7 +474,7 @@ func (o *SiteWithStatus) GetUseForNearestSiteSelection() bool {
 // GetUseForNearestSiteSelectionOk returns a tuple with the UseForNearestSiteSelection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetUseForNearestSiteSelectionOk() (*bool, bool) {
-	if o == nil || o.UseForNearestSiteSelection == nil {
+	if o == nil || IsNil(o.UseForNearestSiteSelection) {
 		return nil, false
 	}
 	return o.UseForNearestSiteSelection, true
@@ -475,7 +482,7 @@ func (o *SiteWithStatus) GetUseForNearestSiteSelectionOk() (*bool, bool) {
 
 // HasUseForNearestSiteSelection returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasUseForNearestSiteSelection() bool {
-	if o != nil && o.UseForNearestSiteSelection != nil {
+	if o != nil && !IsNil(o.UseForNearestSiteSelection) {
 		return true
 	}
 
@@ -489,7 +496,7 @@ func (o *SiteWithStatus) SetUseForNearestSiteSelection(v bool) {
 
 // GetIpPoolMappings returns the IpPoolMappings field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetIpPoolMappings() []SiteAllOfIpPoolMappings {
-	if o == nil || o.IpPoolMappings == nil {
+	if o == nil || IsNil(o.IpPoolMappings) {
 		var ret []SiteAllOfIpPoolMappings
 		return ret
 	}
@@ -499,7 +506,7 @@ func (o *SiteWithStatus) GetIpPoolMappings() []SiteAllOfIpPoolMappings {
 // GetIpPoolMappingsOk returns a tuple with the IpPoolMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetIpPoolMappingsOk() ([]SiteAllOfIpPoolMappings, bool) {
-	if o == nil || o.IpPoolMappings == nil {
+	if o == nil || IsNil(o.IpPoolMappings) {
 		return nil, false
 	}
 	return o.IpPoolMappings, true
@@ -507,7 +514,7 @@ func (o *SiteWithStatus) GetIpPoolMappingsOk() ([]SiteAllOfIpPoolMappings, bool)
 
 // HasIpPoolMappings returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasIpPoolMappings() bool {
-	if o != nil && o.IpPoolMappings != nil {
+	if o != nil && !IsNil(o.IpPoolMappings) {
 		return true
 	}
 
@@ -521,7 +528,7 @@ func (o *SiteWithStatus) SetIpPoolMappings(v []SiteAllOfIpPoolMappings) {
 
 // GetDefaultGateway returns the DefaultGateway field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetDefaultGateway() SiteAllOfDefaultGateway {
-	if o == nil || o.DefaultGateway == nil {
+	if o == nil || IsNil(o.DefaultGateway) {
 		var ret SiteAllOfDefaultGateway
 		return ret
 	}
@@ -531,7 +538,7 @@ func (o *SiteWithStatus) GetDefaultGateway() SiteAllOfDefaultGateway {
 // GetDefaultGatewayOk returns a tuple with the DefaultGateway field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetDefaultGatewayOk() (*SiteAllOfDefaultGateway, bool) {
-	if o == nil || o.DefaultGateway == nil {
+	if o == nil || IsNil(o.DefaultGateway) {
 		return nil, false
 	}
 	return o.DefaultGateway, true
@@ -539,7 +546,7 @@ func (o *SiteWithStatus) GetDefaultGatewayOk() (*SiteAllOfDefaultGateway, bool) 
 
 // HasDefaultGateway returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasDefaultGateway() bool {
-	if o != nil && o.DefaultGateway != nil {
+	if o != nil && !IsNil(o.DefaultGateway) {
 		return true
 	}
 
@@ -553,7 +560,7 @@ func (o *SiteWithStatus) SetDefaultGateway(v SiteAllOfDefaultGateway) {
 
 // GetEntitlementBasedRouting returns the EntitlementBasedRouting field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetEntitlementBasedRouting() bool {
-	if o == nil || o.EntitlementBasedRouting == nil {
+	if o == nil || IsNil(o.EntitlementBasedRouting) {
 		var ret bool
 		return ret
 	}
@@ -563,7 +570,7 @@ func (o *SiteWithStatus) GetEntitlementBasedRouting() bool {
 // GetEntitlementBasedRoutingOk returns a tuple with the EntitlementBasedRouting field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetEntitlementBasedRoutingOk() (*bool, bool) {
-	if o == nil || o.EntitlementBasedRouting == nil {
+	if o == nil || IsNil(o.EntitlementBasedRouting) {
 		return nil, false
 	}
 	return o.EntitlementBasedRouting, true
@@ -571,7 +578,7 @@ func (o *SiteWithStatus) GetEntitlementBasedRoutingOk() (*bool, bool) {
 
 // HasEntitlementBasedRouting returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasEntitlementBasedRouting() bool {
-	if o != nil && o.EntitlementBasedRouting != nil {
+	if o != nil && !IsNil(o.EntitlementBasedRouting) {
 		return true
 	}
 
@@ -585,7 +592,7 @@ func (o *SiteWithStatus) SetEntitlementBasedRouting(v bool) {
 
 // GetVpn returns the Vpn field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetVpn() SiteAllOfVpn {
-	if o == nil || o.Vpn == nil {
+	if o == nil || IsNil(o.Vpn) {
 		var ret SiteAllOfVpn
 		return ret
 	}
@@ -595,7 +602,7 @@ func (o *SiteWithStatus) GetVpn() SiteAllOfVpn {
 // GetVpnOk returns a tuple with the Vpn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetVpnOk() (*SiteAllOfVpn, bool) {
-	if o == nil || o.Vpn == nil {
+	if o == nil || IsNil(o.Vpn) {
 		return nil, false
 	}
 	return o.Vpn, true
@@ -603,7 +610,7 @@ func (o *SiteWithStatus) GetVpnOk() (*SiteAllOfVpn, bool) {
 
 // HasVpn returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasVpn() bool {
-	if o != nil && o.Vpn != nil {
+	if o != nil && !IsNil(o.Vpn) {
 		return true
 	}
 
@@ -617,7 +624,7 @@ func (o *SiteWithStatus) SetVpn(v SiteAllOfVpn) {
 
 // GetNameResolution returns the NameResolution field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetNameResolution() SiteAllOfNameResolution {
-	if o == nil || o.NameResolution == nil {
+	if o == nil || IsNil(o.NameResolution) {
 		var ret SiteAllOfNameResolution
 		return ret
 	}
@@ -627,7 +634,7 @@ func (o *SiteWithStatus) GetNameResolution() SiteAllOfNameResolution {
 // GetNameResolutionOk returns a tuple with the NameResolution field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetNameResolutionOk() (*SiteAllOfNameResolution, bool) {
-	if o == nil || o.NameResolution == nil {
+	if o == nil || IsNil(o.NameResolution) {
 		return nil, false
 	}
 	return o.NameResolution, true
@@ -635,7 +642,7 @@ func (o *SiteWithStatus) GetNameResolutionOk() (*SiteAllOfNameResolution, bool) 
 
 // HasNameResolution returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasNameResolution() bool {
-	if o != nil && o.NameResolution != nil {
+	if o != nil && !IsNil(o.NameResolution) {
 		return true
 	}
 
@@ -649,7 +656,7 @@ func (o *SiteWithStatus) SetNameResolution(v SiteAllOfNameResolution) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *SiteWithStatus) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -659,7 +666,7 @@ func (o *SiteWithStatus) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatus) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -667,7 +674,7 @@ func (o *SiteWithStatus) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *SiteWithStatus) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -680,65 +687,108 @@ func (o *SiteWithStatus) SetStatus(v string) {
 }
 
 func (o SiteWithStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.ShortName != nil {
-		toSerialize["shortName"] = o.ShortName
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.Geolocation != nil {
-		toSerialize["geolocation"] = o.Geolocation
-	}
-	if o.NetworkSubnets != nil {
-		toSerialize["networkSubnets"] = o.NetworkSubnets
-	}
-	if o.FallbackSite != nil {
-		toSerialize["fallbackSite"] = o.FallbackSite
-	}
-	if o.LocalSiteDetection != nil {
-		toSerialize["localSiteDetection"] = o.LocalSiteDetection
-	}
-	if o.UseForNearestSiteSelection != nil {
-		toSerialize["useForNearestSiteSelection"] = o.UseForNearestSiteSelection
-	}
-	if o.IpPoolMappings != nil {
-		toSerialize["ipPoolMappings"] = o.IpPoolMappings
-	}
-	if o.DefaultGateway != nil {
-		toSerialize["defaultGateway"] = o.DefaultGateway
-	}
-	if o.EntitlementBasedRouting != nil {
-		toSerialize["entitlementBasedRouting"] = o.EntitlementBasedRouting
-	}
-	if o.Vpn != nil {
-		toSerialize["vpn"] = o.Vpn
-	}
-	if o.NameResolution != nil {
-		toSerialize["nameResolution"] = o.NameResolution
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteWithStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.ShortName) {
+		toSerialize["shortName"] = o.ShortName
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Geolocation) {
+		toSerialize["geolocation"] = o.Geolocation
+	}
+	if !IsNil(o.NetworkSubnets) {
+		toSerialize["networkSubnets"] = o.NetworkSubnets
+	}
+	if !IsNil(o.FallbackSite) {
+		toSerialize["fallbackSite"] = o.FallbackSite
+	}
+	if !IsNil(o.LocalSiteDetection) {
+		toSerialize["localSiteDetection"] = o.LocalSiteDetection
+	}
+	if !IsNil(o.UseForNearestSiteSelection) {
+		toSerialize["useForNearestSiteSelection"] = o.UseForNearestSiteSelection
+	}
+	if !IsNil(o.IpPoolMappings) {
+		toSerialize["ipPoolMappings"] = o.IpPoolMappings
+	}
+	if !IsNil(o.DefaultGateway) {
+		toSerialize["defaultGateway"] = o.DefaultGateway
+	}
+	if !IsNil(o.EntitlementBasedRouting) {
+		toSerialize["entitlementBasedRouting"] = o.EntitlementBasedRouting
+	}
+	if !IsNil(o.Vpn) {
+		toSerialize["vpn"] = o.Vpn
+	}
+	if !IsNil(o.NameResolution) {
+		toSerialize["nameResolution"] = o.NameResolution
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteWithStatus) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteWithStatus := _SiteWithStatus{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteWithStatus)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteWithStatus(varSiteWithStatus)
+
+	return err
 }
 
 type NullableSiteWithStatus struct {

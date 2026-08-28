@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfTelemetryAggregatorHeaders type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfTelemetryAggregatorHeaders{}
 
 // ApplianceAllOfTelemetryAggregatorHeaders struct for ApplianceAllOfTelemetryAggregatorHeaders
 type ApplianceAllOfTelemetryAggregatorHeaders struct {
@@ -22,6 +27,8 @@ type ApplianceAllOfTelemetryAggregatorHeaders struct {
 	// The header value. Treated as a secret; write-only.
 	Value *string `json:"value,omitempty"`
 }
+
+type _ApplianceAllOfTelemetryAggregatorHeaders ApplianceAllOfTelemetryAggregatorHeaders
 
 // NewApplianceAllOfTelemetryAggregatorHeaders instantiates a new ApplianceAllOfTelemetryAggregatorHeaders object
 // This constructor will assign default values to properties that have it defined,
@@ -67,7 +74,7 @@ func (o *ApplianceAllOfTelemetryAggregatorHeaders) SetName(v string) {
 
 // GetValue returns the Value field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorHeaders) GetValue() string {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		var ret string
 		return ret
 	}
@@ -77,7 +84,7 @@ func (o *ApplianceAllOfTelemetryAggregatorHeaders) GetValue() string {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorHeaders) GetValueOk() (*string, bool) {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
 	return o.Value, true
@@ -85,7 +92,7 @@ func (o *ApplianceAllOfTelemetryAggregatorHeaders) GetValueOk() (*string, bool) 
 
 // HasValue returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregatorHeaders) HasValue() bool {
-	if o != nil && o.Value != nil {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
@@ -98,14 +105,57 @@ func (o *ApplianceAllOfTelemetryAggregatorHeaders) SetValue(v string) {
 }
 
 func (o ApplianceAllOfTelemetryAggregatorHeaders) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Value != nil {
-		toSerialize["value"] = o.Value
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfTelemetryAggregatorHeaders) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Value) {
+		toSerialize["value"] = o.Value
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfTelemetryAggregatorHeaders) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfTelemetryAggregatorHeaders := _ApplianceAllOfTelemetryAggregatorHeaders{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfTelemetryAggregatorHeaders)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfTelemetryAggregatorHeaders(varApplianceAllOfTelemetryAggregatorHeaders)
+
+	return err
 }
 
 type NullableApplianceAllOfTelemetryAggregatorHeaders struct {

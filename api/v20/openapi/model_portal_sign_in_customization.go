@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PortalSignInCustomization type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PortalSignInCustomization{}
+
 // PortalSignInCustomization Visual customizations to make on the Portal sign-in page.
 type PortalSignInCustomization struct {
 	// Changes the background color on the sign-in page. In hexadecimal format.
@@ -50,7 +53,7 @@ func NewPortalSignInCustomizationWithDefaults() *PortalSignInCustomization {
 
 // GetBackgroundColor returns the BackgroundColor field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetBackgroundColor() string {
-	if o == nil || o.BackgroundColor == nil {
+	if o == nil || IsNil(o.BackgroundColor) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *PortalSignInCustomization) GetBackgroundColor() string {
 // GetBackgroundColorOk returns a tuple with the BackgroundColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetBackgroundColorOk() (*string, bool) {
-	if o == nil || o.BackgroundColor == nil {
+	if o == nil || IsNil(o.BackgroundColor) {
 		return nil, false
 	}
 	return o.BackgroundColor, true
@@ -68,7 +71,7 @@ func (o *PortalSignInCustomization) GetBackgroundColorOk() (*string, bool) {
 
 // HasBackgroundColor returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasBackgroundColor() bool {
-	if o != nil && o.BackgroundColor != nil {
+	if o != nil && !IsNil(o.BackgroundColor) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *PortalSignInCustomization) SetBackgroundColor(v string) {
 
 // GetBackgroundImage returns the BackgroundImage field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetBackgroundImage() string {
-	if o == nil || o.BackgroundImage == nil {
+	if o == nil || IsNil(o.BackgroundImage) {
 		var ret string
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *PortalSignInCustomization) GetBackgroundImage() string {
 // GetBackgroundImageOk returns a tuple with the BackgroundImage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetBackgroundImageOk() (*string, bool) {
-	if o == nil || o.BackgroundImage == nil {
+	if o == nil || IsNil(o.BackgroundImage) {
 		return nil, false
 	}
 	return o.BackgroundImage, true
@@ -100,7 +103,7 @@ func (o *PortalSignInCustomization) GetBackgroundImageOk() (*string, bool) {
 
 // HasBackgroundImage returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasBackgroundImage() bool {
-	if o != nil && o.BackgroundImage != nil {
+	if o != nil && !IsNil(o.BackgroundImage) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *PortalSignInCustomization) SetBackgroundImage(v string) {
 
 // GetLogo returns the Logo field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetLogo() string {
-	if o == nil || o.Logo == nil {
+	if o == nil || IsNil(o.Logo) {
 		var ret string
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *PortalSignInCustomization) GetLogo() string {
 // GetLogoOk returns a tuple with the Logo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetLogoOk() (*string, bool) {
-	if o == nil || o.Logo == nil {
+	if o == nil || IsNil(o.Logo) {
 		return nil, false
 	}
 	return o.Logo, true
@@ -132,7 +135,7 @@ func (o *PortalSignInCustomization) GetLogoOk() (*string, bool) {
 
 // HasLogo returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasLogo() bool {
-	if o != nil && o.Logo != nil {
+	if o != nil && !IsNil(o.Logo) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *PortalSignInCustomization) SetLogo(v string) {
 
 // GetText returns the Text field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetText() string {
-	if o == nil || o.Text == nil {
+	if o == nil || IsNil(o.Text) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *PortalSignInCustomization) GetText() string {
 // GetTextOk returns a tuple with the Text field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetTextOk() (*string, bool) {
-	if o == nil || o.Text == nil {
+	if o == nil || IsNil(o.Text) {
 		return nil, false
 	}
 	return o.Text, true
@@ -164,7 +167,7 @@ func (o *PortalSignInCustomization) GetTextOk() (*string, bool) {
 
 // HasText returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasText() bool {
-	if o != nil && o.Text != nil {
+	if o != nil && !IsNil(o.Text) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *PortalSignInCustomization) SetText(v string) {
 
 // GetTextColor returns the TextColor field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetTextColor() string {
-	if o == nil || o.TextColor == nil {
+	if o == nil || IsNil(o.TextColor) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *PortalSignInCustomization) GetTextColor() string {
 // GetTextColorOk returns a tuple with the TextColor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetTextColorOk() (*string, bool) {
-	if o == nil || o.TextColor == nil {
+	if o == nil || IsNil(o.TextColor) {
 		return nil, false
 	}
 	return o.TextColor, true
@@ -196,7 +199,7 @@ func (o *PortalSignInCustomization) GetTextColorOk() (*string, bool) {
 
 // HasTextColor returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasTextColor() bool {
-	if o != nil && o.TextColor != nil {
+	if o != nil && !IsNil(o.TextColor) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *PortalSignInCustomization) SetTextColor(v string) {
 
 // GetAutoRedirect returns the AutoRedirect field value if set, zero value otherwise.
 func (o *PortalSignInCustomization) GetAutoRedirect() bool {
-	if o == nil || o.AutoRedirect == nil {
+	if o == nil || IsNil(o.AutoRedirect) {
 		var ret bool
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *PortalSignInCustomization) GetAutoRedirect() bool {
 // GetAutoRedirectOk returns a tuple with the AutoRedirect field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PortalSignInCustomization) GetAutoRedirectOk() (*bool, bool) {
-	if o == nil || o.AutoRedirect == nil {
+	if o == nil || IsNil(o.AutoRedirect) {
 		return nil, false
 	}
 	return o.AutoRedirect, true
@@ -228,7 +231,7 @@ func (o *PortalSignInCustomization) GetAutoRedirectOk() (*bool, bool) {
 
 // HasAutoRedirect returns a boolean if a field has been set.
 func (o *PortalSignInCustomization) HasAutoRedirect() bool {
-	if o != nil && o.AutoRedirect != nil {
+	if o != nil && !IsNil(o.AutoRedirect) {
 		return true
 	}
 
@@ -241,26 +244,34 @@ func (o *PortalSignInCustomization) SetAutoRedirect(v bool) {
 }
 
 func (o PortalSignInCustomization) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.BackgroundColor != nil {
-		toSerialize["backgroundColor"] = o.BackgroundColor
-	}
-	if o.BackgroundImage != nil {
-		toSerialize["backgroundImage"] = o.BackgroundImage
-	}
-	if o.Logo != nil {
-		toSerialize["logo"] = o.Logo
-	}
-	if o.Text != nil {
-		toSerialize["text"] = o.Text
-	}
-	if o.TextColor != nil {
-		toSerialize["textColor"] = o.TextColor
-	}
-	if o.AutoRedirect != nil {
-		toSerialize["autoRedirect"] = o.AutoRedirect
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PortalSignInCustomization) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.BackgroundColor) {
+		toSerialize["backgroundColor"] = o.BackgroundColor
+	}
+	if !IsNil(o.BackgroundImage) {
+		toSerialize["backgroundImage"] = o.BackgroundImage
+	}
+	if !IsNil(o.Logo) {
+		toSerialize["logo"] = o.Logo
+	}
+	if !IsNil(o.Text) {
+		toSerialize["text"] = o.Text
+	}
+	if !IsNil(o.TextColor) {
+		toSerialize["textColor"] = o.TextColor
+	}
+	if !IsNil(o.AutoRedirect) {
+		toSerialize["autoRedirect"] = o.AutoRedirect
+	}
+	return toSerialize, nil
 }
 
 type NullablePortalSignInCustomization struct {

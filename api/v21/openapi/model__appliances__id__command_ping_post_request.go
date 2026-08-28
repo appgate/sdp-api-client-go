@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppliancesIdCommandPingPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandPingPostRequest{}
 
 // AppliancesIdCommandPingPostRequest struct for AppliancesIdCommandPingPostRequest
 type AppliancesIdCommandPingPostRequest struct {
@@ -24,6 +29,8 @@ type AppliancesIdCommandPingPostRequest struct {
 	// The number of replies to wait for.
 	ProcessTimeout *int32 `json:"processTimeout,omitempty"`
 }
+
+type _AppliancesIdCommandPingPostRequest AppliancesIdCommandPingPostRequest
 
 // NewAppliancesIdCommandPingPostRequest instantiates a new AppliancesIdCommandPingPostRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -73,7 +80,7 @@ func (o *AppliancesIdCommandPingPostRequest) SetDestination(v string) {
 
 // GetInterface returns the Interface field value if set, zero value otherwise.
 func (o *AppliancesIdCommandPingPostRequest) GetInterface() string {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		var ret string
 		return ret
 	}
@@ -83,7 +90,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetInterface() string {
 // GetInterfaceOk returns a tuple with the Interface field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandPingPostRequest) GetInterfaceOk() (*string, bool) {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		return nil, false
 	}
 	return o.Interface, true
@@ -91,7 +98,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetInterfaceOk() (*string, bool) {
 
 // HasInterface returns a boolean if a field has been set.
 func (o *AppliancesIdCommandPingPostRequest) HasInterface() bool {
-	if o != nil && o.Interface != nil {
+	if o != nil && !IsNil(o.Interface) {
 		return true
 	}
 
@@ -105,7 +112,7 @@ func (o *AppliancesIdCommandPingPostRequest) SetInterface(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +122,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -123,7 +130,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeoutOk() (*int32, bool
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandPingPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -136,17 +143,60 @@ func (o *AppliancesIdCommandPingPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandPingPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["destination"] = o.Destination
-	}
-	if o.Interface != nil {
-		toSerialize["interface"] = o.Interface
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandPingPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["destination"] = o.Destination
+	if !IsNil(o.Interface) {
+		toSerialize["interface"] = o.Interface
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
+}
+
+func (o *AppliancesIdCommandPingPostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"destination",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppliancesIdCommandPingPostRequest := _AppliancesIdCommandPingPostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppliancesIdCommandPingPostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppliancesIdCommandPingPostRequest(varAppliancesIdCommandPingPostRequest)
+
+	return err
 }
 
 type NullableAppliancesIdCommandPingPostRequest struct {

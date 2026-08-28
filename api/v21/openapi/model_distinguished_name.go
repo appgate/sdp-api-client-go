@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DistinguishedName type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DistinguishedName{}
+
 // DistinguishedName struct for DistinguishedName
 type DistinguishedName struct {
 	// Distinguished name of a user&device combination. Format: \"CN=,CN=,OU=\"
@@ -50,7 +53,7 @@ func NewDistinguishedNameWithDefaults() *DistinguishedName {
 
 // GetDistinguishedName returns the DistinguishedName field value if set, zero value otherwise.
 func (o *DistinguishedName) GetDistinguishedName() string {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *DistinguishedName) GetDistinguishedName() string {
 // GetDistinguishedNameOk returns a tuple with the DistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		return nil, false
 	}
 	return o.DistinguishedName, true
@@ -68,7 +71,7 @@ func (o *DistinguishedName) GetDistinguishedNameOk() (*string, bool) {
 
 // HasDistinguishedName returns a boolean if a field has been set.
 func (o *DistinguishedName) HasDistinguishedName() bool {
-	if o != nil && o.DistinguishedName != nil {
+	if o != nil && !IsNil(o.DistinguishedName) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *DistinguishedName) SetDistinguishedName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *DistinguishedName) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *DistinguishedName) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -100,7 +103,7 @@ func (o *DistinguishedName) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *DistinguishedName) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *DistinguishedName) SetDeviceId(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *DistinguishedName) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *DistinguishedName) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -132,7 +135,7 @@ func (o *DistinguishedName) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *DistinguishedName) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *DistinguishedName) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *DistinguishedName) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *DistinguishedName) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -164,7 +167,7 @@ func (o *DistinguishedName) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *DistinguishedName) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *DistinguishedName) SetProviderName(v string) {
 
 // GetLastTokenIssuedAt returns the LastTokenIssuedAt field value if set, zero value otherwise.
 func (o *DistinguishedName) GetLastTokenIssuedAt() string {
-	if o == nil || o.LastTokenIssuedAt == nil {
+	if o == nil || IsNil(o.LastTokenIssuedAt) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *DistinguishedName) GetLastTokenIssuedAt() string {
 // GetLastTokenIssuedAtOk returns a tuple with the LastTokenIssuedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetLastTokenIssuedAtOk() (*string, bool) {
-	if o == nil || o.LastTokenIssuedAt == nil {
+	if o == nil || IsNil(o.LastTokenIssuedAt) {
 		return nil, false
 	}
 	return o.LastTokenIssuedAt, true
@@ -196,7 +199,7 @@ func (o *DistinguishedName) GetLastTokenIssuedAtOk() (*string, bool) {
 
 // HasLastTokenIssuedAt returns a boolean if a field has been set.
 func (o *DistinguishedName) HasLastTokenIssuedAt() bool {
-	if o != nil && o.LastTokenIssuedAt != nil {
+	if o != nil && !IsNil(o.LastTokenIssuedAt) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *DistinguishedName) SetLastTokenIssuedAt(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *DistinguishedName) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *DistinguishedName) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedName) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -228,7 +231,7 @@ func (o *DistinguishedName) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *DistinguishedName) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -241,26 +244,34 @@ func (o *DistinguishedName) SetHostname(v string) {
 }
 
 func (o DistinguishedName) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DistinguishedName != nil {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.LastTokenIssuedAt != nil {
-		toSerialize["lastTokenIssuedAt"] = o.LastTokenIssuedAt
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DistinguishedName) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DistinguishedName) {
+		toSerialize["distinguishedName"] = o.DistinguishedName
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.LastTokenIssuedAt) {
+		toSerialize["lastTokenIssuedAt"] = o.LastTokenIssuedAt
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	return toSerialize, nil
 }
 
 type NullableDistinguishedName struct {

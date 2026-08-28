@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ApplianceChangeApiService ApplianceChangeApi service
-type ApplianceChangeApiService service
+// ApplianceChangeAPIService ApplianceChangeAPI service
+type ApplianceChangeAPIService service
 
 type ApiAppliancesIdChangeChangeIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *ApplianceChangeApiService
+	ApiService    *ApplianceChangeAPIService
 	changeId      string
 	authorization *string
 	id            string
@@ -51,7 +51,7 @@ When a change is requested on an appliance it returns a change id. We can use th
 	@param id ID of the object.
 	@return ApiAppliancesIdChangeChangeIdGetRequest
 */
-func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGet(ctx context.Context, changeId string, id string) ApiAppliancesIdChangeChangeIdGetRequest {
+func (a *ApplianceChangeAPIService) AppliancesIdChangeChangeIdGet(ctx context.Context, changeId string, id string) ApiAppliancesIdChangeChangeIdGetRequest {
 	return ApiAppliancesIdChangeChangeIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -63,7 +63,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGet(ctx context.Co
 // Execute executes the request
 //
 //	@return AppliancesIdChangeChangeIdGet200Response
-func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAppliancesIdChangeChangeIdGetRequest) (*AppliancesIdChangeChangeIdGet200Response, *http.Response, error) {
+func (a *ApplianceChangeAPIService) AppliancesIdChangeChangeIdGetExecute(r ApiAppliancesIdChangeChangeIdGetRequest) (*AppliancesIdChangeChangeIdGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -71,14 +71,14 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 		localVarReturnValue *AppliancesIdChangeChangeIdGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceChangeApiService.AppliancesIdChangeChangeIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceChangeAPIService.AppliancesIdChangeChangeIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/change/{changeId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"changeId"+"}", url.PathEscape(parameterToString(r.changeId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"changeId"+"}", url.PathEscape(parameterValueToString(r.changeId, "changeId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -104,7 +104,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -115,9 +115,9 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -134,6 +134,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -144,6 +145,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -154,6 +156,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -164,6 +167,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -174,6 +178,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -184,6 +189,7 @@ func (a *ApplianceChangeApiService) AppliancesIdChangeChangeIdGetExecute(r ApiAp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

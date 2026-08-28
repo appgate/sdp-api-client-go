@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandIpPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandIpPostRequest{}
+
 // AppliancesIdCommandIpPostRequest struct for AppliancesIdCommandIpPostRequest
 type AppliancesIdCommandIpPostRequest struct {
 	// Select IP version.
@@ -50,7 +53,7 @@ func NewAppliancesIdCommandIpPostRequestWithDefaults() *AppliancesIdCommandIpPos
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *AppliancesIdCommandIpPostRequest) GetVersion() int32 {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret int32
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *AppliancesIdCommandIpPostRequest) GetVersion() int32 {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandIpPostRequest) GetVersionOk() (*int32, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -68,7 +71,7 @@ func (o *AppliancesIdCommandIpPostRequest) GetVersionOk() (*int32, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *AppliancesIdCommandIpPostRequest) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *AppliancesIdCommandIpPostRequest) SetVersion(v int32) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandIpPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *AppliancesIdCommandIpPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandIpPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -100,7 +103,7 @@ func (o *AppliancesIdCommandIpPostRequest) GetProcessTimeoutOk() (*int32, bool) 
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandIpPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -113,14 +116,22 @@ func (o *AppliancesIdCommandIpPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandIpPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandIpPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandIpPostRequest struct {

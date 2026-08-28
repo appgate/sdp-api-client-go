@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// IPPoolsApiService IPPoolsApi service
-type IPPoolsApiService service
+// IPPoolsAPIService IPPoolsAPI service
+type IPPoolsAPIService service
 
 type ApiIpPoolsAllocatedIpsGetRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -75,7 +75,7 @@ List all Allocated IPs in the system
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIpPoolsAllocatedIpsGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoolsAllocatedIpsGetRequest {
+func (a *IPPoolsAPIService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoolsAllocatedIpsGetRequest {
 	return ApiIpPoolsAllocatedIpsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -85,7 +85,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGet(ctx context.Context) ApiIpPoo
 // Execute executes the request
 //
 //	@return AllocatedIpList
-func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedIpsGetRequest) (*AllocatedIpList, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedIpsGetRequest) (*AllocatedIpList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -93,7 +93,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 		localVarReturnValue *AllocatedIpList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsAllocatedIpsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsAllocatedIpsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -105,19 +105,19 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,9 +146,9 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,6 +165,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -175,6 +176,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -185,6 +187,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -195,6 +198,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -214,7 +218,7 @@ func (a *IPPoolsApiService) IpPoolsAllocatedIpsGetExecute(r ApiIpPoolsAllocatedI
 
 type ApiIpPoolsBulkUpsertPostRequest struct {
 	ctx                          context.Context
-	ApiService                   *IPPoolsApiService
+	ApiService                   *IPPoolsAPIService
 	ipPoolsBulkUpsertPostRequest *IpPoolsBulkUpsertPostRequest
 }
 
@@ -236,7 +240,7 @@ Create or update multiple ip pools in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIpPoolsBulkUpsertPostRequest
 */
-func (a *IPPoolsApiService) IpPoolsBulkUpsertPost(ctx context.Context) ApiIpPoolsBulkUpsertPostRequest {
+func (a *IPPoolsAPIService) IpPoolsBulkUpsertPost(ctx context.Context) ApiIpPoolsBulkUpsertPostRequest {
 	return ApiIpPoolsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -246,7 +250,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPost(ctx context.Context) ApiIpPool
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -254,7 +258,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -297,9 +301,9 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -316,6 +320,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -326,6 +331,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,6 +342,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -346,6 +353,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -356,6 +364,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -375,7 +384,7 @@ func (a *IPPoolsApiService) IpPoolsBulkUpsertPostExecute(r ApiIpPoolsBulkUpsertP
 
 type ApiIpPoolsGetRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -425,7 +434,7 @@ List all IP Pools visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIpPoolsGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest {
+func (a *IPPoolsAPIService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest {
 	return ApiIpPoolsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -435,7 +444,7 @@ func (a *IPPoolsApiService) IpPoolsGet(ctx context.Context) ApiIpPoolsGetRequest
 // Execute executes the request
 //
 //	@return IpPoolList
-func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolList, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -443,7 +452,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 		localVarReturnValue *IpPoolList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -455,19 +464,19 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -496,9 +505,9 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -515,6 +524,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -525,6 +535,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -535,6 +546,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -545,6 +557,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -564,7 +577,7 @@ func (a *IPPoolsApiService) IpPoolsGetExecute(r ApiIpPoolsGetRequest) (*IpPoolLi
 
 type ApiIpPoolsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	id         string
 }
 
@@ -581,7 +594,7 @@ Delete a specific IP Pool.
 	@param id ID of the object.
 	@return ApiIpPoolsIdDeleteRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdDelete(ctx context.Context, id string) ApiIpPoolsIdDeleteRequest {
+func (a *IPPoolsAPIService) IpPoolsIdDelete(ctx context.Context, id string) ApiIpPoolsIdDeleteRequest {
 	return ApiIpPoolsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -590,20 +603,20 @@ func (a *IPPoolsApiService) IpPoolsIdDelete(ctx context.Context, id string) ApiI
 }
 
 // Execute executes the request
-func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) (*http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -636,9 +649,9 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -655,6 +668,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -665,6 +679,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -675,6 +690,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -685,6 +701,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -695,6 +712,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -705,7 +723,7 @@ func (a *IPPoolsApiService) IpPoolsIdDeleteExecute(r ApiIpPoolsIdDeleteRequest) 
 
 type ApiIpPoolsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	id         string
 }
 
@@ -722,7 +740,7 @@ Get a specific IP Pool.
 	@param id ID of the object.
 	@return ApiIpPoolsIdGetRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPoolsIdGetRequest {
+func (a *IPPoolsAPIService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPoolsIdGetRequest {
 	return ApiIpPoolsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -733,7 +751,7 @@ func (a *IPPoolsApiService) IpPoolsIdGet(ctx context.Context, id string) ApiIpPo
 // Execute executes the request
 //
 //	@return IpPool
-func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPool, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -741,13 +759,13 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 		localVarReturnValue *IpPool
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -780,9 +798,9 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -799,6 +817,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -809,6 +828,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -819,6 +839,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -829,6 +850,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -839,6 +861,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -858,7 +881,7 @@ func (a *IPPoolsApiService) IpPoolsIdGetExecute(r ApiIpPoolsIdGetRequest) (*IpPo
 
 type ApiIpPoolsIdPutRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	id         string
 	ipPool     *IpPool
 }
@@ -882,7 +905,7 @@ Update an existing IP Pool.
 	@param id ID of the object.
 	@return ApiIpPoolsIdPutRequest
 */
-func (a *IPPoolsApiService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPoolsIdPutRequest {
+func (a *IPPoolsAPIService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPoolsIdPutRequest {
 	return ApiIpPoolsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -893,7 +916,7 @@ func (a *IPPoolsApiService) IpPoolsIdPut(ctx context.Context, id string) ApiIpPo
 // Execute executes the request
 //
 //	@return IpPool
-func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPool, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -901,13 +924,13 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 		localVarReturnValue *IpPool
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/ip-pools/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -945,9 +968,9 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -964,6 +987,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -974,6 +998,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -984,6 +1009,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -994,6 +1020,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1004,6 +1031,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1014,6 +1042,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1024,6 +1053,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1043,7 +1073,7 @@ func (a *IPPoolsApiService) IpPoolsIdPutExecute(r ApiIpPoolsIdPutRequest) (*IpPo
 
 type ApiIpPoolsPostRequest struct {
 	ctx        context.Context
-	ApiService *IPPoolsApiService
+	ApiService *IPPoolsAPIService
 	ipPool     *IpPool
 }
 
@@ -1065,7 +1095,7 @@ Create a new IP Pool.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIpPoolsPostRequest
 */
-func (a *IPPoolsApiService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostRequest {
+func (a *IPPoolsAPIService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostRequest {
 	return ApiIpPoolsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1075,7 +1105,7 @@ func (a *IPPoolsApiService) IpPoolsPost(ctx context.Context) ApiIpPoolsPostReque
 // Execute executes the request
 //
 //	@return IpPool
-func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool, *http.Response, error) {
+func (a *IPPoolsAPIService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1083,7 +1113,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 		localVarReturnValue *IpPool
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsApiService.IpPoolsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IPPoolsAPIService.IpPoolsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1126,9 +1156,9 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1145,6 +1175,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1155,6 +1186,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1165,6 +1197,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1175,6 +1208,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1185,6 +1219,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1195,6 +1230,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1205,6 +1241,7 @@ func (a *IPPoolsApiService) IpPoolsPostExecute(r ApiIpPoolsPostRequest) (*IpPool
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

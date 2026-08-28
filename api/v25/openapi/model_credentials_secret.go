@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the CredentialsSecret type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CredentialsSecret{}
 
 // CredentialsSecret struct for CredentialsSecret
 type CredentialsSecret struct {
@@ -39,6 +44,8 @@ type CredentialsSecret struct {
 	// Password for the credentials. Omit the field to keep the old value when updating.
 	Password *string `json:"password,omitempty"`
 }
+
+type _CredentialsSecret CredentialsSecret
 
 // NewCredentialsSecret instantiates a new CredentialsSecret object
 // This constructor will assign default values to properties that have it defined,
@@ -65,7 +72,7 @@ func NewCredentialsSecretWithDefaults() *CredentialsSecret {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -75,7 +82,7 @@ func (o *CredentialsSecret) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -83,7 +90,7 @@ func (o *CredentialsSecret) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -121,7 +128,7 @@ func (o *CredentialsSecret) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -131,7 +138,7 @@ func (o *CredentialsSecret) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -139,7 +146,7 @@ func (o *CredentialsSecret) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -153,7 +160,7 @@ func (o *CredentialsSecret) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -163,7 +170,7 @@ func (o *CredentialsSecret) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -171,7 +178,7 @@ func (o *CredentialsSecret) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -185,7 +192,7 @@ func (o *CredentialsSecret) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -195,7 +202,7 @@ func (o *CredentialsSecret) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -203,7 +210,7 @@ func (o *CredentialsSecret) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -217,7 +224,7 @@ func (o *CredentialsSecret) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -227,7 +234,7 @@ func (o *CredentialsSecret) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -235,7 +242,7 @@ func (o *CredentialsSecret) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -249,7 +256,7 @@ func (o *CredentialsSecret) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -259,7 +266,7 @@ func (o *CredentialsSecret) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -267,7 +274,7 @@ func (o *CredentialsSecret) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -281,7 +288,7 @@ func (o *CredentialsSecret) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -291,7 +298,7 @@ func (o *CredentialsSecret) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -299,7 +306,7 @@ func (o *CredentialsSecret) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -337,7 +344,7 @@ func (o *CredentialsSecret) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *CredentialsSecret) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -347,7 +354,7 @@ func (o *CredentialsSecret) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecret) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -355,7 +362,7 @@ func (o *CredentialsSecret) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *CredentialsSecret) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -368,38 +375,80 @@ func (o *CredentialsSecret) SetPassword(v string) {
 }
 
 func (o CredentialsSecret) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CredentialsSecret) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	toSerialize["username"] = o.Username
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
+}
+
+func (o *CredentialsSecret) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"username",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCredentialsSecret := _CredentialsSecret{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCredentialsSecret)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CredentialsSecret(varCredentialsSecret)
+
+	return err
 }
 
 type NullableCredentialsSecret struct {

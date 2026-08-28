@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateSigningRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateSigningRequest{}
+
 // CertificateSigningRequest A PEM-encoded Certificate Signing Request (CSR).
 type CertificateSigningRequest struct {
 	// The PEM-encoded CSR content.
@@ -40,7 +43,7 @@ func NewCertificateSigningRequestWithDefaults() *CertificateSigningRequest {
 
 // GetCsrPem returns the CsrPem field value if set, zero value otherwise.
 func (o *CertificateSigningRequest) GetCsrPem() string {
-	if o == nil || o.CsrPem == nil {
+	if o == nil || IsNil(o.CsrPem) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CertificateSigningRequest) GetCsrPem() string {
 // GetCsrPemOk returns a tuple with the CsrPem field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateSigningRequest) GetCsrPemOk() (*string, bool) {
-	if o == nil || o.CsrPem == nil {
+	if o == nil || IsNil(o.CsrPem) {
 		return nil, false
 	}
 	return o.CsrPem, true
@@ -58,7 +61,7 @@ func (o *CertificateSigningRequest) GetCsrPemOk() (*string, bool) {
 
 // HasCsrPem returns a boolean if a field has been set.
 func (o *CertificateSigningRequest) HasCsrPem() bool {
-	if o != nil && o.CsrPem != nil {
+	if o != nil && !IsNil(o.CsrPem) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *CertificateSigningRequest) SetCsrPem(v string) {
 }
 
 func (o CertificateSigningRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.CsrPem != nil {
-		toSerialize["csrPem"] = o.CsrPem
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateSigningRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.CsrPem) {
+		toSerialize["csrPem"] = o.CsrPem
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateSigningRequest struct {

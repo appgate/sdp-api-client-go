@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ReplicationReportItem type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationReportItem{}
 
 // ReplicationReportItem struct for ReplicationReportItem
 type ReplicationReportItem struct {
@@ -24,6 +29,8 @@ type ReplicationReportItem struct {
 	// Errors for individual objects that failed to replicate.
 	Errors []ReplicationReportError `json:"errors"`
 }
+
+type _ReplicationReportItem ReplicationReportItem
 
 // NewReplicationReportItem instantiates a new ReplicationReportItem object
 // This constructor will assign default values to properties that have it defined,
@@ -118,17 +125,58 @@ func (o *ReplicationReportItem) SetErrors(v []ReplicationReportError) {
 }
 
 func (o ReplicationReportItem) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["successCount"] = o.SuccessCount
-	}
-	if true {
-		toSerialize["failureCount"] = o.FailureCount
-	}
-	if true {
-		toSerialize["errors"] = o.Errors
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationReportItem) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["successCount"] = o.SuccessCount
+	toSerialize["failureCount"] = o.FailureCount
+	toSerialize["errors"] = o.Errors
+	return toSerialize, nil
+}
+
+func (o *ReplicationReportItem) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"successCount",
+		"failureCount",
+		"errors",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReplicationReportItem := _ReplicationReportItem{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReplicationReportItem)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReplicationReportItem(varReplicationReportItem)
+
+	return err
 }
 
 type NullableReplicationReportItem struct {

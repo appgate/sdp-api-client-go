@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// RiskModelApiService RiskModelApi service
-type RiskModelApiService service
+// RiskModelAPIService RiskModelAPI service
+type RiskModelAPIService service
 
 type ApiRiskModelGetRequest struct {
 	ctx           context.Context
-	ApiService    *RiskModelApiService
+	ApiService    *RiskModelAPIService
 	authorization *string
 }
 
@@ -46,7 +46,7 @@ View the current Risk Model.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiRiskModelGetRequest
 */
-func (a *RiskModelApiService) RiskModelGet(ctx context.Context) ApiRiskModelGetRequest {
+func (a *RiskModelAPIService) RiskModelGet(ctx context.Context) ApiRiskModelGetRequest {
 	return ApiRiskModelGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *RiskModelApiService) RiskModelGet(ctx context.Context) ApiRiskModelGetR
 // Execute executes the request
 //
 //	@return RiskModel
-func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*RiskModel, *http.Response, error) {
+func (a *RiskModelAPIService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*RiskModel, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 		localVarReturnValue *RiskModel
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RiskModelApiService.RiskModelGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RiskModelAPIService.RiskModelGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -95,7 +95,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -106,9 +106,9 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -125,6 +125,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -135,16 +136,18 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -155,6 +158,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -174,7 +178,7 @@ func (a *RiskModelApiService) RiskModelGetExecute(r ApiRiskModelGetRequest) (*Ri
 
 type ApiRiskModelPutRequest struct {
 	ctx           context.Context
-	ApiService    *RiskModelApiService
+	ApiService    *RiskModelAPIService
 	authorization *string
 	riskModel     *RiskModel
 }
@@ -203,7 +207,7 @@ Update Risk Model.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiRiskModelPutRequest
 */
-func (a *RiskModelApiService) RiskModelPut(ctx context.Context) ApiRiskModelPutRequest {
+func (a *RiskModelAPIService) RiskModelPut(ctx context.Context) ApiRiskModelPutRequest {
 	return ApiRiskModelPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -211,14 +215,14 @@ func (a *RiskModelApiService) RiskModelPut(ctx context.Context) ApiRiskModelPutR
 }
 
 // Execute executes the request
-func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*http.Response, error) {
+func (a *RiskModelAPIService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPut
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RiskModelApiService.RiskModelPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RiskModelAPIService.RiskModelPut")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -249,7 +253,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.riskModel
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -262,9 +266,9 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -281,6 +285,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -291,6 +296,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -301,16 +307,18 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -321,6 +329,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -331,6 +340,7 @@ func (a *RiskModelApiService) RiskModelPutExecute(r ApiRiskModelPutRequest) (*ht
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

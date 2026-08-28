@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppliancesIdCommandDigPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandDigPostRequest{}
 
 // AppliancesIdCommandDigPostRequest struct for AppliancesIdCommandDigPostRequest
 type AppliancesIdCommandDigPostRequest struct {
@@ -28,6 +33,8 @@ type AppliancesIdCommandDigPostRequest struct {
 	// The number of seconds to run/wait before timing out.
 	ProcessTimeout *int32 `json:"processTimeout,omitempty"`
 }
+
+type _AppliancesIdCommandDigPostRequest AppliancesIdCommandDigPostRequest
 
 // NewAppliancesIdCommandDigPostRequest instantiates a new AppliancesIdCommandDigPostRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +92,7 @@ func (o *AppliancesIdCommandDigPostRequest) SetHost(v string) {
 
 // GetServer returns the Server field value if set, zero value otherwise.
 func (o *AppliancesIdCommandDigPostRequest) GetServer() string {
-	if o == nil || o.Server == nil {
+	if o == nil || IsNil(o.Server) {
 		var ret string
 		return ret
 	}
@@ -95,7 +102,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetServer() string {
 // GetServerOk returns a tuple with the Server field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandDigPostRequest) GetServerOk() (*string, bool) {
-	if o == nil || o.Server == nil {
+	if o == nil || IsNil(o.Server) {
 		return nil, false
 	}
 	return o.Server, true
@@ -103,7 +110,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetServerOk() (*string, bool) {
 
 // HasServer returns a boolean if a field has been set.
 func (o *AppliancesIdCommandDigPostRequest) HasServer() bool {
-	if o != nil && o.Server != nil {
+	if o != nil && !IsNil(o.Server) {
 		return true
 	}
 
@@ -117,7 +124,7 @@ func (o *AppliancesIdCommandDigPostRequest) SetServer(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *AppliancesIdCommandDigPostRequest) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -127,7 +134,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandDigPostRequest) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -135,7 +142,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *AppliancesIdCommandDigPostRequest) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -149,7 +156,7 @@ func (o *AppliancesIdCommandDigPostRequest) SetType(v string) {
 
 // GetProtocol returns the Protocol field value if set, zero value otherwise.
 func (o *AppliancesIdCommandDigPostRequest) GetProtocol() string {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		var ret string
 		return ret
 	}
@@ -159,7 +166,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetProtocol() string {
 // GetProtocolOk returns a tuple with the Protocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandDigPostRequest) GetProtocolOk() (*string, bool) {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		return nil, false
 	}
 	return o.Protocol, true
@@ -167,7 +174,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetProtocolOk() (*string, bool) {
 
 // HasProtocol returns a boolean if a field has been set.
 func (o *AppliancesIdCommandDigPostRequest) HasProtocol() bool {
-	if o != nil && o.Protocol != nil {
+	if o != nil && !IsNil(o.Protocol) {
 		return true
 	}
 
@@ -181,7 +188,7 @@ func (o *AppliancesIdCommandDigPostRequest) SetProtocol(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandDigPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -191,7 +198,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandDigPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -199,7 +206,7 @@ func (o *AppliancesIdCommandDigPostRequest) GetProcessTimeoutOk() (*int32, bool)
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandDigPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -212,23 +219,66 @@ func (o *AppliancesIdCommandDigPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandDigPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if o.Server != nil {
-		toSerialize["server"] = o.Server
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Protocol != nil {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandDigPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["host"] = o.Host
+	if !IsNil(o.Server) {
+		toSerialize["server"] = o.Server
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Protocol) {
+		toSerialize["protocol"] = o.Protocol
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
+}
+
+func (o *AppliancesIdCommandDigPostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"host",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppliancesIdCommandDigPostRequest := _AppliancesIdCommandDigPostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppliancesIdCommandDigPostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppliancesIdCommandDigPostRequest(varAppliancesIdCommandDigPostRequest)
+
+	return err
 }
 
 type NullableAppliancesIdCommandDigPostRequest struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StatsAppliancesListAllOfNetwork type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesListAllOfNetwork{}
+
 // StatsAppliancesListAllOfNetwork Current network utilization on the Appliance.
 type StatsAppliancesListAllOfNetwork struct {
 	// The name of the NIC that's most used.
@@ -50,7 +53,7 @@ func NewStatsAppliancesListAllOfNetworkWithDefaults() *StatsAppliancesListAllOfN
 
 // GetBusiestNic returns the BusiestNic field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetBusiestNic() string {
-	if o == nil || o.BusiestNic == nil {
+	if o == nil || IsNil(o.BusiestNic) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetBusiestNic() string {
 // GetBusiestNicOk returns a tuple with the BusiestNic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetBusiestNicOk() (*string, bool) {
-	if o == nil || o.BusiestNic == nil {
+	if o == nil || IsNil(o.BusiestNic) {
 		return nil, false
 	}
 	return o.BusiestNic, true
@@ -68,7 +71,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetBusiestNicOk() (*string, bool) {
 
 // HasBusiestNic returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasBusiestNic() bool {
-	if o != nil && o.BusiestNic != nil {
+	if o != nil && !IsNil(o.BusiestNic) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *StatsAppliancesListAllOfNetwork) SetBusiestNic(v string) {
 
 // GetDropin returns the Dropin field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetDropin() float32 {
-	if o == nil || o.Dropin == nil {
+	if o == nil || IsNil(o.Dropin) {
 		var ret float32
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetDropin() float32 {
 // GetDropinOk returns a tuple with the Dropin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetDropinOk() (*float32, bool) {
-	if o == nil || o.Dropin == nil {
+	if o == nil || IsNil(o.Dropin) {
 		return nil, false
 	}
 	return o.Dropin, true
@@ -100,7 +103,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetDropinOk() (*float32, bool) {
 
 // HasDropin returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasDropin() bool {
-	if o != nil && o.Dropin != nil {
+	if o != nil && !IsNil(o.Dropin) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *StatsAppliancesListAllOfNetwork) SetDropin(v float32) {
 
 // GetDropout returns the Dropout field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetDropout() float32 {
-	if o == nil || o.Dropout == nil {
+	if o == nil || IsNil(o.Dropout) {
 		var ret float32
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetDropout() float32 {
 // GetDropoutOk returns a tuple with the Dropout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetDropoutOk() (*float32, bool) {
-	if o == nil || o.Dropout == nil {
+	if o == nil || IsNil(o.Dropout) {
 		return nil, false
 	}
 	return o.Dropout, true
@@ -132,7 +135,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetDropoutOk() (*float32, bool) {
 
 // HasDropout returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasDropout() bool {
-	if o != nil && o.Dropout != nil {
+	if o != nil && !IsNil(o.Dropout) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *StatsAppliancesListAllOfNetwork) SetDropout(v float32) {
 
 // GetRxSpeed returns the RxSpeed field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetRxSpeed() string {
-	if o == nil || o.RxSpeed == nil {
+	if o == nil || IsNil(o.RxSpeed) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetRxSpeed() string {
 // GetRxSpeedOk returns a tuple with the RxSpeed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetRxSpeedOk() (*string, bool) {
-	if o == nil || o.RxSpeed == nil {
+	if o == nil || IsNil(o.RxSpeed) {
 		return nil, false
 	}
 	return o.RxSpeed, true
@@ -164,7 +167,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetRxSpeedOk() (*string, bool) {
 
 // HasRxSpeed returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasRxSpeed() bool {
-	if o != nil && o.RxSpeed != nil {
+	if o != nil && !IsNil(o.RxSpeed) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *StatsAppliancesListAllOfNetwork) SetRxSpeed(v string) {
 
 // GetTxSpeed returns the TxSpeed field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetTxSpeed() string {
-	if o == nil || o.TxSpeed == nil {
+	if o == nil || IsNil(o.TxSpeed) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetTxSpeed() string {
 // GetTxSpeedOk returns a tuple with the TxSpeed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetTxSpeedOk() (*string, bool) {
-	if o == nil || o.TxSpeed == nil {
+	if o == nil || IsNil(o.TxSpeed) {
 		return nil, false
 	}
 	return o.TxSpeed, true
@@ -196,7 +199,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetTxSpeedOk() (*string, bool) {
 
 // HasTxSpeed returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasTxSpeed() bool {
-	if o != nil && o.TxSpeed != nil {
+	if o != nil && !IsNil(o.TxSpeed) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *StatsAppliancesListAllOfNetwork) SetTxSpeed(v string) {
 
 // GetIps returns the Ips field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfNetwork) GetIps() map[string][]string {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		var ret map[string][]string
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetIps() map[string][]string {
 // GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfNetwork) GetIpsOk() (*map[string][]string, bool) {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		return nil, false
 	}
 	return o.Ips, true
@@ -228,7 +231,7 @@ func (o *StatsAppliancesListAllOfNetwork) GetIpsOk() (*map[string][]string, bool
 
 // HasIps returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfNetwork) HasIps() bool {
-	if o != nil && o.Ips != nil {
+	if o != nil && !IsNil(o.Ips) {
 		return true
 	}
 
@@ -241,26 +244,34 @@ func (o *StatsAppliancesListAllOfNetwork) SetIps(v map[string][]string) {
 }
 
 func (o StatsAppliancesListAllOfNetwork) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.BusiestNic != nil {
-		toSerialize["busiestNic"] = o.BusiestNic
-	}
-	if o.Dropin != nil {
-		toSerialize["dropin"] = o.Dropin
-	}
-	if o.Dropout != nil {
-		toSerialize["dropout"] = o.Dropout
-	}
-	if o.RxSpeed != nil {
-		toSerialize["rxSpeed"] = o.RxSpeed
-	}
-	if o.TxSpeed != nil {
-		toSerialize["txSpeed"] = o.TxSpeed
-	}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesListAllOfNetwork) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.BusiestNic) {
+		toSerialize["busiestNic"] = o.BusiestNic
+	}
+	if !IsNil(o.Dropin) {
+		toSerialize["dropin"] = o.Dropin
+	}
+	if !IsNil(o.Dropout) {
+		toSerialize["dropout"] = o.Dropout
+	}
+	if !IsNil(o.RxSpeed) {
+		toSerialize["rxSpeed"] = o.RxSpeed
+	}
+	if !IsNil(o.TxSpeed) {
+		toSerialize["txSpeed"] = o.TxSpeed
+	}
+	if !IsNil(o.Ips) {
+		toSerialize["ips"] = o.Ips
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesListAllOfNetwork struct {

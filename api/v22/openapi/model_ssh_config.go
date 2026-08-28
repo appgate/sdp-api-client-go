@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SSHConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SSHConfig{}
 
 // SSHConfig SSH configuration during seeding.
 type SSHConfig struct {
@@ -56,7 +59,7 @@ func NewSSHConfigWithDefaults() *SSHConfig {
 
 // GetProvideCloudSSHKey returns the ProvideCloudSSHKey field value if set, zero value otherwise.
 func (o *SSHConfig) GetProvideCloudSSHKey() bool {
-	if o == nil || o.ProvideCloudSSHKey == nil {
+	if o == nil || IsNil(o.ProvideCloudSSHKey) {
 		var ret bool
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *SSHConfig) GetProvideCloudSSHKey() bool {
 // GetProvideCloudSSHKeyOk returns a tuple with the ProvideCloudSSHKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SSHConfig) GetProvideCloudSSHKeyOk() (*bool, bool) {
-	if o == nil || o.ProvideCloudSSHKey == nil {
+	if o == nil || IsNil(o.ProvideCloudSSHKey) {
 		return nil, false
 	}
 	return o.ProvideCloudSSHKey, true
@@ -74,7 +77,7 @@ func (o *SSHConfig) GetProvideCloudSSHKeyOk() (*bool, bool) {
 
 // HasProvideCloudSSHKey returns a boolean if a field has been set.
 func (o *SSHConfig) HasProvideCloudSSHKey() bool {
-	if o != nil && o.ProvideCloudSSHKey != nil {
+	if o != nil && !IsNil(o.ProvideCloudSSHKey) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *SSHConfig) SetProvideCloudSSHKey(v bool) {
 
 // GetSshKey returns the SshKey field value if set, zero value otherwise.
 func (o *SSHConfig) GetSshKey() string {
-	if o == nil || o.SshKey == nil {
+	if o == nil || IsNil(o.SshKey) {
 		var ret string
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *SSHConfig) GetSshKey() string {
 // GetSshKeyOk returns a tuple with the SshKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SSHConfig) GetSshKeyOk() (*string, bool) {
-	if o == nil || o.SshKey == nil {
+	if o == nil || IsNil(o.SshKey) {
 		return nil, false
 	}
 	return o.SshKey, true
@@ -106,7 +109,7 @@ func (o *SSHConfig) GetSshKeyOk() (*string, bool) {
 
 // HasSshKey returns a boolean if a field has been set.
 func (o *SSHConfig) HasSshKey() bool {
-	if o != nil && o.SshKey != nil {
+	if o != nil && !IsNil(o.SshKey) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *SSHConfig) SetSshKey(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *SSHConfig) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *SSHConfig) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SSHConfig) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -138,7 +141,7 @@ func (o *SSHConfig) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *SSHConfig) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *SSHConfig) SetPassword(v string) {
 
 // GetAllowCustomization returns the AllowCustomization field value if set, zero value otherwise.
 func (o *SSHConfig) GetAllowCustomization() bool {
-	if o == nil || o.AllowCustomization == nil {
+	if o == nil || IsNil(o.AllowCustomization) {
 		var ret bool
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *SSHConfig) GetAllowCustomization() bool {
 // GetAllowCustomizationOk returns a tuple with the AllowCustomization field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SSHConfig) GetAllowCustomizationOk() (*bool, bool) {
-	if o == nil || o.AllowCustomization == nil {
+	if o == nil || IsNil(o.AllowCustomization) {
 		return nil, false
 	}
 	return o.AllowCustomization, true
@@ -170,7 +173,7 @@ func (o *SSHConfig) GetAllowCustomizationOk() (*bool, bool) {
 
 // HasAllowCustomization returns a boolean if a field has been set.
 func (o *SSHConfig) HasAllowCustomization() bool {
-	if o != nil && o.AllowCustomization != nil {
+	if o != nil && !IsNil(o.AllowCustomization) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *SSHConfig) SetAllowCustomization(v bool) {
 
 // GetValidityDays returns the ValidityDays field value if set, zero value otherwise.
 func (o *SSHConfig) GetValidityDays() float32 {
-	if o == nil || o.ValidityDays == nil {
+	if o == nil || IsNil(o.ValidityDays) {
 		var ret float32
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *SSHConfig) GetValidityDays() float32 {
 // GetValidityDaysOk returns a tuple with the ValidityDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SSHConfig) GetValidityDaysOk() (*float32, bool) {
-	if o == nil || o.ValidityDays == nil {
+	if o == nil || IsNil(o.ValidityDays) {
 		return nil, false
 	}
 	return o.ValidityDays, true
@@ -202,7 +205,7 @@ func (o *SSHConfig) GetValidityDaysOk() (*float32, bool) {
 
 // HasValidityDays returns a boolean if a field has been set.
 func (o *SSHConfig) HasValidityDays() bool {
-	if o != nil && o.ValidityDays != nil {
+	if o != nil && !IsNil(o.ValidityDays) {
 		return true
 	}
 
@@ -215,23 +218,31 @@ func (o *SSHConfig) SetValidityDays(v float32) {
 }
 
 func (o SSHConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProvideCloudSSHKey != nil {
-		toSerialize["provideCloudSSHKey"] = o.ProvideCloudSSHKey
-	}
-	if o.SshKey != nil {
-		toSerialize["sshKey"] = o.SshKey
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.AllowCustomization != nil {
-		toSerialize["allowCustomization"] = o.AllowCustomization
-	}
-	if o.ValidityDays != nil {
-		toSerialize["validityDays"] = o.ValidityDays
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SSHConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProvideCloudSSHKey) {
+		toSerialize["provideCloudSSHKey"] = o.ProvideCloudSSHKey
+	}
+	if !IsNil(o.SshKey) {
+		toSerialize["sshKey"] = o.SshKey
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.AllowCustomization) {
+		toSerialize["allowCustomization"] = o.AllowCustomization
+	}
+	if !IsNil(o.ValidityDays) {
+		toSerialize["validityDays"] = o.ValidityDays
+	}
+	return toSerialize, nil
 }
 
 type NullableSSHConfig struct {

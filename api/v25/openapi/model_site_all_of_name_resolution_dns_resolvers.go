@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the SiteAllOfNameResolutionDnsResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionDnsResolvers{}
 
 // SiteAllOfNameResolutionDnsResolvers struct for SiteAllOfNameResolutionDnsResolvers
 type SiteAllOfNameResolutionDnsResolvers struct {
@@ -32,6 +37,8 @@ type SiteAllOfNameResolutionDnsResolvers struct {
 	// This will configure Client machines' DNS according to this resolver if the Client connects to this Site.
 	AutoClientDns *bool `json:"autoClientDns,omitempty"`
 }
+
+type _SiteAllOfNameResolutionDnsResolvers SiteAllOfNameResolutionDnsResolvers
 
 // NewSiteAllOfNameResolutionDnsResolvers instantiates a new SiteAllOfNameResolutionDnsResolvers object
 // This constructor will assign default values to properties that have it defined,
@@ -89,7 +96,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -99,7 +106,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -107,7 +114,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateIntervalOk() (*int32, boo
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -121,7 +128,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetUpdateInterval(v int32) {
 
 // GetQueryAAAA returns the QueryAAAA field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAA() bool {
-	if o == nil || o.QueryAAAA == nil {
+	if o == nil || IsNil(o.QueryAAAA) {
 		var ret bool
 		return ret
 	}
@@ -131,7 +138,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAA() bool {
 // GetQueryAAAAOk returns a tuple with the QueryAAAA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAAOk() (*bool, bool) {
-	if o == nil || o.QueryAAAA == nil {
+	if o == nil || IsNil(o.QueryAAAA) {
 		return nil, false
 	}
 	return o.QueryAAAA, true
@@ -139,7 +146,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAAOk() (*bool, bool) {
 
 // HasQueryAAAA returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasQueryAAAA() bool {
-	if o != nil && o.QueryAAAA != nil {
+	if o != nil && !IsNil(o.QueryAAAA) {
 		return true
 	}
 
@@ -153,7 +160,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetQueryAAAA(v bool) {
 
 // GetZonesTransfers returns the ZonesTransfers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetZonesTransfers() bool {
-	if o == nil || o.ZonesTransfers == nil {
+	if o == nil || IsNil(o.ZonesTransfers) {
 		var ret bool
 		return ret
 	}
@@ -163,7 +170,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetZonesTransfers() bool {
 // GetZonesTransfersOk returns a tuple with the ZonesTransfers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetZonesTransfersOk() (*bool, bool) {
-	if o == nil || o.ZonesTransfers == nil {
+	if o == nil || IsNil(o.ZonesTransfers) {
 		return nil, false
 	}
 	return o.ZonesTransfers, true
@@ -171,7 +178,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetZonesTransfersOk() (*bool, bool
 
 // HasZonesTransfers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasZonesTransfers() bool {
-	if o != nil && o.ZonesTransfers != nil {
+	if o != nil && !IsNil(o.ZonesTransfers) {
 		return true
 	}
 
@@ -185,7 +192,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetZonesTransfers(v bool) {
 
 // GetServers returns the Servers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetServers() []string {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		var ret []string
 		return ret
 	}
@@ -195,7 +202,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetServers() []string {
 // GetServersOk returns a tuple with the Servers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetServersOk() ([]string, bool) {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		return nil, false
 	}
 	return o.Servers, true
@@ -203,7 +210,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetServersOk() ([]string, bool) {
 
 // HasServers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasServers() bool {
-	if o != nil && o.Servers != nil {
+	if o != nil && !IsNil(o.Servers) {
 		return true
 	}
 
@@ -217,7 +224,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetServers(v []string) {
 
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomains() []string {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		var ret []string
 		return ret
 	}
@@ -227,7 +234,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomains() []string {
 // GetMatchDomainsOk returns a tuple with the MatchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomainsOk() ([]string, bool) {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		return nil, false
 	}
 	return o.MatchDomains, true
@@ -235,7 +242,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomainsOk() ([]string, boo
 
 // HasMatchDomains returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasMatchDomains() bool {
-	if o != nil && o.MatchDomains != nil {
+	if o != nil && !IsNil(o.MatchDomains) {
 		return true
 	}
 
@@ -249,7 +256,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetMatchDomains(v []string) {
 
 // GetAutoClientDns returns the AutoClientDns field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetAutoClientDns() bool {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		var ret bool
 		return ret
 	}
@@ -259,7 +266,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetAutoClientDns() bool {
 // GetAutoClientDnsOk returns a tuple with the AutoClientDns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetAutoClientDnsOk() (*bool, bool) {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		return nil, false
 	}
 	return o.AutoClientDns, true
@@ -267,7 +274,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetAutoClientDnsOk() (*bool, bool)
 
 // HasAutoClientDns returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasAutoClientDns() bool {
-	if o != nil && o.AutoClientDns != nil {
+	if o != nil && !IsNil(o.AutoClientDns) {
 		return true
 	}
 
@@ -280,29 +287,72 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetAutoClientDns(v bool) {
 }
 
 func (o SiteAllOfNameResolutionDnsResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if o.QueryAAAA != nil {
-		toSerialize["queryAAAA"] = o.QueryAAAA
-	}
-	if o.ZonesTransfers != nil {
-		toSerialize["zonesTransfers"] = o.ZonesTransfers
-	}
-	if o.Servers != nil {
-		toSerialize["servers"] = o.Servers
-	}
-	if o.MatchDomains != nil {
-		toSerialize["matchDomains"] = o.MatchDomains
-	}
-	if o.AutoClientDns != nil {
-		toSerialize["autoClientDns"] = o.AutoClientDns
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionDnsResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.QueryAAAA) {
+		toSerialize["queryAAAA"] = o.QueryAAAA
+	}
+	if !IsNil(o.ZonesTransfers) {
+		toSerialize["zonesTransfers"] = o.ZonesTransfers
+	}
+	if !IsNil(o.Servers) {
+		toSerialize["servers"] = o.Servers
+	}
+	if !IsNil(o.MatchDomains) {
+		toSerialize["matchDomains"] = o.MatchDomains
+	}
+	if !IsNil(o.AutoClientDns) {
+		toSerialize["autoClientDns"] = o.AutoClientDns
+	}
+	return toSerialize, nil
+}
+
+func (o *SiteAllOfNameResolutionDnsResolvers) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSiteAllOfNameResolutionDnsResolvers := _SiteAllOfNameResolutionDnsResolvers{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSiteAllOfNameResolutionDnsResolvers)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SiteAllOfNameResolutionDnsResolvers(varSiteAllOfNameResolutionDnsResolvers)
+
+	return err
 }
 
 type NullableSiteAllOfNameResolutionDnsResolvers struct {

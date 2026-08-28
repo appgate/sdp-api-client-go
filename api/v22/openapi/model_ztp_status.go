@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ZtpStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpStatus{}
 
 // ZtpStatus struct for ZtpStatus
 type ZtpStatus struct {
@@ -44,7 +47,7 @@ func NewZtpStatusWithDefaults() *ZtpStatus {
 
 // GetRegistered returns the Registered field value if set, zero value otherwise.
 func (o *ZtpStatus) GetRegistered() bool {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ZtpStatus) GetRegistered() bool {
 // GetRegisteredOk returns a tuple with the Registered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetRegisteredOk() (*bool, bool) {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		return nil, false
 	}
 	return o.Registered, true
@@ -62,7 +65,7 @@ func (o *ZtpStatus) GetRegisteredOk() (*bool, bool) {
 
 // HasRegistered returns a boolean if a field has been set.
 func (o *ZtpStatus) HasRegistered() bool {
-	if o != nil && o.Registered != nil {
+	if o != nil && !IsNil(o.Registered) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ZtpStatus) SetRegistered(v bool) {
 
 // GetServiceNames returns the ServiceNames field value if set, zero value otherwise.
 func (o *ZtpStatus) GetServiceNames() []string {
-	if o == nil || o.ServiceNames == nil {
+	if o == nil || IsNil(o.ServiceNames) {
 		var ret []string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ZtpStatus) GetServiceNames() []string {
 // GetServiceNamesOk returns a tuple with the ServiceNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetServiceNamesOk() ([]string, bool) {
-	if o == nil || o.ServiceNames == nil {
+	if o == nil || IsNil(o.ServiceNames) {
 		return nil, false
 	}
 	return o.ServiceNames, true
@@ -94,7 +97,7 @@ func (o *ZtpStatus) GetServiceNamesOk() ([]string, bool) {
 
 // HasServiceNames returns a boolean if a field has been set.
 func (o *ZtpStatus) HasServiceNames() bool {
-	if o != nil && o.ServiceNames != nil {
+	if o != nil && !IsNil(o.ServiceNames) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ZtpStatus) SetServiceNames(v []string) {
 
 // GetConsoleUrl returns the ConsoleUrl field value if set, zero value otherwise.
 func (o *ZtpStatus) GetConsoleUrl() string {
-	if o == nil || o.ConsoleUrl == nil {
+	if o == nil || IsNil(o.ConsoleUrl) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ZtpStatus) GetConsoleUrl() string {
 // GetConsoleUrlOk returns a tuple with the ConsoleUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetConsoleUrlOk() (*string, bool) {
-	if o == nil || o.ConsoleUrl == nil {
+	if o == nil || IsNil(o.ConsoleUrl) {
 		return nil, false
 	}
 	return o.ConsoleUrl, true
@@ -126,7 +129,7 @@ func (o *ZtpStatus) GetConsoleUrlOk() (*string, bool) {
 
 // HasConsoleUrl returns a boolean if a field has been set.
 func (o *ZtpStatus) HasConsoleUrl() bool {
-	if o != nil && o.ConsoleUrl != nil {
+	if o != nil && !IsNil(o.ConsoleUrl) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ZtpStatus) SetConsoleUrl(v string) {
 }
 
 func (o ZtpStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Registered != nil {
-		toSerialize["registered"] = o.Registered
-	}
-	if o.ServiceNames != nil {
-		toSerialize["serviceNames"] = o.ServiceNames
-	}
-	if o.ConsoleUrl != nil {
-		toSerialize["consoleUrl"] = o.ConsoleUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Registered) {
+		toSerialize["registered"] = o.Registered
+	}
+	if !IsNil(o.ServiceNames) {
+		toSerialize["serviceNames"] = o.ServiceNames
+	}
+	if !IsNil(o.ConsoleUrl) {
+		toSerialize["consoleUrl"] = o.ConsoleUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpStatus struct {

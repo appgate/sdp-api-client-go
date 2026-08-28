@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GatewayRole type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GatewayRole{}
+
 // GatewayRole struct for GatewayRole
 type GatewayRole struct {
 	// Status of the role.
@@ -45,7 +48,7 @@ func NewGatewayRoleWithDefaults() *GatewayRole {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *GatewayRole) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *GatewayRole) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GatewayRole) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -63,7 +66,7 @@ func (o *GatewayRole) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *GatewayRole) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *GatewayRole) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *GatewayRole) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *GatewayRole) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GatewayRole) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -95,7 +98,7 @@ func (o *GatewayRole) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *GatewayRole) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *GatewayRole) SetDetails(v string) {
 
 // GetNumberOfSessions returns the NumberOfSessions field value if set, zero value otherwise.
 func (o *GatewayRole) GetNumberOfSessions() int32 {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		var ret int32
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *GatewayRole) GetNumberOfSessions() int32 {
 // GetNumberOfSessionsOk returns a tuple with the NumberOfSessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GatewayRole) GetNumberOfSessionsOk() (*int32, bool) {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		return nil, false
 	}
 	return o.NumberOfSessions, true
@@ -127,7 +130,7 @@ func (o *GatewayRole) GetNumberOfSessionsOk() (*int32, bool) {
 
 // HasNumberOfSessions returns a boolean if a field has been set.
 func (o *GatewayRole) HasNumberOfSessions() bool {
-	if o != nil && o.NumberOfSessions != nil {
+	if o != nil && !IsNil(o.NumberOfSessions) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *GatewayRole) SetNumberOfSessions(v int32) {
 
 // GetSessionCounts returns the SessionCounts field value if set, zero value otherwise.
 func (o *GatewayRole) GetSessionCounts() SessionCounts {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		var ret SessionCounts
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *GatewayRole) GetSessionCounts() SessionCounts {
 // GetSessionCountsOk returns a tuple with the SessionCounts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GatewayRole) GetSessionCountsOk() (*SessionCounts, bool) {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		return nil, false
 	}
 	return o.SessionCounts, true
@@ -159,7 +162,7 @@ func (o *GatewayRole) GetSessionCountsOk() (*SessionCounts, bool) {
 
 // HasSessionCounts returns a boolean if a field has been set.
 func (o *GatewayRole) HasSessionCounts() bool {
-	if o != nil && o.SessionCounts != nil {
+	if o != nil && !IsNil(o.SessionCounts) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *GatewayRole) SetSessionCounts(v SessionCounts) {
 }
 
 func (o GatewayRole) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.NumberOfSessions != nil {
-		toSerialize["numberOfSessions"] = o.NumberOfSessions
-	}
-	if o.SessionCounts != nil {
-		toSerialize["sessionCounts"] = o.SessionCounts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GatewayRole) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.NumberOfSessions) {
+		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	}
+	if !IsNil(o.SessionCounts) {
+		toSerialize["sessionCounts"] = o.SessionCounts
+	}
+	return toSerialize, nil
 }
 
 type NullableGatewayRole struct {

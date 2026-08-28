@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceWithSessionsRole type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceWithSessionsRole{}
+
 // ApplianceWithSessionsRole struct for ApplianceWithSessionsRole
 type ApplianceWithSessionsRole struct {
 	// Status of the role.
@@ -44,7 +47,7 @@ func NewApplianceWithSessionsRoleWithDefaults() *ApplianceWithSessionsRole {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ApplianceWithSessionsRole) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ApplianceWithSessionsRole) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithSessionsRole) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -62,7 +65,7 @@ func (o *ApplianceWithSessionsRole) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ApplianceWithSessionsRole) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ApplianceWithSessionsRole) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *ApplianceWithSessionsRole) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ApplianceWithSessionsRole) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithSessionsRole) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -94,7 +97,7 @@ func (o *ApplianceWithSessionsRole) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *ApplianceWithSessionsRole) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ApplianceWithSessionsRole) SetDetails(v string) {
 
 // GetNumberOfSessions returns the NumberOfSessions field value if set, zero value otherwise.
 func (o *ApplianceWithSessionsRole) GetNumberOfSessions() int32 {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		var ret int32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ApplianceWithSessionsRole) GetNumberOfSessions() int32 {
 // GetNumberOfSessionsOk returns a tuple with the NumberOfSessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithSessionsRole) GetNumberOfSessionsOk() (*int32, bool) {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		return nil, false
 	}
 	return o.NumberOfSessions, true
@@ -126,7 +129,7 @@ func (o *ApplianceWithSessionsRole) GetNumberOfSessionsOk() (*int32, bool) {
 
 // HasNumberOfSessions returns a boolean if a field has been set.
 func (o *ApplianceWithSessionsRole) HasNumberOfSessions() bool {
-	if o != nil && o.NumberOfSessions != nil {
+	if o != nil && !IsNil(o.NumberOfSessions) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ApplianceWithSessionsRole) SetNumberOfSessions(v int32) {
 }
 
 func (o ApplianceWithSessionsRole) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.NumberOfSessions != nil {
-		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceWithSessionsRole) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.NumberOfSessions) {
+		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceWithSessionsRole struct {

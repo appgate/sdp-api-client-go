@@ -12,9 +12,14 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"time"
 )
+
+// checks if the SamlProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SamlProvider{}
 
 // SamlProvider struct for SamlProvider
 type SamlProvider struct {
@@ -73,6 +78,8 @@ type SamlProvider struct {
 	ForceAuthn *bool `json:"forceAuthn,omitempty"`
 }
 
+type _SamlProvider SamlProvider
+
 // NewSamlProvider instantiates a new SamlProvider object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
@@ -118,7 +125,7 @@ func NewSamlProviderWithDefaults() *SamlProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *SamlProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -128,7 +135,7 @@ func (o *SamlProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -136,7 +143,7 @@ func (o *SamlProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *SamlProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -174,7 +181,7 @@ func (o *SamlProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *SamlProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -184,7 +191,7 @@ func (o *SamlProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -192,7 +199,7 @@ func (o *SamlProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *SamlProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -206,7 +213,7 @@ func (o *SamlProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *SamlProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -216,7 +223,7 @@ func (o *SamlProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -224,7 +231,7 @@ func (o *SamlProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *SamlProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -238,7 +245,7 @@ func (o *SamlProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *SamlProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -248,7 +255,7 @@ func (o *SamlProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -256,7 +263,7 @@ func (o *SamlProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *SamlProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -270,7 +277,7 @@ func (o *SamlProvider) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *SamlProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -280,7 +287,7 @@ func (o *SamlProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -288,7 +295,7 @@ func (o *SamlProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *SamlProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -326,7 +333,7 @@ func (o *SamlProvider) SetType(v string) {
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
 func (o *SamlProvider) GetIpPoolV4() string {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		var ret string
 		return ret
 	}
@@ -336,7 +343,7 @@ func (o *SamlProvider) GetIpPoolV4() string {
 // GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetIpPoolV4Ok() (*string, bool) {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		return nil, false
 	}
 	return o.IpPoolV4, true
@@ -344,7 +351,7 @@ func (o *SamlProvider) GetIpPoolV4Ok() (*string, bool) {
 
 // HasIpPoolV4 returns a boolean if a field has been set.
 func (o *SamlProvider) HasIpPoolV4() bool {
-	if o != nil && o.IpPoolV4 != nil {
+	if o != nil && !IsNil(o.IpPoolV4) {
 		return true
 	}
 
@@ -358,7 +365,7 @@ func (o *SamlProvider) SetIpPoolV4(v string) {
 
 // GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
 func (o *SamlProvider) GetIpPoolV6() string {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		var ret string
 		return ret
 	}
@@ -368,7 +375,7 @@ func (o *SamlProvider) GetIpPoolV6() string {
 // GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetIpPoolV6Ok() (*string, bool) {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		return nil, false
 	}
 	return o.IpPoolV6, true
@@ -376,7 +383,7 @@ func (o *SamlProvider) GetIpPoolV6Ok() (*string, bool) {
 
 // HasIpPoolV6 returns a boolean if a field has been set.
 func (o *SamlProvider) HasIpPoolV6() bool {
-	if o != nil && o.IpPoolV6 != nil {
+	if o != nil && !IsNil(o.IpPoolV6) {
 		return true
 	}
 
@@ -390,7 +397,7 @@ func (o *SamlProvider) SetIpPoolV6(v string) {
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
 func (o *SamlProvider) GetClaimMappings() []ClaimMappingsInner {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		var ret []ClaimMappingsInner
 		return ret
 	}
@@ -400,7 +407,7 @@ func (o *SamlProvider) GetClaimMappings() []ClaimMappingsInner {
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		return nil, false
 	}
 	return o.ClaimMappings, true
@@ -408,7 +415,7 @@ func (o *SamlProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
 
 // HasClaimMappings returns a boolean if a field has been set.
 func (o *SamlProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
+	if o != nil && !IsNil(o.ClaimMappings) {
 		return true
 	}
 
@@ -422,7 +429,7 @@ func (o *SamlProvider) SetClaimMappings(v []ClaimMappingsInner) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *SamlProvider) GetUserScripts() []string {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret []string
 		return ret
 	}
@@ -432,7 +439,7 @@ func (o *SamlProvider) GetUserScripts() []string {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetUserScriptsOk() ([]string, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -440,7 +447,7 @@ func (o *SamlProvider) GetUserScriptsOk() ([]string, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *SamlProvider) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -454,7 +461,7 @@ func (o *SamlProvider) SetUserScripts(v []string) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *SamlProvider) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -464,7 +471,7 @@ func (o *SamlProvider) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -472,7 +479,7 @@ func (o *SamlProvider) GetDnsServersOk() ([]string, bool) {
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *SamlProvider) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -486,7 +493,7 @@ func (o *SamlProvider) SetDnsServers(v []string) {
 
 // GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
 func (o *SamlProvider) GetDnsSearchDomains() []string {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		var ret []string
 		return ret
 	}
@@ -496,7 +503,7 @@ func (o *SamlProvider) GetDnsSearchDomains() []string {
 // GetDnsSearchDomainsOk returns a tuple with the DnsSearchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetDnsSearchDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		return nil, false
 	}
 	return o.DnsSearchDomains, true
@@ -504,7 +511,7 @@ func (o *SamlProvider) GetDnsSearchDomainsOk() ([]string, bool) {
 
 // HasDnsSearchDomains returns a boolean if a field has been set.
 func (o *SamlProvider) HasDnsSearchDomains() bool {
-	if o != nil && o.DnsSearchDomains != nil {
+	if o != nil && !IsNil(o.DnsSearchDomains) {
 		return true
 	}
 
@@ -518,7 +525,7 @@ func (o *SamlProvider) SetDnsSearchDomains(v []string) {
 
 // GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
 func (o *SamlProvider) GetDeviceLimitPerUser() int32 {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		var ret int32
 		return ret
 	}
@@ -528,7 +535,7 @@ func (o *SamlProvider) GetDeviceLimitPerUser() int32 {
 // GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		return nil, false
 	}
 	return o.DeviceLimitPerUser, true
@@ -536,7 +543,7 @@ func (o *SamlProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
 
 // HasDeviceLimitPerUser returns a boolean if a field has been set.
 func (o *SamlProvider) HasDeviceLimitPerUser() bool {
-	if o != nil && o.DeviceLimitPerUser != nil {
+	if o != nil && !IsNil(o.DeviceLimitPerUser) {
 		return true
 	}
 
@@ -550,7 +557,7 @@ func (o *SamlProvider) SetDeviceLimitPerUser(v int32) {
 
 // GetAdminProvider returns the AdminProvider field value if set, zero value otherwise.
 func (o *SamlProvider) GetAdminProvider() bool {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		var ret bool
 		return ret
 	}
@@ -560,7 +567,7 @@ func (o *SamlProvider) GetAdminProvider() bool {
 // GetAdminProviderOk returns a tuple with the AdminProvider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetAdminProviderOk() (*bool, bool) {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		return nil, false
 	}
 	return o.AdminProvider, true
@@ -568,7 +575,7 @@ func (o *SamlProvider) GetAdminProviderOk() (*bool, bool) {
 
 // HasAdminProvider returns a boolean if a field has been set.
 func (o *SamlProvider) HasAdminProvider() bool {
-	if o != nil && o.AdminProvider != nil {
+	if o != nil && !IsNil(o.AdminProvider) {
 		return true
 	}
 
@@ -582,7 +589,7 @@ func (o *SamlProvider) SetAdminProvider(v bool) {
 
 // GetOnBoarding2FA returns the OnBoarding2FA field value if set, zero value otherwise.
 func (o *SamlProvider) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoarding2FA {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		var ret ConfigurableIdentityProviderAllOfOnBoarding2FA
 		return ret
 	}
@@ -592,7 +599,7 @@ func (o *SamlProvider) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoa
 // GetOnBoarding2FAOk returns a tuple with the OnBoarding2FA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfOnBoarding2FA, bool) {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		return nil, false
 	}
 	return o.OnBoarding2FA, true
@@ -600,7 +607,7 @@ func (o *SamlProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfO
 
 // HasOnBoarding2FA returns a boolean if a field has been set.
 func (o *SamlProvider) HasOnBoarding2FA() bool {
-	if o != nil && o.OnBoarding2FA != nil {
+	if o != nil && !IsNil(o.OnBoarding2FA) {
 		return true
 	}
 
@@ -614,7 +621,7 @@ func (o *SamlProvider) SetOnBoarding2FA(v ConfigurableIdentityProviderAllOfOnBoa
 
 // GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
 func (o *SamlProvider) GetInactivityTimeoutMinutes() int32 {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -624,7 +631,7 @@ func (o *SamlProvider) GetInactivityTimeoutMinutes() int32 {
 // GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		return nil, false
 	}
 	return o.InactivityTimeoutMinutes, true
@@ -632,7 +639,7 @@ func (o *SamlProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
 
 // HasInactivityTimeoutMinutes returns a boolean if a field has been set.
 func (o *SamlProvider) HasInactivityTimeoutMinutes() bool {
-	if o != nil && o.InactivityTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutMinutes) {
 		return true
 	}
 
@@ -646,7 +653,7 @@ func (o *SamlProvider) SetInactivityTimeoutMinutes(v int32) {
 
 // GetNetworkInactivityTimeoutEnabled returns the NetworkInactivityTimeoutEnabled field value if set, zero value otherwise.
 func (o *SamlProvider) GetNetworkInactivityTimeoutEnabled() bool {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		var ret bool
 		return ret
 	}
@@ -656,7 +663,7 @@ func (o *SamlProvider) GetNetworkInactivityTimeoutEnabled() bool {
 // GetNetworkInactivityTimeoutEnabledOk returns a tuple with the NetworkInactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return nil, false
 	}
 	return o.NetworkInactivityTimeoutEnabled, true
@@ -664,7 +671,7 @@ func (o *SamlProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
 
 // HasNetworkInactivityTimeoutEnabled returns a boolean if a field has been set.
 func (o *SamlProvider) HasNetworkInactivityTimeoutEnabled() bool {
-	if o != nil && o.NetworkInactivityTimeoutEnabled != nil {
+	if o != nil && !IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return true
 	}
 
@@ -678,7 +685,7 @@ func (o *SamlProvider) SetNetworkInactivityTimeoutEnabled(v bool) {
 
 // GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
 func (o *SamlProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		var ret bool
 		return ret
 	}
@@ -688,7 +695,7 @@ func (o *SamlProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
 // GetEnforceWindowsNetworkProfileAsDomainOk returns a tuple with the EnforceWindowsNetworkProfileAsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool) {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return nil, false
 	}
 	return o.EnforceWindowsNetworkProfileAsDomain, true
@@ -696,7 +703,7 @@ func (o *SamlProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool)
 
 // HasEnforceWindowsNetworkProfileAsDomain returns a boolean if a field has been set.
 func (o *SamlProvider) HasEnforceWindowsNetworkProfileAsDomain() bool {
-	if o != nil && o.EnforceWindowsNetworkProfileAsDomain != nil {
+	if o != nil && !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return true
 	}
 
@@ -710,7 +717,7 @@ func (o *SamlProvider) SetEnforceWindowsNetworkProfileAsDomain(v bool) {
 
 // GetBlockLocalDnsRequests returns the BlockLocalDnsRequests field value if set, zero value otherwise.
 func (o *SamlProvider) GetBlockLocalDnsRequests() bool {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		var ret bool
 		return ret
 	}
@@ -720,7 +727,7 @@ func (o *SamlProvider) GetBlockLocalDnsRequests() bool {
 // GetBlockLocalDnsRequestsOk returns a tuple with the BlockLocalDnsRequests field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		return nil, false
 	}
 	return o.BlockLocalDnsRequests, true
@@ -728,7 +735,7 @@ func (o *SamlProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
 
 // HasBlockLocalDnsRequests returns a boolean if a field has been set.
 func (o *SamlProvider) HasBlockLocalDnsRequests() bool {
-	if o != nil && o.BlockLocalDnsRequests != nil {
+	if o != nil && !IsNil(o.BlockLocalDnsRequests) {
 		return true
 	}
 
@@ -742,7 +749,7 @@ func (o *SamlProvider) SetBlockLocalDnsRequests(v bool) {
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
 func (o *SamlProvider) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		var ret []OnDemandClaimMappingsInner
 		return ret
 	}
@@ -752,7 +759,7 @@ func (o *SamlProvider) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInner, bool) {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		return nil, false
 	}
 	return o.OnDemandClaimMappings, true
@@ -760,7 +767,7 @@ func (o *SamlProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInne
 
 // HasOnDemandClaimMappings returns a boolean if a field has been set.
 func (o *SamlProvider) HasOnDemandClaimMappings() bool {
-	if o != nil && o.OnDemandClaimMappings != nil {
+	if o != nil && !IsNil(o.OnDemandClaimMappings) {
 		return true
 	}
 
@@ -870,7 +877,7 @@ func (o *SamlProvider) SetProviderCertificate(v string) {
 
 // GetDecryptionKey returns the DecryptionKey field value if set, zero value otherwise.
 func (o *SamlProvider) GetDecryptionKey() string {
-	if o == nil || o.DecryptionKey == nil {
+	if o == nil || IsNil(o.DecryptionKey) {
 		var ret string
 		return ret
 	}
@@ -880,7 +887,7 @@ func (o *SamlProvider) GetDecryptionKey() string {
 // GetDecryptionKeyOk returns a tuple with the DecryptionKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetDecryptionKeyOk() (*string, bool) {
-	if o == nil || o.DecryptionKey == nil {
+	if o == nil || IsNil(o.DecryptionKey) {
 		return nil, false
 	}
 	return o.DecryptionKey, true
@@ -888,7 +895,7 @@ func (o *SamlProvider) GetDecryptionKeyOk() (*string, bool) {
 
 // HasDecryptionKey returns a boolean if a field has been set.
 func (o *SamlProvider) HasDecryptionKey() bool {
-	if o != nil && o.DecryptionKey != nil {
+	if o != nil && !IsNil(o.DecryptionKey) {
 		return true
 	}
 
@@ -902,7 +909,7 @@ func (o *SamlProvider) SetDecryptionKey(v string) {
 
 // GetForceAuthn returns the ForceAuthn field value if set, zero value otherwise.
 func (o *SamlProvider) GetForceAuthn() bool {
-	if o == nil || o.ForceAuthn == nil {
+	if o == nil || IsNil(o.ForceAuthn) {
 		var ret bool
 		return ret
 	}
@@ -912,7 +919,7 @@ func (o *SamlProvider) GetForceAuthn() bool {
 // GetForceAuthnOk returns a tuple with the ForceAuthn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProvider) GetForceAuthnOk() (*bool, bool) {
-	if o == nil || o.ForceAuthn == nil {
+	if o == nil || IsNil(o.ForceAuthn) {
 		return nil, false
 	}
 	return o.ForceAuthn, true
@@ -920,7 +927,7 @@ func (o *SamlProvider) GetForceAuthnOk() (*bool, bool) {
 
 // HasForceAuthn returns a boolean if a field has been set.
 func (o *SamlProvider) HasForceAuthn() bool {
-	if o != nil && o.ForceAuthn != nil {
+	if o != nil && !IsNil(o.ForceAuthn) {
 		return true
 	}
 
@@ -933,89 +940,127 @@ func (o *SamlProvider) SetForceAuthn(v bool) {
 }
 
 func (o SamlProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.IpPoolV4 != nil {
-		toSerialize["ipPoolV4"] = o.IpPoolV4
-	}
-	if o.IpPoolV6 != nil {
-		toSerialize["ipPoolV6"] = o.IpPoolV6
-	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if o.DnsSearchDomains != nil {
-		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
-	}
-	if o.DeviceLimitPerUser != nil {
-		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
-	}
-	if o.AdminProvider != nil {
-		toSerialize["adminProvider"] = o.AdminProvider
-	}
-	if o.OnBoarding2FA != nil {
-		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
-	}
-	if o.InactivityTimeoutMinutes != nil {
-		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
-	}
-	if o.NetworkInactivityTimeoutEnabled != nil {
-		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
-	}
-	if o.EnforceWindowsNetworkProfileAsDomain != nil {
-		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
-	}
-	if o.BlockLocalDnsRequests != nil {
-		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
-	}
-	if o.OnDemandClaimMappings != nil {
-		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
-	}
-	if true {
-		toSerialize["redirectUrl"] = o.RedirectUrl
-	}
-	if true {
-		toSerialize["issuer"] = o.Issuer
-	}
-	if true {
-		toSerialize["audience"] = o.Audience
-	}
-	if true {
-		toSerialize["providerCertificate"] = o.ProviderCertificate
-	}
-	if o.DecryptionKey != nil {
-		toSerialize["decryptionKey"] = o.DecryptionKey
-	}
-	if o.ForceAuthn != nil {
-		toSerialize["forceAuthn"] = o.ForceAuthn
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SamlProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IpPoolV4) {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if !IsNil(o.IpPoolV6) {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if !IsNil(o.ClaimMappings) {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if !IsNil(o.DnsSearchDomains) {
+		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	}
+	if !IsNil(o.DeviceLimitPerUser) {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
+	}
+	if !IsNil(o.AdminProvider) {
+		toSerialize["adminProvider"] = o.AdminProvider
+	}
+	if !IsNil(o.OnBoarding2FA) {
+		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
+	}
+	if !IsNil(o.InactivityTimeoutMinutes) {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	if !IsNil(o.NetworkInactivityTimeoutEnabled) {
+		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
+	}
+	if !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
+		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
+	}
+	if !IsNil(o.BlockLocalDnsRequests) {
+		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
+	}
+	if !IsNil(o.OnDemandClaimMappings) {
+		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	toSerialize["redirectUrl"] = o.RedirectUrl
+	toSerialize["issuer"] = o.Issuer
+	toSerialize["audience"] = o.Audience
+	toSerialize["providerCertificate"] = o.ProviderCertificate
+	if !IsNil(o.DecryptionKey) {
+		toSerialize["decryptionKey"] = o.DecryptionKey
+	}
+	if !IsNil(o.ForceAuthn) {
+		toSerialize["forceAuthn"] = o.ForceAuthn
+	}
+	return toSerialize, nil
+}
+
+func (o *SamlProvider) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"type",
+		"redirectUrl",
+		"issuer",
+		"audience",
+		"providerCertificate",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSamlProvider := _SamlProvider{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSamlProvider)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SamlProvider(varSamlProvider)
+
+	return err
 }
 
 type NullableSamlProvider struct {

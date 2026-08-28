@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityCaNextGeneratePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityCaNextGeneratePostRequest{}
+
 // CertificateAuthorityCaNextGeneratePostRequest struct for CertificateAuthorityCaNextGeneratePostRequest
 type CertificateAuthorityCaNextGeneratePostRequest struct {
 	// X509 subject name for the CA certificate.
@@ -50,7 +53,7 @@ func NewCertificateAuthorityCaNextGeneratePostRequestWithDefaults() *Certificate
 
 // GetSubject returns the Subject field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) GetSubject() string {
-	if o == nil || o.Subject == nil {
+	if o == nil || IsNil(o.Subject) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) GetSubject() string {
 // GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) GetSubjectOk() (*string, bool) {
-	if o == nil || o.Subject == nil {
+	if o == nil || IsNil(o.Subject) {
 		return nil, false
 	}
 	return o.Subject, true
@@ -68,7 +71,7 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) GetSubjectOk() (*string,
 
 // HasSubject returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) HasSubject() bool {
-	if o != nil && o.Subject != nil {
+	if o != nil && !IsNil(o.Subject) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) SetSubject(v string) {
 
 // GetValidityYears returns the ValidityYears field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) GetValidityYears() float32 {
-	if o == nil || o.ValidityYears == nil {
+	if o == nil || IsNil(o.ValidityYears) {
 		var ret float32
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) GetValidityYears() float
 // GetValidityYearsOk returns a tuple with the ValidityYears field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) GetValidityYearsOk() (*float32, bool) {
-	if o == nil || o.ValidityYears == nil {
+	if o == nil || IsNil(o.ValidityYears) {
 		return nil, false
 	}
 	return o.ValidityYears, true
@@ -100,7 +103,7 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) GetValidityYearsOk() (*f
 
 // HasValidityYears returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextGeneratePostRequest) HasValidityYears() bool {
-	if o != nil && o.ValidityYears != nil {
+	if o != nil && !IsNil(o.ValidityYears) {
 		return true
 	}
 
@@ -113,14 +116,22 @@ func (o *CertificateAuthorityCaNextGeneratePostRequest) SetValidityYears(v float
 }
 
 func (o CertificateAuthorityCaNextGeneratePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Subject != nil {
-		toSerialize["subject"] = o.Subject
-	}
-	if o.ValidityYears != nil {
-		toSerialize["validityYears"] = o.ValidityYears
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityCaNextGeneratePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Subject) {
+		toSerialize["subject"] = o.Subject
+	}
+	if !IsNil(o.ValidityYears) {
+		toSerialize["validityYears"] = o.ValidityYears
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityCaNextGeneratePostRequest struct {

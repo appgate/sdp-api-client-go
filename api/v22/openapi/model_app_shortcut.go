@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AppShortcut type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppShortcut{}
 
 // AppShortcut Publishes the configured URL as an app on the client using the display name as the app name.
 type AppShortcut struct {
@@ -28,6 +33,8 @@ type AppShortcut struct {
 	// The group name this shortcut is to be grouped by
 	GroupName *string `json:"groupName,omitempty"`
 }
+
+type _AppShortcut AppShortcut
 
 // NewAppShortcut instantiates a new AppShortcut object
 // This constructor will assign default values to properties that have it defined,
@@ -78,7 +85,7 @@ func (o *AppShortcut) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *AppShortcut) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -88,7 +95,7 @@ func (o *AppShortcut) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppShortcut) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -96,7 +103,7 @@ func (o *AppShortcut) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *AppShortcut) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -134,7 +141,7 @@ func (o *AppShortcut) SetUrl(v string) {
 
 // GetColorCode returns the ColorCode field value if set, zero value otherwise.
 func (o *AppShortcut) GetColorCode() int32 {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		var ret int32
 		return ret
 	}
@@ -144,7 +151,7 @@ func (o *AppShortcut) GetColorCode() int32 {
 // GetColorCodeOk returns a tuple with the ColorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppShortcut) GetColorCodeOk() (*int32, bool) {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		return nil, false
 	}
 	return o.ColorCode, true
@@ -152,7 +159,7 @@ func (o *AppShortcut) GetColorCodeOk() (*int32, bool) {
 
 // HasColorCode returns a boolean if a field has been set.
 func (o *AppShortcut) HasColorCode() bool {
-	if o != nil && o.ColorCode != nil {
+	if o != nil && !IsNil(o.ColorCode) {
 		return true
 	}
 
@@ -166,7 +173,7 @@ func (o *AppShortcut) SetColorCode(v int32) {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *AppShortcut) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -176,7 +183,7 @@ func (o *AppShortcut) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppShortcut) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -184,7 +191,7 @@ func (o *AppShortcut) GetGroupNameOk() (*string, bool) {
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *AppShortcut) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -197,23 +204,65 @@ func (o *AppShortcut) SetGroupName(v string) {
 }
 
 func (o AppShortcut) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if o.ColorCode != nil {
-		toSerialize["colorCode"] = o.ColorCode
-	}
-	if o.GroupName != nil {
-		toSerialize["groupName"] = o.GroupName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppShortcut) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	toSerialize["url"] = o.Url
+	if !IsNil(o.ColorCode) {
+		toSerialize["colorCode"] = o.ColorCode
+	}
+	if !IsNil(o.GroupName) {
+		toSerialize["groupName"] = o.GroupName
+	}
+	return toSerialize, nil
+}
+
+func (o *AppShortcut) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"url",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAppShortcut := _AppShortcut{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAppShortcut)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AppShortcut(varAppShortcut)
+
+	return err
 }
 
 type NullableAppShortcut struct {

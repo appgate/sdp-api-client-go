@@ -14,19 +14,19 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 )
 
-// ClientLogsApiService ClientLogsApi service
-type ClientLogsApiService service
+// ClientLogsAPIService ClientLogsAPI service
+type ClientLogsAPIService service
 
 type ApiClientLogsDistinguishedNameGetRequest struct {
 	ctx               context.Context
-	ApiService        *ClientLogsApiService
+	ApiService        *ClientLogsAPIService
 	authorization     *string
 	distinguishedName string
 }
@@ -37,7 +37,7 @@ func (r ApiClientLogsDistinguishedNameGetRequest) Authorization(authorization st
 	return r
 }
 
-func (r ApiClientLogsDistinguishedNameGetRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiClientLogsDistinguishedNameGetRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.ClientLogsDistinguishedNameGetExecute(r)
 }
 
@@ -50,7 +50,7 @@ Sends a message to Client with the specified Distinguished Name to upload its lo
 	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
 	@return ApiClientLogsDistinguishedNameGetRequest
 */
-func (a *ClientLogsApiService) ClientLogsDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiClientLogsDistinguishedNameGetRequest {
+func (a *ClientLogsAPIService) ClientLogsDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiClientLogsDistinguishedNameGetRequest {
 	return ApiClientLogsDistinguishedNameGetRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -61,21 +61,21 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGet(ctx context.Contex
 // Execute executes the request
 //
 //	@return *os.File
-func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClientLogsDistinguishedNameGetRequest) (**os.File, *http.Response, error) {
+func (a *ClientLogsAPIService) ClientLogsDistinguishedNameGetExecute(r ApiClientLogsDistinguishedNameGetRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue **os.File
+		localVarReturnValue *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientLogsApiService.ClientLogsDistinguishedNameGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ClientLogsAPIService.ClientLogsDistinguishedNameGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/client-logs/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,7 +101,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -112,9 +112,9 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -131,6 +131,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -141,6 +142,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -151,6 +153,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -161,6 +164,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -171,6 +175,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -181,6 +186,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -191,6 +197,7 @@ func (a *ClientLogsApiService) ClientLogsDistinguishedNameGetExecute(r ApiClient
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

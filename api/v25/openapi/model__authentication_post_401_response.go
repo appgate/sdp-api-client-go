@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AuthenticationPost401Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationPost401Response{}
+
 // AuthenticationPost401Response struct for AuthenticationPost401Response
 type AuthenticationPost401Response struct {
 	// Machine readable error code.
@@ -44,7 +47,7 @@ func NewAuthenticationPost401ResponseWithDefaults() *AuthenticationPost401Respon
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AuthenticationPost401Response) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AuthenticationPost401Response) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationPost401Response) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -62,7 +65,7 @@ func (o *AuthenticationPost401Response) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AuthenticationPost401Response) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AuthenticationPost401Response) SetId(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AuthenticationPost401Response) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AuthenticationPost401Response) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationPost401Response) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -94,7 +97,7 @@ func (o *AuthenticationPost401Response) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *AuthenticationPost401Response) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AuthenticationPost401Response) SetMessage(v string) {
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *AuthenticationPost401Response) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AuthenticationPost401Response) GetReason() string {
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationPost401Response) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -126,7 +129,7 @@ func (o *AuthenticationPost401Response) GetReasonOk() (*string, bool) {
 
 // HasReason returns a boolean if a field has been set.
 func (o *AuthenticationPost401Response) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *AuthenticationPost401Response) SetReason(v string) {
 }
 
 func (o AuthenticationPost401Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationPost401Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationPost401Response struct {

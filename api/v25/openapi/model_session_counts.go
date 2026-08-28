@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SessionCounts type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionCounts{}
+
 // SessionCounts Session counts by connection type.
 type SessionCounts struct {
 	// Number of direct sessions.
@@ -44,7 +47,7 @@ func NewSessionCountsWithDefaults() *SessionCounts {
 
 // GetDirect returns the Direct field value if set, zero value otherwise.
 func (o *SessionCounts) GetDirect() int32 {
-	if o == nil || o.Direct == nil {
+	if o == nil || IsNil(o.Direct) {
 		var ret int32
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *SessionCounts) GetDirect() int32 {
 // GetDirectOk returns a tuple with the Direct field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionCounts) GetDirectOk() (*int32, bool) {
-	if o == nil || o.Direct == nil {
+	if o == nil || IsNil(o.Direct) {
 		return nil, false
 	}
 	return o.Direct, true
@@ -62,7 +65,7 @@ func (o *SessionCounts) GetDirectOk() (*int32, bool) {
 
 // HasDirect returns a boolean if a field has been set.
 func (o *SessionCounts) HasDirect() bool {
-	if o != nil && o.Direct != nil {
+	if o != nil && !IsNil(o.Direct) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *SessionCounts) SetDirect(v int32) {
 
 // GetDirectViaNatt returns the DirectViaNatt field value if set, zero value otherwise.
 func (o *SessionCounts) GetDirectViaNatt() int32 {
-	if o == nil || o.DirectViaNatt == nil {
+	if o == nil || IsNil(o.DirectViaNatt) {
 		var ret int32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *SessionCounts) GetDirectViaNatt() int32 {
 // GetDirectViaNattOk returns a tuple with the DirectViaNatt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionCounts) GetDirectViaNattOk() (*int32, bool) {
-	if o == nil || o.DirectViaNatt == nil {
+	if o == nil || IsNil(o.DirectViaNatt) {
 		return nil, false
 	}
 	return o.DirectViaNatt, true
@@ -94,7 +97,7 @@ func (o *SessionCounts) GetDirectViaNattOk() (*int32, bool) {
 
 // HasDirectViaNatt returns a boolean if a field has been set.
 func (o *SessionCounts) HasDirectViaNatt() bool {
-	if o != nil && o.DirectViaNatt != nil {
+	if o != nil && !IsNil(o.DirectViaNatt) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *SessionCounts) SetDirectViaNatt(v int32) {
 
 // GetRelayed returns the Relayed field value if set, zero value otherwise.
 func (o *SessionCounts) GetRelayed() int32 {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		var ret int32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *SessionCounts) GetRelayed() int32 {
 // GetRelayedOk returns a tuple with the Relayed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionCounts) GetRelayedOk() (*int32, bool) {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		return nil, false
 	}
 	return o.Relayed, true
@@ -126,7 +129,7 @@ func (o *SessionCounts) GetRelayedOk() (*int32, bool) {
 
 // HasRelayed returns a boolean if a field has been set.
 func (o *SessionCounts) HasRelayed() bool {
-	if o != nil && o.Relayed != nil {
+	if o != nil && !IsNil(o.Relayed) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *SessionCounts) SetRelayed(v int32) {
 }
 
 func (o SessionCounts) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Direct != nil {
-		toSerialize["direct"] = o.Direct
-	}
-	if o.DirectViaNatt != nil {
-		toSerialize["directViaNatt"] = o.DirectViaNatt
-	}
-	if o.Relayed != nil {
-		toSerialize["relayed"] = o.Relayed
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionCounts) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Direct) {
+		toSerialize["direct"] = o.Direct
+	}
+	if !IsNil(o.DirectViaNatt) {
+		toSerialize["directViaNatt"] = o.DirectViaNatt
+	}
+	if !IsNil(o.Relayed) {
+		toSerialize["relayed"] = o.Relayed
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionCounts struct {

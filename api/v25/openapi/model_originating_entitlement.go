@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OriginatingEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OriginatingEntitlement{}
+
 // OriginatingEntitlement An entitlement that was used to access the application
 type OriginatingEntitlement struct {
 	// Name of the entitlement
@@ -41,7 +44,7 @@ func NewOriginatingEntitlementWithDefaults() *OriginatingEntitlement {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *OriginatingEntitlement) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *OriginatingEntitlement) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OriginatingEntitlement) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -59,7 +62,7 @@ func (o *OriginatingEntitlement) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *OriginatingEntitlement) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *OriginatingEntitlement) SetName(v string) {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *OriginatingEntitlement) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *OriginatingEntitlement) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OriginatingEntitlement) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -91,7 +94,7 @@ func (o *OriginatingEntitlement) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *OriginatingEntitlement) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *OriginatingEntitlement) SetId(v string) {
 }
 
 func (o OriginatingEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OriginatingEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	return toSerialize, nil
 }
 
 type NullableOriginatingEntitlement struct {

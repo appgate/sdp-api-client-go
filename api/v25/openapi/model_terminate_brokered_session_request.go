@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the TerminateBrokeredSessionRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TerminateBrokeredSessionRequest{}
 
 // TerminateBrokeredSessionRequest struct for TerminateBrokeredSessionRequest
 type TerminateBrokeredSessionRequest struct {
@@ -24,6 +29,8 @@ type TerminateBrokeredSessionRequest struct {
 	// A human-readable reason for terminating the session.
 	Reason string `json:"reason"`
 }
+
+type _TerminateBrokeredSessionRequest TerminateBrokeredSessionRequest
 
 // NewTerminateBrokeredSessionRequest instantiates a new TerminateBrokeredSessionRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -118,17 +125,58 @@ func (o *TerminateBrokeredSessionRequest) SetReason(v string) {
 }
 
 func (o TerminateBrokeredSessionRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["gatewayId"] = o.GatewayId
-	}
-	if true {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if true {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TerminateBrokeredSessionRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["gatewayId"] = o.GatewayId
+	toSerialize["distinguishedName"] = o.DistinguishedName
+	toSerialize["reason"] = o.Reason
+	return toSerialize, nil
+}
+
+func (o *TerminateBrokeredSessionRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"gatewayId",
+		"distinguishedName",
+		"reason",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTerminateBrokeredSessionRequest := _TerminateBrokeredSessionRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTerminateBrokeredSessionRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TerminateBrokeredSessionRequest(varTerminateBrokeredSessionRequest)
+
+	return err
 }
 
 type NullableTerminateBrokeredSessionRequest struct {

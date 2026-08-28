@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the PolicyAllOfClientSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfClientSettings{}
 
 // PolicyAllOfClientSettings Settings that admins can apply to the Client.
 type PolicyAllOfClientSettings struct {
@@ -64,7 +67,7 @@ func NewPolicyAllOfClientSettingsWithDefaults() *PolicyAllOfClientSettings {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -74,7 +77,7 @@ func (o *PolicyAllOfClientSettings) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -82,7 +85,7 @@ func (o *PolicyAllOfClientSettings) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -96,7 +99,7 @@ func (o *PolicyAllOfClientSettings) SetEnabled(v bool) {
 
 // GetEntitlementsList returns the EntitlementsList field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetEntitlementsList() string {
-	if o == nil || o.EntitlementsList == nil {
+	if o == nil || IsNil(o.EntitlementsList) {
 		var ret string
 		return ret
 	}
@@ -106,7 +109,7 @@ func (o *PolicyAllOfClientSettings) GetEntitlementsList() string {
 // GetEntitlementsListOk returns a tuple with the EntitlementsList field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetEntitlementsListOk() (*string, bool) {
-	if o == nil || o.EntitlementsList == nil {
+	if o == nil || IsNil(o.EntitlementsList) {
 		return nil, false
 	}
 	return o.EntitlementsList, true
@@ -114,7 +117,7 @@ func (o *PolicyAllOfClientSettings) GetEntitlementsListOk() (*string, bool) {
 
 // HasEntitlementsList returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasEntitlementsList() bool {
-	if o != nil && o.EntitlementsList != nil {
+	if o != nil && !IsNil(o.EntitlementsList) {
 		return true
 	}
 
@@ -128,7 +131,7 @@ func (o *PolicyAllOfClientSettings) SetEntitlementsList(v string) {
 
 // GetAttentionLevel returns the AttentionLevel field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetAttentionLevel() string {
-	if o == nil || o.AttentionLevel == nil {
+	if o == nil || IsNil(o.AttentionLevel) {
 		var ret string
 		return ret
 	}
@@ -138,7 +141,7 @@ func (o *PolicyAllOfClientSettings) GetAttentionLevel() string {
 // GetAttentionLevelOk returns a tuple with the AttentionLevel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetAttentionLevelOk() (*string, bool) {
-	if o == nil || o.AttentionLevel == nil {
+	if o == nil || IsNil(o.AttentionLevel) {
 		return nil, false
 	}
 	return o.AttentionLevel, true
@@ -146,7 +149,7 @@ func (o *PolicyAllOfClientSettings) GetAttentionLevelOk() (*string, bool) {
 
 // HasAttentionLevel returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasAttentionLevel() bool {
-	if o != nil && o.AttentionLevel != nil {
+	if o != nil && !IsNil(o.AttentionLevel) {
 		return true
 	}
 
@@ -160,7 +163,7 @@ func (o *PolicyAllOfClientSettings) SetAttentionLevel(v string) {
 
 // GetAutoStart returns the AutoStart field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetAutoStart() string {
-	if o == nil || o.AutoStart == nil {
+	if o == nil || IsNil(o.AutoStart) {
 		var ret string
 		return ret
 	}
@@ -170,7 +173,7 @@ func (o *PolicyAllOfClientSettings) GetAutoStart() string {
 // GetAutoStartOk returns a tuple with the AutoStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetAutoStartOk() (*string, bool) {
-	if o == nil || o.AutoStart == nil {
+	if o == nil || IsNil(o.AutoStart) {
 		return nil, false
 	}
 	return o.AutoStart, true
@@ -178,7 +181,7 @@ func (o *PolicyAllOfClientSettings) GetAutoStartOk() (*string, bool) {
 
 // HasAutoStart returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasAutoStart() bool {
-	if o != nil && o.AutoStart != nil {
+	if o != nil && !IsNil(o.AutoStart) {
 		return true
 	}
 
@@ -192,7 +195,7 @@ func (o *PolicyAllOfClientSettings) SetAutoStart(v string) {
 
 // GetAddRemoveProfiles returns the AddRemoveProfiles field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetAddRemoveProfiles() string {
-	if o == nil || o.AddRemoveProfiles == nil {
+	if o == nil || IsNil(o.AddRemoveProfiles) {
 		var ret string
 		return ret
 	}
@@ -202,7 +205,7 @@ func (o *PolicyAllOfClientSettings) GetAddRemoveProfiles() string {
 // GetAddRemoveProfilesOk returns a tuple with the AddRemoveProfiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetAddRemoveProfilesOk() (*string, bool) {
-	if o == nil || o.AddRemoveProfiles == nil {
+	if o == nil || IsNil(o.AddRemoveProfiles) {
 		return nil, false
 	}
 	return o.AddRemoveProfiles, true
@@ -210,7 +213,7 @@ func (o *PolicyAllOfClientSettings) GetAddRemoveProfilesOk() (*string, bool) {
 
 // HasAddRemoveProfiles returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasAddRemoveProfiles() bool {
-	if o != nil && o.AddRemoveProfiles != nil {
+	if o != nil && !IsNil(o.AddRemoveProfiles) {
 		return true
 	}
 
@@ -224,7 +227,7 @@ func (o *PolicyAllOfClientSettings) SetAddRemoveProfiles(v string) {
 
 // GetKeepMeSignedIn returns the KeepMeSignedIn field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetKeepMeSignedIn() string {
-	if o == nil || o.KeepMeSignedIn == nil {
+	if o == nil || IsNil(o.KeepMeSignedIn) {
 		var ret string
 		return ret
 	}
@@ -234,7 +237,7 @@ func (o *PolicyAllOfClientSettings) GetKeepMeSignedIn() string {
 // GetKeepMeSignedInOk returns a tuple with the KeepMeSignedIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetKeepMeSignedInOk() (*string, bool) {
-	if o == nil || o.KeepMeSignedIn == nil {
+	if o == nil || IsNil(o.KeepMeSignedIn) {
 		return nil, false
 	}
 	return o.KeepMeSignedIn, true
@@ -242,7 +245,7 @@ func (o *PolicyAllOfClientSettings) GetKeepMeSignedInOk() (*string, bool) {
 
 // HasKeepMeSignedIn returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasKeepMeSignedIn() bool {
-	if o != nil && o.KeepMeSignedIn != nil {
+	if o != nil && !IsNil(o.KeepMeSignedIn) {
 		return true
 	}
 
@@ -256,7 +259,7 @@ func (o *PolicyAllOfClientSettings) SetKeepMeSignedIn(v string) {
 
 // GetSamlAutoSignIn returns the SamlAutoSignIn field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetSamlAutoSignIn() string {
-	if o == nil || o.SamlAutoSignIn == nil {
+	if o == nil || IsNil(o.SamlAutoSignIn) {
 		var ret string
 		return ret
 	}
@@ -266,7 +269,7 @@ func (o *PolicyAllOfClientSettings) GetSamlAutoSignIn() string {
 // GetSamlAutoSignInOk returns a tuple with the SamlAutoSignIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetSamlAutoSignInOk() (*string, bool) {
-	if o == nil || o.SamlAutoSignIn == nil {
+	if o == nil || IsNil(o.SamlAutoSignIn) {
 		return nil, false
 	}
 	return o.SamlAutoSignIn, true
@@ -274,7 +277,7 @@ func (o *PolicyAllOfClientSettings) GetSamlAutoSignInOk() (*string, bool) {
 
 // HasSamlAutoSignIn returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasSamlAutoSignIn() bool {
-	if o != nil && o.SamlAutoSignIn != nil {
+	if o != nil && !IsNil(o.SamlAutoSignIn) {
 		return true
 	}
 
@@ -288,7 +291,7 @@ func (o *PolicyAllOfClientSettings) SetSamlAutoSignIn(v string) {
 
 // GetQuit returns the Quit field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetQuit() string {
-	if o == nil || o.Quit == nil {
+	if o == nil || IsNil(o.Quit) {
 		var ret string
 		return ret
 	}
@@ -298,7 +301,7 @@ func (o *PolicyAllOfClientSettings) GetQuit() string {
 // GetQuitOk returns a tuple with the Quit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetQuitOk() (*string, bool) {
-	if o == nil || o.Quit == nil {
+	if o == nil || IsNil(o.Quit) {
 		return nil, false
 	}
 	return o.Quit, true
@@ -306,7 +309,7 @@ func (o *PolicyAllOfClientSettings) GetQuitOk() (*string, bool) {
 
 // HasQuit returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasQuit() bool {
-	if o != nil && o.Quit != nil {
+	if o != nil && !IsNil(o.Quit) {
 		return true
 	}
 
@@ -320,7 +323,7 @@ func (o *PolicyAllOfClientSettings) SetQuit(v string) {
 
 // GetSignOut returns the SignOut field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetSignOut() string {
-	if o == nil || o.SignOut == nil {
+	if o == nil || IsNil(o.SignOut) {
 		var ret string
 		return ret
 	}
@@ -330,7 +333,7 @@ func (o *PolicyAllOfClientSettings) GetSignOut() string {
 // GetSignOutOk returns a tuple with the SignOut field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetSignOutOk() (*string, bool) {
-	if o == nil || o.SignOut == nil {
+	if o == nil || IsNil(o.SignOut) {
 		return nil, false
 	}
 	return o.SignOut, true
@@ -338,7 +341,7 @@ func (o *PolicyAllOfClientSettings) GetSignOutOk() (*string, bool) {
 
 // HasSignOut returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasSignOut() bool {
-	if o != nil && o.SignOut != nil {
+	if o != nil && !IsNil(o.SignOut) {
 		return true
 	}
 
@@ -352,7 +355,7 @@ func (o *PolicyAllOfClientSettings) SetSignOut(v string) {
 
 // GetSuspend returns the Suspend field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetSuspend() string {
-	if o == nil || o.Suspend == nil {
+	if o == nil || IsNil(o.Suspend) {
 		var ret string
 		return ret
 	}
@@ -362,7 +365,7 @@ func (o *PolicyAllOfClientSettings) GetSuspend() string {
 // GetSuspendOk returns a tuple with the Suspend field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetSuspendOk() (*string, bool) {
-	if o == nil || o.Suspend == nil {
+	if o == nil || IsNil(o.Suspend) {
 		return nil, false
 	}
 	return o.Suspend, true
@@ -370,7 +373,7 @@ func (o *PolicyAllOfClientSettings) GetSuspendOk() (*string, bool) {
 
 // HasSuspend returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasSuspend() bool {
-	if o != nil && o.Suspend != nil {
+	if o != nil && !IsNil(o.Suspend) {
 		return true
 	}
 
@@ -384,7 +387,7 @@ func (o *PolicyAllOfClientSettings) SetSuspend(v string) {
 
 // GetNewUserOnboarding returns the NewUserOnboarding field value if set, zero value otherwise.
 func (o *PolicyAllOfClientSettings) GetNewUserOnboarding() string {
-	if o == nil || o.NewUserOnboarding == nil {
+	if o == nil || IsNil(o.NewUserOnboarding) {
 		var ret string
 		return ret
 	}
@@ -394,7 +397,7 @@ func (o *PolicyAllOfClientSettings) GetNewUserOnboarding() string {
 // GetNewUserOnboardingOk returns a tuple with the NewUserOnboarding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfClientSettings) GetNewUserOnboardingOk() (*string, bool) {
-	if o == nil || o.NewUserOnboarding == nil {
+	if o == nil || IsNil(o.NewUserOnboarding) {
 		return nil, false
 	}
 	return o.NewUserOnboarding, true
@@ -402,7 +405,7 @@ func (o *PolicyAllOfClientSettings) GetNewUserOnboardingOk() (*string, bool) {
 
 // HasNewUserOnboarding returns a boolean if a field has been set.
 func (o *PolicyAllOfClientSettings) HasNewUserOnboarding() bool {
-	if o != nil && o.NewUserOnboarding != nil {
+	if o != nil && !IsNil(o.NewUserOnboarding) {
 		return true
 	}
 
@@ -415,41 +418,49 @@ func (o *PolicyAllOfClientSettings) SetNewUserOnboarding(v string) {
 }
 
 func (o PolicyAllOfClientSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.EntitlementsList != nil {
-		toSerialize["entitlementsList"] = o.EntitlementsList
-	}
-	if o.AttentionLevel != nil {
-		toSerialize["attentionLevel"] = o.AttentionLevel
-	}
-	if o.AutoStart != nil {
-		toSerialize["autoStart"] = o.AutoStart
-	}
-	if o.AddRemoveProfiles != nil {
-		toSerialize["addRemoveProfiles"] = o.AddRemoveProfiles
-	}
-	if o.KeepMeSignedIn != nil {
-		toSerialize["keepMeSignedIn"] = o.KeepMeSignedIn
-	}
-	if o.SamlAutoSignIn != nil {
-		toSerialize["samlAutoSignIn"] = o.SamlAutoSignIn
-	}
-	if o.Quit != nil {
-		toSerialize["quit"] = o.Quit
-	}
-	if o.SignOut != nil {
-		toSerialize["signOut"] = o.SignOut
-	}
-	if o.Suspend != nil {
-		toSerialize["suspend"] = o.Suspend
-	}
-	if o.NewUserOnboarding != nil {
-		toSerialize["newUserOnboarding"] = o.NewUserOnboarding
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfClientSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.EntitlementsList) {
+		toSerialize["entitlementsList"] = o.EntitlementsList
+	}
+	if !IsNil(o.AttentionLevel) {
+		toSerialize["attentionLevel"] = o.AttentionLevel
+	}
+	if !IsNil(o.AutoStart) {
+		toSerialize["autoStart"] = o.AutoStart
+	}
+	if !IsNil(o.AddRemoveProfiles) {
+		toSerialize["addRemoveProfiles"] = o.AddRemoveProfiles
+	}
+	if !IsNil(o.KeepMeSignedIn) {
+		toSerialize["keepMeSignedIn"] = o.KeepMeSignedIn
+	}
+	if !IsNil(o.SamlAutoSignIn) {
+		toSerialize["samlAutoSignIn"] = o.SamlAutoSignIn
+	}
+	if !IsNil(o.Quit) {
+		toSerialize["quit"] = o.Quit
+	}
+	if !IsNil(o.SignOut) {
+		toSerialize["signOut"] = o.SignOut
+	}
+	if !IsNil(o.Suspend) {
+		toSerialize["suspend"] = o.Suspend
+	}
+	if !IsNil(o.NewUserOnboarding) {
+		toSerialize["newUserOnboarding"] = o.NewUserOnboarding
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfClientSettings struct {

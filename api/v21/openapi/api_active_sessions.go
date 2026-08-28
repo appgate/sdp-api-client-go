@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ActiveSessionsApiService ActiveSessionsApi service
-type ActiveSessionsApiService service
+// ActiveSessionsAPIService ActiveSessionsAPI service
+type ActiveSessionsAPIService service
 
 type ApiSessionInfoDistinguishedNameGetRequest struct {
 	ctx               context.Context
-	ApiService        *ActiveSessionsApiService
+	ApiService        *ActiveSessionsAPIService
 	authorization     *string
 	distinguishedName string
 }
@@ -49,7 +49,7 @@ Get the details of a specific Active Client Session from all Gateways. This API 
 	@param distinguishedName Distinguished name of the user&devices which will be affected by the operation. Format: 'CN=\\<device ID\\>,CN=\\<username\\>,OU=\\<provider name\\>'
 	@return ApiSessionInfoDistinguishedNameGetRequest
 */
-func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
+func (a *ActiveSessionsAPIService) SessionInfoDistinguishedNameGet(ctx context.Context, distinguishedName string) ApiSessionInfoDistinguishedNameGetRequest {
 	return ApiSessionInfoDistinguishedNameGetRequest{
 		ApiService:        a,
 		ctx:               ctx,
@@ -60,7 +60,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGet(ctx context.C
 // Execute executes the request
 //
 //	@return SessionInfoDistinguishedName
-func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
+func (a *ActiveSessionsAPIService) SessionInfoDistinguishedNameGetExecute(r ApiSessionInfoDistinguishedNameGetRequest) (*SessionInfoDistinguishedName, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -68,13 +68,13 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 		localVarReturnValue *SessionInfoDistinguishedName
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.SessionInfoDistinguishedNameGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.SessionInfoDistinguishedNameGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/session-info/{distinguished-name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterToString(r.distinguishedName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"distinguished-name"+"}", url.PathEscape(parameterValueToString(r.distinguishedName, "distinguishedName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,7 +100,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -111,9 +111,9 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -130,6 +130,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -140,6 +141,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -150,16 +152,18 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -170,6 +174,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -189,7 +194,7 @@ func (a *ActiveSessionsApiService) SessionInfoDistinguishedNameGetExecute(r ApiS
 
 type ApiStatsActiveSessionsDashboardGetRequest struct {
 	ctx           context.Context
-	ApiService    *ActiveSessionsApiService
+	ApiService    *ActiveSessionsAPIService
 	authorization *string
 }
 
@@ -213,7 +218,7 @@ Retrieves dashboard data related to active sessions. This includes information a
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsActiveSessionsDashboardGetRequest
 */
-func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGet(ctx context.Context) ApiStatsActiveSessionsDashboardGetRequest {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDashboardGet(ctx context.Context) ApiStatsActiveSessionsDashboardGetRequest {
 	return ApiStatsActiveSessionsDashboardGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -223,7 +228,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGet(ctx context.C
 // Execute executes the request
 //
 //	@return DashboardSessionsDto
-func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiStatsActiveSessionsDashboardGetRequest) (*DashboardSessionsDto, *http.Response, error) {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDashboardGetExecute(r ApiStatsActiveSessionsDashboardGetRequest) (*DashboardSessionsDto, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -231,7 +236,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 		localVarReturnValue *DashboardSessionsDto
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.StatsActiveSessionsDashboardGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.StatsActiveSessionsDashboardGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -262,7 +267,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -273,9 +278,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -292,6 +297,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -302,16 +308,18 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -322,6 +330,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -341,7 +350,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDashboardGetExecute(r ApiS
 
 type ApiStatsActiveSessionsDnGetRequest struct {
 	ctx              context.Context
-	ApiService       *ActiveSessionsApiService
+	ApiService       *ActiveSessionsAPIService
 	authorization    *string
 	query            *string
 	range_           *string
@@ -405,7 +414,7 @@ Get session data from currently Active Client Sessions grouped by distinguished 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiStatsActiveSessionsDnGetRequest
 */
-func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDnGet(ctx context.Context) ApiStatsActiveSessionsDnGetRequest {
 	return ApiStatsActiveSessionsDnGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -415,7 +424,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGet(ctx context.Context)
 // Execute executes the request
 //
 //	@return ActiveSessionsDn
-func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsDnGetExecute(r ApiStatsActiveSessionsDnGetRequest) (*ActiveSessionsDn, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -423,7 +432,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 		localVarReturnValue *ActiveSessionsDn
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.StatsActiveSessionsDnGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.StatsActiveSessionsDnGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -438,22 +447,22 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.geolocationQuery != nil {
-		localVarQueryParams.Add("geolocationQuery", parameterToString(*r.geolocationQuery, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "geolocationQuery", r.geolocationQuery, "form", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -472,7 +481,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -483,9 +492,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -502,6 +511,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -512,16 +522,18 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -532,6 +544,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -551,7 +564,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsDnGetExecute(r ApiStatsAct
 
 type ApiStatsActiveSessionsGetRequest struct {
 	ctx              context.Context
-	ApiService       *ActiveSessionsApiService
+	ApiService       *ActiveSessionsAPIService
 	authorization    *string
 	query            *string
 	range_           *string
@@ -617,7 +630,7 @@ Deprecated as of 6.3.0. Please use /active-sessions-dn API. Get currently Active
 
 Deprecated
 */
-func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) ApiStatsActiveSessionsGetRequest {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsGet(ctx context.Context) ApiStatsActiveSessionsGetRequest {
 	return ApiStatsActiveSessionsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -629,7 +642,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGet(ctx context.Context) A
 //	@return ActiveSessions
 //
 // Deprecated
-func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiveSessionsGetRequest) (*ActiveSessions, *http.Response, error) {
+func (a *ActiveSessionsAPIService) StatsActiveSessionsGetExecute(r ApiStatsActiveSessionsGetRequest) (*ActiveSessions, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -637,7 +650,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 		localVarReturnValue *ActiveSessions
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsApiService.StatsActiveSessionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveSessionsAPIService.StatsActiveSessionsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -652,22 +665,22 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.geolocationQuery != nil {
-		localVarQueryParams.Add("geolocationQuery", parameterToString(*r.geolocationQuery, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "geolocationQuery", r.geolocationQuery, "form", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -686,7 +699,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -697,9 +710,9 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -716,6 +729,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -726,16 +740,18 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -746,6 +762,7 @@ func (a *ActiveSessionsApiService) StatsActiveSessionsGetExecute(r ApiStatsActiv
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

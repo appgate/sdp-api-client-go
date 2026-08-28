@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// IdentityProvidersApiService IdentityProvidersApi service
-type IdentityProvidersApiService service
+// IdentityProvidersAPIService IdentityProvidersAPI service
+type IdentityProvidersAPIService service
 
 type ApiIdentityProvidersGetRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	query         *string
 	range_        *string
@@ -82,7 +82,7 @@ List all Identity Providers visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIdentityProvidersGetRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) ApiIdentityProvidersGetRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersGet(ctx context.Context) ApiIdentityProvidersGetRequest {
 	return ApiIdentityProvidersGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -92,7 +92,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGet(ctx context.Context) 
 // Execute executes the request
 //
 //	@return IdentityProviderList
-func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersGetExecute(r ApiIdentityProvidersGetRequest) (*IdentityProviderList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -100,7 +100,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 		localVarReturnValue *IdentityProviderList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -115,19 +115,19 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 	}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -146,7 +146,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -157,9 +157,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -176,6 +176,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,6 +187,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -196,6 +198,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -206,6 +209,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -225,7 +229,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersGetExecute(r ApiIdentityP
 
 type ApiIdentityProvidersIdAttributesPostRequest struct {
 	ctx                                      context.Context
-	ApiService                               *IdentityProvidersApiService
+	ApiService                               *IdentityProvidersAPIService
 	authorization                            *string
 	id                                       string
 	identityProvidersIdAttributesPostRequest *IdentityProvidersIdAttributesPostRequest
@@ -256,7 +260,7 @@ Get raw attributes and mapped claims for a user.
 	@param id ID of the object.
 	@return ApiIdentityProvidersIdAttributesPostRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiIdentityProvidersIdAttributesPostRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdAttributesPost(ctx context.Context, id string) ApiIdentityProvidersIdAttributesPostRequest {
 	return ApiIdentityProvidersIdAttributesPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -267,7 +271,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPost(ctx cont
 // Execute executes the request
 //
 //	@return IdentityProvidersIdAttributesPost200Response
-func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r ApiIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdAttributesPostExecute(r ApiIdentityProvidersIdAttributesPostRequest) (*IdentityProvidersIdAttributesPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -275,13 +279,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 		localVarReturnValue *IdentityProvidersIdAttributesPost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdAttributesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersIdAttributesPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}/attributes"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -307,7 +311,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.identityProvidersIdAttributesPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -320,9 +324,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -339,6 +343,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -349,6 +354,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -359,6 +365,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -369,6 +376,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -379,6 +387,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -389,6 +398,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -399,6 +409,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -418,7 +429,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdAttributesPostExecute(r
 
 type ApiIdentityProvidersIdDeleteRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	id            string
 }
@@ -442,7 +453,7 @@ Delete a specific Identity Provider.
 	@param id ID of the object.
 	@return ApiIdentityProvidersIdDeleteRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiIdentityProvidersIdDeleteRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdDelete(ctx context.Context, id string) ApiIdentityProvidersIdDeleteRequest {
 	return ApiIdentityProvidersIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -451,20 +462,20 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDelete(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIdentityProvidersIdDeleteRequest) (*http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdDeleteExecute(r ApiIdentityProvidersIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -490,7 +501,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -501,9 +512,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -520,6 +531,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -530,6 +542,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -540,6 +553,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -550,6 +564,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -560,6 +575,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -570,7 +586,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r ApiIden
 
 type ApiIdentityProvidersIdGetRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	id            string
 }
@@ -594,7 +610,7 @@ Get a specific Identity Provider.
 	@param id ID of the object.
 	@return ApiIdentityProvidersIdGetRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context, id string) ApiIdentityProvidersIdGetRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdGet(ctx context.Context, id string) ApiIdentityProvidersIdGetRequest {
 	return ApiIdentityProvidersIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -605,7 +621,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGet(ctx context.Context
 // Execute executes the request
 //
 //	@return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdGetExecute(r ApiIdentityProvidersIdGetRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -613,13 +629,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 		localVarReturnValue map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -645,7 +661,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -656,9 +672,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -675,6 +691,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -685,6 +702,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -695,6 +713,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -705,6 +724,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -715,6 +735,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -734,7 +755,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiIdentit
 
 type ApiIdentityProvidersIdPutRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	id            string
 	body          *map[string]interface{}
@@ -765,7 +786,7 @@ Update an existing Identity Provider.
 	@param id ID of the object.
 	@return ApiIdentityProvidersIdPutRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context, id string) ApiIdentityProvidersIdPutRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdPut(ctx context.Context, id string) ApiIdentityProvidersIdPutRequest {
 	return ApiIdentityProvidersIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -776,7 +797,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPut(ctx context.Context
 // Execute executes the request
 //
 //	@return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersIdPutExecute(r ApiIdentityProvidersIdPutRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -784,13 +805,13 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 		localVarReturnValue map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -819,7 +840,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -832,9 +853,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -851,6 +872,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -861,6 +883,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -871,6 +894,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -881,6 +905,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -891,6 +916,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -901,6 +927,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -911,6 +938,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -930,7 +958,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiIdentit
 
 type ApiIdentityProvidersPostRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	body          *map[string]interface{}
 }
@@ -959,7 +987,7 @@ Create a new Identity Provider.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIdentityProvidersPostRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx context.Context) ApiIdentityProvidersPostRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersPost(ctx context.Context) ApiIdentityProvidersPostRequest {
 	return ApiIdentityProvidersPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -969,7 +997,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPost(ctx context.Context)
 // Execute executes the request
 //
 //	@return map[string]interface{}
-func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersPostExecute(r ApiIdentityProvidersPostRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -977,7 +1005,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 		localVarReturnValue map[string]interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1011,7 +1039,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1024,9 +1052,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1043,6 +1071,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1053,6 +1082,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1063,6 +1093,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1073,6 +1104,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1083,6 +1115,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1093,6 +1126,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1103,6 +1137,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1122,7 +1157,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersPostExecute(r ApiIdentity
 
 type ApiIdentityProvidersTestPostRequest struct {
 	ctx           context.Context
-	ApiService    *IdentityProvidersApiService
+	ApiService    *IdentityProvidersAPIService
 	authorization *string
 	body          *map[string]interface{}
 }
@@ -1151,7 +1186,7 @@ Test connection for the given Identity Provider JSON.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiIdentityProvidersTestPostRequest
 */
-func (a *IdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Context) ApiIdentityProvidersTestPostRequest {
+func (a *IdentityProvidersAPIService) IdentityProvidersTestPost(ctx context.Context) ApiIdentityProvidersTestPostRequest {
 	return ApiIdentityProvidersTestPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -1161,7 +1196,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPost(ctx context.Cont
 // Execute executes the request
 //
 //	@return IdentityProvidersTestPost200Response
-func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
+func (a *IdentityProvidersAPIService) IdentityProvidersTestPostExecute(r ApiIdentityProvidersTestPostRequest) (*IdentityProvidersTestPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1169,7 +1204,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 		localVarReturnValue *IdentityProvidersTestPost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersApiService.IdentityProvidersTestPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IdentityProvidersAPIService.IdentityProvidersTestPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1203,7 +1238,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	// body params
 	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -1216,9 +1251,9 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1235,6 +1270,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1245,6 +1281,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1255,6 +1292,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1265,6 +1303,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1275,6 +1314,7 @@ func (a *IdentityProvidersApiService) IdentityProvidersTestPostExecute(r ApiIden
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

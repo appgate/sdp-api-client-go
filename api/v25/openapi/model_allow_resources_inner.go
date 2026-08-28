@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the AllowResourcesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AllowResourcesInner{}
 
 // AllowResourcesInner struct for AllowResourcesInner
 type AllowResourcesInner struct {
@@ -22,6 +27,8 @@ type AllowResourcesInner struct {
 	// netmask
 	Netmask int32 `json:"netmask"`
 }
+
+type _AllowResourcesInner AllowResourcesInner
 
 // NewAllowResourcesInner instantiates a new AllowResourcesInner object
 // This constructor will assign default values to properties that have it defined,
@@ -91,14 +98,56 @@ func (o *AllowResourcesInner) SetNetmask(v int32) {
 }
 
 func (o AllowResourcesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["address"] = o.Address
-	}
-	if true {
-		toSerialize["netmask"] = o.Netmask
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AllowResourcesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["address"] = o.Address
+	toSerialize["netmask"] = o.Netmask
+	return toSerialize, nil
+}
+
+func (o *AllowResourcesInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"address",
+		"netmask",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAllowResourcesInner := _AllowResourcesInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAllowResourcesInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AllowResourcesInner(varAllowResourcesInner)
+
+	return err
 }
 
 type NullableAllowResourcesInner struct {

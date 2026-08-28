@@ -51,7 +51,7 @@ func (dst *AnyEntitlement) UnmarshalJSON(data []byte) error {
 	var jsonDict map[string]interface{}
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
-		return fmt.Errorf("Failed to unmarshal JSON into map for the discriminator lookup.")
+		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
 	// check if the discriminator value is 'BrokeredRdp'
@@ -62,19 +62,7 @@ func (dst *AnyEntitlement) UnmarshalJSON(data []byte) error {
 			return nil // data stored in dst.BrokeredRdpEntitlement, return on the first match
 		} else {
 			dst.BrokeredRdpEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as BrokeredRdpEntitlement: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'BrokeredRdpEntitlement'
-	if jsonDict["type"] == "BrokeredRdpEntitlement" {
-		// try to unmarshal JSON data into BrokeredRdpEntitlement
-		err = json.Unmarshal(data, &dst.BrokeredRdpEntitlement)
-		if err == nil {
-			return nil // data stored in dst.BrokeredRdpEntitlement, return on the first match
-		} else {
-			dst.BrokeredRdpEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as BrokeredRdpEntitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as BrokeredRdpEntitlement: %s", err.Error())
 		}
 	}
 
@@ -86,31 +74,7 @@ func (dst *AnyEntitlement) UnmarshalJSON(data []byte) error {
 			return nil // data stored in dst.BrokeredSshEntitlement, return on the first match
 		} else {
 			dst.BrokeredSshEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as BrokeredSshEntitlement: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'BrokeredSshEntitlement'
-	if jsonDict["type"] == "BrokeredSshEntitlement" {
-		// try to unmarshal JSON data into BrokeredSshEntitlement
-		err = json.Unmarshal(data, &dst.BrokeredSshEntitlement)
-		if err == nil {
-			return nil // data stored in dst.BrokeredSshEntitlement, return on the first match
-		} else {
-			dst.BrokeredSshEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as BrokeredSshEntitlement: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'Entitlement'
-	if jsonDict["type"] == "Entitlement" {
-		// try to unmarshal JSON data into Entitlement
-		err = json.Unmarshal(data, &dst.Entitlement)
-		if err == nil {
-			return nil // data stored in dst.Entitlement, return on the first match
-		} else {
-			dst.Entitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as Entitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as BrokeredSshEntitlement: %s", err.Error())
 		}
 	}
 
@@ -122,7 +86,43 @@ func (dst *AnyEntitlement) UnmarshalJSON(data []byte) error {
 			return nil // data stored in dst.Entitlement, return on the first match
 		} else {
 			dst.Entitlement = nil
-			return fmt.Errorf("Failed to unmarshal AnyEntitlement as Entitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as Entitlement: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BrokeredRdpEntitlement'
+	if jsonDict["type"] == "BrokeredRdpEntitlement" {
+		// try to unmarshal JSON data into BrokeredRdpEntitlement
+		err = json.Unmarshal(data, &dst.BrokeredRdpEntitlement)
+		if err == nil {
+			return nil // data stored in dst.BrokeredRdpEntitlement, return on the first match
+		} else {
+			dst.BrokeredRdpEntitlement = nil
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as BrokeredRdpEntitlement: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BrokeredSshEntitlement'
+	if jsonDict["type"] == "BrokeredSshEntitlement" {
+		// try to unmarshal JSON data into BrokeredSshEntitlement
+		err = json.Unmarshal(data, &dst.BrokeredSshEntitlement)
+		if err == nil {
+			return nil // data stored in dst.BrokeredSshEntitlement, return on the first match
+		} else {
+			dst.BrokeredSshEntitlement = nil
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as BrokeredSshEntitlement: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'Entitlement'
+	if jsonDict["type"] == "Entitlement" {
+		// try to unmarshal JSON data into Entitlement
+		err = json.Unmarshal(data, &dst.Entitlement)
+		if err == nil {
+			return nil // data stored in dst.Entitlement, return on the first match
+		} else {
+			dst.Entitlement = nil
+			return fmt.Errorf("failed to unmarshal AnyEntitlement as Entitlement: %s", err.Error())
 		}
 	}
 

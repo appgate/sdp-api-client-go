@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetailsUsage type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetailsUsage{}
+
 // LicenseDetailsUsage License usage information.
 type LicenseDetailsUsage struct {
 	// The amount of licensed users in the system currently.
@@ -48,7 +51,7 @@ func NewLicenseDetailsUsageWithDefaults() *LicenseDetailsUsage {
 
 // GetUsers returns the Users field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetUsers() float32 {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		var ret float32
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *LicenseDetailsUsage) GetUsers() float32 {
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetUsersOk() (*float32, bool) {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
@@ -66,7 +69,7 @@ func (o *LicenseDetailsUsage) GetUsersOk() (*float32, bool) {
 
 // HasUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasUsers() bool {
-	if o != nil && o.Users != nil {
+	if o != nil && !IsNil(o.Users) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *LicenseDetailsUsage) SetUsers(v float32) {
 
 // GetPortalUsers returns the PortalUsers field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetPortalUsers() float32 {
-	if o == nil || o.PortalUsers == nil {
+	if o == nil || IsNil(o.PortalUsers) {
 		var ret float32
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *LicenseDetailsUsage) GetPortalUsers() float32 {
 // GetPortalUsersOk returns a tuple with the PortalUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetPortalUsersOk() (*float32, bool) {
-	if o == nil || o.PortalUsers == nil {
+	if o == nil || IsNil(o.PortalUsers) {
 		return nil, false
 	}
 	return o.PortalUsers, true
@@ -98,7 +101,7 @@ func (o *LicenseDetailsUsage) GetPortalUsersOk() (*float32, bool) {
 
 // HasPortalUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasPortalUsers() bool {
-	if o != nil && o.PortalUsers != nil {
+	if o != nil && !IsNil(o.PortalUsers) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *LicenseDetailsUsage) SetPortalUsers(v float32) {
 
 // GetServiceUsers returns the ServiceUsers field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetServiceUsers() float32 {
-	if o == nil || o.ServiceUsers == nil {
+	if o == nil || IsNil(o.ServiceUsers) {
 		var ret float32
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *LicenseDetailsUsage) GetServiceUsers() float32 {
 // GetServiceUsersOk returns a tuple with the ServiceUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetServiceUsersOk() (*float32, bool) {
-	if o == nil || o.ServiceUsers == nil {
+	if o == nil || IsNil(o.ServiceUsers) {
 		return nil, false
 	}
 	return o.ServiceUsers, true
@@ -130,7 +133,7 @@ func (o *LicenseDetailsUsage) GetServiceUsersOk() (*float32, bool) {
 
 // HasServiceUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasServiceUsers() bool {
-	if o != nil && o.ServiceUsers != nil {
+	if o != nil && !IsNil(o.ServiceUsers) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *LicenseDetailsUsage) SetServiceUsers(v float32) {
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetSites() float32 {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret float32
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *LicenseDetailsUsage) GetSites() float32 {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetSitesOk() (*float32, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -162,7 +165,7 @@ func (o *LicenseDetailsUsage) GetSitesOk() (*float32, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *LicenseDetailsUsage) SetSites(v float32) {
 
 // GetConnectorGroups returns the ConnectorGroups field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetConnectorGroups() float32 {
-	if o == nil || o.ConnectorGroups == nil {
+	if o == nil || IsNil(o.ConnectorGroups) {
 		var ret float32
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *LicenseDetailsUsage) GetConnectorGroups() float32 {
 // GetConnectorGroupsOk returns a tuple with the ConnectorGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetConnectorGroupsOk() (*float32, bool) {
-	if o == nil || o.ConnectorGroups == nil {
+	if o == nil || IsNil(o.ConnectorGroups) {
 		return nil, false
 	}
 	return o.ConnectorGroups, true
@@ -194,7 +197,7 @@ func (o *LicenseDetailsUsage) GetConnectorGroupsOk() (*float32, bool) {
 
 // HasConnectorGroups returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasConnectorGroups() bool {
-	if o != nil && o.ConnectorGroups != nil {
+	if o != nil && !IsNil(o.ConnectorGroups) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *LicenseDetailsUsage) SetConnectorGroups(v float32) {
 }
 
 func (o LicenseDetailsUsage) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Users != nil {
-		toSerialize["users"] = o.Users
-	}
-	if o.PortalUsers != nil {
-		toSerialize["portalUsers"] = o.PortalUsers
-	}
-	if o.ServiceUsers != nil {
-		toSerialize["serviceUsers"] = o.ServiceUsers
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
-	}
-	if o.ConnectorGroups != nil {
-		toSerialize["connectorGroups"] = o.ConnectorGroups
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetailsUsage) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	if !IsNil(o.PortalUsers) {
+		toSerialize["portalUsers"] = o.PortalUsers
+	}
+	if !IsNil(o.ServiceUsers) {
+		toSerialize["serviceUsers"] = o.ServiceUsers
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	if !IsNil(o.ConnectorGroups) {
+		toSerialize["connectorGroups"] = o.ConnectorGroups
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetailsUsage struct {

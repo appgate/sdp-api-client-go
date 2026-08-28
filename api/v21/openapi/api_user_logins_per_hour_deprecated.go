@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// UserLoginsPerHourDeprecatedApiService UserLoginsPerHourDeprecatedApi service
-type UserLoginsPerHourDeprecatedApiService service
+// UserLoginsPerHourDeprecatedAPIService UserLoginsPerHourDeprecatedAPI service
+type UserLoginsPerHourDeprecatedAPIService service
 
 type ApiStatsUserLoginsGetRequest struct {
 	ctx           context.Context
-	ApiService    *UserLoginsPerHourDeprecatedApiService
+	ApiService    *UserLoginsPerHourDeprecatedAPIService
 	authorization *string
 }
 
@@ -48,7 +48,7 @@ Deprecated as of 6.3.0. Please use /on-boarded-devices APIs. Get the User Logins
 
 Deprecated
 */
-func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGet(ctx context.Context) ApiStatsUserLoginsGetRequest {
+func (a *UserLoginsPerHourDeprecatedAPIService) StatsUserLoginsGet(ctx context.Context) ApiStatsUserLoginsGetRequest {
 	return ApiStatsUserLoginsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -60,7 +60,7 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGet(ctx context.C
 //	@return UserLogins
 //
 // Deprecated
-func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
+func (a *UserLoginsPerHourDeprecatedAPIService) StatsUserLoginsGetExecute(r ApiStatsUserLoginsGetRequest) (*UserLogins, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -68,7 +68,7 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 		localVarReturnValue *UserLogins
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserLoginsPerHourDeprecatedApiService.StatsUserLoginsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UserLoginsPerHourDeprecatedAPIService.StatsUserLoginsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -99,7 +99,7 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "", "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -110,9 +110,9 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -129,6 +129,7 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -139,16 +140,18 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -159,6 +162,7 @@ func (a *UserLoginsPerHourDeprecatedApiService) StatsUserLoginsGetExecute(r ApiS
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

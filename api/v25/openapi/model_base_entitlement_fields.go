@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the BaseEntitlementFields type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BaseEntitlementFields{}
 
 // BaseEntitlementFields Fields shared by all Entitlement types.
 type BaseEntitlementFields struct {
@@ -33,6 +38,8 @@ type BaseEntitlementFields struct {
 	// Numeric percentage score representing how optimized this Entitlement is based on usage data. Licensed feature.
 	OptimizationScorePercentage *int32 `json:"optimizationScorePercentage,omitempty"`
 }
+
+type _BaseEntitlementFields BaseEntitlementFields
 
 // NewBaseEntitlementFields instantiates a new BaseEntitlementFields object
 // This constructor will assign default values to properties that have it defined,
@@ -67,7 +74,7 @@ func NewBaseEntitlementFieldsWithDefaults() *BaseEntitlementFields {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetType() EntitlementType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret EntitlementType
 		return ret
 	}
@@ -77,7 +84,7 @@ func (o *BaseEntitlementFields) GetType() EntitlementType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetTypeOk() (*EntitlementType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -85,7 +92,7 @@ func (o *BaseEntitlementFields) GetTypeOk() (*EntitlementType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -99,7 +106,7 @@ func (o *BaseEntitlementFields) SetType(v EntitlementType) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -109,7 +116,7 @@ func (o *BaseEntitlementFields) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -117,7 +124,7 @@ func (o *BaseEntitlementFields) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -155,7 +162,7 @@ func (o *BaseEntitlementFields) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -165,7 +172,7 @@ func (o *BaseEntitlementFields) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -173,7 +180,7 @@ func (o *BaseEntitlementFields) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -187,7 +194,7 @@ func (o *BaseEntitlementFields) SetSiteName(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -197,7 +204,7 @@ func (o *BaseEntitlementFields) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -205,7 +212,7 @@ func (o *BaseEntitlementFields) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -243,7 +250,7 @@ func (o *BaseEntitlementFields) SetConditions(v []string) {
 
 // GetOptimizationScore returns the OptimizationScore field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetOptimizationScore() string {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		var ret string
 		return ret
 	}
@@ -253,7 +260,7 @@ func (o *BaseEntitlementFields) GetOptimizationScore() string {
 // GetOptimizationScoreOk returns a tuple with the OptimizationScore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetOptimizationScoreOk() (*string, bool) {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		return nil, false
 	}
 	return o.OptimizationScore, true
@@ -261,7 +268,7 @@ func (o *BaseEntitlementFields) GetOptimizationScoreOk() (*string, bool) {
 
 // HasOptimizationScore returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasOptimizationScore() bool {
-	if o != nil && o.OptimizationScore != nil {
+	if o != nil && !IsNil(o.OptimizationScore) {
 		return true
 	}
 
@@ -275,7 +282,7 @@ func (o *BaseEntitlementFields) SetOptimizationScore(v string) {
 
 // GetOptimizationScorePercentage returns the OptimizationScorePercentage field value if set, zero value otherwise.
 func (o *BaseEntitlementFields) GetOptimizationScorePercentage() int32 {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		var ret int32
 		return ret
 	}
@@ -285,7 +292,7 @@ func (o *BaseEntitlementFields) GetOptimizationScorePercentage() int32 {
 // GetOptimizationScorePercentageOk returns a tuple with the OptimizationScorePercentage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementFields) GetOptimizationScorePercentageOk() (*int32, bool) {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		return nil, false
 	}
 	return o.OptimizationScorePercentage, true
@@ -293,7 +300,7 @@ func (o *BaseEntitlementFields) GetOptimizationScorePercentageOk() (*int32, bool
 
 // HasOptimizationScorePercentage returns a boolean if a field has been set.
 func (o *BaseEntitlementFields) HasOptimizationScorePercentage() bool {
-	if o != nil && o.OptimizationScorePercentage != nil {
+	if o != nil && !IsNil(o.OptimizationScorePercentage) {
 		return true
 	}
 
@@ -306,32 +313,74 @@ func (o *BaseEntitlementFields) SetOptimizationScorePercentage(v int32) {
 }
 
 func (o BaseEntitlementFields) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if o.OptimizationScore != nil {
-		toSerialize["optimizationScore"] = o.OptimizationScore
-	}
-	if o.OptimizationScorePercentage != nil {
-		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BaseEntitlementFields) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	if !IsNil(o.OptimizationScore) {
+		toSerialize["optimizationScore"] = o.OptimizationScore
+	}
+	if !IsNil(o.OptimizationScorePercentage) {
+		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
+	}
+	return toSerialize, nil
+}
+
+func (o *BaseEntitlementFields) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"site",
+		"conditions",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBaseEntitlementFields := _BaseEntitlementFields{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBaseEntitlementFields)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BaseEntitlementFields(varBaseEntitlementFields)
+
+	return err
 }
 
 type NullableBaseEntitlementFields struct {

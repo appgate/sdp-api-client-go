@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TokenRecordsReevalByDnDistinguishedNamePost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TokenRecordsReevalByDnDistinguishedNamePost200Response{}
+
 // TokenRecordsReevalByDnDistinguishedNamePost200Response struct for TokenRecordsReevalByDnDistinguishedNamePost200Response
 type TokenRecordsReevalByDnDistinguishedNamePost200Response struct {
 	// List of reevaluated Distinguished Names.
@@ -40,7 +43,7 @@ func NewTokenRecordsReevalByDnDistinguishedNamePost200ResponseWithDefaults() *To
 
 // GetReevaluatedDistinguishedNames returns the ReevaluatedDistinguishedNames field value if set, zero value otherwise.
 func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) GetReevaluatedDistinguishedNames() []string {
-	if o == nil || o.ReevaluatedDistinguishedNames == nil {
+	if o == nil || IsNil(o.ReevaluatedDistinguishedNames) {
 		var ret []string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) GetReevaluatedD
 // GetReevaluatedDistinguishedNamesOk returns a tuple with the ReevaluatedDistinguishedNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) GetReevaluatedDistinguishedNamesOk() ([]string, bool) {
-	if o == nil || o.ReevaluatedDistinguishedNames == nil {
+	if o == nil || IsNil(o.ReevaluatedDistinguishedNames) {
 		return nil, false
 	}
 	return o.ReevaluatedDistinguishedNames, true
@@ -58,7 +61,7 @@ func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) GetReevaluatedD
 
 // HasReevaluatedDistinguishedNames returns a boolean if a field has been set.
 func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) HasReevaluatedDistinguishedNames() bool {
-	if o != nil && o.ReevaluatedDistinguishedNames != nil {
+	if o != nil && !IsNil(o.ReevaluatedDistinguishedNames) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *TokenRecordsReevalByDnDistinguishedNamePost200Response) SetReevaluatedD
 }
 
 func (o TokenRecordsReevalByDnDistinguishedNamePost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ReevaluatedDistinguishedNames != nil {
-		toSerialize["reevaluatedDistinguishedNames"] = o.ReevaluatedDistinguishedNames
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TokenRecordsReevalByDnDistinguishedNamePost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ReevaluatedDistinguishedNames) {
+		toSerialize["reevaluatedDistinguishedNames"] = o.ReevaluatedDistinguishedNames
+	}
+	return toSerialize, nil
 }
 
 type NullableTokenRecordsReevalByDnDistinguishedNamePost200Response struct {

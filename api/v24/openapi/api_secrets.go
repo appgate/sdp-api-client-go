@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// SecretsApiService SecretsApi service
-type SecretsApiService service
+// SecretsAPIService SecretsAPI service
+type SecretsAPIService service
 
 type ApiSecretsBulkUpsertPostRequest struct {
 	ctx                          context.Context
-	ApiService                   *SecretsApiService
+	ApiService                   *SecretsAPIService
 	secretsBulkUpsertPostRequest *SecretsBulkUpsertPostRequest
 }
 
@@ -46,7 +46,7 @@ Create or update multiple secrets in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSecretsBulkUpsertPostRequest
 */
-func (a *SecretsApiService) SecretsBulkUpsertPost(ctx context.Context) ApiSecretsBulkUpsertPostRequest {
+func (a *SecretsAPIService) SecretsBulkUpsertPost(ctx context.Context) ApiSecretsBulkUpsertPostRequest {
 	return ApiSecretsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -56,7 +56,7 @@ func (a *SecretsApiService) SecretsBulkUpsertPost(ctx context.Context) ApiSecret
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *SecretsAPIService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsApiService.SecretsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecretsAPIService.SecretsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -107,9 +107,9 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -126,6 +126,7 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -136,6 +137,7 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -146,16 +148,18 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v LoginPost406Response
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -166,6 +170,7 @@ func (a *SecretsApiService) SecretsBulkUpsertPostExecute(r ApiSecretsBulkUpsertP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SessionGeoData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionGeoData{}
+
 // SessionGeoData struct for SessionGeoData
 type SessionGeoData struct {
 	// The count of sessions for this geolocation.
@@ -48,7 +51,7 @@ func NewSessionGeoDataWithDefaults() *SessionGeoData {
 
 // GetSessionCount returns the SessionCount field value if set, zero value otherwise.
 func (o *SessionGeoData) GetSessionCount() int32 {
-	if o == nil || o.SessionCount == nil {
+	if o == nil || IsNil(o.SessionCount) {
 		var ret int32
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *SessionGeoData) GetSessionCount() int32 {
 // GetSessionCountOk returns a tuple with the SessionCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetSessionCountOk() (*int32, bool) {
-	if o == nil || o.SessionCount == nil {
+	if o == nil || IsNil(o.SessionCount) {
 		return nil, false
 	}
 	return o.SessionCount, true
@@ -66,7 +69,7 @@ func (o *SessionGeoData) GetSessionCountOk() (*int32, bool) {
 
 // HasSessionCount returns a boolean if a field has been set.
 func (o *SessionGeoData) HasSessionCount() bool {
-	if o != nil && o.SessionCount != nil {
+	if o != nil && !IsNil(o.SessionCount) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *SessionGeoData) SetSessionCount(v int32) {
 
 // GetLatitude returns the Latitude field value if set, zero value otherwise.
 func (o *SessionGeoData) GetLatitude() float64 {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		var ret float64
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *SessionGeoData) GetLatitude() float64 {
 // GetLatitudeOk returns a tuple with the Latitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetLatitudeOk() (*float64, bool) {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		return nil, false
 	}
 	return o.Latitude, true
@@ -98,7 +101,7 @@ func (o *SessionGeoData) GetLatitudeOk() (*float64, bool) {
 
 // HasLatitude returns a boolean if a field has been set.
 func (o *SessionGeoData) HasLatitude() bool {
-	if o != nil && o.Latitude != nil {
+	if o != nil && !IsNil(o.Latitude) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *SessionGeoData) SetLatitude(v float64) {
 
 // GetLongitude returns the Longitude field value if set, zero value otherwise.
 func (o *SessionGeoData) GetLongitude() float64 {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		var ret float64
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *SessionGeoData) GetLongitude() float64 {
 // GetLongitudeOk returns a tuple with the Longitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetLongitudeOk() (*float64, bool) {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		return nil, false
 	}
 	return o.Longitude, true
@@ -130,7 +133,7 @@ func (o *SessionGeoData) GetLongitudeOk() (*float64, bool) {
 
 // HasLongitude returns a boolean if a field has been set.
 func (o *SessionGeoData) HasLongitude() bool {
-	if o != nil && o.Longitude != nil {
+	if o != nil && !IsNil(o.Longitude) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *SessionGeoData) SetLongitude(v float64) {
 
 // GetCountryCode returns the CountryCode field value if set, zero value otherwise.
 func (o *SessionGeoData) GetCountryCode() string {
-	if o == nil || o.CountryCode == nil {
+	if o == nil || IsNil(o.CountryCode) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *SessionGeoData) GetCountryCode() string {
 // GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetCountryCodeOk() (*string, bool) {
-	if o == nil || o.CountryCode == nil {
+	if o == nil || IsNil(o.CountryCode) {
 		return nil, false
 	}
 	return o.CountryCode, true
@@ -162,7 +165,7 @@ func (o *SessionGeoData) GetCountryCodeOk() (*string, bool) {
 
 // HasCountryCode returns a boolean if a field has been set.
 func (o *SessionGeoData) HasCountryCode() bool {
-	if o != nil && o.CountryCode != nil {
+	if o != nil && !IsNil(o.CountryCode) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *SessionGeoData) SetCountryCode(v string) {
 
 // GetContinentCode returns the ContinentCode field value if set, zero value otherwise.
 func (o *SessionGeoData) GetContinentCode() string {
-	if o == nil || o.ContinentCode == nil {
+	if o == nil || IsNil(o.ContinentCode) {
 		var ret string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *SessionGeoData) GetContinentCode() string {
 // GetContinentCodeOk returns a tuple with the ContinentCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetContinentCodeOk() (*string, bool) {
-	if o == nil || o.ContinentCode == nil {
+	if o == nil || IsNil(o.ContinentCode) {
 		return nil, false
 	}
 	return o.ContinentCode, true
@@ -194,7 +197,7 @@ func (o *SessionGeoData) GetContinentCodeOk() (*string, bool) {
 
 // HasContinentCode returns a boolean if a field has been set.
 func (o *SessionGeoData) HasContinentCode() bool {
-	if o != nil && o.ContinentCode != nil {
+	if o != nil && !IsNil(o.ContinentCode) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *SessionGeoData) SetContinentCode(v string) {
 
 // GetIps returns the Ips field value if set, zero value otherwise.
 func (o *SessionGeoData) GetIps() []string {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		var ret []string
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *SessionGeoData) GetIps() []string {
 // GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionGeoData) GetIpsOk() ([]string, bool) {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		return nil, false
 	}
 	return o.Ips, true
@@ -226,7 +229,7 @@ func (o *SessionGeoData) GetIpsOk() ([]string, bool) {
 
 // HasIps returns a boolean if a field has been set.
 func (o *SessionGeoData) HasIps() bool {
-	if o != nil && o.Ips != nil {
+	if o != nil && !IsNil(o.Ips) {
 		return true
 	}
 
@@ -239,26 +242,34 @@ func (o *SessionGeoData) SetIps(v []string) {
 }
 
 func (o SessionGeoData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SessionCount != nil {
-		toSerialize["sessionCount"] = o.SessionCount
-	}
-	if o.Latitude != nil {
-		toSerialize["latitude"] = o.Latitude
-	}
-	if o.Longitude != nil {
-		toSerialize["longitude"] = o.Longitude
-	}
-	if o.CountryCode != nil {
-		toSerialize["countryCode"] = o.CountryCode
-	}
-	if o.ContinentCode != nil {
-		toSerialize["continentCode"] = o.ContinentCode
-	}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionGeoData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SessionCount) {
+		toSerialize["sessionCount"] = o.SessionCount
+	}
+	if !IsNil(o.Latitude) {
+		toSerialize["latitude"] = o.Latitude
+	}
+	if !IsNil(o.Longitude) {
+		toSerialize["longitude"] = o.Longitude
+	}
+	if !IsNil(o.CountryCode) {
+		toSerialize["countryCode"] = o.CountryCode
+	}
+	if !IsNil(o.ContinentCode) {
+		toSerialize["continentCode"] = o.ContinentCode
+	}
+	if !IsNil(o.Ips) {
+		toSerialize["ips"] = o.Ips
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionGeoData struct {

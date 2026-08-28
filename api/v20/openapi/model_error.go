@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Error type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Error{}
+
 // Error Generic HTTP error.
 type Error struct {
 	// Machine readable error code.
@@ -42,7 +45,7 @@ func NewErrorWithDefaults() *Error {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Error) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *Error) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -60,7 +63,7 @@ func (o *Error) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Error) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *Error) SetId(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *Error) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *Error) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -92,7 +95,7 @@ func (o *Error) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *Error) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *Error) SetMessage(v string) {
 }
 
 func (o Error) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Error) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	return toSerialize, nil
 }
 
 type NullableError struct {

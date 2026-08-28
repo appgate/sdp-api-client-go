@@ -12,14 +12,21 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ReplicationTargetRegistrationToken type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationTargetRegistrationToken{}
 
 // ReplicationTargetRegistrationToken struct for ReplicationTargetRegistrationToken
 type ReplicationTargetRegistrationToken struct {
 	// Registration token provided by the replication target.
 	Token string `json:"token"`
 }
+
+type _ReplicationTargetRegistrationToken ReplicationTargetRegistrationToken
 
 // NewReplicationTargetRegistrationToken instantiates a new ReplicationTargetRegistrationToken object
 // This constructor will assign default values to properties that have it defined,
@@ -64,11 +71,54 @@ func (o *ReplicationTargetRegistrationToken) SetToken(v string) {
 }
 
 func (o ReplicationTargetRegistrationToken) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["token"] = o.Token
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationTargetRegistrationToken) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["token"] = o.Token
+	return toSerialize, nil
+}
+
+func (o *ReplicationTargetRegistrationToken) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"token",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReplicationTargetRegistrationToken := _ReplicationTargetRegistrationToken{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReplicationTargetRegistrationToken)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReplicationTargetRegistrationToken(varReplicationTargetRegistrationToken)
+
+	return err
 }
 
 type NullableReplicationTargetRegistrationToken struct {

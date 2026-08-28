@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IdentityProvidersIdAttributesPost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersIdAttributesPost200Response{}
+
 // IdentityProvidersIdAttributesPost200Response struct for IdentityProvidersIdAttributesPost200Response
 type IdentityProvidersIdAttributesPost200Response struct {
 	// The attributes received and unchanged by the Identity Provider.
@@ -42,7 +45,7 @@ func NewIdentityProvidersIdAttributesPost200ResponseWithDefaults() *IdentityProv
 
 // GetRawAttributes returns the RawAttributes field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPost200Response) GetRawAttributes() map[string][]string {
-	if o == nil || o.RawAttributes == nil {
+	if o == nil || IsNil(o.RawAttributes) {
 		var ret map[string][]string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *IdentityProvidersIdAttributesPost200Response) GetRawAttributes() map[st
 // GetRawAttributesOk returns a tuple with the RawAttributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPost200Response) GetRawAttributesOk() (*map[string][]string, bool) {
-	if o == nil || o.RawAttributes == nil {
+	if o == nil || IsNil(o.RawAttributes) {
 		return nil, false
 	}
 	return o.RawAttributes, true
@@ -60,7 +63,7 @@ func (o *IdentityProvidersIdAttributesPost200Response) GetRawAttributesOk() (*ma
 
 // HasRawAttributes returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPost200Response) HasRawAttributes() bool {
-	if o != nil && o.RawAttributes != nil {
+	if o != nil && !IsNil(o.RawAttributes) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *IdentityProvidersIdAttributesPost200Response) SetRawAttributes(v map[st
 
 // GetMappedAttributes returns the MappedAttributes field value if set, zero value otherwise.
 func (o *IdentityProvidersIdAttributesPost200Response) GetMappedAttributes() map[string]string {
-	if o == nil || o.MappedAttributes == nil {
+	if o == nil || IsNil(o.MappedAttributes) {
 		var ret map[string]string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *IdentityProvidersIdAttributesPost200Response) GetMappedAttributes() map
 // GetMappedAttributesOk returns a tuple with the MappedAttributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersIdAttributesPost200Response) GetMappedAttributesOk() (*map[string]string, bool) {
-	if o == nil || o.MappedAttributes == nil {
+	if o == nil || IsNil(o.MappedAttributes) {
 		return nil, false
 	}
 	return o.MappedAttributes, true
@@ -92,7 +95,7 @@ func (o *IdentityProvidersIdAttributesPost200Response) GetMappedAttributesOk() (
 
 // HasMappedAttributes returns a boolean if a field has been set.
 func (o *IdentityProvidersIdAttributesPost200Response) HasMappedAttributes() bool {
-	if o != nil && o.MappedAttributes != nil {
+	if o != nil && !IsNil(o.MappedAttributes) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *IdentityProvidersIdAttributesPost200Response) SetMappedAttributes(v map
 }
 
 func (o IdentityProvidersIdAttributesPost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RawAttributes != nil {
-		toSerialize["rawAttributes"] = o.RawAttributes
-	}
-	if o.MappedAttributes != nil {
-		toSerialize["mappedAttributes"] = o.MappedAttributes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersIdAttributesPost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RawAttributes) {
+		toSerialize["rawAttributes"] = o.RawAttributes
+	}
+	if !IsNil(o.MappedAttributes) {
+		toSerialize["mappedAttributes"] = o.MappedAttributes
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersIdAttributesPost200Response struct {

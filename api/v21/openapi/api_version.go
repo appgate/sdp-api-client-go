@@ -14,17 +14,17 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-// VersionApiService VersionApi service
-type VersionApiService service
+// VersionAPIService VersionAPI service
+type VersionAPIService service
 
 type ApiVersionGetRequest struct {
 	ctx        context.Context
-	ApiService *VersionApiService
+	ApiService *VersionAPIService
 }
 
 func (r ApiVersionGetRequest) Execute() (*VersionGet200Response, *http.Response, error) {
@@ -37,7 +37,7 @@ VersionGet Get the current and lowest accepted version of the peer API.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiVersionGetRequest
 */
-func (a *VersionApiService) VersionGet(ctx context.Context) ApiVersionGetRequest {
+func (a *VersionAPIService) VersionGet(ctx context.Context) ApiVersionGetRequest {
 	return ApiVersionGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -47,7 +47,7 @@ func (a *VersionApiService) VersionGet(ctx context.Context) ApiVersionGetRequest
 // Execute executes the request
 //
 //	@return VersionGet200Response
-func (a *VersionApiService) VersionGetExecute(r ApiVersionGetRequest) (*VersionGet200Response, *http.Response, error) {
+func (a *VersionAPIService) VersionGetExecute(r ApiVersionGetRequest) (*VersionGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -55,7 +55,7 @@ func (a *VersionApiService) VersionGetExecute(r ApiVersionGetRequest) (*VersionG
 		localVarReturnValue *VersionGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionApiService.VersionGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionAPIService.VersionGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -93,9 +93,9 @@ func (a *VersionApiService) VersionGetExecute(r ApiVersionGetRequest) (*VersionG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ColorCode type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ColorCode{}
+
 // ColorCode Represents a Color Code.
 type ColorCode struct {
 	// ID of the color code.
@@ -42,7 +45,7 @@ func NewColorCodeWithDefaults() *ColorCode {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ColorCode) GetId() float32 {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret float32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ColorCode) GetId() float32 {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ColorCode) GetIdOk() (*float32, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -60,7 +63,7 @@ func (o *ColorCode) GetIdOk() (*float32, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ColorCode) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ColorCode) SetId(v float32) {
 
 // GetColorName returns the ColorName field value if set, zero value otherwise.
 func (o *ColorCode) GetColorName() string {
-	if o == nil || o.ColorName == nil {
+	if o == nil || IsNil(o.ColorName) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ColorCode) GetColorName() string {
 // GetColorNameOk returns a tuple with the ColorName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ColorCode) GetColorNameOk() (*string, bool) {
-	if o == nil || o.ColorName == nil {
+	if o == nil || IsNil(o.ColorName) {
 		return nil, false
 	}
 	return o.ColorName, true
@@ -92,7 +95,7 @@ func (o *ColorCode) GetColorNameOk() (*string, bool) {
 
 // HasColorName returns a boolean if a field has been set.
 func (o *ColorCode) HasColorName() bool {
-	if o != nil && o.ColorName != nil {
+	if o != nil && !IsNil(o.ColorName) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ColorCode) SetColorName(v string) {
 }
 
 func (o ColorCode) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.ColorName != nil {
-		toSerialize["colorName"] = o.ColorName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ColorCode) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.ColorName) {
+		toSerialize["colorName"] = o.ColorName
+	}
+	return toSerialize, nil
 }
 
 type NullableColorCode struct {

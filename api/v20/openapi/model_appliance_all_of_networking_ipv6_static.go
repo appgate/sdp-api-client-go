@@ -12,8 +12,13 @@ Contact: appgatesdp.support@appgate.com
 package openapi
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 )
+
+// checks if the ApplianceAllOfNetworkingIpv6Static type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingIpv6Static{}
 
 // ApplianceAllOfNetworkingIpv6Static struct for ApplianceAllOfNetworkingIpv6Static
 type ApplianceAllOfNetworkingIpv6Static struct {
@@ -24,6 +29,8 @@ type ApplianceAllOfNetworkingIpv6Static struct {
 	// Enable SNAT on this IP.
 	Snat *bool `json:"snat,omitempty"`
 }
+
+type _ApplianceAllOfNetworkingIpv6Static ApplianceAllOfNetworkingIpv6Static
 
 // NewApplianceAllOfNetworkingIpv6Static instantiates a new ApplianceAllOfNetworkingIpv6Static object
 // This constructor will assign default values to properties that have it defined,
@@ -94,7 +101,7 @@ func (o *ApplianceAllOfNetworkingIpv6Static) SetNetmask(v int32) {
 
 // GetSnat returns the Snat field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Static) GetSnat() bool {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		var ret bool
 		return ret
 	}
@@ -104,7 +111,7 @@ func (o *ApplianceAllOfNetworkingIpv6Static) GetSnat() bool {
 // GetSnatOk returns a tuple with the Snat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv6Static) GetSnatOk() (*bool, bool) {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		return nil, false
 	}
 	return o.Snat, true
@@ -112,7 +119,7 @@ func (o *ApplianceAllOfNetworkingIpv6Static) GetSnatOk() (*bool, bool) {
 
 // HasSnat returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv6Static) HasSnat() bool {
-	if o != nil && o.Snat != nil {
+	if o != nil && !IsNil(o.Snat) {
 		return true
 	}
 
@@ -125,17 +132,59 @@ func (o *ApplianceAllOfNetworkingIpv6Static) SetSnat(v bool) {
 }
 
 func (o ApplianceAllOfNetworkingIpv6Static) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["address"] = o.Address
-	}
-	if true {
-		toSerialize["netmask"] = o.Netmask
-	}
-	if o.Snat != nil {
-		toSerialize["snat"] = o.Snat
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingIpv6Static) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["address"] = o.Address
+	toSerialize["netmask"] = o.Netmask
+	if !IsNil(o.Snat) {
+		toSerialize["snat"] = o.Snat
+	}
+	return toSerialize, nil
+}
+
+func (o *ApplianceAllOfNetworkingIpv6Static) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"address",
+		"netmask",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varApplianceAllOfNetworkingIpv6Static := _ApplianceAllOfNetworkingIpv6Static{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varApplianceAllOfNetworkingIpv6Static)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ApplianceAllOfNetworkingIpv6Static(varApplianceAllOfNetworkingIpv6Static)
+
+	return err
 }
 
 type NullableApplianceAllOfNetworkingIpv6Static struct {

@@ -14,18 +14,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// ApplianceCustomizationsApiService ApplianceCustomizationsApi service
-type ApplianceCustomizationsApiService service
+// ApplianceCustomizationsAPIService ApplianceCustomizationsAPI service
+type ApplianceCustomizationsAPIService service
 
 type ApiApplianceCustomizationsBulkUpsertPostRequest struct {
 	ctx                                          context.Context
-	ApiService                                   *ApplianceCustomizationsApiService
+	ApiService                                   *ApplianceCustomizationsAPIService
 	applianceCustomizationsBulkUpsertPostRequest *ApplianceCustomizationsBulkUpsertPostRequest
 }
 
@@ -47,7 +47,7 @@ Create or update multiple appliance customizations in a single request.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiApplianceCustomizationsBulkUpsertPostRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPost(ctx context.Context) ApiApplianceCustomizationsBulkUpsertPostRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsBulkUpsertPost(ctx context.Context) ApiApplianceCustomizationsBulkUpsertPostRequest {
 	return ApiApplianceCustomizationsBulkUpsertPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -57,7 +57,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 // Execute executes the request
 //
 //	@return BulkUpsertReport
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPostExecute(r ApiApplianceCustomizationsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsBulkUpsertPostExecute(r ApiApplianceCustomizationsBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -65,7 +65,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 		localVarReturnValue *BulkUpsertReport
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsBulkUpsertPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsBulkUpsertPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -108,9 +108,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -127,6 +127,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -137,6 +138,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -147,6 +149,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -157,6 +160,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -167,6 +171,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -186,7 +191,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsBulkUpsertPos
 
 type ApiApplianceCustomizationsGetRequest struct {
 	ctx        context.Context
-	ApiService *ApplianceCustomizationsApiService
+	ApiService *ApplianceCustomizationsAPIService
 	query      *string
 	range_     *string
 	orderBy    *string
@@ -236,7 +241,7 @@ List all Appliance Customizations visible to current user.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiApplianceCustomizationsGetRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx context.Context) ApiApplianceCustomizationsGetRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsGet(ctx context.Context) ApiApplianceCustomizationsGetRequest {
 	return ApiApplianceCustomizationsGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -246,7 +251,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGet(ctx conte
 // Execute executes the request
 //
 //	@return ApplianceCustomizationList
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r ApiApplianceCustomizationsGetRequest) (*ApplianceCustomizationList, *http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsGetExecute(r ApiApplianceCustomizationsGetRequest) (*ApplianceCustomizationList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -254,7 +259,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 		localVarReturnValue *ApplianceCustomizationList
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -266,19 +271,19 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "", "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "", "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "", "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "", "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -307,9 +312,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -326,6 +331,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -336,6 +342,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -346,6 +353,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -356,6 +364,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -375,7 +384,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsGetExecute(r 
 
 type ApiApplianceCustomizationsIdDeleteRequest struct {
 	ctx        context.Context
-	ApiService *ApplianceCustomizationsApiService
+	ApiService *ApplianceCustomizationsAPIService
 	id         string
 }
 
@@ -392,7 +401,7 @@ Delete a specific Appliance Customization.
 	@param id ID of the object.
 	@return ApiApplianceCustomizationsIdDeleteRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDelete(ctx context.Context, id string) ApiApplianceCustomizationsIdDeleteRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdDelete(ctx context.Context, id string) ApiApplianceCustomizationsIdDeleteRequest {
 	return ApiApplianceCustomizationsIdDeleteRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -401,20 +410,20 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDelete(ctx 
 }
 
 // Execute executes the request
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecute(r ApiApplianceCustomizationsIdDeleteRequest) (*http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdDeleteExecute(r ApiApplianceCustomizationsIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsIdDelete")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliance-customizations/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,9 +456,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -466,6 +475,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -476,6 +486,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -486,6 +497,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -496,6 +508,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -506,6 +519,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -516,7 +530,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdDeleteExecu
 
 type ApiApplianceCustomizationsIdGetRequest struct {
 	ctx        context.Context
-	ApiService *ApplianceCustomizationsApiService
+	ApiService *ApplianceCustomizationsAPIService
 	id         string
 }
 
@@ -533,7 +547,7 @@ Get a specific Appliance Customization.
 	@param id ID of the object.
 	@return ApiApplianceCustomizationsIdGetRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx context.Context, id string) ApiApplianceCustomizationsIdGetRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdGet(ctx context.Context, id string) ApiApplianceCustomizationsIdGetRequest {
 	return ApiApplianceCustomizationsIdGetRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -544,7 +558,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGet(ctx con
 // Execute executes the request
 //
 //	@return ApplianceCustomization
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(r ApiApplianceCustomizationsIdGetRequest) (*ApplianceCustomization, *http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdGetExecute(r ApiApplianceCustomizationsIdGetRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -552,13 +566,13 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 		localVarReturnValue *ApplianceCustomization
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsIdGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliance-customizations/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -591,9 +605,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -610,6 +624,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -620,6 +635,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -630,6 +646,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -640,6 +657,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -650,6 +668,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -669,7 +688,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdGetExecute(
 
 type ApiApplianceCustomizationsIdPutRequest struct {
 	ctx                    context.Context
-	ApiService             *ApplianceCustomizationsApiService
+	ApiService             *ApplianceCustomizationsAPIService
 	id                     string
 	applianceCustomization *ApplianceCustomization
 }
@@ -693,7 +712,7 @@ Update an existing Appliance Customization.
 	@param id ID of the object.
 	@return ApiApplianceCustomizationsIdPutRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx context.Context, id string) ApiApplianceCustomizationsIdPutRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdPut(ctx context.Context, id string) ApiApplianceCustomizationsIdPutRequest {
 	return ApiApplianceCustomizationsIdPutRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -704,7 +723,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPut(ctx con
 // Execute executes the request
 //
 //	@return ApplianceCustomization
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(r ApiApplianceCustomizationsIdPutRequest) (*ApplianceCustomization, *http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsIdPutExecute(r ApiApplianceCustomizationsIdPutRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
@@ -712,13 +731,13 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 		localVarReturnValue *ApplianceCustomization
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsIdPut")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsIdPut")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/appliance-customizations/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -756,9 +775,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -775,6 +794,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -785,6 +805,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -795,6 +816,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -805,6 +827,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -815,6 +838,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -825,6 +849,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -835,6 +860,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -854,7 +880,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsIdPutExecute(
 
 type ApiApplianceCustomizationsPostRequest struct {
 	ctx                    context.Context
-	ApiService             *ApplianceCustomizationsApiService
+	ApiService             *ApplianceCustomizationsAPIService
 	applianceCustomization *ApplianceCustomization
 }
 
@@ -876,7 +902,7 @@ Create a new Appliance Customization.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiApplianceCustomizationsPostRequest
 */
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx context.Context) ApiApplianceCustomizationsPostRequest {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsPost(ctx context.Context) ApiApplianceCustomizationsPostRequest {
 	return ApiApplianceCustomizationsPostRequest{
 		ApiService: a,
 		ctx:        ctx,
@@ -886,7 +912,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPost(ctx cont
 // Execute executes the request
 //
 //	@return ApplianceCustomization
-func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r ApiApplianceCustomizationsPostRequest) (*ApplianceCustomization, *http.Response, error) {
+func (a *ApplianceCustomizationsAPIService) ApplianceCustomizationsPostExecute(r ApiApplianceCustomizationsPostRequest) (*ApplianceCustomization, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -894,7 +920,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 		localVarReturnValue *ApplianceCustomization
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsApiService.ApplianceCustomizationsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceCustomizationsAPIService.ApplianceCustomizationsPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -937,9 +963,9 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -956,6 +982,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -966,6 +993,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -976,6 +1004,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -986,6 +1015,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -996,6 +1026,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1006,6 +1037,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1016,6 +1048,7 @@ func (a *ApplianceCustomizationsApiService) ApplianceCustomizationsPostExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr

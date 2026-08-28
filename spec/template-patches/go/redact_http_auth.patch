@@ -1,26 +1,25 @@
 diff --git a/go/client.mustache b/go/client.mustache
-index 8b9e173fe01..75aa59bc3d2 100644
 --- a/go/client.mustache
 +++ b/go/client.mustache
-@@ -34,6 +34,8 @@ import (
+@@ -35,6 +35,8 @@
  var (
- 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
- 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
-+	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
-+	redactPW  = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+ 	JsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?json)`)
+ 	XmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?xml)`)
++	redact          = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
++	redactPW        = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+ 	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
+ 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
  )
-
- // APIClient manages communication with the {{appName}} API v{{version}}
-@@ -172,7 +173,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+@@ -274,7 +276,7 @@
  		if err != nil {
  			return nil, err
  		}
 -		log.Printf("\n%s\n", string(dump))
 +		log.Printf("\n%s\n", redactPW.ReplaceAllString(redact.ReplaceAllString(string(dump), "${1}REDACTED"), "${2}REDACTED"))
  	}
-
+ 
  	resp, err := c.cfg.HTTPClient.Do(request)
-@@ -185,7 +186,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+@@ -287,7 +289,7 @@
  		if err != nil {
  			return resp, err
  		}

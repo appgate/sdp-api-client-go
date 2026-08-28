@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StatsAppliancesListAllOfData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesListAllOfData{}
+
 // StatsAppliancesListAllOfData An active Appliance status details.
 type StatsAppliancesListAllOfData struct {
 	// ID of the Appliance.
@@ -79,7 +82,7 @@ func NewStatsAppliancesListAllOfDataWithDefaults() *StatsAppliancesListAllOfData
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *StatsAppliancesListAllOfData) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -97,7 +100,7 @@ func (o *StatsAppliancesListAllOfData) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *StatsAppliancesListAllOfData) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *StatsAppliancesListAllOfData) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -129,7 +132,7 @@ func (o *StatsAppliancesListAllOfData) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *StatsAppliancesListAllOfData) SetName(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *StatsAppliancesListAllOfData) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -161,7 +164,7 @@ func (o *StatsAppliancesListAllOfData) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -175,7 +178,7 @@ func (o *StatsAppliancesListAllOfData) SetSiteName(v string) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -185,7 +188,7 @@ func (o *StatsAppliancesListAllOfData) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -193,7 +196,7 @@ func (o *StatsAppliancesListAllOfData) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *StatsAppliancesListAllOfData) SetTags(v []string) {
 // GetOnline returns the Online field value if set, zero value otherwise.
 // Deprecated
 func (o *StatsAppliancesListAllOfData) GetOnline() bool {
-	if o == nil || o.Online == nil {
+	if o == nil || IsNil(o.Online) {
 		var ret bool
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *StatsAppliancesListAllOfData) GetOnline() bool {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *StatsAppliancesListAllOfData) GetOnlineOk() (*bool, bool) {
-	if o == nil || o.Online == nil {
+	if o == nil || IsNil(o.Online) {
 		return nil, false
 	}
 	return o.Online, true
@@ -227,7 +230,7 @@ func (o *StatsAppliancesListAllOfData) GetOnlineOk() (*bool, bool) {
 
 // HasOnline returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasOnline() bool {
-	if o != nil && o.Online != nil {
+	if o != nil && !IsNil(o.Online) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *StatsAppliancesListAllOfData) SetOnline(v bool) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *StatsAppliancesListAllOfData) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -260,7 +263,7 @@ func (o *StatsAppliancesListAllOfData) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *StatsAppliancesListAllOfData) SetVersion(v string) {
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetState() string {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret string
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *StatsAppliancesListAllOfData) GetState() string {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetStateOk() (*string, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -292,7 +295,7 @@ func (o *StatsAppliancesListAllOfData) GetStateOk() (*string, bool) {
 
 // HasState returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -306,7 +309,7 @@ func (o *StatsAppliancesListAllOfData) SetState(v string) {
 
 // GetVolumeNumber returns the VolumeNumber field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetVolumeNumber() float32 {
-	if o == nil || o.VolumeNumber == nil {
+	if o == nil || IsNil(o.VolumeNumber) {
 		var ret float32
 		return ret
 	}
@@ -316,7 +319,7 @@ func (o *StatsAppliancesListAllOfData) GetVolumeNumber() float32 {
 // GetVolumeNumberOk returns a tuple with the VolumeNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetVolumeNumberOk() (*float32, bool) {
-	if o == nil || o.VolumeNumber == nil {
+	if o == nil || IsNil(o.VolumeNumber) {
 		return nil, false
 	}
 	return o.VolumeNumber, true
@@ -324,7 +327,7 @@ func (o *StatsAppliancesListAllOfData) GetVolumeNumberOk() (*float32, bool) {
 
 // HasVolumeNumber returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasVolumeNumber() bool {
-	if o != nil && o.VolumeNumber != nil {
+	if o != nil && !IsNil(o.VolumeNumber) {
 		return true
 	}
 
@@ -338,7 +341,7 @@ func (o *StatsAppliancesListAllOfData) SetVolumeNumber(v float32) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -348,7 +351,7 @@ func (o *StatsAppliancesListAllOfData) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -356,7 +359,7 @@ func (o *StatsAppliancesListAllOfData) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -370,7 +373,7 @@ func (o *StatsAppliancesListAllOfData) SetStatus(v string) {
 
 // GetFunction returns the Function field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetFunction() string {
-	if o == nil || o.Function == nil {
+	if o == nil || IsNil(o.Function) {
 		var ret string
 		return ret
 	}
@@ -380,7 +383,7 @@ func (o *StatsAppliancesListAllOfData) GetFunction() string {
 // GetFunctionOk returns a tuple with the Function field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetFunctionOk() (*string, bool) {
-	if o == nil || o.Function == nil {
+	if o == nil || IsNil(o.Function) {
 		return nil, false
 	}
 	return o.Function, true
@@ -388,7 +391,7 @@ func (o *StatsAppliancesListAllOfData) GetFunctionOk() (*string, bool) {
 
 // HasFunction returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasFunction() bool {
-	if o != nil && o.Function != nil {
+	if o != nil && !IsNil(o.Function) {
 		return true
 	}
 
@@ -402,7 +405,7 @@ func (o *StatsAppliancesListAllOfData) SetFunction(v string) {
 
 // GetController returns the Controller field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetController() ControllerRole {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		var ret ControllerRole
 		return ret
 	}
@@ -412,7 +415,7 @@ func (o *StatsAppliancesListAllOfData) GetController() ControllerRole {
 // GetControllerOk returns a tuple with the Controller field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetControllerOk() (*ControllerRole, bool) {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		return nil, false
 	}
 	return o.Controller, true
@@ -420,7 +423,7 @@ func (o *StatsAppliancesListAllOfData) GetControllerOk() (*ControllerRole, bool)
 
 // HasController returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasController() bool {
-	if o != nil && o.Controller != nil {
+	if o != nil && !IsNil(o.Controller) {
 		return true
 	}
 
@@ -434,7 +437,7 @@ func (o *StatsAppliancesListAllOfData) SetController(v ControllerRole) {
 
 // GetLogServer returns the LogServer field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetLogServer() ApplianceRole {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		var ret ApplianceRole
 		return ret
 	}
@@ -444,7 +447,7 @@ func (o *StatsAppliancesListAllOfData) GetLogServer() ApplianceRole {
 // GetLogServerOk returns a tuple with the LogServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetLogServerOk() (*ApplianceRole, bool) {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		return nil, false
 	}
 	return o.LogServer, true
@@ -452,7 +455,7 @@ func (o *StatsAppliancesListAllOfData) GetLogServerOk() (*ApplianceRole, bool) {
 
 // HasLogServer returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasLogServer() bool {
-	if o != nil && o.LogServer != nil {
+	if o != nil && !IsNil(o.LogServer) {
 		return true
 	}
 
@@ -466,7 +469,7 @@ func (o *StatsAppliancesListAllOfData) SetLogServer(v ApplianceRole) {
 
 // GetLogForwarder returns the LogForwarder field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetLogForwarder() ApplianceRole {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		var ret ApplianceRole
 		return ret
 	}
@@ -476,7 +479,7 @@ func (o *StatsAppliancesListAllOfData) GetLogForwarder() ApplianceRole {
 // GetLogForwarderOk returns a tuple with the LogForwarder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetLogForwarderOk() (*ApplianceRole, bool) {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		return nil, false
 	}
 	return o.LogForwarder, true
@@ -484,7 +487,7 @@ func (o *StatsAppliancesListAllOfData) GetLogForwarderOk() (*ApplianceRole, bool
 
 // HasLogForwarder returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasLogForwarder() bool {
-	if o != nil && o.LogForwarder != nil {
+	if o != nil && !IsNil(o.LogForwarder) {
 		return true
 	}
 
@@ -498,7 +501,7 @@ func (o *StatsAppliancesListAllOfData) SetLogForwarder(v ApplianceRole) {
 
 // GetGateway returns the Gateway field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetGateway() ApplianceWithSessionsRole {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -508,7 +511,7 @@ func (o *StatsAppliancesListAllOfData) GetGateway() ApplianceWithSessionsRole {
 // GetGatewayOk returns a tuple with the Gateway field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetGatewayOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		return nil, false
 	}
 	return o.Gateway, true
@@ -516,7 +519,7 @@ func (o *StatsAppliancesListAllOfData) GetGatewayOk() (*ApplianceWithSessionsRol
 
 // HasGateway returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasGateway() bool {
-	if o != nil && o.Gateway != nil {
+	if o != nil && !IsNil(o.Gateway) {
 		return true
 	}
 
@@ -530,7 +533,7 @@ func (o *StatsAppliancesListAllOfData) SetGateway(v ApplianceWithSessionsRole) {
 
 // GetConnector returns the Connector field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetConnector() ApplianceWithSessionsRole {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -540,7 +543,7 @@ func (o *StatsAppliancesListAllOfData) GetConnector() ApplianceWithSessionsRole 
 // GetConnectorOk returns a tuple with the Connector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetConnectorOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		return nil, false
 	}
 	return o.Connector, true
@@ -548,7 +551,7 @@ func (o *StatsAppliancesListAllOfData) GetConnectorOk() (*ApplianceWithSessionsR
 
 // HasConnector returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasConnector() bool {
-	if o != nil && o.Connector != nil {
+	if o != nil && !IsNil(o.Connector) {
 		return true
 	}
 
@@ -562,7 +565,7 @@ func (o *StatsAppliancesListAllOfData) SetConnector(v ApplianceWithSessionsRole)
 
 // GetPortal returns the Portal field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetPortal() ApplianceWithSessionsRole {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -572,7 +575,7 @@ func (o *StatsAppliancesListAllOfData) GetPortal() ApplianceWithSessionsRole {
 // GetPortalOk returns a tuple with the Portal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetPortalOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		return nil, false
 	}
 	return o.Portal, true
@@ -580,7 +583,7 @@ func (o *StatsAppliancesListAllOfData) GetPortalOk() (*ApplianceWithSessionsRole
 
 // HasPortal returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasPortal() bool {
-	if o != nil && o.Portal != nil {
+	if o != nil && !IsNil(o.Portal) {
 		return true
 	}
 
@@ -594,7 +597,7 @@ func (o *StatsAppliancesListAllOfData) SetPortal(v ApplianceWithSessionsRole) {
 
 // GetAppliance returns the Appliance field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetAppliance() ApplianceBaseRole {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		var ret ApplianceBaseRole
 		return ret
 	}
@@ -604,7 +607,7 @@ func (o *StatsAppliancesListAllOfData) GetAppliance() ApplianceBaseRole {
 // GetApplianceOk returns a tuple with the Appliance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetApplianceOk() (*ApplianceBaseRole, bool) {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		return nil, false
 	}
 	return o.Appliance, true
@@ -612,7 +615,7 @@ func (o *StatsAppliancesListAllOfData) GetApplianceOk() (*ApplianceBaseRole, boo
 
 // HasAppliance returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasAppliance() bool {
-	if o != nil && o.Appliance != nil {
+	if o != nil && !IsNil(o.Appliance) {
 		return true
 	}
 
@@ -626,7 +629,7 @@ func (o *StatsAppliancesListAllOfData) SetAppliance(v ApplianceBaseRole) {
 
 // GetNumberOfSessions returns the NumberOfSessions field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetNumberOfSessions() int32 {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		var ret int32
 		return ret
 	}
@@ -636,7 +639,7 @@ func (o *StatsAppliancesListAllOfData) GetNumberOfSessions() int32 {
 // GetNumberOfSessionsOk returns a tuple with the NumberOfSessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetNumberOfSessionsOk() (*int32, bool) {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		return nil, false
 	}
 	return o.NumberOfSessions, true
@@ -644,7 +647,7 @@ func (o *StatsAppliancesListAllOfData) GetNumberOfSessionsOk() (*int32, bool) {
 
 // HasNumberOfSessions returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasNumberOfSessions() bool {
-	if o != nil && o.NumberOfSessions != nil {
+	if o != nil && !IsNil(o.NumberOfSessions) {
 		return true
 	}
 
@@ -658,7 +661,7 @@ func (o *StatsAppliancesListAllOfData) SetNumberOfSessions(v int32) {
 
 // GetCpu returns the Cpu field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetCpu() float32 {
-	if o == nil || o.Cpu == nil {
+	if o == nil || IsNil(o.Cpu) {
 		var ret float32
 		return ret
 	}
@@ -668,7 +671,7 @@ func (o *StatsAppliancesListAllOfData) GetCpu() float32 {
 // GetCpuOk returns a tuple with the Cpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetCpuOk() (*float32, bool) {
-	if o == nil || o.Cpu == nil {
+	if o == nil || IsNil(o.Cpu) {
 		return nil, false
 	}
 	return o.Cpu, true
@@ -676,7 +679,7 @@ func (o *StatsAppliancesListAllOfData) GetCpuOk() (*float32, bool) {
 
 // HasCpu returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasCpu() bool {
-	if o != nil && o.Cpu != nil {
+	if o != nil && !IsNil(o.Cpu) {
 		return true
 	}
 
@@ -690,7 +693,7 @@ func (o *StatsAppliancesListAllOfData) SetCpu(v float32) {
 
 // GetMemory returns the Memory field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetMemory() float32 {
-	if o == nil || o.Memory == nil {
+	if o == nil || IsNil(o.Memory) {
 		var ret float32
 		return ret
 	}
@@ -700,7 +703,7 @@ func (o *StatsAppliancesListAllOfData) GetMemory() float32 {
 // GetMemoryOk returns a tuple with the Memory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetMemoryOk() (*float32, bool) {
-	if o == nil || o.Memory == nil {
+	if o == nil || IsNil(o.Memory) {
 		return nil, false
 	}
 	return o.Memory, true
@@ -708,7 +711,7 @@ func (o *StatsAppliancesListAllOfData) GetMemoryOk() (*float32, bool) {
 
 // HasMemory returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasMemory() bool {
-	if o != nil && o.Memory != nil {
+	if o != nil && !IsNil(o.Memory) {
 		return true
 	}
 
@@ -722,7 +725,7 @@ func (o *StatsAppliancesListAllOfData) SetMemory(v float32) {
 
 // GetDisk returns the Disk field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetDisk() float32 {
-	if o == nil || o.Disk == nil {
+	if o == nil || IsNil(o.Disk) {
 		var ret float32
 		return ret
 	}
@@ -732,7 +735,7 @@ func (o *StatsAppliancesListAllOfData) GetDisk() float32 {
 // GetDiskOk returns a tuple with the Disk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetDiskOk() (*float32, bool) {
-	if o == nil || o.Disk == nil {
+	if o == nil || IsNil(o.Disk) {
 		return nil, false
 	}
 	return o.Disk, true
@@ -740,7 +743,7 @@ func (o *StatsAppliancesListAllOfData) GetDiskOk() (*float32, bool) {
 
 // HasDisk returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasDisk() bool {
-	if o != nil && o.Disk != nil {
+	if o != nil && !IsNil(o.Disk) {
 		return true
 	}
 
@@ -754,7 +757,7 @@ func (o *StatsAppliancesListAllOfData) SetDisk(v float32) {
 
 // GetDiskInfo returns the DiskInfo field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetDiskInfo() StatsAppliancesListAllOfDiskInfo {
-	if o == nil || o.DiskInfo == nil {
+	if o == nil || IsNil(o.DiskInfo) {
 		var ret StatsAppliancesListAllOfDiskInfo
 		return ret
 	}
@@ -764,7 +767,7 @@ func (o *StatsAppliancesListAllOfData) GetDiskInfo() StatsAppliancesListAllOfDis
 // GetDiskInfoOk returns a tuple with the DiskInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetDiskInfoOk() (*StatsAppliancesListAllOfDiskInfo, bool) {
-	if o == nil || o.DiskInfo == nil {
+	if o == nil || IsNil(o.DiskInfo) {
 		return nil, false
 	}
 	return o.DiskInfo, true
@@ -772,7 +775,7 @@ func (o *StatsAppliancesListAllOfData) GetDiskInfoOk() (*StatsAppliancesListAllO
 
 // HasDiskInfo returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasDiskInfo() bool {
-	if o != nil && o.DiskInfo != nil {
+	if o != nil && !IsNil(o.DiskInfo) {
 		return true
 	}
 
@@ -786,7 +789,7 @@ func (o *StatsAppliancesListAllOfData) SetDiskInfo(v StatsAppliancesListAllOfDis
 
 // GetNetwork returns the Network field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetNetwork() StatsAppliancesListAllOfNetwork {
-	if o == nil || o.Network == nil {
+	if o == nil || IsNil(o.Network) {
 		var ret StatsAppliancesListAllOfNetwork
 		return ret
 	}
@@ -796,7 +799,7 @@ func (o *StatsAppliancesListAllOfData) GetNetwork() StatsAppliancesListAllOfNetw
 // GetNetworkOk returns a tuple with the Network field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetNetworkOk() (*StatsAppliancesListAllOfNetwork, bool) {
-	if o == nil || o.Network == nil {
+	if o == nil || IsNil(o.Network) {
 		return nil, false
 	}
 	return o.Network, true
@@ -804,7 +807,7 @@ func (o *StatsAppliancesListAllOfData) GetNetworkOk() (*StatsAppliancesListAllOf
 
 // HasNetwork returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasNetwork() bool {
-	if o != nil && o.Network != nil {
+	if o != nil && !IsNil(o.Network) {
 		return true
 	}
 
@@ -818,7 +821,7 @@ func (o *StatsAppliancesListAllOfData) SetNetwork(v StatsAppliancesListAllOfNetw
 
 // GetUpgrade returns the Upgrade field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetUpgrade() StatsAppliancesListAllOfUpgrade {
-	if o == nil || o.Upgrade == nil {
+	if o == nil || IsNil(o.Upgrade) {
 		var ret StatsAppliancesListAllOfUpgrade
 		return ret
 	}
@@ -828,7 +831,7 @@ func (o *StatsAppliancesListAllOfData) GetUpgrade() StatsAppliancesListAllOfUpgr
 // GetUpgradeOk returns a tuple with the Upgrade field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetUpgradeOk() (*StatsAppliancesListAllOfUpgrade, bool) {
-	if o == nil || o.Upgrade == nil {
+	if o == nil || IsNil(o.Upgrade) {
 		return nil, false
 	}
 	return o.Upgrade, true
@@ -836,7 +839,7 @@ func (o *StatsAppliancesListAllOfData) GetUpgradeOk() (*StatsAppliancesListAllOf
 
 // HasUpgrade returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasUpgrade() bool {
-	if o != nil && o.Upgrade != nil {
+	if o != nil && !IsNil(o.Upgrade) {
 		return true
 	}
 
@@ -850,7 +853,7 @@ func (o *StatsAppliancesListAllOfData) SetUpgrade(v StatsAppliancesListAllOfUpgr
 
 // GetCustomizationName returns the CustomizationName field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfData) GetCustomizationName() string {
-	if o == nil || o.CustomizationName == nil {
+	if o == nil || IsNil(o.CustomizationName) {
 		var ret string
 		return ret
 	}
@@ -860,7 +863,7 @@ func (o *StatsAppliancesListAllOfData) GetCustomizationName() string {
 // GetCustomizationNameOk returns a tuple with the CustomizationName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfData) GetCustomizationNameOk() (*string, bool) {
-	if o == nil || o.CustomizationName == nil {
+	if o == nil || IsNil(o.CustomizationName) {
 		return nil, false
 	}
 	return o.CustomizationName, true
@@ -868,7 +871,7 @@ func (o *StatsAppliancesListAllOfData) GetCustomizationNameOk() (*string, bool) 
 
 // HasCustomizationName returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfData) HasCustomizationName() bool {
-	if o != nil && o.CustomizationName != nil {
+	if o != nil && !IsNil(o.CustomizationName) {
 		return true
 	}
 
@@ -881,83 +884,91 @@ func (o *StatsAppliancesListAllOfData) SetCustomizationName(v string) {
 }
 
 func (o StatsAppliancesListAllOfData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Online != nil {
-		toSerialize["online"] = o.Online
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.State != nil {
-		toSerialize["state"] = o.State
-	}
-	if o.VolumeNumber != nil {
-		toSerialize["volumeNumber"] = o.VolumeNumber
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Function != nil {
-		toSerialize["function"] = o.Function
-	}
-	if o.Controller != nil {
-		toSerialize["controller"] = o.Controller
-	}
-	if o.LogServer != nil {
-		toSerialize["logServer"] = o.LogServer
-	}
-	if o.LogForwarder != nil {
-		toSerialize["logForwarder"] = o.LogForwarder
-	}
-	if o.Gateway != nil {
-		toSerialize["gateway"] = o.Gateway
-	}
-	if o.Connector != nil {
-		toSerialize["connector"] = o.Connector
-	}
-	if o.Portal != nil {
-		toSerialize["portal"] = o.Portal
-	}
-	if o.Appliance != nil {
-		toSerialize["appliance"] = o.Appliance
-	}
-	if o.NumberOfSessions != nil {
-		toSerialize["numberOfSessions"] = o.NumberOfSessions
-	}
-	if o.Cpu != nil {
-		toSerialize["cpu"] = o.Cpu
-	}
-	if o.Memory != nil {
-		toSerialize["memory"] = o.Memory
-	}
-	if o.Disk != nil {
-		toSerialize["disk"] = o.Disk
-	}
-	if o.DiskInfo != nil {
-		toSerialize["diskInfo"] = o.DiskInfo
-	}
-	if o.Network != nil {
-		toSerialize["network"] = o.Network
-	}
-	if o.Upgrade != nil {
-		toSerialize["upgrade"] = o.Upgrade
-	}
-	if o.CustomizationName != nil {
-		toSerialize["customizationName"] = o.CustomizationName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesListAllOfData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Online) {
+		toSerialize["online"] = o.Online
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	if !IsNil(o.VolumeNumber) {
+		toSerialize["volumeNumber"] = o.VolumeNumber
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Function) {
+		toSerialize["function"] = o.Function
+	}
+	if !IsNil(o.Controller) {
+		toSerialize["controller"] = o.Controller
+	}
+	if !IsNil(o.LogServer) {
+		toSerialize["logServer"] = o.LogServer
+	}
+	if !IsNil(o.LogForwarder) {
+		toSerialize["logForwarder"] = o.LogForwarder
+	}
+	if !IsNil(o.Gateway) {
+		toSerialize["gateway"] = o.Gateway
+	}
+	if !IsNil(o.Connector) {
+		toSerialize["connector"] = o.Connector
+	}
+	if !IsNil(o.Portal) {
+		toSerialize["portal"] = o.Portal
+	}
+	if !IsNil(o.Appliance) {
+		toSerialize["appliance"] = o.Appliance
+	}
+	if !IsNil(o.NumberOfSessions) {
+		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	}
+	if !IsNil(o.Cpu) {
+		toSerialize["cpu"] = o.Cpu
+	}
+	if !IsNil(o.Memory) {
+		toSerialize["memory"] = o.Memory
+	}
+	if !IsNil(o.Disk) {
+		toSerialize["disk"] = o.Disk
+	}
+	if !IsNil(o.DiskInfo) {
+		toSerialize["diskInfo"] = o.DiskInfo
+	}
+	if !IsNil(o.Network) {
+		toSerialize["network"] = o.Network
+	}
+	if !IsNil(o.Upgrade) {
+		toSerialize["upgrade"] = o.Upgrade
+	}
+	if !IsNil(o.CustomizationName) {
+		toSerialize["customizationName"] = o.CustomizationName
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesListAllOfData struct {
