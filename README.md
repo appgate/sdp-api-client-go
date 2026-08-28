@@ -109,7 +109,7 @@ More examples can be seen in [examples directory](./_examples/).
 ### Code generation
 
 #### Requirements
-	- go 1.20
+	- go 1.27
 	- python
 	- [apigentools](https://github.com/DataDog/apigentools) v1.6.0
 	- docker (with userns enabled)

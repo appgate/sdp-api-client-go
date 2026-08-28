@@ -9,7 +9,7 @@ if ! command -v apigentools &> /dev/null; then
 fi
 
 
-go_version_minimum="1.22.2"
+go_version_minimum="1.25.0"
 
 go_version() {
     go version | sed -nE -e 's/[^0-9.]+([0-9.]+).+/\1/p'
