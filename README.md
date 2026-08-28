@@ -7,7 +7,7 @@ The code is generated using [openapi-generator](https://github.com/OpenAPITools/
 ## Installation
 
 ```sh
-go get -u github.com/appgate/sdp-api-client-go/api/v20/openapi
+go get -u github.com/appgate/sdp-api-client-go/api/v25/openapi
 ```
 
 ## Version compatibility matrix
@@ -19,6 +19,8 @@ Each appliance version has a minimum of compatibility with 2 API versions back.
 | 6.3.*             	 | 20          	 |
 | 6.4.*             	 | 21          	 |
 | 6.5.*             	 | 22          	 |
+| 6.6.*             	 | 24          	 |
+| 6.7.*             	 | 25          	 |
 
 
 
@@ -39,12 +41,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/appgate/sdp-api-client-go/api/v19/openapi"
+	"github.com/appgate/sdp-api-client-go/api/v25/openapi"
 	"github.com/google/uuid"
 )
 
 const (
-	version  = 21
+	version  = 25
 	timeout  = 10
 	insecure = true
 	provider = "local"
