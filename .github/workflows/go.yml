@@ -33,18 +33,16 @@ jobs:
     name: "Static analysis"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: WillAbides/setup-go-faster@v1.7.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: "1.27.x"
-      - run: "GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@2023.1.2"
-      - uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
       - uses: actions/cache@v4
         with:
           path: ~/.cache/staticcheck
           key: staticcheck-${{ github.sha }}
           restore-keys: |
             staticcheck-
+      - run: "go install honnef.co/go/tools/cmd/staticcheck@latest"
       - run: "go vet ./api/..."
       - run: "$(go env GOPATH)/bin/staticcheck ./api/..."
