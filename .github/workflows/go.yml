@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-go@v4
       with:
-        go-version: '1.20.2'
+        go-version: '1.27.0'
 
 
     - name: Get dependencies
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: WillAbides/setup-go-faster@v1.7.0
         with:
-          go-version: "1.20.x"
+          go-version: "1.27.x"
       - run: "GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@2023.1.2"
       - uses: actions/checkout@v1
         with:
