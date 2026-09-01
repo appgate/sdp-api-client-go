@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the NetworkInfoDetailsValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NetworkInfoDetailsValue{}
+
 // NetworkInfoDetailsValue Network information details.
 type NetworkInfoDetailsValue struct {
 	// Dropin.
@@ -48,7 +51,7 @@ func NewNetworkInfoDetailsValueWithDefaults() *NetworkInfoDetailsValue {
 
 // GetDropin returns the Dropin field value if set, zero value otherwise.
 func (o *NetworkInfoDetailsValue) GetDropin() int32 {
-	if o == nil || o.Dropin == nil {
+	if o == nil || IsNil(o.Dropin) {
 		var ret int32
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *NetworkInfoDetailsValue) GetDropin() int32 {
 // GetDropinOk returns a tuple with the Dropin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfoDetailsValue) GetDropinOk() (*int32, bool) {
-	if o == nil || o.Dropin == nil {
+	if o == nil || IsNil(o.Dropin) {
 		return nil, false
 	}
 	return o.Dropin, true
@@ -66,7 +69,7 @@ func (o *NetworkInfoDetailsValue) GetDropinOk() (*int32, bool) {
 
 // HasDropin returns a boolean if a field has been set.
 func (o *NetworkInfoDetailsValue) HasDropin() bool {
-	if o != nil && o.Dropin != nil {
+	if o != nil && !IsNil(o.Dropin) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *NetworkInfoDetailsValue) SetDropin(v int32) {
 
 // GetDropout returns the Dropout field value if set, zero value otherwise.
 func (o *NetworkInfoDetailsValue) GetDropout() int32 {
-	if o == nil || o.Dropout == nil {
+	if o == nil || IsNil(o.Dropout) {
 		var ret int32
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *NetworkInfoDetailsValue) GetDropout() int32 {
 // GetDropoutOk returns a tuple with the Dropout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfoDetailsValue) GetDropoutOk() (*int32, bool) {
-	if o == nil || o.Dropout == nil {
+	if o == nil || IsNil(o.Dropout) {
 		return nil, false
 	}
 	return o.Dropout, true
@@ -98,7 +101,7 @@ func (o *NetworkInfoDetailsValue) GetDropoutOk() (*int32, bool) {
 
 // HasDropout returns a boolean if a field has been set.
 func (o *NetworkInfoDetailsValue) HasDropout() bool {
-	if o != nil && o.Dropout != nil {
+	if o != nil && !IsNil(o.Dropout) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *NetworkInfoDetailsValue) SetDropout(v int32) {
 
 // GetRxSpeed returns the RxSpeed field value if set, zero value otherwise.
 func (o *NetworkInfoDetailsValue) GetRxSpeed() string {
-	if o == nil || o.RxSpeed == nil {
+	if o == nil || IsNil(o.RxSpeed) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *NetworkInfoDetailsValue) GetRxSpeed() string {
 // GetRxSpeedOk returns a tuple with the RxSpeed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfoDetailsValue) GetRxSpeedOk() (*string, bool) {
-	if o == nil || o.RxSpeed == nil {
+	if o == nil || IsNil(o.RxSpeed) {
 		return nil, false
 	}
 	return o.RxSpeed, true
@@ -130,7 +133,7 @@ func (o *NetworkInfoDetailsValue) GetRxSpeedOk() (*string, bool) {
 
 // HasRxSpeed returns a boolean if a field has been set.
 func (o *NetworkInfoDetailsValue) HasRxSpeed() bool {
-	if o != nil && o.RxSpeed != nil {
+	if o != nil && !IsNil(o.RxSpeed) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *NetworkInfoDetailsValue) SetRxSpeed(v string) {
 
 // GetTxSpeed returns the TxSpeed field value if set, zero value otherwise.
 func (o *NetworkInfoDetailsValue) GetTxSpeed() string {
-	if o == nil || o.TxSpeed == nil {
+	if o == nil || IsNil(o.TxSpeed) {
 		var ret string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *NetworkInfoDetailsValue) GetTxSpeed() string {
 // GetTxSpeedOk returns a tuple with the TxSpeed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfoDetailsValue) GetTxSpeedOk() (*string, bool) {
-	if o == nil || o.TxSpeed == nil {
+	if o == nil || IsNil(o.TxSpeed) {
 		return nil, false
 	}
 	return o.TxSpeed, true
@@ -162,7 +165,7 @@ func (o *NetworkInfoDetailsValue) GetTxSpeedOk() (*string, bool) {
 
 // HasTxSpeed returns a boolean if a field has been set.
 func (o *NetworkInfoDetailsValue) HasTxSpeed() bool {
-	if o != nil && o.TxSpeed != nil {
+	if o != nil && !IsNil(o.TxSpeed) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *NetworkInfoDetailsValue) SetTxSpeed(v string) {
 
 // GetIps returns the Ips field value if set, zero value otherwise.
 func (o *NetworkInfoDetailsValue) GetIps() []string {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		var ret []string
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *NetworkInfoDetailsValue) GetIps() []string {
 // GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfoDetailsValue) GetIpsOk() ([]string, bool) {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		return nil, false
 	}
 	return o.Ips, true
@@ -194,7 +197,7 @@ func (o *NetworkInfoDetailsValue) GetIpsOk() ([]string, bool) {
 
 // HasIps returns a boolean if a field has been set.
 func (o *NetworkInfoDetailsValue) HasIps() bool {
-	if o != nil && o.Ips != nil {
+	if o != nil && !IsNil(o.Ips) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *NetworkInfoDetailsValue) SetIps(v []string) {
 }
 
 func (o NetworkInfoDetailsValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Dropin != nil {
-		toSerialize["dropin"] = o.Dropin
-	}
-	if o.Dropout != nil {
-		toSerialize["dropout"] = o.Dropout
-	}
-	if o.RxSpeed != nil {
-		toSerialize["rxSpeed"] = o.RxSpeed
-	}
-	if o.TxSpeed != nil {
-		toSerialize["txSpeed"] = o.TxSpeed
-	}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NetworkInfoDetailsValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Dropin) {
+		toSerialize["dropin"] = o.Dropin
+	}
+	if !IsNil(o.Dropout) {
+		toSerialize["dropout"] = o.Dropout
+	}
+	if !IsNil(o.RxSpeed) {
+		toSerialize["rxSpeed"] = o.RxSpeed
+	}
+	if !IsNil(o.TxSpeed) {
+		toSerialize["txSpeed"] = o.TxSpeed
+	}
+	if !IsNil(o.Ips) {
+		toSerialize["ips"] = o.Ips
+	}
+	return toSerialize, nil
 }
 
 type NullableNetworkInfoDetailsValue struct {

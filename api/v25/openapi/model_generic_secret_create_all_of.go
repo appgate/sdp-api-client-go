@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GenericSecretCreateAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GenericSecretCreateAllOf{}
+
 // GenericSecretCreateAllOf Represents a generic string Secret.
 type GenericSecretCreateAllOf struct {
 	// Secret string to store in Controller.
@@ -64,11 +67,17 @@ func (o *GenericSecretCreateAllOf) SetSecret(v string) {
 }
 
 func (o GenericSecretCreateAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["secret"] = o.Secret
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GenericSecretCreateAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["secret"] = o.Secret
+	return toSerialize, nil
 }
 
 type NullableGenericSecretCreateAllOf struct {

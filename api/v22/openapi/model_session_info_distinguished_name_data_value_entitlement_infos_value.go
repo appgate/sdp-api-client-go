@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SessionInfoDistinguishedNameDataValueEntitlementInfosValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionInfoDistinguishedNameDataValueEntitlementInfosValue{}
 
 // SessionInfoDistinguishedNameDataValueEntitlementInfosValue Entitlement details.
 type SessionInfoDistinguishedNameDataValueEntitlementInfosValue struct {
@@ -52,7 +55,7 @@ func NewSessionInfoDistinguishedNameDataValueEntitlementInfosValueWithDefaults()
 
 // GetAccess returns the Access field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetAccess() bool {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		var ret bool
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetAccess()
 // GetAccessOk returns a tuple with the Access field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetAccessOk() (*bool, bool) {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		return nil, false
 	}
 	return o.Access, true
@@ -70,7 +73,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetAccessOk
 
 // HasAccess returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasAccess() bool {
-	if o != nil && o.Access != nil {
+	if o != nil && !IsNil(o.Access) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetAccess(v
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditio
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -102,7 +105,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditio
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetConditio
 
 // GetConditionResults returns the ConditionResults field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditionResults() map[string]bool {
-	if o == nil || o.ConditionResults == nil {
+	if o == nil || IsNil(o.ConditionResults) {
 		var ret map[string]bool
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditio
 // GetConditionResultsOk returns a tuple with the ConditionResults field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditionResultsOk() (*map[string]bool, bool) {
-	if o == nil || o.ConditionResults == nil {
+	if o == nil || IsNil(o.ConditionResults) {
 		return nil, false
 	}
 	return o.ConditionResults, true
@@ -134,7 +137,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetConditio
 
 // HasConditionResults returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasConditionResults() bool {
-	if o != nil && o.ConditionResults != nil {
+	if o != nil && !IsNil(o.ConditionResults) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetConditio
 
 // GetFirewallRules returns the FirewallRules field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetFirewallRules() []SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner {
-	if o == nil || o.FirewallRules == nil {
+	if o == nil || IsNil(o.FirewallRules) {
 		var ret []SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetFirewall
 // GetFirewallRulesOk returns a tuple with the FirewallRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetFirewallRulesOk() ([]SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner, bool) {
-	if o == nil || o.FirewallRules == nil {
+	if o == nil || IsNil(o.FirewallRules) {
 		return nil, false
 	}
 	return o.FirewallRules, true
@@ -166,7 +169,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetFirewall
 
 // HasFirewallRules returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasFirewallRules() bool {
-	if o != nil && o.FirewallRules != nil {
+	if o != nil && !IsNil(o.FirewallRules) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetFirewall
 
 // GetPolicyNames returns the PolicyNames field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPolicyNames() []string {
-	if o == nil || o.PolicyNames == nil {
+	if o == nil || IsNil(o.PolicyNames) {
 		var ret []string
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPolicyNa
 // GetPolicyNamesOk returns a tuple with the PolicyNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPolicyNamesOk() ([]string, bool) {
-	if o == nil || o.PolicyNames == nil {
+	if o == nil || IsNil(o.PolicyNames) {
 		return nil, false
 	}
 	return o.PolicyNames, true
@@ -198,7 +201,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPolicyNa
 
 // HasPolicyNames returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasPolicyNames() bool {
-	if o != nil && o.PolicyNames != nil {
+	if o != nil && !IsNil(o.PolicyNames) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetPolicyNa
 
 // GetPrimarySite returns the PrimarySite field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPrimarySite() string {
-	if o == nil || o.PrimarySite == nil {
+	if o == nil || IsNil(o.PrimarySite) {
 		var ret string
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPrimaryS
 // GetPrimarySiteOk returns a tuple with the PrimarySite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPrimarySiteOk() (*string, bool) {
-	if o == nil || o.PrimarySite == nil {
+	if o == nil || IsNil(o.PrimarySite) {
 		return nil, false
 	}
 	return o.PrimarySite, true
@@ -230,7 +233,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetPrimaryS
 
 // HasPrimarySite returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasPrimarySite() bool {
-	if o != nil && o.PrimarySite != nil {
+	if o != nil && !IsNil(o.PrimarySite) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetPrimaryS
 
 // GetDomainEntitlement returns the DomainEntitlement field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetDomainEntitlement() bool {
-	if o == nil || o.DomainEntitlement == nil {
+	if o == nil || IsNil(o.DomainEntitlement) {
 		var ret bool
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetDomainEn
 // GetDomainEntitlementOk returns a tuple with the DomainEntitlement field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetDomainEntitlementOk() (*bool, bool) {
-	if o == nil || o.DomainEntitlement == nil {
+	if o == nil || IsNil(o.DomainEntitlement) {
 		return nil, false
 	}
 	return o.DomainEntitlement, true
@@ -262,7 +265,7 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) GetDomainEn
 
 // HasDomainEntitlement returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) HasDomainEntitlement() bool {
-	if o != nil && o.DomainEntitlement != nil {
+	if o != nil && !IsNil(o.DomainEntitlement) {
 		return true
 	}
 
@@ -275,29 +278,37 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValue) SetDomainEn
 }
 
 func (o SessionInfoDistinguishedNameDataValueEntitlementInfosValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Access != nil {
-		toSerialize["access"] = o.Access
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if o.ConditionResults != nil {
-		toSerialize["conditionResults"] = o.ConditionResults
-	}
-	if o.FirewallRules != nil {
-		toSerialize["firewallRules"] = o.FirewallRules
-	}
-	if o.PolicyNames != nil {
-		toSerialize["policyNames"] = o.PolicyNames
-	}
-	if o.PrimarySite != nil {
-		toSerialize["primarySite"] = o.PrimarySite
-	}
-	if o.DomainEntitlement != nil {
-		toSerialize["domainEntitlement"] = o.DomainEntitlement
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionInfoDistinguishedNameDataValueEntitlementInfosValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Access) {
+		toSerialize["access"] = o.Access
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	if !IsNil(o.ConditionResults) {
+		toSerialize["conditionResults"] = o.ConditionResults
+	}
+	if !IsNil(o.FirewallRules) {
+		toSerialize["firewallRules"] = o.FirewallRules
+	}
+	if !IsNil(o.PolicyNames) {
+		toSerialize["policyNames"] = o.PolicyNames
+	}
+	if !IsNil(o.PrimarySite) {
+		toSerialize["primarySite"] = o.PrimarySite
+	}
+	if !IsNil(o.DomainEntitlement) {
+		toSerialize["domainEntitlement"] = o.DomainEntitlement
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionInfoDistinguishedNameDataValueEntitlementInfosValue struct {

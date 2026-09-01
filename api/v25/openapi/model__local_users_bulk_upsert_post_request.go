@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LocalUsersBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LocalUsersBulkUpsertPostRequest{}
+
 // LocalUsersBulkUpsertPostRequest struct for LocalUsersBulkUpsertPostRequest
 type LocalUsersBulkUpsertPostRequest struct {
 	Data []LocalUser `json:"data"`
@@ -63,11 +66,17 @@ func (o *LocalUsersBulkUpsertPostRequest) SetData(v []LocalUser) {
 }
 
 func (o LocalUsersBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LocalUsersBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableLocalUsersBulkUpsertPostRequest struct {

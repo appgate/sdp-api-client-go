@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the IssuedCertificate type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IssuedCertificate{}
 
 // IssuedCertificate Issued Certificate by Appgate CA.
 type IssuedCertificate struct {
@@ -71,7 +74,7 @@ func NewIssuedCertificateWithDefaults() *IssuedCertificate {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *IssuedCertificate) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -89,7 +92,7 @@ func (o *IssuedCertificate) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -103,7 +106,7 @@ func (o *IssuedCertificate) SetId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -113,7 +116,7 @@ func (o *IssuedCertificate) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -121,7 +124,7 @@ func (o *IssuedCertificate) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -135,7 +138,7 @@ func (o *IssuedCertificate) SetType(v string) {
 
 // GetSubject returns the Subject field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetSubject() string {
-	if o == nil || o.Subject == nil {
+	if o == nil || IsNil(o.Subject) {
 		var ret string
 		return ret
 	}
@@ -145,7 +148,7 @@ func (o *IssuedCertificate) GetSubject() string {
 // GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetSubjectOk() (*string, bool) {
-	if o == nil || o.Subject == nil {
+	if o == nil || IsNil(o.Subject) {
 		return nil, false
 	}
 	return o.Subject, true
@@ -153,7 +156,7 @@ func (o *IssuedCertificate) GetSubjectOk() (*string, bool) {
 
 // HasSubject returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasSubject() bool {
-	if o != nil && o.Subject != nil {
+	if o != nil && !IsNil(o.Subject) {
 		return true
 	}
 
@@ -167,7 +170,7 @@ func (o *IssuedCertificate) SetSubject(v string) {
 
 // GetIssuer returns the Issuer field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetIssuer() string {
-	if o == nil || o.Issuer == nil {
+	if o == nil || IsNil(o.Issuer) {
 		var ret string
 		return ret
 	}
@@ -177,7 +180,7 @@ func (o *IssuedCertificate) GetIssuer() string {
 // GetIssuerOk returns a tuple with the Issuer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetIssuerOk() (*string, bool) {
-	if o == nil || o.Issuer == nil {
+	if o == nil || IsNil(o.Issuer) {
 		return nil, false
 	}
 	return o.Issuer, true
@@ -185,7 +188,7 @@ func (o *IssuedCertificate) GetIssuerOk() (*string, bool) {
 
 // HasIssuer returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasIssuer() bool {
-	if o != nil && o.Issuer != nil {
+	if o != nil && !IsNil(o.Issuer) {
 		return true
 	}
 
@@ -199,7 +202,7 @@ func (o *IssuedCertificate) SetIssuer(v string) {
 
 // GetSerial returns the Serial field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetSerial() string {
-	if o == nil || o.Serial == nil {
+	if o == nil || IsNil(o.Serial) {
 		var ret string
 		return ret
 	}
@@ -209,7 +212,7 @@ func (o *IssuedCertificate) GetSerial() string {
 // GetSerialOk returns a tuple with the Serial field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetSerialOk() (*string, bool) {
-	if o == nil || o.Serial == nil {
+	if o == nil || IsNil(o.Serial) {
 		return nil, false
 	}
 	return o.Serial, true
@@ -217,7 +220,7 @@ func (o *IssuedCertificate) GetSerialOk() (*string, bool) {
 
 // HasSerial returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasSerial() bool {
-	if o != nil && o.Serial != nil {
+	if o != nil && !IsNil(o.Serial) {
 		return true
 	}
 
@@ -231,7 +234,7 @@ func (o *IssuedCertificate) SetSerial(v string) {
 
 // GetFingerprintSha256 returns the FingerprintSha256 field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetFingerprintSha256() string {
-	if o == nil || o.FingerprintSha256 == nil {
+	if o == nil || IsNil(o.FingerprintSha256) {
 		var ret string
 		return ret
 	}
@@ -241,7 +244,7 @@ func (o *IssuedCertificate) GetFingerprintSha256() string {
 // GetFingerprintSha256Ok returns a tuple with the FingerprintSha256 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetFingerprintSha256Ok() (*string, bool) {
-	if o == nil || o.FingerprintSha256 == nil {
+	if o == nil || IsNil(o.FingerprintSha256) {
 		return nil, false
 	}
 	return o.FingerprintSha256, true
@@ -249,7 +252,7 @@ func (o *IssuedCertificate) GetFingerprintSha256Ok() (*string, bool) {
 
 // HasFingerprintSha256 returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasFingerprintSha256() bool {
-	if o != nil && o.FingerprintSha256 != nil {
+	if o != nil && !IsNil(o.FingerprintSha256) {
 		return true
 	}
 
@@ -263,7 +266,7 @@ func (o *IssuedCertificate) SetFingerprintSha256(v string) {
 
 // GetValidFrom returns the ValidFrom field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetValidFrom() time.Time {
-	if o == nil || o.ValidFrom == nil {
+	if o == nil || IsNil(o.ValidFrom) {
 		var ret time.Time
 		return ret
 	}
@@ -273,7 +276,7 @@ func (o *IssuedCertificate) GetValidFrom() time.Time {
 // GetValidFromOk returns a tuple with the ValidFrom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetValidFromOk() (*time.Time, bool) {
-	if o == nil || o.ValidFrom == nil {
+	if o == nil || IsNil(o.ValidFrom) {
 		return nil, false
 	}
 	return o.ValidFrom, true
@@ -281,7 +284,7 @@ func (o *IssuedCertificate) GetValidFromOk() (*time.Time, bool) {
 
 // HasValidFrom returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasValidFrom() bool {
-	if o != nil && o.ValidFrom != nil {
+	if o != nil && !IsNil(o.ValidFrom) {
 		return true
 	}
 
@@ -295,7 +298,7 @@ func (o *IssuedCertificate) SetValidFrom(v time.Time) {
 
 // GetValidTo returns the ValidTo field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetValidTo() time.Time {
-	if o == nil || o.ValidTo == nil {
+	if o == nil || IsNil(o.ValidTo) {
 		var ret time.Time
 		return ret
 	}
@@ -305,7 +308,7 @@ func (o *IssuedCertificate) GetValidTo() time.Time {
 // GetValidToOk returns a tuple with the ValidTo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetValidToOk() (*time.Time, bool) {
-	if o == nil || o.ValidTo == nil {
+	if o == nil || IsNil(o.ValidTo) {
 		return nil, false
 	}
 	return o.ValidTo, true
@@ -313,7 +316,7 @@ func (o *IssuedCertificate) GetValidToOk() (*time.Time, bool) {
 
 // HasValidTo returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasValidTo() bool {
-	if o != nil && o.ValidTo != nil {
+	if o != nil && !IsNil(o.ValidTo) {
 		return true
 	}
 
@@ -327,7 +330,7 @@ func (o *IssuedCertificate) SetValidTo(v time.Time) {
 
 // GetPem returns the Pem field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetPem() string {
-	if o == nil || o.Pem == nil {
+	if o == nil || IsNil(o.Pem) {
 		var ret string
 		return ret
 	}
@@ -337,7 +340,7 @@ func (o *IssuedCertificate) GetPem() string {
 // GetPemOk returns a tuple with the Pem field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetPemOk() (*string, bool) {
-	if o == nil || o.Pem == nil {
+	if o == nil || IsNil(o.Pem) {
 		return nil, false
 	}
 	return o.Pem, true
@@ -345,7 +348,7 @@ func (o *IssuedCertificate) GetPemOk() (*string, bool) {
 
 // HasPem returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasPem() bool {
-	if o != nil && o.Pem != nil {
+	if o != nil && !IsNil(o.Pem) {
 		return true
 	}
 
@@ -359,7 +362,7 @@ func (o *IssuedCertificate) SetPem(v string) {
 
 // GetIssueTime returns the IssueTime field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetIssueTime() time.Time {
-	if o == nil || o.IssueTime == nil {
+	if o == nil || IsNil(o.IssueTime) {
 		var ret time.Time
 		return ret
 	}
@@ -369,7 +372,7 @@ func (o *IssuedCertificate) GetIssueTime() time.Time {
 // GetIssueTimeOk returns a tuple with the IssueTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetIssueTimeOk() (*time.Time, bool) {
-	if o == nil || o.IssueTime == nil {
+	if o == nil || IsNil(o.IssueTime) {
 		return nil, false
 	}
 	return o.IssueTime, true
@@ -377,7 +380,7 @@ func (o *IssuedCertificate) GetIssueTimeOk() (*time.Time, bool) {
 
 // HasIssueTime returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasIssueTime() bool {
-	if o != nil && o.IssueTime != nil {
+	if o != nil && !IsNil(o.IssueTime) {
 		return true
 	}
 
@@ -391,7 +394,7 @@ func (o *IssuedCertificate) SetIssueTime(v time.Time) {
 
 // GetRevoked returns the Revoked field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetRevoked() bool {
-	if o == nil || o.Revoked == nil {
+	if o == nil || IsNil(o.Revoked) {
 		var ret bool
 		return ret
 	}
@@ -401,7 +404,7 @@ func (o *IssuedCertificate) GetRevoked() bool {
 // GetRevokedOk returns a tuple with the Revoked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetRevokedOk() (*bool, bool) {
-	if o == nil || o.Revoked == nil {
+	if o == nil || IsNil(o.Revoked) {
 		return nil, false
 	}
 	return o.Revoked, true
@@ -409,7 +412,7 @@ func (o *IssuedCertificate) GetRevokedOk() (*bool, bool) {
 
 // HasRevoked returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasRevoked() bool {
-	if o != nil && o.Revoked != nil {
+	if o != nil && !IsNil(o.Revoked) {
 		return true
 	}
 
@@ -423,7 +426,7 @@ func (o *IssuedCertificate) SetRevoked(v bool) {
 
 // GetRevocationReason returns the RevocationReason field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetRevocationReason() string {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		var ret string
 		return ret
 	}
@@ -433,7 +436,7 @@ func (o *IssuedCertificate) GetRevocationReason() string {
 // GetRevocationReasonOk returns a tuple with the RevocationReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetRevocationReasonOk() (*string, bool) {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		return nil, false
 	}
 	return o.RevocationReason, true
@@ -441,7 +444,7 @@ func (o *IssuedCertificate) GetRevocationReasonOk() (*string, bool) {
 
 // HasRevocationReason returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasRevocationReason() bool {
-	if o != nil && o.RevocationReason != nil {
+	if o != nil && !IsNil(o.RevocationReason) {
 		return true
 	}
 
@@ -455,7 +458,7 @@ func (o *IssuedCertificate) SetRevocationReason(v string) {
 
 // GetRevocationTime returns the RevocationTime field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetRevocationTime() time.Time {
-	if o == nil || o.RevocationTime == nil {
+	if o == nil || IsNil(o.RevocationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -465,7 +468,7 @@ func (o *IssuedCertificate) GetRevocationTime() time.Time {
 // GetRevocationTimeOk returns a tuple with the RevocationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetRevocationTimeOk() (*time.Time, bool) {
-	if o == nil || o.RevocationTime == nil {
+	if o == nil || IsNil(o.RevocationTime) {
 		return nil, false
 	}
 	return o.RevocationTime, true
@@ -473,7 +476,7 @@ func (o *IssuedCertificate) GetRevocationTimeOk() (*time.Time, bool) {
 
 // HasRevocationTime returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasRevocationTime() bool {
-	if o != nil && o.RevocationTime != nil {
+	if o != nil && !IsNil(o.RevocationTime) {
 		return true
 	}
 
@@ -487,7 +490,7 @@ func (o *IssuedCertificate) SetRevocationTime(v time.Time) {
 
 // GetRevocationNotes returns the RevocationNotes field value if set, zero value otherwise.
 func (o *IssuedCertificate) GetRevocationNotes() string {
-	if o == nil || o.RevocationNotes == nil {
+	if o == nil || IsNil(o.RevocationNotes) {
 		var ret string
 		return ret
 	}
@@ -497,7 +500,7 @@ func (o *IssuedCertificate) GetRevocationNotes() string {
 // GetRevocationNotesOk returns a tuple with the RevocationNotes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IssuedCertificate) GetRevocationNotesOk() (*string, bool) {
-	if o == nil || o.RevocationNotes == nil {
+	if o == nil || IsNil(o.RevocationNotes) {
 		return nil, false
 	}
 	return o.RevocationNotes, true
@@ -505,7 +508,7 @@ func (o *IssuedCertificate) GetRevocationNotesOk() (*string, bool) {
 
 // HasRevocationNotes returns a boolean if a field has been set.
 func (o *IssuedCertificate) HasRevocationNotes() bool {
-	if o != nil && o.RevocationNotes != nil {
+	if o != nil && !IsNil(o.RevocationNotes) {
 		return true
 	}
 
@@ -518,50 +521,58 @@ func (o *IssuedCertificate) SetRevocationNotes(v string) {
 }
 
 func (o IssuedCertificate) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Subject != nil {
-		toSerialize["subject"] = o.Subject
-	}
-	if o.Issuer != nil {
-		toSerialize["issuer"] = o.Issuer
-	}
-	if o.Serial != nil {
-		toSerialize["serial"] = o.Serial
-	}
-	if o.FingerprintSha256 != nil {
-		toSerialize["fingerprintSha256"] = o.FingerprintSha256
-	}
-	if o.ValidFrom != nil {
-		toSerialize["validFrom"] = o.ValidFrom
-	}
-	if o.ValidTo != nil {
-		toSerialize["validTo"] = o.ValidTo
-	}
-	if o.Pem != nil {
-		toSerialize["pem"] = o.Pem
-	}
-	if o.IssueTime != nil {
-		toSerialize["issueTime"] = o.IssueTime
-	}
-	if o.Revoked != nil {
-		toSerialize["revoked"] = o.Revoked
-	}
-	if o.RevocationReason != nil {
-		toSerialize["revocationReason"] = o.RevocationReason
-	}
-	if o.RevocationTime != nil {
-		toSerialize["revocationTime"] = o.RevocationTime
-	}
-	if o.RevocationNotes != nil {
-		toSerialize["revocationNotes"] = o.RevocationNotes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IssuedCertificate) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Subject) {
+		toSerialize["subject"] = o.Subject
+	}
+	if !IsNil(o.Issuer) {
+		toSerialize["issuer"] = o.Issuer
+	}
+	if !IsNil(o.Serial) {
+		toSerialize["serial"] = o.Serial
+	}
+	if !IsNil(o.FingerprintSha256) {
+		toSerialize["fingerprintSha256"] = o.FingerprintSha256
+	}
+	if !IsNil(o.ValidFrom) {
+		toSerialize["validFrom"] = o.ValidFrom
+	}
+	if !IsNil(o.ValidTo) {
+		toSerialize["validTo"] = o.ValidTo
+	}
+	if !IsNil(o.Pem) {
+		toSerialize["pem"] = o.Pem
+	}
+	if !IsNil(o.IssueTime) {
+		toSerialize["issueTime"] = o.IssueTime
+	}
+	if !IsNil(o.Revoked) {
+		toSerialize["revoked"] = o.Revoked
+	}
+	if !IsNil(o.RevocationReason) {
+		toSerialize["revocationReason"] = o.RevocationReason
+	}
+	if !IsNil(o.RevocationTime) {
+		toSerialize["revocationTime"] = o.RevocationTime
+	}
+	if !IsNil(o.RevocationNotes) {
+		toSerialize["revocationNotes"] = o.RevocationNotes
+	}
+	return toSerialize, nil
 }
 
 type NullableIssuedCertificate struct {

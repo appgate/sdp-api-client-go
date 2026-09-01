@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolution type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolution{}
+
 // SiteAllOfNameResolution Settings for asset name resolution.
 type SiteAllOfNameResolution struct {
 	// Name resolution to use Appliance's /etc/hosts file.
@@ -57,7 +60,7 @@ func NewSiteAllOfNameResolutionWithDefaults() *SiteAllOfNameResolution {
 
 // GetUseHostsFile returns the UseHostsFile field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetUseHostsFile() bool {
-	if o == nil || o.UseHostsFile == nil {
+	if o == nil || IsNil(o.UseHostsFile) {
 		var ret bool
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *SiteAllOfNameResolution) GetUseHostsFile() bool {
 // GetUseHostsFileOk returns a tuple with the UseHostsFile field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetUseHostsFileOk() (*bool, bool) {
-	if o == nil || o.UseHostsFile == nil {
+	if o == nil || IsNil(o.UseHostsFile) {
 		return nil, false
 	}
 	return o.UseHostsFile, true
@@ -75,7 +78,7 @@ func (o *SiteAllOfNameResolution) GetUseHostsFileOk() (*bool, bool) {
 
 // HasUseHostsFile returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasUseHostsFile() bool {
-	if o != nil && o.UseHostsFile != nil {
+	if o != nil && !IsNil(o.UseHostsFile) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *SiteAllOfNameResolution) SetUseHostsFile(v bool) {
 
 // GetDnsResolvers returns the DnsResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetDnsResolvers() []SiteAllOfNameResolutionDnsResolvers {
-	if o == nil || o.DnsResolvers == nil {
+	if o == nil || IsNil(o.DnsResolvers) {
 		var ret []SiteAllOfNameResolutionDnsResolvers
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *SiteAllOfNameResolution) GetDnsResolvers() []SiteAllOfNameResolutionDns
 // GetDnsResolversOk returns a tuple with the DnsResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetDnsResolversOk() ([]SiteAllOfNameResolutionDnsResolvers, bool) {
-	if o == nil || o.DnsResolvers == nil {
+	if o == nil || IsNil(o.DnsResolvers) {
 		return nil, false
 	}
 	return o.DnsResolvers, true
@@ -107,7 +110,7 @@ func (o *SiteAllOfNameResolution) GetDnsResolversOk() ([]SiteAllOfNameResolution
 
 // HasDnsResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasDnsResolvers() bool {
-	if o != nil && o.DnsResolvers != nil {
+	if o != nil && !IsNil(o.DnsResolvers) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *SiteAllOfNameResolution) SetDnsResolvers(v []SiteAllOfNameResolutionDns
 
 // GetAwsResolvers returns the AwsResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetAwsResolvers() []SiteAllOfNameResolutionAwsResolvers {
-	if o == nil || o.AwsResolvers == nil {
+	if o == nil || IsNil(o.AwsResolvers) {
 		var ret []SiteAllOfNameResolutionAwsResolvers
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *SiteAllOfNameResolution) GetAwsResolvers() []SiteAllOfNameResolutionAws
 // GetAwsResolversOk returns a tuple with the AwsResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetAwsResolversOk() ([]SiteAllOfNameResolutionAwsResolvers, bool) {
-	if o == nil || o.AwsResolvers == nil {
+	if o == nil || IsNil(o.AwsResolvers) {
 		return nil, false
 	}
 	return o.AwsResolvers, true
@@ -139,7 +142,7 @@ func (o *SiteAllOfNameResolution) GetAwsResolversOk() ([]SiteAllOfNameResolution
 
 // HasAwsResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasAwsResolvers() bool {
-	if o != nil && o.AwsResolvers != nil {
+	if o != nil && !IsNil(o.AwsResolvers) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *SiteAllOfNameResolution) SetAwsResolvers(v []SiteAllOfNameResolutionAws
 
 // GetAzureResolvers returns the AzureResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetAzureResolvers() []SiteAllOfNameResolutionAzureResolvers {
-	if o == nil || o.AzureResolvers == nil {
+	if o == nil || IsNil(o.AzureResolvers) {
 		var ret []SiteAllOfNameResolutionAzureResolvers
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *SiteAllOfNameResolution) GetAzureResolvers() []SiteAllOfNameResolutionA
 // GetAzureResolversOk returns a tuple with the AzureResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetAzureResolversOk() ([]SiteAllOfNameResolutionAzureResolvers, bool) {
-	if o == nil || o.AzureResolvers == nil {
+	if o == nil || IsNil(o.AzureResolvers) {
 		return nil, false
 	}
 	return o.AzureResolvers, true
@@ -171,7 +174,7 @@ func (o *SiteAllOfNameResolution) GetAzureResolversOk() ([]SiteAllOfNameResoluti
 
 // HasAzureResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasAzureResolvers() bool {
-	if o != nil && o.AzureResolvers != nil {
+	if o != nil && !IsNil(o.AzureResolvers) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *SiteAllOfNameResolution) SetAzureResolvers(v []SiteAllOfNameResolutionA
 
 // GetEsxResolvers returns the EsxResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetEsxResolvers() []SiteAllOfNameResolutionEsxResolvers {
-	if o == nil || o.EsxResolvers == nil {
+	if o == nil || IsNil(o.EsxResolvers) {
 		var ret []SiteAllOfNameResolutionEsxResolvers
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *SiteAllOfNameResolution) GetEsxResolvers() []SiteAllOfNameResolutionEsx
 // GetEsxResolversOk returns a tuple with the EsxResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetEsxResolversOk() ([]SiteAllOfNameResolutionEsxResolvers, bool) {
-	if o == nil || o.EsxResolvers == nil {
+	if o == nil || IsNil(o.EsxResolvers) {
 		return nil, false
 	}
 	return o.EsxResolvers, true
@@ -203,7 +206,7 @@ func (o *SiteAllOfNameResolution) GetEsxResolversOk() ([]SiteAllOfNameResolution
 
 // HasEsxResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasEsxResolvers() bool {
-	if o != nil && o.EsxResolvers != nil {
+	if o != nil && !IsNil(o.EsxResolvers) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *SiteAllOfNameResolution) SetEsxResolvers(v []SiteAllOfNameResolutionEsx
 
 // GetGcpResolvers returns the GcpResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetGcpResolvers() []SiteAllOfNameResolutionGcpResolvers {
-	if o == nil || o.GcpResolvers == nil {
+	if o == nil || IsNil(o.GcpResolvers) {
 		var ret []SiteAllOfNameResolutionGcpResolvers
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *SiteAllOfNameResolution) GetGcpResolvers() []SiteAllOfNameResolutionGcp
 // GetGcpResolversOk returns a tuple with the GcpResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetGcpResolversOk() ([]SiteAllOfNameResolutionGcpResolvers, bool) {
-	if o == nil || o.GcpResolvers == nil {
+	if o == nil || IsNil(o.GcpResolvers) {
 		return nil, false
 	}
 	return o.GcpResolvers, true
@@ -235,7 +238,7 @@ func (o *SiteAllOfNameResolution) GetGcpResolversOk() ([]SiteAllOfNameResolution
 
 // HasGcpResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasGcpResolvers() bool {
-	if o != nil && o.GcpResolvers != nil {
+	if o != nil && !IsNil(o.GcpResolvers) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *SiteAllOfNameResolution) SetGcpResolvers(v []SiteAllOfNameResolutionGcp
 
 // GetIllumioResolvers returns the IllumioResolvers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetIllumioResolvers() []SiteAllOfNameResolutionIllumioResolvers {
-	if o == nil || o.IllumioResolvers == nil {
+	if o == nil || IsNil(o.IllumioResolvers) {
 		var ret []SiteAllOfNameResolutionIllumioResolvers
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *SiteAllOfNameResolution) GetIllumioResolvers() []SiteAllOfNameResolutio
 // GetIllumioResolversOk returns a tuple with the IllumioResolvers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetIllumioResolversOk() ([]SiteAllOfNameResolutionIllumioResolvers, bool) {
-	if o == nil || o.IllumioResolvers == nil {
+	if o == nil || IsNil(o.IllumioResolvers) {
 		return nil, false
 	}
 	return o.IllumioResolvers, true
@@ -267,7 +270,7 @@ func (o *SiteAllOfNameResolution) GetIllumioResolversOk() ([]SiteAllOfNameResolu
 
 // HasIllumioResolvers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasIllumioResolvers() bool {
-	if o != nil && o.IllumioResolvers != nil {
+	if o != nil && !IsNil(o.IllumioResolvers) {
 		return true
 	}
 
@@ -281,7 +284,7 @@ func (o *SiteAllOfNameResolution) SetIllumioResolvers(v []SiteAllOfNameResolutio
 
 // GetDnsForwarding returns the DnsForwarding field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetDnsForwarding() SiteAllOfNameResolutionDnsForwarding {
-	if o == nil || o.DnsForwarding == nil {
+	if o == nil || IsNil(o.DnsForwarding) {
 		var ret SiteAllOfNameResolutionDnsForwarding
 		return ret
 	}
@@ -291,7 +294,7 @@ func (o *SiteAllOfNameResolution) GetDnsForwarding() SiteAllOfNameResolutionDnsF
 // GetDnsForwardingOk returns a tuple with the DnsForwarding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolution) GetDnsForwardingOk() (*SiteAllOfNameResolutionDnsForwarding, bool) {
-	if o == nil || o.DnsForwarding == nil {
+	if o == nil || IsNil(o.DnsForwarding) {
 		return nil, false
 	}
 	return o.DnsForwarding, true
@@ -299,7 +302,7 @@ func (o *SiteAllOfNameResolution) GetDnsForwardingOk() (*SiteAllOfNameResolution
 
 // HasDnsForwarding returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolution) HasDnsForwarding() bool {
-	if o != nil && o.DnsForwarding != nil {
+	if o != nil && !IsNil(o.DnsForwarding) {
 		return true
 	}
 
@@ -312,32 +315,40 @@ func (o *SiteAllOfNameResolution) SetDnsForwarding(v SiteAllOfNameResolutionDnsF
 }
 
 func (o SiteAllOfNameResolution) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UseHostsFile != nil {
-		toSerialize["useHostsFile"] = o.UseHostsFile
-	}
-	if o.DnsResolvers != nil {
-		toSerialize["dnsResolvers"] = o.DnsResolvers
-	}
-	if o.AwsResolvers != nil {
-		toSerialize["awsResolvers"] = o.AwsResolvers
-	}
-	if o.AzureResolvers != nil {
-		toSerialize["azureResolvers"] = o.AzureResolvers
-	}
-	if o.EsxResolvers != nil {
-		toSerialize["esxResolvers"] = o.EsxResolvers
-	}
-	if o.GcpResolvers != nil {
-		toSerialize["gcpResolvers"] = o.GcpResolvers
-	}
-	if o.IllumioResolvers != nil {
-		toSerialize["illumioResolvers"] = o.IllumioResolvers
-	}
-	if o.DnsForwarding != nil {
-		toSerialize["dnsForwarding"] = o.DnsForwarding
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolution) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UseHostsFile) {
+		toSerialize["useHostsFile"] = o.UseHostsFile
+	}
+	if !IsNil(o.DnsResolvers) {
+		toSerialize["dnsResolvers"] = o.DnsResolvers
+	}
+	if !IsNil(o.AwsResolvers) {
+		toSerialize["awsResolvers"] = o.AwsResolvers
+	}
+	if !IsNil(o.AzureResolvers) {
+		toSerialize["azureResolvers"] = o.AzureResolvers
+	}
+	if !IsNil(o.EsxResolvers) {
+		toSerialize["esxResolvers"] = o.EsxResolvers
+	}
+	if !IsNil(o.GcpResolvers) {
+		toSerialize["gcpResolvers"] = o.GcpResolvers
+	}
+	if !IsNil(o.IllumioResolvers) {
+		toSerialize["illumioResolvers"] = o.IllumioResolvers
+	}
+	if !IsNil(o.DnsForwarding) {
+		toSerialize["dnsForwarding"] = o.DnsForwarding
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolution struct {

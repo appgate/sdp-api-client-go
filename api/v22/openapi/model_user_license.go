@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the UserLicense type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserLicense{}
 
 // UserLicense struct for UserLicense
 type UserLicense struct {
@@ -53,7 +56,7 @@ func NewUserLicenseWithDefaults() *UserLicense {
 
 // GetUserDistinguishedName returns the UserDistinguishedName field value if set, zero value otherwise.
 func (o *UserLicense) GetUserDistinguishedName() string {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *UserLicense) GetUserDistinguishedName() string {
 // GetUserDistinguishedNameOk returns a tuple with the UserDistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetUserDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		return nil, false
 	}
 	return o.UserDistinguishedName, true
@@ -71,7 +74,7 @@ func (o *UserLicense) GetUserDistinguishedNameOk() (*string, bool) {
 
 // HasUserDistinguishedName returns a boolean if a field has been set.
 func (o *UserLicense) HasUserDistinguishedName() bool {
-	if o != nil && o.UserDistinguishedName != nil {
+	if o != nil && !IsNil(o.UserDistinguishedName) {
 		return true
 	}
 
@@ -85,7 +88,7 @@ func (o *UserLicense) SetUserDistinguishedName(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *UserLicense) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *UserLicense) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -103,7 +106,7 @@ func (o *UserLicense) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *UserLicense) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *UserLicense) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *UserLicense) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *UserLicense) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -135,7 +138,7 @@ func (o *UserLicense) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *UserLicense) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *UserLicense) SetProviderName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *UserLicense) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *UserLicense) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -167,7 +170,7 @@ func (o *UserLicense) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *UserLicense) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *UserLicense) SetType(v string) {
 
 // GetProfileName returns the ProfileName field value if set, zero value otherwise.
 func (o *UserLicense) GetProfileName() string {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		var ret string
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *UserLicense) GetProfileName() string {
 // GetProfileNameOk returns a tuple with the ProfileName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetProfileNameOk() (*string, bool) {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		return nil, false
 	}
 	return o.ProfileName, true
@@ -199,7 +202,7 @@ func (o *UserLicense) GetProfileNameOk() (*string, bool) {
 
 // HasProfileName returns a boolean if a field has been set.
 func (o *UserLicense) HasProfileName() bool {
-	if o != nil && o.ProfileName != nil {
+	if o != nil && !IsNil(o.ProfileName) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *UserLicense) SetProfileName(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *UserLicense) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *UserLicense) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -231,7 +234,7 @@ func (o *UserLicense) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *UserLicense) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *UserLicense) SetCreated(v time.Time) {
 
 // GetLastSeenAt returns the LastSeenAt field value if set, zero value otherwise.
 func (o *UserLicense) GetLastSeenAt() time.Time {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		var ret time.Time
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *UserLicense) GetLastSeenAt() time.Time {
 // GetLastSeenAtOk returns a tuple with the LastSeenAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicense) GetLastSeenAtOk() (*time.Time, bool) {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		return nil, false
 	}
 	return o.LastSeenAt, true
@@ -263,7 +266,7 @@ func (o *UserLicense) GetLastSeenAtOk() (*time.Time, bool) {
 
 // HasLastSeenAt returns a boolean if a field has been set.
 func (o *UserLicense) HasLastSeenAt() bool {
-	if o != nil && o.LastSeenAt != nil {
+	if o != nil && !IsNil(o.LastSeenAt) {
 		return true
 	}
 
@@ -276,29 +279,37 @@ func (o *UserLicense) SetLastSeenAt(v time.Time) {
 }
 
 func (o UserLicense) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserDistinguishedName != nil {
-		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.ProfileName != nil {
-		toSerialize["profileName"] = o.ProfileName
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.LastSeenAt != nil {
-		toSerialize["lastSeenAt"] = o.LastSeenAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserLicense) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserDistinguishedName) {
+		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.ProfileName) {
+		toSerialize["profileName"] = o.ProfileName
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.LastSeenAt) {
+		toSerialize["lastSeenAt"] = o.LastSeenAt
+	}
+	return toSerialize, nil
 }
 
 type NullableUserLicense struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworking type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworking{}
+
 // ApplianceAllOfNetworking Networking configuration of the system.
 type ApplianceAllOfNetworking struct {
 	// /etc/hosts configuration
@@ -49,7 +52,7 @@ func NewApplianceAllOfNetworkingWithDefaults() *ApplianceAllOfNetworking {
 
 // GetHosts returns the Hosts field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworking) GetHosts() []ApplianceAllOfNetworkingHosts {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		var ret []ApplianceAllOfNetworkingHosts
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *ApplianceAllOfNetworking) GetHosts() []ApplianceAllOfNetworkingHosts {
 // GetHostsOk returns a tuple with the Hosts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworking) GetHostsOk() ([]ApplianceAllOfNetworkingHosts, bool) {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		return nil, false
 	}
 	return o.Hosts, true
@@ -67,7 +70,7 @@ func (o *ApplianceAllOfNetworking) GetHostsOk() ([]ApplianceAllOfNetworkingHosts
 
 // HasHosts returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworking) HasHosts() bool {
-	if o != nil && o.Hosts != nil {
+	if o != nil && !IsNil(o.Hosts) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *ApplianceAllOfNetworking) SetHosts(v []ApplianceAllOfNetworkingHosts) {
 
 // GetNics returns the Nics field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworking) GetNics() []ApplianceAllOfNetworkingNics {
-	if o == nil || o.Nics == nil {
+	if o == nil || IsNil(o.Nics) {
 		var ret []ApplianceAllOfNetworkingNics
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *ApplianceAllOfNetworking) GetNics() []ApplianceAllOfNetworkingNics {
 // GetNicsOk returns a tuple with the Nics field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworking) GetNicsOk() ([]ApplianceAllOfNetworkingNics, bool) {
-	if o == nil || o.Nics == nil {
+	if o == nil || IsNil(o.Nics) {
 		return nil, false
 	}
 	return o.Nics, true
@@ -99,7 +102,7 @@ func (o *ApplianceAllOfNetworking) GetNicsOk() ([]ApplianceAllOfNetworkingNics, 
 
 // HasNics returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworking) HasNics() bool {
-	if o != nil && o.Nics != nil {
+	if o != nil && !IsNil(o.Nics) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *ApplianceAllOfNetworking) SetNics(v []ApplianceAllOfNetworkingNics) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworking) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *ApplianceAllOfNetworking) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworking) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -131,7 +134,7 @@ func (o *ApplianceAllOfNetworking) GetDnsServersOk() ([]string, bool) {
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworking) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *ApplianceAllOfNetworking) SetDnsServers(v []string) {
 // GetDnsDomains returns the DnsDomains field value if set, zero value otherwise.
 // Deprecated
 func (o *ApplianceAllOfNetworking) GetDnsDomains() []string {
-	if o == nil || o.DnsDomains == nil {
+	if o == nil || IsNil(o.DnsDomains) {
 		var ret []string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *ApplianceAllOfNetworking) GetDnsDomains() []string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *ApplianceAllOfNetworking) GetDnsDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsDomains == nil {
+	if o == nil || IsNil(o.DnsDomains) {
 		return nil, false
 	}
 	return o.DnsDomains, true
@@ -165,7 +168,7 @@ func (o *ApplianceAllOfNetworking) GetDnsDomainsOk() ([]string, bool) {
 
 // HasDnsDomains returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworking) HasDnsDomains() bool {
-	if o != nil && o.DnsDomains != nil {
+	if o != nil && !IsNil(o.DnsDomains) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *ApplianceAllOfNetworking) SetDnsDomains(v []string) {
 
 // GetRoutes returns the Routes field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworking) GetRoutes() []ApplianceAllOfNetworkingRoutes {
-	if o == nil || o.Routes == nil {
+	if o == nil || IsNil(o.Routes) {
 		var ret []ApplianceAllOfNetworkingRoutes
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *ApplianceAllOfNetworking) GetRoutes() []ApplianceAllOfNetworkingRoutes 
 // GetRoutesOk returns a tuple with the Routes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworking) GetRoutesOk() ([]ApplianceAllOfNetworkingRoutes, bool) {
-	if o == nil || o.Routes == nil {
+	if o == nil || IsNil(o.Routes) {
 		return nil, false
 	}
 	return o.Routes, true
@@ -198,7 +201,7 @@ func (o *ApplianceAllOfNetworking) GetRoutesOk() ([]ApplianceAllOfNetworkingRout
 
 // HasRoutes returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworking) HasRoutes() bool {
-	if o != nil && o.Routes != nil {
+	if o != nil && !IsNil(o.Routes) {
 		return true
 	}
 
@@ -211,23 +214,31 @@ func (o *ApplianceAllOfNetworking) SetRoutes(v []ApplianceAllOfNetworkingRoutes)
 }
 
 func (o ApplianceAllOfNetworking) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Hosts != nil {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.Nics != nil {
-		toSerialize["nics"] = o.Nics
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if o.DnsDomains != nil {
-		toSerialize["dnsDomains"] = o.DnsDomains
-	}
-	if o.Routes != nil {
-		toSerialize["routes"] = o.Routes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworking) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Hosts) {
+		toSerialize["hosts"] = o.Hosts
+	}
+	if !IsNil(o.Nics) {
+		toSerialize["nics"] = o.Nics
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if !IsNil(o.DnsDomains) {
+		toSerialize["dnsDomains"] = o.DnsDomains
+	}
+	if !IsNil(o.Routes) {
+		toSerialize["routes"] = o.Routes
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworking struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RingfenceRulesBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RingfenceRulesBulkUpsertPostRequest{}
+
 // RingfenceRulesBulkUpsertPostRequest struct for RingfenceRulesBulkUpsertPostRequest
 type RingfenceRulesBulkUpsertPostRequest struct {
 	Data []RingfenceRule `json:"data"`
@@ -63,11 +66,17 @@ func (o *RingfenceRulesBulkUpsertPostRequest) SetData(v []RingfenceRule) {
 }
 
 func (o RingfenceRulesBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RingfenceRulesBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableRingfenceRulesBulkUpsertPostRequest struct {

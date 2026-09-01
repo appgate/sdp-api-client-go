@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandPingPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandPingPostRequest{}
+
 // AppliancesIdCommandPingPostRequest struct for AppliancesIdCommandPingPostRequest
 type AppliancesIdCommandPingPostRequest struct {
 	// The destination to ping.
@@ -73,7 +76,7 @@ func (o *AppliancesIdCommandPingPostRequest) SetDestination(v string) {
 
 // GetInterface returns the Interface field value if set, zero value otherwise.
 func (o *AppliancesIdCommandPingPostRequest) GetInterface() string {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetInterface() string {
 // GetInterfaceOk returns a tuple with the Interface field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandPingPostRequest) GetInterfaceOk() (*string, bool) {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		return nil, false
 	}
 	return o.Interface, true
@@ -91,7 +94,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetInterfaceOk() (*string, bool) {
 
 // HasInterface returns a boolean if a field has been set.
 func (o *AppliancesIdCommandPingPostRequest) HasInterface() bool {
-	if o != nil && o.Interface != nil {
+	if o != nil && !IsNil(o.Interface) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *AppliancesIdCommandPingPostRequest) SetInterface(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -123,7 +126,7 @@ func (o *AppliancesIdCommandPingPostRequest) GetProcessTimeoutOk() (*int32, bool
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandPingPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -136,17 +139,23 @@ func (o *AppliancesIdCommandPingPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandPingPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["destination"] = o.Destination
-	}
-	if o.Interface != nil {
-		toSerialize["interface"] = o.Interface
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandPingPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["destination"] = o.Destination
+	if !IsNil(o.Interface) {
+		toSerialize["interface"] = o.Interface
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandPingPostRequest struct {

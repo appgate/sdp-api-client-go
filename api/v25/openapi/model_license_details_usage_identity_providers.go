@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetailsUsageIdentityProviders type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetailsUsageIdentityProviders{}
+
 // LicenseDetailsUsageIdentityProviders The amount of non-built-in Identity Providers in the system at present broken out by type.
 type LicenseDetailsUsageIdentityProviders struct {
 	Ldap            *float32 `json:"ldap,omitempty"`
@@ -43,7 +46,7 @@ func NewLicenseDetailsUsageIdentityProvidersWithDefaults() *LicenseDetailsUsageI
 
 // GetLdap returns the Ldap field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageIdentityProviders) GetLdap() float32 {
-	if o == nil || o.Ldap == nil {
+	if o == nil || IsNil(o.Ldap) {
 		var ret float32
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetLdap() float32 {
 // GetLdapOk returns a tuple with the Ldap field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageIdentityProviders) GetLdapOk() (*float32, bool) {
-	if o == nil || o.Ldap == nil {
+	if o == nil || IsNil(o.Ldap) {
 		return nil, false
 	}
 	return o.Ldap, true
@@ -61,7 +64,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetLdapOk() (*float32, bool) {
 
 // HasLdap returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageIdentityProviders) HasLdap() bool {
-	if o != nil && o.Ldap != nil {
+	if o != nil && !IsNil(o.Ldap) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *LicenseDetailsUsageIdentityProviders) SetLdap(v float32) {
 
 // GetLdapCertificate returns the LdapCertificate field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageIdentityProviders) GetLdapCertificate() float32 {
-	if o == nil || o.LdapCertificate == nil {
+	if o == nil || IsNil(o.LdapCertificate) {
 		var ret float32
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetLdapCertificate() float32 {
 // GetLdapCertificateOk returns a tuple with the LdapCertificate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageIdentityProviders) GetLdapCertificateOk() (*float32, bool) {
-	if o == nil || o.LdapCertificate == nil {
+	if o == nil || IsNil(o.LdapCertificate) {
 		return nil, false
 	}
 	return o.LdapCertificate, true
@@ -93,7 +96,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetLdapCertificateOk() (*float32,
 
 // HasLdapCertificate returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageIdentityProviders) HasLdapCertificate() bool {
-	if o != nil && o.LdapCertificate != nil {
+	if o != nil && !IsNil(o.LdapCertificate) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *LicenseDetailsUsageIdentityProviders) SetLdapCertificate(v float32) {
 
 // GetRadius returns the Radius field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageIdentityProviders) GetRadius() float32 {
-	if o == nil || o.Radius == nil {
+	if o == nil || IsNil(o.Radius) {
 		var ret float32
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetRadius() float32 {
 // GetRadiusOk returns a tuple with the Radius field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageIdentityProviders) GetRadiusOk() (*float32, bool) {
-	if o == nil || o.Radius == nil {
+	if o == nil || IsNil(o.Radius) {
 		return nil, false
 	}
 	return o.Radius, true
@@ -125,7 +128,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetRadiusOk() (*float32, bool) {
 
 // HasRadius returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageIdentityProviders) HasRadius() bool {
-	if o != nil && o.Radius != nil {
+	if o != nil && !IsNil(o.Radius) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *LicenseDetailsUsageIdentityProviders) SetRadius(v float32) {
 
 // GetSaml returns the Saml field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageIdentityProviders) GetSaml() float32 {
-	if o == nil || o.Saml == nil {
+	if o == nil || IsNil(o.Saml) {
 		var ret float32
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetSaml() float32 {
 // GetSamlOk returns a tuple with the Saml field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageIdentityProviders) GetSamlOk() (*float32, bool) {
-	if o == nil || o.Saml == nil {
+	if o == nil || IsNil(o.Saml) {
 		return nil, false
 	}
 	return o.Saml, true
@@ -157,7 +160,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetSamlOk() (*float32, bool) {
 
 // HasSaml returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageIdentityProviders) HasSaml() bool {
-	if o != nil && o.Saml != nil {
+	if o != nil && !IsNil(o.Saml) {
 		return true
 	}
 
@@ -171,7 +174,7 @@ func (o *LicenseDetailsUsageIdentityProviders) SetSaml(v float32) {
 
 // GetOidc returns the Oidc field value if set, zero value otherwise.
 func (o *LicenseDetailsUsageIdentityProviders) GetOidc() float32 {
-	if o == nil || o.Oidc == nil {
+	if o == nil || IsNil(o.Oidc) {
 		var ret float32
 		return ret
 	}
@@ -181,7 +184,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetOidc() float32 {
 // GetOidcOk returns a tuple with the Oidc field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsageIdentityProviders) GetOidcOk() (*float32, bool) {
-	if o == nil || o.Oidc == nil {
+	if o == nil || IsNil(o.Oidc) {
 		return nil, false
 	}
 	return o.Oidc, true
@@ -189,7 +192,7 @@ func (o *LicenseDetailsUsageIdentityProviders) GetOidcOk() (*float32, bool) {
 
 // HasOidc returns a boolean if a field has been set.
 func (o *LicenseDetailsUsageIdentityProviders) HasOidc() bool {
-	if o != nil && o.Oidc != nil {
+	if o != nil && !IsNil(o.Oidc) {
 		return true
 	}
 
@@ -202,23 +205,31 @@ func (o *LicenseDetailsUsageIdentityProviders) SetOidc(v float32) {
 }
 
 func (o LicenseDetailsUsageIdentityProviders) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Ldap != nil {
-		toSerialize["ldap"] = o.Ldap
-	}
-	if o.LdapCertificate != nil {
-		toSerialize["ldapCertificate"] = o.LdapCertificate
-	}
-	if o.Radius != nil {
-		toSerialize["radius"] = o.Radius
-	}
-	if o.Saml != nil {
-		toSerialize["saml"] = o.Saml
-	}
-	if o.Oidc != nil {
-		toSerialize["oidc"] = o.Oidc
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetailsUsageIdentityProviders) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Ldap) {
+		toSerialize["ldap"] = o.Ldap
+	}
+	if !IsNil(o.LdapCertificate) {
+		toSerialize["ldapCertificate"] = o.LdapCertificate
+	}
+	if !IsNil(o.Radius) {
+		toSerialize["radius"] = o.Radius
+	}
+	if !IsNil(o.Saml) {
+		toSerialize["saml"] = o.Saml
+	}
+	if !IsNil(o.Oidc) {
+		toSerialize["oidc"] = o.Oidc
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetailsUsageIdentityProviders struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfCollectiveReplication type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfCollectiveReplication{}
+
 // ApplianceAllOfCollectiveReplication Collective Replication settings.
 type ApplianceAllOfCollectiveReplication struct {
 	// Whether the Collective Replication Service is enabled on this Appliance or not. It's managed by registering and unregistering Replication Source.
@@ -42,7 +45,7 @@ func NewApplianceAllOfCollectiveReplicationWithDefaults() *ApplianceAllOfCollect
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfCollectiveReplication) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ApplianceAllOfCollectiveReplication) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfCollectiveReplication) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -60,7 +63,7 @@ func (o *ApplianceAllOfCollectiveReplication) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfCollectiveReplication) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ApplianceAllOfCollectiveReplication) SetEnabled(v bool) {
 
 // GetPaused returns the Paused field value if set, zero value otherwise.
 func (o *ApplianceAllOfCollectiveReplication) GetPaused() bool {
-	if o == nil || o.Paused == nil {
+	if o == nil || IsNil(o.Paused) {
 		var ret bool
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ApplianceAllOfCollectiveReplication) GetPaused() bool {
 // GetPausedOk returns a tuple with the Paused field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfCollectiveReplication) GetPausedOk() (*bool, bool) {
-	if o == nil || o.Paused == nil {
+	if o == nil || IsNil(o.Paused) {
 		return nil, false
 	}
 	return o.Paused, true
@@ -92,7 +95,7 @@ func (o *ApplianceAllOfCollectiveReplication) GetPausedOk() (*bool, bool) {
 
 // HasPaused returns a boolean if a field has been set.
 func (o *ApplianceAllOfCollectiveReplication) HasPaused() bool {
-	if o != nil && o.Paused != nil {
+	if o != nil && !IsNil(o.Paused) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ApplianceAllOfCollectiveReplication) SetPaused(v bool) {
 }
 
 func (o ApplianceAllOfCollectiveReplication) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Paused != nil {
-		toSerialize["paused"] = o.Paused
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfCollectiveReplication) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Paused) {
+		toSerialize["paused"] = o.Paused
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfCollectiveReplication struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DistinguishedNameListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DistinguishedNameListAllOf{}
+
 // DistinguishedNameListAllOf Represents a list of Distinguished Names.
 type DistinguishedNameListAllOf struct {
 	// List of Distinguished Names.
@@ -40,7 +43,7 @@ func NewDistinguishedNameListAllOfWithDefaults() *DistinguishedNameListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *DistinguishedNameListAllOf) GetData() []DistinguishedName {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []DistinguishedName
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *DistinguishedNameListAllOf) GetData() []DistinguishedName {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedNameListAllOf) GetDataOk() ([]DistinguishedName, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *DistinguishedNameListAllOf) GetDataOk() ([]DistinguishedName, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *DistinguishedNameListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *DistinguishedNameListAllOf) SetData(v []DistinguishedName) {
 }
 
 func (o DistinguishedNameListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DistinguishedNameListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableDistinguishedNameListAllOf struct {

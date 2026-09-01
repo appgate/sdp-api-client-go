@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AllocatedIp type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AllocatedIp{}
+
 // AllocatedIp struct for AllocatedIp
 type AllocatedIp struct {
 	// Distinguished name of a user&device combination. Format: \"CN=,CN=,OU=\"
@@ -55,7 +58,7 @@ func NewAllocatedIpWithDefaults() *AllocatedIp {
 
 // GetDistinguishedName returns the DistinguishedName field value if set, zero value otherwise.
 func (o *AllocatedIp) GetDistinguishedName() string {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -65,7 +68,7 @@ func (o *AllocatedIp) GetDistinguishedName() string {
 // GetDistinguishedNameOk returns a tuple with the DistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		return nil, false
 	}
 	return o.DistinguishedName, true
@@ -73,7 +76,7 @@ func (o *AllocatedIp) GetDistinguishedNameOk() (*string, bool) {
 
 // HasDistinguishedName returns a boolean if a field has been set.
 func (o *AllocatedIp) HasDistinguishedName() bool {
-	if o != nil && o.DistinguishedName != nil {
+	if o != nil && !IsNil(o.DistinguishedName) {
 		return true
 	}
 
@@ -87,7 +90,7 @@ func (o *AllocatedIp) SetDistinguishedName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *AllocatedIp) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -97,7 +100,7 @@ func (o *AllocatedIp) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -105,7 +108,7 @@ func (o *AllocatedIp) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *AllocatedIp) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -119,7 +122,7 @@ func (o *AllocatedIp) SetDeviceId(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *AllocatedIp) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -129,7 +132,7 @@ func (o *AllocatedIp) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -137,7 +140,7 @@ func (o *AllocatedIp) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *AllocatedIp) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -151,7 +154,7 @@ func (o *AllocatedIp) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *AllocatedIp) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -161,7 +164,7 @@ func (o *AllocatedIp) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -169,7 +172,7 @@ func (o *AllocatedIp) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *AllocatedIp) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -183,7 +186,7 @@ func (o *AllocatedIp) SetProviderName(v string) {
 
 // GetPoolId returns the PoolId field value if set, zero value otherwise.
 func (o *AllocatedIp) GetPoolId() string {
-	if o == nil || o.PoolId == nil {
+	if o == nil || IsNil(o.PoolId) {
 		var ret string
 		return ret
 	}
@@ -193,7 +196,7 @@ func (o *AllocatedIp) GetPoolId() string {
 // GetPoolIdOk returns a tuple with the PoolId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetPoolIdOk() (*string, bool) {
-	if o == nil || o.PoolId == nil {
+	if o == nil || IsNil(o.PoolId) {
 		return nil, false
 	}
 	return o.PoolId, true
@@ -201,7 +204,7 @@ func (o *AllocatedIp) GetPoolIdOk() (*string, bool) {
 
 // HasPoolId returns a boolean if a field has been set.
 func (o *AllocatedIp) HasPoolId() bool {
-	if o != nil && o.PoolId != nil {
+	if o != nil && !IsNil(o.PoolId) {
 		return true
 	}
 
@@ -215,7 +218,7 @@ func (o *AllocatedIp) SetPoolId(v string) {
 
 // GetIpAddress returns the IpAddress field value if set, zero value otherwise.
 func (o *AllocatedIp) GetIpAddress() string {
-	if o == nil || o.IpAddress == nil {
+	if o == nil || IsNil(o.IpAddress) {
 		var ret string
 		return ret
 	}
@@ -225,7 +228,7 @@ func (o *AllocatedIp) GetIpAddress() string {
 // GetIpAddressOk returns a tuple with the IpAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetIpAddressOk() (*string, bool) {
-	if o == nil || o.IpAddress == nil {
+	if o == nil || IsNil(o.IpAddress) {
 		return nil, false
 	}
 	return o.IpAddress, true
@@ -233,7 +236,7 @@ func (o *AllocatedIp) GetIpAddressOk() (*string, bool) {
 
 // HasIpAddress returns a boolean if a field has been set.
 func (o *AllocatedIp) HasIpAddress() bool {
-	if o != nil && o.IpAddress != nil {
+	if o != nil && !IsNil(o.IpAddress) {
 		return true
 	}
 
@@ -247,7 +250,7 @@ func (o *AllocatedIp) SetIpAddress(v string) {
 
 // GetAllocationTime returns the AllocationTime field value if set, zero value otherwise.
 func (o *AllocatedIp) GetAllocationTime() time.Time {
-	if o == nil || o.AllocationTime == nil {
+	if o == nil || IsNil(o.AllocationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -257,7 +260,7 @@ func (o *AllocatedIp) GetAllocationTime() time.Time {
 // GetAllocationTimeOk returns a tuple with the AllocationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetAllocationTimeOk() (*time.Time, bool) {
-	if o == nil || o.AllocationTime == nil {
+	if o == nil || IsNil(o.AllocationTime) {
 		return nil, false
 	}
 	return o.AllocationTime, true
@@ -265,7 +268,7 @@ func (o *AllocatedIp) GetAllocationTimeOk() (*time.Time, bool) {
 
 // HasAllocationTime returns a boolean if a field has been set.
 func (o *AllocatedIp) HasAllocationTime() bool {
-	if o != nil && o.AllocationTime != nil {
+	if o != nil && !IsNil(o.AllocationTime) {
 		return true
 	}
 
@@ -279,7 +282,7 @@ func (o *AllocatedIp) SetAllocationTime(v time.Time) {
 
 // GetExpirationTime returns the ExpirationTime field value if set, zero value otherwise.
 func (o *AllocatedIp) GetExpirationTime() time.Time {
-	if o == nil || o.ExpirationTime == nil {
+	if o == nil || IsNil(o.ExpirationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -289,7 +292,7 @@ func (o *AllocatedIp) GetExpirationTime() time.Time {
 // GetExpirationTimeOk returns a tuple with the ExpirationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllocatedIp) GetExpirationTimeOk() (*time.Time, bool) {
-	if o == nil || o.ExpirationTime == nil {
+	if o == nil || IsNil(o.ExpirationTime) {
 		return nil, false
 	}
 	return o.ExpirationTime, true
@@ -297,7 +300,7 @@ func (o *AllocatedIp) GetExpirationTimeOk() (*time.Time, bool) {
 
 // HasExpirationTime returns a boolean if a field has been set.
 func (o *AllocatedIp) HasExpirationTime() bool {
-	if o != nil && o.ExpirationTime != nil {
+	if o != nil && !IsNil(o.ExpirationTime) {
 		return true
 	}
 
@@ -310,32 +313,40 @@ func (o *AllocatedIp) SetExpirationTime(v time.Time) {
 }
 
 func (o AllocatedIp) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DistinguishedName != nil {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.PoolId != nil {
-		toSerialize["poolId"] = o.PoolId
-	}
-	if o.IpAddress != nil {
-		toSerialize["ipAddress"] = o.IpAddress
-	}
-	if o.AllocationTime != nil {
-		toSerialize["allocationTime"] = o.AllocationTime
-	}
-	if o.ExpirationTime != nil {
-		toSerialize["expirationTime"] = o.ExpirationTime
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AllocatedIp) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DistinguishedName) {
+		toSerialize["distinguishedName"] = o.DistinguishedName
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.PoolId) {
+		toSerialize["poolId"] = o.PoolId
+	}
+	if !IsNil(o.IpAddress) {
+		toSerialize["ipAddress"] = o.IpAddress
+	}
+	if !IsNil(o.AllocationTime) {
+		toSerialize["allocationTime"] = o.AllocationTime
+	}
+	if !IsNil(o.ExpirationTime) {
+		toSerialize["expirationTime"] = o.ExpirationTime
+	}
+	return toSerialize, nil
 }
 
 type NullableAllocatedIp struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AllowResourcesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AllowResourcesInner{}
+
 // AllowResourcesInner struct for AllowResourcesInner
 type AllowResourcesInner struct {
 	// IP address
@@ -91,14 +94,18 @@ func (o *AllowResourcesInner) SetNetmask(v int32) {
 }
 
 func (o AllowResourcesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["address"] = o.Address
-	}
-	if true {
-		toSerialize["netmask"] = o.Netmask
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AllowResourcesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["address"] = o.Address
+	toSerialize["netmask"] = o.Netmask
+	return toSerialize, nil
 }
 
 type NullableAllowResourcesInner struct {

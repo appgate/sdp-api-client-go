@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the LdapCertificateProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LdapCertificateProvider{}
+
 // LdapCertificateProvider struct for LdapCertificateProvider
 type LdapCertificateProvider struct {
 	// ID of the object.
@@ -156,7 +159,7 @@ func NewLdapCertificateProviderWithDefaults() *LdapCertificateProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -166,7 +169,7 @@ func (o *LdapCertificateProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -174,7 +177,7 @@ func (o *LdapCertificateProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *LdapCertificateProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *LdapCertificateProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -230,7 +233,7 @@ func (o *LdapCertificateProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *LdapCertificateProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *LdapCertificateProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -262,7 +265,7 @@ func (o *LdapCertificateProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -276,7 +279,7 @@ func (o *LdapCertificateProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -286,7 +289,7 @@ func (o *LdapCertificateProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -294,7 +297,7 @@ func (o *LdapCertificateProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -308,7 +311,7 @@ func (o *LdapCertificateProvider) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -318,7 +321,7 @@ func (o *LdapCertificateProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -326,7 +329,7 @@ func (o *LdapCertificateProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -364,7 +367,7 @@ func (o *LdapCertificateProvider) SetType(v string) {
 
 // GetIpPoolV4 returns the IpPoolV4 field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetIpPoolV4() string {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		var ret string
 		return ret
 	}
@@ -374,7 +377,7 @@ func (o *LdapCertificateProvider) GetIpPoolV4() string {
 // GetIpPoolV4Ok returns a tuple with the IpPoolV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetIpPoolV4Ok() (*string, bool) {
-	if o == nil || o.IpPoolV4 == nil {
+	if o == nil || IsNil(o.IpPoolV4) {
 		return nil, false
 	}
 	return o.IpPoolV4, true
@@ -382,7 +385,7 @@ func (o *LdapCertificateProvider) GetIpPoolV4Ok() (*string, bool) {
 
 // HasIpPoolV4 returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasIpPoolV4() bool {
-	if o != nil && o.IpPoolV4 != nil {
+	if o != nil && !IsNil(o.IpPoolV4) {
 		return true
 	}
 
@@ -396,7 +399,7 @@ func (o *LdapCertificateProvider) SetIpPoolV4(v string) {
 
 // GetIpPoolV6 returns the IpPoolV6 field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetIpPoolV6() string {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		var ret string
 		return ret
 	}
@@ -406,7 +409,7 @@ func (o *LdapCertificateProvider) GetIpPoolV6() string {
 // GetIpPoolV6Ok returns a tuple with the IpPoolV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetIpPoolV6Ok() (*string, bool) {
-	if o == nil || o.IpPoolV6 == nil {
+	if o == nil || IsNil(o.IpPoolV6) {
 		return nil, false
 	}
 	return o.IpPoolV6, true
@@ -414,7 +417,7 @@ func (o *LdapCertificateProvider) GetIpPoolV6Ok() (*string, bool) {
 
 // HasIpPoolV6 returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasIpPoolV6() bool {
-	if o != nil && o.IpPoolV6 != nil {
+	if o != nil && !IsNil(o.IpPoolV6) {
 		return true
 	}
 
@@ -428,7 +431,7 @@ func (o *LdapCertificateProvider) SetIpPoolV6(v string) {
 
 // GetClaimMappings returns the ClaimMappings field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetClaimMappings() []ClaimMappingsInner {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		var ret []ClaimMappingsInner
 		return ret
 	}
@@ -438,7 +441,7 @@ func (o *LdapCertificateProvider) GetClaimMappings() []ClaimMappingsInner {
 // GetClaimMappingsOk returns a tuple with the ClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bool) {
-	if o == nil || o.ClaimMappings == nil {
+	if o == nil || IsNil(o.ClaimMappings) {
 		return nil, false
 	}
 	return o.ClaimMappings, true
@@ -446,7 +449,7 @@ func (o *LdapCertificateProvider) GetClaimMappingsOk() ([]ClaimMappingsInner, bo
 
 // HasClaimMappings returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasClaimMappings() bool {
-	if o != nil && o.ClaimMappings != nil {
+	if o != nil && !IsNil(o.ClaimMappings) {
 		return true
 	}
 
@@ -460,7 +463,7 @@ func (o *LdapCertificateProvider) SetClaimMappings(v []ClaimMappingsInner) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetUserScripts() []string {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret []string
 		return ret
 	}
@@ -470,7 +473,7 @@ func (o *LdapCertificateProvider) GetUserScripts() []string {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetUserScriptsOk() ([]string, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -478,7 +481,7 @@ func (o *LdapCertificateProvider) GetUserScriptsOk() ([]string, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -492,7 +495,7 @@ func (o *LdapCertificateProvider) SetUserScripts(v []string) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -502,7 +505,7 @@ func (o *LdapCertificateProvider) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -510,7 +513,7 @@ func (o *LdapCertificateProvider) GetDnsServersOk() ([]string, bool) {
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -524,7 +527,7 @@ func (o *LdapCertificateProvider) SetDnsServers(v []string) {
 
 // GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetDnsSearchDomains() []string {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		var ret []string
 		return ret
 	}
@@ -534,7 +537,7 @@ func (o *LdapCertificateProvider) GetDnsSearchDomains() []string {
 // GetDnsSearchDomainsOk returns a tuple with the DnsSearchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetDnsSearchDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		return nil, false
 	}
 	return o.DnsSearchDomains, true
@@ -542,7 +545,7 @@ func (o *LdapCertificateProvider) GetDnsSearchDomainsOk() ([]string, bool) {
 
 // HasDnsSearchDomains returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasDnsSearchDomains() bool {
-	if o != nil && o.DnsSearchDomains != nil {
+	if o != nil && !IsNil(o.DnsSearchDomains) {
 		return true
 	}
 
@@ -556,7 +559,7 @@ func (o *LdapCertificateProvider) SetDnsSearchDomains(v []string) {
 
 // GetDeviceLimitPerUser returns the DeviceLimitPerUser field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetDeviceLimitPerUser() int32 {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		var ret int32
 		return ret
 	}
@@ -566,7 +569,7 @@ func (o *LdapCertificateProvider) GetDeviceLimitPerUser() int32 {
 // GetDeviceLimitPerUserOk returns a tuple with the DeviceLimitPerUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
-	if o == nil || o.DeviceLimitPerUser == nil {
+	if o == nil || IsNil(o.DeviceLimitPerUser) {
 		return nil, false
 	}
 	return o.DeviceLimitPerUser, true
@@ -574,7 +577,7 @@ func (o *LdapCertificateProvider) GetDeviceLimitPerUserOk() (*int32, bool) {
 
 // HasDeviceLimitPerUser returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasDeviceLimitPerUser() bool {
-	if o != nil && o.DeviceLimitPerUser != nil {
+	if o != nil && !IsNil(o.DeviceLimitPerUser) {
 		return true
 	}
 
@@ -588,7 +591,7 @@ func (o *LdapCertificateProvider) SetDeviceLimitPerUser(v int32) {
 
 // GetAdminProvider returns the AdminProvider field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetAdminProvider() bool {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		var ret bool
 		return ret
 	}
@@ -598,7 +601,7 @@ func (o *LdapCertificateProvider) GetAdminProvider() bool {
 // GetAdminProviderOk returns a tuple with the AdminProvider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetAdminProviderOk() (*bool, bool) {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		return nil, false
 	}
 	return o.AdminProvider, true
@@ -606,7 +609,7 @@ func (o *LdapCertificateProvider) GetAdminProviderOk() (*bool, bool) {
 
 // HasAdminProvider returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasAdminProvider() bool {
-	if o != nil && o.AdminProvider != nil {
+	if o != nil && !IsNil(o.AdminProvider) {
 		return true
 	}
 
@@ -620,7 +623,7 @@ func (o *LdapCertificateProvider) SetAdminProvider(v bool) {
 
 // GetOnBoarding2FA returns the OnBoarding2FA field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoarding2FA {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		var ret ConfigurableIdentityProviderAllOfOnBoarding2FA
 		return ret
 	}
@@ -630,7 +633,7 @@ func (o *LdapCertificateProvider) GetOnBoarding2FA() ConfigurableIdentityProvide
 // GetOnBoarding2FAOk returns a tuple with the OnBoarding2FA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfOnBoarding2FA, bool) {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		return nil, false
 	}
 	return o.OnBoarding2FA, true
@@ -638,7 +641,7 @@ func (o *LdapCertificateProvider) GetOnBoarding2FAOk() (*ConfigurableIdentityPro
 
 // HasOnBoarding2FA returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasOnBoarding2FA() bool {
-	if o != nil && o.OnBoarding2FA != nil {
+	if o != nil && !IsNil(o.OnBoarding2FA) {
 		return true
 	}
 
@@ -652,7 +655,7 @@ func (o *LdapCertificateProvider) SetOnBoarding2FA(v ConfigurableIdentityProvide
 
 // GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetInactivityTimeoutMinutes() int32 {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -662,7 +665,7 @@ func (o *LdapCertificateProvider) GetInactivityTimeoutMinutes() int32 {
 // GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetInactivityTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		return nil, false
 	}
 	return o.InactivityTimeoutMinutes, true
@@ -670,7 +673,7 @@ func (o *LdapCertificateProvider) GetInactivityTimeoutMinutesOk() (*int32, bool)
 
 // HasInactivityTimeoutMinutes returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasInactivityTimeoutMinutes() bool {
-	if o != nil && o.InactivityTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutMinutes) {
 		return true
 	}
 
@@ -684,7 +687,7 @@ func (o *LdapCertificateProvider) SetInactivityTimeoutMinutes(v int32) {
 
 // GetNetworkInactivityTimeoutEnabled returns the NetworkInactivityTimeoutEnabled field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetNetworkInactivityTimeoutEnabled() bool {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		var ret bool
 		return ret
 	}
@@ -694,7 +697,7 @@ func (o *LdapCertificateProvider) GetNetworkInactivityTimeoutEnabled() bool {
 // GetNetworkInactivityTimeoutEnabledOk returns a tuple with the NetworkInactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return nil, false
 	}
 	return o.NetworkInactivityTimeoutEnabled, true
@@ -702,7 +705,7 @@ func (o *LdapCertificateProvider) GetNetworkInactivityTimeoutEnabledOk() (*bool,
 
 // HasNetworkInactivityTimeoutEnabled returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasNetworkInactivityTimeoutEnabled() bool {
-	if o != nil && o.NetworkInactivityTimeoutEnabled != nil {
+	if o != nil && !IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return true
 	}
 
@@ -716,7 +719,7 @@ func (o *LdapCertificateProvider) SetNetworkInactivityTimeoutEnabled(v bool) {
 
 // GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetEnforceWindowsNetworkProfileAsDomain() bool {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		var ret bool
 		return ret
 	}
@@ -726,7 +729,7 @@ func (o *LdapCertificateProvider) GetEnforceWindowsNetworkProfileAsDomain() bool
 // GetEnforceWindowsNetworkProfileAsDomainOk returns a tuple with the EnforceWindowsNetworkProfileAsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool) {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return nil, false
 	}
 	return o.EnforceWindowsNetworkProfileAsDomain, true
@@ -734,7 +737,7 @@ func (o *LdapCertificateProvider) GetEnforceWindowsNetworkProfileAsDomainOk() (*
 
 // HasEnforceWindowsNetworkProfileAsDomain returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasEnforceWindowsNetworkProfileAsDomain() bool {
-	if o != nil && o.EnforceWindowsNetworkProfileAsDomain != nil {
+	if o != nil && !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return true
 	}
 
@@ -748,7 +751,7 @@ func (o *LdapCertificateProvider) SetEnforceWindowsNetworkProfileAsDomain(v bool
 
 // GetBlockLocalDnsRequests returns the BlockLocalDnsRequests field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetBlockLocalDnsRequests() bool {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		var ret bool
 		return ret
 	}
@@ -758,7 +761,7 @@ func (o *LdapCertificateProvider) GetBlockLocalDnsRequests() bool {
 // GetBlockLocalDnsRequestsOk returns a tuple with the BlockLocalDnsRequests field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		return nil, false
 	}
 	return o.BlockLocalDnsRequests, true
@@ -766,7 +769,7 @@ func (o *LdapCertificateProvider) GetBlockLocalDnsRequestsOk() (*bool, bool) {
 
 // HasBlockLocalDnsRequests returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasBlockLocalDnsRequests() bool {
-	if o != nil && o.BlockLocalDnsRequests != nil {
+	if o != nil && !IsNil(o.BlockLocalDnsRequests) {
 		return true
 	}
 
@@ -780,7 +783,7 @@ func (o *LdapCertificateProvider) SetBlockLocalDnsRequests(v bool) {
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		var ret []OnDemandClaimMappingsInner
 		return ret
 	}
@@ -790,7 +793,7 @@ func (o *LdapCertificateProvider) GetOnDemandClaimMappings() []OnDemandClaimMapp
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInner, bool) {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		return nil, false
 	}
 	return o.OnDemandClaimMappings, true
@@ -798,7 +801,7 @@ func (o *LdapCertificateProvider) GetOnDemandClaimMappingsOk() ([]OnDemandClaimM
 
 // HasOnDemandClaimMappings returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasOnDemandClaimMappings() bool {
-	if o != nil && o.OnDemandClaimMappings != nil {
+	if o != nil && !IsNil(o.OnDemandClaimMappings) {
 		return true
 	}
 
@@ -860,7 +863,7 @@ func (o *LdapCertificateProvider) SetPort(v int32) {
 
 // GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetSslEnabled() bool {
-	if o == nil || o.SslEnabled == nil {
+	if o == nil || IsNil(o.SslEnabled) {
 		var ret bool
 		return ret
 	}
@@ -870,7 +873,7 @@ func (o *LdapCertificateProvider) GetSslEnabled() bool {
 // GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetSslEnabledOk() (*bool, bool) {
-	if o == nil || o.SslEnabled == nil {
+	if o == nil || IsNil(o.SslEnabled) {
 		return nil, false
 	}
 	return o.SslEnabled, true
@@ -878,7 +881,7 @@ func (o *LdapCertificateProvider) GetSslEnabledOk() (*bool, bool) {
 
 // HasSslEnabled returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasSslEnabled() bool {
-	if o != nil && o.SslEnabled != nil {
+	if o != nil && !IsNil(o.SslEnabled) {
 		return true
 	}
 
@@ -916,7 +919,7 @@ func (o *LdapCertificateProvider) SetAdminDistinguishedName(v string) {
 
 // GetAdminPassword returns the AdminPassword field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetAdminPassword() string {
-	if o == nil || o.AdminPassword == nil {
+	if o == nil || IsNil(o.AdminPassword) {
 		var ret string
 		return ret
 	}
@@ -926,7 +929,7 @@ func (o *LdapCertificateProvider) GetAdminPassword() string {
 // GetAdminPasswordOk returns a tuple with the AdminPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetAdminPasswordOk() (*string, bool) {
-	if o == nil || o.AdminPassword == nil {
+	if o == nil || IsNil(o.AdminPassword) {
 		return nil, false
 	}
 	return o.AdminPassword, true
@@ -934,7 +937,7 @@ func (o *LdapCertificateProvider) GetAdminPasswordOk() (*string, bool) {
 
 // HasAdminPassword returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasAdminPassword() bool {
-	if o != nil && o.AdminPassword != nil {
+	if o != nil && !IsNil(o.AdminPassword) {
 		return true
 	}
 
@@ -948,7 +951,7 @@ func (o *LdapCertificateProvider) SetAdminPassword(v string) {
 
 // GetBaseDn returns the BaseDn field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetBaseDn() string {
-	if o == nil || o.BaseDn == nil {
+	if o == nil || IsNil(o.BaseDn) {
 		var ret string
 		return ret
 	}
@@ -958,7 +961,7 @@ func (o *LdapCertificateProvider) GetBaseDn() string {
 // GetBaseDnOk returns a tuple with the BaseDn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetBaseDnOk() (*string, bool) {
-	if o == nil || o.BaseDn == nil {
+	if o == nil || IsNil(o.BaseDn) {
 		return nil, false
 	}
 	return o.BaseDn, true
@@ -966,7 +969,7 @@ func (o *LdapCertificateProvider) GetBaseDnOk() (*string, bool) {
 
 // HasBaseDn returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasBaseDn() bool {
-	if o != nil && o.BaseDn != nil {
+	if o != nil && !IsNil(o.BaseDn) {
 		return true
 	}
 
@@ -981,7 +984,7 @@ func (o *LdapCertificateProvider) SetBaseDn(v string) {
 // GetObjectClass returns the ObjectClass field value if set, zero value otherwise.
 // Deprecated
 func (o *LdapCertificateProvider) GetObjectClass() string {
-	if o == nil || o.ObjectClass == nil {
+	if o == nil || IsNil(o.ObjectClass) {
 		var ret string
 		return ret
 	}
@@ -992,7 +995,7 @@ func (o *LdapCertificateProvider) GetObjectClass() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *LdapCertificateProvider) GetObjectClassOk() (*string, bool) {
-	if o == nil || o.ObjectClass == nil {
+	if o == nil || IsNil(o.ObjectClass) {
 		return nil, false
 	}
 	return o.ObjectClass, true
@@ -1000,7 +1003,7 @@ func (o *LdapCertificateProvider) GetObjectClassOk() (*string, bool) {
 
 // HasObjectClass returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasObjectClass() bool {
-	if o != nil && o.ObjectClass != nil {
+	if o != nil && !IsNil(o.ObjectClass) {
 		return true
 	}
 
@@ -1015,7 +1018,7 @@ func (o *LdapCertificateProvider) SetObjectClass(v string) {
 
 // GetUserFilter returns the UserFilter field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetUserFilter() string {
-	if o == nil || o.UserFilter == nil {
+	if o == nil || IsNil(o.UserFilter) {
 		var ret string
 		return ret
 	}
@@ -1025,7 +1028,7 @@ func (o *LdapCertificateProvider) GetUserFilter() string {
 // GetUserFilterOk returns a tuple with the UserFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetUserFilterOk() (*string, bool) {
-	if o == nil || o.UserFilter == nil {
+	if o == nil || IsNil(o.UserFilter) {
 		return nil, false
 	}
 	return o.UserFilter, true
@@ -1033,7 +1036,7 @@ func (o *LdapCertificateProvider) GetUserFilterOk() (*string, bool) {
 
 // HasUserFilter returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasUserFilter() bool {
-	if o != nil && o.UserFilter != nil {
+	if o != nil && !IsNil(o.UserFilter) {
 		return true
 	}
 
@@ -1047,7 +1050,7 @@ func (o *LdapCertificateProvider) SetUserFilter(v string) {
 
 // GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetUsernameAttribute() string {
-	if o == nil || o.UsernameAttribute == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		var ret string
 		return ret
 	}
@@ -1057,7 +1060,7 @@ func (o *LdapCertificateProvider) GetUsernameAttribute() string {
 // GetUsernameAttributeOk returns a tuple with the UsernameAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetUsernameAttributeOk() (*string, bool) {
-	if o == nil || o.UsernameAttribute == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		return nil, false
 	}
 	return o.UsernameAttribute, true
@@ -1065,7 +1068,7 @@ func (o *LdapCertificateProvider) GetUsernameAttributeOk() (*string, bool) {
 
 // HasUsernameAttribute returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasUsernameAttribute() bool {
-	if o != nil && o.UsernameAttribute != nil {
+	if o != nil && !IsNil(o.UsernameAttribute) {
 		return true
 	}
 
@@ -1079,7 +1082,7 @@ func (o *LdapCertificateProvider) SetUsernameAttribute(v string) {
 
 // GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetMembershipFilter() string {
-	if o == nil || o.MembershipFilter == nil {
+	if o == nil || IsNil(o.MembershipFilter) {
 		var ret string
 		return ret
 	}
@@ -1089,7 +1092,7 @@ func (o *LdapCertificateProvider) GetMembershipFilter() string {
 // GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetMembershipFilterOk() (*string, bool) {
-	if o == nil || o.MembershipFilter == nil {
+	if o == nil || IsNil(o.MembershipFilter) {
 		return nil, false
 	}
 	return o.MembershipFilter, true
@@ -1097,7 +1100,7 @@ func (o *LdapCertificateProvider) GetMembershipFilterOk() (*string, bool) {
 
 // HasMembershipFilter returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasMembershipFilter() bool {
-	if o != nil && o.MembershipFilter != nil {
+	if o != nil && !IsNil(o.MembershipFilter) {
 		return true
 	}
 
@@ -1111,7 +1114,7 @@ func (o *LdapCertificateProvider) SetMembershipFilter(v string) {
 
 // GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetMembershipBaseDn() string {
-	if o == nil || o.MembershipBaseDn == nil {
+	if o == nil || IsNil(o.MembershipBaseDn) {
 		var ret string
 		return ret
 	}
@@ -1121,7 +1124,7 @@ func (o *LdapCertificateProvider) GetMembershipBaseDn() string {
 // GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetMembershipBaseDnOk() (*string, bool) {
-	if o == nil || o.MembershipBaseDn == nil {
+	if o == nil || IsNil(o.MembershipBaseDn) {
 		return nil, false
 	}
 	return o.MembershipBaseDn, true
@@ -1129,7 +1132,7 @@ func (o *LdapCertificateProvider) GetMembershipBaseDnOk() (*string, bool) {
 
 // HasMembershipBaseDn returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasMembershipBaseDn() bool {
-	if o != nil && o.MembershipBaseDn != nil {
+	if o != nil && !IsNil(o.MembershipBaseDn) {
 		return true
 	}
 
@@ -1143,7 +1146,7 @@ func (o *LdapCertificateProvider) SetMembershipBaseDn(v string) {
 
 // GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
-	if o == nil || o.PasswordWarning == nil {
+	if o == nil || IsNil(o.PasswordWarning) {
 		var ret LdapProviderAllOfPasswordWarning
 		return ret
 	}
@@ -1153,7 +1156,7 @@ func (o *LdapCertificateProvider) GetPasswordWarning() LdapProviderAllOfPassword
 // GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
-	if o == nil || o.PasswordWarning == nil {
+	if o == nil || IsNil(o.PasswordWarning) {
 		return nil, false
 	}
 	return o.PasswordWarning, true
@@ -1161,7 +1164,7 @@ func (o *LdapCertificateProvider) GetPasswordWarningOk() (*LdapProviderAllOfPass
 
 // HasPasswordWarning returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasPasswordWarning() bool {
-	if o != nil && o.PasswordWarning != nil {
+	if o != nil && !IsNil(o.PasswordWarning) {
 		return true
 	}
 
@@ -1199,7 +1202,7 @@ func (o *LdapCertificateProvider) SetCaCertificates(v []string) {
 
 // GetCertificateUserAttribute returns the CertificateUserAttribute field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetCertificateUserAttribute() string {
-	if o == nil || o.CertificateUserAttribute == nil {
+	if o == nil || IsNil(o.CertificateUserAttribute) {
 		var ret string
 		return ret
 	}
@@ -1209,7 +1212,7 @@ func (o *LdapCertificateProvider) GetCertificateUserAttribute() string {
 // GetCertificateUserAttributeOk returns a tuple with the CertificateUserAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetCertificateUserAttributeOk() (*string, bool) {
-	if o == nil || o.CertificateUserAttribute == nil {
+	if o == nil || IsNil(o.CertificateUserAttribute) {
 		return nil, false
 	}
 	return o.CertificateUserAttribute, true
@@ -1217,7 +1220,7 @@ func (o *LdapCertificateProvider) GetCertificateUserAttributeOk() (*string, bool
 
 // HasCertificateUserAttribute returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasCertificateUserAttribute() bool {
-	if o != nil && o.CertificateUserAttribute != nil {
+	if o != nil && !IsNil(o.CertificateUserAttribute) {
 		return true
 	}
 
@@ -1231,7 +1234,7 @@ func (o *LdapCertificateProvider) SetCertificateUserAttribute(v string) {
 
 // GetCertificateAttribute returns the CertificateAttribute field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetCertificateAttribute() string {
-	if o == nil || o.CertificateAttribute == nil {
+	if o == nil || IsNil(o.CertificateAttribute) {
 		var ret string
 		return ret
 	}
@@ -1241,7 +1244,7 @@ func (o *LdapCertificateProvider) GetCertificateAttribute() string {
 // GetCertificateAttributeOk returns a tuple with the CertificateAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetCertificateAttributeOk() (*string, bool) {
-	if o == nil || o.CertificateAttribute == nil {
+	if o == nil || IsNil(o.CertificateAttribute) {
 		return nil, false
 	}
 	return o.CertificateAttribute, true
@@ -1249,7 +1252,7 @@ func (o *LdapCertificateProvider) GetCertificateAttributeOk() (*string, bool) {
 
 // HasCertificateAttribute returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasCertificateAttribute() bool {
-	if o != nil && o.CertificateAttribute != nil {
+	if o != nil && !IsNil(o.CertificateAttribute) {
 		return true
 	}
 
@@ -1263,7 +1266,7 @@ func (o *LdapCertificateProvider) SetCertificateAttribute(v string) {
 
 // GetSkipX509ExternalChecks returns the SkipX509ExternalChecks field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetSkipX509ExternalChecks() bool {
-	if o == nil || o.SkipX509ExternalChecks == nil {
+	if o == nil || IsNil(o.SkipX509ExternalChecks) {
 		var ret bool
 		return ret
 	}
@@ -1273,7 +1276,7 @@ func (o *LdapCertificateProvider) GetSkipX509ExternalChecks() bool {
 // GetSkipX509ExternalChecksOk returns a tuple with the SkipX509ExternalChecks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetSkipX509ExternalChecksOk() (*bool, bool) {
-	if o == nil || o.SkipX509ExternalChecks == nil {
+	if o == nil || IsNil(o.SkipX509ExternalChecks) {
 		return nil, false
 	}
 	return o.SkipX509ExternalChecks, true
@@ -1281,7 +1284,7 @@ func (o *LdapCertificateProvider) GetSkipX509ExternalChecksOk() (*bool, bool) {
 
 // HasSkipX509ExternalChecks returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasSkipX509ExternalChecks() bool {
-	if o != nil && o.SkipX509ExternalChecks != nil {
+	if o != nil && !IsNil(o.SkipX509ExternalChecks) {
 		return true
 	}
 
@@ -1295,7 +1298,7 @@ func (o *LdapCertificateProvider) SetSkipX509ExternalChecks(v bool) {
 
 // GetCertificatePriorities returns the CertificatePriorities field value if set, zero value otherwise.
 func (o *LdapCertificateProvider) GetCertificatePriorities() []LdapCertificateProviderAllOfCertificatePriorities {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		var ret []LdapCertificateProviderAllOfCertificatePriorities
 		return ret
 	}
@@ -1305,7 +1308,7 @@ func (o *LdapCertificateProvider) GetCertificatePriorities() []LdapCertificatePr
 // GetCertificatePrioritiesOk returns a tuple with the CertificatePriorities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProvider) GetCertificatePrioritiesOk() ([]LdapCertificateProviderAllOfCertificatePriorities, bool) {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		return nil, false
 	}
 	return o.CertificatePriorities, true
@@ -1313,7 +1316,7 @@ func (o *LdapCertificateProvider) GetCertificatePrioritiesOk() ([]LdapCertificat
 
 // HasCertificatePriorities returns a boolean if a field has been set.
 func (o *LdapCertificateProvider) HasCertificatePriorities() bool {
-	if o != nil && o.CertificatePriorities != nil {
+	if o != nil && !IsNil(o.CertificatePriorities) {
 		return true
 	}
 
@@ -1326,122 +1329,118 @@ func (o *LdapCertificateProvider) SetCertificatePriorities(v []LdapCertificatePr
 }
 
 func (o LdapCertificateProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.IpPoolV4 != nil {
-		toSerialize["ipPoolV4"] = o.IpPoolV4
-	}
-	if o.IpPoolV6 != nil {
-		toSerialize["ipPoolV6"] = o.IpPoolV6
-	}
-	if o.ClaimMappings != nil {
-		toSerialize["claimMappings"] = o.ClaimMappings
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if o.DnsSearchDomains != nil {
-		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
-	}
-	if o.DeviceLimitPerUser != nil {
-		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
-	}
-	if o.AdminProvider != nil {
-		toSerialize["adminProvider"] = o.AdminProvider
-	}
-	if o.OnBoarding2FA != nil {
-		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
-	}
-	if o.InactivityTimeoutMinutes != nil {
-		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
-	}
-	if o.NetworkInactivityTimeoutEnabled != nil {
-		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
-	}
-	if o.EnforceWindowsNetworkProfileAsDomain != nil {
-		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
-	}
-	if o.BlockLocalDnsRequests != nil {
-		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
-	}
-	if o.OnDemandClaimMappings != nil {
-		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
-	}
-	if true {
-		toSerialize["hostnames"] = o.Hostnames
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SslEnabled != nil {
-		toSerialize["sslEnabled"] = o.SslEnabled
-	}
-	if true {
-		toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
-	}
-	if o.AdminPassword != nil {
-		toSerialize["adminPassword"] = o.AdminPassword
-	}
-	if o.BaseDn != nil {
-		toSerialize["baseDn"] = o.BaseDn
-	}
-	if o.ObjectClass != nil {
-		toSerialize["objectClass"] = o.ObjectClass
-	}
-	if o.UserFilter != nil {
-		toSerialize["userFilter"] = o.UserFilter
-	}
-	if o.UsernameAttribute != nil {
-		toSerialize["usernameAttribute"] = o.UsernameAttribute
-	}
-	if o.MembershipFilter != nil {
-		toSerialize["membershipFilter"] = o.MembershipFilter
-	}
-	if o.MembershipBaseDn != nil {
-		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
-	}
-	if o.PasswordWarning != nil {
-		toSerialize["passwordWarning"] = o.PasswordWarning
-	}
-	if true {
-		toSerialize["caCertificates"] = o.CaCertificates
-	}
-	if o.CertificateUserAttribute != nil {
-		toSerialize["certificateUserAttribute"] = o.CertificateUserAttribute
-	}
-	if o.CertificateAttribute != nil {
-		toSerialize["certificateAttribute"] = o.CertificateAttribute
-	}
-	if o.SkipX509ExternalChecks != nil {
-		toSerialize["skipX509ExternalChecks"] = o.SkipX509ExternalChecks
-	}
-	if o.CertificatePriorities != nil {
-		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LdapCertificateProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.IpPoolV4) {
+		toSerialize["ipPoolV4"] = o.IpPoolV4
+	}
+	if !IsNil(o.IpPoolV6) {
+		toSerialize["ipPoolV6"] = o.IpPoolV6
+	}
+	if !IsNil(o.ClaimMappings) {
+		toSerialize["claimMappings"] = o.ClaimMappings
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if !IsNil(o.DnsSearchDomains) {
+		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	}
+	if !IsNil(o.DeviceLimitPerUser) {
+		toSerialize["deviceLimitPerUser"] = o.DeviceLimitPerUser
+	}
+	if !IsNil(o.AdminProvider) {
+		toSerialize["adminProvider"] = o.AdminProvider
+	}
+	if !IsNil(o.OnBoarding2FA) {
+		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
+	}
+	if !IsNil(o.InactivityTimeoutMinutes) {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	if !IsNil(o.NetworkInactivityTimeoutEnabled) {
+		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
+	}
+	if !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
+		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
+	}
+	if !IsNil(o.BlockLocalDnsRequests) {
+		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
+	}
+	if !IsNil(o.OnDemandClaimMappings) {
+		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	toSerialize["hostnames"] = o.Hostnames
+	toSerialize["port"] = o.Port
+	if !IsNil(o.SslEnabled) {
+		toSerialize["sslEnabled"] = o.SslEnabled
+	}
+	toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
+	if !IsNil(o.AdminPassword) {
+		toSerialize["adminPassword"] = o.AdminPassword
+	}
+	if !IsNil(o.BaseDn) {
+		toSerialize["baseDn"] = o.BaseDn
+	}
+	if !IsNil(o.ObjectClass) {
+		toSerialize["objectClass"] = o.ObjectClass
+	}
+	if !IsNil(o.UserFilter) {
+		toSerialize["userFilter"] = o.UserFilter
+	}
+	if !IsNil(o.UsernameAttribute) {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
+	}
+	if !IsNil(o.MembershipFilter) {
+		toSerialize["membershipFilter"] = o.MembershipFilter
+	}
+	if !IsNil(o.MembershipBaseDn) {
+		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
+	}
+	if !IsNil(o.PasswordWarning) {
+		toSerialize["passwordWarning"] = o.PasswordWarning
+	}
+	toSerialize["caCertificates"] = o.CaCertificates
+	if !IsNil(o.CertificateUserAttribute) {
+		toSerialize["certificateUserAttribute"] = o.CertificateUserAttribute
+	}
+	if !IsNil(o.CertificateAttribute) {
+		toSerialize["certificateAttribute"] = o.CertificateAttribute
+	}
+	if !IsNil(o.SkipX509ExternalChecks) {
+		toSerialize["skipX509ExternalChecks"] = o.SkipX509ExternalChecks
+	}
+	if !IsNil(o.CertificatePriorities) {
+		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	}
+	return toSerialize, nil
 }
 
 type NullableLdapCertificateProvider struct {

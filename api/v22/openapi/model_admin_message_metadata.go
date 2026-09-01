@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the AdminMessageMetadata type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMessageMetadata{}
 
 // AdminMessageMetadata struct for AdminMessageMetadata
 type AdminMessageMetadata struct {
@@ -57,7 +60,7 @@ func NewAdminMessageMetadataWithDefaults() *AdminMessageMetadata {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *AdminMessageMetadata) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -75,7 +78,7 @@ func (o *AdminMessageMetadata) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -137,7 +140,7 @@ func (o *AdminMessageMetadata) SetStatus(v string) {
 
 // GetAppliedAt returns the AppliedAt field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetAppliedAt() time.Time {
-	if o == nil || o.AppliedAt == nil {
+	if o == nil || IsNil(o.AppliedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -147,7 +150,7 @@ func (o *AdminMessageMetadata) GetAppliedAt() time.Time {
 // GetAppliedAtOk returns a tuple with the AppliedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetAppliedAtOk() (*time.Time, bool) {
-	if o == nil || o.AppliedAt == nil {
+	if o == nil || IsNil(o.AppliedAt) {
 		return nil, false
 	}
 	return o.AppliedAt, true
@@ -155,7 +158,7 @@ func (o *AdminMessageMetadata) GetAppliedAtOk() (*time.Time, bool) {
 
 // HasAppliedAt returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasAppliedAt() bool {
-	if o != nil && o.AppliedAt != nil {
+	if o != nil && !IsNil(o.AppliedAt) {
 		return true
 	}
 
@@ -169,7 +172,7 @@ func (o *AdminMessageMetadata) SetAppliedAt(v time.Time) {
 
 // GetAppliedBy returns the AppliedBy field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetAppliedBy() string {
-	if o == nil || o.AppliedBy == nil {
+	if o == nil || IsNil(o.AppliedBy) {
 		var ret string
 		return ret
 	}
@@ -179,7 +182,7 @@ func (o *AdminMessageMetadata) GetAppliedBy() string {
 // GetAppliedByOk returns a tuple with the AppliedBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetAppliedByOk() (*string, bool) {
-	if o == nil || o.AppliedBy == nil {
+	if o == nil || IsNil(o.AppliedBy) {
 		return nil, false
 	}
 	return o.AppliedBy, true
@@ -187,7 +190,7 @@ func (o *AdminMessageMetadata) GetAppliedByOk() (*string, bool) {
 
 // HasAppliedBy returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasAppliedBy() bool {
-	if o != nil && o.AppliedBy != nil {
+	if o != nil && !IsNil(o.AppliedBy) {
 		return true
 	}
 
@@ -201,7 +204,7 @@ func (o *AdminMessageMetadata) SetAppliedBy(v string) {
 
 // GetAppliedByUsername returns the AppliedByUsername field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetAppliedByUsername() string {
-	if o == nil || o.AppliedByUsername == nil {
+	if o == nil || IsNil(o.AppliedByUsername) {
 		var ret string
 		return ret
 	}
@@ -211,7 +214,7 @@ func (o *AdminMessageMetadata) GetAppliedByUsername() string {
 // GetAppliedByUsernameOk returns a tuple with the AppliedByUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetAppliedByUsernameOk() (*string, bool) {
-	if o == nil || o.AppliedByUsername == nil {
+	if o == nil || IsNil(o.AppliedByUsername) {
 		return nil, false
 	}
 	return o.AppliedByUsername, true
@@ -219,7 +222,7 @@ func (o *AdminMessageMetadata) GetAppliedByUsernameOk() (*string, bool) {
 
 // HasAppliedByUsername returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasAppliedByUsername() bool {
-	if o != nil && o.AppliedByUsername != nil {
+	if o != nil && !IsNil(o.AppliedByUsername) {
 		return true
 	}
 
@@ -233,7 +236,7 @@ func (o *AdminMessageMetadata) SetAppliedByUsername(v string) {
 
 // GetAppliedByProviderName returns the AppliedByProviderName field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetAppliedByProviderName() string {
-	if o == nil || o.AppliedByProviderName == nil {
+	if o == nil || IsNil(o.AppliedByProviderName) {
 		var ret string
 		return ret
 	}
@@ -243,7 +246,7 @@ func (o *AdminMessageMetadata) GetAppliedByProviderName() string {
 // GetAppliedByProviderNameOk returns a tuple with the AppliedByProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetAppliedByProviderNameOk() (*string, bool) {
-	if o == nil || o.AppliedByProviderName == nil {
+	if o == nil || IsNil(o.AppliedByProviderName) {
 		return nil, false
 	}
 	return o.AppliedByProviderName, true
@@ -251,7 +254,7 @@ func (o *AdminMessageMetadata) GetAppliedByProviderNameOk() (*string, bool) {
 
 // HasAppliedByProviderName returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasAppliedByProviderName() bool {
-	if o != nil && o.AppliedByProviderName != nil {
+	if o != nil && !IsNil(o.AppliedByProviderName) {
 		return true
 	}
 
@@ -265,7 +268,7 @@ func (o *AdminMessageMetadata) SetAppliedByProviderName(v string) {
 
 // GetAppliedByDeviceId returns the AppliedByDeviceId field value if set, zero value otherwise.
 func (o *AdminMessageMetadata) GetAppliedByDeviceId() string {
-	if o == nil || o.AppliedByDeviceId == nil {
+	if o == nil || IsNil(o.AppliedByDeviceId) {
 		var ret string
 		return ret
 	}
@@ -275,7 +278,7 @@ func (o *AdminMessageMetadata) GetAppliedByDeviceId() string {
 // GetAppliedByDeviceIdOk returns a tuple with the AppliedByDeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadata) GetAppliedByDeviceIdOk() (*string, bool) {
-	if o == nil || o.AppliedByDeviceId == nil {
+	if o == nil || IsNil(o.AppliedByDeviceId) {
 		return nil, false
 	}
 	return o.AppliedByDeviceId, true
@@ -283,7 +286,7 @@ func (o *AdminMessageMetadata) GetAppliedByDeviceIdOk() (*string, bool) {
 
 // HasAppliedByDeviceId returns a boolean if a field has been set.
 func (o *AdminMessageMetadata) HasAppliedByDeviceId() bool {
-	if o != nil && o.AppliedByDeviceId != nil {
+	if o != nil && !IsNil(o.AppliedByDeviceId) {
 		return true
 	}
 
@@ -296,32 +299,36 @@ func (o *AdminMessageMetadata) SetAppliedByDeviceId(v string) {
 }
 
 func (o AdminMessageMetadata) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["message"] = o.Message
-	}
-	if true {
-		toSerialize["status"] = o.Status
-	}
-	if o.AppliedAt != nil {
-		toSerialize["appliedAt"] = o.AppliedAt
-	}
-	if o.AppliedBy != nil {
-		toSerialize["appliedBy"] = o.AppliedBy
-	}
-	if o.AppliedByUsername != nil {
-		toSerialize["appliedByUsername"] = o.AppliedByUsername
-	}
-	if o.AppliedByProviderName != nil {
-		toSerialize["appliedByProviderName"] = o.AppliedByProviderName
-	}
-	if o.AppliedByDeviceId != nil {
-		toSerialize["appliedByDeviceId"] = o.AppliedByDeviceId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMessageMetadata) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["message"] = o.Message
+	toSerialize["status"] = o.Status
+	if !IsNil(o.AppliedAt) {
+		toSerialize["appliedAt"] = o.AppliedAt
+	}
+	if !IsNil(o.AppliedBy) {
+		toSerialize["appliedBy"] = o.AppliedBy
+	}
+	if !IsNil(o.AppliedByUsername) {
+		toSerialize["appliedByUsername"] = o.AppliedByUsername
+	}
+	if !IsNil(o.AppliedByProviderName) {
+		toSerialize["appliedByProviderName"] = o.AppliedByProviderName
+	}
+	if !IsNil(o.AppliedByDeviceId) {
+		toSerialize["appliedByDeviceId"] = o.AppliedByDeviceId
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMessageMetadata struct {

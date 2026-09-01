@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppListAllOf{}
+
 // AppListAllOf Represents a list of discovered apps.
 type AppListAllOf struct {
 	// List of discovered apps.
@@ -42,7 +45,7 @@ func NewAppListAllOfWithDefaults() *AppListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AppListAllOf) GetData() []App {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []App
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *AppListAllOf) GetData() []App {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppListAllOf) GetDataOk() ([]App, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -60,7 +63,7 @@ func (o *AppListAllOf) GetDataOk() ([]App, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *AppListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *AppListAllOf) SetData(v []App) {
 
 // GetAllOriginatingEntitlements returns the AllOriginatingEntitlements field value if set, zero value otherwise.
 func (o *AppListAllOf) GetAllOriginatingEntitlements() []OriginatingEntitlement {
-	if o == nil || o.AllOriginatingEntitlements == nil {
+	if o == nil || IsNil(o.AllOriginatingEntitlements) {
 		var ret []OriginatingEntitlement
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *AppListAllOf) GetAllOriginatingEntitlements() []OriginatingEntitlement 
 // GetAllOriginatingEntitlementsOk returns a tuple with the AllOriginatingEntitlements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppListAllOf) GetAllOriginatingEntitlementsOk() ([]OriginatingEntitlement, bool) {
-	if o == nil || o.AllOriginatingEntitlements == nil {
+	if o == nil || IsNil(o.AllOriginatingEntitlements) {
 		return nil, false
 	}
 	return o.AllOriginatingEntitlements, true
@@ -92,7 +95,7 @@ func (o *AppListAllOf) GetAllOriginatingEntitlementsOk() ([]OriginatingEntitleme
 
 // HasAllOriginatingEntitlements returns a boolean if a field has been set.
 func (o *AppListAllOf) HasAllOriginatingEntitlements() bool {
-	if o != nil && o.AllOriginatingEntitlements != nil {
+	if o != nil && !IsNil(o.AllOriginatingEntitlements) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *AppListAllOf) SetAllOriginatingEntitlements(v []OriginatingEntitlement)
 }
 
 func (o AppListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.AllOriginatingEntitlements != nil {
-		toSerialize["allOriginatingEntitlements"] = o.AllOriginatingEntitlements
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.AllOriginatingEntitlements) {
+		toSerialize["allOriginatingEntitlements"] = o.AllOriginatingEntitlements
+	}
+	return toSerialize, nil
 }
 
 type NullableAppListAllOf struct {

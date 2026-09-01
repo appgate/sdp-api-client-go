@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppDiscoveryAllOfData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDiscoveryAllOfData{}
+
 // AppDiscoveryAllOfData A Discovered App.
 type AppDiscoveryAllOfData struct {
 	// The app name, with the domain field it makes up the discovered hostname.
@@ -48,7 +51,7 @@ func NewAppDiscoveryAllOfDataWithDefaults() *AppDiscoveryAllOfData {
 
 // GetApp returns the App field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfData) GetApp() string {
-	if o == nil || o.App == nil {
+	if o == nil || IsNil(o.App) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *AppDiscoveryAllOfData) GetApp() string {
 // GetAppOk returns a tuple with the App field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfData) GetAppOk() (*string, bool) {
-	if o == nil || o.App == nil {
+	if o == nil || IsNil(o.App) {
 		return nil, false
 	}
 	return o.App, true
@@ -66,7 +69,7 @@ func (o *AppDiscoveryAllOfData) GetAppOk() (*string, bool) {
 
 // HasApp returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfData) HasApp() bool {
-	if o != nil && o.App != nil {
+	if o != nil && !IsNil(o.App) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *AppDiscoveryAllOfData) SetApp(v string) {
 
 // GetDomain returns the Domain field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfData) GetDomain() string {
-	if o == nil || o.Domain == nil {
+	if o == nil || IsNil(o.Domain) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *AppDiscoveryAllOfData) GetDomain() string {
 // GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfData) GetDomainOk() (*string, bool) {
-	if o == nil || o.Domain == nil {
+	if o == nil || IsNil(o.Domain) {
 		return nil, false
 	}
 	return o.Domain, true
@@ -98,7 +101,7 @@ func (o *AppDiscoveryAllOfData) GetDomainOk() (*string, bool) {
 
 // HasDomain returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfData) HasDomain() bool {
-	if o != nil && o.Domain != nil {
+	if o != nil && !IsNil(o.Domain) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *AppDiscoveryAllOfData) SetDomain(v string) {
 
 // GetAccessCount returns the AccessCount field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfData) GetAccessCount() float32 {
-	if o == nil || o.AccessCount == nil {
+	if o == nil || IsNil(o.AccessCount) {
 		var ret float32
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *AppDiscoveryAllOfData) GetAccessCount() float32 {
 // GetAccessCountOk returns a tuple with the AccessCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfData) GetAccessCountOk() (*float32, bool) {
-	if o == nil || o.AccessCount == nil {
+	if o == nil || IsNil(o.AccessCount) {
 		return nil, false
 	}
 	return o.AccessCount, true
@@ -130,7 +133,7 @@ func (o *AppDiscoveryAllOfData) GetAccessCountOk() (*float32, bool) {
 
 // HasAccessCount returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfData) HasAccessCount() bool {
-	if o != nil && o.AccessCount != nil {
+	if o != nil && !IsNil(o.AccessCount) {
 		return true
 	}
 
@@ -144,7 +147,7 @@ func (o *AppDiscoveryAllOfData) SetAccessCount(v float32) {
 
 // GetIps returns the Ips field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfData) GetIps() []string {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		var ret []string
 		return ret
 	}
@@ -154,7 +157,7 @@ func (o *AppDiscoveryAllOfData) GetIps() []string {
 // GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfData) GetIpsOk() ([]string, bool) {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		return nil, false
 	}
 	return o.Ips, true
@@ -162,7 +165,7 @@ func (o *AppDiscoveryAllOfData) GetIpsOk() ([]string, bool) {
 
 // HasIps returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfData) HasIps() bool {
-	if o != nil && o.Ips != nil {
+	if o != nil && !IsNil(o.Ips) {
 		return true
 	}
 
@@ -176,7 +179,7 @@ func (o *AppDiscoveryAllOfData) SetIps(v []string) {
 
 // GetDistinguishedNames returns the DistinguishedNames field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfData) GetDistinguishedNames() []AppDiscoveryAllOfDistinguishedNames {
-	if o == nil || o.DistinguishedNames == nil {
+	if o == nil || IsNil(o.DistinguishedNames) {
 		var ret []AppDiscoveryAllOfDistinguishedNames
 		return ret
 	}
@@ -186,7 +189,7 @@ func (o *AppDiscoveryAllOfData) GetDistinguishedNames() []AppDiscoveryAllOfDisti
 // GetDistinguishedNamesOk returns a tuple with the DistinguishedNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfData) GetDistinguishedNamesOk() ([]AppDiscoveryAllOfDistinguishedNames, bool) {
-	if o == nil || o.DistinguishedNames == nil {
+	if o == nil || IsNil(o.DistinguishedNames) {
 		return nil, false
 	}
 	return o.DistinguishedNames, true
@@ -194,7 +197,7 @@ func (o *AppDiscoveryAllOfData) GetDistinguishedNamesOk() ([]AppDiscoveryAllOfDi
 
 // HasDistinguishedNames returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfData) HasDistinguishedNames() bool {
-	if o != nil && o.DistinguishedNames != nil {
+	if o != nil && !IsNil(o.DistinguishedNames) {
 		return true
 	}
 
@@ -207,23 +210,31 @@ func (o *AppDiscoveryAllOfData) SetDistinguishedNames(v []AppDiscoveryAllOfDisti
 }
 
 func (o AppDiscoveryAllOfData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.App != nil {
-		toSerialize["app"] = o.App
-	}
-	if o.Domain != nil {
-		toSerialize["domain"] = o.Domain
-	}
-	if o.AccessCount != nil {
-		toSerialize["accessCount"] = o.AccessCount
-	}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
-	}
-	if o.DistinguishedNames != nil {
-		toSerialize["distinguishedNames"] = o.DistinguishedNames
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDiscoveryAllOfData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.App) {
+		toSerialize["app"] = o.App
+	}
+	if !IsNil(o.Domain) {
+		toSerialize["domain"] = o.Domain
+	}
+	if !IsNil(o.AccessCount) {
+		toSerialize["accessCount"] = o.AccessCount
+	}
+	if !IsNil(o.Ips) {
+		toSerialize["ips"] = o.Ips
+	}
+	if !IsNil(o.DistinguishedNames) {
+		toSerialize["distinguishedNames"] = o.DistinguishedNames
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDiscoveryAllOfData struct {

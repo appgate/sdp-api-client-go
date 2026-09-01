@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ApplianceAllOfAdminInterface type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfAdminInterface{}
 
 // ApplianceAllOfAdminInterface The details of the admin connection interface. Required on Controllers and LogServers.
 type ApplianceAllOfAdminInterface struct {
@@ -77,7 +80,7 @@ func (o *ApplianceAllOfAdminInterface) SetHostname(v string) {
 
 // GetHttpsPort returns the HttpsPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetHttpsPort() int32 {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		var ret int32
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsPort() int32 {
 // GetHttpsPortOk returns a tuple with the HttpsPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetHttpsPortOk() (*int32, bool) {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		return nil, false
 	}
 	return o.HttpsPort, true
@@ -95,7 +98,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsPortOk() (*int32, bool) {
 
 // HasHttpsPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasHttpsPort() bool {
-	if o != nil && o.HttpsPort != nil {
+	if o != nil && !IsNil(o.HttpsPort) {
 		return true
 	}
 
@@ -133,7 +136,7 @@ func (o *ApplianceAllOfAdminInterface) SetHttpsCiphers(v []string) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -143,7 +146,7 @@ func (o *ApplianceAllOfAdminInterface) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -151,7 +154,7 @@ func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() ([]AllowSourcesInner,
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -165,7 +168,7 @@ func (o *ApplianceAllOfAdminInterface) SetAllowSources(v []AllowSourcesInner) {
 
 // GetHttpsP12 returns the HttpsP12 field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetHttpsP12() P12 {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		var ret P12
 		return ret
 	}
@@ -175,7 +178,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsP12() P12 {
 // GetHttpsP12Ok returns a tuple with the HttpsP12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetHttpsP12Ok() (*P12, bool) {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		return nil, false
 	}
 	return o.HttpsP12, true
@@ -183,7 +186,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsP12Ok() (*P12, bool) {
 
 // HasHttpsP12 returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasHttpsP12() bool {
-	if o != nil && o.HttpsP12 != nil {
+	if o != nil && !IsNil(o.HttpsP12) {
 		return true
 	}
 
@@ -196,23 +199,27 @@ func (o *ApplianceAllOfAdminInterface) SetHttpsP12(v P12) {
 }
 
 func (o ApplianceAllOfAdminInterface) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.HttpsPort != nil {
-		toSerialize["httpsPort"] = o.HttpsPort
-	}
-	if true {
-		toSerialize["httpsCiphers"] = o.HttpsCiphers
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
-	}
-	if o.HttpsP12 != nil {
-		toSerialize["httpsP12"] = o.HttpsP12
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfAdminInterface) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.HttpsPort) {
+		toSerialize["httpsPort"] = o.HttpsPort
+	}
+	toSerialize["httpsCiphers"] = o.HttpsCiphers
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	if !IsNil(o.HttpsP12) {
+		toSerialize["httpsP12"] = o.HttpsP12
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfAdminInterface struct {

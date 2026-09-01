@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RecordingDiskUsage type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RecordingDiskUsage{}
+
 // RecordingDiskUsage Aggregate recording-volume capacity summed across the reporting Gateways. Used bytes is derived (total - free) by the caller.
 type RecordingDiskUsage struct {
 	// Total capacity of the recording volumes, in bytes.
@@ -42,7 +45,7 @@ func NewRecordingDiskUsageWithDefaults() *RecordingDiskUsage {
 
 // GetTotalBytes returns the TotalBytes field value if set, zero value otherwise.
 func (o *RecordingDiskUsage) GetTotalBytes() int64 {
-	if o == nil || o.TotalBytes == nil {
+	if o == nil || IsNil(o.TotalBytes) {
 		var ret int64
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *RecordingDiskUsage) GetTotalBytes() int64 {
 // GetTotalBytesOk returns a tuple with the TotalBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordingDiskUsage) GetTotalBytesOk() (*int64, bool) {
-	if o == nil || o.TotalBytes == nil {
+	if o == nil || IsNil(o.TotalBytes) {
 		return nil, false
 	}
 	return o.TotalBytes, true
@@ -60,7 +63,7 @@ func (o *RecordingDiskUsage) GetTotalBytesOk() (*int64, bool) {
 
 // HasTotalBytes returns a boolean if a field has been set.
 func (o *RecordingDiskUsage) HasTotalBytes() bool {
-	if o != nil && o.TotalBytes != nil {
+	if o != nil && !IsNil(o.TotalBytes) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *RecordingDiskUsage) SetTotalBytes(v int64) {
 
 // GetFreeBytes returns the FreeBytes field value if set, zero value otherwise.
 func (o *RecordingDiskUsage) GetFreeBytes() int64 {
-	if o == nil || o.FreeBytes == nil {
+	if o == nil || IsNil(o.FreeBytes) {
 		var ret int64
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *RecordingDiskUsage) GetFreeBytes() int64 {
 // GetFreeBytesOk returns a tuple with the FreeBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordingDiskUsage) GetFreeBytesOk() (*int64, bool) {
-	if o == nil || o.FreeBytes == nil {
+	if o == nil || IsNil(o.FreeBytes) {
 		return nil, false
 	}
 	return o.FreeBytes, true
@@ -92,7 +95,7 @@ func (o *RecordingDiskUsage) GetFreeBytesOk() (*int64, bool) {
 
 // HasFreeBytes returns a boolean if a field has been set.
 func (o *RecordingDiskUsage) HasFreeBytes() bool {
-	if o != nil && o.FreeBytes != nil {
+	if o != nil && !IsNil(o.FreeBytes) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *RecordingDiskUsage) SetFreeBytes(v int64) {
 }
 
 func (o RecordingDiskUsage) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TotalBytes != nil {
-		toSerialize["totalBytes"] = o.TotalBytes
-	}
-	if o.FreeBytes != nil {
-		toSerialize["freeBytes"] = o.FreeBytes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RecordingDiskUsage) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TotalBytes) {
+		toSerialize["totalBytes"] = o.TotalBytes
+	}
+	if !IsNil(o.FreeBytes) {
+		toSerialize["freeBytes"] = o.FreeBytes
+	}
+	return toSerialize, nil
 }
 
 type NullableRecordingDiskUsage struct {

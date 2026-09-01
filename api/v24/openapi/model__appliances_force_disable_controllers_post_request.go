@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesForceDisableControllersPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesForceDisableControllersPostRequest{}
+
 // AppliancesForceDisableControllersPostRequest struct for AppliancesForceDisableControllersPostRequest
 type AppliancesForceDisableControllersPostRequest struct {
 	// IDs of the Controller Appliance's to disable the function for.
@@ -64,11 +67,17 @@ func (o *AppliancesForceDisableControllersPostRequest) SetApplianceIds(v []strin
 }
 
 func (o AppliancesForceDisableControllersPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["applianceIds"] = o.ApplianceIds
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesForceDisableControllersPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["applianceIds"] = o.ApplianceIds
+	return toSerialize, nil
 }
 
 type NullableAppliancesForceDisableControllersPostRequest struct {

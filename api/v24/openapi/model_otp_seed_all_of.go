@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OtpSeedAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OtpSeedAllOf{}
+
 // OtpSeedAllOf struct for OtpSeedAllOf
 type OtpSeedAllOf struct {
 	// Whether the generated Seed successfully used by the User at least once or not.
@@ -40,7 +43,7 @@ func NewOtpSeedAllOfWithDefaults() *OtpSeedAllOf {
 
 // GetVerified returns the Verified field value if set, zero value otherwise.
 func (o *OtpSeedAllOf) GetVerified() bool {
-	if o == nil || o.Verified == nil {
+	if o == nil || IsNil(o.Verified) {
 		var ret bool
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *OtpSeedAllOf) GetVerified() bool {
 // GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OtpSeedAllOf) GetVerifiedOk() (*bool, bool) {
-	if o == nil || o.Verified == nil {
+	if o == nil || IsNil(o.Verified) {
 		return nil, false
 	}
 	return o.Verified, true
@@ -58,7 +61,7 @@ func (o *OtpSeedAllOf) GetVerifiedOk() (*bool, bool) {
 
 // HasVerified returns a boolean if a field has been set.
 func (o *OtpSeedAllOf) HasVerified() bool {
-	if o != nil && o.Verified != nil {
+	if o != nil && !IsNil(o.Verified) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *OtpSeedAllOf) SetVerified(v bool) {
 }
 
 func (o OtpSeedAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Verified != nil {
-		toSerialize["verified"] = o.Verified
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OtpSeedAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Verified) {
+		toSerialize["verified"] = o.Verified
+	}
+	return toSerialize, nil
 }
 
 type NullableOtpSeedAllOf struct {

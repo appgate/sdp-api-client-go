@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClientProfilesBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfilesBulkUpsertPostRequest{}
+
 // ClientProfilesBulkUpsertPostRequest struct for ClientProfilesBulkUpsertPostRequest
 type ClientProfilesBulkUpsertPostRequest struct {
 	Data []map[string]interface{} `json:"data"`
@@ -63,11 +66,17 @@ func (o *ClientProfilesBulkUpsertPostRequest) SetData(v []map[string]interface{}
 }
 
 func (o ClientProfilesBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfilesBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableClientProfilesBulkUpsertPostRequest struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest{}
+
 // CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest struct for CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest
 type CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest struct {
 	// X509 certificate revocation reason. See RFC 5280.
@@ -42,7 +45,7 @@ func NewCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequestWith
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) G
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -60,7 +63,7 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) G
 
 // HasReason returns a boolean if a field has been set.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) S
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) G
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -92,7 +95,7 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) G
 
 // HasNotes returns a boolean if a field has been set.
 func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) S
 }
 
 func (o CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityIssuedCertificatesRevokedCertificateIdPutRequest struct {

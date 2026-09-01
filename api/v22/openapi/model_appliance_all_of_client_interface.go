@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ApplianceAllOfClientInterface type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfClientInterface{}
 
 // ApplianceAllOfClientInterface The details of the Client connection interface.
 type ApplianceAllOfClientInterface struct {
@@ -65,7 +68,7 @@ func NewApplianceAllOfClientInterfaceWithDefaults() *ApplianceAllOfClientInterfa
 
 // GetProxyProtocol returns the ProxyProtocol field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetProxyProtocol() bool {
-	if o == nil || o.ProxyProtocol == nil {
+	if o == nil || IsNil(o.ProxyProtocol) {
 		var ret bool
 		return ret
 	}
@@ -75,7 +78,7 @@ func (o *ApplianceAllOfClientInterface) GetProxyProtocol() bool {
 // GetProxyProtocolOk returns a tuple with the ProxyProtocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetProxyProtocolOk() (*bool, bool) {
-	if o == nil || o.ProxyProtocol == nil {
+	if o == nil || IsNil(o.ProxyProtocol) {
 		return nil, false
 	}
 	return o.ProxyProtocol, true
@@ -83,7 +86,7 @@ func (o *ApplianceAllOfClientInterface) GetProxyProtocolOk() (*bool, bool) {
 
 // HasProxyProtocol returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasProxyProtocol() bool {
-	if o != nil && o.ProxyProtocol != nil {
+	if o != nil && !IsNil(o.ProxyProtocol) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *ApplianceAllOfClientInterface) SetHostname(v string) {
 
 // GetLocalHostname returns the LocalHostname field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetLocalHostname() string {
-	if o == nil || o.LocalHostname == nil {
+	if o == nil || IsNil(o.LocalHostname) {
 		var ret string
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *ApplianceAllOfClientInterface) GetLocalHostname() string {
 // GetLocalHostnameOk returns a tuple with the LocalHostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetLocalHostnameOk() (*string, bool) {
-	if o == nil || o.LocalHostname == nil {
+	if o == nil || IsNil(o.LocalHostname) {
 		return nil, false
 	}
 	return o.LocalHostname, true
@@ -139,7 +142,7 @@ func (o *ApplianceAllOfClientInterface) GetLocalHostnameOk() (*string, bool) {
 
 // HasLocalHostname returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasLocalHostname() bool {
-	if o != nil && o.LocalHostname != nil {
+	if o != nil && !IsNil(o.LocalHostname) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *ApplianceAllOfClientInterface) SetLocalHostname(v string) {
 
 // GetHttpsPort returns the HttpsPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetHttpsPort() int32 {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		var ret int32
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *ApplianceAllOfClientInterface) GetHttpsPort() int32 {
 // GetHttpsPortOk returns a tuple with the HttpsPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetHttpsPortOk() (*int32, bool) {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		return nil, false
 	}
 	return o.HttpsPort, true
@@ -171,7 +174,7 @@ func (o *ApplianceAllOfClientInterface) GetHttpsPortOk() (*int32, bool) {
 
 // HasHttpsPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasHttpsPort() bool {
-	if o != nil && o.HttpsPort != nil {
+	if o != nil && !IsNil(o.HttpsPort) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *ApplianceAllOfClientInterface) SetHttpsPort(v int32) {
 
 // GetDtlsPort returns the DtlsPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetDtlsPort() int32 {
-	if o == nil || o.DtlsPort == nil {
+	if o == nil || IsNil(o.DtlsPort) {
 		var ret int32
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *ApplianceAllOfClientInterface) GetDtlsPort() int32 {
 // GetDtlsPortOk returns a tuple with the DtlsPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetDtlsPortOk() (*int32, bool) {
-	if o == nil || o.DtlsPort == nil {
+	if o == nil || IsNil(o.DtlsPort) {
 		return nil, false
 	}
 	return o.DtlsPort, true
@@ -203,7 +206,7 @@ func (o *ApplianceAllOfClientInterface) GetDtlsPortOk() (*int32, bool) {
 
 // HasDtlsPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasDtlsPort() bool {
-	if o != nil && o.DtlsPort != nil {
+	if o != nil && !IsNil(o.DtlsPort) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *ApplianceAllOfClientInterface) SetDtlsPort(v int32) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *ApplianceAllOfClientInterface) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -235,7 +238,7 @@ func (o *ApplianceAllOfClientInterface) GetAllowSourcesOk() ([]AllowSourcesInner
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *ApplianceAllOfClientInterface) SetAllowSources(v []AllowSourcesInner) {
 
 // GetOverrideSpaMode returns the OverrideSpaMode field value if set, zero value otherwise.
 func (o *ApplianceAllOfClientInterface) GetOverrideSpaMode() string {
-	if o == nil || o.OverrideSpaMode == nil {
+	if o == nil || IsNil(o.OverrideSpaMode) {
 		var ret string
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *ApplianceAllOfClientInterface) GetOverrideSpaMode() string {
 // GetOverrideSpaModeOk returns a tuple with the OverrideSpaMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfClientInterface) GetOverrideSpaModeOk() (*string, bool) {
-	if o == nil || o.OverrideSpaMode == nil {
+	if o == nil || IsNil(o.OverrideSpaMode) {
 		return nil, false
 	}
 	return o.OverrideSpaMode, true
@@ -267,7 +270,7 @@ func (o *ApplianceAllOfClientInterface) GetOverrideSpaModeOk() (*string, bool) {
 
 // HasOverrideSpaMode returns a boolean if a field has been set.
 func (o *ApplianceAllOfClientInterface) HasOverrideSpaMode() bool {
-	if o != nil && o.OverrideSpaMode != nil {
+	if o != nil && !IsNil(o.OverrideSpaMode) {
 		return true
 	}
 
@@ -280,29 +283,35 @@ func (o *ApplianceAllOfClientInterface) SetOverrideSpaMode(v string) {
 }
 
 func (o ApplianceAllOfClientInterface) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProxyProtocol != nil {
-		toSerialize["proxyProtocol"] = o.ProxyProtocol
-	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.LocalHostname != nil {
-		toSerialize["localHostname"] = o.LocalHostname
-	}
-	if o.HttpsPort != nil {
-		toSerialize["httpsPort"] = o.HttpsPort
-	}
-	if o.DtlsPort != nil {
-		toSerialize["dtlsPort"] = o.DtlsPort
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
-	}
-	if o.OverrideSpaMode != nil {
-		toSerialize["overrideSpaMode"] = o.OverrideSpaMode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfClientInterface) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProxyProtocol) {
+		toSerialize["proxyProtocol"] = o.ProxyProtocol
+	}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.LocalHostname) {
+		toSerialize["localHostname"] = o.LocalHostname
+	}
+	if !IsNil(o.HttpsPort) {
+		toSerialize["httpsPort"] = o.HttpsPort
+	}
+	if !IsNil(o.DtlsPort) {
+		toSerialize["dtlsPort"] = o.DtlsPort
+	}
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	if !IsNil(o.OverrideSpaMode) {
+		toSerialize["overrideSpaMode"] = o.OverrideSpaMode
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfClientInterface struct {

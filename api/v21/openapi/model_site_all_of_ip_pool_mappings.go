@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfIpPoolMappings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfIpPoolMappings{}
+
 // SiteAllOfIpPoolMappings struct for SiteAllOfIpPoolMappings
 type SiteAllOfIpPoolMappings struct {
 	// IP Pool ID to map from. If a user is authorizing with this IP Pool via Identity Provider assignment and has access to this Site, mapping will occur for that user.
@@ -48,7 +51,7 @@ func NewSiteAllOfIpPoolMappingsWithDefaults() *SiteAllOfIpPoolMappings {
 
 // GetFrom returns the From field value if set, zero value otherwise.
 func (o *SiteAllOfIpPoolMappings) GetFrom() string {
-	if o == nil || o.From == nil {
+	if o == nil || IsNil(o.From) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *SiteAllOfIpPoolMappings) GetFrom() string {
 // GetFromOk returns a tuple with the From field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfIpPoolMappings) GetFromOk() (*string, bool) {
-	if o == nil || o.From == nil {
+	if o == nil || IsNil(o.From) {
 		return nil, false
 	}
 	return o.From, true
@@ -66,7 +69,7 @@ func (o *SiteAllOfIpPoolMappings) GetFromOk() (*string, bool) {
 
 // HasFrom returns a boolean if a field has been set.
 func (o *SiteAllOfIpPoolMappings) HasFrom() bool {
-	if o != nil && o.From != nil {
+	if o != nil && !IsNil(o.From) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *SiteAllOfIpPoolMappings) SetFrom(v string) {
 
 // GetTo returns the To field value if set, zero value otherwise.
 func (o *SiteAllOfIpPoolMappings) GetTo() string {
-	if o == nil || o.To == nil {
+	if o == nil || IsNil(o.To) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *SiteAllOfIpPoolMappings) GetTo() string {
 // GetToOk returns a tuple with the To field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfIpPoolMappings) GetToOk() (*string, bool) {
-	if o == nil || o.To == nil {
+	if o == nil || IsNil(o.To) {
 		return nil, false
 	}
 	return o.To, true
@@ -98,7 +101,7 @@ func (o *SiteAllOfIpPoolMappings) GetToOk() (*string, bool) {
 
 // HasTo returns a boolean if a field has been set.
 func (o *SiteAllOfIpPoolMappings) HasTo() bool {
-	if o != nil && o.To != nil {
+	if o != nil && !IsNil(o.To) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *SiteAllOfIpPoolMappings) SetTo(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *SiteAllOfIpPoolMappings) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *SiteAllOfIpPoolMappings) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfIpPoolMappings) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -130,7 +133,7 @@ func (o *SiteAllOfIpPoolMappings) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *SiteAllOfIpPoolMappings) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *SiteAllOfIpPoolMappings) SetType(v string) {
 }
 
 func (o SiteAllOfIpPoolMappings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.From != nil {
-		toSerialize["from"] = o.From
-	}
-	if o.To != nil {
-		toSerialize["to"] = o.To
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfIpPoolMappings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.From) {
+		toSerialize["from"] = o.From
+	}
+	if !IsNil(o.To) {
+		toSerialize["to"] = o.To
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfIpPoolMappings struct {

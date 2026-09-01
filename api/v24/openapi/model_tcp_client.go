@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TcpClient type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TcpClient{}
+
 // TcpClient struct for TcpClient
 type TcpClient struct {
 	// Name of the endpoint.
@@ -150,7 +153,7 @@ func (o *TcpClient) SetFormat(v string) {
 
 // GetUseTLS returns the UseTLS field value if set, zero value otherwise.
 func (o *TcpClient) GetUseTLS() bool {
-	if o == nil || o.UseTLS == nil {
+	if o == nil || IsNil(o.UseTLS) {
 		var ret bool
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *TcpClient) GetUseTLS() bool {
 // GetUseTLSOk returns a tuple with the UseTLS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TcpClient) GetUseTLSOk() (*bool, bool) {
-	if o == nil || o.UseTLS == nil {
+	if o == nil || IsNil(o.UseTLS) {
 		return nil, false
 	}
 	return o.UseTLS, true
@@ -168,7 +171,7 @@ func (o *TcpClient) GetUseTLSOk() (*bool, bool) {
 
 // HasUseTLS returns a boolean if a field has been set.
 func (o *TcpClient) HasUseTLS() bool {
-	if o != nil && o.UseTLS != nil {
+	if o != nil && !IsNil(o.UseTLS) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *TcpClient) SetUseTLS(v bool) {
 
 // GetFilter returns the Filter field value if set, zero value otherwise.
 func (o *TcpClient) GetFilter() string {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		var ret string
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *TcpClient) GetFilter() string {
 // GetFilterOk returns a tuple with the Filter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TcpClient) GetFilterOk() (*string, bool) {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		return nil, false
 	}
 	return o.Filter, true
@@ -200,7 +203,7 @@ func (o *TcpClient) GetFilterOk() (*string, bool) {
 
 // HasFilter returns a boolean if a field has been set.
 func (o *TcpClient) HasFilter() bool {
-	if o != nil && o.Filter != nil {
+	if o != nil && !IsNil(o.Filter) {
 		return true
 	}
 
@@ -213,26 +216,26 @@ func (o *TcpClient) SetFilter(v string) {
 }
 
 func (o TcpClient) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if true {
-		toSerialize["format"] = o.Format
-	}
-	if o.UseTLS != nil {
-		toSerialize["useTLS"] = o.UseTLS
-	}
-	if o.Filter != nil {
-		toSerialize["filter"] = o.Filter
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TcpClient) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["host"] = o.Host
+	toSerialize["port"] = o.Port
+	toSerialize["format"] = o.Format
+	if !IsNil(o.UseTLS) {
+		toSerialize["useTLS"] = o.UseTLS
+	}
+	if !IsNil(o.Filter) {
+		toSerialize["filter"] = o.Filter
+	}
+	return toSerialize, nil
 }
 
 type NullableTcpClient struct {

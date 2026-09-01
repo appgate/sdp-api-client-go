@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GeoIpSettingsIpInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GeoIpSettingsIpInfo{}
+
 // GeoIpSettingsIpInfo IPInfo provider configuration. Required if provider is IPInfo.
 type GeoIpSettingsIpInfo struct {
 	// Can be one of the predefined values: \"ipinfo_lite\", \"ipinfo_core\", \"ipinfo_plus\", \"ipinfo_location\", \"location_extended_v2\", or a custom database name for future IPinfo additions.
@@ -42,7 +45,7 @@ func NewGeoIpSettingsIpInfoWithDefaults() *GeoIpSettingsIpInfo {
 
 // GetDatabaseId returns the DatabaseId field value if set, zero value otherwise.
 func (o *GeoIpSettingsIpInfo) GetDatabaseId() string {
-	if o == nil || o.DatabaseId == nil {
+	if o == nil || IsNil(o.DatabaseId) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *GeoIpSettingsIpInfo) GetDatabaseId() string {
 // GetDatabaseIdOk returns a tuple with the DatabaseId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettingsIpInfo) GetDatabaseIdOk() (*string, bool) {
-	if o == nil || o.DatabaseId == nil {
+	if o == nil || IsNil(o.DatabaseId) {
 		return nil, false
 	}
 	return o.DatabaseId, true
@@ -60,7 +63,7 @@ func (o *GeoIpSettingsIpInfo) GetDatabaseIdOk() (*string, bool) {
 
 // HasDatabaseId returns a boolean if a field has been set.
 func (o *GeoIpSettingsIpInfo) HasDatabaseId() bool {
-	if o != nil && o.DatabaseId != nil {
+	if o != nil && !IsNil(o.DatabaseId) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *GeoIpSettingsIpInfo) SetDatabaseId(v string) {
 
 // GetToken returns the Token field value if set, zero value otherwise.
 func (o *GeoIpSettingsIpInfo) GetToken() string {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *GeoIpSettingsIpInfo) GetToken() string {
 // GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettingsIpInfo) GetTokenOk() (*string, bool) {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
 	return o.Token, true
@@ -92,7 +95,7 @@ func (o *GeoIpSettingsIpInfo) GetTokenOk() (*string, bool) {
 
 // HasToken returns a boolean if a field has been set.
 func (o *GeoIpSettingsIpInfo) HasToken() bool {
-	if o != nil && o.Token != nil {
+	if o != nil && !IsNil(o.Token) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *GeoIpSettingsIpInfo) SetToken(v string) {
 }
 
 func (o GeoIpSettingsIpInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DatabaseId != nil {
-		toSerialize["databaseId"] = o.DatabaseId
-	}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GeoIpSettingsIpInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DatabaseId) {
+		toSerialize["databaseId"] = o.DatabaseId
+	}
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	return toSerialize, nil
 }
 
 type NullableGeoIpSettingsIpInfo struct {

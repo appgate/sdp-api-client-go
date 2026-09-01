@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdministrativeRolesBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdministrativeRolesBulkUpsertPostRequest{}
+
 // AdministrativeRolesBulkUpsertPostRequest struct for AdministrativeRolesBulkUpsertPostRequest
 type AdministrativeRolesBulkUpsertPostRequest struct {
 	Data []AdministrativeRole `json:"data"`
@@ -63,11 +66,17 @@ func (o *AdministrativeRolesBulkUpsertPostRequest) SetData(v []AdministrativeRol
 }
 
 func (o AdministrativeRolesBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdministrativeRolesBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableAdministrativeRolesBulkUpsertPostRequest struct {

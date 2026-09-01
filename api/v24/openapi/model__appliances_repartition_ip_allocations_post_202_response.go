@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesRepartitionIpAllocationsPost202Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesRepartitionIpAllocationsPost202Response{}
+
 // AppliancesRepartitionIpAllocationsPost202Response Appliance change id for the result of the maintenance mode
 type AppliancesRepartitionIpAllocationsPost202Response struct {
 	// Id for this change
@@ -40,7 +43,7 @@ func NewAppliancesRepartitionIpAllocationsPost202ResponseWithDefaults() *Applian
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AppliancesRepartitionIpAllocationsPost202Response) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesRepartitionIpAllocationsPost202Response) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesRepartitionIpAllocationsPost202Response) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -58,7 +61,7 @@ func (o *AppliancesRepartitionIpAllocationsPost202Response) GetIdOk() (*string, 
 
 // HasId returns a boolean if a field has been set.
 func (o *AppliancesRepartitionIpAllocationsPost202Response) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesRepartitionIpAllocationsPost202Response) SetId(v string) {
 }
 
 func (o AppliancesRepartitionIpAllocationsPost202Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesRepartitionIpAllocationsPost202Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesRepartitionIpAllocationsPost202Response struct {

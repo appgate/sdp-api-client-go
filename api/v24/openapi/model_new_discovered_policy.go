@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the NewDiscoveredPolicy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NewDiscoveredPolicy{}
+
 // NewDiscoveredPolicy Access will be granted by creating a new Policy for the generated Entitlement.
 type NewDiscoveredPolicy struct {
 	Action *string `json:"action,omitempty"`
@@ -45,7 +48,7 @@ func NewNewDiscoveredPolicyWithDefaults() *NewDiscoveredPolicy {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *NewDiscoveredPolicy) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *NewDiscoveredPolicy) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewDiscoveredPolicy) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -63,7 +66,7 @@ func (o *NewDiscoveredPolicy) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *NewDiscoveredPolicy) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *NewDiscoveredPolicy) SetAction(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *NewDiscoveredPolicy) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *NewDiscoveredPolicy) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewDiscoveredPolicy) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -95,7 +98,7 @@ func (o *NewDiscoveredPolicy) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *NewDiscoveredPolicy) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *NewDiscoveredPolicy) SetName(v string) {
 
 // GetGroup returns the Group field value if set, zero value otherwise.
 func (o *NewDiscoveredPolicy) GetGroup() string {
-	if o == nil || o.Group == nil {
+	if o == nil || IsNil(o.Group) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *NewDiscoveredPolicy) GetGroup() string {
 // GetGroupOk returns a tuple with the Group field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewDiscoveredPolicy) GetGroupOk() (*string, bool) {
-	if o == nil || o.Group == nil {
+	if o == nil || IsNil(o.Group) {
 		return nil, false
 	}
 	return o.Group, true
@@ -127,7 +130,7 @@ func (o *NewDiscoveredPolicy) GetGroupOk() (*string, bool) {
 
 // HasGroup returns a boolean if a field has been set.
 func (o *NewDiscoveredPolicy) HasGroup() bool {
-	if o != nil && o.Group != nil {
+	if o != nil && !IsNil(o.Group) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *NewDiscoveredPolicy) SetGroup(v string) {
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *NewDiscoveredPolicy) GetProvider() string {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *NewDiscoveredPolicy) GetProvider() string {
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewDiscoveredPolicy) GetProviderOk() (*string, bool) {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
 	return o.Provider, true
@@ -159,7 +162,7 @@ func (o *NewDiscoveredPolicy) GetProviderOk() (*string, bool) {
 
 // HasProvider returns a boolean if a field has been set.
 func (o *NewDiscoveredPolicy) HasProvider() bool {
-	if o != nil && o.Provider != nil {
+	if o != nil && !IsNil(o.Provider) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *NewDiscoveredPolicy) SetProvider(v string) {
 }
 
 func (o NewDiscoveredPolicy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Group != nil {
-		toSerialize["group"] = o.Group
-	}
-	if o.Provider != nil {
-		toSerialize["provider"] = o.Provider
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NewDiscoveredPolicy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Group) {
+		toSerialize["group"] = o.Group
+	}
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
+	}
+	return toSerialize, nil
 }
 
 type NullableNewDiscoveredPolicy struct {

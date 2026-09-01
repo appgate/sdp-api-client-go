@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the NetworkInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NetworkInfo{}
+
 // NetworkInfo Network information.
 type NetworkInfo struct {
 	// Busiest NIC.
@@ -42,7 +45,7 @@ func NewNetworkInfoWithDefaults() *NetworkInfo {
 
 // GetBusiestNic returns the BusiestNic field value if set, zero value otherwise.
 func (o *NetworkInfo) GetBusiestNic() string {
-	if o == nil || o.BusiestNic == nil {
+	if o == nil || IsNil(o.BusiestNic) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *NetworkInfo) GetBusiestNic() string {
 // GetBusiestNicOk returns a tuple with the BusiestNic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfo) GetBusiestNicOk() (*string, bool) {
-	if o == nil || o.BusiestNic == nil {
+	if o == nil || IsNil(o.BusiestNic) {
 		return nil, false
 	}
 	return o.BusiestNic, true
@@ -60,7 +63,7 @@ func (o *NetworkInfo) GetBusiestNicOk() (*string, bool) {
 
 // HasBusiestNic returns a boolean if a field has been set.
 func (o *NetworkInfo) HasBusiestNic() bool {
-	if o != nil && o.BusiestNic != nil {
+	if o != nil && !IsNil(o.BusiestNic) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *NetworkInfo) SetBusiestNic(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *NetworkInfo) GetDetails() map[string]NetworkInfoDetailsValue {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret map[string]NetworkInfoDetailsValue
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *NetworkInfo) GetDetails() map[string]NetworkInfoDetailsValue {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NetworkInfo) GetDetailsOk() (*map[string]NetworkInfoDetailsValue, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -92,7 +95,7 @@ func (o *NetworkInfo) GetDetailsOk() (*map[string]NetworkInfoDetailsValue, bool)
 
 // HasDetails returns a boolean if a field has been set.
 func (o *NetworkInfo) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *NetworkInfo) SetDetails(v map[string]NetworkInfoDetailsValue) {
 }
 
 func (o NetworkInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.BusiestNic != nil {
-		toSerialize["busiestNic"] = o.BusiestNic
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NetworkInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.BusiestNic) {
+		toSerialize["busiestNic"] = o.BusiestNic
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
 }
 
 type NullableNetworkInfo struct {

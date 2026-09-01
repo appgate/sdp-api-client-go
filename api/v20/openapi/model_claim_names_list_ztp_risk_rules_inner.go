@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClaimNamesListZtpRiskRulesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClaimNamesListZtpRiskRulesInner{}
+
 // ClaimNamesListZtpRiskRulesInner struct for ClaimNamesListZtpRiskRulesInner
 type ClaimNamesListZtpRiskRulesInner struct {
 	// ID of the rule.
@@ -42,7 +45,7 @@ func NewClaimNamesListZtpRiskRulesInnerWithDefaults() *ClaimNamesListZtpRiskRule
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ClaimNamesListZtpRiskRulesInner) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ClaimNamesListZtpRiskRulesInner) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesListZtpRiskRulesInner) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -60,7 +63,7 @@ func (o *ClaimNamesListZtpRiskRulesInner) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ClaimNamesListZtpRiskRulesInner) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ClaimNamesListZtpRiskRulesInner) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *ClaimNamesListZtpRiskRulesInner) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ClaimNamesListZtpRiskRulesInner) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesListZtpRiskRulesInner) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -92,7 +95,7 @@ func (o *ClaimNamesListZtpRiskRulesInner) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *ClaimNamesListZtpRiskRulesInner) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ClaimNamesListZtpRiskRulesInner) SetName(v string) {
 }
 
 func (o ClaimNamesListZtpRiskRulesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClaimNamesListZtpRiskRulesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	return toSerialize, nil
 }
 
 type NullableClaimNamesListZtpRiskRulesInner struct {

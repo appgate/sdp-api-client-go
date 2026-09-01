@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceUpgrade type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceUpgrade{}
+
 // ApplianceUpgrade Appliance Upgrade request.
 type ApplianceUpgrade struct {
 	// Disclaimer of Warranty - internal use only. This is not a supported property. Use the development keyring to verify the upgrade image.
@@ -43,7 +46,7 @@ func NewApplianceUpgradeWithDefaults() *ApplianceUpgrade {
 
 // GetDevKeyring returns the DevKeyring field value if set, zero value otherwise.
 func (o *ApplianceUpgrade) GetDevKeyring() bool {
-	if o == nil || o.DevKeyring == nil {
+	if o == nil || IsNil(o.DevKeyring) {
 		var ret bool
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ApplianceUpgrade) GetDevKeyring() bool {
 // GetDevKeyringOk returns a tuple with the DevKeyring field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceUpgrade) GetDevKeyringOk() (*bool, bool) {
-	if o == nil || o.DevKeyring == nil {
+	if o == nil || IsNil(o.DevKeyring) {
 		return nil, false
 	}
 	return o.DevKeyring, true
@@ -61,7 +64,7 @@ func (o *ApplianceUpgrade) GetDevKeyringOk() (*bool, bool) {
 
 // HasDevKeyring returns a boolean if a field has been set.
 func (o *ApplianceUpgrade) HasDevKeyring() bool {
-	if o != nil && o.DevKeyring != nil {
+	if o != nil && !IsNil(o.DevKeyring) {
 		return true
 	}
 
@@ -98,14 +101,20 @@ func (o *ApplianceUpgrade) SetImageUrl(v string) {
 }
 
 func (o ApplianceUpgrade) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DevKeyring != nil {
-		toSerialize["devKeyring"] = o.DevKeyring
-	}
-	if true {
-		toSerialize["imageUrl"] = o.ImageUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceUpgrade) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DevKeyring) {
+		toSerialize["devKeyring"] = o.DevKeyring
+	}
+	toSerialize["imageUrl"] = o.ImageUrl
+	return toSerialize, nil
 }
 
 type NullableApplianceUpgrade struct {

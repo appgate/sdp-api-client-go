@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UserLoginsAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserLoginsAllOf{}
+
 // UserLoginsAllOf struct for UserLoginsAllOf
 type UserLoginsAllOf struct {
 	// A dictionary of User Logins Per Hour. The key is the hour, the value is a map of Users Logins per controller. For example 8: {'controller1.company.com' : '25', 'controller2.company.com' : '5', 'total': '30'} means, between 08:00 - 09:00, 25 Logins have occurred to 'controller1.company.com' and 5 Logins to 'controller2.company.com' and total Logins to all controllers in this period is 30. Times are UTC based and if the hour number is after the current time, it represents the day before.
@@ -40,7 +43,7 @@ func NewUserLoginsAllOfWithDefaults() *UserLoginsAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *UserLoginsAllOf) GetData() map[string]float32 {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]float32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *UserLoginsAllOf) GetData() map[string]float32 {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLoginsAllOf) GetDataOk() (*map[string]float32, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *UserLoginsAllOf) GetDataOk() (*map[string]float32, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *UserLoginsAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *UserLoginsAllOf) SetData(v map[string]float32) {
 }
 
 func (o UserLoginsAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserLoginsAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableUserLoginsAllOf struct {

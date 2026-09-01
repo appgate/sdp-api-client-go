@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectionBrokerRoleAllOfRelayed type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectionBrokerRoleAllOfRelayed{}
+
 // ConnectionBrokerRoleAllOfRelayed struct for ConnectionBrokerRoleAllOfRelayed
 type ConnectionBrokerRoleAllOfRelayed struct {
 	// Number of active sessions relayed by the Connection Broker.
@@ -42,7 +45,7 @@ func NewConnectionBrokerRoleAllOfRelayedWithDefaults() *ConnectionBrokerRoleAllO
 
 // GetSessions returns the Sessions field value if set, zero value otherwise.
 func (o *ConnectionBrokerRoleAllOfRelayed) GetSessions() int32 {
-	if o == nil || o.Sessions == nil {
+	if o == nil || IsNil(o.Sessions) {
 		var ret int32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ConnectionBrokerRoleAllOfRelayed) GetSessions() int32 {
 // GetSessionsOk returns a tuple with the Sessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRoleAllOfRelayed) GetSessionsOk() (*int32, bool) {
-	if o == nil || o.Sessions == nil {
+	if o == nil || IsNil(o.Sessions) {
 		return nil, false
 	}
 	return o.Sessions, true
@@ -60,7 +63,7 @@ func (o *ConnectionBrokerRoleAllOfRelayed) GetSessionsOk() (*int32, bool) {
 
 // HasSessions returns a boolean if a field has been set.
 func (o *ConnectionBrokerRoleAllOfRelayed) HasSessions() bool {
-	if o != nil && o.Sessions != nil {
+	if o != nil && !IsNil(o.Sessions) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ConnectionBrokerRoleAllOfRelayed) SetSessions(v int32) {
 
 // GetDataThroughputBitsPerSecond returns the DataThroughputBitsPerSecond field value if set, zero value otherwise.
 func (o *ConnectionBrokerRoleAllOfRelayed) GetDataThroughputBitsPerSecond() float32 {
-	if o == nil || o.DataThroughputBitsPerSecond == nil {
+	if o == nil || IsNil(o.DataThroughputBitsPerSecond) {
 		var ret float32
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ConnectionBrokerRoleAllOfRelayed) GetDataThroughputBitsPerSecond() floa
 // GetDataThroughputBitsPerSecondOk returns a tuple with the DataThroughputBitsPerSecond field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRoleAllOfRelayed) GetDataThroughputBitsPerSecondOk() (*float32, bool) {
-	if o == nil || o.DataThroughputBitsPerSecond == nil {
+	if o == nil || IsNil(o.DataThroughputBitsPerSecond) {
 		return nil, false
 	}
 	return o.DataThroughputBitsPerSecond, true
@@ -92,7 +95,7 @@ func (o *ConnectionBrokerRoleAllOfRelayed) GetDataThroughputBitsPerSecondOk() (*
 
 // HasDataThroughputBitsPerSecond returns a boolean if a field has been set.
 func (o *ConnectionBrokerRoleAllOfRelayed) HasDataThroughputBitsPerSecond() bool {
-	if o != nil && o.DataThroughputBitsPerSecond != nil {
+	if o != nil && !IsNil(o.DataThroughputBitsPerSecond) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ConnectionBrokerRoleAllOfRelayed) SetDataThroughputBitsPerSecond(v floa
 }
 
 func (o ConnectionBrokerRoleAllOfRelayed) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Sessions != nil {
-		toSerialize["sessions"] = o.Sessions
-	}
-	if o.DataThroughputBitsPerSecond != nil {
-		toSerialize["dataThroughputBitsPerSecond"] = o.DataThroughputBitsPerSecond
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectionBrokerRoleAllOfRelayed) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Sessions) {
+		toSerialize["sessions"] = o.Sessions
+	}
+	if !IsNil(o.DataThroughputBitsPerSecond) {
+		toSerialize["dataThroughputBitsPerSecond"] = o.DataThroughputBitsPerSecond
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectionBrokerRoleAllOfRelayed struct {

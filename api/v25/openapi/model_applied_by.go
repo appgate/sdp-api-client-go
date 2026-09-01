@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliedBy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliedBy{}
+
 // AppliedBy struct for AppliedBy
 type AppliedBy struct {
 	// The distinguished name of who updated the message metadata.
@@ -46,7 +49,7 @@ func NewAppliedByWithDefaults() *AppliedBy {
 
 // GetAppliedBy returns the AppliedBy field value if set, zero value otherwise.
 func (o *AppliedBy) GetAppliedBy() string {
-	if o == nil || o.AppliedBy == nil {
+	if o == nil || IsNil(o.AppliedBy) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *AppliedBy) GetAppliedBy() string {
 // GetAppliedByOk returns a tuple with the AppliedBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliedBy) GetAppliedByOk() (*string, bool) {
-	if o == nil || o.AppliedBy == nil {
+	if o == nil || IsNil(o.AppliedBy) {
 		return nil, false
 	}
 	return o.AppliedBy, true
@@ -64,7 +67,7 @@ func (o *AppliedBy) GetAppliedByOk() (*string, bool) {
 
 // HasAppliedBy returns a boolean if a field has been set.
 func (o *AppliedBy) HasAppliedBy() bool {
-	if o != nil && o.AppliedBy != nil {
+	if o != nil && !IsNil(o.AppliedBy) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *AppliedBy) SetAppliedBy(v string) {
 
 // GetAppliedByUsername returns the AppliedByUsername field value if set, zero value otherwise.
 func (o *AppliedBy) GetAppliedByUsername() string {
-	if o == nil || o.AppliedByUsername == nil {
+	if o == nil || IsNil(o.AppliedByUsername) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *AppliedBy) GetAppliedByUsername() string {
 // GetAppliedByUsernameOk returns a tuple with the AppliedByUsername field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliedBy) GetAppliedByUsernameOk() (*string, bool) {
-	if o == nil || o.AppliedByUsername == nil {
+	if o == nil || IsNil(o.AppliedByUsername) {
 		return nil, false
 	}
 	return o.AppliedByUsername, true
@@ -96,7 +99,7 @@ func (o *AppliedBy) GetAppliedByUsernameOk() (*string, bool) {
 
 // HasAppliedByUsername returns a boolean if a field has been set.
 func (o *AppliedBy) HasAppliedByUsername() bool {
-	if o != nil && o.AppliedByUsername != nil {
+	if o != nil && !IsNil(o.AppliedByUsername) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *AppliedBy) SetAppliedByUsername(v string) {
 
 // GetAppliedByProviderName returns the AppliedByProviderName field value if set, zero value otherwise.
 func (o *AppliedBy) GetAppliedByProviderName() string {
-	if o == nil || o.AppliedByProviderName == nil {
+	if o == nil || IsNil(o.AppliedByProviderName) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *AppliedBy) GetAppliedByProviderName() string {
 // GetAppliedByProviderNameOk returns a tuple with the AppliedByProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliedBy) GetAppliedByProviderNameOk() (*string, bool) {
-	if o == nil || o.AppliedByProviderName == nil {
+	if o == nil || IsNil(o.AppliedByProviderName) {
 		return nil, false
 	}
 	return o.AppliedByProviderName, true
@@ -128,7 +131,7 @@ func (o *AppliedBy) GetAppliedByProviderNameOk() (*string, bool) {
 
 // HasAppliedByProviderName returns a boolean if a field has been set.
 func (o *AppliedBy) HasAppliedByProviderName() bool {
-	if o != nil && o.AppliedByProviderName != nil {
+	if o != nil && !IsNil(o.AppliedByProviderName) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *AppliedBy) SetAppliedByProviderName(v string) {
 
 // GetAppliedByDeviceId returns the AppliedByDeviceId field value if set, zero value otherwise.
 func (o *AppliedBy) GetAppliedByDeviceId() string {
-	if o == nil || o.AppliedByDeviceId == nil {
+	if o == nil || IsNil(o.AppliedByDeviceId) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *AppliedBy) GetAppliedByDeviceId() string {
 // GetAppliedByDeviceIdOk returns a tuple with the AppliedByDeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliedBy) GetAppliedByDeviceIdOk() (*string, bool) {
-	if o == nil || o.AppliedByDeviceId == nil {
+	if o == nil || IsNil(o.AppliedByDeviceId) {
 		return nil, false
 	}
 	return o.AppliedByDeviceId, true
@@ -160,7 +163,7 @@ func (o *AppliedBy) GetAppliedByDeviceIdOk() (*string, bool) {
 
 // HasAppliedByDeviceId returns a boolean if a field has been set.
 func (o *AppliedBy) HasAppliedByDeviceId() bool {
-	if o != nil && o.AppliedByDeviceId != nil {
+	if o != nil && !IsNil(o.AppliedByDeviceId) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *AppliedBy) SetAppliedByDeviceId(v string) {
 }
 
 func (o AppliedBy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AppliedBy != nil {
-		toSerialize["appliedBy"] = o.AppliedBy
-	}
-	if o.AppliedByUsername != nil {
-		toSerialize["appliedByUsername"] = o.AppliedByUsername
-	}
-	if o.AppliedByProviderName != nil {
-		toSerialize["appliedByProviderName"] = o.AppliedByProviderName
-	}
-	if o.AppliedByDeviceId != nil {
-		toSerialize["appliedByDeviceId"] = o.AppliedByDeviceId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliedBy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AppliedBy) {
+		toSerialize["appliedBy"] = o.AppliedBy
+	}
+	if !IsNil(o.AppliedByUsername) {
+		toSerialize["appliedByUsername"] = o.AppliedByUsername
+	}
+	if !IsNil(o.AppliedByProviderName) {
+		toSerialize["appliedByProviderName"] = o.AppliedByProviderName
+	}
+	if !IsNil(o.AppliedByDeviceId) {
+		toSerialize["appliedByDeviceId"] = o.AppliedByDeviceId
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliedBy struct {

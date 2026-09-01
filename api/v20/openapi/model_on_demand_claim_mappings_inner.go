@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OnDemandClaimMappingsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnDemandClaimMappingsInner{}
+
 // OnDemandClaimMappingsInner struct for OnDemandClaimMappingsInner
 type OnDemandClaimMappingsInner struct {
 	// The name of the command.
@@ -96,7 +99,7 @@ func (o *OnDemandClaimMappingsInner) SetClaimName(v string) {
 
 // GetParameters returns the Parameters field value if set, zero value otherwise.
 func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerParameters {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		var ret OnDemandClaimMappingsInnerParameters
 		return ret
 	}
@@ -106,7 +109,7 @@ func (o *OnDemandClaimMappingsInner) GetParameters() OnDemandClaimMappingsInnerP
 // GetParametersOk returns a tuple with the Parameters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsInnerParameters, bool) {
-	if o == nil || o.Parameters == nil {
+	if o == nil || IsNil(o.Parameters) {
 		return nil, false
 	}
 	return o.Parameters, true
@@ -114,7 +117,7 @@ func (o *OnDemandClaimMappingsInner) GetParametersOk() (*OnDemandClaimMappingsIn
 
 // HasParameters returns a boolean if a field has been set.
 func (o *OnDemandClaimMappingsInner) HasParameters() bool {
-	if o != nil && o.Parameters != nil {
+	if o != nil && !IsNil(o.Parameters) {
 		return true
 	}
 
@@ -151,20 +154,22 @@ func (o *OnDemandClaimMappingsInner) SetPlatform(v string) {
 }
 
 func (o OnDemandClaimMappingsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["command"] = o.Command
-	}
-	if true {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.Parameters != nil {
-		toSerialize["parameters"] = o.Parameters
-	}
-	if true {
-		toSerialize["platform"] = o.Platform
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnDemandClaimMappingsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["command"] = o.Command
+	toSerialize["claimName"] = o.ClaimName
+	if !IsNil(o.Parameters) {
+		toSerialize["parameters"] = o.Parameters
+	}
+	toSerialize["platform"] = o.Platform
+	return toSerialize, nil
 }
 
 type NullableOnDemandClaimMappingsInner struct {

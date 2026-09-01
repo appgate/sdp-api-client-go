@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Datadog type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Datadog{}
+
 // Datadog struct for Datadog
 type Datadog struct {
 	// Datadog site to send logs to.
@@ -121,7 +124,7 @@ func (o *Datadog) SetSource(v string) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Datadog) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *Datadog) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Datadog) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -139,7 +142,7 @@ func (o *Datadog) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Datadog) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -152,20 +155,22 @@ func (o *Datadog) SetTags(v []string) {
 }
 
 func (o Datadog) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if true {
-		toSerialize["apiKey"] = o.ApiKey
-	}
-	if true {
-		toSerialize["source"] = o.Source
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Datadog) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["site"] = o.Site
+	toSerialize["apiKey"] = o.ApiKey
+	toSerialize["source"] = o.Source
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableDatadog struct {

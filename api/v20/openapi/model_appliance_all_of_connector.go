@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfConnector type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnector{}
+
 // ApplianceAllOfConnector Connector settings.
 type ApplianceAllOfConnector struct {
 	// Whether the Connector is enabled on this appliance or not.
@@ -48,7 +51,7 @@ func NewApplianceAllOfConnectorWithDefaults() *ApplianceAllOfConnector {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *ApplianceAllOfConnector) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -66,7 +69,7 @@ func (o *ApplianceAllOfConnector) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *ApplianceAllOfConnector) SetEnabled(v bool) {
 
 // GetExpressClients returns the ExpressClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetExpressClients() []ApplianceAllOfConnectorExpressClients {
-	if o == nil || o.ExpressClients == nil {
+	if o == nil || IsNil(o.ExpressClients) {
 		var ret []ApplianceAllOfConnectorExpressClients
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *ApplianceAllOfConnector) GetExpressClients() []ApplianceAllOfConnectorE
 // GetExpressClientsOk returns a tuple with the ExpressClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetExpressClientsOk() ([]ApplianceAllOfConnectorExpressClients, bool) {
-	if o == nil || o.ExpressClients == nil {
+	if o == nil || IsNil(o.ExpressClients) {
 		return nil, false
 	}
 	return o.ExpressClients, true
@@ -98,7 +101,7 @@ func (o *ApplianceAllOfConnector) GetExpressClientsOk() ([]ApplianceAllOfConnect
 
 // HasExpressClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasExpressClients() bool {
-	if o != nil && o.ExpressClients != nil {
+	if o != nil && !IsNil(o.ExpressClients) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *ApplianceAllOfConnector) SetExpressClients(v []ApplianceAllOfConnectorE
 
 // GetAdvancedClients returns the AdvancedClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetAdvancedClients() []ApplianceAllOfConnectorAdvancedClients {
-	if o == nil || o.AdvancedClients == nil {
+	if o == nil || IsNil(o.AdvancedClients) {
 		var ret []ApplianceAllOfConnectorAdvancedClients
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *ApplianceAllOfConnector) GetAdvancedClients() []ApplianceAllOfConnector
 // GetAdvancedClientsOk returns a tuple with the AdvancedClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetAdvancedClientsOk() ([]ApplianceAllOfConnectorAdvancedClients, bool) {
-	if o == nil || o.AdvancedClients == nil {
+	if o == nil || IsNil(o.AdvancedClients) {
 		return nil, false
 	}
 	return o.AdvancedClients, true
@@ -130,7 +133,7 @@ func (o *ApplianceAllOfConnector) GetAdvancedClientsOk() ([]ApplianceAllOfConnec
 
 // HasAdvancedClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasAdvancedClients() bool {
-	if o != nil && o.AdvancedClients != nil {
+	if o != nil && !IsNil(o.AdvancedClients) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *ApplianceAllOfConnector) SetAdvancedClients(v []ApplianceAllOfConnector
 }
 
 func (o ApplianceAllOfConnector) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.ExpressClients != nil {
-		toSerialize["expressClients"] = o.ExpressClients
-	}
-	if o.AdvancedClients != nil {
-		toSerialize["advancedClients"] = o.AdvancedClients
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnector) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.ExpressClients) {
+		toSerialize["expressClients"] = o.ExpressClients
+	}
+	if !IsNil(o.AdvancedClients) {
+		toSerialize["advancedClients"] = o.AdvancedClients
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnector struct {

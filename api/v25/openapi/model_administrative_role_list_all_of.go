@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdministrativeRoleListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdministrativeRoleListAllOf{}
+
 // AdministrativeRoleListAllOf Represents a list of Administrative Roles.
 type AdministrativeRoleListAllOf struct {
 	// List of Administrative Roles.
@@ -40,7 +43,7 @@ func NewAdministrativeRoleListAllOfWithDefaults() *AdministrativeRoleListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AdministrativeRoleListAllOf) GetData() []AdministrativeRole {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []AdministrativeRole
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AdministrativeRoleListAllOf) GetData() []AdministrativeRole {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativeRoleListAllOf) GetDataOk() ([]AdministrativeRole, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *AdministrativeRoleListAllOf) GetDataOk() ([]AdministrativeRole, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *AdministrativeRoleListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AdministrativeRoleListAllOf) SetData(v []AdministrativeRole) {
 }
 
 func (o AdministrativeRoleListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdministrativeRoleListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableAdministrativeRoleListAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppStats type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppStats{}
+
 // AppStats Represents statistics for discovered apps.
 type AppStats struct {
 	Authentication *AppStatsEntry `json:"authentication,omitempty"`
@@ -41,7 +44,7 @@ func NewAppStatsWithDefaults() *AppStats {
 
 // GetAuthentication returns the Authentication field value if set, zero value otherwise.
 func (o *AppStats) GetAuthentication() AppStatsEntry {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		var ret AppStatsEntry
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *AppStats) GetAuthentication() AppStatsEntry {
 // GetAuthenticationOk returns a tuple with the Authentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppStats) GetAuthenticationOk() (*AppStatsEntry, bool) {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		return nil, false
 	}
 	return o.Authentication, true
@@ -59,7 +62,7 @@ func (o *AppStats) GetAuthenticationOk() (*AppStatsEntry, bool) {
 
 // HasAuthentication returns a boolean if a field has been set.
 func (o *AppStats) HasAuthentication() bool {
-	if o != nil && o.Authentication != nil {
+	if o != nil && !IsNil(o.Authentication) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *AppStats) SetAuthentication(v AppStatsEntry) {
 
 // GetAccess returns the Access field value if set, zero value otherwise.
 func (o *AppStats) GetAccess() AppStatsEntry {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		var ret AppStatsEntry
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *AppStats) GetAccess() AppStatsEntry {
 // GetAccessOk returns a tuple with the Access field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppStats) GetAccessOk() (*AppStatsEntry, bool) {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		return nil, false
 	}
 	return o.Access, true
@@ -91,7 +94,7 @@ func (o *AppStats) GetAccessOk() (*AppStatsEntry, bool) {
 
 // HasAccess returns a boolean if a field has been set.
 func (o *AppStats) HasAccess() bool {
-	if o != nil && o.Access != nil {
+	if o != nil && !IsNil(o.Access) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *AppStats) SetAccess(v AppStatsEntry) {
 
 // GetDns returns the Dns field value if set, zero value otherwise.
 func (o *AppStats) GetDns() AppStatsEntry {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		var ret AppStatsEntry
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *AppStats) GetDns() AppStatsEntry {
 // GetDnsOk returns a tuple with the Dns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppStats) GetDnsOk() (*AppStatsEntry, bool) {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		return nil, false
 	}
 	return o.Dns, true
@@ -123,7 +126,7 @@ func (o *AppStats) GetDnsOk() (*AppStatsEntry, bool) {
 
 // HasDns returns a boolean if a field has been set.
 func (o *AppStats) HasDns() bool {
-	if o != nil && o.Dns != nil {
+	if o != nil && !IsNil(o.Dns) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *AppStats) SetDns(v AppStatsEntry) {
 }
 
 func (o AppStats) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Authentication != nil {
-		toSerialize["authentication"] = o.Authentication
-	}
-	if o.Access != nil {
-		toSerialize["access"] = o.Access
-	}
-	if o.Dns != nil {
-		toSerialize["dns"] = o.Dns
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppStats) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Authentication) {
+		toSerialize["authentication"] = o.Authentication
+	}
+	if !IsNil(o.Access) {
+		toSerialize["access"] = o.Access
+	}
+	if !IsNil(o.Dns) {
+		toSerialize["dns"] = o.Dns
+	}
+	return toSerialize, nil
 }
 
 type NullableAppStats struct {

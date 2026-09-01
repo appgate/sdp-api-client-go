@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Risk type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Risk{}
+
 // Risk Risk definition.
 type Risk struct {
 	// The action to take for the risk level.
@@ -47,7 +50,7 @@ func NewRiskWithDefaults() *Risk {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *Risk) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *Risk) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Risk) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -65,7 +68,7 @@ func (o *Risk) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *Risk) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *Risk) SetAction(v string) {
 
 // GetDenyMessage returns the DenyMessage field value if set, zero value otherwise.
 func (o *Risk) GetDenyMessage() string {
-	if o == nil || o.DenyMessage == nil {
+	if o == nil || IsNil(o.DenyMessage) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *Risk) GetDenyMessage() string {
 // GetDenyMessageOk returns a tuple with the DenyMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Risk) GetDenyMessageOk() (*string, bool) {
-	if o == nil || o.DenyMessage == nil {
+	if o == nil || IsNil(o.DenyMessage) {
 		return nil, false
 	}
 	return o.DenyMessage, true
@@ -97,7 +100,7 @@ func (o *Risk) GetDenyMessageOk() (*string, bool) {
 
 // HasDenyMessage returns a boolean if a field has been set.
 func (o *Risk) HasDenyMessage() bool {
-	if o != nil && o.DenyMessage != nil {
+	if o != nil && !IsNil(o.DenyMessage) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *Risk) SetDenyMessage(v string) {
 
 // GetUserAction returns the UserAction field value if set, zero value otherwise.
 func (o *Risk) GetUserAction() RiskUserAction {
-	if o == nil || o.UserAction == nil {
+	if o == nil || IsNil(o.UserAction) {
 		var ret RiskUserAction
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *Risk) GetUserAction() RiskUserAction {
 // GetUserActionOk returns a tuple with the UserAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Risk) GetUserActionOk() (*RiskUserAction, bool) {
-	if o == nil || o.UserAction == nil {
+	if o == nil || IsNil(o.UserAction) {
 		return nil, false
 	}
 	return o.UserAction, true
@@ -129,7 +132,7 @@ func (o *Risk) GetUserActionOk() (*RiskUserAction, bool) {
 
 // HasUserAction returns a boolean if a field has been set.
 func (o *Risk) HasUserAction() bool {
-	if o != nil && o.UserAction != nil {
+	if o != nil && !IsNil(o.UserAction) {
 		return true
 	}
 
@@ -142,17 +145,25 @@ func (o *Risk) SetUserAction(v RiskUserAction) {
 }
 
 func (o Risk) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.DenyMessage != nil {
-		toSerialize["denyMessage"] = o.DenyMessage
-	}
-	if o.UserAction != nil {
-		toSerialize["userAction"] = o.UserAction
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Risk) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.DenyMessage) {
+		toSerialize["denyMessage"] = o.DenyMessage
+	}
+	if !IsNil(o.UserAction) {
+		toSerialize["userAction"] = o.UserAction
+	}
+	return toSerialize, nil
 }
 
 type NullableRisk struct {

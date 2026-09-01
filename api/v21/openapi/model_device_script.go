@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the DeviceScript type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeviceScript{}
+
 // DeviceScript struct for DeviceScript
 type DeviceScript struct {
 	// ID of the object.
@@ -59,7 +62,7 @@ func NewDeviceScriptWithDefaults() *DeviceScript {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *DeviceScript) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -69,7 +72,7 @@ func (o *DeviceScript) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -77,7 +80,7 @@ func (o *DeviceScript) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *DeviceScript) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *DeviceScript) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *DeviceScript) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *DeviceScript) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -133,7 +136,7 @@ func (o *DeviceScript) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *DeviceScript) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *DeviceScript) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *DeviceScript) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *DeviceScript) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -165,7 +168,7 @@ func (o *DeviceScript) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *DeviceScript) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *DeviceScript) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *DeviceScript) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *DeviceScript) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -197,7 +200,7 @@ func (o *DeviceScript) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *DeviceScript) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *DeviceScript) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *DeviceScript) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *DeviceScript) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -229,7 +232,7 @@ func (o *DeviceScript) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *DeviceScript) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -267,7 +270,7 @@ func (o *DeviceScript) SetFilename(v string) {
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *DeviceScript) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -277,7 +280,7 @@ func (o *DeviceScript) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -285,7 +288,7 @@ func (o *DeviceScript) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *DeviceScript) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -299,7 +302,7 @@ func (o *DeviceScript) SetFile(v string) {
 
 // GetChecksumSha256 returns the ChecksumSha256 field value if set, zero value otherwise.
 func (o *DeviceScript) GetChecksumSha256() string {
-	if o == nil || o.ChecksumSha256 == nil {
+	if o == nil || IsNil(o.ChecksumSha256) {
 		var ret string
 		return ret
 	}
@@ -309,7 +312,7 @@ func (o *DeviceScript) GetChecksumSha256() string {
 // GetChecksumSha256Ok returns a tuple with the ChecksumSha256 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScript) GetChecksumSha256Ok() (*string, bool) {
-	if o == nil || o.ChecksumSha256 == nil {
+	if o == nil || IsNil(o.ChecksumSha256) {
 		return nil, false
 	}
 	return o.ChecksumSha256, true
@@ -317,7 +320,7 @@ func (o *DeviceScript) GetChecksumSha256Ok() (*string, bool) {
 
 // HasChecksumSha256 returns a boolean if a field has been set.
 func (o *DeviceScript) HasChecksumSha256() bool {
-	if o != nil && o.ChecksumSha256 != nil {
+	if o != nil && !IsNil(o.ChecksumSha256) {
 		return true
 	}
 
@@ -330,35 +333,39 @@ func (o *DeviceScript) SetChecksumSha256(v string) {
 }
 
 func (o DeviceScript) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["filename"] = o.Filename
-	}
-	if o.File != nil {
-		toSerialize["file"] = o.File
-	}
-	if o.ChecksumSha256 != nil {
-		toSerialize["checksumSha256"] = o.ChecksumSha256
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeviceScript) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["filename"] = o.Filename
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	if !IsNil(o.ChecksumSha256) {
+		toSerialize["checksumSha256"] = o.ChecksumSha256
+	}
+	return toSerialize, nil
 }
 
 type NullableDeviceScript struct {

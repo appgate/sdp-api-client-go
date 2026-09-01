@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConnectionBrokerRoleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConnectionBrokerRoleAllOf{}
+
 // ConnectionBrokerRoleAllOf struct for ConnectionBrokerRoleAllOf
 type ConnectionBrokerRoleAllOf struct {
 	Relayed *ConnectionBrokerRoleAllOfRelayed `json:"relayed,omitempty"`
@@ -39,7 +42,7 @@ func NewConnectionBrokerRoleAllOfWithDefaults() *ConnectionBrokerRoleAllOf {
 
 // GetRelayed returns the Relayed field value if set, zero value otherwise.
 func (o *ConnectionBrokerRoleAllOf) GetRelayed() ConnectionBrokerRoleAllOfRelayed {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		var ret ConnectionBrokerRoleAllOfRelayed
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *ConnectionBrokerRoleAllOf) GetRelayed() ConnectionBrokerRoleAllOfRelaye
 // GetRelayedOk returns a tuple with the Relayed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectionBrokerRoleAllOf) GetRelayedOk() (*ConnectionBrokerRoleAllOfRelayed, bool) {
-	if o == nil || o.Relayed == nil {
+	if o == nil || IsNil(o.Relayed) {
 		return nil, false
 	}
 	return o.Relayed, true
@@ -57,7 +60,7 @@ func (o *ConnectionBrokerRoleAllOf) GetRelayedOk() (*ConnectionBrokerRoleAllOfRe
 
 // HasRelayed returns a boolean if a field has been set.
 func (o *ConnectionBrokerRoleAllOf) HasRelayed() bool {
-	if o != nil && o.Relayed != nil {
+	if o != nil && !IsNil(o.Relayed) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ConnectionBrokerRoleAllOf) SetRelayed(v ConnectionBrokerRoleAllOfRelaye
 }
 
 func (o ConnectionBrokerRoleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Relayed != nil {
-		toSerialize["relayed"] = o.Relayed
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConnectionBrokerRoleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Relayed) {
+		toSerialize["relayed"] = o.Relayed
+	}
+	return toSerialize, nil
 }
 
 type NullableConnectionBrokerRoleAllOf struct {

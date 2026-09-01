@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ClaimNamesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClaimNamesInner{}
 
 // ClaimNamesInner Details of a Claim.
 type ClaimNamesInner struct {
@@ -44,7 +47,7 @@ func NewClaimNamesInnerWithDefaults() *ClaimNamesInner {
 
 // GetClaimName returns the ClaimName field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetClaimName() string {
-	if o == nil || o.ClaimName == nil {
+	if o == nil || IsNil(o.ClaimName) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ClaimNamesInner) GetClaimName() string {
 // GetClaimNameOk returns a tuple with the ClaimName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetClaimNameOk() (*string, bool) {
-	if o == nil || o.ClaimName == nil {
+	if o == nil || IsNil(o.ClaimName) {
 		return nil, false
 	}
 	return o.ClaimName, true
@@ -62,7 +65,7 @@ func (o *ClaimNamesInner) GetClaimNameOk() (*string, bool) {
 
 // HasClaimName returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasClaimName() bool {
-	if o != nil && o.ClaimName != nil {
+	if o != nil && !IsNil(o.ClaimName) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ClaimNamesInner) SetClaimName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ClaimNamesInner) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -94,7 +97,7 @@ func (o *ClaimNamesInner) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ClaimNamesInner) SetType(v string) {
 
 // GetAvailableForPolicy returns the AvailableForPolicy field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetAvailableForPolicy() bool {
-	if o == nil || o.AvailableForPolicy == nil {
+	if o == nil || IsNil(o.AvailableForPolicy) {
 		var ret bool
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ClaimNamesInner) GetAvailableForPolicy() bool {
 // GetAvailableForPolicyOk returns a tuple with the AvailableForPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetAvailableForPolicyOk() (*bool, bool) {
-	if o == nil || o.AvailableForPolicy == nil {
+	if o == nil || IsNil(o.AvailableForPolicy) {
 		return nil, false
 	}
 	return o.AvailableForPolicy, true
@@ -126,7 +129,7 @@ func (o *ClaimNamesInner) GetAvailableForPolicyOk() (*bool, bool) {
 
 // HasAvailableForPolicy returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasAvailableForPolicy() bool {
-	if o != nil && o.AvailableForPolicy != nil {
+	if o != nil && !IsNil(o.AvailableForPolicy) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ClaimNamesInner) SetAvailableForPolicy(v bool) {
 }
 
 func (o ClaimNamesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ClaimName != nil {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.AvailableForPolicy != nil {
-		toSerialize["availableForPolicy"] = o.AvailableForPolicy
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClaimNamesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ClaimName) {
+		toSerialize["claimName"] = o.ClaimName
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.AvailableForPolicy) {
+		toSerialize["availableForPolicy"] = o.AvailableForPolicy
+	}
+	return toSerialize, nil
 }
 
 type NullableClaimNamesInner struct {

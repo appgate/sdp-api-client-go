@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceSeedISO type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceSeedISO{}
+
 // ApplianceSeedISO The ISO file blob in JSON.
 type ApplianceSeedISO struct {
 	// The ISO file in base64 format. Response must be Base64 decoded and saved as an ISO file.
@@ -40,7 +43,7 @@ func NewApplianceSeedISOWithDefaults() *ApplianceSeedISO {
 
 // GetIso returns the Iso field value if set, zero value otherwise.
 func (o *ApplianceSeedISO) GetIso() string {
-	if o == nil || o.Iso == nil {
+	if o == nil || IsNil(o.Iso) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ApplianceSeedISO) GetIso() string {
 // GetIsoOk returns a tuple with the Iso field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceSeedISO) GetIsoOk() (*string, bool) {
-	if o == nil || o.Iso == nil {
+	if o == nil || IsNil(o.Iso) {
 		return nil, false
 	}
 	return o.Iso, true
@@ -58,7 +61,7 @@ func (o *ApplianceSeedISO) GetIsoOk() (*string, bool) {
 
 // HasIso returns a boolean if a field has been set.
 func (o *ApplianceSeedISO) HasIso() bool {
-	if o != nil && o.Iso != nil {
+	if o != nil && !IsNil(o.Iso) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ApplianceSeedISO) SetIso(v string) {
 }
 
 func (o ApplianceSeedISO) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Iso != nil {
-		toSerialize["iso"] = o.Iso
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceSeedISO) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Iso) {
+		toSerialize["iso"] = o.Iso
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceSeedISO struct {

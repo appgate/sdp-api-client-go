@@ -43,7 +43,7 @@ func (dst *DiscoveredAppsIdAccessEntitlementPostRequest) UnmarshalJSON(data []by
 	var jsonDict map[string]interface{}
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
-		return fmt.Errorf("Failed to unmarshal JSON into map for the discriminator lookup.")
+		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
 	// check if the discriminator value is 'AddToExisting'
@@ -54,7 +54,7 @@ func (dst *DiscoveredAppsIdAccessEntitlementPostRequest) UnmarshalJSON(data []by
 			return nil // data stored in dst.ExistingEntitlement, return on the first match
 		} else {
 			dst.ExistingEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as ExistingEntitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as ExistingEntitlement: %s", err.Error())
 		}
 	}
 
@@ -66,7 +66,7 @@ func (dst *DiscoveredAppsIdAccessEntitlementPostRequest) UnmarshalJSON(data []by
 			return nil // data stored in dst.NewAppEntitlement, return on the first match
 		} else {
 			dst.NewAppEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as NewAppEntitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as NewAppEntitlement: %s", err.Error())
 		}
 	}
 
@@ -78,7 +78,7 @@ func (dst *DiscoveredAppsIdAccessEntitlementPostRequest) UnmarshalJSON(data []by
 			return nil // data stored in dst.ExistingEntitlement, return on the first match
 		} else {
 			dst.ExistingEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as ExistingEntitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as ExistingEntitlement: %s", err.Error())
 		}
 	}
 
@@ -90,7 +90,7 @@ func (dst *DiscoveredAppsIdAccessEntitlementPostRequest) UnmarshalJSON(data []by
 			return nil // data stored in dst.NewAppEntitlement, return on the first match
 		} else {
 			dst.NewAppEntitlement = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as NewAppEntitlement: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessEntitlementPostRequest as NewAppEntitlement: %s", err.Error())
 		}
 	}
 

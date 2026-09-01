@@ -43,7 +43,7 @@ func (dst *DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner) UnmarshalJSON(d
 	var jsonDict map[string]interface{}
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
-		return fmt.Errorf("Failed to unmarshal JSON into map for the discriminator lookup.")
+		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
 	// check if the discriminator value is 'AddToExisting'
@@ -54,7 +54,7 @@ func (dst *DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner) UnmarshalJSON(d
 			return nil // data stored in dst.ExistingPolicy, return on the first match
 		} else {
 			dst.ExistingPolicy = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as ExistingPolicy: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as ExistingPolicy: %s", err.Error())
 		}
 	}
 
@@ -66,7 +66,7 @@ func (dst *DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner) UnmarshalJSON(d
 			return nil // data stored in dst.NewDiscoveredPolicy, return on the first match
 		} else {
 			dst.NewDiscoveredPolicy = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as NewDiscoveredPolicy: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as NewDiscoveredPolicy: %s", err.Error())
 		}
 	}
 
@@ -78,7 +78,7 @@ func (dst *DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner) UnmarshalJSON(d
 			return nil // data stored in dst.ExistingPolicy, return on the first match
 		} else {
 			dst.ExistingPolicy = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as ExistingPolicy: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as ExistingPolicy: %s", err.Error())
 		}
 	}
 
@@ -90,7 +90,7 @@ func (dst *DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner) UnmarshalJSON(d
 			return nil // data stored in dst.NewDiscoveredPolicy, return on the first match
 		} else {
 			dst.NewDiscoveredPolicy = nil
-			return fmt.Errorf("Failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as NewDiscoveredPolicy: %s", err.Error())
+			return fmt.Errorf("failed to unmarshal DiscoveredAppsIdAccessPolicyPostRequestPoliciesInner as NewDiscoveredPolicy: %s", err.Error())
 		}
 	}
 

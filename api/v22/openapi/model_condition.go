@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the Condition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Condition{}
 
 // Condition struct for Condition
 type Condition struct {
@@ -65,7 +68,7 @@ func NewConditionWithDefaults() *Condition {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Condition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -75,7 +78,7 @@ func (o *Condition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -83,7 +86,7 @@ func (o *Condition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Condition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *Condition) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Condition) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *Condition) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -139,7 +142,7 @@ func (o *Condition) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Condition) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *Condition) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Condition) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *Condition) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -171,7 +174,7 @@ func (o *Condition) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Condition) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *Condition) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *Condition) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *Condition) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -203,7 +206,7 @@ func (o *Condition) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *Condition) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *Condition) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Condition) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *Condition) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -235,7 +238,7 @@ func (o *Condition) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Condition) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -273,7 +276,7 @@ func (o *Condition) SetExpression(v string) {
 
 // GetRepeatSchedules returns the RepeatSchedules field value if set, zero value otherwise.
 func (o *Condition) GetRepeatSchedules() []string {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		var ret []string
 		return ret
 	}
@@ -283,7 +286,7 @@ func (o *Condition) GetRepeatSchedules() []string {
 // GetRepeatSchedulesOk returns a tuple with the RepeatSchedules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRepeatSchedulesOk() ([]string, bool) {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		return nil, false
 	}
 	return o.RepeatSchedules, true
@@ -291,7 +294,7 @@ func (o *Condition) GetRepeatSchedulesOk() ([]string, bool) {
 
 // HasRepeatSchedules returns a boolean if a field has been set.
 func (o *Condition) HasRepeatSchedules() bool {
-	if o != nil && o.RepeatSchedules != nil {
+	if o != nil && !IsNil(o.RepeatSchedules) {
 		return true
 	}
 
@@ -305,7 +308,7 @@ func (o *Condition) SetRepeatSchedules(v []string) {
 
 // GetRemedyLogic returns the RemedyLogic field value if set, zero value otherwise.
 func (o *Condition) GetRemedyLogic() string {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		var ret string
 		return ret
 	}
@@ -315,7 +318,7 @@ func (o *Condition) GetRemedyLogic() string {
 // GetRemedyLogicOk returns a tuple with the RemedyLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRemedyLogicOk() (*string, bool) {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		return nil, false
 	}
 	return o.RemedyLogic, true
@@ -323,7 +326,7 @@ func (o *Condition) GetRemedyLogicOk() (*string, bool) {
 
 // HasRemedyLogic returns a boolean if a field has been set.
 func (o *Condition) HasRemedyLogic() bool {
-	if o != nil && o.RemedyLogic != nil {
+	if o != nil && !IsNil(o.RemedyLogic) {
 		return true
 	}
 
@@ -337,7 +340,7 @@ func (o *Condition) SetRemedyLogic(v string) {
 
 // GetRemedyMethods returns the RemedyMethods field value if set, zero value otherwise.
 func (o *Condition) GetRemedyMethods() []RemedyMethod {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		var ret []RemedyMethod
 		return ret
 	}
@@ -347,7 +350,7 @@ func (o *Condition) GetRemedyMethods() []RemedyMethod {
 // GetRemedyMethodsOk returns a tuple with the RemedyMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		return nil, false
 	}
 	return o.RemedyMethods, true
@@ -355,7 +358,7 @@ func (o *Condition) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
 
 // HasRemedyMethods returns a boolean if a field has been set.
 func (o *Condition) HasRemedyMethods() bool {
-	if o != nil && o.RemedyMethods != nil {
+	if o != nil && !IsNil(o.RemedyMethods) {
 		return true
 	}
 
@@ -368,38 +371,42 @@ func (o *Condition) SetRemedyMethods(v []RemedyMethod) {
 }
 
 func (o Condition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.RepeatSchedules != nil {
-		toSerialize["repeatSchedules"] = o.RepeatSchedules
-	}
-	if o.RemedyLogic != nil {
-		toSerialize["remedyLogic"] = o.RemedyLogic
-	}
-	if o.RemedyMethods != nil {
-		toSerialize["remedyMethods"] = o.RemedyMethods
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Condition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.RepeatSchedules) {
+		toSerialize["repeatSchedules"] = o.RepeatSchedules
+	}
+	if !IsNil(o.RemedyLogic) {
+		toSerialize["remedyLogic"] = o.RemedyLogic
+	}
+	if !IsNil(o.RemedyMethods) {
+		toSerialize["remedyMethods"] = o.RemedyMethods
+	}
+	return toSerialize, nil
 }
 
 type NullableCondition struct {

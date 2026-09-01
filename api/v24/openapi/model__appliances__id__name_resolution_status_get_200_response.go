@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdNameResolutionStatusGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdNameResolutionStatusGet200Response{}
+
 // AppliancesIdNameResolutionStatusGet200Response The name resolution status.
 type AppliancesIdNameResolutionStatusGet200Response struct {
 	// Dictionary of resource name and respective results.
@@ -40,7 +43,7 @@ func NewAppliancesIdNameResolutionStatusGet200ResponseWithDefaults() *Appliances
 
 // GetResolutions returns the Resolutions field value if set, zero value otherwise.
 func (o *AppliancesIdNameResolutionStatusGet200Response) GetResolutions() map[string]AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue {
-	if o == nil || o.Resolutions == nil {
+	if o == nil || IsNil(o.Resolutions) {
 		var ret map[string]AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesIdNameResolutionStatusGet200Response) GetResolutions() map[st
 // GetResolutionsOk returns a tuple with the Resolutions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdNameResolutionStatusGet200Response) GetResolutionsOk() (*map[string]AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue, bool) {
-	if o == nil || o.Resolutions == nil {
+	if o == nil || IsNil(o.Resolutions) {
 		return nil, false
 	}
 	return o.Resolutions, true
@@ -58,7 +61,7 @@ func (o *AppliancesIdNameResolutionStatusGet200Response) GetResolutionsOk() (*ma
 
 // HasResolutions returns a boolean if a field has been set.
 func (o *AppliancesIdNameResolutionStatusGet200Response) HasResolutions() bool {
-	if o != nil && o.Resolutions != nil {
+	if o != nil && !IsNil(o.Resolutions) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesIdNameResolutionStatusGet200Response) SetResolutions(v map[st
 }
 
 func (o AppliancesIdNameResolutionStatusGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Resolutions != nil {
-		toSerialize["resolutions"] = o.Resolutions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdNameResolutionStatusGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Resolutions) {
+		toSerialize["resolutions"] = o.Resolutions
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdNameResolutionStatusGet200Response struct {

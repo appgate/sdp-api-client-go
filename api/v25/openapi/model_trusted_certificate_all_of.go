@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TrustedCertificateAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TrustedCertificateAllOf{}
+
 // TrustedCertificateAllOf Represents a Trusted Certificate.
 type TrustedCertificateAllOf struct {
 	// A certificate in PEM format.
@@ -66,7 +69,7 @@ func (o *TrustedCertificateAllOf) SetPem(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *TrustedCertificateAllOf) GetDetails() CertificateDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret CertificateDetails
 		return ret
 	}
@@ -76,7 +79,7 @@ func (o *TrustedCertificateAllOf) GetDetails() CertificateDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TrustedCertificateAllOf) GetDetailsOk() (*CertificateDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -84,7 +87,7 @@ func (o *TrustedCertificateAllOf) GetDetailsOk() (*CertificateDetails, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *TrustedCertificateAllOf) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -97,14 +100,20 @@ func (o *TrustedCertificateAllOf) SetDetails(v CertificateDetails) {
 }
 
 func (o TrustedCertificateAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["pem"] = o.Pem
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TrustedCertificateAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["pem"] = o.Pem
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
 }
 
 type NullableTrustedCertificateAllOf struct {

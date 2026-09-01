@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UserScriptAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserScriptAllOf{}
+
 // UserScriptAllOf Represents a User Claim Script.
 type UserScriptAllOf struct {
 	// A JavaScript expression that returns an object.
@@ -64,11 +67,17 @@ func (o *UserScriptAllOf) SetExpression(v string) {
 }
 
 func (o UserScriptAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["expression"] = o.Expression
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserScriptAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["expression"] = o.Expression
+	return toSerialize, nil
 }
 
 type NullableUserScriptAllOf struct {

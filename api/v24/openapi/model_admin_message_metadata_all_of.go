@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AdminMessageMetadataAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMessageMetadataAllOf{}
+
 // AdminMessageMetadataAllOf Additional metadata for the message.
 type AdminMessageMetadataAllOf struct {
 	// The uuid of the message metadata.
@@ -49,7 +52,7 @@ func NewAdminMessageMetadataAllOfWithDefaults() *AdminMessageMetadataAllOf {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AdminMessageMetadataAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *AdminMessageMetadataAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadataAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -67,7 +70,7 @@ func (o *AdminMessageMetadataAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AdminMessageMetadataAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -129,7 +132,7 @@ func (o *AdminMessageMetadataAllOf) SetStatus(v string) {
 
 // GetAppliedAt returns the AppliedAt field value if set, zero value otherwise.
 func (o *AdminMessageMetadataAllOf) GetAppliedAt() time.Time {
-	if o == nil || o.AppliedAt == nil {
+	if o == nil || IsNil(o.AppliedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *AdminMessageMetadataAllOf) GetAppliedAt() time.Time {
 // GetAppliedAtOk returns a tuple with the AppliedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessageMetadataAllOf) GetAppliedAtOk() (*time.Time, bool) {
-	if o == nil || o.AppliedAt == nil {
+	if o == nil || IsNil(o.AppliedAt) {
 		return nil, false
 	}
 	return o.AppliedAt, true
@@ -147,7 +150,7 @@ func (o *AdminMessageMetadataAllOf) GetAppliedAtOk() (*time.Time, bool) {
 
 // HasAppliedAt returns a boolean if a field has been set.
 func (o *AdminMessageMetadataAllOf) HasAppliedAt() bool {
-	if o != nil && o.AppliedAt != nil {
+	if o != nil && !IsNil(o.AppliedAt) {
 		return true
 	}
 
@@ -160,20 +163,24 @@ func (o *AdminMessageMetadataAllOf) SetAppliedAt(v time.Time) {
 }
 
 func (o AdminMessageMetadataAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["message"] = o.Message
-	}
-	if true {
-		toSerialize["status"] = o.Status
-	}
-	if o.AppliedAt != nil {
-		toSerialize["appliedAt"] = o.AppliedAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMessageMetadataAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["message"] = o.Message
+	toSerialize["status"] = o.Status
+	if !IsNil(o.AppliedAt) {
+		toSerialize["appliedAt"] = o.AppliedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMessageMetadataAllOf struct {

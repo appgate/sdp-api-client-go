@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ValidationError type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ValidationError{}
+
 // ValidationError Http 422 error for object validation.
 type ValidationError struct {
 	// Machine readable error code.
@@ -44,7 +47,7 @@ func NewValidationErrorWithDefaults() *ValidationError {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ValidationError) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ValidationError) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationError) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -62,7 +65,7 @@ func (o *ValidationError) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ValidationError) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ValidationError) SetId(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ValidationError) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ValidationError) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationError) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -94,7 +97,7 @@ func (o *ValidationError) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ValidationError) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ValidationError) SetMessage(v string) {
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *ValidationError) GetErrors() []ValidationErrorErrorsInner {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []ValidationErrorErrorsInner
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ValidationError) GetErrors() []ValidationErrorErrorsInner {
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ValidationError) GetErrorsOk() ([]ValidationErrorErrorsInner, bool) {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
@@ -126,7 +129,7 @@ func (o *ValidationError) GetErrorsOk() ([]ValidationErrorErrorsInner, bool) {
 
 // HasErrors returns a boolean if a field has been set.
 func (o *ValidationError) HasErrors() bool {
-	if o != nil && o.Errors != nil {
+	if o != nil && !IsNil(o.Errors) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ValidationError) SetErrors(v []ValidationErrorErrorsInner) {
 }
 
 func (o ValidationError) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ValidationError) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
+	return toSerialize, nil
 }
 
 type NullableValidationError struct {

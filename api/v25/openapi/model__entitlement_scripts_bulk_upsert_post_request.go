@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementScriptsBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementScriptsBulkUpsertPostRequest{}
+
 // EntitlementScriptsBulkUpsertPostRequest struct for EntitlementScriptsBulkUpsertPostRequest
 type EntitlementScriptsBulkUpsertPostRequest struct {
 	Data []EntitlementScript `json:"data"`
@@ -63,11 +66,17 @@ func (o *EntitlementScriptsBulkUpsertPostRequest) SetData(v []EntitlementScript)
 }
 
 func (o EntitlementScriptsBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementScriptsBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableEntitlementScriptsBulkUpsertPostRequest struct {

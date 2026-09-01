@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PolicyAllOfTrustedNetworkCheck type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfTrustedNetworkCheck{}
+
 // PolicyAllOfTrustedNetworkCheck Client suspends operations when it's in a trusted network.
 type PolicyAllOfTrustedNetworkCheck struct {
 	Enabled *bool `json:"enabled,omitempty"`
@@ -45,7 +48,7 @@ func NewPolicyAllOfTrustedNetworkCheckWithDefaults() *PolicyAllOfTrustedNetworkC
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *PolicyAllOfTrustedNetworkCheck) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *PolicyAllOfTrustedNetworkCheck) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfTrustedNetworkCheck) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -63,7 +66,7 @@ func (o *PolicyAllOfTrustedNetworkCheck) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *PolicyAllOfTrustedNetworkCheck) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *PolicyAllOfTrustedNetworkCheck) SetEnabled(v bool) {
 
 // GetDnsSuffix returns the DnsSuffix field value if set, zero value otherwise.
 func (o *PolicyAllOfTrustedNetworkCheck) GetDnsSuffix() string {
-	if o == nil || o.DnsSuffix == nil {
+	if o == nil || IsNil(o.DnsSuffix) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *PolicyAllOfTrustedNetworkCheck) GetDnsSuffix() string {
 // GetDnsSuffixOk returns a tuple with the DnsSuffix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfTrustedNetworkCheck) GetDnsSuffixOk() (*string, bool) {
-	if o == nil || o.DnsSuffix == nil {
+	if o == nil || IsNil(o.DnsSuffix) {
 		return nil, false
 	}
 	return o.DnsSuffix, true
@@ -95,7 +98,7 @@ func (o *PolicyAllOfTrustedNetworkCheck) GetDnsSuffixOk() (*string, bool) {
 
 // HasDnsSuffix returns a boolean if a field has been set.
 func (o *PolicyAllOfTrustedNetworkCheck) HasDnsSuffix() bool {
-	if o != nil && o.DnsSuffix != nil {
+	if o != nil && !IsNil(o.DnsSuffix) {
 		return true
 	}
 
@@ -108,14 +111,22 @@ func (o *PolicyAllOfTrustedNetworkCheck) SetDnsSuffix(v string) {
 }
 
 func (o PolicyAllOfTrustedNetworkCheck) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.DnsSuffix != nil {
-		toSerialize["dnsSuffix"] = o.DnsSuffix
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfTrustedNetworkCheck) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.DnsSuffix) {
+		toSerialize["dnsSuffix"] = o.DnsSuffix
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfTrustedNetworkCheck struct {

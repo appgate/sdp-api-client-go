@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the EntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOf{}
 
 // EntitlementAllOf Represents an Entitlement.
 type EntitlementAllOf struct {
@@ -68,7 +71,7 @@ func NewEntitlementAllOfWithDefaults() *EntitlementAllOf {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -78,7 +81,7 @@ func (o *EntitlementAllOf) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -86,7 +89,7 @@ func (o *EntitlementAllOf) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *EntitlementAllOf) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *EntitlementAllOf) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -142,7 +145,7 @@ func (o *EntitlementAllOf) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -157,7 +160,7 @@ func (o *EntitlementAllOf) SetSiteName(v string) {
 // GetRiskSensitivity returns the RiskSensitivity field value if set, zero value otherwise.
 // Deprecated
 func (o *EntitlementAllOf) GetRiskSensitivity() string {
-	if o == nil || o.RiskSensitivity == nil {
+	if o == nil || IsNil(o.RiskSensitivity) {
 		var ret string
 		return ret
 	}
@@ -168,7 +171,7 @@ func (o *EntitlementAllOf) GetRiskSensitivity() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *EntitlementAllOf) GetRiskSensitivityOk() (*string, bool) {
-	if o == nil || o.RiskSensitivity == nil {
+	if o == nil || IsNil(o.RiskSensitivity) {
 		return nil, false
 	}
 	return o.RiskSensitivity, true
@@ -176,7 +179,7 @@ func (o *EntitlementAllOf) GetRiskSensitivityOk() (*string, bool) {
 
 // HasRiskSensitivity returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasRiskSensitivity() bool {
-	if o != nil && o.RiskSensitivity != nil {
+	if o != nil && !IsNil(o.RiskSensitivity) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *EntitlementAllOf) SetRiskSensitivity(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *EntitlementAllOf) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -209,7 +212,7 @@ func (o *EntitlementAllOf) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -271,7 +274,7 @@ func (o *EntitlementAllOf) SetActions(v []EntitlementAllOfActions) {
 
 // GetAppShortcuts returns the AppShortcuts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		var ret []AppShortcut
 		return ret
 	}
@@ -281,7 +284,7 @@ func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
 // GetAppShortcutsOk returns a tuple with the AppShortcuts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		return nil, false
 	}
 	return o.AppShortcuts, true
@@ -289,7 +292,7 @@ func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
 
 // HasAppShortcuts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcuts() bool {
-	if o != nil && o.AppShortcuts != nil {
+	if o != nil && !IsNil(o.AppShortcuts) {
 		return true
 	}
 
@@ -303,7 +306,7 @@ func (o *EntitlementAllOf) SetAppShortcuts(v []AppShortcut) {
 
 // GetAppShortcutScripts returns the AppShortcutScripts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		var ret []string
 		return ret
 	}
@@ -313,7 +316,7 @@ func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
 // GetAppShortcutScriptsOk returns a tuple with the AppShortcutScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		return nil, false
 	}
 	return o.AppShortcutScripts, true
@@ -321,7 +324,7 @@ func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
 
 // HasAppShortcutScripts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcutScripts() bool {
-	if o != nil && o.AppShortcutScripts != nil {
+	if o != nil && !IsNil(o.AppShortcutScripts) {
 		return true
 	}
 
@@ -334,35 +337,37 @@ func (o *EntitlementAllOf) SetAppShortcutScripts(v []string) {
 }
 
 func (o EntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.RiskSensitivity != nil {
-		toSerialize["riskSensitivity"] = o.RiskSensitivity
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if true {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.AppShortcuts != nil {
-		toSerialize["appShortcuts"] = o.AppShortcuts
-	}
-	if o.AppShortcutScripts != nil {
-		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.RiskSensitivity) {
+		toSerialize["riskSensitivity"] = o.RiskSensitivity
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.AppShortcuts) {
+		toSerialize["appShortcuts"] = o.AppShortcuts
+	}
+	if !IsNil(o.AppShortcutScripts) {
+		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworkingNics type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingNics{}
+
 // ApplianceAllOfNetworkingNics struct for ApplianceAllOfNetworkingNics
 type ApplianceAllOfNetworkingNics struct {
 	// Whether the NIC is active or not.
@@ -47,7 +50,7 @@ func NewApplianceAllOfNetworkingNicsWithDefaults() *ApplianceAllOfNetworkingNics
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *ApplianceAllOfNetworkingNics) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -65,7 +68,7 @@ func (o *ApplianceAllOfNetworkingNics) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -103,7 +106,7 @@ func (o *ApplianceAllOfNetworkingNics) SetName(v string) {
 
 // GetIpv4 returns the Ipv4 field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetIpv4() ApplianceAllOfNetworkingIpv4 {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		var ret ApplianceAllOfNetworkingIpv4
 		return ret
 	}
@@ -113,7 +116,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv4() ApplianceAllOfNetworkingIpv4 {
 // GetIpv4Ok returns a tuple with the Ipv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetIpv4Ok() (*ApplianceAllOfNetworkingIpv4, bool) {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		return nil, false
 	}
 	return o.Ipv4, true
@@ -121,7 +124,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv4Ok() (*ApplianceAllOfNetworkingIpv
 
 // HasIpv4 returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasIpv4() bool {
-	if o != nil && o.Ipv4 != nil {
+	if o != nil && !IsNil(o.Ipv4) {
 		return true
 	}
 
@@ -135,7 +138,7 @@ func (o *ApplianceAllOfNetworkingNics) SetIpv4(v ApplianceAllOfNetworkingIpv4) {
 
 // GetIpv6 returns the Ipv6 field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetIpv6() ApplianceAllOfNetworkingIpv6 {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		var ret ApplianceAllOfNetworkingIpv6
 		return ret
 	}
@@ -145,7 +148,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv6() ApplianceAllOfNetworkingIpv6 {
 // GetIpv6Ok returns a tuple with the Ipv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetIpv6Ok() (*ApplianceAllOfNetworkingIpv6, bool) {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		return nil, false
 	}
 	return o.Ipv6, true
@@ -153,7 +156,7 @@ func (o *ApplianceAllOfNetworkingNics) GetIpv6Ok() (*ApplianceAllOfNetworkingIpv
 
 // HasIpv6 returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasIpv6() bool {
-	if o != nil && o.Ipv6 != nil {
+	if o != nil && !IsNil(o.Ipv6) {
 		return true
 	}
 
@@ -167,7 +170,7 @@ func (o *ApplianceAllOfNetworkingNics) SetIpv6(v ApplianceAllOfNetworkingIpv6) {
 
 // GetMtu returns the Mtu field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingNics) GetMtu() int32 {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		var ret int32
 		return ret
 	}
@@ -177,7 +180,7 @@ func (o *ApplianceAllOfNetworkingNics) GetMtu() int32 {
 // GetMtuOk returns a tuple with the Mtu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingNics) GetMtuOk() (*int32, bool) {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		return nil, false
 	}
 	return o.Mtu, true
@@ -185,7 +188,7 @@ func (o *ApplianceAllOfNetworkingNics) GetMtuOk() (*int32, bool) {
 
 // HasMtu returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingNics) HasMtu() bool {
-	if o != nil && o.Mtu != nil {
+	if o != nil && !IsNil(o.Mtu) {
 		return true
 	}
 
@@ -198,23 +201,29 @@ func (o *ApplianceAllOfNetworkingNics) SetMtu(v int32) {
 }
 
 func (o ApplianceAllOfNetworkingNics) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Ipv4 != nil {
-		toSerialize["ipv4"] = o.Ipv4
-	}
-	if o.Ipv6 != nil {
-		toSerialize["ipv6"] = o.Ipv6
-	}
-	if o.Mtu != nil {
-		toSerialize["mtu"] = o.Mtu
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingNics) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Ipv4) {
+		toSerialize["ipv4"] = o.Ipv4
+	}
+	if !IsNil(o.Ipv6) {
+		toSerialize["ipv6"] = o.Ipv6
+	}
+	if !IsNil(o.Mtu) {
+		toSerialize["mtu"] = o.Mtu
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworkingNics struct {

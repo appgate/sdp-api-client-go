@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeviceRevocationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeviceRevocationRequest{}
+
 // DeviceRevocationRequest Details for token revocation request.
 type DeviceRevocationRequest struct {
 	// The filter to find devices by their distinguished names. It is used with \"starts with\" logic. If a full distinguished name is passed, then a single device will be affected. If \"OU=ldap\" is passed, then all devices for \"ldap\" identity provider will be affected. If left as empty string \"\", then all active devices past 24 hours will be affected. Cannot be null.
@@ -85,7 +88,7 @@ func (o *DeviceRevocationRequest) SetDistinguishedNameFilter(v string) {
 
 // GetSpecificDistinguishedNames returns the SpecificDistinguishedNames field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetSpecificDistinguishedNames() []string {
-	if o == nil || o.SpecificDistinguishedNames == nil {
+	if o == nil || IsNil(o.SpecificDistinguishedNames) {
 		var ret []string
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *DeviceRevocationRequest) GetSpecificDistinguishedNames() []string {
 // GetSpecificDistinguishedNamesOk returns a tuple with the SpecificDistinguishedNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetSpecificDistinguishedNamesOk() ([]string, bool) {
-	if o == nil || o.SpecificDistinguishedNames == nil {
+	if o == nil || IsNil(o.SpecificDistinguishedNames) {
 		return nil, false
 	}
 	return o.SpecificDistinguishedNames, true
@@ -103,7 +106,7 @@ func (o *DeviceRevocationRequest) GetSpecificDistinguishedNamesOk() ([]string, b
 
 // HasSpecificDistinguishedNames returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasSpecificDistinguishedNames() bool {
-	if o != nil && o.SpecificDistinguishedNames != nil {
+	if o != nil && !IsNil(o.SpecificDistinguishedNames) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *DeviceRevocationRequest) SetSpecificDistinguishedNames(v []string) {
 
 // GetSiteId returns the SiteId field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetSiteId() string {
-	if o == nil || o.SiteId == nil {
+	if o == nil || IsNil(o.SiteId) {
 		var ret string
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *DeviceRevocationRequest) GetSiteId() string {
 // GetSiteIdOk returns a tuple with the SiteId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetSiteIdOk() (*string, bool) {
-	if o == nil || o.SiteId == nil {
+	if o == nil || IsNil(o.SiteId) {
 		return nil, false
 	}
 	return o.SiteId, true
@@ -135,7 +138,7 @@ func (o *DeviceRevocationRequest) GetSiteIdOk() (*string, bool) {
 
 // HasSiteId returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasSiteId() bool {
-	if o != nil && o.SiteId != nil {
+	if o != nil && !IsNil(o.SiteId) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *DeviceRevocationRequest) SetSiteId(v string) {
 
 // GetTokenType returns the TokenType field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetTokenType() string {
-	if o == nil || o.TokenType == nil {
+	if o == nil || IsNil(o.TokenType) {
 		var ret string
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *DeviceRevocationRequest) GetTokenType() string {
 // GetTokenTypeOk returns a tuple with the TokenType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetTokenTypeOk() (*string, bool) {
-	if o == nil || o.TokenType == nil {
+	if o == nil || IsNil(o.TokenType) {
 		return nil, false
 	}
 	return o.TokenType, true
@@ -167,7 +170,7 @@ func (o *DeviceRevocationRequest) GetTokenTypeOk() (*string, bool) {
 
 // HasTokenType returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasTokenType() bool {
-	if o != nil && o.TokenType != nil {
+	if o != nil && !IsNil(o.TokenType) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *DeviceRevocationRequest) SetTokenType(v string) {
 
 // GetRevocationReason returns the RevocationReason field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetRevocationReason() string {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		var ret string
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *DeviceRevocationRequest) GetRevocationReason() string {
 // GetRevocationReasonOk returns a tuple with the RevocationReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetRevocationReasonOk() (*string, bool) {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		return nil, false
 	}
 	return o.RevocationReason, true
@@ -199,7 +202,7 @@ func (o *DeviceRevocationRequest) GetRevocationReasonOk() (*string, bool) {
 
 // HasRevocationReason returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasRevocationReason() bool {
-	if o != nil && o.RevocationReason != nil {
+	if o != nil && !IsNil(o.RevocationReason) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *DeviceRevocationRequest) SetRevocationReason(v string) {
 
 // GetDelayMinutes returns the DelayMinutes field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetDelayMinutes() int32 {
-	if o == nil || o.DelayMinutes == nil {
+	if o == nil || IsNil(o.DelayMinutes) {
 		var ret int32
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *DeviceRevocationRequest) GetDelayMinutes() int32 {
 // GetDelayMinutesOk returns a tuple with the DelayMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetDelayMinutesOk() (*int32, bool) {
-	if o == nil || o.DelayMinutes == nil {
+	if o == nil || IsNil(o.DelayMinutes) {
 		return nil, false
 	}
 	return o.DelayMinutes, true
@@ -231,7 +234,7 @@ func (o *DeviceRevocationRequest) GetDelayMinutesOk() (*int32, bool) {
 
 // HasDelayMinutes returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasDelayMinutes() bool {
-	if o != nil && o.DelayMinutes != nil {
+	if o != nil && !IsNil(o.DelayMinutes) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *DeviceRevocationRequest) SetDelayMinutes(v int32) {
 
 // GetDevicesPerSecond returns the DevicesPerSecond field value if set, zero value otherwise.
 func (o *DeviceRevocationRequest) GetDevicesPerSecond() float32 {
-	if o == nil || o.DevicesPerSecond == nil {
+	if o == nil || IsNil(o.DevicesPerSecond) {
 		var ret float32
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *DeviceRevocationRequest) GetDevicesPerSecond() float32 {
 // GetDevicesPerSecondOk returns a tuple with the DevicesPerSecond field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceRevocationRequest) GetDevicesPerSecondOk() (*float32, bool) {
-	if o == nil || o.DevicesPerSecond == nil {
+	if o == nil || IsNil(o.DevicesPerSecond) {
 		return nil, false
 	}
 	return o.DevicesPerSecond, true
@@ -263,7 +266,7 @@ func (o *DeviceRevocationRequest) GetDevicesPerSecondOk() (*float32, bool) {
 
 // HasDevicesPerSecond returns a boolean if a field has been set.
 func (o *DeviceRevocationRequest) HasDevicesPerSecond() bool {
-	if o != nil && o.DevicesPerSecond != nil {
+	if o != nil && !IsNil(o.DevicesPerSecond) {
 		return true
 	}
 
@@ -276,29 +279,35 @@ func (o *DeviceRevocationRequest) SetDevicesPerSecond(v float32) {
 }
 
 func (o DeviceRevocationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["distinguishedNameFilter"] = o.DistinguishedNameFilter
-	}
-	if o.SpecificDistinguishedNames != nil {
-		toSerialize["specificDistinguishedNames"] = o.SpecificDistinguishedNames
-	}
-	if o.SiteId != nil {
-		toSerialize["siteId"] = o.SiteId
-	}
-	if o.TokenType != nil {
-		toSerialize["tokenType"] = o.TokenType
-	}
-	if o.RevocationReason != nil {
-		toSerialize["revocationReason"] = o.RevocationReason
-	}
-	if o.DelayMinutes != nil {
-		toSerialize["delayMinutes"] = o.DelayMinutes
-	}
-	if o.DevicesPerSecond != nil {
-		toSerialize["devicesPerSecond"] = o.DevicesPerSecond
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeviceRevocationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["distinguishedNameFilter"] = o.DistinguishedNameFilter
+	if !IsNil(o.SpecificDistinguishedNames) {
+		toSerialize["specificDistinguishedNames"] = o.SpecificDistinguishedNames
+	}
+	if !IsNil(o.SiteId) {
+		toSerialize["siteId"] = o.SiteId
+	}
+	if !IsNil(o.TokenType) {
+		toSerialize["tokenType"] = o.TokenType
+	}
+	if !IsNil(o.RevocationReason) {
+		toSerialize["revocationReason"] = o.RevocationReason
+	}
+	if !IsNil(o.DelayMinutes) {
+		toSerialize["delayMinutes"] = o.DelayMinutes
+	}
+	if !IsNil(o.DevicesPerSecond) {
+		toSerialize["devicesPerSecond"] = o.DevicesPerSecond
+	}
+	return toSerialize, nil
 }
 
 type NullableDeviceRevocationRequest struct {

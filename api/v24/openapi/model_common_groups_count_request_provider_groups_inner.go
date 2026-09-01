@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CommonGroupsCountRequestProviderGroupsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CommonGroupsCountRequestProviderGroupsInner{}
+
 // CommonGroupsCountRequestProviderGroupsInner struct for CommonGroupsCountRequestProviderGroupsInner
 type CommonGroupsCountRequestProviderGroupsInner struct {
 	// Name of the group.
@@ -91,14 +94,18 @@ func (o *CommonGroupsCountRequestProviderGroupsInner) SetProviderName(v string) 
 }
 
 func (o CommonGroupsCountRequestProviderGroupsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["groupName"] = o.GroupName
-	}
-	if true {
-		toSerialize["providerName"] = o.ProviderName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CommonGroupsCountRequestProviderGroupsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["groupName"] = o.GroupName
+	toSerialize["providerName"] = o.ProviderName
+	return toSerialize, nil
 }
 
 type NullableCommonGroupsCountRequestProviderGroupsInner struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TrustedCertificatesBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TrustedCertificatesBulkUpsertPostRequest{}
+
 // TrustedCertificatesBulkUpsertPostRequest struct for TrustedCertificatesBulkUpsertPostRequest
 type TrustedCertificatesBulkUpsertPostRequest struct {
 	Data []TrustedCertificate `json:"data"`
@@ -63,11 +66,17 @@ func (o *TrustedCertificatesBulkUpsertPostRequest) SetData(v []TrustedCertificat
 }
 
 func (o TrustedCertificatesBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TrustedCertificatesBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableTrustedCertificatesBulkUpsertPostRequest struct {

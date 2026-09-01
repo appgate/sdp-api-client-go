@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfConnectionBroker type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnectionBroker{}
+
 // ApplianceAllOfConnectionBroker Connection Broker settings.
 type ApplianceAllOfConnectionBroker struct {
 	// Whether the Connection Broker is enabled on this appliance or not.
@@ -46,7 +49,7 @@ func NewApplianceAllOfConnectionBrokerWithDefaults() *ApplianceAllOfConnectionBr
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectionBroker) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ApplianceAllOfConnectionBroker) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectionBroker) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -64,7 +67,7 @@ func (o *ApplianceAllOfConnectionBroker) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectionBroker) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ApplianceAllOfConnectionBroker) SetEnabled(v bool) {
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectionBroker) GetSites() []string {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret []string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ApplianceAllOfConnectionBroker) GetSites() []string {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectionBroker) GetSitesOk() ([]string, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -96,7 +99,7 @@ func (o *ApplianceAllOfConnectionBroker) GetSitesOk() ([]string, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectionBroker) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *ApplianceAllOfConnectionBroker) SetSites(v []string) {
 }
 
 func (o ApplianceAllOfConnectionBroker) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnectionBroker) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnectionBroker struct {

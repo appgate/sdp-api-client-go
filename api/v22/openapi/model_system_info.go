@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SystemInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SystemInfo{}
 
 // SystemInfo System resource information.
 type SystemInfo struct {
@@ -50,7 +53,7 @@ func NewSystemInfoWithDefaults() *SystemInfo {
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *SystemInfo) GetTotal() int64 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret int64
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *SystemInfo) GetTotal() int64 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetTotalOk() (*int64, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -68,7 +71,7 @@ func (o *SystemInfo) GetTotalOk() (*int64, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *SystemInfo) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *SystemInfo) SetTotal(v int64) {
 
 // GetUsed returns the Used field value if set, zero value otherwise.
 func (o *SystemInfo) GetUsed() int64 {
-	if o == nil || o.Used == nil {
+	if o == nil || IsNil(o.Used) {
 		var ret int64
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *SystemInfo) GetUsed() int64 {
 // GetUsedOk returns a tuple with the Used field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetUsedOk() (*int64, bool) {
-	if o == nil || o.Used == nil {
+	if o == nil || IsNil(o.Used) {
 		return nil, false
 	}
 	return o.Used, true
@@ -100,7 +103,7 @@ func (o *SystemInfo) GetUsedOk() (*int64, bool) {
 
 // HasUsed returns a boolean if a field has been set.
 func (o *SystemInfo) HasUsed() bool {
-	if o != nil && o.Used != nil {
+	if o != nil && !IsNil(o.Used) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *SystemInfo) SetUsed(v int64) {
 
 // GetFree returns the Free field value if set, zero value otherwise.
 func (o *SystemInfo) GetFree() int64 {
-	if o == nil || o.Free == nil {
+	if o == nil || IsNil(o.Free) {
 		var ret int64
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *SystemInfo) GetFree() int64 {
 // GetFreeOk returns a tuple with the Free field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetFreeOk() (*int64, bool) {
-	if o == nil || o.Free == nil {
+	if o == nil || IsNil(o.Free) {
 		return nil, false
 	}
 	return o.Free, true
@@ -132,7 +135,7 @@ func (o *SystemInfo) GetFreeOk() (*int64, bool) {
 
 // HasFree returns a boolean if a field has been set.
 func (o *SystemInfo) HasFree() bool {
-	if o != nil && o.Free != nil {
+	if o != nil && !IsNil(o.Free) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *SystemInfo) SetFree(v int64) {
 
 // GetPercent returns the Percent field value if set, zero value otherwise.
 func (o *SystemInfo) GetPercent() float32 {
-	if o == nil || o.Percent == nil {
+	if o == nil || IsNil(o.Percent) {
 		var ret float32
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *SystemInfo) GetPercent() float32 {
 // GetPercentOk returns a tuple with the Percent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetPercentOk() (*float32, bool) {
-	if o == nil || o.Percent == nil {
+	if o == nil || IsNil(o.Percent) {
 		return nil, false
 	}
 	return o.Percent, true
@@ -164,7 +167,7 @@ func (o *SystemInfo) GetPercentOk() (*float32, bool) {
 
 // HasPercent returns a boolean if a field has been set.
 func (o *SystemInfo) HasPercent() bool {
-	if o != nil && o.Percent != nil {
+	if o != nil && !IsNil(o.Percent) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *SystemInfo) SetPercent(v float32) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *SystemInfo) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *SystemInfo) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -196,7 +199,7 @@ func (o *SystemInfo) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *SystemInfo) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *SystemInfo) SetDetails(v string) {
 
 // GetAvailable returns the Available field value if set, zero value otherwise.
 func (o *SystemInfo) GetAvailable() float32 {
-	if o == nil || o.Available == nil {
+	if o == nil || IsNil(o.Available) {
 		var ret float32
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *SystemInfo) GetAvailable() float32 {
 // GetAvailableOk returns a tuple with the Available field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SystemInfo) GetAvailableOk() (*float32, bool) {
-	if o == nil || o.Available == nil {
+	if o == nil || IsNil(o.Available) {
 		return nil, false
 	}
 	return o.Available, true
@@ -228,7 +231,7 @@ func (o *SystemInfo) GetAvailableOk() (*float32, bool) {
 
 // HasAvailable returns a boolean if a field has been set.
 func (o *SystemInfo) HasAvailable() bool {
-	if o != nil && o.Available != nil {
+	if o != nil && !IsNil(o.Available) {
 		return true
 	}
 
@@ -241,26 +244,34 @@ func (o *SystemInfo) SetAvailable(v float32) {
 }
 
 func (o SystemInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
-	}
-	if o.Used != nil {
-		toSerialize["used"] = o.Used
-	}
-	if o.Free != nil {
-		toSerialize["free"] = o.Free
-	}
-	if o.Percent != nil {
-		toSerialize["percent"] = o.Percent
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.Available != nil {
-		toSerialize["available"] = o.Available
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SystemInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.Used) {
+		toSerialize["used"] = o.Used
+	}
+	if !IsNil(o.Free) {
+		toSerialize["free"] = o.Free
+	}
+	if !IsNil(o.Percent) {
+		toSerialize["percent"] = o.Percent
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.Available) {
+		toSerialize["available"] = o.Available
+	}
+	return toSerialize, nil
 }
 
 type NullableSystemInfo struct {

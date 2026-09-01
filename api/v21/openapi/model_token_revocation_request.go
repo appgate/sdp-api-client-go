@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TokenRevocationRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TokenRevocationRequest{}
+
 // TokenRevocationRequest Details for token revocation request.
 type TokenRevocationRequest struct {
 	// Optional reason text for the revocation. The value is stored and logged.
@@ -54,7 +57,7 @@ func NewTokenRevocationRequestWithDefaults() *TokenRevocationRequest {
 
 // GetRevocationReason returns the RevocationReason field value if set, zero value otherwise.
 func (o *TokenRevocationRequest) GetRevocationReason() string {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		var ret string
 		return ret
 	}
@@ -64,7 +67,7 @@ func (o *TokenRevocationRequest) GetRevocationReason() string {
 // GetRevocationReasonOk returns a tuple with the RevocationReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocationRequest) GetRevocationReasonOk() (*string, bool) {
-	if o == nil || o.RevocationReason == nil {
+	if o == nil || IsNil(o.RevocationReason) {
 		return nil, false
 	}
 	return o.RevocationReason, true
@@ -72,7 +75,7 @@ func (o *TokenRevocationRequest) GetRevocationReasonOk() (*string, bool) {
 
 // HasRevocationReason returns a boolean if a field has been set.
 func (o *TokenRevocationRequest) HasRevocationReason() bool {
-	if o != nil && o.RevocationReason != nil {
+	if o != nil && !IsNil(o.RevocationReason) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *TokenRevocationRequest) SetRevocationReason(v string) {
 
 // GetDelayMinutes returns the DelayMinutes field value if set, zero value otherwise.
 func (o *TokenRevocationRequest) GetDelayMinutes() int32 {
-	if o == nil || o.DelayMinutes == nil {
+	if o == nil || IsNil(o.DelayMinutes) {
 		var ret int32
 		return ret
 	}
@@ -96,7 +99,7 @@ func (o *TokenRevocationRequest) GetDelayMinutes() int32 {
 // GetDelayMinutesOk returns a tuple with the DelayMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocationRequest) GetDelayMinutesOk() (*int32, bool) {
-	if o == nil || o.DelayMinutes == nil {
+	if o == nil || IsNil(o.DelayMinutes) {
 		return nil, false
 	}
 	return o.DelayMinutes, true
@@ -104,7 +107,7 @@ func (o *TokenRevocationRequest) GetDelayMinutesOk() (*int32, bool) {
 
 // HasDelayMinutes returns a boolean if a field has been set.
 func (o *TokenRevocationRequest) HasDelayMinutes() bool {
-	if o != nil && o.DelayMinutes != nil {
+	if o != nil && !IsNil(o.DelayMinutes) {
 		return true
 	}
 
@@ -118,7 +121,7 @@ func (o *TokenRevocationRequest) SetDelayMinutes(v int32) {
 
 // GetTokensPerSecond returns the TokensPerSecond field value if set, zero value otherwise.
 func (o *TokenRevocationRequest) GetTokensPerSecond() float32 {
-	if o == nil || o.TokensPerSecond == nil {
+	if o == nil || IsNil(o.TokensPerSecond) {
 		var ret float32
 		return ret
 	}
@@ -128,7 +131,7 @@ func (o *TokenRevocationRequest) GetTokensPerSecond() float32 {
 // GetTokensPerSecondOk returns a tuple with the TokensPerSecond field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocationRequest) GetTokensPerSecondOk() (*float32, bool) {
-	if o == nil || o.TokensPerSecond == nil {
+	if o == nil || IsNil(o.TokensPerSecond) {
 		return nil, false
 	}
 	return o.TokensPerSecond, true
@@ -136,7 +139,7 @@ func (o *TokenRevocationRequest) GetTokensPerSecondOk() (*float32, bool) {
 
 // HasTokensPerSecond returns a boolean if a field has been set.
 func (o *TokenRevocationRequest) HasTokensPerSecond() bool {
-	if o != nil && o.TokensPerSecond != nil {
+	if o != nil && !IsNil(o.TokensPerSecond) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *TokenRevocationRequest) SetTokensPerSecond(v float32) {
 
 // GetSpecificDistinguishedNames returns the SpecificDistinguishedNames field value if set, zero value otherwise.
 func (o *TokenRevocationRequest) GetSpecificDistinguishedNames() []string {
-	if o == nil || o.SpecificDistinguishedNames == nil {
+	if o == nil || IsNil(o.SpecificDistinguishedNames) {
 		var ret []string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *TokenRevocationRequest) GetSpecificDistinguishedNames() []string {
 // GetSpecificDistinguishedNamesOk returns a tuple with the SpecificDistinguishedNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocationRequest) GetSpecificDistinguishedNamesOk() ([]string, bool) {
-	if o == nil || o.SpecificDistinguishedNames == nil {
+	if o == nil || IsNil(o.SpecificDistinguishedNames) {
 		return nil, false
 	}
 	return o.SpecificDistinguishedNames, true
@@ -168,7 +171,7 @@ func (o *TokenRevocationRequest) GetSpecificDistinguishedNamesOk() ([]string, bo
 
 // HasSpecificDistinguishedNames returns a boolean if a field has been set.
 func (o *TokenRevocationRequest) HasSpecificDistinguishedNames() bool {
-	if o != nil && o.SpecificDistinguishedNames != nil {
+	if o != nil && !IsNil(o.SpecificDistinguishedNames) {
 		return true
 	}
 
@@ -181,20 +184,28 @@ func (o *TokenRevocationRequest) SetSpecificDistinguishedNames(v []string) {
 }
 
 func (o TokenRevocationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RevocationReason != nil {
-		toSerialize["revocationReason"] = o.RevocationReason
-	}
-	if o.DelayMinutes != nil {
-		toSerialize["delayMinutes"] = o.DelayMinutes
-	}
-	if o.TokensPerSecond != nil {
-		toSerialize["tokensPerSecond"] = o.TokensPerSecond
-	}
-	if o.SpecificDistinguishedNames != nil {
-		toSerialize["specificDistinguishedNames"] = o.SpecificDistinguishedNames
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TokenRevocationRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RevocationReason) {
+		toSerialize["revocationReason"] = o.RevocationReason
+	}
+	if !IsNil(o.DelayMinutes) {
+		toSerialize["delayMinutes"] = o.DelayMinutes
+	}
+	if !IsNil(o.TokensPerSecond) {
+		toSerialize["tokensPerSecond"] = o.TokensPerSecond
+	}
+	if !IsNil(o.SpecificDistinguishedNames) {
+		toSerialize["specificDistinguishedNames"] = o.SpecificDistinguishedNames
+	}
+	return toSerialize, nil
 }
 
 type NullableTokenRevocationRequest struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolutionDnsForwarding type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionDnsForwarding{}
+
 // SiteAllOfNameResolutionDnsForwarding DNS Forwarding feature. Always enabled and will be filled if there is no object is passed.
 type SiteAllOfNameResolutionDnsForwarding struct {
 	// DNS Forwarder Site IPv4 address.
@@ -51,7 +54,7 @@ func NewSiteAllOfNameResolutionDnsForwardingWithDefaults() *SiteAllOfNameResolut
 
 // GetSiteIpv4 returns the SiteIpv4 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
 // GetSiteIpv4Ok returns a tuple with the SiteIpv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		return nil, false
 	}
 	return o.SiteIpv4, true
@@ -69,7 +72,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
 
 // HasSiteIpv4 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv4() bool {
-	if o != nil && o.SiteIpv4 != nil {
+	if o != nil && !IsNil(o.SiteIpv4) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetSiteIpv4(v string) {
 
 // GetSiteIpv6 returns the SiteIpv6 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
 // GetSiteIpv6Ok returns a tuple with the SiteIpv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		return nil, false
 	}
 	return o.SiteIpv6, true
@@ -101,7 +104,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
 
 // HasSiteIpv6 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv6() bool {
-	if o != nil && o.SiteIpv6 != nil {
+	if o != nil && !IsNil(o.SiteIpv6) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetSiteIpv6(v string) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -133,7 +136,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServersOk() ([]string, bool
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -171,7 +174,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []AllowRes
 
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomains() []string {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		var ret []string
 		return ret
 	}
@@ -181,7 +184,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomains() []string {
 // GetMatchDomainsOk returns a tuple with the MatchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomainsOk() ([]string, bool) {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		return nil, false
 	}
 	return o.MatchDomains, true
@@ -189,7 +192,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomainsOk() ([]string, bo
 
 // HasMatchDomains returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasMatchDomains() bool {
-	if o != nil && o.MatchDomains != nil {
+	if o != nil && !IsNil(o.MatchDomains) {
 		return true
 	}
 
@@ -203,7 +206,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetMatchDomains(v []string) {
 
 // GetAutoClientDns returns the AutoClientDns field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDns() bool {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		var ret bool
 		return ret
 	}
@@ -213,7 +216,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDns() bool {
 // GetAutoClientDnsOk returns a tuple with the AutoClientDns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDnsOk() (*bool, bool) {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		return nil, false
 	}
 	return o.AutoClientDns, true
@@ -221,7 +224,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDnsOk() (*bool, bool
 
 // HasAutoClientDns returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasAutoClientDns() bool {
-	if o != nil && o.AutoClientDns != nil {
+	if o != nil && !IsNil(o.AutoClientDns) {
 		return true
 	}
 
@@ -234,26 +237,32 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAutoClientDns(v bool) {
 }
 
 func (o SiteAllOfNameResolutionDnsForwarding) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SiteIpv4 != nil {
-		toSerialize["siteIpv4"] = o.SiteIpv4
-	}
-	if o.SiteIpv6 != nil {
-		toSerialize["siteIpv6"] = o.SiteIpv6
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if true {
-		toSerialize["allowDestinations"] = o.AllowDestinations
-	}
-	if o.MatchDomains != nil {
-		toSerialize["matchDomains"] = o.MatchDomains
-	}
-	if o.AutoClientDns != nil {
-		toSerialize["autoClientDns"] = o.AutoClientDns
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionDnsForwarding) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SiteIpv4) {
+		toSerialize["siteIpv4"] = o.SiteIpv4
+	}
+	if !IsNil(o.SiteIpv6) {
+		toSerialize["siteIpv6"] = o.SiteIpv6
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	toSerialize["allowDestinations"] = o.AllowDestinations
+	if !IsNil(o.MatchDomains) {
+		toSerialize["matchDomains"] = o.MatchDomains
+	}
+	if !IsNil(o.AutoClientDns) {
+		toSerialize["autoClientDns"] = o.AutoClientDns
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionDnsForwarding struct {

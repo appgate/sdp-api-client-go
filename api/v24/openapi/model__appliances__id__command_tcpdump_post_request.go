@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandTcpdumpPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandTcpdumpPostRequest{}
+
 // AppliancesIdCommandTcpdumpPostRequest struct for AppliancesIdCommandTcpdumpPostRequest
 type AppliancesIdCommandTcpdumpPostRequest struct {
 	// The expression to filter tcpdump.
@@ -48,7 +51,7 @@ func NewAppliancesIdCommandTcpdumpPostRequestWithDefaults() *AppliancesIdCommand
 
 // GetExpression returns the Expression field value if set, zero value otherwise.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetExpression() string {
-	if o == nil || o.Expression == nil {
+	if o == nil || IsNil(o.Expression) {
 		var ret string
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetExpression() string {
 // GetExpressionOk returns a tuple with the Expression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetExpressionOk() (*string, bool) {
-	if o == nil || o.Expression == nil {
+	if o == nil || IsNil(o.Expression) {
 		return nil, false
 	}
 	return o.Expression, true
@@ -66,7 +69,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetExpressionOk() (*string, bool
 
 // HasExpression returns a boolean if a field has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) HasExpression() bool {
-	if o != nil && o.Expression != nil {
+	if o != nil && !IsNil(o.Expression) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) SetExpression(v string) {
 
 // GetInterface returns the Interface field value if set, zero value otherwise.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetInterface() string {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetInterface() string {
 // GetInterfaceOk returns a tuple with the Interface field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetInterfaceOk() (*string, bool) {
-	if o == nil || o.Interface == nil {
+	if o == nil || IsNil(o.Interface) {
 		return nil, false
 	}
 	return o.Interface, true
@@ -98,7 +101,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetInterfaceOk() (*string, bool)
 
 // HasInterface returns a boolean if a field has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) HasInterface() bool {
-	if o != nil && o.Interface != nil {
+	if o != nil && !IsNil(o.Interface) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) SetInterface(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -130,7 +133,7 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) GetProcessTimeoutOk() (*int32, b
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandTcpdumpPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *AppliancesIdCommandTcpdumpPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandTcpdumpPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Expression != nil {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.Interface != nil {
-		toSerialize["interface"] = o.Interface
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandTcpdumpPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Expression) {
+		toSerialize["expression"] = o.Expression
+	}
+	if !IsNil(o.Interface) {
+		toSerialize["interface"] = o.Interface
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandTcpdumpPostRequest struct {

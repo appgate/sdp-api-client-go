@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOf{}
+
 // EntitlementAllOf Represents a Network Entitlement.
 type EntitlementAllOf struct {
 	// List of all IP Access actions in this Entitlement.
@@ -69,7 +72,7 @@ func (o *EntitlementAllOf) SetActions(v []EntitlementAllOfActions) {
 
 // GetAppShortcuts returns the AppShortcuts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		var ret []AppShortcut
 		return ret
 	}
@@ -79,7 +82,7 @@ func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
 // GetAppShortcutsOk returns a tuple with the AppShortcuts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		return nil, false
 	}
 	return o.AppShortcuts, true
@@ -87,7 +90,7 @@ func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
 
 // HasAppShortcuts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcuts() bool {
-	if o != nil && o.AppShortcuts != nil {
+	if o != nil && !IsNil(o.AppShortcuts) {
 		return true
 	}
 
@@ -101,7 +104,7 @@ func (o *EntitlementAllOf) SetAppShortcuts(v []AppShortcut) {
 
 // GetAppShortcutScripts returns the AppShortcutScripts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		var ret []string
 		return ret
 	}
@@ -111,7 +114,7 @@ func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
 // GetAppShortcutScriptsOk returns a tuple with the AppShortcutScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		return nil, false
 	}
 	return o.AppShortcutScripts, true
@@ -119,7 +122,7 @@ func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
 
 // HasAppShortcutScripts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcutScripts() bool {
-	if o != nil && o.AppShortcutScripts != nil {
+	if o != nil && !IsNil(o.AppShortcutScripts) {
 		return true
 	}
 
@@ -132,17 +135,23 @@ func (o *EntitlementAllOf) SetAppShortcutScripts(v []string) {
 }
 
 func (o EntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.AppShortcuts != nil {
-		toSerialize["appShortcuts"] = o.AppShortcuts
-	}
-	if o.AppShortcutScripts != nil {
-		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.AppShortcuts) {
+		toSerialize["appShortcuts"] = o.AppShortcuts
+	}
+	if !IsNil(o.AppShortcutScripts) {
+		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementAllOf struct {

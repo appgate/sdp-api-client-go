@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ResetAppRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ResetAppRequest{}
+
 // ResetAppRequest Request body for resetting a discovered app.
 type ResetAppRequest struct {
 	// List of ports to reset; each entry can be a single port or a range.
@@ -64,11 +67,17 @@ func (o *ResetAppRequest) SetPorts(v []string) {
 }
 
 func (o ResetAppRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["ports"] = o.Ports
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ResetAppRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["ports"] = o.Ports
+	return toSerialize, nil
 }
 
 type NullableResetAppRequest struct {

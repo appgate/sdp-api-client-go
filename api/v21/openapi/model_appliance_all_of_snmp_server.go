@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfSnmpServer type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfSnmpServer{}
+
 // ApplianceAllOfSnmpServer SNMP Server configuration.
 type ApplianceAllOfSnmpServer struct {
 	// Whether the SNMP Server os enabled on this appliance or not.
@@ -52,7 +55,7 @@ func NewApplianceAllOfSnmpServerWithDefaults() *ApplianceAllOfSnmpServer {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfSnmpServer) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *ApplianceAllOfSnmpServer) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfSnmpServer) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -70,7 +73,7 @@ func (o *ApplianceAllOfSnmpServer) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfSnmpServer) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *ApplianceAllOfSnmpServer) SetEnabled(v bool) {
 
 // GetTcpPort returns the TcpPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfSnmpServer) GetTcpPort() int32 {
-	if o == nil || o.TcpPort == nil {
+	if o == nil || IsNil(o.TcpPort) {
 		var ret int32
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *ApplianceAllOfSnmpServer) GetTcpPort() int32 {
 // GetTcpPortOk returns a tuple with the TcpPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfSnmpServer) GetTcpPortOk() (*int32, bool) {
-	if o == nil || o.TcpPort == nil {
+	if o == nil || IsNil(o.TcpPort) {
 		return nil, false
 	}
 	return o.TcpPort, true
@@ -102,7 +105,7 @@ func (o *ApplianceAllOfSnmpServer) GetTcpPortOk() (*int32, bool) {
 
 // HasTcpPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfSnmpServer) HasTcpPort() bool {
-	if o != nil && o.TcpPort != nil {
+	if o != nil && !IsNil(o.TcpPort) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *ApplianceAllOfSnmpServer) SetTcpPort(v int32) {
 
 // GetUdpPort returns the UdpPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfSnmpServer) GetUdpPort() int32 {
-	if o == nil || o.UdpPort == nil {
+	if o == nil || IsNil(o.UdpPort) {
 		var ret int32
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *ApplianceAllOfSnmpServer) GetUdpPort() int32 {
 // GetUdpPortOk returns a tuple with the UdpPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfSnmpServer) GetUdpPortOk() (*int32, bool) {
-	if o == nil || o.UdpPort == nil {
+	if o == nil || IsNil(o.UdpPort) {
 		return nil, false
 	}
 	return o.UdpPort, true
@@ -134,7 +137,7 @@ func (o *ApplianceAllOfSnmpServer) GetUdpPortOk() (*int32, bool) {
 
 // HasUdpPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfSnmpServer) HasUdpPort() bool {
-	if o != nil && o.UdpPort != nil {
+	if o != nil && !IsNil(o.UdpPort) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *ApplianceAllOfSnmpServer) SetUdpPort(v int32) {
 
 // GetSnmpdConf returns the SnmpdConf field value if set, zero value otherwise.
 func (o *ApplianceAllOfSnmpServer) GetSnmpdConf() string {
-	if o == nil || o.SnmpdConf == nil {
+	if o == nil || IsNil(o.SnmpdConf) {
 		var ret string
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *ApplianceAllOfSnmpServer) GetSnmpdConf() string {
 // GetSnmpdConfOk returns a tuple with the SnmpdConf field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfSnmpServer) GetSnmpdConfOk() (*string, bool) {
-	if o == nil || o.SnmpdConf == nil {
+	if o == nil || IsNil(o.SnmpdConf) {
 		return nil, false
 	}
 	return o.SnmpdConf, true
@@ -166,7 +169,7 @@ func (o *ApplianceAllOfSnmpServer) GetSnmpdConfOk() (*string, bool) {
 
 // HasSnmpdConf returns a boolean if a field has been set.
 func (o *ApplianceAllOfSnmpServer) HasSnmpdConf() bool {
-	if o != nil && o.SnmpdConf != nil {
+	if o != nil && !IsNil(o.SnmpdConf) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *ApplianceAllOfSnmpServer) SetSnmpdConf(v string) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfSnmpServer) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *ApplianceAllOfSnmpServer) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfSnmpServer) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -198,7 +201,7 @@ func (o *ApplianceAllOfSnmpServer) GetAllowSourcesOk() ([]AllowSourcesInner, boo
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfSnmpServer) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -211,23 +214,31 @@ func (o *ApplianceAllOfSnmpServer) SetAllowSources(v []AllowSourcesInner) {
 }
 
 func (o ApplianceAllOfSnmpServer) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.TcpPort != nil {
-		toSerialize["tcpPort"] = o.TcpPort
-	}
-	if o.UdpPort != nil {
-		toSerialize["udpPort"] = o.UdpPort
-	}
-	if o.SnmpdConf != nil {
-		toSerialize["snmpd.conf"] = o.SnmpdConf
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfSnmpServer) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.TcpPort) {
+		toSerialize["tcpPort"] = o.TcpPort
+	}
+	if !IsNil(o.UdpPort) {
+		toSerialize["udpPort"] = o.UdpPort
+	}
+	if !IsNil(o.SnmpdConf) {
+		toSerialize["snmpd.conf"] = o.SnmpdConf
+	}
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfSnmpServer struct {

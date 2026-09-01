@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LoginRequestOidcCodeExchange type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginRequestOidcCodeExchange{}
+
 // LoginRequestOidcCodeExchange OIDC authorization code exchange parameters. Required if an OIDC based Identity Provider is used and the provider has a client secret configured (backend token exchange flow).
 type LoginRequestOidcCodeExchange struct {
 	// Authorization code received from OIDC provider after user authentication.
@@ -118,17 +121,19 @@ func (o *LoginRequestOidcCodeExchange) SetCodeVerifier(v string) {
 }
 
 func (o LoginRequestOidcCodeExchange) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["authCode"] = o.AuthCode
-	}
-	if true {
-		toSerialize["redirectUri"] = o.RedirectUri
-	}
-	if true {
-		toSerialize["codeVerifier"] = o.CodeVerifier
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginRequestOidcCodeExchange) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["authCode"] = o.AuthCode
+	toSerialize["redirectUri"] = o.RedirectUri
+	toSerialize["codeVerifier"] = o.CodeVerifier
+	return toSerialize, nil
 }
 
 type NullableLoginRequestOidcCodeExchange struct {

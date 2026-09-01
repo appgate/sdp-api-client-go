@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfLogServer type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfLogServer{}
+
 // ApplianceAllOfLogServer Log Server settings. Log Server collects audit logs from all the appliances and stores them.
 type ApplianceAllOfLogServer struct {
 	// Whether the Log Server is enabled on this appliance or not.
@@ -50,7 +53,7 @@ func NewApplianceAllOfLogServerWithDefaults() *ApplianceAllOfLogServer {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogServer) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *ApplianceAllOfLogServer) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogServer) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -68,7 +71,7 @@ func (o *ApplianceAllOfLogServer) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogServer) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *ApplianceAllOfLogServer) SetEnabled(v bool) {
 
 // GetRetentionDays returns the RetentionDays field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogServer) GetRetentionDays() int32 {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		var ret int32
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *ApplianceAllOfLogServer) GetRetentionDays() int32 {
 // GetRetentionDaysOk returns a tuple with the RetentionDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogServer) GetRetentionDaysOk() (*int32, bool) {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		return nil, false
 	}
 	return o.RetentionDays, true
@@ -100,7 +103,7 @@ func (o *ApplianceAllOfLogServer) GetRetentionDaysOk() (*int32, bool) {
 
 // HasRetentionDays returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogServer) HasRetentionDays() bool {
-	if o != nil && o.RetentionDays != nil {
+	if o != nil && !IsNil(o.RetentionDays) {
 		return true
 	}
 
@@ -113,14 +116,22 @@ func (o *ApplianceAllOfLogServer) SetRetentionDays(v int32) {
 }
 
 func (o ApplianceAllOfLogServer) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.RetentionDays != nil {
-		toSerialize["retentionDays"] = o.RetentionDays
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfLogServer) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.RetentionDays) {
+		toSerialize["retentionDays"] = o.RetentionDays
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfLogServer struct {

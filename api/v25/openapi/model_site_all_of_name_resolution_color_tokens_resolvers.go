@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolutionColorTokensResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionColorTokensResolvers{}
+
 // SiteAllOfNameResolutionColorTokensResolvers struct for SiteAllOfNameResolutionColorTokensResolvers
 type SiteAllOfNameResolutionColorTokensResolvers struct {
 	// Identifier name. Has no functional effect.
@@ -85,7 +88,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateInterval() int32 
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -103,7 +106,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetUpdateIntervalOk() (*in
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetFingerprint(v string) {
 
 // GetPrivateKey returns the PrivateKey field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKey() string {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		var ret string
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKey() string {
 // GetPrivateKeyOk returns a tuple with the PrivateKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKeyOk() (*string, bool) {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		return nil, false
 	}
 	return o.PrivateKey, true
@@ -231,7 +234,7 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) GetPrivateKeyOk() (*string
 
 // HasPrivateKey returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionColorTokensResolvers) HasPrivateKey() bool {
-	if o != nil && o.PrivateKey != nil {
+	if o != nil && !IsNil(o.PrivateKey) {
 		return true
 	}
 
@@ -244,29 +247,27 @@ func (o *SiteAllOfNameResolutionColorTokensResolvers) SetPrivateKey(v string) {
 }
 
 func (o SiteAllOfNameResolutionColorTokensResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if true {
-		toSerialize["clusterName"] = o.ClusterName
-	}
-	if true {
-		toSerialize["tenantId"] = o.TenantId
-	}
-	if true {
-		toSerialize["userId"] = o.UserId
-	}
-	if true {
-		toSerialize["fingerprint"] = o.Fingerprint
-	}
-	if o.PrivateKey != nil {
-		toSerialize["privateKey"] = o.PrivateKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionColorTokensResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	toSerialize["clusterName"] = o.ClusterName
+	toSerialize["tenantId"] = o.TenantId
+	toSerialize["userId"] = o.UserId
+	toSerialize["fingerprint"] = o.Fingerprint
+	if !IsNil(o.PrivateKey) {
+		toSerialize["privateKey"] = o.PrivateKey
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionColorTokensResolvers struct {

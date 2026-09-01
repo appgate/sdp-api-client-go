@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SecretsBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SecretsBulkUpsertPostRequest{}
+
 // SecretsBulkUpsertPostRequest struct for SecretsBulkUpsertPostRequest
 type SecretsBulkUpsertPostRequest struct {
 	Data []Secret `json:"data"`
@@ -63,11 +66,17 @@ func (o *SecretsBulkUpsertPostRequest) SetData(v []Secret) {
 }
 
 func (o SecretsBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SecretsBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableSecretsBulkUpsertPostRequest struct {

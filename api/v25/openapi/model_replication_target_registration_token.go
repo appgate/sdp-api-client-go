@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationTargetRegistrationToken type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationTargetRegistrationToken{}
+
 // ReplicationTargetRegistrationToken struct for ReplicationTargetRegistrationToken
 type ReplicationTargetRegistrationToken struct {
 	// Registration token provided by the replication target.
@@ -64,11 +67,17 @@ func (o *ReplicationTargetRegistrationToken) SetToken(v string) {
 }
 
 func (o ReplicationTargetRegistrationToken) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["token"] = o.Token
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationTargetRegistrationToken) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["token"] = o.Token
+	return toSerialize, nil
 }
 
 type NullableReplicationTargetRegistrationToken struct {

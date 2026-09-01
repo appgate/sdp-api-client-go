@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AuthenticationOtpInitializePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationOtpInitializePostRequest{}
+
 // AuthenticationOtpInitializePostRequest struct for AuthenticationOtpInitializePostRequest
 type AuthenticationOtpInitializePostRequest struct {
 	// Some MFA configurations require user password in order to authenticate the user along with the multi-factor. Otherwise not required.
@@ -40,7 +43,7 @@ func NewAuthenticationOtpInitializePostRequestWithDefaults() *AuthenticationOtpI
 
 // GetUserPassword returns the UserPassword field value if set, zero value otherwise.
 func (o *AuthenticationOtpInitializePostRequest) GetUserPassword() string {
-	if o == nil || o.UserPassword == nil {
+	if o == nil || IsNil(o.UserPassword) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AuthenticationOtpInitializePostRequest) GetUserPassword() string {
 // GetUserPasswordOk returns a tuple with the UserPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpInitializePostRequest) GetUserPasswordOk() (*string, bool) {
-	if o == nil || o.UserPassword == nil {
+	if o == nil || IsNil(o.UserPassword) {
 		return nil, false
 	}
 	return o.UserPassword, true
@@ -58,7 +61,7 @@ func (o *AuthenticationOtpInitializePostRequest) GetUserPasswordOk() (*string, b
 
 // HasUserPassword returns a boolean if a field has been set.
 func (o *AuthenticationOtpInitializePostRequest) HasUserPassword() bool {
-	if o != nil && o.UserPassword != nil {
+	if o != nil && !IsNil(o.UserPassword) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AuthenticationOtpInitializePostRequest) SetUserPassword(v string) {
 }
 
 func (o AuthenticationOtpInitializePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserPassword != nil {
-		toSerialize["userPassword"] = o.UserPassword
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationOtpInitializePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserPassword) {
+		toSerialize["userPassword"] = o.UserPassword
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationOtpInitializePostRequest struct {

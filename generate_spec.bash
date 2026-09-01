@@ -70,7 +70,9 @@ for version in "${supportedVersions[@]}"; do
     apigentools --api-versions "v${version}" validate
     apigentools --api-versions "v${version}" generate
     mkdir -p "../api/v${version}/openapi/"
-    find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' -exec cp {} "../api/v$version/openapi/" \;
+    # openapi-generator v6.6+ emits empty api/model test stubs with an incorrect
+    # module import path; skip them (v6.0.0 did not generate these).
+    find "generated/sdp-api-client-go/openapi_v${version}" -name '*.go' ! -name '*_test.go' -exec cp {} "../api/v$version/openapi/" \;
     popd
 done
 

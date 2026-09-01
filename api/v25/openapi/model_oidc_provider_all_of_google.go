@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OidcProviderAllOfGoogle type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OidcProviderAllOfGoogle{}
+
 // OidcProviderAllOfGoogle Google specific OIDC settings.
 type OidcProviderAllOfGoogle struct {
 	// Whether to enable Google OIDC settings or not.
@@ -48,7 +51,7 @@ func NewOidcProviderAllOfGoogleWithDefaults() *OidcProviderAllOfGoogle {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *OidcProviderAllOfGoogle) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *OidcProviderAllOfGoogle) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OidcProviderAllOfGoogle) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -66,7 +69,7 @@ func (o *OidcProviderAllOfGoogle) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *OidcProviderAllOfGoogle) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *OidcProviderAllOfGoogle) SetEnabled(v bool) {
 
 // GetClientSecret returns the ClientSecret field value if set, zero value otherwise.
 func (o *OidcProviderAllOfGoogle) GetClientSecret() string {
-	if o == nil || o.ClientSecret == nil {
+	if o == nil || IsNil(o.ClientSecret) {
 		var ret string
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *OidcProviderAllOfGoogle) GetClientSecret() string {
 // GetClientSecretOk returns a tuple with the ClientSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OidcProviderAllOfGoogle) GetClientSecretOk() (*string, bool) {
-	if o == nil || o.ClientSecret == nil {
+	if o == nil || IsNil(o.ClientSecret) {
 		return nil, false
 	}
 	return o.ClientSecret, true
@@ -98,7 +101,7 @@ func (o *OidcProviderAllOfGoogle) GetClientSecretOk() (*string, bool) {
 
 // HasClientSecret returns a boolean if a field has been set.
 func (o *OidcProviderAllOfGoogle) HasClientSecret() bool {
-	if o != nil && o.ClientSecret != nil {
+	if o != nil && !IsNil(o.ClientSecret) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *OidcProviderAllOfGoogle) SetClientSecret(v string) {
 
 // GetRefreshToken returns the RefreshToken field value if set, zero value otherwise.
 func (o *OidcProviderAllOfGoogle) GetRefreshToken() bool {
-	if o == nil || o.RefreshToken == nil {
+	if o == nil || IsNil(o.RefreshToken) {
 		var ret bool
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *OidcProviderAllOfGoogle) GetRefreshToken() bool {
 // GetRefreshTokenOk returns a tuple with the RefreshToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OidcProviderAllOfGoogle) GetRefreshTokenOk() (*bool, bool) {
-	if o == nil || o.RefreshToken == nil {
+	if o == nil || IsNil(o.RefreshToken) {
 		return nil, false
 	}
 	return o.RefreshToken, true
@@ -130,7 +133,7 @@ func (o *OidcProviderAllOfGoogle) GetRefreshTokenOk() (*bool, bool) {
 
 // HasRefreshToken returns a boolean if a field has been set.
 func (o *OidcProviderAllOfGoogle) HasRefreshToken() bool {
-	if o != nil && o.RefreshToken != nil {
+	if o != nil && !IsNil(o.RefreshToken) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *OidcProviderAllOfGoogle) SetRefreshToken(v bool) {
 }
 
 func (o OidcProviderAllOfGoogle) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.ClientSecret != nil {
-		toSerialize["clientSecret"] = o.ClientSecret
-	}
-	if o.RefreshToken != nil {
-		toSerialize["refreshToken"] = o.RefreshToken
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OidcProviderAllOfGoogle) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.ClientSecret) {
+		toSerialize["clientSecret"] = o.ClientSecret
+	}
+	if !IsNil(o.RefreshToken) {
+		toSerialize["refreshToken"] = o.RefreshToken
+	}
+	return toSerialize, nil
 }
 
 type NullableOidcProviderAllOfGoogle struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Portal12AllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Portal12AllOf{}
+
 // Portal12AllOf struct for Portal12AllOf
 type Portal12AllOf struct {
 	// Portal will verify upstream certificate of the endpoints.
@@ -44,7 +47,7 @@ func NewPortal12AllOfWithDefaults() *Portal12AllOf {
 
 // GetVerifyUpstream returns the VerifyUpstream field value if set, zero value otherwise.
 func (o *Portal12AllOf) GetVerifyUpstream() bool {
-	if o == nil || o.VerifyUpstream == nil {
+	if o == nil || IsNil(o.VerifyUpstream) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *Portal12AllOf) GetVerifyUpstream() bool {
 // GetVerifyUpstreamOk returns a tuple with the VerifyUpstream field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Portal12AllOf) GetVerifyUpstreamOk() (*bool, bool) {
-	if o == nil || o.VerifyUpstream == nil {
+	if o == nil || IsNil(o.VerifyUpstream) {
 		return nil, false
 	}
 	return o.VerifyUpstream, true
@@ -62,7 +65,7 @@ func (o *Portal12AllOf) GetVerifyUpstreamOk() (*bool, bool) {
 
 // HasVerifyUpstream returns a boolean if a field has been set.
 func (o *Portal12AllOf) HasVerifyUpstream() bool {
-	if o != nil && o.VerifyUpstream != nil {
+	if o != nil && !IsNil(o.VerifyUpstream) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *Portal12AllOf) SetVerifyUpstream(v bool) {
 }
 
 func (o Portal12AllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.VerifyUpstream != nil {
-		toSerialize["verifyUpstream"] = o.VerifyUpstream
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Portal12AllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.VerifyUpstream) {
+		toSerialize["verifyUpstream"] = o.VerifyUpstream
+	}
+	return toSerialize, nil
 }
 
 type NullablePortal12AllOf struct {

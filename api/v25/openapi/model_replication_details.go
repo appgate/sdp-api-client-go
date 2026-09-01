@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationDetails{}
+
 // ReplicationDetails struct for ReplicationDetails
 type ReplicationDetails struct {
 	// Error message from the last replication attempt that failed.
@@ -41,7 +44,7 @@ func NewReplicationDetailsWithDefaults() *ReplicationDetails {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *ReplicationDetails) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ReplicationDetails) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationDetails) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -59,7 +62,7 @@ func (o *ReplicationDetails) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *ReplicationDetails) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ReplicationDetails) SetError(v string) {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ReplicationDetails) GetItems() ReplicationItems {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret ReplicationItems
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *ReplicationDetails) GetItems() ReplicationItems {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationDetails) GetItemsOk() (*ReplicationItems, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -91,7 +94,7 @@ func (o *ReplicationDetails) GetItemsOk() (*ReplicationItems, bool) {
 
 // HasItems returns a boolean if a field has been set.
 func (o *ReplicationDetails) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *ReplicationDetails) SetItems(v ReplicationItems) {
 }
 
 func (o ReplicationDetails) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
-	}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationDetails) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	return toSerialize, nil
 }
 
 type NullableReplicationDetails struct {

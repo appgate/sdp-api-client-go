@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WeightedExternalProfileAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WeightedExternalProfileAllOf{}
+
 // WeightedExternalProfileAllOf struct for WeightedExternalProfileAllOf
 type WeightedExternalProfileAllOf struct {
 	// Load balancing weight of the profile in this group.
@@ -44,7 +47,7 @@ func NewWeightedExternalProfileAllOfWithDefaults() *WeightedExternalProfileAllOf
 
 // GetWeight returns the Weight field value if set, zero value otherwise.
 func (o *WeightedExternalProfileAllOf) GetWeight() int32 {
-	if o == nil || o.Weight == nil {
+	if o == nil || IsNil(o.Weight) {
 		var ret int32
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *WeightedExternalProfileAllOf) GetWeight() int32 {
 // GetWeightOk returns a tuple with the Weight field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfileAllOf) GetWeightOk() (*int32, bool) {
-	if o == nil || o.Weight == nil {
+	if o == nil || IsNil(o.Weight) {
 		return nil, false
 	}
 	return o.Weight, true
@@ -62,7 +65,7 @@ func (o *WeightedExternalProfileAllOf) GetWeightOk() (*int32, bool) {
 
 // HasWeight returns a boolean if a field has been set.
 func (o *WeightedExternalProfileAllOf) HasWeight() bool {
-	if o != nil && o.Weight != nil {
+	if o != nil && !IsNil(o.Weight) {
 		return true
 	}
 
@@ -75,11 +78,19 @@ func (o *WeightedExternalProfileAllOf) SetWeight(v int32) {
 }
 
 func (o WeightedExternalProfileAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Weight != nil {
-		toSerialize["weight"] = o.Weight
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WeightedExternalProfileAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Weight) {
+		toSerialize["weight"] = o.Weight
+	}
+	return toSerialize, nil
 }
 
 type NullableWeightedExternalProfileAllOf struct {

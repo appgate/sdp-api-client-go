@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the IdentityProvidersNamesGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersNamesGet200Response{}
 
 // IdentityProvidersNamesGet200Response struct for IdentityProvidersNamesGet200Response
 type IdentityProvidersNamesGet200Response struct {
@@ -42,7 +45,7 @@ func NewIdentityProvidersNamesGet200ResponseWithDefaults() *IdentityProvidersNam
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200Response) GetData() []IdentityProvidersNamesGet200ResponseDataInner {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []IdentityProvidersNamesGet200ResponseDataInner
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *IdentityProvidersNamesGet200Response) GetData() []IdentityProvidersName
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200Response) GetDataOk() ([]IdentityProvidersNamesGet200ResponseDataInner, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -60,7 +63,7 @@ func (o *IdentityProvidersNamesGet200Response) GetDataOk() ([]IdentityProvidersN
 
 // HasData returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200Response) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *IdentityProvidersNamesGet200Response) SetData(v []IdentityProvidersName
 
 // GetBannerMessage returns the BannerMessage field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200Response) GetBannerMessage() string {
-	if o == nil || o.BannerMessage == nil {
+	if o == nil || IsNil(o.BannerMessage) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *IdentityProvidersNamesGet200Response) GetBannerMessage() string {
 // GetBannerMessageOk returns a tuple with the BannerMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200Response) GetBannerMessageOk() (*string, bool) {
-	if o == nil || o.BannerMessage == nil {
+	if o == nil || IsNil(o.BannerMessage) {
 		return nil, false
 	}
 	return o.BannerMessage, true
@@ -92,7 +95,7 @@ func (o *IdentityProvidersNamesGet200Response) GetBannerMessageOk() (*string, bo
 
 // HasBannerMessage returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200Response) HasBannerMessage() bool {
-	if o != nil && o.BannerMessage != nil {
+	if o != nil && !IsNil(o.BannerMessage) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *IdentityProvidersNamesGet200Response) SetBannerMessage(v string) {
 }
 
 func (o IdentityProvidersNamesGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.BannerMessage != nil {
-		toSerialize["bannerMessage"] = o.BannerMessage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersNamesGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.BannerMessage) {
+		toSerialize["bannerMessage"] = o.BannerMessage
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersNamesGet200Response struct {

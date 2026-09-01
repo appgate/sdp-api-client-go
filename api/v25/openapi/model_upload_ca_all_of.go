@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UploadCaAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UploadCaAllOf{}
+
 // UploadCaAllOf Upload P12 file for root CA.
 type UploadCaAllOf struct {
 	// The URL where the CRL will be hosted.
@@ -40,7 +43,7 @@ func NewUploadCaAllOfWithDefaults() *UploadCaAllOf {
 
 // GetCrlUrl returns the CrlUrl field value if set, zero value otherwise.
 func (o *UploadCaAllOf) GetCrlUrl() string {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *UploadCaAllOf) GetCrlUrl() string {
 // GetCrlUrlOk returns a tuple with the CrlUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UploadCaAllOf) GetCrlUrlOk() (*string, bool) {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		return nil, false
 	}
 	return o.CrlUrl, true
@@ -58,7 +61,7 @@ func (o *UploadCaAllOf) GetCrlUrlOk() (*string, bool) {
 
 // HasCrlUrl returns a boolean if a field has been set.
 func (o *UploadCaAllOf) HasCrlUrl() bool {
-	if o != nil && o.CrlUrl != nil {
+	if o != nil && !IsNil(o.CrlUrl) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *UploadCaAllOf) SetCrlUrl(v string) {
 }
 
 func (o UploadCaAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.CrlUrl != nil {
-		toSerialize["crlUrl"] = o.CrlUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UploadCaAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.CrlUrl) {
+		toSerialize["crlUrl"] = o.CrlUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableUploadCaAllOf struct {

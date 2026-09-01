@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SshKeySecretCreateAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SshKeySecretCreateAllOf{}
+
 // SshKeySecretCreateAllOf Represents an SSH key Secret.
 type SshKeySecretCreateAllOf struct {
 	// Username for the SSH key.
@@ -91,14 +94,18 @@ func (o *SshKeySecretCreateAllOf) SetPrivateKey(v string) {
 }
 
 func (o SshKeySecretCreateAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if true {
-		toSerialize["privateKey"] = o.PrivateKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SshKeySecretCreateAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["username"] = o.Username
+	toSerialize["privateKey"] = o.PrivateKey
+	return toSerialize, nil
 }
 
 type NullableSshKeySecretCreateAllOf struct {

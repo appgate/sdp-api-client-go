@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DiscoveredAppsIdAccessPolicyPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DiscoveredAppsIdAccessPolicyPostRequest{}
+
 // DiscoveredAppsIdAccessPolicyPostRequest Policy access configuration details.
 type DiscoveredAppsIdAccessPolicyPostRequest struct {
 	// List of policies to configure.
@@ -64,11 +67,17 @@ func (o *DiscoveredAppsIdAccessPolicyPostRequest) SetPolicies(v []DiscoveredApps
 }
 
 func (o DiscoveredAppsIdAccessPolicyPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["policies"] = o.Policies
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DiscoveredAppsIdAccessPolicyPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["policies"] = o.Policies
+	return toSerialize, nil
 }
 
 type NullableDiscoveredAppsIdAccessPolicyPostRequest struct {

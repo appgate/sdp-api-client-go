@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpSettings{}
+
 // ZtpSettings struct for ZtpSettings
 type ZtpSettings struct {
 	RiskEngine *ZtpSettingsRiskEngine `json:"riskEngine,omitempty"`
@@ -39,7 +42,7 @@ func NewZtpSettingsWithDefaults() *ZtpSettings {
 
 // GetRiskEngine returns the RiskEngine field value if set, zero value otherwise.
 func (o *ZtpSettings) GetRiskEngine() ZtpSettingsRiskEngine {
-	if o == nil || o.RiskEngine == nil {
+	if o == nil || IsNil(o.RiskEngine) {
 		var ret ZtpSettingsRiskEngine
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *ZtpSettings) GetRiskEngine() ZtpSettingsRiskEngine {
 // GetRiskEngineOk returns a tuple with the RiskEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettings) GetRiskEngineOk() (*ZtpSettingsRiskEngine, bool) {
-	if o == nil || o.RiskEngine == nil {
+	if o == nil || IsNil(o.RiskEngine) {
 		return nil, false
 	}
 	return o.RiskEngine, true
@@ -57,7 +60,7 @@ func (o *ZtpSettings) GetRiskEngineOk() (*ZtpSettingsRiskEngine, bool) {
 
 // HasRiskEngine returns a boolean if a field has been set.
 func (o *ZtpSettings) HasRiskEngine() bool {
-	if o != nil && o.RiskEngine != nil {
+	if o != nil && !IsNil(o.RiskEngine) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ZtpSettings) SetRiskEngine(v ZtpSettingsRiskEngine) {
 }
 
 func (o ZtpSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.RiskEngine != nil {
-		toSerialize["riskEngine"] = o.RiskEngine
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RiskEngine) {
+		toSerialize["riskEngine"] = o.RiskEngine
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpSettings struct {

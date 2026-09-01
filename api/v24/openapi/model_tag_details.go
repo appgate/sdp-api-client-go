@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the TagDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TagDetails{}
+
 // TagDetails struct for TagDetails
 type TagDetails struct {
 	// ID of the object.
@@ -63,7 +66,7 @@ func NewTagDetailsWithDefaults() *TagDetails {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *TagDetails) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -73,7 +76,7 @@ func (o *TagDetails) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -81,7 +84,7 @@ func (o *TagDetails) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *TagDetails) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -95,7 +98,7 @@ func (o *TagDetails) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *TagDetails) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -105,7 +108,7 @@ func (o *TagDetails) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -113,7 +116,7 @@ func (o *TagDetails) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *TagDetails) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -127,7 +130,7 @@ func (o *TagDetails) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *TagDetails) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -137,7 +140,7 @@ func (o *TagDetails) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -145,7 +148,7 @@ func (o *TagDetails) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *TagDetails) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -159,7 +162,7 @@ func (o *TagDetails) SetNotes(v string) {
 
 // GetColorCode returns the ColorCode field value if set, zero value otherwise.
 func (o *TagDetails) GetColorCode() int32 {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		var ret int32
 		return ret
 	}
@@ -169,7 +172,7 @@ func (o *TagDetails) GetColorCode() int32 {
 // GetColorCodeOk returns a tuple with the ColorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetColorCodeOk() (*int32, bool) {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		return nil, false
 	}
 	return o.ColorCode, true
@@ -177,7 +180,7 @@ func (o *TagDetails) GetColorCodeOk() (*int32, bool) {
 
 // HasColorCode returns a boolean if a field has been set.
 func (o *TagDetails) HasColorCode() bool {
-	if o != nil && o.ColorCode != nil {
+	if o != nil && !IsNil(o.ColorCode) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *TagDetails) SetColorCode(v int32) {
 
 // GetColorName returns the ColorName field value if set, zero value otherwise.
 func (o *TagDetails) GetColorName() string {
-	if o == nil || o.ColorName == nil {
+	if o == nil || IsNil(o.ColorName) {
 		var ret string
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *TagDetails) GetColorName() string {
 // GetColorNameOk returns a tuple with the ColorName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetColorNameOk() (*string, bool) {
-	if o == nil || o.ColorName == nil {
+	if o == nil || IsNil(o.ColorName) {
 		return nil, false
 	}
 	return o.ColorName, true
@@ -209,7 +212,7 @@ func (o *TagDetails) GetColorNameOk() (*string, bool) {
 
 // HasColorName returns a boolean if a field has been set.
 func (o *TagDetails) HasColorName() bool {
-	if o != nil && o.ColorName != nil {
+	if o != nil && !IsNil(o.ColorName) {
 		return true
 	}
 
@@ -223,7 +226,7 @@ func (o *TagDetails) SetColorName(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *TagDetails) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -233,7 +236,7 @@ func (o *TagDetails) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -241,7 +244,7 @@ func (o *TagDetails) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *TagDetails) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -255,7 +258,7 @@ func (o *TagDetails) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *TagDetails) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -265,7 +268,7 @@ func (o *TagDetails) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -273,7 +276,7 @@ func (o *TagDetails) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *TagDetails) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -287,7 +290,7 @@ func (o *TagDetails) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *TagDetails) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -297,7 +300,7 @@ func (o *TagDetails) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -305,7 +308,7 @@ func (o *TagDetails) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *TagDetails) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -319,7 +322,7 @@ func (o *TagDetails) SetReadOnly(v bool) {
 
 // GetTaggedOccurrences returns the TaggedOccurrences field value if set, zero value otherwise.
 func (o *TagDetails) GetTaggedOccurrences() int32 {
-	if o == nil || o.TaggedOccurrences == nil {
+	if o == nil || IsNil(o.TaggedOccurrences) {
 		var ret int32
 		return ret
 	}
@@ -329,7 +332,7 @@ func (o *TagDetails) GetTaggedOccurrences() int32 {
 // GetTaggedOccurrencesOk returns a tuple with the TaggedOccurrences field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetTaggedOccurrencesOk() (*int32, bool) {
-	if o == nil || o.TaggedOccurrences == nil {
+	if o == nil || IsNil(o.TaggedOccurrences) {
 		return nil, false
 	}
 	return o.TaggedOccurrences, true
@@ -337,7 +340,7 @@ func (o *TagDetails) GetTaggedOccurrencesOk() (*int32, bool) {
 
 // HasTaggedOccurrences returns a boolean if a field has been set.
 func (o *TagDetails) HasTaggedOccurrences() bool {
-	if o != nil && o.TaggedOccurrences != nil {
+	if o != nil && !IsNil(o.TaggedOccurrences) {
 		return true
 	}
 
@@ -351,7 +354,7 @@ func (o *TagDetails) SetTaggedOccurrences(v int32) {
 
 // GetLinkedOccurrences returns the LinkedOccurrences field value if set, zero value otherwise.
 func (o *TagDetails) GetLinkedOccurrences() int32 {
-	if o == nil || o.LinkedOccurrences == nil {
+	if o == nil || IsNil(o.LinkedOccurrences) {
 		var ret int32
 		return ret
 	}
@@ -361,7 +364,7 @@ func (o *TagDetails) GetLinkedOccurrences() int32 {
 // GetLinkedOccurrencesOk returns a tuple with the LinkedOccurrences field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetLinkedOccurrencesOk() (*int32, bool) {
-	if o == nil || o.LinkedOccurrences == nil {
+	if o == nil || IsNil(o.LinkedOccurrences) {
 		return nil, false
 	}
 	return o.LinkedOccurrences, true
@@ -369,7 +372,7 @@ func (o *TagDetails) GetLinkedOccurrencesOk() (*int32, bool) {
 
 // HasLinkedOccurrences returns a boolean if a field has been set.
 func (o *TagDetails) HasLinkedOccurrences() bool {
-	if o != nil && o.LinkedOccurrences != nil {
+	if o != nil && !IsNil(o.LinkedOccurrences) {
 		return true
 	}
 
@@ -383,7 +386,7 @@ func (o *TagDetails) SetLinkedOccurrences(v int32) {
 
 // GetTaggedOccurrencesByEntityType returns the TaggedOccurrencesByEntityType field value if set, zero value otherwise.
 func (o *TagDetails) GetTaggedOccurrencesByEntityType() map[string]interface{} {
-	if o == nil || o.TaggedOccurrencesByEntityType == nil {
+	if o == nil || IsNil(o.TaggedOccurrencesByEntityType) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -393,15 +396,15 @@ func (o *TagDetails) GetTaggedOccurrencesByEntityType() map[string]interface{} {
 // GetTaggedOccurrencesByEntityTypeOk returns a tuple with the TaggedOccurrencesByEntityType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetTaggedOccurrencesByEntityTypeOk() (map[string]interface{}, bool) {
-	if o == nil || o.TaggedOccurrencesByEntityType == nil {
-		return nil, false
+	if o == nil || IsNil(o.TaggedOccurrencesByEntityType) {
+		return map[string]interface{}{}, false
 	}
 	return o.TaggedOccurrencesByEntityType, true
 }
 
 // HasTaggedOccurrencesByEntityType returns a boolean if a field has been set.
 func (o *TagDetails) HasTaggedOccurrencesByEntityType() bool {
-	if o != nil && o.TaggedOccurrencesByEntityType != nil {
+	if o != nil && !IsNil(o.TaggedOccurrencesByEntityType) {
 		return true
 	}
 
@@ -415,7 +418,7 @@ func (o *TagDetails) SetTaggedOccurrencesByEntityType(v map[string]interface{}) 
 
 // GetLinkedOccurrencesByEntityType returns the LinkedOccurrencesByEntityType field value if set, zero value otherwise.
 func (o *TagDetails) GetLinkedOccurrencesByEntityType() map[string]interface{} {
-	if o == nil || o.LinkedOccurrencesByEntityType == nil {
+	if o == nil || IsNil(o.LinkedOccurrencesByEntityType) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -425,15 +428,15 @@ func (o *TagDetails) GetLinkedOccurrencesByEntityType() map[string]interface{} {
 // GetLinkedOccurrencesByEntityTypeOk returns a tuple with the LinkedOccurrencesByEntityType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetails) GetLinkedOccurrencesByEntityTypeOk() (map[string]interface{}, bool) {
-	if o == nil || o.LinkedOccurrencesByEntityType == nil {
-		return nil, false
+	if o == nil || IsNil(o.LinkedOccurrencesByEntityType) {
+		return map[string]interface{}{}, false
 	}
 	return o.LinkedOccurrencesByEntityType, true
 }
 
 // HasLinkedOccurrencesByEntityType returns a boolean if a field has been set.
 func (o *TagDetails) HasLinkedOccurrencesByEntityType() bool {
-	if o != nil && o.LinkedOccurrencesByEntityType != nil {
+	if o != nil && !IsNil(o.LinkedOccurrencesByEntityType) {
 		return true
 	}
 
@@ -446,44 +449,52 @@ func (o *TagDetails) SetLinkedOccurrencesByEntityType(v map[string]interface{}) 
 }
 
 func (o TagDetails) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.ColorCode != nil {
-		toSerialize["colorCode"] = o.ColorCode
-	}
-	if o.ColorName != nil {
-		toSerialize["colorName"] = o.ColorName
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.TaggedOccurrences != nil {
-		toSerialize["taggedOccurrences"] = o.TaggedOccurrences
-	}
-	if o.LinkedOccurrences != nil {
-		toSerialize["linkedOccurrences"] = o.LinkedOccurrences
-	}
-	if o.TaggedOccurrencesByEntityType != nil {
-		toSerialize["taggedOccurrencesByEntityType"] = o.TaggedOccurrencesByEntityType
-	}
-	if o.LinkedOccurrencesByEntityType != nil {
-		toSerialize["linkedOccurrencesByEntityType"] = o.LinkedOccurrencesByEntityType
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TagDetails) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.ColorCode) {
+		toSerialize["colorCode"] = o.ColorCode
+	}
+	if !IsNil(o.ColorName) {
+		toSerialize["colorName"] = o.ColorName
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.TaggedOccurrences) {
+		toSerialize["taggedOccurrences"] = o.TaggedOccurrences
+	}
+	if !IsNil(o.LinkedOccurrences) {
+		toSerialize["linkedOccurrences"] = o.LinkedOccurrences
+	}
+	if !IsNil(o.TaggedOccurrencesByEntityType) {
+		toSerialize["taggedOccurrencesByEntityType"] = o.TaggedOccurrencesByEntityType
+	}
+	if !IsNil(o.LinkedOccurrencesByEntityType) {
+		toSerialize["linkedOccurrencesByEntityType"] = o.LinkedOccurrencesByEntityType
+	}
+	return toSerialize, nil
 }
 
 type NullableTagDetails struct {

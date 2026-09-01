@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementAllOfMonitor type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOfMonitor{}
+
 // EntitlementAllOfMonitor Only available for tcp_up and http_up subtypes. If enabled, Gateways will monitor this action for responsiveness and act accordingly. See admin manual for more details.
 type EntitlementAllOfMonitor struct {
 	Enabled *bool `json:"enabled,omitempty"`
@@ -49,7 +52,7 @@ func NewEntitlementAllOfMonitorWithDefaults() *EntitlementAllOfMonitor {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *EntitlementAllOfMonitor) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *EntitlementAllOfMonitor) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfMonitor) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -67,7 +70,7 @@ func (o *EntitlementAllOfMonitor) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *EntitlementAllOfMonitor) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *EntitlementAllOfMonitor) SetEnabled(v bool) {
 
 // GetTimeout returns the Timeout field value if set, zero value otherwise.
 func (o *EntitlementAllOfMonitor) GetTimeout() int32 {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		var ret int32
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *EntitlementAllOfMonitor) GetTimeout() int32 {
 // GetTimeoutOk returns a tuple with the Timeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfMonitor) GetTimeoutOk() (*int32, bool) {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		return nil, false
 	}
 	return o.Timeout, true
@@ -99,7 +102,7 @@ func (o *EntitlementAllOfMonitor) GetTimeoutOk() (*int32, bool) {
 
 // HasTimeout returns a boolean if a field has been set.
 func (o *EntitlementAllOfMonitor) HasTimeout() bool {
-	if o != nil && o.Timeout != nil {
+	if o != nil && !IsNil(o.Timeout) {
 		return true
 	}
 
@@ -112,14 +115,22 @@ func (o *EntitlementAllOfMonitor) SetTimeout(v int32) {
 }
 
 func (o EntitlementAllOfMonitor) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Timeout != nil {
-		toSerialize["timeout"] = o.Timeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOfMonitor) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Timeout) {
+		toSerialize["timeout"] = o.Timeout
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementAllOfMonitor struct {

@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the StatsAppliancesList type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesList{}
+
 // StatsAppliancesList struct for StatsAppliancesList
 type StatsAppliancesList struct {
 	// User-friendly name for the stats.
@@ -70,7 +73,7 @@ func NewStatsAppliancesListWithDefaults() *StatsAppliancesList {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -80,7 +83,7 @@ func (o *StatsAppliancesList) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -88,7 +91,7 @@ func (o *StatsAppliancesList) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -102,7 +105,7 @@ func (o *StatsAppliancesList) SetName(v string) {
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -112,7 +115,7 @@ func (o *StatsAppliancesList) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -120,7 +123,7 @@ func (o *StatsAppliancesList) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -134,7 +137,7 @@ func (o *StatsAppliancesList) SetCreationDate(v time.Time) {
 
 // GetRefreshInterval returns the RefreshInterval field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetRefreshInterval() float32 {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		var ret float32
 		return ret
 	}
@@ -144,7 +147,7 @@ func (o *StatsAppliancesList) GetRefreshInterval() float32 {
 // GetRefreshIntervalOk returns a tuple with the RefreshInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetRefreshIntervalOk() (*float32, bool) {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		return nil, false
 	}
 	return o.RefreshInterval, true
@@ -152,7 +155,7 @@ func (o *StatsAppliancesList) GetRefreshIntervalOk() (*float32, bool) {
 
 // HasRefreshInterval returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasRefreshInterval() bool {
-	if o != nil && o.RefreshInterval != nil {
+	if o != nil && !IsNil(o.RefreshInterval) {
 		return true
 	}
 
@@ -166,7 +169,7 @@ func (o *StatsAppliancesList) SetRefreshInterval(v float32) {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -176,7 +179,7 @@ func (o *StatsAppliancesList) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -184,7 +187,7 @@ func (o *StatsAppliancesList) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -198,7 +201,7 @@ func (o *StatsAppliancesList) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -208,7 +211,7 @@ func (o *StatsAppliancesList) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -216,7 +219,7 @@ func (o *StatsAppliancesList) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -230,7 +233,7 @@ func (o *StatsAppliancesList) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -240,7 +243,7 @@ func (o *StatsAppliancesList) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -248,7 +251,7 @@ func (o *StatsAppliancesList) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -262,7 +265,7 @@ func (o *StatsAppliancesList) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -272,7 +275,7 @@ func (o *StatsAppliancesList) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -280,7 +283,7 @@ func (o *StatsAppliancesList) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -294,7 +297,7 @@ func (o *StatsAppliancesList) SetQueries(v []string) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -304,7 +307,7 @@ func (o *StatsAppliancesList) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -312,7 +315,7 @@ func (o *StatsAppliancesList) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -326,7 +329,7 @@ func (o *StatsAppliancesList) SetFilterBy(v []FilterBy) {
 
 // GetControllerCount returns the ControllerCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetControllerCount() float32 {
-	if o == nil || o.ControllerCount == nil {
+	if o == nil || IsNil(o.ControllerCount) {
 		var ret float32
 		return ret
 	}
@@ -336,7 +339,7 @@ func (o *StatsAppliancesList) GetControllerCount() float32 {
 // GetControllerCountOk returns a tuple with the ControllerCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetControllerCountOk() (*float32, bool) {
-	if o == nil || o.ControllerCount == nil {
+	if o == nil || IsNil(o.ControllerCount) {
 		return nil, false
 	}
 	return o.ControllerCount, true
@@ -344,7 +347,7 @@ func (o *StatsAppliancesList) GetControllerCountOk() (*float32, bool) {
 
 // HasControllerCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasControllerCount() bool {
-	if o != nil && o.ControllerCount != nil {
+	if o != nil && !IsNil(o.ControllerCount) {
 		return true
 	}
 
@@ -358,7 +361,7 @@ func (o *StatsAppliancesList) SetControllerCount(v float32) {
 
 // GetGatewayCount returns the GatewayCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetGatewayCount() float32 {
-	if o == nil || o.GatewayCount == nil {
+	if o == nil || IsNil(o.GatewayCount) {
 		var ret float32
 		return ret
 	}
@@ -368,7 +371,7 @@ func (o *StatsAppliancesList) GetGatewayCount() float32 {
 // GetGatewayCountOk returns a tuple with the GatewayCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetGatewayCountOk() (*float32, bool) {
-	if o == nil || o.GatewayCount == nil {
+	if o == nil || IsNil(o.GatewayCount) {
 		return nil, false
 	}
 	return o.GatewayCount, true
@@ -376,7 +379,7 @@ func (o *StatsAppliancesList) GetGatewayCountOk() (*float32, bool) {
 
 // HasGatewayCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasGatewayCount() bool {
-	if o != nil && o.GatewayCount != nil {
+	if o != nil && !IsNil(o.GatewayCount) {
 		return true
 	}
 
@@ -390,7 +393,7 @@ func (o *StatsAppliancesList) SetGatewayCount(v float32) {
 
 // GetApplianceCount returns the ApplianceCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetApplianceCount() float32 {
-	if o == nil || o.ApplianceCount == nil {
+	if o == nil || IsNil(o.ApplianceCount) {
 		var ret float32
 		return ret
 	}
@@ -400,7 +403,7 @@ func (o *StatsAppliancesList) GetApplianceCount() float32 {
 // GetApplianceCountOk returns a tuple with the ApplianceCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetApplianceCountOk() (*float32, bool) {
-	if o == nil || o.ApplianceCount == nil {
+	if o == nil || IsNil(o.ApplianceCount) {
 		return nil, false
 	}
 	return o.ApplianceCount, true
@@ -408,7 +411,7 @@ func (o *StatsAppliancesList) GetApplianceCountOk() (*float32, bool) {
 
 // HasApplianceCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasApplianceCount() bool {
-	if o != nil && o.ApplianceCount != nil {
+	if o != nil && !IsNil(o.ApplianceCount) {
 		return true
 	}
 
@@ -422,7 +425,7 @@ func (o *StatsAppliancesList) SetApplianceCount(v float32) {
 
 // GetLogServerCount returns the LogServerCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetLogServerCount() float32 {
-	if o == nil || o.LogServerCount == nil {
+	if o == nil || IsNil(o.LogServerCount) {
 		var ret float32
 		return ret
 	}
@@ -432,7 +435,7 @@ func (o *StatsAppliancesList) GetLogServerCount() float32 {
 // GetLogServerCountOk returns a tuple with the LogServerCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetLogServerCountOk() (*float32, bool) {
-	if o == nil || o.LogServerCount == nil {
+	if o == nil || IsNil(o.LogServerCount) {
 		return nil, false
 	}
 	return o.LogServerCount, true
@@ -440,7 +443,7 @@ func (o *StatsAppliancesList) GetLogServerCountOk() (*float32, bool) {
 
 // HasLogServerCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasLogServerCount() bool {
-	if o != nil && o.LogServerCount != nil {
+	if o != nil && !IsNil(o.LogServerCount) {
 		return true
 	}
 
@@ -454,7 +457,7 @@ func (o *StatsAppliancesList) SetLogServerCount(v float32) {
 
 // GetLogForwarderCount returns the LogForwarderCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetLogForwarderCount() float32 {
-	if o == nil || o.LogForwarderCount == nil {
+	if o == nil || IsNil(o.LogForwarderCount) {
 		var ret float32
 		return ret
 	}
@@ -464,7 +467,7 @@ func (o *StatsAppliancesList) GetLogForwarderCount() float32 {
 // GetLogForwarderCountOk returns a tuple with the LogForwarderCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetLogForwarderCountOk() (*float32, bool) {
-	if o == nil || o.LogForwarderCount == nil {
+	if o == nil || IsNil(o.LogForwarderCount) {
 		return nil, false
 	}
 	return o.LogForwarderCount, true
@@ -472,7 +475,7 @@ func (o *StatsAppliancesList) GetLogForwarderCountOk() (*float32, bool) {
 
 // HasLogForwarderCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasLogForwarderCount() bool {
-	if o != nil && o.LogForwarderCount != nil {
+	if o != nil && !IsNil(o.LogForwarderCount) {
 		return true
 	}
 
@@ -486,7 +489,7 @@ func (o *StatsAppliancesList) SetLogForwarderCount(v float32) {
 
 // GetConnectorCount returns the ConnectorCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetConnectorCount() float32 {
-	if o == nil || o.ConnectorCount == nil {
+	if o == nil || IsNil(o.ConnectorCount) {
 		var ret float32
 		return ret
 	}
@@ -496,7 +499,7 @@ func (o *StatsAppliancesList) GetConnectorCount() float32 {
 // GetConnectorCountOk returns a tuple with the ConnectorCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetConnectorCountOk() (*float32, bool) {
-	if o == nil || o.ConnectorCount == nil {
+	if o == nil || IsNil(o.ConnectorCount) {
 		return nil, false
 	}
 	return o.ConnectorCount, true
@@ -504,7 +507,7 @@ func (o *StatsAppliancesList) GetConnectorCountOk() (*float32, bool) {
 
 // HasConnectorCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasConnectorCount() bool {
-	if o != nil && o.ConnectorCount != nil {
+	if o != nil && !IsNil(o.ConnectorCount) {
 		return true
 	}
 
@@ -518,7 +521,7 @@ func (o *StatsAppliancesList) SetConnectorCount(v float32) {
 
 // GetPortalCount returns the PortalCount field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetPortalCount() float32 {
-	if o == nil || o.PortalCount == nil {
+	if o == nil || IsNil(o.PortalCount) {
 		var ret float32
 		return ret
 	}
@@ -528,7 +531,7 @@ func (o *StatsAppliancesList) GetPortalCount() float32 {
 // GetPortalCountOk returns a tuple with the PortalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetPortalCountOk() (*float32, bool) {
-	if o == nil || o.PortalCount == nil {
+	if o == nil || IsNil(o.PortalCount) {
 		return nil, false
 	}
 	return o.PortalCount, true
@@ -536,7 +539,7 @@ func (o *StatsAppliancesList) GetPortalCountOk() (*float32, bool) {
 
 // HasPortalCount returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasPortalCount() bool {
-	if o != nil && o.PortalCount != nil {
+	if o != nil && !IsNil(o.PortalCount) {
 		return true
 	}
 
@@ -550,7 +553,7 @@ func (o *StatsAppliancesList) SetPortalCount(v float32) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *StatsAppliancesList) GetData() []StatsAppliancesListAllOfData {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []StatsAppliancesListAllOfData
 		return ret
 	}
@@ -560,7 +563,7 @@ func (o *StatsAppliancesList) GetData() []StatsAppliancesListAllOfData {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesList) GetDataOk() ([]StatsAppliancesListAllOfData, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -568,7 +571,7 @@ func (o *StatsAppliancesList) GetDataOk() ([]StatsAppliancesListAllOfData, bool)
 
 // HasData returns a boolean if a field has been set.
 func (o *StatsAppliancesList) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -581,56 +584,64 @@ func (o *StatsAppliancesList) SetData(v []StatsAppliancesListAllOfData) {
 }
 
 func (o StatsAppliancesList) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.CreationDate != nil {
-		toSerialize["creationDate"] = o.CreationDate
-	}
-	if o.RefreshInterval != nil {
-		toSerialize["refreshInterval"] = o.RefreshInterval
-	}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.ControllerCount != nil {
-		toSerialize["controllerCount"] = o.ControllerCount
-	}
-	if o.GatewayCount != nil {
-		toSerialize["gatewayCount"] = o.GatewayCount
-	}
-	if o.ApplianceCount != nil {
-		toSerialize["applianceCount"] = o.ApplianceCount
-	}
-	if o.LogServerCount != nil {
-		toSerialize["logServerCount"] = o.LogServerCount
-	}
-	if o.LogForwarderCount != nil {
-		toSerialize["logForwarderCount"] = o.LogForwarderCount
-	}
-	if o.ConnectorCount != nil {
-		toSerialize["connectorCount"] = o.ConnectorCount
-	}
-	if o.PortalCount != nil {
-		toSerialize["portalCount"] = o.PortalCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesList) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creationDate"] = o.CreationDate
+	}
+	if !IsNil(o.RefreshInterval) {
+		toSerialize["refreshInterval"] = o.RefreshInterval
+	}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.ControllerCount) {
+		toSerialize["controllerCount"] = o.ControllerCount
+	}
+	if !IsNil(o.GatewayCount) {
+		toSerialize["gatewayCount"] = o.GatewayCount
+	}
+	if !IsNil(o.ApplianceCount) {
+		toSerialize["applianceCount"] = o.ApplianceCount
+	}
+	if !IsNil(o.LogServerCount) {
+		toSerialize["logServerCount"] = o.LogServerCount
+	}
+	if !IsNil(o.LogForwarderCount) {
+		toSerialize["logForwarderCount"] = o.LogForwarderCount
+	}
+	if !IsNil(o.ConnectorCount) {
+		toSerialize["connectorCount"] = o.ConnectorCount
+	}
+	if !IsNil(o.PortalCount) {
+		toSerialize["portalCount"] = o.PortalCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesList struct {

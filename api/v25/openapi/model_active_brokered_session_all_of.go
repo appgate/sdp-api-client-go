@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ActiveBrokeredSessionAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveBrokeredSessionAllOf{}
+
 // ActiveBrokeredSessionAllOf struct for ActiveBrokeredSessionAllOf
 type ActiveBrokeredSessionAllOf struct {
 	// Unique identifier of the brokered session. A 32-char raw-hex guac session token, not a UUID.
@@ -56,7 +59,7 @@ func NewActiveBrokeredSessionAllOfWithDefaults() *ActiveBrokeredSessionAllOf {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *ActiveBrokeredSessionAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +77,7 @@ func (o *ActiveBrokeredSessionAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *ActiveBrokeredSessionAllOf) SetId(v string) {
 
 // GetGatewayId returns the GatewayId field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetGatewayId() string {
-	if o == nil || o.GatewayId == nil {
+	if o == nil || IsNil(o.GatewayId) {
 		var ret string
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *ActiveBrokeredSessionAllOf) GetGatewayId() string {
 // GetGatewayIdOk returns a tuple with the GatewayId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetGatewayIdOk() (*string, bool) {
-	if o == nil || o.GatewayId == nil {
+	if o == nil || IsNil(o.GatewayId) {
 		return nil, false
 	}
 	return o.GatewayId, true
@@ -106,7 +109,7 @@ func (o *ActiveBrokeredSessionAllOf) GetGatewayIdOk() (*string, bool) {
 
 // HasGatewayId returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasGatewayId() bool {
-	if o != nil && o.GatewayId != nil {
+	if o != nil && !IsNil(o.GatewayId) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *ActiveBrokeredSessionAllOf) SetGatewayId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *ActiveBrokeredSessionAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -138,7 +141,7 @@ func (o *ActiveBrokeredSessionAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *ActiveBrokeredSessionAllOf) SetType(v string) {
 
 // GetSite returns the Site field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetSite() string {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		var ret string
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *ActiveBrokeredSessionAllOf) GetSite() string {
 // GetSiteOk returns a tuple with the Site field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetSiteOk() (*string, bool) {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		return nil, false
 	}
 	return o.Site, true
@@ -170,7 +173,7 @@ func (o *ActiveBrokeredSessionAllOf) GetSiteOk() (*string, bool) {
 
 // HasSite returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasSite() bool {
-	if o != nil && o.Site != nil {
+	if o != nil && !IsNil(o.Site) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *ActiveBrokeredSessionAllOf) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *ActiveBrokeredSessionAllOf) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -202,7 +205,7 @@ func (o *ActiveBrokeredSessionAllOf) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *ActiveBrokeredSessionAllOf) SetSiteName(v string) {
 
 // GetEntitlement returns the Entitlement field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetEntitlement() string {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		var ret string
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *ActiveBrokeredSessionAllOf) GetEntitlement() string {
 // GetEntitlementOk returns a tuple with the Entitlement field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetEntitlementOk() (*string, bool) {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		return nil, false
 	}
 	return o.Entitlement, true
@@ -234,7 +237,7 @@ func (o *ActiveBrokeredSessionAllOf) GetEntitlementOk() (*string, bool) {
 
 // HasEntitlement returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasEntitlement() bool {
-	if o != nil && o.Entitlement != nil {
+	if o != nil && !IsNil(o.Entitlement) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *ActiveBrokeredSessionAllOf) SetEntitlement(v string) {
 
 // GetEntitlementName returns the EntitlementName field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetEntitlementName() string {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		var ret string
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *ActiveBrokeredSessionAllOf) GetEntitlementName() string {
 // GetEntitlementNameOk returns a tuple with the EntitlementName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetEntitlementNameOk() (*string, bool) {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		return nil, false
 	}
 	return o.EntitlementName, true
@@ -266,7 +269,7 @@ func (o *ActiveBrokeredSessionAllOf) GetEntitlementNameOk() (*string, bool) {
 
 // HasEntitlementName returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasEntitlementName() bool {
-	if o != nil && o.EntitlementName != nil {
+	if o != nil && !IsNil(o.EntitlementName) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *ActiveBrokeredSessionAllOf) SetEntitlementName(v string) {
 
 // GetHost returns the Host field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetHost() string {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		var ret string
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *ActiveBrokeredSessionAllOf) GetHost() string {
 // GetHostOk returns a tuple with the Host field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetHostOk() (*string, bool) {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		return nil, false
 	}
 	return o.Host, true
@@ -298,7 +301,7 @@ func (o *ActiveBrokeredSessionAllOf) GetHostOk() (*string, bool) {
 
 // HasHost returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasHost() bool {
-	if o != nil && o.Host != nil {
+	if o != nil && !IsNil(o.Host) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *ActiveBrokeredSessionAllOf) SetHost(v string) {
 
 // GetDurationSeconds returns the DurationSeconds field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionAllOf) GetDurationSeconds() int64 {
-	if o == nil || o.DurationSeconds == nil {
+	if o == nil || IsNil(o.DurationSeconds) {
 		var ret int64
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *ActiveBrokeredSessionAllOf) GetDurationSeconds() int64 {
 // GetDurationSecondsOk returns a tuple with the DurationSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionAllOf) GetDurationSecondsOk() (*int64, bool) {
-	if o == nil || o.DurationSeconds == nil {
+	if o == nil || IsNil(o.DurationSeconds) {
 		return nil, false
 	}
 	return o.DurationSeconds, true
@@ -330,7 +333,7 @@ func (o *ActiveBrokeredSessionAllOf) GetDurationSecondsOk() (*int64, bool) {
 
 // HasDurationSeconds returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionAllOf) HasDurationSeconds() bool {
-	if o != nil && o.DurationSeconds != nil {
+	if o != nil && !IsNil(o.DurationSeconds) {
 		return true
 	}
 
@@ -343,35 +346,43 @@ func (o *ActiveBrokeredSessionAllOf) SetDurationSeconds(v int64) {
 }
 
 func (o ActiveBrokeredSessionAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.GatewayId != nil {
-		toSerialize["gatewayId"] = o.GatewayId
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Site != nil {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.Entitlement != nil {
-		toSerialize["entitlement"] = o.Entitlement
-	}
-	if o.EntitlementName != nil {
-		toSerialize["entitlementName"] = o.EntitlementName
-	}
-	if o.Host != nil {
-		toSerialize["host"] = o.Host
-	}
-	if o.DurationSeconds != nil {
-		toSerialize["durationSeconds"] = o.DurationSeconds
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveBrokeredSessionAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.GatewayId) {
+		toSerialize["gatewayId"] = o.GatewayId
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Site) {
+		toSerialize["site"] = o.Site
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.Entitlement) {
+		toSerialize["entitlement"] = o.Entitlement
+	}
+	if !IsNil(o.EntitlementName) {
+		toSerialize["entitlementName"] = o.EntitlementName
+	}
+	if !IsNil(o.Host) {
+		toSerialize["host"] = o.Host
+	}
+	if !IsNil(o.DurationSeconds) {
+		toSerialize["durationSeconds"] = o.DurationSeconds
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveBrokeredSessionAllOf struct {

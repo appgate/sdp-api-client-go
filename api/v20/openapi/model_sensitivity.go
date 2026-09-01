@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Sensitivity type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Sensitivity{}
+
 // Sensitivity Sensitivity settings.
 type Sensitivity struct {
 	LowRisk    *Risk `json:"lowRisk,omitempty"`
@@ -41,7 +44,7 @@ func NewSensitivityWithDefaults() *Sensitivity {
 
 // GetLowRisk returns the LowRisk field value if set, zero value otherwise.
 func (o *Sensitivity) GetLowRisk() Risk {
-	if o == nil || o.LowRisk == nil {
+	if o == nil || IsNil(o.LowRisk) {
 		var ret Risk
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *Sensitivity) GetLowRisk() Risk {
 // GetLowRiskOk returns a tuple with the LowRisk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Sensitivity) GetLowRiskOk() (*Risk, bool) {
-	if o == nil || o.LowRisk == nil {
+	if o == nil || IsNil(o.LowRisk) {
 		return nil, false
 	}
 	return o.LowRisk, true
@@ -59,7 +62,7 @@ func (o *Sensitivity) GetLowRiskOk() (*Risk, bool) {
 
 // HasLowRisk returns a boolean if a field has been set.
 func (o *Sensitivity) HasLowRisk() bool {
-	if o != nil && o.LowRisk != nil {
+	if o != nil && !IsNil(o.LowRisk) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *Sensitivity) SetLowRisk(v Risk) {
 
 // GetMediumRisk returns the MediumRisk field value if set, zero value otherwise.
 func (o *Sensitivity) GetMediumRisk() Risk {
-	if o == nil || o.MediumRisk == nil {
+	if o == nil || IsNil(o.MediumRisk) {
 		var ret Risk
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *Sensitivity) GetMediumRisk() Risk {
 // GetMediumRiskOk returns a tuple with the MediumRisk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Sensitivity) GetMediumRiskOk() (*Risk, bool) {
-	if o == nil || o.MediumRisk == nil {
+	if o == nil || IsNil(o.MediumRisk) {
 		return nil, false
 	}
 	return o.MediumRisk, true
@@ -91,7 +94,7 @@ func (o *Sensitivity) GetMediumRiskOk() (*Risk, bool) {
 
 // HasMediumRisk returns a boolean if a field has been set.
 func (o *Sensitivity) HasMediumRisk() bool {
-	if o != nil && o.MediumRisk != nil {
+	if o != nil && !IsNil(o.MediumRisk) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *Sensitivity) SetMediumRisk(v Risk) {
 
 // GetHighRisk returns the HighRisk field value if set, zero value otherwise.
 func (o *Sensitivity) GetHighRisk() Risk {
-	if o == nil || o.HighRisk == nil {
+	if o == nil || IsNil(o.HighRisk) {
 		var ret Risk
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *Sensitivity) GetHighRisk() Risk {
 // GetHighRiskOk returns a tuple with the HighRisk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Sensitivity) GetHighRiskOk() (*Risk, bool) {
-	if o == nil || o.HighRisk == nil {
+	if o == nil || IsNil(o.HighRisk) {
 		return nil, false
 	}
 	return o.HighRisk, true
@@ -123,7 +126,7 @@ func (o *Sensitivity) GetHighRiskOk() (*Risk, bool) {
 
 // HasHighRisk returns a boolean if a field has been set.
 func (o *Sensitivity) HasHighRisk() bool {
-	if o != nil && o.HighRisk != nil {
+	if o != nil && !IsNil(o.HighRisk) {
 		return true
 	}
 
@@ -136,17 +139,25 @@ func (o *Sensitivity) SetHighRisk(v Risk) {
 }
 
 func (o Sensitivity) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.LowRisk != nil {
-		toSerialize["lowRisk"] = o.LowRisk
-	}
-	if o.MediumRisk != nil {
-		toSerialize["mediumRisk"] = o.MediumRisk
-	}
-	if o.HighRisk != nil {
-		toSerialize["highRisk"] = o.HighRisk
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Sensitivity) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.LowRisk) {
+		toSerialize["lowRisk"] = o.LowRisk
+	}
+	if !IsNil(o.MediumRisk) {
+		toSerialize["mediumRisk"] = o.MediumRisk
+	}
+	if !IsNil(o.HighRisk) {
+		toSerialize["highRisk"] = o.HighRisk
+	}
+	return toSerialize, nil
 }
 
 type NullableSensitivity struct {

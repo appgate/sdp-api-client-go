@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdminMessagesSummarize type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMessagesSummarize{}
+
 // AdminMessagesSummarize struct for AdminMessagesSummarize
 type AdminMessagesSummarize struct {
 	Data []AdminMessagesSummarizeDataInner `json:"data,omitempty"`
@@ -39,7 +42,7 @@ func NewAdminMessagesSummarizeWithDefaults() *AdminMessagesSummarize {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AdminMessagesSummarize) GetData() []AdminMessagesSummarizeDataInner {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []AdminMessagesSummarizeDataInner
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *AdminMessagesSummarize) GetData() []AdminMessagesSummarizeDataInner {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarize) GetDataOk() ([]AdminMessagesSummarizeDataInner, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -57,7 +60,7 @@ func (o *AdminMessagesSummarize) GetDataOk() ([]AdminMessagesSummarizeDataInner,
 
 // HasData returns a boolean if a field has been set.
 func (o *AdminMessagesSummarize) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *AdminMessagesSummarize) SetData(v []AdminMessagesSummarizeDataInner) {
 }
 
 func (o AdminMessagesSummarize) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMessagesSummarize) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMessagesSummarize struct {

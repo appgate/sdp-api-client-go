@@ -51,7 +51,7 @@ func (dst *EntitlementScriptTestResultResultInner) UnmarshalJSON(data []byte) er
 		dst.string = nil
 	}
 
-	return fmt.Errorf("Data failed to match schemas in anyOf(EntitlementScriptTestResultResultInner)")
+	return fmt.Errorf("data failed to match schemas in anyOf(EntitlementScriptTestResultResultInner)")
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON

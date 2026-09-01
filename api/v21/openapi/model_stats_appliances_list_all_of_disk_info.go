@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StatsAppliancesListAllOfDiskInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesListAllOfDiskInfo{}
+
 // StatsAppliancesListAllOfDiskInfo Disk usage information.
 type StatsAppliancesListAllOfDiskInfo struct {
 	// Total disk space in bytes.
@@ -44,7 +47,7 @@ func NewStatsAppliancesListAllOfDiskInfoWithDefaults() *StatsAppliancesListAllOf
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfDiskInfo) GetTotal() float32 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret float32
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetTotal() float32 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) GetTotalOk() (*float32, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -62,7 +65,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetTotalOk() (*float32, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) SetTotal(v float32) {
 
 // GetUsed returns the Used field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfDiskInfo) GetUsed() float32 {
-	if o == nil || o.Used == nil {
+	if o == nil || IsNil(o.Used) {
 		var ret float32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetUsed() float32 {
 // GetUsedOk returns a tuple with the Used field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) GetUsedOk() (*float32, bool) {
-	if o == nil || o.Used == nil {
+	if o == nil || IsNil(o.Used) {
 		return nil, false
 	}
 	return o.Used, true
@@ -94,7 +97,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetUsedOk() (*float32, bool) {
 
 // HasUsed returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) HasUsed() bool {
-	if o != nil && o.Used != nil {
+	if o != nil && !IsNil(o.Used) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) SetUsed(v float32) {
 
 // GetFree returns the Free field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfDiskInfo) GetFree() float32 {
-	if o == nil || o.Free == nil {
+	if o == nil || IsNil(o.Free) {
 		var ret float32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetFree() float32 {
 // GetFreeOk returns a tuple with the Free field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) GetFreeOk() (*float32, bool) {
-	if o == nil || o.Free == nil {
+	if o == nil || IsNil(o.Free) {
 		return nil, false
 	}
 	return o.Free, true
@@ -126,7 +129,7 @@ func (o *StatsAppliancesListAllOfDiskInfo) GetFreeOk() (*float32, bool) {
 
 // HasFree returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfDiskInfo) HasFree() bool {
-	if o != nil && o.Free != nil {
+	if o != nil && !IsNil(o.Free) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *StatsAppliancesListAllOfDiskInfo) SetFree(v float32) {
 }
 
 func (o StatsAppliancesListAllOfDiskInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
-	}
-	if o.Used != nil {
-		toSerialize["used"] = o.Used
-	}
-	if o.Free != nil {
-		toSerialize["free"] = o.Free
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesListAllOfDiskInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.Used) {
+		toSerialize["used"] = o.Used
+	}
+	if !IsNil(o.Free) {
+		toSerialize["free"] = o.Free
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesListAllOfDiskInfo struct {

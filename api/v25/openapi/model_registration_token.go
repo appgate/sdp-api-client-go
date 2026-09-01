@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RegistrationToken type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RegistrationToken{}
+
 // RegistrationToken struct for RegistrationToken
 type RegistrationToken struct {
 	// Registration token provided by ZTP.
@@ -64,11 +67,17 @@ func (o *RegistrationToken) SetToken(v string) {
 }
 
 func (o RegistrationToken) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["token"] = o.Token
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RegistrationToken) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["token"] = o.Token
+	return toSerialize, nil
 }
 
 type NullableRegistrationToken struct {

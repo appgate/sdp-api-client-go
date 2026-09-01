@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceWithSessionsRoleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceWithSessionsRoleAllOf{}
+
 // ApplianceWithSessionsRoleAllOf struct for ApplianceWithSessionsRoleAllOf
 type ApplianceWithSessionsRoleAllOf struct {
 	// Number of active sessions on the Gateway or Portal.
@@ -40,7 +43,7 @@ func NewApplianceWithSessionsRoleAllOfWithDefaults() *ApplianceWithSessionsRoleA
 
 // GetNumberOfSessions returns the NumberOfSessions field value if set, zero value otherwise.
 func (o *ApplianceWithSessionsRoleAllOf) GetNumberOfSessions() int32 {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		var ret int32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ApplianceWithSessionsRoleAllOf) GetNumberOfSessions() int32 {
 // GetNumberOfSessionsOk returns a tuple with the NumberOfSessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithSessionsRoleAllOf) GetNumberOfSessionsOk() (*int32, bool) {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		return nil, false
 	}
 	return o.NumberOfSessions, true
@@ -58,7 +61,7 @@ func (o *ApplianceWithSessionsRoleAllOf) GetNumberOfSessionsOk() (*int32, bool) 
 
 // HasNumberOfSessions returns a boolean if a field has been set.
 func (o *ApplianceWithSessionsRoleAllOf) HasNumberOfSessions() bool {
-	if o != nil && o.NumberOfSessions != nil {
+	if o != nil && !IsNil(o.NumberOfSessions) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ApplianceWithSessionsRoleAllOf) SetNumberOfSessions(v int32) {
 }
 
 func (o ApplianceWithSessionsRoleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.NumberOfSessions != nil {
-		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceWithSessionsRoleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.NumberOfSessions) {
+		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceWithSessionsRoleAllOf struct {

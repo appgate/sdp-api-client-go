@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AwsKinesisAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AwsKinesisAllOf{}
+
 // AwsKinesisAllOf struct for AwsKinesisAllOf
 type AwsKinesisAllOf struct {
 	// AWS Kinesis type
@@ -106,7 +109,7 @@ func (o *AwsKinesisAllOf) SetStreamName(v string) {
 
 // GetBatchSize returns the BatchSize field value if set, zero value otherwise.
 func (o *AwsKinesisAllOf) GetBatchSize() int32 {
-	if o == nil || o.BatchSize == nil {
+	if o == nil || IsNil(o.BatchSize) {
 		var ret int32
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *AwsKinesisAllOf) GetBatchSize() int32 {
 // GetBatchSizeOk returns a tuple with the BatchSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesisAllOf) GetBatchSizeOk() (*int32, bool) {
-	if o == nil || o.BatchSize == nil {
+	if o == nil || IsNil(o.BatchSize) {
 		return nil, false
 	}
 	return o.BatchSize, true
@@ -124,7 +127,7 @@ func (o *AwsKinesisAllOf) GetBatchSizeOk() (*int32, bool) {
 
 // HasBatchSize returns a boolean if a field has been set.
 func (o *AwsKinesisAllOf) HasBatchSize() bool {
-	if o != nil && o.BatchSize != nil {
+	if o != nil && !IsNil(o.BatchSize) {
 		return true
 	}
 
@@ -138,7 +141,7 @@ func (o *AwsKinesisAllOf) SetBatchSize(v int32) {
 
 // GetNumberOfPartitionKeys returns the NumberOfPartitionKeys field value if set, zero value otherwise.
 func (o *AwsKinesisAllOf) GetNumberOfPartitionKeys() int32 {
-	if o == nil || o.NumberOfPartitionKeys == nil {
+	if o == nil || IsNil(o.NumberOfPartitionKeys) {
 		var ret int32
 		return ret
 	}
@@ -148,7 +151,7 @@ func (o *AwsKinesisAllOf) GetNumberOfPartitionKeys() int32 {
 // GetNumberOfPartitionKeysOk returns a tuple with the NumberOfPartitionKeys field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesisAllOf) GetNumberOfPartitionKeysOk() (*int32, bool) {
-	if o == nil || o.NumberOfPartitionKeys == nil {
+	if o == nil || IsNil(o.NumberOfPartitionKeys) {
 		return nil, false
 	}
 	return o.NumberOfPartitionKeys, true
@@ -156,7 +159,7 @@ func (o *AwsKinesisAllOf) GetNumberOfPartitionKeysOk() (*int32, bool) {
 
 // HasNumberOfPartitionKeys returns a boolean if a field has been set.
 func (o *AwsKinesisAllOf) HasNumberOfPartitionKeys() bool {
-	if o != nil && o.NumberOfPartitionKeys != nil {
+	if o != nil && !IsNil(o.NumberOfPartitionKeys) {
 		return true
 	}
 
@@ -170,7 +173,7 @@ func (o *AwsKinesisAllOf) SetNumberOfPartitionKeys(v int32) {
 
 // GetFilter returns the Filter field value if set, zero value otherwise.
 func (o *AwsKinesisAllOf) GetFilter() string {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		var ret string
 		return ret
 	}
@@ -180,7 +183,7 @@ func (o *AwsKinesisAllOf) GetFilter() string {
 // GetFilterOk returns a tuple with the Filter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesisAllOf) GetFilterOk() (*string, bool) {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		return nil, false
 	}
 	return o.Filter, true
@@ -188,7 +191,7 @@ func (o *AwsKinesisAllOf) GetFilterOk() (*string, bool) {
 
 // HasFilter returns a boolean if a field has been set.
 func (o *AwsKinesisAllOf) HasFilter() bool {
-	if o != nil && o.Filter != nil {
+	if o != nil && !IsNil(o.Filter) {
 		return true
 	}
 
@@ -201,23 +204,27 @@ func (o *AwsKinesisAllOf) SetFilter(v string) {
 }
 
 func (o AwsKinesisAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["streamName"] = o.StreamName
-	}
-	if o.BatchSize != nil {
-		toSerialize["batchSize"] = o.BatchSize
-	}
-	if o.NumberOfPartitionKeys != nil {
-		toSerialize["numberOfPartitionKeys"] = o.NumberOfPartitionKeys
-	}
-	if o.Filter != nil {
-		toSerialize["filter"] = o.Filter
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AwsKinesisAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["streamName"] = o.StreamName
+	if !IsNil(o.BatchSize) {
+		toSerialize["batchSize"] = o.BatchSize
+	}
+	if !IsNil(o.NumberOfPartitionKeys) {
+		toSerialize["numberOfPartitionKeys"] = o.NumberOfPartitionKeys
+	}
+	if !IsNil(o.Filter) {
+		toSerialize["filter"] = o.Filter
+	}
+	return toSerialize, nil
 }
 
 type NullableAwsKinesisAllOf struct {

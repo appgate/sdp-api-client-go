@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AllowSourcesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AllowSourcesInner{}
+
 // AllowSourcesInner struct for AllowSourcesInner
 type AllowSourcesInner struct {
 	// IP address to allow connection.
@@ -44,7 +47,7 @@ func NewAllowSourcesInnerWithDefaults() *AllowSourcesInner {
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *AllowSourcesInner) GetAddress() string {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AllowSourcesInner) GetAddress() string {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllowSourcesInner) GetAddressOk() (*string, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -62,7 +65,7 @@ func (o *AllowSourcesInner) GetAddressOk() (*string, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *AllowSourcesInner) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AllowSourcesInner) SetAddress(v string) {
 
 // GetNetmask returns the Netmask field value if set, zero value otherwise.
 func (o *AllowSourcesInner) GetNetmask() int32 {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		var ret int32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AllowSourcesInner) GetNetmask() int32 {
 // GetNetmaskOk returns a tuple with the Netmask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllowSourcesInner) GetNetmaskOk() (*int32, bool) {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		return nil, false
 	}
 	return o.Netmask, true
@@ -94,7 +97,7 @@ func (o *AllowSourcesInner) GetNetmaskOk() (*int32, bool) {
 
 // HasNetmask returns a boolean if a field has been set.
 func (o *AllowSourcesInner) HasNetmask() bool {
-	if o != nil && o.Netmask != nil {
+	if o != nil && !IsNil(o.Netmask) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AllowSourcesInner) SetNetmask(v int32) {
 
 // GetNic returns the Nic field value if set, zero value otherwise.
 func (o *AllowSourcesInner) GetNic() string {
-	if o == nil || o.Nic == nil {
+	if o == nil || IsNil(o.Nic) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AllowSourcesInner) GetNic() string {
 // GetNicOk returns a tuple with the Nic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AllowSourcesInner) GetNicOk() (*string, bool) {
-	if o == nil || o.Nic == nil {
+	if o == nil || IsNil(o.Nic) {
 		return nil, false
 	}
 	return o.Nic, true
@@ -126,7 +129,7 @@ func (o *AllowSourcesInner) GetNicOk() (*string, bool) {
 
 // HasNic returns a boolean if a field has been set.
 func (o *AllowSourcesInner) HasNic() bool {
-	if o != nil && o.Nic != nil {
+	if o != nil && !IsNil(o.Nic) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *AllowSourcesInner) SetNic(v string) {
 }
 
 func (o AllowSourcesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Netmask != nil {
-		toSerialize["netmask"] = o.Netmask
-	}
-	if o.Nic != nil {
-		toSerialize["nic"] = o.Nic
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AllowSourcesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Netmask) {
+		toSerialize["netmask"] = o.Netmask
+	}
+	if !IsNil(o.Nic) {
+		toSerialize["nic"] = o.Nic
+	}
+	return toSerialize, nil
 }
 
 type NullableAllowSourcesInner struct {

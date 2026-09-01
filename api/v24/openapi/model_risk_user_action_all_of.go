@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RiskUserActionAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RiskUserActionAllOf{}
+
 // RiskUserActionAllOf struct for RiskUserActionAllOf
 type RiskUserActionAllOf struct {
 	// User Action type. May not be DisplayMessage or Reason for Risk Access.
@@ -40,7 +43,7 @@ func NewRiskUserActionAllOfWithDefaults() *RiskUserActionAllOf {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *RiskUserActionAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *RiskUserActionAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskUserActionAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -58,7 +61,7 @@ func (o *RiskUserActionAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *RiskUserActionAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *RiskUserActionAllOf) SetType(v string) {
 }
 
 func (o RiskUserActionAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RiskUserActionAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	return toSerialize, nil
 }
 
 type NullableRiskUserActionAllOf struct {

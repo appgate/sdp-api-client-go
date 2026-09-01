@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ActiveSessionsDnAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveSessionsDnAllOf{}
+
 // ActiveSessionsDnAllOf struct for ActiveSessionsDnAllOf
 type ActiveSessionsDnAllOf struct {
 	Data             []ActiveSession   `json:"data,omitempty"`
@@ -40,7 +43,7 @@ func NewActiveSessionsDnAllOfWithDefaults() *ActiveSessionsDnAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ActiveSessionsDnAllOf) GetData() []ActiveSession {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []ActiveSession
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ActiveSessionsDnAllOf) GetData() []ActiveSession {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessionsDnAllOf) GetDataOk() ([]ActiveSession, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *ActiveSessionsDnAllOf) GetDataOk() ([]ActiveSession, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ActiveSessionsDnAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *ActiveSessionsDnAllOf) SetData(v []ActiveSession) {
 
 // GetGeolocationQuery returns the GeolocationQuery field value if set, zero value otherwise.
 func (o *ActiveSessionsDnAllOf) GetGeolocationQuery() GeolocationQuery {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		var ret GeolocationQuery
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *ActiveSessionsDnAllOf) GetGeolocationQuery() GeolocationQuery {
 // GetGeolocationQueryOk returns a tuple with the GeolocationQuery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessionsDnAllOf) GetGeolocationQueryOk() (*GeolocationQuery, bool) {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		return nil, false
 	}
 	return o.GeolocationQuery, true
@@ -90,7 +93,7 @@ func (o *ActiveSessionsDnAllOf) GetGeolocationQueryOk() (*GeolocationQuery, bool
 
 // HasGeolocationQuery returns a boolean if a field has been set.
 func (o *ActiveSessionsDnAllOf) HasGeolocationQuery() bool {
-	if o != nil && o.GeolocationQuery != nil {
+	if o != nil && !IsNil(o.GeolocationQuery) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *ActiveSessionsDnAllOf) SetGeolocationQuery(v GeolocationQuery) {
 }
 
 func (o ActiveSessionsDnAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.GeolocationQuery != nil {
-		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveSessionsDnAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.GeolocationQuery) {
+		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveSessionsDnAllOf struct {

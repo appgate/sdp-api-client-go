@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServiceUserListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServiceUserListAllOf{}
+
 // ServiceUserListAllOf Represents a list of Service Users.
 type ServiceUserListAllOf struct {
 	// List of Service Users.
@@ -40,7 +43,7 @@ func NewServiceUserListAllOfWithDefaults() *ServiceUserListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ServiceUserListAllOf) GetData() []ServiceUser {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []ServiceUser
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ServiceUserListAllOf) GetData() []ServiceUser {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserListAllOf) GetDataOk() ([]ServiceUser, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *ServiceUserListAllOf) GetDataOk() ([]ServiceUser, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ServiceUserListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ServiceUserListAllOf) SetData(v []ServiceUser) {
 }
 
 func (o ServiceUserListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServiceUserListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableServiceUserListAllOf struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the OnBoardedDeviceAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnBoardedDeviceAllOf{}
 
 // OnBoardedDeviceAllOf struct for OnBoardedDeviceAllOf
 type OnBoardedDeviceAllOf struct {
@@ -47,7 +50,7 @@ func NewOnBoardedDeviceAllOfWithDefaults() *OnBoardedDeviceAllOf {
 
 // GetDeviceType returns the DeviceType field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetDeviceType() string {
-	if o == nil || o.DeviceType == nil {
+	if o == nil || IsNil(o.DeviceType) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *OnBoardedDeviceAllOf) GetDeviceType() string {
 // GetDeviceTypeOk returns a tuple with the DeviceType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetDeviceTypeOk() (*string, bool) {
-	if o == nil || o.DeviceType == nil {
+	if o == nil || IsNil(o.DeviceType) {
 		return nil, false
 	}
 	return o.DeviceType, true
@@ -65,7 +68,7 @@ func (o *OnBoardedDeviceAllOf) GetDeviceTypeOk() (*string, bool) {
 
 // HasDeviceType returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasDeviceType() bool {
-	if o != nil && o.DeviceType != nil {
+	if o != nil && !IsNil(o.DeviceType) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *OnBoardedDeviceAllOf) SetDeviceType(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *OnBoardedDeviceAllOf) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -97,7 +100,7 @@ func (o *OnBoardedDeviceAllOf) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *OnBoardedDeviceAllOf) SetHostname(v string) {
 
 // GetOnBoardedAt returns the OnBoardedAt field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetOnBoardedAt() time.Time {
-	if o == nil || o.OnBoardedAt == nil {
+	if o == nil || IsNil(o.OnBoardedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *OnBoardedDeviceAllOf) GetOnBoardedAt() time.Time {
 // GetOnBoardedAtOk returns a tuple with the OnBoardedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetOnBoardedAtOk() (*time.Time, bool) {
-	if o == nil || o.OnBoardedAt == nil {
+	if o == nil || IsNil(o.OnBoardedAt) {
 		return nil, false
 	}
 	return o.OnBoardedAt, true
@@ -129,7 +132,7 @@ func (o *OnBoardedDeviceAllOf) GetOnBoardedAtOk() (*time.Time, bool) {
 
 // HasOnBoardedAt returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasOnBoardedAt() bool {
-	if o != nil && o.OnBoardedAt != nil {
+	if o != nil && !IsNil(o.OnBoardedAt) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *OnBoardedDeviceAllOf) SetOnBoardedAt(v time.Time) {
 
 // GetLastSeenAt returns the LastSeenAt field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetLastSeenAt() time.Time {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		var ret time.Time
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *OnBoardedDeviceAllOf) GetLastSeenAt() time.Time {
 // GetLastSeenAtOk returns a tuple with the LastSeenAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetLastSeenAtOk() (*time.Time, bool) {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		return nil, false
 	}
 	return o.LastSeenAt, true
@@ -161,7 +164,7 @@ func (o *OnBoardedDeviceAllOf) GetLastSeenAtOk() (*time.Time, bool) {
 
 // HasLastSeenAt returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasLastSeenAt() bool {
-	if o != nil && o.LastSeenAt != nil {
+	if o != nil && !IsNil(o.LastSeenAt) {
 		return true
 	}
 
@@ -174,20 +177,28 @@ func (o *OnBoardedDeviceAllOf) SetLastSeenAt(v time.Time) {
 }
 
 func (o OnBoardedDeviceAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DeviceType != nil {
-		toSerialize["device_type"] = o.DeviceType
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.OnBoardedAt != nil {
-		toSerialize["onBoardedAt"] = o.OnBoardedAt
-	}
-	if o.LastSeenAt != nil {
-		toSerialize["lastSeenAt"] = o.LastSeenAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnBoardedDeviceAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DeviceType) {
+		toSerialize["device_type"] = o.DeviceType
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.OnBoardedAt) {
+		toSerialize["onBoardedAt"] = o.OnBoardedAt
+	}
+	if !IsNil(o.LastSeenAt) {
+		toSerialize["lastSeenAt"] = o.LastSeenAt
+	}
+	return toSerialize, nil
 }
 
 type NullableOnBoardedDeviceAllOf struct {

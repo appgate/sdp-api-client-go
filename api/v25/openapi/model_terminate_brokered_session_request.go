@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TerminateBrokeredSessionRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TerminateBrokeredSessionRequest{}
+
 // TerminateBrokeredSessionRequest struct for TerminateBrokeredSessionRequest
 type TerminateBrokeredSessionRequest struct {
 	// The ID of the Gateway that owns the session. Returned by the list API.
@@ -118,17 +121,19 @@ func (o *TerminateBrokeredSessionRequest) SetReason(v string) {
 }
 
 func (o TerminateBrokeredSessionRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["gatewayId"] = o.GatewayId
-	}
-	if true {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if true {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TerminateBrokeredSessionRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["gatewayId"] = o.GatewayId
+	toSerialize["distinguishedName"] = o.DistinguishedName
+	toSerialize["reason"] = o.Reason
+	return toSerialize, nil
 }
 
 type NullableTerminateBrokeredSessionRequest struct {

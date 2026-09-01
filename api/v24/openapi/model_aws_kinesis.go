@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AwsKinesis type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AwsKinesis{}
+
 // AwsKinesis struct for AwsKinesis
 type AwsKinesis struct {
 	// AWS ID to login. Only required if AWS Access Keys are being used to authenticate.
@@ -66,7 +69,7 @@ func NewAwsKinesisWithDefaults() *AwsKinesis {
 
 // GetAwsId returns the AwsId field value if set, zero value otherwise.
 func (o *AwsKinesis) GetAwsId() string {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		var ret string
 		return ret
 	}
@@ -76,7 +79,7 @@ func (o *AwsKinesis) GetAwsId() string {
 // GetAwsIdOk returns a tuple with the AwsId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetAwsIdOk() (*string, bool) {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		return nil, false
 	}
 	return o.AwsId, true
@@ -84,7 +87,7 @@ func (o *AwsKinesis) GetAwsIdOk() (*string, bool) {
 
 // HasAwsId returns a boolean if a field has been set.
 func (o *AwsKinesis) HasAwsId() bool {
-	if o != nil && o.AwsId != nil {
+	if o != nil && !IsNil(o.AwsId) {
 		return true
 	}
 
@@ -98,7 +101,7 @@ func (o *AwsKinesis) SetAwsId(v string) {
 
 // GetAwsSecret returns the AwsSecret field value if set, zero value otherwise.
 func (o *AwsKinesis) GetAwsSecret() string {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		var ret string
 		return ret
 	}
@@ -108,7 +111,7 @@ func (o *AwsKinesis) GetAwsSecret() string {
 // GetAwsSecretOk returns a tuple with the AwsSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetAwsSecretOk() (*string, bool) {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		return nil, false
 	}
 	return o.AwsSecret, true
@@ -116,7 +119,7 @@ func (o *AwsKinesis) GetAwsSecretOk() (*string, bool) {
 
 // HasAwsSecret returns a boolean if a field has been set.
 func (o *AwsKinesis) HasAwsSecret() bool {
-	if o != nil && o.AwsSecret != nil {
+	if o != nil && !IsNil(o.AwsSecret) {
 		return true
 	}
 
@@ -130,7 +133,7 @@ func (o *AwsKinesis) SetAwsSecret(v string) {
 
 // GetAwsRegion returns the AwsRegion field value if set, zero value otherwise.
 func (o *AwsKinesis) GetAwsRegion() string {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		var ret string
 		return ret
 	}
@@ -140,7 +143,7 @@ func (o *AwsKinesis) GetAwsRegion() string {
 // GetAwsRegionOk returns a tuple with the AwsRegion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetAwsRegionOk() (*string, bool) {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		return nil, false
 	}
 	return o.AwsRegion, true
@@ -148,7 +151,7 @@ func (o *AwsKinesis) GetAwsRegionOk() (*string, bool) {
 
 // HasAwsRegion returns a boolean if a field has been set.
 func (o *AwsKinesis) HasAwsRegion() bool {
-	if o != nil && o.AwsRegion != nil {
+	if o != nil && !IsNil(o.AwsRegion) {
 		return true
 	}
 
@@ -162,7 +165,7 @@ func (o *AwsKinesis) SetAwsRegion(v string) {
 
 // GetUseInstanceCredentials returns the UseInstanceCredentials field value if set, zero value otherwise.
 func (o *AwsKinesis) GetUseInstanceCredentials() bool {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		var ret bool
 		return ret
 	}
@@ -172,7 +175,7 @@ func (o *AwsKinesis) GetUseInstanceCredentials() bool {
 // GetUseInstanceCredentialsOk returns a tuple with the UseInstanceCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetUseInstanceCredentialsOk() (*bool, bool) {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		return nil, false
 	}
 	return o.UseInstanceCredentials, true
@@ -180,7 +183,7 @@ func (o *AwsKinesis) GetUseInstanceCredentialsOk() (*bool, bool) {
 
 // HasUseInstanceCredentials returns a boolean if a field has been set.
 func (o *AwsKinesis) HasUseInstanceCredentials() bool {
-	if o != nil && o.UseInstanceCredentials != nil {
+	if o != nil && !IsNil(o.UseInstanceCredentials) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *AwsKinesis) SetStreamName(v string) {
 
 // GetBatchSize returns the BatchSize field value if set, zero value otherwise.
 func (o *AwsKinesis) GetBatchSize() int32 {
-	if o == nil || o.BatchSize == nil {
+	if o == nil || IsNil(o.BatchSize) {
 		var ret int32
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *AwsKinesis) GetBatchSize() int32 {
 // GetBatchSizeOk returns a tuple with the BatchSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetBatchSizeOk() (*int32, bool) {
-	if o == nil || o.BatchSize == nil {
+	if o == nil || IsNil(o.BatchSize) {
 		return nil, false
 	}
 	return o.BatchSize, true
@@ -260,7 +263,7 @@ func (o *AwsKinesis) GetBatchSizeOk() (*int32, bool) {
 
 // HasBatchSize returns a boolean if a field has been set.
 func (o *AwsKinesis) HasBatchSize() bool {
-	if o != nil && o.BatchSize != nil {
+	if o != nil && !IsNil(o.BatchSize) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *AwsKinesis) SetBatchSize(v int32) {
 
 // GetNumberOfPartitionKeys returns the NumberOfPartitionKeys field value if set, zero value otherwise.
 func (o *AwsKinesis) GetNumberOfPartitionKeys() int32 {
-	if o == nil || o.NumberOfPartitionKeys == nil {
+	if o == nil || IsNil(o.NumberOfPartitionKeys) {
 		var ret int32
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *AwsKinesis) GetNumberOfPartitionKeys() int32 {
 // GetNumberOfPartitionKeysOk returns a tuple with the NumberOfPartitionKeys field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetNumberOfPartitionKeysOk() (*int32, bool) {
-	if o == nil || o.NumberOfPartitionKeys == nil {
+	if o == nil || IsNil(o.NumberOfPartitionKeys) {
 		return nil, false
 	}
 	return o.NumberOfPartitionKeys, true
@@ -292,7 +295,7 @@ func (o *AwsKinesis) GetNumberOfPartitionKeysOk() (*int32, bool) {
 
 // HasNumberOfPartitionKeys returns a boolean if a field has been set.
 func (o *AwsKinesis) HasNumberOfPartitionKeys() bool {
-	if o != nil && o.NumberOfPartitionKeys != nil {
+	if o != nil && !IsNil(o.NumberOfPartitionKeys) {
 		return true
 	}
 
@@ -306,7 +309,7 @@ func (o *AwsKinesis) SetNumberOfPartitionKeys(v int32) {
 
 // GetFilter returns the Filter field value if set, zero value otherwise.
 func (o *AwsKinesis) GetFilter() string {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		var ret string
 		return ret
 	}
@@ -316,7 +319,7 @@ func (o *AwsKinesis) GetFilter() string {
 // GetFilterOk returns a tuple with the Filter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsKinesis) GetFilterOk() (*string, bool) {
-	if o == nil || o.Filter == nil {
+	if o == nil || IsNil(o.Filter) {
 		return nil, false
 	}
 	return o.Filter, true
@@ -324,7 +327,7 @@ func (o *AwsKinesis) GetFilterOk() (*string, bool) {
 
 // HasFilter returns a boolean if a field has been set.
 func (o *AwsKinesis) HasFilter() bool {
-	if o != nil && o.Filter != nil {
+	if o != nil && !IsNil(o.Filter) {
 		return true
 	}
 
@@ -337,35 +340,39 @@ func (o *AwsKinesis) SetFilter(v string) {
 }
 
 func (o AwsKinesis) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AwsId != nil {
-		toSerialize["awsId"] = o.AwsId
-	}
-	if o.AwsSecret != nil {
-		toSerialize["awsSecret"] = o.AwsSecret
-	}
-	if o.AwsRegion != nil {
-		toSerialize["awsRegion"] = o.AwsRegion
-	}
-	if o.UseInstanceCredentials != nil {
-		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["streamName"] = o.StreamName
-	}
-	if o.BatchSize != nil {
-		toSerialize["batchSize"] = o.BatchSize
-	}
-	if o.NumberOfPartitionKeys != nil {
-		toSerialize["numberOfPartitionKeys"] = o.NumberOfPartitionKeys
-	}
-	if o.Filter != nil {
-		toSerialize["filter"] = o.Filter
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AwsKinesis) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AwsId) {
+		toSerialize["awsId"] = o.AwsId
+	}
+	if !IsNil(o.AwsSecret) {
+		toSerialize["awsSecret"] = o.AwsSecret
+	}
+	if !IsNil(o.AwsRegion) {
+		toSerialize["awsRegion"] = o.AwsRegion
+	}
+	if !IsNil(o.UseInstanceCredentials) {
+		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
+	}
+	toSerialize["type"] = o.Type
+	toSerialize["streamName"] = o.StreamName
+	if !IsNil(o.BatchSize) {
+		toSerialize["batchSize"] = o.BatchSize
+	}
+	if !IsNil(o.NumberOfPartitionKeys) {
+		toSerialize["numberOfPartitionKeys"] = o.NumberOfPartitionKeys
+	}
+	if !IsNil(o.Filter) {
+		toSerialize["filter"] = o.Filter
+	}
+	return toSerialize, nil
 }
 
 type NullableAwsKinesis struct {

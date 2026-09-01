@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Fido2DeviceAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Fido2DeviceAllOf{}
+
 // Fido2DeviceAllOf struct for Fido2DeviceAllOf
 type Fido2DeviceAllOf struct {
 	// The device ID reported by the FIDO2 device during registration. May be empty.
@@ -45,7 +48,7 @@ func NewFido2DeviceAllOfWithDefaults() *Fido2DeviceAllOf {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *Fido2DeviceAllOf) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -63,7 +66,7 @@ func (o *Fido2DeviceAllOf) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *Fido2DeviceAllOf) SetDeviceId(v string) {
 
 // GetDeviceName returns the DeviceName field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetDeviceName() string {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *Fido2DeviceAllOf) GetDeviceName() string {
 // GetDeviceNameOk returns a tuple with the DeviceName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetDeviceNameOk() (*string, bool) {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		return nil, false
 	}
 	return o.DeviceName, true
@@ -95,7 +98,7 @@ func (o *Fido2DeviceAllOf) GetDeviceNameOk() (*string, bool) {
 
 // HasDeviceName returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasDeviceName() bool {
-	if o != nil && o.DeviceName != nil {
+	if o != nil && !IsNil(o.DeviceName) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *Fido2DeviceAllOf) SetDeviceName(v string) {
 
 // GetRegistered returns the Registered field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetRegistered() time.Time {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		var ret time.Time
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *Fido2DeviceAllOf) GetRegistered() time.Time {
 // GetRegisteredOk returns a tuple with the Registered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetRegisteredOk() (*time.Time, bool) {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		return nil, false
 	}
 	return o.Registered, true
@@ -127,7 +130,7 @@ func (o *Fido2DeviceAllOf) GetRegisteredOk() (*time.Time, bool) {
 
 // HasRegistered returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasRegistered() bool {
-	if o != nil && o.Registered != nil {
+	if o != nil && !IsNil(o.Registered) {
 		return true
 	}
 
@@ -140,17 +143,25 @@ func (o *Fido2DeviceAllOf) SetRegistered(v time.Time) {
 }
 
 func (o Fido2DeviceAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.DeviceName != nil {
-		toSerialize["deviceName"] = o.DeviceName
-	}
-	if o.Registered != nil {
-		toSerialize["registered"] = o.Registered
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Fido2DeviceAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.DeviceName) {
+		toSerialize["deviceName"] = o.DeviceName
+	}
+	if !IsNil(o.Registered) {
+		toSerialize["registered"] = o.Registered
+	}
+	return toSerialize, nil
 }
 
 type NullableFido2DeviceAllOf struct {

@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the ActiveSessions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveSessions{}
+
 // ActiveSessions struct for ActiveSessions
 type ActiveSessions struct {
 	// User-friendly name for the stats.
@@ -37,9 +40,9 @@ type ActiveSessions struct {
 	// The filters applied to the list.
 	FilterBy []FilterBy `json:"filterBy,omitempty"`
 	// The number of total Distinct Users currently active.
-	DistinctUserCount *float32            `json:"distinctUserCount,omitempty"`
-	Data              []BaseActiveSession `json:"data,omitempty"`
-	GeolocationQuery  *GeolocationQuery   `json:"geolocationQuery,omitempty"`
+	DistinctUserCount *float32                       `json:"distinctUserCount,omitempty"`
+	Data              []ActiveSessionsAllOfDataInner `json:"data,omitempty"`
+	GeolocationQuery  *GeolocationQuery              `json:"geolocationQuery,omitempty"`
 }
 
 // NewActiveSessions instantiates a new ActiveSessions object
@@ -61,7 +64,7 @@ func NewActiveSessionsWithDefaults() *ActiveSessions {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *ActiveSessions) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -71,7 +74,7 @@ func (o *ActiveSessions) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -79,7 +82,7 @@ func (o *ActiveSessions) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *ActiveSessions) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -93,7 +96,7 @@ func (o *ActiveSessions) SetName(v string) {
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 func (o *ActiveSessions) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -103,7 +106,7 @@ func (o *ActiveSessions) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -111,7 +114,7 @@ func (o *ActiveSessions) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *ActiveSessions) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -125,7 +128,7 @@ func (o *ActiveSessions) SetCreationDate(v time.Time) {
 
 // GetRefreshInterval returns the RefreshInterval field value if set, zero value otherwise.
 func (o *ActiveSessions) GetRefreshInterval() float32 {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		var ret float32
 		return ret
 	}
@@ -135,7 +138,7 @@ func (o *ActiveSessions) GetRefreshInterval() float32 {
 // GetRefreshIntervalOk returns a tuple with the RefreshInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetRefreshIntervalOk() (*float32, bool) {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		return nil, false
 	}
 	return o.RefreshInterval, true
@@ -143,7 +146,7 @@ func (o *ActiveSessions) GetRefreshIntervalOk() (*float32, bool) {
 
 // HasRefreshInterval returns a boolean if a field has been set.
 func (o *ActiveSessions) HasRefreshInterval() bool {
-	if o != nil && o.RefreshInterval != nil {
+	if o != nil && !IsNil(o.RefreshInterval) {
 		return true
 	}
 
@@ -157,7 +160,7 @@ func (o *ActiveSessions) SetRefreshInterval(v float32) {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *ActiveSessions) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -167,7 +170,7 @@ func (o *ActiveSessions) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -175,7 +178,7 @@ func (o *ActiveSessions) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *ActiveSessions) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -189,7 +192,7 @@ func (o *ActiveSessions) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *ActiveSessions) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -199,7 +202,7 @@ func (o *ActiveSessions) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -207,7 +210,7 @@ func (o *ActiveSessions) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *ActiveSessions) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -221,7 +224,7 @@ func (o *ActiveSessions) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *ActiveSessions) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -231,7 +234,7 @@ func (o *ActiveSessions) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -239,7 +242,7 @@ func (o *ActiveSessions) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *ActiveSessions) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -253,7 +256,7 @@ func (o *ActiveSessions) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *ActiveSessions) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -263,7 +266,7 @@ func (o *ActiveSessions) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -271,7 +274,7 @@ func (o *ActiveSessions) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *ActiveSessions) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -285,7 +288,7 @@ func (o *ActiveSessions) SetQueries(v []string) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *ActiveSessions) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -295,7 +298,7 @@ func (o *ActiveSessions) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -303,7 +306,7 @@ func (o *ActiveSessions) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *ActiveSessions) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -317,7 +320,7 @@ func (o *ActiveSessions) SetTotalCount(v int32) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *ActiveSessions) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -327,7 +330,7 @@ func (o *ActiveSessions) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -335,7 +338,7 @@ func (o *ActiveSessions) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *ActiveSessions) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -349,7 +352,7 @@ func (o *ActiveSessions) SetFilterBy(v []FilterBy) {
 
 // GetDistinctUserCount returns the DistinctUserCount field value if set, zero value otherwise.
 func (o *ActiveSessions) GetDistinctUserCount() float32 {
-	if o == nil || o.DistinctUserCount == nil {
+	if o == nil || IsNil(o.DistinctUserCount) {
 		var ret float32
 		return ret
 	}
@@ -359,7 +362,7 @@ func (o *ActiveSessions) GetDistinctUserCount() float32 {
 // GetDistinctUserCountOk returns a tuple with the DistinctUserCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetDistinctUserCountOk() (*float32, bool) {
-	if o == nil || o.DistinctUserCount == nil {
+	if o == nil || IsNil(o.DistinctUserCount) {
 		return nil, false
 	}
 	return o.DistinctUserCount, true
@@ -367,7 +370,7 @@ func (o *ActiveSessions) GetDistinctUserCountOk() (*float32, bool) {
 
 // HasDistinctUserCount returns a boolean if a field has been set.
 func (o *ActiveSessions) HasDistinctUserCount() bool {
-	if o != nil && o.DistinctUserCount != nil {
+	if o != nil && !IsNil(o.DistinctUserCount) {
 		return true
 	}
 
@@ -380,9 +383,9 @@ func (o *ActiveSessions) SetDistinctUserCount(v float32) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ActiveSessions) GetData() []BaseActiveSession {
-	if o == nil || o.Data == nil {
-		var ret []BaseActiveSession
+func (o *ActiveSessions) GetData() []ActiveSessionsAllOfDataInner {
+	if o == nil || IsNil(o.Data) {
+		var ret []ActiveSessionsAllOfDataInner
 		return ret
 	}
 	return o.Data
@@ -390,8 +393,8 @@ func (o *ActiveSessions) GetData() []BaseActiveSession {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ActiveSessions) GetDataOk() ([]BaseActiveSession, bool) {
-	if o == nil || o.Data == nil {
+func (o *ActiveSessions) GetDataOk() ([]ActiveSessionsAllOfDataInner, bool) {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -399,21 +402,21 @@ func (o *ActiveSessions) GetDataOk() ([]BaseActiveSession, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ActiveSessions) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
 	return false
 }
 
-// SetData gets a reference to the given []BaseActiveSession and assigns it to the Data field.
-func (o *ActiveSessions) SetData(v []BaseActiveSession) {
+// SetData gets a reference to the given []ActiveSessionsAllOfDataInner and assigns it to the Data field.
+func (o *ActiveSessions) SetData(v []ActiveSessionsAllOfDataInner) {
 	o.Data = v
 }
 
 // GetGeolocationQuery returns the GeolocationQuery field value if set, zero value otherwise.
 func (o *ActiveSessions) GetGeolocationQuery() GeolocationQuery {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		var ret GeolocationQuery
 		return ret
 	}
@@ -423,7 +426,7 @@ func (o *ActiveSessions) GetGeolocationQuery() GeolocationQuery {
 // GetGeolocationQueryOk returns a tuple with the GeolocationQuery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessions) GetGeolocationQueryOk() (*GeolocationQuery, bool) {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		return nil, false
 	}
 	return o.GeolocationQuery, true
@@ -431,7 +434,7 @@ func (o *ActiveSessions) GetGeolocationQueryOk() (*GeolocationQuery, bool) {
 
 // HasGeolocationQuery returns a boolean if a field has been set.
 func (o *ActiveSessions) HasGeolocationQuery() bool {
-	if o != nil && o.GeolocationQuery != nil {
+	if o != nil && !IsNil(o.GeolocationQuery) {
 		return true
 	}
 
@@ -444,44 +447,52 @@ func (o *ActiveSessions) SetGeolocationQuery(v GeolocationQuery) {
 }
 
 func (o ActiveSessions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.CreationDate != nil {
-		toSerialize["creationDate"] = o.CreationDate
-	}
-	if o.RefreshInterval != nil {
-		toSerialize["refreshInterval"] = o.RefreshInterval
-	}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.TotalCount != nil {
-		toSerialize["totalCount"] = o.TotalCount
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.DistinctUserCount != nil {
-		toSerialize["distinctUserCount"] = o.DistinctUserCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.GeolocationQuery != nil {
-		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveSessions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creationDate"] = o.CreationDate
+	}
+	if !IsNil(o.RefreshInterval) {
+		toSerialize["refreshInterval"] = o.RefreshInterval
+	}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["totalCount"] = o.TotalCount
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.DistinctUserCount) {
+		toSerialize["distinctUserCount"] = o.DistinctUserCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.GeolocationQuery) {
+		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveSessions struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RemedyMethod type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RemedyMethod{}
+
 // RemedyMethod struct for RemedyMethod
 type RemedyMethod struct {
 	// User Action type.
@@ -96,7 +99,7 @@ func (o *RemedyMethod) SetMessage(v string) {
 
 // GetClaimSuffix returns the ClaimSuffix field value if set, zero value otherwise.
 func (o *RemedyMethod) GetClaimSuffix() string {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		var ret string
 		return ret
 	}
@@ -106,7 +109,7 @@ func (o *RemedyMethod) GetClaimSuffix() string {
 // GetClaimSuffixOk returns a tuple with the ClaimSuffix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RemedyMethod) GetClaimSuffixOk() (*string, bool) {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		return nil, false
 	}
 	return o.ClaimSuffix, true
@@ -114,7 +117,7 @@ func (o *RemedyMethod) GetClaimSuffixOk() (*string, bool) {
 
 // HasClaimSuffix returns a boolean if a field has been set.
 func (o *RemedyMethod) HasClaimSuffix() bool {
-	if o != nil && o.ClaimSuffix != nil {
+	if o != nil && !IsNil(o.ClaimSuffix) {
 		return true
 	}
 
@@ -128,7 +131,7 @@ func (o *RemedyMethod) SetClaimSuffix(v string) {
 
 // GetProviderId returns the ProviderId field value if set, zero value otherwise.
 func (o *RemedyMethod) GetProviderId() string {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		var ret string
 		return ret
 	}
@@ -138,7 +141,7 @@ func (o *RemedyMethod) GetProviderId() string {
 // GetProviderIdOk returns a tuple with the ProviderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RemedyMethod) GetProviderIdOk() (*string, bool) {
-	if o == nil || o.ProviderId == nil {
+	if o == nil || IsNil(o.ProviderId) {
 		return nil, false
 	}
 	return o.ProviderId, true
@@ -146,7 +149,7 @@ func (o *RemedyMethod) GetProviderIdOk() (*string, bool) {
 
 // HasProviderId returns a boolean if a field has been set.
 func (o *RemedyMethod) HasProviderId() bool {
-	if o != nil && o.ProviderId != nil {
+	if o != nil && !IsNil(o.ProviderId) {
 		return true
 	}
 
@@ -159,20 +162,24 @@ func (o *RemedyMethod) SetProviderId(v string) {
 }
 
 func (o RemedyMethod) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["message"] = o.Message
-	}
-	if o.ClaimSuffix != nil {
-		toSerialize["claimSuffix"] = o.ClaimSuffix
-	}
-	if o.ProviderId != nil {
-		toSerialize["providerId"] = o.ProviderId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RemedyMethod) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["message"] = o.Message
+	if !IsNil(o.ClaimSuffix) {
+		toSerialize["claimSuffix"] = o.ClaimSuffix
+	}
+	if !IsNil(o.ProviderId) {
+		toSerialize["providerId"] = o.ProviderId
+	}
+	return toSerialize, nil
 }
 
 type NullableRemedyMethod struct {

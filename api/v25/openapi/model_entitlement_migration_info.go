@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementMigrationInfo type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementMigrationInfo{}
+
 // EntitlementMigrationInfo Migration details of a specific Action of a specific Entitlement.
 type EntitlementMigrationInfo struct {
 	// ID of the Entitlement.
@@ -52,7 +55,7 @@ func NewEntitlementMigrationInfoWithDefaults() *EntitlementMigrationInfo {
 
 // GetEntitlementId returns the EntitlementId field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetEntitlementId() string {
-	if o == nil || o.EntitlementId == nil {
+	if o == nil || IsNil(o.EntitlementId) {
 		var ret string
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *EntitlementMigrationInfo) GetEntitlementId() string {
 // GetEntitlementIdOk returns a tuple with the EntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetEntitlementIdOk() (*string, bool) {
-	if o == nil || o.EntitlementId == nil {
+	if o == nil || IsNil(o.EntitlementId) {
 		return nil, false
 	}
 	return o.EntitlementId, true
@@ -70,7 +73,7 @@ func (o *EntitlementMigrationInfo) GetEntitlementIdOk() (*string, bool) {
 
 // HasEntitlementId returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasEntitlementId() bool {
-	if o != nil && o.EntitlementId != nil {
+	if o != nil && !IsNil(o.EntitlementId) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *EntitlementMigrationInfo) SetEntitlementId(v string) {
 
 // GetEntitlementName returns the EntitlementName field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetEntitlementName() string {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		var ret string
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *EntitlementMigrationInfo) GetEntitlementName() string {
 // GetEntitlementNameOk returns a tuple with the EntitlementName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetEntitlementNameOk() (*string, bool) {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		return nil, false
 	}
 	return o.EntitlementName, true
@@ -102,7 +105,7 @@ func (o *EntitlementMigrationInfo) GetEntitlementNameOk() (*string, bool) {
 
 // HasEntitlementName returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasEntitlementName() bool {
-	if o != nil && o.EntitlementName != nil {
+	if o != nil && !IsNil(o.EntitlementName) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *EntitlementMigrationInfo) SetEntitlementName(v string) {
 
 // GetActionIndex returns the ActionIndex field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetActionIndex() float32 {
-	if o == nil || o.ActionIndex == nil {
+	if o == nil || IsNil(o.ActionIndex) {
 		var ret float32
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *EntitlementMigrationInfo) GetActionIndex() float32 {
 // GetActionIndexOk returns a tuple with the ActionIndex field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetActionIndexOk() (*float32, bool) {
-	if o == nil || o.ActionIndex == nil {
+	if o == nil || IsNil(o.ActionIndex) {
 		return nil, false
 	}
 	return o.ActionIndex, true
@@ -134,7 +137,7 @@ func (o *EntitlementMigrationInfo) GetActionIndexOk() (*float32, bool) {
 
 // HasActionIndex returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasActionIndex() bool {
-	if o != nil && o.ActionIndex != nil {
+	if o != nil && !IsNil(o.ActionIndex) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *EntitlementMigrationInfo) SetActionIndex(v float32) {
 
 // GetHostIndex returns the HostIndex field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetHostIndex() float32 {
-	if o == nil || o.HostIndex == nil {
+	if o == nil || IsNil(o.HostIndex) {
 		var ret float32
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *EntitlementMigrationInfo) GetHostIndex() float32 {
 // GetHostIndexOk returns a tuple with the HostIndex field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetHostIndexOk() (*float32, bool) {
-	if o == nil || o.HostIndex == nil {
+	if o == nil || IsNil(o.HostIndex) {
 		return nil, false
 	}
 	return o.HostIndex, true
@@ -166,7 +169,7 @@ func (o *EntitlementMigrationInfo) GetHostIndexOk() (*float32, bool) {
 
 // HasHostIndex returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasHostIndex() bool {
-	if o != nil && o.HostIndex != nil {
+	if o != nil && !IsNil(o.HostIndex) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *EntitlementMigrationInfo) SetHostIndex(v float32) {
 
 // GetOriginalHost returns the OriginalHost field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetOriginalHost() string {
-	if o == nil || o.OriginalHost == nil {
+	if o == nil || IsNil(o.OriginalHost) {
 		var ret string
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *EntitlementMigrationInfo) GetOriginalHost() string {
 // GetOriginalHostOk returns a tuple with the OriginalHost field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetOriginalHostOk() (*string, bool) {
-	if o == nil || o.OriginalHost == nil {
+	if o == nil || IsNil(o.OriginalHost) {
 		return nil, false
 	}
 	return o.OriginalHost, true
@@ -198,7 +201,7 @@ func (o *EntitlementMigrationInfo) GetOriginalHostOk() (*string, bool) {
 
 // HasOriginalHost returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasOriginalHost() bool {
-	if o != nil && o.OriginalHost != nil {
+	if o != nil && !IsNil(o.OriginalHost) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *EntitlementMigrationInfo) SetOriginalHost(v string) {
 
 // GetUpdatedHost returns the UpdatedHost field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetUpdatedHost() string {
-	if o == nil || o.UpdatedHost == nil {
+	if o == nil || IsNil(o.UpdatedHost) {
 		var ret string
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *EntitlementMigrationInfo) GetUpdatedHost() string {
 // GetUpdatedHostOk returns a tuple with the UpdatedHost field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetUpdatedHostOk() (*string, bool) {
-	if o == nil || o.UpdatedHost == nil {
+	if o == nil || IsNil(o.UpdatedHost) {
 		return nil, false
 	}
 	return o.UpdatedHost, true
@@ -230,7 +233,7 @@ func (o *EntitlementMigrationInfo) GetUpdatedHostOk() (*string, bool) {
 
 // HasUpdatedHost returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasUpdatedHost() bool {
-	if o != nil && o.UpdatedHost != nil {
+	if o != nil && !IsNil(o.UpdatedHost) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *EntitlementMigrationInfo) SetUpdatedHost(v string) {
 
 // GetMigrationErrors returns the MigrationErrors field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetMigrationErrors() []string {
-	if o == nil || o.MigrationErrors == nil {
+	if o == nil || IsNil(o.MigrationErrors) {
 		var ret []string
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *EntitlementMigrationInfo) GetMigrationErrors() []string {
 // GetMigrationErrorsOk returns a tuple with the MigrationErrors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementMigrationInfo) GetMigrationErrorsOk() ([]string, bool) {
-	if o == nil || o.MigrationErrors == nil {
+	if o == nil || IsNil(o.MigrationErrors) {
 		return nil, false
 	}
 	return o.MigrationErrors, true
@@ -262,7 +265,7 @@ func (o *EntitlementMigrationInfo) GetMigrationErrorsOk() ([]string, bool) {
 
 // HasMigrationErrors returns a boolean if a field has been set.
 func (o *EntitlementMigrationInfo) HasMigrationErrors() bool {
-	if o != nil && o.MigrationErrors != nil {
+	if o != nil && !IsNil(o.MigrationErrors) {
 		return true
 	}
 
@@ -275,29 +278,37 @@ func (o *EntitlementMigrationInfo) SetMigrationErrors(v []string) {
 }
 
 func (o EntitlementMigrationInfo) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EntitlementId != nil {
-		toSerialize["entitlementId"] = o.EntitlementId
-	}
-	if o.EntitlementName != nil {
-		toSerialize["entitlementName"] = o.EntitlementName
-	}
-	if o.ActionIndex != nil {
-		toSerialize["actionIndex"] = o.ActionIndex
-	}
-	if o.HostIndex != nil {
-		toSerialize["hostIndex"] = o.HostIndex
-	}
-	if o.OriginalHost != nil {
-		toSerialize["originalHost"] = o.OriginalHost
-	}
-	if o.UpdatedHost != nil {
-		toSerialize["updatedHost"] = o.UpdatedHost
-	}
-	if o.MigrationErrors != nil {
-		toSerialize["migrationErrors"] = o.MigrationErrors
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementMigrationInfo) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EntitlementId) {
+		toSerialize["entitlementId"] = o.EntitlementId
+	}
+	if !IsNil(o.EntitlementName) {
+		toSerialize["entitlementName"] = o.EntitlementName
+	}
+	if !IsNil(o.ActionIndex) {
+		toSerialize["actionIndex"] = o.ActionIndex
+	}
+	if !IsNil(o.HostIndex) {
+		toSerialize["hostIndex"] = o.HostIndex
+	}
+	if !IsNil(o.OriginalHost) {
+		toSerialize["originalHost"] = o.OriginalHost
+	}
+	if !IsNil(o.UpdatedHost) {
+		toSerialize["updatedHost"] = o.UpdatedHost
+	}
+	if !IsNil(o.MigrationErrors) {
+		toSerialize["migrationErrors"] = o.MigrationErrors
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementMigrationInfo struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementScriptsTestAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementScriptsTestAllOf{}
+
 // EntitlementScriptsTestAllOf struct for EntitlementScriptsTestAllOf
 type EntitlementScriptsTestAllOf struct {
 	// The type of the Entitlement Script.
@@ -64,11 +67,17 @@ func (o *EntitlementScriptsTestAllOf) SetType(v string) {
 }
 
 func (o EntitlementScriptsTestAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementScriptsTestAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	return toSerialize, nil
 }
 
 type NullableEntitlementScriptsTestAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PrometheusExporterAllowedUsersInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PrometheusExporterAllowedUsersInner{}
+
 // PrometheusExporterAllowedUsersInner struct for PrometheusExporterAllowedUsersInner
 type PrometheusExporterAllowedUsersInner struct {
 	Username *string `json:"username,omitempty"`
@@ -40,7 +43,7 @@ func NewPrometheusExporterAllowedUsersInnerWithDefaults() *PrometheusExporterAll
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *PrometheusExporterAllowedUsersInner) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *PrometheusExporterAllowedUsersInner) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporterAllowedUsersInner) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -58,7 +61,7 @@ func (o *PrometheusExporterAllowedUsersInner) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *PrometheusExporterAllowedUsersInner) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *PrometheusExporterAllowedUsersInner) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *PrometheusExporterAllowedUsersInner) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *PrometheusExporterAllowedUsersInner) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporterAllowedUsersInner) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -90,7 +93,7 @@ func (o *PrometheusExporterAllowedUsersInner) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *PrometheusExporterAllowedUsersInner) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -103,14 +106,22 @@ func (o *PrometheusExporterAllowedUsersInner) SetPassword(v string) {
 }
 
 func (o PrometheusExporterAllowedUsersInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PrometheusExporterAllowedUsersInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
 }
 
 type NullablePrometheusExporterAllowedUsersInner struct {

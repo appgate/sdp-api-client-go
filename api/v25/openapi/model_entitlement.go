@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Entitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Entitlement{}
+
 // Entitlement struct for Entitlement
 type Entitlement struct {
 	// ID of the object.
@@ -90,7 +93,7 @@ func NewEntitlementWithDefaults() *Entitlement {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Entitlement) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -100,7 +103,7 @@ func (o *Entitlement) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -108,7 +111,7 @@ func (o *Entitlement) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Entitlement) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *Entitlement) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Entitlement) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *Entitlement) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -164,7 +167,7 @@ func (o *Entitlement) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Entitlement) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *Entitlement) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Entitlement) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -188,7 +191,7 @@ func (o *Entitlement) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -196,7 +199,7 @@ func (o *Entitlement) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Entitlement) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *Entitlement) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *Entitlement) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *Entitlement) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -228,7 +231,7 @@ func (o *Entitlement) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *Entitlement) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *Entitlement) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *Entitlement) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *Entitlement) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -260,7 +263,7 @@ func (o *Entitlement) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *Entitlement) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *Entitlement) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Entitlement) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *Entitlement) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -292,7 +295,7 @@ func (o *Entitlement) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Entitlement) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -306,7 +309,7 @@ func (o *Entitlement) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *Entitlement) GetType() EntitlementType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret EntitlementType
 		return ret
 	}
@@ -316,7 +319,7 @@ func (o *Entitlement) GetType() EntitlementType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetTypeOk() (*EntitlementType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -324,7 +327,7 @@ func (o *Entitlement) GetTypeOk() (*EntitlementType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *Entitlement) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -338,7 +341,7 @@ func (o *Entitlement) SetType(v EntitlementType) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *Entitlement) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -348,7 +351,7 @@ func (o *Entitlement) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -356,7 +359,7 @@ func (o *Entitlement) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *Entitlement) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -394,7 +397,7 @@ func (o *Entitlement) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *Entitlement) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -404,7 +407,7 @@ func (o *Entitlement) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -412,7 +415,7 @@ func (o *Entitlement) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *Entitlement) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -426,7 +429,7 @@ func (o *Entitlement) SetSiteName(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *Entitlement) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -436,7 +439,7 @@ func (o *Entitlement) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -444,7 +447,7 @@ func (o *Entitlement) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *Entitlement) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -482,7 +485,7 @@ func (o *Entitlement) SetConditions(v []string) {
 
 // GetOptimizationScore returns the OptimizationScore field value if set, zero value otherwise.
 func (o *Entitlement) GetOptimizationScore() string {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		var ret string
 		return ret
 	}
@@ -492,7 +495,7 @@ func (o *Entitlement) GetOptimizationScore() string {
 // GetOptimizationScoreOk returns a tuple with the OptimizationScore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetOptimizationScoreOk() (*string, bool) {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		return nil, false
 	}
 	return o.OptimizationScore, true
@@ -500,7 +503,7 @@ func (o *Entitlement) GetOptimizationScoreOk() (*string, bool) {
 
 // HasOptimizationScore returns a boolean if a field has been set.
 func (o *Entitlement) HasOptimizationScore() bool {
-	if o != nil && o.OptimizationScore != nil {
+	if o != nil && !IsNil(o.OptimizationScore) {
 		return true
 	}
 
@@ -514,7 +517,7 @@ func (o *Entitlement) SetOptimizationScore(v string) {
 
 // GetOptimizationScorePercentage returns the OptimizationScorePercentage field value if set, zero value otherwise.
 func (o *Entitlement) GetOptimizationScorePercentage() int32 {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		var ret int32
 		return ret
 	}
@@ -524,7 +527,7 @@ func (o *Entitlement) GetOptimizationScorePercentage() int32 {
 // GetOptimizationScorePercentageOk returns a tuple with the OptimizationScorePercentage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetOptimizationScorePercentageOk() (*int32, bool) {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		return nil, false
 	}
 	return o.OptimizationScorePercentage, true
@@ -532,7 +535,7 @@ func (o *Entitlement) GetOptimizationScorePercentageOk() (*int32, bool) {
 
 // HasOptimizationScorePercentage returns a boolean if a field has been set.
 func (o *Entitlement) HasOptimizationScorePercentage() bool {
-	if o != nil && o.OptimizationScorePercentage != nil {
+	if o != nil && !IsNil(o.OptimizationScorePercentage) {
 		return true
 	}
 
@@ -570,7 +573,7 @@ func (o *Entitlement) SetActions(v []EntitlementAllOfActions) {
 
 // GetAppShortcuts returns the AppShortcuts field value if set, zero value otherwise.
 func (o *Entitlement) GetAppShortcuts() []AppShortcut {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		var ret []AppShortcut
 		return ret
 	}
@@ -580,7 +583,7 @@ func (o *Entitlement) GetAppShortcuts() []AppShortcut {
 // GetAppShortcutsOk returns a tuple with the AppShortcuts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetAppShortcutsOk() ([]AppShortcut, bool) {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		return nil, false
 	}
 	return o.AppShortcuts, true
@@ -588,7 +591,7 @@ func (o *Entitlement) GetAppShortcutsOk() ([]AppShortcut, bool) {
 
 // HasAppShortcuts returns a boolean if a field has been set.
 func (o *Entitlement) HasAppShortcuts() bool {
-	if o != nil && o.AppShortcuts != nil {
+	if o != nil && !IsNil(o.AppShortcuts) {
 		return true
 	}
 
@@ -602,7 +605,7 @@ func (o *Entitlement) SetAppShortcuts(v []AppShortcut) {
 
 // GetAppShortcutScripts returns the AppShortcutScripts field value if set, zero value otherwise.
 func (o *Entitlement) GetAppShortcutScripts() []string {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		var ret []string
 		return ret
 	}
@@ -612,7 +615,7 @@ func (o *Entitlement) GetAppShortcutScripts() []string {
 // GetAppShortcutScriptsOk returns a tuple with the AppShortcutScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Entitlement) GetAppShortcutScriptsOk() ([]string, bool) {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		return nil, false
 	}
 	return o.AppShortcutScripts, true
@@ -620,7 +623,7 @@ func (o *Entitlement) GetAppShortcutScriptsOk() ([]string, bool) {
 
 // HasAppShortcutScripts returns a boolean if a field has been set.
 func (o *Entitlement) HasAppShortcutScripts() bool {
-	if o != nil && o.AppShortcutScripts != nil {
+	if o != nil && !IsNil(o.AppShortcutScripts) {
 		return true
 	}
 
@@ -633,62 +636,62 @@ func (o *Entitlement) SetAppShortcutScripts(v []string) {
 }
 
 func (o Entitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if o.OptimizationScore != nil {
-		toSerialize["optimizationScore"] = o.OptimizationScore
-	}
-	if o.OptimizationScorePercentage != nil {
-		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
-	}
-	if true {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.AppShortcuts != nil {
-		toSerialize["appShortcuts"] = o.AppShortcuts
-	}
-	if o.AppShortcutScripts != nil {
-		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Entitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	if !IsNil(o.OptimizationScore) {
+		toSerialize["optimizationScore"] = o.OptimizationScore
+	}
+	if !IsNil(o.OptimizationScorePercentage) {
+		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
+	}
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.AppShortcuts) {
+		toSerialize["appShortcuts"] = o.AppShortcuts
+	}
+	if !IsNil(o.AppShortcutScripts) {
+		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlement struct {

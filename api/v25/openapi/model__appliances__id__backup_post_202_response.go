@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdBackupPost202Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdBackupPost202Response{}
+
 // AppliancesIdBackupPost202Response struct for AppliancesIdBackupPost202Response
 type AppliancesIdBackupPost202Response struct {
 	// Appliance Backup ID to  be used as path parameter {backupId} to follow the progress.
@@ -40,7 +43,7 @@ func NewAppliancesIdBackupPost202ResponseWithDefaults() *AppliancesIdBackupPost2
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AppliancesIdBackupPost202Response) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesIdBackupPost202Response) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdBackupPost202Response) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -58,7 +61,7 @@ func (o *AppliancesIdBackupPost202Response) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AppliancesIdBackupPost202Response) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesIdBackupPost202Response) SetId(v string) {
 }
 
 func (o AppliancesIdBackupPost202Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdBackupPost202Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdBackupPost202Response struct {

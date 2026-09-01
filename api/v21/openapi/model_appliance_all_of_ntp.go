@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNtp type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNtp{}
+
 // ApplianceAllOfNtp NTP configuration.
 type ApplianceAllOfNtp struct {
 	Servers []ApplianceAllOfNtpServers `json:"servers,omitempty"`
@@ -39,7 +42,7 @@ func NewApplianceAllOfNtpWithDefaults() *ApplianceAllOfNtp {
 
 // GetServers returns the Servers field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtp) GetServers() []ApplianceAllOfNtpServers {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		var ret []ApplianceAllOfNtpServers
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *ApplianceAllOfNtp) GetServers() []ApplianceAllOfNtpServers {
 // GetServersOk returns a tuple with the Servers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtp) GetServersOk() ([]ApplianceAllOfNtpServers, bool) {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		return nil, false
 	}
 	return o.Servers, true
@@ -57,7 +60,7 @@ func (o *ApplianceAllOfNtp) GetServersOk() ([]ApplianceAllOfNtpServers, bool) {
 
 // HasServers returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtp) HasServers() bool {
-	if o != nil && o.Servers != nil {
+	if o != nil && !IsNil(o.Servers) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ApplianceAllOfNtp) SetServers(v []ApplianceAllOfNtpServers) {
 }
 
 func (o ApplianceAllOfNtp) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Servers != nil {
-		toSerialize["servers"] = o.Servers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNtp) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Servers) {
+		toSerialize["servers"] = o.Servers
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNtp struct {

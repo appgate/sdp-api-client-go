@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfGatewayVpnAllowDestinations type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfGatewayVpnAllowDestinations{}
+
 // ApplianceAllOfGatewayVpnAllowDestinations struct for ApplianceAllOfGatewayVpnAllowDestinations
 type ApplianceAllOfGatewayVpnAllowDestinations struct {
 	// IP address to allow connection.
@@ -45,7 +48,7 @@ func NewApplianceAllOfGatewayVpnAllowDestinationsWithDefaults() *ApplianceAllOfG
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetAddress() string {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetAddress() string {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetAddressOk() (*string, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -63,7 +66,7 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetAddressOk() (*string, boo
 
 // HasAddress returns a boolean if a field has been set.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) SetAddress(v string) {
 
 // GetNetmask returns the Netmask field value if set, zero value otherwise.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetNetmask() int32 {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		var ret int32
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetNetmask() int32 {
 // GetNetmaskOk returns a tuple with the Netmask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetNetmaskOk() (*int32, bool) {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		return nil, false
 	}
 	return o.Netmask, true
@@ -95,7 +98,7 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) GetNetmaskOk() (*int32, bool
 
 // HasNetmask returns a boolean if a field has been set.
 func (o *ApplianceAllOfGatewayVpnAllowDestinations) HasNetmask() bool {
-	if o != nil && o.Netmask != nil {
+	if o != nil && !IsNil(o.Netmask) {
 		return true
 	}
 
@@ -132,17 +135,23 @@ func (o *ApplianceAllOfGatewayVpnAllowDestinations) SetNic(v string) {
 }
 
 func (o ApplianceAllOfGatewayVpnAllowDestinations) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Netmask != nil {
-		toSerialize["netmask"] = o.Netmask
-	}
-	if true {
-		toSerialize["nic"] = o.Nic
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfGatewayVpnAllowDestinations) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Netmask) {
+		toSerialize["netmask"] = o.Netmask
+	}
+	toSerialize["nic"] = o.Nic
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfGatewayVpnAllowDestinations struct {

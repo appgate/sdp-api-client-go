@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClientProfilesIdBarcodeGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfilesIdBarcodeGet200Response{}
+
 // ClientProfilesIdBarcodeGet200Response struct for ClientProfilesIdBarcodeGet200Response
 type ClientProfilesIdBarcodeGet200Response struct {
 	// The QR code image in PNG format, in base64 format.
@@ -40,7 +43,7 @@ func NewClientProfilesIdBarcodeGet200ResponseWithDefaults() *ClientProfilesIdBar
 
 // GetBarcode returns the Barcode field value if set, zero value otherwise.
 func (o *ClientProfilesIdBarcodeGet200Response) GetBarcode() string {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ClientProfilesIdBarcodeGet200Response) GetBarcode() string {
 // GetBarcodeOk returns a tuple with the Barcode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfilesIdBarcodeGet200Response) GetBarcodeOk() (*string, bool) {
-	if o == nil || o.Barcode == nil {
+	if o == nil || IsNil(o.Barcode) {
 		return nil, false
 	}
 	return o.Barcode, true
@@ -58,7 +61,7 @@ func (o *ClientProfilesIdBarcodeGet200Response) GetBarcodeOk() (*string, bool) {
 
 // HasBarcode returns a boolean if a field has been set.
 func (o *ClientProfilesIdBarcodeGet200Response) HasBarcode() bool {
-	if o != nil && o.Barcode != nil {
+	if o != nil && !IsNil(o.Barcode) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ClientProfilesIdBarcodeGet200Response) SetBarcode(v string) {
 }
 
 func (o ClientProfilesIdBarcodeGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Barcode != nil {
-		toSerialize["barcode"] = o.Barcode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfilesIdBarcodeGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Barcode) {
+		toSerialize["barcode"] = o.Barcode
+	}
+	return toSerialize, nil
 }
 
 type NullableClientProfilesIdBarcodeGet200Response struct {

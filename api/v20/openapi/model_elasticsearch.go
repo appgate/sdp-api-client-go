@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Elasticsearch type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Elasticsearch{}
+
 // Elasticsearch struct for Elasticsearch
 type Elasticsearch struct {
 	// AWS ID to login. Only required if AWS Access Keys are being used to authenticate.
@@ -58,7 +61,7 @@ func NewElasticsearchWithDefaults() *Elasticsearch {
 
 // GetAwsId returns the AwsId field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsId() string {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		var ret string
 		return ret
 	}
@@ -68,7 +71,7 @@ func (o *Elasticsearch) GetAwsId() string {
 // GetAwsIdOk returns a tuple with the AwsId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsIdOk() (*string, bool) {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		return nil, false
 	}
 	return o.AwsId, true
@@ -76,7 +79,7 @@ func (o *Elasticsearch) GetAwsIdOk() (*string, bool) {
 
 // HasAwsId returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsId() bool {
-	if o != nil && o.AwsId != nil {
+	if o != nil && !IsNil(o.AwsId) {
 		return true
 	}
 
@@ -90,7 +93,7 @@ func (o *Elasticsearch) SetAwsId(v string) {
 
 // GetAwsSecret returns the AwsSecret field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsSecret() string {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		var ret string
 		return ret
 	}
@@ -100,7 +103,7 @@ func (o *Elasticsearch) GetAwsSecret() string {
 // GetAwsSecretOk returns a tuple with the AwsSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsSecretOk() (*string, bool) {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		return nil, false
 	}
 	return o.AwsSecret, true
@@ -108,7 +111,7 @@ func (o *Elasticsearch) GetAwsSecretOk() (*string, bool) {
 
 // HasAwsSecret returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsSecret() bool {
-	if o != nil && o.AwsSecret != nil {
+	if o != nil && !IsNil(o.AwsSecret) {
 		return true
 	}
 
@@ -122,7 +125,7 @@ func (o *Elasticsearch) SetAwsSecret(v string) {
 
 // GetAwsRegion returns the AwsRegion field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAwsRegion() string {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		var ret string
 		return ret
 	}
@@ -132,7 +135,7 @@ func (o *Elasticsearch) GetAwsRegion() string {
 // GetAwsRegionOk returns a tuple with the AwsRegion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAwsRegionOk() (*string, bool) {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		return nil, false
 	}
 	return o.AwsRegion, true
@@ -140,7 +143,7 @@ func (o *Elasticsearch) GetAwsRegionOk() (*string, bool) {
 
 // HasAwsRegion returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAwsRegion() bool {
-	if o != nil && o.AwsRegion != nil {
+	if o != nil && !IsNil(o.AwsRegion) {
 		return true
 	}
 
@@ -154,7 +157,7 @@ func (o *Elasticsearch) SetAwsRegion(v string) {
 
 // GetUseInstanceCredentials returns the UseInstanceCredentials field value if set, zero value otherwise.
 func (o *Elasticsearch) GetUseInstanceCredentials() bool {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		var ret bool
 		return ret
 	}
@@ -164,7 +167,7 @@ func (o *Elasticsearch) GetUseInstanceCredentials() bool {
 // GetUseInstanceCredentialsOk returns a tuple with the UseInstanceCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetUseInstanceCredentialsOk() (*bool, bool) {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		return nil, false
 	}
 	return o.UseInstanceCredentials, true
@@ -172,7 +175,7 @@ func (o *Elasticsearch) GetUseInstanceCredentialsOk() (*bool, bool) {
 
 // HasUseInstanceCredentials returns a boolean if a field has been set.
 func (o *Elasticsearch) HasUseInstanceCredentials() bool {
-	if o != nil && o.UseInstanceCredentials != nil {
+	if o != nil && !IsNil(o.UseInstanceCredentials) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *Elasticsearch) SetUrl(v string) {
 
 // GetRetentionDays returns the RetentionDays field value if set, zero value otherwise.
 func (o *Elasticsearch) GetRetentionDays() int32 {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		var ret int32
 		return ret
 	}
@@ -220,7 +223,7 @@ func (o *Elasticsearch) GetRetentionDays() int32 {
 // GetRetentionDaysOk returns a tuple with the RetentionDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetRetentionDaysOk() (*int32, bool) {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		return nil, false
 	}
 	return o.RetentionDays, true
@@ -228,7 +231,7 @@ func (o *Elasticsearch) GetRetentionDaysOk() (*int32, bool) {
 
 // HasRetentionDays returns a boolean if a field has been set.
 func (o *Elasticsearch) HasRetentionDays() bool {
-	if o != nil && o.RetentionDays != nil {
+	if o != nil && !IsNil(o.RetentionDays) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *Elasticsearch) SetRetentionDays(v int32) {
 
 // GetCompatibilityMode returns the CompatibilityMode field value if set, zero value otherwise.
 func (o *Elasticsearch) GetCompatibilityMode() int32 {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		var ret int32
 		return ret
 	}
@@ -252,7 +255,7 @@ func (o *Elasticsearch) GetCompatibilityMode() int32 {
 // GetCompatibilityModeOk returns a tuple with the CompatibilityMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetCompatibilityModeOk() (*int32, bool) {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		return nil, false
 	}
 	return o.CompatibilityMode, true
@@ -260,7 +263,7 @@ func (o *Elasticsearch) GetCompatibilityModeOk() (*int32, bool) {
 
 // HasCompatibilityMode returns a boolean if a field has been set.
 func (o *Elasticsearch) HasCompatibilityMode() bool {
-	if o != nil && o.CompatibilityMode != nil {
+	if o != nil && !IsNil(o.CompatibilityMode) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *Elasticsearch) SetCompatibilityMode(v int32) {
 
 // GetAuthentication returns the Authentication field value if set, zero value otherwise.
 func (o *Elasticsearch) GetAuthentication() ElasticsearchAllOfAuthentication {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		var ret ElasticsearchAllOfAuthentication
 		return ret
 	}
@@ -284,7 +287,7 @@ func (o *Elasticsearch) GetAuthentication() ElasticsearchAllOfAuthentication {
 // GetAuthenticationOk returns a tuple with the Authentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Elasticsearch) GetAuthenticationOk() (*ElasticsearchAllOfAuthentication, bool) {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		return nil, false
 	}
 	return o.Authentication, true
@@ -292,7 +295,7 @@ func (o *Elasticsearch) GetAuthenticationOk() (*ElasticsearchAllOfAuthentication
 
 // HasAuthentication returns a boolean if a field has been set.
 func (o *Elasticsearch) HasAuthentication() bool {
-	if o != nil && o.Authentication != nil {
+	if o != nil && !IsNil(o.Authentication) {
 		return true
 	}
 
@@ -305,32 +308,38 @@ func (o *Elasticsearch) SetAuthentication(v ElasticsearchAllOfAuthentication) {
 }
 
 func (o Elasticsearch) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AwsId != nil {
-		toSerialize["awsId"] = o.AwsId
-	}
-	if o.AwsSecret != nil {
-		toSerialize["awsSecret"] = o.AwsSecret
-	}
-	if o.AwsRegion != nil {
-		toSerialize["awsRegion"] = o.AwsRegion
-	}
-	if o.UseInstanceCredentials != nil {
-		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
-	}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if o.RetentionDays != nil {
-		toSerialize["retentionDays"] = o.RetentionDays
-	}
-	if o.CompatibilityMode != nil {
-		toSerialize["compatibilityMode"] = o.CompatibilityMode
-	}
-	if o.Authentication != nil {
-		toSerialize["authentication"] = o.Authentication
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Elasticsearch) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AwsId) {
+		toSerialize["awsId"] = o.AwsId
+	}
+	if !IsNil(o.AwsSecret) {
+		toSerialize["awsSecret"] = o.AwsSecret
+	}
+	if !IsNil(o.AwsRegion) {
+		toSerialize["awsRegion"] = o.AwsRegion
+	}
+	if !IsNil(o.UseInstanceCredentials) {
+		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
+	}
+	toSerialize["url"] = o.Url
+	if !IsNil(o.RetentionDays) {
+		toSerialize["retentionDays"] = o.RetentionDays
+	}
+	if !IsNil(o.CompatibilityMode) {
+		toSerialize["compatibilityMode"] = o.CompatibilityMode
+	}
+	if !IsNil(o.Authentication) {
+		toSerialize["authentication"] = o.Authentication
+	}
+	return toSerialize, nil
 }
 
 type NullableElasticsearch struct {

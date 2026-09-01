@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ResolverResourcesAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ResolverResourcesAllOf{}
+
 // ResolverResourcesAllOf Resource query result.
 type ResolverResourcesAllOf struct {
 	// List of queries resources.
@@ -44,7 +47,7 @@ func NewResolverResourcesAllOfWithDefaults() *ResolverResourcesAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ResolverResourcesAllOf) GetData() []string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ResolverResourcesAllOf) GetData() []string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResourcesAllOf) GetDataOk() ([]string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -62,7 +65,7 @@ func (o *ResolverResourcesAllOf) GetDataOk() ([]string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ResolverResourcesAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ResolverResourcesAllOf) SetData(v []string) {
 
 // GetResolver returns the Resolver field value if set, zero value otherwise.
 func (o *ResolverResourcesAllOf) GetResolver() ResolverType {
-	if o == nil || o.Resolver == nil {
+	if o == nil || IsNil(o.Resolver) {
 		var ret ResolverType
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ResolverResourcesAllOf) GetResolver() ResolverType {
 // GetResolverOk returns a tuple with the Resolver field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResourcesAllOf) GetResolverOk() (*ResolverType, bool) {
-	if o == nil || o.Resolver == nil {
+	if o == nil || IsNil(o.Resolver) {
 		return nil, false
 	}
 	return o.Resolver, true
@@ -94,7 +97,7 @@ func (o *ResolverResourcesAllOf) GetResolverOk() (*ResolverType, bool) {
 
 // HasResolver returns a boolean if a field has been set.
 func (o *ResolverResourcesAllOf) HasResolver() bool {
-	if o != nil && o.Resolver != nil {
+	if o != nil && !IsNil(o.Resolver) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ResolverResourcesAllOf) SetResolver(v ResolverType) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ResolverResourcesAllOf) GetType() ResourceType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret ResourceType
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ResolverResourcesAllOf) GetType() ResourceType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResourcesAllOf) GetTypeOk() (*ResourceType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -126,7 +129,7 @@ func (o *ResolverResourcesAllOf) GetTypeOk() (*ResourceType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ResolverResourcesAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *ResolverResourcesAllOf) SetType(v ResourceType) {
 
 // GetGatewayName returns the GatewayName field value if set, zero value otherwise.
 func (o *ResolverResourcesAllOf) GetGatewayName() string {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		var ret string
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *ResolverResourcesAllOf) GetGatewayName() string {
 // GetGatewayNameOk returns a tuple with the GatewayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResourcesAllOf) GetGatewayNameOk() (*string, bool) {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		return nil, false
 	}
 	return o.GatewayName, true
@@ -158,7 +161,7 @@ func (o *ResolverResourcesAllOf) GetGatewayNameOk() (*string, bool) {
 
 // HasGatewayName returns a boolean if a field has been set.
 func (o *ResolverResourcesAllOf) HasGatewayName() bool {
-	if o != nil && o.GatewayName != nil {
+	if o != nil && !IsNil(o.GatewayName) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *ResolverResourcesAllOf) SetGatewayName(v string) {
 }
 
 func (o ResolverResourcesAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.Resolver != nil {
-		toSerialize["resolver"] = o.Resolver
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.GatewayName != nil {
-		toSerialize["gatewayName"] = o.GatewayName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ResolverResourcesAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.Resolver) {
+		toSerialize["resolver"] = o.Resolver
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.GatewayName) {
+		toSerialize["gatewayName"] = o.GatewayName
+	}
+	return toSerialize, nil
 }
 
 type NullableResolverResourcesAllOf struct {

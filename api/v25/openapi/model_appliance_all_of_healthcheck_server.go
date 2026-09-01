@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfHealthcheckServer type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfHealthcheckServer{}
+
 // ApplianceAllOfHealthcheckServer Healthcheck Server configuration.
 type ApplianceAllOfHealthcheckServer struct {
 	// Whether the Healthcheck Server is enabled on this appliance or not.
@@ -52,7 +55,7 @@ func NewApplianceAllOfHealthcheckServerWithDefaults() *ApplianceAllOfHealthcheck
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfHealthcheckServer) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfHealthcheckServer) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -70,7 +73,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfHealthcheckServer) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *ApplianceAllOfHealthcheckServer) SetEnabled(v bool) {
 
 // GetPort returns the Port field value if set, zero value otherwise.
 func (o *ApplianceAllOfHealthcheckServer) GetPort() int32 {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		var ret int32
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetPort() int32 {
 // GetPortOk returns a tuple with the Port field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfHealthcheckServer) GetPortOk() (*int32, bool) {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		return nil, false
 	}
 	return o.Port, true
@@ -102,7 +105,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetPortOk() (*int32, bool) {
 
 // HasPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfHealthcheckServer) HasPort() bool {
-	if o != nil && o.Port != nil {
+	if o != nil && !IsNil(o.Port) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *ApplianceAllOfHealthcheckServer) SetPort(v int32) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfHealthcheckServer) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetAllowSources() []AllowSourcesInner 
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfHealthcheckServer) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -134,7 +137,7 @@ func (o *ApplianceAllOfHealthcheckServer) GetAllowSourcesOk() ([]AllowSourcesInn
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfHealthcheckServer) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -147,17 +150,25 @@ func (o *ApplianceAllOfHealthcheckServer) SetAllowSources(v []AllowSourcesInner)
 }
 
 func (o ApplianceAllOfHealthcheckServer) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Port != nil {
-		toSerialize["port"] = o.Port
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfHealthcheckServer) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfHealthcheckServer struct {

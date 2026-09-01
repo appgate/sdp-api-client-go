@@ -15,11 +15,13 @@ import (
 	"encoding/json"
 )
 
+// checks if the RecordedSessionListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RecordedSessionListAllOf{}
+
 // RecordedSessionListAllOf struct for RecordedSessionListAllOf
 type RecordedSessionListAllOf struct {
-	Data []RecordedSession `json:"data,omitempty"`
-	// Aggregate recording-volume capacity
-	DiskUsage NullableRecordingDiskUsage `json:"diskUsage,omitempty"`
+	Data      []RecordedSession                         `json:"data,omitempty"`
+	DiskUsage NullableRecordedSessionListAllOfDiskUsage `json:"diskUsage,omitempty"`
 }
 
 // NewRecordedSessionListAllOf instantiates a new RecordedSessionListAllOf object
@@ -41,7 +43,7 @@ func NewRecordedSessionListAllOfWithDefaults() *RecordedSessionListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *RecordedSessionListAllOf) GetData() []RecordedSession {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []RecordedSession
 		return ret
 	}
@@ -51,7 +53,7 @@ func (o *RecordedSessionListAllOf) GetData() []RecordedSession {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionListAllOf) GetDataOk() ([]RecordedSession, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -59,7 +61,7 @@ func (o *RecordedSessionListAllOf) GetDataOk() ([]RecordedSession, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *RecordedSessionListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -72,9 +74,9 @@ func (o *RecordedSessionListAllOf) SetData(v []RecordedSession) {
 }
 
 // GetDiskUsage returns the DiskUsage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RecordedSessionListAllOf) GetDiskUsage() RecordingDiskUsage {
-	if o == nil || o.DiskUsage.Get() == nil {
-		var ret RecordingDiskUsage
+func (o *RecordedSessionListAllOf) GetDiskUsage() RecordedSessionListAllOfDiskUsage {
+	if o == nil || IsNil(o.DiskUsage.Get()) {
+		var ret RecordedSessionListAllOfDiskUsage
 		return ret
 	}
 	return *o.DiskUsage.Get()
@@ -83,7 +85,7 @@ func (o *RecordedSessionListAllOf) GetDiskUsage() RecordingDiskUsage {
 // GetDiskUsageOk returns a tuple with the DiskUsage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RecordedSessionListAllOf) GetDiskUsageOk() (*RecordingDiskUsage, bool) {
+func (o *RecordedSessionListAllOf) GetDiskUsageOk() (*RecordedSessionListAllOfDiskUsage, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -99,8 +101,8 @@ func (o *RecordedSessionListAllOf) HasDiskUsage() bool {
 	return false
 }
 
-// SetDiskUsage gets a reference to the given NullableRecordingDiskUsage and assigns it to the DiskUsage field.
-func (o *RecordedSessionListAllOf) SetDiskUsage(v RecordingDiskUsage) {
+// SetDiskUsage gets a reference to the given NullableRecordedSessionListAllOfDiskUsage and assigns it to the DiskUsage field.
+func (o *RecordedSessionListAllOf) SetDiskUsage(v RecordedSessionListAllOfDiskUsage) {
 	o.DiskUsage.Set(&v)
 }
 
@@ -115,14 +117,22 @@ func (o *RecordedSessionListAllOf) UnsetDiskUsage() {
 }
 
 func (o RecordedSessionListAllOf) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o RecordedSessionListAllOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
+	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
 	if o.DiskUsage.IsSet() {
 		toSerialize["diskUsage"] = o.DiskUsage.Get()
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableRecordedSessionListAllOf struct {

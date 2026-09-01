@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfMetricsAggregator type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfMetricsAggregator{}
+
 // ApplianceAllOfMetricsAggregator Metrics Aggregator settings. It collects metrics from the appliances in the given sites and provides Prometheus APIs for consumption.
 type ApplianceAllOfMetricsAggregator struct {
 	// Whether the Metrics Aggregator is enabled on this appliance or not.
@@ -47,7 +50,7 @@ func NewApplianceAllOfMetricsAggregatorWithDefaults() *ApplianceAllOfMetricsAggr
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfMetricsAggregator) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfMetricsAggregator) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -65,7 +68,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfMetricsAggregator) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *ApplianceAllOfMetricsAggregator) SetEnabled(v bool) {
 
 // GetPrometheusExporter returns the PrometheusExporter field value if set, zero value otherwise.
 func (o *ApplianceAllOfMetricsAggregator) GetPrometheusExporter() PrometheusExporter {
-	if o == nil || o.PrometheusExporter == nil {
+	if o == nil || IsNil(o.PrometheusExporter) {
 		var ret PrometheusExporter
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetPrometheusExporter() PrometheusExpo
 // GetPrometheusExporterOk returns a tuple with the PrometheusExporter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfMetricsAggregator) GetPrometheusExporterOk() (*PrometheusExporter, bool) {
-	if o == nil || o.PrometheusExporter == nil {
+	if o == nil || IsNil(o.PrometheusExporter) {
 		return nil, false
 	}
 	return o.PrometheusExporter, true
@@ -97,7 +100,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetPrometheusExporterOk() (*Prometheus
 
 // HasPrometheusExporter returns a boolean if a field has been set.
 func (o *ApplianceAllOfMetricsAggregator) HasPrometheusExporter() bool {
-	if o != nil && o.PrometheusExporter != nil {
+	if o != nil && !IsNil(o.PrometheusExporter) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *ApplianceAllOfMetricsAggregator) SetPrometheusExporter(v PrometheusExpo
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ApplianceAllOfMetricsAggregator) GetSites() []string {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret []string
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetSites() []string {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfMetricsAggregator) GetSitesOk() ([]string, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -129,7 +132,7 @@ func (o *ApplianceAllOfMetricsAggregator) GetSitesOk() ([]string, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *ApplianceAllOfMetricsAggregator) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -142,17 +145,25 @@ func (o *ApplianceAllOfMetricsAggregator) SetSites(v []string) {
 }
 
 func (o ApplianceAllOfMetricsAggregator) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.PrometheusExporter != nil {
-		toSerialize["prometheusExporter"] = o.PrometheusExporter
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfMetricsAggregator) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.PrometheusExporter) {
+		toSerialize["prometheusExporter"] = o.PrometheusExporter
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfMetricsAggregator struct {

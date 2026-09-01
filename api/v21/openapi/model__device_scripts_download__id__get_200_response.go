@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeviceScriptsDownloadIdGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeviceScriptsDownloadIdGet200Response{}
+
 // DeviceScriptsDownloadIdGet200Response struct for DeviceScriptsDownloadIdGet200Response
 type DeviceScriptsDownloadIdGet200Response struct {
 	// Name of the Device Claim Script object.
@@ -44,7 +47,7 @@ func NewDeviceScriptsDownloadIdGet200ResponseWithDefaults() *DeviceScriptsDownlo
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *DeviceScriptsDownloadIdGet200Response) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -62,7 +65,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) SetName(v string) {
 
 // GetFilename returns the Filename field value if set, zero value otherwise.
 func (o *DeviceScriptsDownloadIdGet200Response) GetFilename() string {
-	if o == nil || o.Filename == nil {
+	if o == nil || IsNil(o.Filename) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetFilename() string {
 // GetFilenameOk returns a tuple with the Filename field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) GetFilenameOk() (*string, bool) {
-	if o == nil || o.Filename == nil {
+	if o == nil || IsNil(o.Filename) {
 		return nil, false
 	}
 	return o.Filename, true
@@ -94,7 +97,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetFilenameOk() (*string, bool) 
 
 // HasFilename returns a boolean if a field has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) HasFilename() bool {
-	if o != nil && o.Filename != nil {
+	if o != nil && !IsNil(o.Filename) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) SetFilename(v string) {
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *DeviceScriptsDownloadIdGet200Response) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -126,7 +129,7 @@ func (o *DeviceScriptsDownloadIdGet200Response) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *DeviceScriptsDownloadIdGet200Response) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *DeviceScriptsDownloadIdGet200Response) SetFile(v string) {
 }
 
 func (o DeviceScriptsDownloadIdGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Filename != nil {
-		toSerialize["filename"] = o.Filename
-	}
-	if o.File != nil {
-		toSerialize["file"] = o.File
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeviceScriptsDownloadIdGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Filename) {
+		toSerialize["filename"] = o.Filename
+	}
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	return toSerialize, nil
 }
 
 type NullableDeviceScriptsDownloadIdGet200Response struct {

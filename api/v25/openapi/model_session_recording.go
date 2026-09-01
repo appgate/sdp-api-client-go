@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SessionRecording type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionRecording{}
+
 // SessionRecording Session recording configuration.
 type SessionRecording struct {
 	// Whether sessions to this entitlement are recorded.
@@ -50,7 +53,7 @@ func NewSessionRecordingWithDefaults() *SessionRecording {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *SessionRecording) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *SessionRecording) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionRecording) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -68,7 +71,7 @@ func (o *SessionRecording) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *SessionRecording) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *SessionRecording) SetEnabled(v bool) {
 
 // GetDisclosureMessage returns the DisclosureMessage field value if set, zero value otherwise.
 func (o *SessionRecording) GetDisclosureMessage() string {
-	if o == nil || o.DisclosureMessage == nil {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		var ret string
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *SessionRecording) GetDisclosureMessage() string {
 // GetDisclosureMessageOk returns a tuple with the DisclosureMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionRecording) GetDisclosureMessageOk() (*string, bool) {
-	if o == nil || o.DisclosureMessage == nil {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		return nil, false
 	}
 	return o.DisclosureMessage, true
@@ -100,7 +103,7 @@ func (o *SessionRecording) GetDisclosureMessageOk() (*string, bool) {
 
 // HasDisclosureMessage returns a boolean if a field has been set.
 func (o *SessionRecording) HasDisclosureMessage() bool {
-	if o != nil && o.DisclosureMessage != nil {
+	if o != nil && !IsNil(o.DisclosureMessage) {
 		return true
 	}
 
@@ -113,14 +116,22 @@ func (o *SessionRecording) SetDisclosureMessage(v string) {
 }
 
 func (o SessionRecording) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.DisclosureMessage != nil {
-		toSerialize["disclosureMessage"] = o.DisclosureMessage
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionRecording) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.DisclosureMessage) {
+		toSerialize["disclosureMessage"] = o.DisclosureMessage
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionRecording struct {

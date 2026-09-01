@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AutoUpdateSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AutoUpdateSettings{}
+
 // AutoUpdateSettings struct for AutoUpdateSettings
 type AutoUpdateSettings struct {
 	// Whether the Client Auto-Update is enabled or not.
@@ -47,7 +50,7 @@ func NewAutoUpdateSettingsWithDefaults() *AutoUpdateSettings {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *AutoUpdateSettings) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -65,7 +68,7 @@ func (o *AutoUpdateSettings) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *AutoUpdateSettings) SetEnabled(v bool) {
 
 // GetCriteriaScript returns the CriteriaScript field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetCriteriaScript() string {
-	if o == nil || o.CriteriaScript == nil {
+	if o == nil || IsNil(o.CriteriaScript) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *AutoUpdateSettings) GetCriteriaScript() string {
 // GetCriteriaScriptOk returns a tuple with the CriteriaScript field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetCriteriaScriptOk() (*string, bool) {
-	if o == nil || o.CriteriaScript == nil {
+	if o == nil || IsNil(o.CriteriaScript) {
 		return nil, false
 	}
 	return o.CriteriaScript, true
@@ -97,7 +100,7 @@ func (o *AutoUpdateSettings) GetCriteriaScriptOk() (*string, bool) {
 
 // HasCriteriaScript returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasCriteriaScript() bool {
-	if o != nil && o.CriteriaScript != nil {
+	if o != nil && !IsNil(o.CriteriaScript) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *AutoUpdateSettings) SetCriteriaScript(v string) {
 
 // GetWindows returns the Windows field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetWindows() Client {
-	if o == nil || o.Windows == nil {
+	if o == nil || IsNil(o.Windows) {
 		var ret Client
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *AutoUpdateSettings) GetWindows() Client {
 // GetWindowsOk returns a tuple with the Windows field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetWindowsOk() (*Client, bool) {
-	if o == nil || o.Windows == nil {
+	if o == nil || IsNil(o.Windows) {
 		return nil, false
 	}
 	return o.Windows, true
@@ -129,7 +132,7 @@ func (o *AutoUpdateSettings) GetWindowsOk() (*Client, bool) {
 
 // HasWindows returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasWindows() bool {
-	if o != nil && o.Windows != nil {
+	if o != nil && !IsNil(o.Windows) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *AutoUpdateSettings) SetWindows(v Client) {
 
 // GetMacOS returns the MacOS field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetMacOS() Client {
-	if o == nil || o.MacOS == nil {
+	if o == nil || IsNil(o.MacOS) {
 		var ret Client
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *AutoUpdateSettings) GetMacOS() Client {
 // GetMacOSOk returns a tuple with the MacOS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetMacOSOk() (*Client, bool) {
-	if o == nil || o.MacOS == nil {
+	if o == nil || IsNil(o.MacOS) {
 		return nil, false
 	}
 	return o.MacOS, true
@@ -161,7 +164,7 @@ func (o *AutoUpdateSettings) GetMacOSOk() (*Client, bool) {
 
 // HasMacOS returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasMacOS() bool {
-	if o != nil && o.MacOS != nil {
+	if o != nil && !IsNil(o.MacOS) {
 		return true
 	}
 
@@ -175,7 +178,7 @@ func (o *AutoUpdateSettings) SetMacOS(v Client) {
 
 // GetUbuntu returns the Ubuntu field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetUbuntu() Client {
-	if o == nil || o.Ubuntu == nil {
+	if o == nil || IsNil(o.Ubuntu) {
 		var ret Client
 		return ret
 	}
@@ -185,7 +188,7 @@ func (o *AutoUpdateSettings) GetUbuntu() Client {
 // GetUbuntuOk returns a tuple with the Ubuntu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetUbuntuOk() (*Client, bool) {
-	if o == nil || o.Ubuntu == nil {
+	if o == nil || IsNil(o.Ubuntu) {
 		return nil, false
 	}
 	return o.Ubuntu, true
@@ -193,7 +196,7 @@ func (o *AutoUpdateSettings) GetUbuntuOk() (*Client, bool) {
 
 // HasUbuntu returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasUbuntu() bool {
-	if o != nil && o.Ubuntu != nil {
+	if o != nil && !IsNil(o.Ubuntu) {
 		return true
 	}
 
@@ -207,7 +210,7 @@ func (o *AutoUpdateSettings) SetUbuntu(v Client) {
 
 // GetFedora returns the Fedora field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetFedora() Client {
-	if o == nil || o.Fedora == nil {
+	if o == nil || IsNil(o.Fedora) {
 		var ret Client
 		return ret
 	}
@@ -217,7 +220,7 @@ func (o *AutoUpdateSettings) GetFedora() Client {
 // GetFedoraOk returns a tuple with the Fedora field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetFedoraOk() (*Client, bool) {
-	if o == nil || o.Fedora == nil {
+	if o == nil || IsNil(o.Fedora) {
 		return nil, false
 	}
 	return o.Fedora, true
@@ -225,7 +228,7 @@ func (o *AutoUpdateSettings) GetFedoraOk() (*Client, bool) {
 
 // HasFedora returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasFedora() bool {
-	if o != nil && o.Fedora != nil {
+	if o != nil && !IsNil(o.Fedora) {
 		return true
 	}
 
@@ -239,7 +242,7 @@ func (o *AutoUpdateSettings) SetFedora(v Client) {
 
 // GetRedHat returns the RedHat field value if set, zero value otherwise.
 func (o *AutoUpdateSettings) GetRedHat() Client {
-	if o == nil || o.RedHat == nil {
+	if o == nil || IsNil(o.RedHat) {
 		var ret Client
 		return ret
 	}
@@ -249,7 +252,7 @@ func (o *AutoUpdateSettings) GetRedHat() Client {
 // GetRedHatOk returns a tuple with the RedHat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AutoUpdateSettings) GetRedHatOk() (*Client, bool) {
-	if o == nil || o.RedHat == nil {
+	if o == nil || IsNil(o.RedHat) {
 		return nil, false
 	}
 	return o.RedHat, true
@@ -257,7 +260,7 @@ func (o *AutoUpdateSettings) GetRedHatOk() (*Client, bool) {
 
 // HasRedHat returns a boolean if a field has been set.
 func (o *AutoUpdateSettings) HasRedHat() bool {
-	if o != nil && o.RedHat != nil {
+	if o != nil && !IsNil(o.RedHat) {
 		return true
 	}
 
@@ -270,29 +273,37 @@ func (o *AutoUpdateSettings) SetRedHat(v Client) {
 }
 
 func (o AutoUpdateSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.CriteriaScript != nil {
-		toSerialize["criteriaScript"] = o.CriteriaScript
-	}
-	if o.Windows != nil {
-		toSerialize["windows"] = o.Windows
-	}
-	if o.MacOS != nil {
-		toSerialize["macOS"] = o.MacOS
-	}
-	if o.Ubuntu != nil {
-		toSerialize["ubuntu"] = o.Ubuntu
-	}
-	if o.Fedora != nil {
-		toSerialize["fedora"] = o.Fedora
-	}
-	if o.RedHat != nil {
-		toSerialize["redHat"] = o.RedHat
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AutoUpdateSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.CriteriaScript) {
+		toSerialize["criteriaScript"] = o.CriteriaScript
+	}
+	if !IsNil(o.Windows) {
+		toSerialize["windows"] = o.Windows
+	}
+	if !IsNil(o.MacOS) {
+		toSerialize["macOS"] = o.MacOS
+	}
+	if !IsNil(o.Ubuntu) {
+		toSerialize["ubuntu"] = o.Ubuntu
+	}
+	if !IsNil(o.Fedora) {
+		toSerialize["fedora"] = o.Fedora
+	}
+	if !IsNil(o.RedHat) {
+		toSerialize["redHat"] = o.RedHat
+	}
+	return toSerialize, nil
 }
 
 type NullableAutoUpdateSettings struct {

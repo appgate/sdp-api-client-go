@@ -15,12 +15,15 @@ import (
 	"encoding/json"
 )
 
+// checks if the ActiveSessionsAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveSessionsAllOf{}
+
 // ActiveSessionsAllOf struct for ActiveSessionsAllOf
 type ActiveSessionsAllOf struct {
 	// The number of total Distinct Users currently active.
-	DistinctUserCount *float32            `json:"distinctUserCount,omitempty"`
-	Data              []BaseActiveSession `json:"data,omitempty"`
-	GeolocationQuery  *GeolocationQuery   `json:"geolocationQuery,omitempty"`
+	DistinctUserCount *float32                       `json:"distinctUserCount,omitempty"`
+	Data              []ActiveSessionsAllOfDataInner `json:"data,omitempty"`
+	GeolocationQuery  *GeolocationQuery              `json:"geolocationQuery,omitempty"`
 }
 
 // NewActiveSessionsAllOf instantiates a new ActiveSessionsAllOf object
@@ -42,7 +45,7 @@ func NewActiveSessionsAllOfWithDefaults() *ActiveSessionsAllOf {
 
 // GetDistinctUserCount returns the DistinctUserCount field value if set, zero value otherwise.
 func (o *ActiveSessionsAllOf) GetDistinctUserCount() float32 {
-	if o == nil || o.DistinctUserCount == nil {
+	if o == nil || IsNil(o.DistinctUserCount) {
 		var ret float32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ActiveSessionsAllOf) GetDistinctUserCount() float32 {
 // GetDistinctUserCountOk returns a tuple with the DistinctUserCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessionsAllOf) GetDistinctUserCountOk() (*float32, bool) {
-	if o == nil || o.DistinctUserCount == nil {
+	if o == nil || IsNil(o.DistinctUserCount) {
 		return nil, false
 	}
 	return o.DistinctUserCount, true
@@ -60,7 +63,7 @@ func (o *ActiveSessionsAllOf) GetDistinctUserCountOk() (*float32, bool) {
 
 // HasDistinctUserCount returns a boolean if a field has been set.
 func (o *ActiveSessionsAllOf) HasDistinctUserCount() bool {
-	if o != nil && o.DistinctUserCount != nil {
+	if o != nil && !IsNil(o.DistinctUserCount) {
 		return true
 	}
 
@@ -73,9 +76,9 @@ func (o *ActiveSessionsAllOf) SetDistinctUserCount(v float32) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ActiveSessionsAllOf) GetData() []BaseActiveSession {
-	if o == nil || o.Data == nil {
-		var ret []BaseActiveSession
+func (o *ActiveSessionsAllOf) GetData() []ActiveSessionsAllOfDataInner {
+	if o == nil || IsNil(o.Data) {
+		var ret []ActiveSessionsAllOfDataInner
 		return ret
 	}
 	return o.Data
@@ -83,8 +86,8 @@ func (o *ActiveSessionsAllOf) GetData() []BaseActiveSession {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ActiveSessionsAllOf) GetDataOk() ([]BaseActiveSession, bool) {
-	if o == nil || o.Data == nil {
+func (o *ActiveSessionsAllOf) GetDataOk() ([]ActiveSessionsAllOfDataInner, bool) {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -92,21 +95,21 @@ func (o *ActiveSessionsAllOf) GetDataOk() ([]BaseActiveSession, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ActiveSessionsAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
 	return false
 }
 
-// SetData gets a reference to the given []BaseActiveSession and assigns it to the Data field.
-func (o *ActiveSessionsAllOf) SetData(v []BaseActiveSession) {
+// SetData gets a reference to the given []ActiveSessionsAllOfDataInner and assigns it to the Data field.
+func (o *ActiveSessionsAllOf) SetData(v []ActiveSessionsAllOfDataInner) {
 	o.Data = v
 }
 
 // GetGeolocationQuery returns the GeolocationQuery field value if set, zero value otherwise.
 func (o *ActiveSessionsAllOf) GetGeolocationQuery() GeolocationQuery {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		var ret GeolocationQuery
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *ActiveSessionsAllOf) GetGeolocationQuery() GeolocationQuery {
 // GetGeolocationQueryOk returns a tuple with the GeolocationQuery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSessionsAllOf) GetGeolocationQueryOk() (*GeolocationQuery, bool) {
-	if o == nil || o.GeolocationQuery == nil {
+	if o == nil || IsNil(o.GeolocationQuery) {
 		return nil, false
 	}
 	return o.GeolocationQuery, true
@@ -124,7 +127,7 @@ func (o *ActiveSessionsAllOf) GetGeolocationQueryOk() (*GeolocationQuery, bool) 
 
 // HasGeolocationQuery returns a boolean if a field has been set.
 func (o *ActiveSessionsAllOf) HasGeolocationQuery() bool {
-	if o != nil && o.GeolocationQuery != nil {
+	if o != nil && !IsNil(o.GeolocationQuery) {
 		return true
 	}
 
@@ -137,17 +140,25 @@ func (o *ActiveSessionsAllOf) SetGeolocationQuery(v GeolocationQuery) {
 }
 
 func (o ActiveSessionsAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DistinctUserCount != nil {
-		toSerialize["distinctUserCount"] = o.DistinctUserCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.GeolocationQuery != nil {
-		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveSessionsAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DistinctUserCount) {
+		toSerialize["distinctUserCount"] = o.DistinctUserCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.GeolocationQuery) {
+		toSerialize["geolocationQuery"] = o.GeolocationQuery
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveSessionsAllOf struct {

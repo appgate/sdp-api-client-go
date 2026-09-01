@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfVpnTls type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfVpnTls{}
+
 // SiteAllOfVpnTls VPN over TLS protocol configuration.
 type SiteAllOfVpnTls struct {
 	Enabled *bool `json:"enabled,omitempty"`
@@ -49,7 +52,7 @@ func NewSiteAllOfVpnTlsWithDefaults() *SiteAllOfVpnTls {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *SiteAllOfVpnTls) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *SiteAllOfVpnTls) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpnTls) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -67,7 +70,7 @@ func (o *SiteAllOfVpnTls) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *SiteAllOfVpnTls) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *SiteAllOfVpnTls) SetEnabled(v bool) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *SiteAllOfVpnTls) GetVersion() string {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *SiteAllOfVpnTls) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpnTls) GetVersionOk() (*string, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -99,7 +102,7 @@ func (o *SiteAllOfVpnTls) GetVersionOk() (*string, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *SiteAllOfVpnTls) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -112,14 +115,22 @@ func (o *SiteAllOfVpnTls) SetVersion(v string) {
 }
 
 func (o SiteAllOfVpnTls) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfVpnTls) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfVpnTls struct {

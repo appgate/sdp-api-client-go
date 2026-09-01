@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ActiveBrokeredSessionListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveBrokeredSessionListAllOf{}
+
 // ActiveBrokeredSessionListAllOf struct for ActiveBrokeredSessionListAllOf
 type ActiveBrokeredSessionListAllOf struct {
 	Data []ActiveBrokeredSession `json:"data,omitempty"`
@@ -39,7 +42,7 @@ func NewActiveBrokeredSessionListAllOfWithDefaults() *ActiveBrokeredSessionListA
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ActiveBrokeredSessionListAllOf) GetData() []ActiveBrokeredSession {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []ActiveBrokeredSession
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *ActiveBrokeredSessionListAllOf) GetData() []ActiveBrokeredSession {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveBrokeredSessionListAllOf) GetDataOk() ([]ActiveBrokeredSession, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -57,7 +60,7 @@ func (o *ActiveBrokeredSessionListAllOf) GetDataOk() ([]ActiveBrokeredSession, b
 
 // HasData returns a boolean if a field has been set.
 func (o *ActiveBrokeredSessionListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ActiveBrokeredSessionListAllOf) SetData(v []ActiveBrokeredSession) {
 }
 
 func (o ActiveBrokeredSessionListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveBrokeredSessionListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveBrokeredSessionListAllOf struct {

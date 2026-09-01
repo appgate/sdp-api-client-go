@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the FilterBy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &FilterBy{}
+
 // FilterBy struct for FilterBy
 type FilterBy struct {
 	// The field name the filter is applied to.
@@ -42,7 +45,7 @@ func NewFilterByWithDefaults() *FilterBy {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *FilterBy) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *FilterBy) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FilterBy) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -60,7 +63,7 @@ func (o *FilterBy) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *FilterBy) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *FilterBy) SetName(v string) {
 
 // GetValue returns the Value field value if set, zero value otherwise.
 func (o *FilterBy) GetValue() string {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *FilterBy) GetValue() string {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FilterBy) GetValueOk() (*string, bool) {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
 	return o.Value, true
@@ -92,7 +95,7 @@ func (o *FilterBy) GetValueOk() (*string, bool) {
 
 // HasValue returns a boolean if a field has been set.
 func (o *FilterBy) HasValue() bool {
-	if o != nil && o.Value != nil {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *FilterBy) SetValue(v string) {
 }
 
 func (o FilterBy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Value != nil {
-		toSerialize["value"] = o.Value
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o FilterBy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Value) {
+		toSerialize["value"] = o.Value
+	}
+	return toSerialize, nil
 }
 
 type NullableFilterBy struct {

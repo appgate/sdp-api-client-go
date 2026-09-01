@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeviceScriptAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeviceScriptAllOf{}
+
 // DeviceScriptAllOf Represents a Device Claim Script.
 type DeviceScriptAllOf struct {
 	// The name of the file to be downloaded as to the client devices.
@@ -69,7 +72,7 @@ func (o *DeviceScriptAllOf) SetFilename(v string) {
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *DeviceScriptAllOf) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -79,7 +82,7 @@ func (o *DeviceScriptAllOf) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScriptAllOf) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -87,7 +90,7 @@ func (o *DeviceScriptAllOf) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *DeviceScriptAllOf) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -101,7 +104,7 @@ func (o *DeviceScriptAllOf) SetFile(v string) {
 
 // GetChecksumSha256 returns the ChecksumSha256 field value if set, zero value otherwise.
 func (o *DeviceScriptAllOf) GetChecksumSha256() string {
-	if o == nil || o.ChecksumSha256 == nil {
+	if o == nil || IsNil(o.ChecksumSha256) {
 		var ret string
 		return ret
 	}
@@ -111,7 +114,7 @@ func (o *DeviceScriptAllOf) GetChecksumSha256() string {
 // GetChecksumSha256Ok returns a tuple with the ChecksumSha256 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeviceScriptAllOf) GetChecksumSha256Ok() (*string, bool) {
-	if o == nil || o.ChecksumSha256 == nil {
+	if o == nil || IsNil(o.ChecksumSha256) {
 		return nil, false
 	}
 	return o.ChecksumSha256, true
@@ -119,7 +122,7 @@ func (o *DeviceScriptAllOf) GetChecksumSha256Ok() (*string, bool) {
 
 // HasChecksumSha256 returns a boolean if a field has been set.
 func (o *DeviceScriptAllOf) HasChecksumSha256() bool {
-	if o != nil && o.ChecksumSha256 != nil {
+	if o != nil && !IsNil(o.ChecksumSha256) {
 		return true
 	}
 
@@ -132,17 +135,23 @@ func (o *DeviceScriptAllOf) SetChecksumSha256(v string) {
 }
 
 func (o DeviceScriptAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["filename"] = o.Filename
-	}
-	if o.File != nil {
-		toSerialize["file"] = o.File
-	}
-	if o.ChecksumSha256 != nil {
-		toSerialize["checksumSha256"] = o.ChecksumSha256
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeviceScriptAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["filename"] = o.Filename
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	if !IsNil(o.ChecksumSha256) {
+		toSerialize["checksumSha256"] = o.ChecksumSha256
+	}
+	return toSerialize, nil
 }
 
 type NullableDeviceScriptAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DiscoveredAppsConfiguration type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DiscoveredAppsConfiguration{}
+
 // DiscoveredAppsConfiguration Configuration for Application Discovery.
 type DiscoveredAppsConfiguration struct {
 	// List of custom types to group apps according to their ports.
@@ -46,7 +49,7 @@ func NewDiscoveredAppsConfigurationWithDefaults() *DiscoveredAppsConfiguration {
 
 // GetCustomAppTypes returns the CustomAppTypes field value if set, zero value otherwise.
 func (o *DiscoveredAppsConfiguration) GetCustomAppTypes() []DiscoveredAppsConfigurationCustomAppTypesInner {
-	if o == nil || o.CustomAppTypes == nil {
+	if o == nil || IsNil(o.CustomAppTypes) {
 		var ret []DiscoveredAppsConfigurationCustomAppTypesInner
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *DiscoveredAppsConfiguration) GetCustomAppTypes() []DiscoveredAppsConfig
 // GetCustomAppTypesOk returns a tuple with the CustomAppTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DiscoveredAppsConfiguration) GetCustomAppTypesOk() ([]DiscoveredAppsConfigurationCustomAppTypesInner, bool) {
-	if o == nil || o.CustomAppTypes == nil {
+	if o == nil || IsNil(o.CustomAppTypes) {
 		return nil, false
 	}
 	return o.CustomAppTypes, true
@@ -64,7 +67,7 @@ func (o *DiscoveredAppsConfiguration) GetCustomAppTypesOk() ([]DiscoveredAppsCon
 
 // HasCustomAppTypes returns a boolean if a field has been set.
 func (o *DiscoveredAppsConfiguration) HasCustomAppTypes() bool {
-	if o != nil && o.CustomAppTypes != nil {
+	if o != nil && !IsNil(o.CustomAppTypes) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *DiscoveredAppsConfiguration) SetCustomAppTypes(v []DiscoveredAppsConfig
 
 // GetGroupsClaim returns the GroupsClaim field value if set, zero value otherwise.
 func (o *DiscoveredAppsConfiguration) GetGroupsClaim() string {
-	if o == nil || o.GroupsClaim == nil {
+	if o == nil || IsNil(o.GroupsClaim) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *DiscoveredAppsConfiguration) GetGroupsClaim() string {
 // GetGroupsClaimOk returns a tuple with the GroupsClaim field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DiscoveredAppsConfiguration) GetGroupsClaimOk() (*string, bool) {
-	if o == nil || o.GroupsClaim == nil {
+	if o == nil || IsNil(o.GroupsClaim) {
 		return nil, false
 	}
 	return o.GroupsClaim, true
@@ -96,7 +99,7 @@ func (o *DiscoveredAppsConfiguration) GetGroupsClaimOk() (*string, bool) {
 
 // HasGroupsClaim returns a boolean if a field has been set.
 func (o *DiscoveredAppsConfiguration) HasGroupsClaim() bool {
-	if o != nil && o.GroupsClaim != nil {
+	if o != nil && !IsNil(o.GroupsClaim) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *DiscoveredAppsConfiguration) SetGroupsClaim(v string) {
 }
 
 func (o DiscoveredAppsConfiguration) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.CustomAppTypes != nil {
-		toSerialize["customAppTypes"] = o.CustomAppTypes
-	}
-	if o.GroupsClaim != nil {
-		toSerialize["groupsClaim"] = o.GroupsClaim
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DiscoveredAppsConfiguration) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.CustomAppTypes) {
+		toSerialize["customAppTypes"] = o.CustomAppTypes
+	}
+	if !IsNil(o.GroupsClaim) {
+		toSerialize["groupsClaim"] = o.GroupsClaim
+	}
+	return toSerialize, nil
 }
 
 type NullableDiscoveredAppsConfiguration struct {

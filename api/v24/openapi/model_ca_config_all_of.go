@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CaConfigAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CaConfigAllOf{}
+
 // CaConfigAllOf CA details.
 type CaConfigAllOf struct {
 	// Name constraints extension details for permitted hostnames or IPs.
@@ -44,7 +47,7 @@ func NewCaConfigAllOfWithDefaults() *CaConfigAllOf {
 
 // GetNameConstraintsPermitted returns the NameConstraintsPermitted field value if set, zero value otherwise.
 func (o *CaConfigAllOf) GetNameConstraintsPermitted() []string {
-	if o == nil || o.NameConstraintsPermitted == nil {
+	if o == nil || IsNil(o.NameConstraintsPermitted) {
 		var ret []string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *CaConfigAllOf) GetNameConstraintsPermitted() []string {
 // GetNameConstraintsPermittedOk returns a tuple with the NameConstraintsPermitted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaConfigAllOf) GetNameConstraintsPermittedOk() ([]string, bool) {
-	if o == nil || o.NameConstraintsPermitted == nil {
+	if o == nil || IsNil(o.NameConstraintsPermitted) {
 		return nil, false
 	}
 	return o.NameConstraintsPermitted, true
@@ -62,7 +65,7 @@ func (o *CaConfigAllOf) GetNameConstraintsPermittedOk() ([]string, bool) {
 
 // HasNameConstraintsPermitted returns a boolean if a field has been set.
 func (o *CaConfigAllOf) HasNameConstraintsPermitted() bool {
-	if o != nil && o.NameConstraintsPermitted != nil {
+	if o != nil && !IsNil(o.NameConstraintsPermitted) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *CaConfigAllOf) SetNameConstraintsPermitted(v []string) {
 
 // GetNameConstraintsExcluded returns the NameConstraintsExcluded field value if set, zero value otherwise.
 func (o *CaConfigAllOf) GetNameConstraintsExcluded() []string {
-	if o == nil || o.NameConstraintsExcluded == nil {
+	if o == nil || IsNil(o.NameConstraintsExcluded) {
 		var ret []string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *CaConfigAllOf) GetNameConstraintsExcluded() []string {
 // GetNameConstraintsExcludedOk returns a tuple with the NameConstraintsExcluded field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaConfigAllOf) GetNameConstraintsExcludedOk() ([]string, bool) {
-	if o == nil || o.NameConstraintsExcluded == nil {
+	if o == nil || IsNil(o.NameConstraintsExcluded) {
 		return nil, false
 	}
 	return o.NameConstraintsExcluded, true
@@ -94,7 +97,7 @@ func (o *CaConfigAllOf) GetNameConstraintsExcludedOk() ([]string, bool) {
 
 // HasNameConstraintsExcluded returns a boolean if a field has been set.
 func (o *CaConfigAllOf) HasNameConstraintsExcluded() bool {
-	if o != nil && o.NameConstraintsExcluded != nil {
+	if o != nil && !IsNil(o.NameConstraintsExcluded) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *CaConfigAllOf) SetNameConstraintsExcluded(v []string) {
 
 // GetCrlUrl returns the CrlUrl field value if set, zero value otherwise.
 func (o *CaConfigAllOf) GetCrlUrl() string {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *CaConfigAllOf) GetCrlUrl() string {
 // GetCrlUrlOk returns a tuple with the CrlUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CaConfigAllOf) GetCrlUrlOk() (*string, bool) {
-	if o == nil || o.CrlUrl == nil {
+	if o == nil || IsNil(o.CrlUrl) {
 		return nil, false
 	}
 	return o.CrlUrl, true
@@ -126,7 +129,7 @@ func (o *CaConfigAllOf) GetCrlUrlOk() (*string, bool) {
 
 // HasCrlUrl returns a boolean if a field has been set.
 func (o *CaConfigAllOf) HasCrlUrl() bool {
-	if o != nil && o.CrlUrl != nil {
+	if o != nil && !IsNil(o.CrlUrl) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *CaConfigAllOf) SetCrlUrl(v string) {
 }
 
 func (o CaConfigAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.NameConstraintsPermitted != nil {
-		toSerialize["nameConstraintsPermitted"] = o.NameConstraintsPermitted
-	}
-	if o.NameConstraintsExcluded != nil {
-		toSerialize["nameConstraintsExcluded"] = o.NameConstraintsExcluded
-	}
-	if o.CrlUrl != nil {
-		toSerialize["crlUrl"] = o.CrlUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CaConfigAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.NameConstraintsPermitted) {
+		toSerialize["nameConstraintsPermitted"] = o.NameConstraintsPermitted
+	}
+	if !IsNil(o.NameConstraintsExcluded) {
+		toSerialize["nameConstraintsExcluded"] = o.NameConstraintsExcluded
+	}
+	if !IsNil(o.CrlUrl) {
+		toSerialize["crlUrl"] = o.CrlUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableCaConfigAllOf struct {

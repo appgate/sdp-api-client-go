@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WeightedExternalProfile type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WeightedExternalProfile{}
+
 // WeightedExternalProfile struct for WeightedExternalProfile
 type WeightedExternalProfile struct {
 	// Identifier to track the object on update since all the other fields are write-only. A random one will be assigned if left empty.
@@ -52,7 +55,7 @@ func NewWeightedExternalProfileWithDefaults() *WeightedExternalProfile {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *WeightedExternalProfile) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *WeightedExternalProfile) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfile) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -70,7 +73,7 @@ func (o *WeightedExternalProfile) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *WeightedExternalProfile) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *WeightedExternalProfile) SetId(v string) {
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *WeightedExternalProfile) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *WeightedExternalProfile) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfile) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -102,7 +105,7 @@ func (o *WeightedExternalProfile) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *WeightedExternalProfile) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *WeightedExternalProfile) SetUrl(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *WeightedExternalProfile) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *WeightedExternalProfile) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfile) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -134,7 +137,7 @@ func (o *WeightedExternalProfile) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *WeightedExternalProfile) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *WeightedExternalProfile) SetHostname(v string) {
 
 // GetProfileName returns the ProfileName field value if set, zero value otherwise.
 func (o *WeightedExternalProfile) GetProfileName() string {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		var ret string
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *WeightedExternalProfile) GetProfileName() string {
 // GetProfileNameOk returns a tuple with the ProfileName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfile) GetProfileNameOk() (*string, bool) {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		return nil, false
 	}
 	return o.ProfileName, true
@@ -166,7 +169,7 @@ func (o *WeightedExternalProfile) GetProfileNameOk() (*string, bool) {
 
 // HasProfileName returns a boolean if a field has been set.
 func (o *WeightedExternalProfile) HasProfileName() bool {
-	if o != nil && o.ProfileName != nil {
+	if o != nil && !IsNil(o.ProfileName) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *WeightedExternalProfile) SetProfileName(v string) {
 
 // GetWeight returns the Weight field value if set, zero value otherwise.
 func (o *WeightedExternalProfile) GetWeight() int32 {
-	if o == nil || o.Weight == nil {
+	if o == nil || IsNil(o.Weight) {
 		var ret int32
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *WeightedExternalProfile) GetWeight() int32 {
 // GetWeightOk returns a tuple with the Weight field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WeightedExternalProfile) GetWeightOk() (*int32, bool) {
-	if o == nil || o.Weight == nil {
+	if o == nil || IsNil(o.Weight) {
 		return nil, false
 	}
 	return o.Weight, true
@@ -198,7 +201,7 @@ func (o *WeightedExternalProfile) GetWeightOk() (*int32, bool) {
 
 // HasWeight returns a boolean if a field has been set.
 func (o *WeightedExternalProfile) HasWeight() bool {
-	if o != nil && o.Weight != nil {
+	if o != nil && !IsNil(o.Weight) {
 		return true
 	}
 
@@ -211,23 +214,31 @@ func (o *WeightedExternalProfile) SetWeight(v int32) {
 }
 
 func (o WeightedExternalProfile) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.ProfileName != nil {
-		toSerialize["profileName"] = o.ProfileName
-	}
-	if o.Weight != nil {
-		toSerialize["weight"] = o.Weight
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WeightedExternalProfile) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.ProfileName) {
+		toSerialize["profileName"] = o.ProfileName
+	}
+	if !IsNil(o.Weight) {
+		toSerialize["weight"] = o.Weight
+	}
+	return toSerialize, nil
 }
 
 type NullableWeightedExternalProfile struct {

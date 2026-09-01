@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityCaNextSwitchPost412Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityCaNextSwitchPost412Response{}
+
 // CertificateAuthorityCaNextSwitchPost412Response struct for CertificateAuthorityCaNextSwitchPost412Response
 type CertificateAuthorityCaNextSwitchPost412Response struct {
 	// Machine readable error code.
@@ -44,7 +47,7 @@ func NewCertificateAuthorityCaNextSwitchPost412ResponseWithDefaults() *Certifica
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -62,7 +65,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) GetIdOk() (*string, bo
 
 // HasId returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) SetId(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -94,7 +97,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) GetMessageOk() (*strin
 
 // HasMessage returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) SetMessage(v string) {
 
 // GetFailedAppliances returns the FailedAppliances field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetFailedAppliances() map[string]interface{} {
-	if o == nil || o.FailedAppliances == nil {
+	if o == nil || IsNil(o.FailedAppliances) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -118,15 +121,15 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) GetFailedAppliances() 
 // GetFailedAppliancesOk returns a tuple with the FailedAppliances field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) GetFailedAppliancesOk() (map[string]interface{}, bool) {
-	if o == nil || o.FailedAppliances == nil {
-		return nil, false
+	if o == nil || IsNil(o.FailedAppliances) {
+		return map[string]interface{}{}, false
 	}
 	return o.FailedAppliances, true
 }
 
 // HasFailedAppliances returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412Response) HasFailedAppliances() bool {
-	if o != nil && o.FailedAppliances != nil {
+	if o != nil && !IsNil(o.FailedAppliances) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *CertificateAuthorityCaNextSwitchPost412Response) SetFailedAppliances(v 
 }
 
 func (o CertificateAuthorityCaNextSwitchPost412Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.FailedAppliances != nil {
-		toSerialize["failedAppliances"] = o.FailedAppliances
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityCaNextSwitchPost412Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.FailedAppliances) {
+		toSerialize["failedAppliances"] = o.FailedAppliances
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityCaNextSwitchPost412Response struct {

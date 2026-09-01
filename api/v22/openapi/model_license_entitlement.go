@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the LicenseEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseEntitlement{}
 
 // LicenseEntitlement License entitlement details.
 type LicenseEntitlement struct {
@@ -62,7 +65,7 @@ func NewLicenseEntitlementWithDefaults() *LicenseEntitlement {
 
 // GetMaxUsers returns the MaxUsers field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxUsers() float32 {
-	if o == nil || o.MaxUsers == nil {
+	if o == nil || IsNil(o.MaxUsers) {
 		var ret float32
 		return ret
 	}
@@ -72,7 +75,7 @@ func (o *LicenseEntitlement) GetMaxUsers() float32 {
 // GetMaxUsersOk returns a tuple with the MaxUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxUsersOk() (*float32, bool) {
-	if o == nil || o.MaxUsers == nil {
+	if o == nil || IsNil(o.MaxUsers) {
 		return nil, false
 	}
 	return o.MaxUsers, true
@@ -80,7 +83,7 @@ func (o *LicenseEntitlement) GetMaxUsersOk() (*float32, bool) {
 
 // HasMaxUsers returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxUsers() bool {
-	if o != nil && o.MaxUsers != nil {
+	if o != nil && !IsNil(o.MaxUsers) {
 		return true
 	}
 
@@ -94,7 +97,7 @@ func (o *LicenseEntitlement) SetMaxUsers(v float32) {
 
 // GetMaxPortalUsers returns the MaxPortalUsers field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxPortalUsers() float32 {
-	if o == nil || o.MaxPortalUsers == nil {
+	if o == nil || IsNil(o.MaxPortalUsers) {
 		var ret float32
 		return ret
 	}
@@ -104,7 +107,7 @@ func (o *LicenseEntitlement) GetMaxPortalUsers() float32 {
 // GetMaxPortalUsersOk returns a tuple with the MaxPortalUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxPortalUsersOk() (*float32, bool) {
-	if o == nil || o.MaxPortalUsers == nil {
+	if o == nil || IsNil(o.MaxPortalUsers) {
 		return nil, false
 	}
 	return o.MaxPortalUsers, true
@@ -112,7 +115,7 @@ func (o *LicenseEntitlement) GetMaxPortalUsersOk() (*float32, bool) {
 
 // HasMaxPortalUsers returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxPortalUsers() bool {
-	if o != nil && o.MaxPortalUsers != nil {
+	if o != nil && !IsNil(o.MaxPortalUsers) {
 		return true
 	}
 
@@ -126,7 +129,7 @@ func (o *LicenseEntitlement) SetMaxPortalUsers(v float32) {
 
 // GetMaxServiceUsers returns the MaxServiceUsers field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxServiceUsers() float32 {
-	if o == nil || o.MaxServiceUsers == nil {
+	if o == nil || IsNil(o.MaxServiceUsers) {
 		var ret float32
 		return ret
 	}
@@ -136,7 +139,7 @@ func (o *LicenseEntitlement) GetMaxServiceUsers() float32 {
 // GetMaxServiceUsersOk returns a tuple with the MaxServiceUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxServiceUsersOk() (*float32, bool) {
-	if o == nil || o.MaxServiceUsers == nil {
+	if o == nil || IsNil(o.MaxServiceUsers) {
 		return nil, false
 	}
 	return o.MaxServiceUsers, true
@@ -144,7 +147,7 @@ func (o *LicenseEntitlement) GetMaxServiceUsersOk() (*float32, bool) {
 
 // HasMaxServiceUsers returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxServiceUsers() bool {
-	if o != nil && o.MaxServiceUsers != nil {
+	if o != nil && !IsNil(o.MaxServiceUsers) {
 		return true
 	}
 
@@ -158,7 +161,7 @@ func (o *LicenseEntitlement) SetMaxServiceUsers(v float32) {
 
 // GetUsersLeaseTimeHours returns the UsersLeaseTimeHours field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetUsersLeaseTimeHours() float32 {
-	if o == nil || o.UsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.UsersLeaseTimeHours) {
 		var ret float32
 		return ret
 	}
@@ -168,7 +171,7 @@ func (o *LicenseEntitlement) GetUsersLeaseTimeHours() float32 {
 // GetUsersLeaseTimeHoursOk returns a tuple with the UsersLeaseTimeHours field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetUsersLeaseTimeHoursOk() (*float32, bool) {
-	if o == nil || o.UsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.UsersLeaseTimeHours) {
 		return nil, false
 	}
 	return o.UsersLeaseTimeHours, true
@@ -176,7 +179,7 @@ func (o *LicenseEntitlement) GetUsersLeaseTimeHoursOk() (*float32, bool) {
 
 // HasUsersLeaseTimeHours returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasUsersLeaseTimeHours() bool {
-	if o != nil && o.UsersLeaseTimeHours != nil {
+	if o != nil && !IsNil(o.UsersLeaseTimeHours) {
 		return true
 	}
 
@@ -190,7 +193,7 @@ func (o *LicenseEntitlement) SetUsersLeaseTimeHours(v float32) {
 
 // GetPortalUsersLeaseTimeHours returns the PortalUsersLeaseTimeHours field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetPortalUsersLeaseTimeHours() float32 {
-	if o == nil || o.PortalUsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.PortalUsersLeaseTimeHours) {
 		var ret float32
 		return ret
 	}
@@ -200,7 +203,7 @@ func (o *LicenseEntitlement) GetPortalUsersLeaseTimeHours() float32 {
 // GetPortalUsersLeaseTimeHoursOk returns a tuple with the PortalUsersLeaseTimeHours field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetPortalUsersLeaseTimeHoursOk() (*float32, bool) {
-	if o == nil || o.PortalUsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.PortalUsersLeaseTimeHours) {
 		return nil, false
 	}
 	return o.PortalUsersLeaseTimeHours, true
@@ -208,7 +211,7 @@ func (o *LicenseEntitlement) GetPortalUsersLeaseTimeHoursOk() (*float32, bool) {
 
 // HasPortalUsersLeaseTimeHours returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasPortalUsersLeaseTimeHours() bool {
-	if o != nil && o.PortalUsersLeaseTimeHours != nil {
+	if o != nil && !IsNil(o.PortalUsersLeaseTimeHours) {
 		return true
 	}
 
@@ -222,7 +225,7 @@ func (o *LicenseEntitlement) SetPortalUsersLeaseTimeHours(v float32) {
 
 // GetServiceUsersLeaseTimeHours returns the ServiceUsersLeaseTimeHours field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetServiceUsersLeaseTimeHours() float32 {
-	if o == nil || o.ServiceUsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.ServiceUsersLeaseTimeHours) {
 		var ret float32
 		return ret
 	}
@@ -232,7 +235,7 @@ func (o *LicenseEntitlement) GetServiceUsersLeaseTimeHours() float32 {
 // GetServiceUsersLeaseTimeHoursOk returns a tuple with the ServiceUsersLeaseTimeHours field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetServiceUsersLeaseTimeHoursOk() (*float32, bool) {
-	if o == nil || o.ServiceUsersLeaseTimeHours == nil {
+	if o == nil || IsNil(o.ServiceUsersLeaseTimeHours) {
 		return nil, false
 	}
 	return o.ServiceUsersLeaseTimeHours, true
@@ -240,7 +243,7 @@ func (o *LicenseEntitlement) GetServiceUsersLeaseTimeHoursOk() (*float32, bool) 
 
 // HasServiceUsersLeaseTimeHours returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasServiceUsersLeaseTimeHours() bool {
-	if o != nil && o.ServiceUsersLeaseTimeHours != nil {
+	if o != nil && !IsNil(o.ServiceUsersLeaseTimeHours) {
 		return true
 	}
 
@@ -254,7 +257,7 @@ func (o *LicenseEntitlement) SetServiceUsersLeaseTimeHours(v float32) {
 
 // GetMaxSites returns the MaxSites field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxSites() float32 {
-	if o == nil || o.MaxSites == nil {
+	if o == nil || IsNil(o.MaxSites) {
 		var ret float32
 		return ret
 	}
@@ -264,7 +267,7 @@ func (o *LicenseEntitlement) GetMaxSites() float32 {
 // GetMaxSitesOk returns a tuple with the MaxSites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxSitesOk() (*float32, bool) {
-	if o == nil || o.MaxSites == nil {
+	if o == nil || IsNil(o.MaxSites) {
 		return nil, false
 	}
 	return o.MaxSites, true
@@ -272,7 +275,7 @@ func (o *LicenseEntitlement) GetMaxSitesOk() (*float32, bool) {
 
 // HasMaxSites returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxSites() bool {
-	if o != nil && o.MaxSites != nil {
+	if o != nil && !IsNil(o.MaxSites) {
 		return true
 	}
 
@@ -286,7 +289,7 @@ func (o *LicenseEntitlement) SetMaxSites(v float32) {
 
 // GetMaxAccessPolicies returns the MaxAccessPolicies field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxAccessPolicies() float32 {
-	if o == nil || o.MaxAccessPolicies == nil {
+	if o == nil || IsNil(o.MaxAccessPolicies) {
 		var ret float32
 		return ret
 	}
@@ -296,7 +299,7 @@ func (o *LicenseEntitlement) GetMaxAccessPolicies() float32 {
 // GetMaxAccessPoliciesOk returns a tuple with the MaxAccessPolicies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxAccessPoliciesOk() (*float32, bool) {
-	if o == nil || o.MaxAccessPolicies == nil {
+	if o == nil || IsNil(o.MaxAccessPolicies) {
 		return nil, false
 	}
 	return o.MaxAccessPolicies, true
@@ -304,7 +307,7 @@ func (o *LicenseEntitlement) GetMaxAccessPoliciesOk() (*float32, bool) {
 
 // HasMaxAccessPolicies returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxAccessPolicies() bool {
-	if o != nil && o.MaxAccessPolicies != nil {
+	if o != nil && !IsNil(o.MaxAccessPolicies) {
 		return true
 	}
 
@@ -318,7 +321,7 @@ func (o *LicenseEntitlement) SetMaxAccessPolicies(v float32) {
 
 // GetMaxConnectorGroups returns the MaxConnectorGroups field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetMaxConnectorGroups() float32 {
-	if o == nil || o.MaxConnectorGroups == nil {
+	if o == nil || IsNil(o.MaxConnectorGroups) {
 		var ret float32
 		return ret
 	}
@@ -328,7 +331,7 @@ func (o *LicenseEntitlement) GetMaxConnectorGroups() float32 {
 // GetMaxConnectorGroupsOk returns a tuple with the MaxConnectorGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetMaxConnectorGroupsOk() (*float32, bool) {
-	if o == nil || o.MaxConnectorGroups == nil {
+	if o == nil || IsNil(o.MaxConnectorGroups) {
 		return nil, false
 	}
 	return o.MaxConnectorGroups, true
@@ -336,7 +339,7 @@ func (o *LicenseEntitlement) GetMaxConnectorGroupsOk() (*float32, bool) {
 
 // HasMaxConnectorGroups returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasMaxConnectorGroups() bool {
-	if o != nil && o.MaxConnectorGroups != nil {
+	if o != nil && !IsNil(o.MaxConnectorGroups) {
 		return true
 	}
 
@@ -350,7 +353,7 @@ func (o *LicenseEntitlement) SetMaxConnectorGroups(v float32) {
 
 // GetRiskEngine returns the RiskEngine field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetRiskEngine() bool {
-	if o == nil || o.RiskEngine == nil {
+	if o == nil || IsNil(o.RiskEngine) {
 		var ret bool
 		return ret
 	}
@@ -360,7 +363,7 @@ func (o *LicenseEntitlement) GetRiskEngine() bool {
 // GetRiskEngineOk returns a tuple with the RiskEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetRiskEngineOk() (*bool, bool) {
-	if o == nil || o.RiskEngine == nil {
+	if o == nil || IsNil(o.RiskEngine) {
 		return nil, false
 	}
 	return o.RiskEngine, true
@@ -368,7 +371,7 @@ func (o *LicenseEntitlement) GetRiskEngineOk() (*bool, bool) {
 
 // HasRiskEngine returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasRiskEngine() bool {
-	if o != nil && o.RiskEngine != nil {
+	if o != nil && !IsNil(o.RiskEngine) {
 		return true
 	}
 
@@ -382,7 +385,7 @@ func (o *LicenseEntitlement) SetRiskEngine(v bool) {
 
 // GetApplicationDiscovery returns the ApplicationDiscovery field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetApplicationDiscovery() bool {
-	if o == nil || o.ApplicationDiscovery == nil {
+	if o == nil || IsNil(o.ApplicationDiscovery) {
 		var ret bool
 		return ret
 	}
@@ -392,7 +395,7 @@ func (o *LicenseEntitlement) GetApplicationDiscovery() bool {
 // GetApplicationDiscoveryOk returns a tuple with the ApplicationDiscovery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetApplicationDiscoveryOk() (*bool, bool) {
-	if o == nil || o.ApplicationDiscovery == nil {
+	if o == nil || IsNil(o.ApplicationDiscovery) {
 		return nil, false
 	}
 	return o.ApplicationDiscovery, true
@@ -400,7 +403,7 @@ func (o *LicenseEntitlement) GetApplicationDiscoveryOk() (*bool, bool) {
 
 // HasApplicationDiscovery returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasApplicationDiscovery() bool {
-	if o != nil && o.ApplicationDiscovery != nil {
+	if o != nil && !IsNil(o.ApplicationDiscovery) {
 		return true
 	}
 
@@ -414,7 +417,7 @@ func (o *LicenseEntitlement) SetApplicationDiscovery(v bool) {
 
 // GetDigitalExperienceMonitoring returns the DigitalExperienceMonitoring field value if set, zero value otherwise.
 func (o *LicenseEntitlement) GetDigitalExperienceMonitoring() bool {
-	if o == nil || o.DigitalExperienceMonitoring == nil {
+	if o == nil || IsNil(o.DigitalExperienceMonitoring) {
 		var ret bool
 		return ret
 	}
@@ -424,7 +427,7 @@ func (o *LicenseEntitlement) GetDigitalExperienceMonitoring() bool {
 // GetDigitalExperienceMonitoringOk returns a tuple with the DigitalExperienceMonitoring field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseEntitlement) GetDigitalExperienceMonitoringOk() (*bool, bool) {
-	if o == nil || o.DigitalExperienceMonitoring == nil {
+	if o == nil || IsNil(o.DigitalExperienceMonitoring) {
 		return nil, false
 	}
 	return o.DigitalExperienceMonitoring, true
@@ -432,7 +435,7 @@ func (o *LicenseEntitlement) GetDigitalExperienceMonitoringOk() (*bool, bool) {
 
 // HasDigitalExperienceMonitoring returns a boolean if a field has been set.
 func (o *LicenseEntitlement) HasDigitalExperienceMonitoring() bool {
-	if o != nil && o.DigitalExperienceMonitoring != nil {
+	if o != nil && !IsNil(o.DigitalExperienceMonitoring) {
 		return true
 	}
 
@@ -445,44 +448,52 @@ func (o *LicenseEntitlement) SetDigitalExperienceMonitoring(v bool) {
 }
 
 func (o LicenseEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.MaxUsers != nil {
-		toSerialize["maxUsers"] = o.MaxUsers
-	}
-	if o.MaxPortalUsers != nil {
-		toSerialize["maxPortalUsers"] = o.MaxPortalUsers
-	}
-	if o.MaxServiceUsers != nil {
-		toSerialize["maxServiceUsers"] = o.MaxServiceUsers
-	}
-	if o.UsersLeaseTimeHours != nil {
-		toSerialize["usersLeaseTimeHours"] = o.UsersLeaseTimeHours
-	}
-	if o.PortalUsersLeaseTimeHours != nil {
-		toSerialize["portalUsersLeaseTimeHours"] = o.PortalUsersLeaseTimeHours
-	}
-	if o.ServiceUsersLeaseTimeHours != nil {
-		toSerialize["serviceUsersLeaseTimeHours"] = o.ServiceUsersLeaseTimeHours
-	}
-	if o.MaxSites != nil {
-		toSerialize["maxSites"] = o.MaxSites
-	}
-	if o.MaxAccessPolicies != nil {
-		toSerialize["maxAccessPolicies"] = o.MaxAccessPolicies
-	}
-	if o.MaxConnectorGroups != nil {
-		toSerialize["maxConnectorGroups"] = o.MaxConnectorGroups
-	}
-	if o.RiskEngine != nil {
-		toSerialize["riskEngine"] = o.RiskEngine
-	}
-	if o.ApplicationDiscovery != nil {
-		toSerialize["applicationDiscovery"] = o.ApplicationDiscovery
-	}
-	if o.DigitalExperienceMonitoring != nil {
-		toSerialize["digitalExperienceMonitoring"] = o.DigitalExperienceMonitoring
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MaxUsers) {
+		toSerialize["maxUsers"] = o.MaxUsers
+	}
+	if !IsNil(o.MaxPortalUsers) {
+		toSerialize["maxPortalUsers"] = o.MaxPortalUsers
+	}
+	if !IsNil(o.MaxServiceUsers) {
+		toSerialize["maxServiceUsers"] = o.MaxServiceUsers
+	}
+	if !IsNil(o.UsersLeaseTimeHours) {
+		toSerialize["usersLeaseTimeHours"] = o.UsersLeaseTimeHours
+	}
+	if !IsNil(o.PortalUsersLeaseTimeHours) {
+		toSerialize["portalUsersLeaseTimeHours"] = o.PortalUsersLeaseTimeHours
+	}
+	if !IsNil(o.ServiceUsersLeaseTimeHours) {
+		toSerialize["serviceUsersLeaseTimeHours"] = o.ServiceUsersLeaseTimeHours
+	}
+	if !IsNil(o.MaxSites) {
+		toSerialize["maxSites"] = o.MaxSites
+	}
+	if !IsNil(o.MaxAccessPolicies) {
+		toSerialize["maxAccessPolicies"] = o.MaxAccessPolicies
+	}
+	if !IsNil(o.MaxConnectorGroups) {
+		toSerialize["maxConnectorGroups"] = o.MaxConnectorGroups
+	}
+	if !IsNil(o.RiskEngine) {
+		toSerialize["riskEngine"] = o.RiskEngine
+	}
+	if !IsNil(o.ApplicationDiscovery) {
+		toSerialize["applicationDiscovery"] = o.ApplicationDiscovery
+	}
+	if !IsNil(o.DigitalExperienceMonitoring) {
+		toSerialize["digitalExperienceMonitoring"] = o.DigitalExperienceMonitoring
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseEntitlement struct {

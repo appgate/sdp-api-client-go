@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolutionDnsResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionDnsResolvers{}
+
 // SiteAllOfNameResolutionDnsResolvers struct for SiteAllOfNameResolutionDnsResolvers
 type SiteAllOfNameResolutionDnsResolvers struct {
 	// Identifier name. Has no functional effect.
@@ -88,7 +91,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -106,7 +109,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetUpdateIntervalOk() (*int32, boo
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetUpdateInterval(v int32) {
 
 // GetQueryAAAA returns the QueryAAAA field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAA() bool {
-	if o == nil || o.QueryAAAA == nil {
+	if o == nil || IsNil(o.QueryAAAA) {
 		var ret bool
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAA() bool {
 // GetQueryAAAAOk returns a tuple with the QueryAAAA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAAOk() (*bool, bool) {
-	if o == nil || o.QueryAAAA == nil {
+	if o == nil || IsNil(o.QueryAAAA) {
 		return nil, false
 	}
 	return o.QueryAAAA, true
@@ -138,7 +141,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetQueryAAAAOk() (*bool, bool) {
 
 // HasQueryAAAA returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasQueryAAAA() bool {
-	if o != nil && o.QueryAAAA != nil {
+	if o != nil && !IsNil(o.QueryAAAA) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetQueryAAAA(v bool) {
 
 // GetDefaultTtlSeconds returns the DefaultTtlSeconds field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetDefaultTtlSeconds() int32 {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		var ret int32
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetDefaultTtlSeconds() int32 {
 // GetDefaultTtlSecondsOk returns a tuple with the DefaultTtlSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetDefaultTtlSecondsOk() (*int32, bool) {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		return nil, false
 	}
 	return o.DefaultTtlSeconds, true
@@ -170,7 +173,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetDefaultTtlSecondsOk() (*int32, 
 
 // HasDefaultTtlSeconds returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasDefaultTtlSeconds() bool {
-	if o != nil && o.DefaultTtlSeconds != nil {
+	if o != nil && !IsNil(o.DefaultTtlSeconds) {
 		return true
 	}
 
@@ -208,7 +211,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetServers(v []string) {
 
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomains() []string {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		var ret []string
 		return ret
 	}
@@ -218,7 +221,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomains() []string {
 // GetMatchDomainsOk returns a tuple with the MatchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomainsOk() ([]string, bool) {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		return nil, false
 	}
 	return o.MatchDomains, true
@@ -226,7 +229,7 @@ func (o *SiteAllOfNameResolutionDnsResolvers) GetMatchDomainsOk() ([]string, boo
 
 // HasMatchDomains returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsResolvers) HasMatchDomains() bool {
-	if o != nil && o.MatchDomains != nil {
+	if o != nil && !IsNil(o.MatchDomains) {
 		return true
 	}
 
@@ -239,26 +242,30 @@ func (o *SiteAllOfNameResolutionDnsResolvers) SetMatchDomains(v []string) {
 }
 
 func (o SiteAllOfNameResolutionDnsResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if o.QueryAAAA != nil {
-		toSerialize["queryAAAA"] = o.QueryAAAA
-	}
-	if o.DefaultTtlSeconds != nil {
-		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
-	}
-	if true {
-		toSerialize["servers"] = o.Servers
-	}
-	if o.MatchDomains != nil {
-		toSerialize["matchDomains"] = o.MatchDomains
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionDnsResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.QueryAAAA) {
+		toSerialize["queryAAAA"] = o.QueryAAAA
+	}
+	if !IsNil(o.DefaultTtlSeconds) {
+		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
+	}
+	toSerialize["servers"] = o.Servers
+	if !IsNil(o.MatchDomains) {
+		toSerialize["matchDomains"] = o.MatchDomains
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionDnsResolvers struct {

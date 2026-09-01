@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SecretAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SecretAllOf{}
+
 // SecretAllOf Represents a Secret.
 type SecretAllOf struct {
 	// Secret string to store in Controller. Omit the field to keep the old password when updating a user.
@@ -40,7 +43,7 @@ func NewSecretAllOfWithDefaults() *SecretAllOf {
 
 // GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *SecretAllOf) GetSecret() string {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *SecretAllOf) GetSecret() string {
 // GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SecretAllOf) GetSecretOk() (*string, bool) {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		return nil, false
 	}
 	return o.Secret, true
@@ -58,7 +61,7 @@ func (o *SecretAllOf) GetSecretOk() (*string, bool) {
 
 // HasSecret returns a boolean if a field has been set.
 func (o *SecretAllOf) HasSecret() bool {
-	if o != nil && o.Secret != nil {
+	if o != nil && !IsNil(o.Secret) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *SecretAllOf) SetSecret(v string) {
 }
 
 func (o SecretAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Secret != nil {
-		toSerialize["secret"] = o.Secret
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SecretAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Secret) {
+		toSerialize["secret"] = o.Secret
+	}
+	return toSerialize, nil
 }
 
 type NullableSecretAllOf struct {

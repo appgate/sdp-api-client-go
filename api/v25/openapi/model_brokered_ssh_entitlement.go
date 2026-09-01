@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the BrokeredSshEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredSshEntitlement{}
+
 // BrokeredSshEntitlement struct for BrokeredSshEntitlement
 type BrokeredSshEntitlement struct {
 	// ID of the object.
@@ -126,7 +129,7 @@ func NewBrokeredSshEntitlementWithDefaults() *BrokeredSshEntitlement {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -136,7 +139,7 @@ func (o *BrokeredSshEntitlement) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -144,7 +147,7 @@ func (o *BrokeredSshEntitlement) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *BrokeredSshEntitlement) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *BrokeredSshEntitlement) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -200,7 +203,7 @@ func (o *BrokeredSshEntitlement) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -214,7 +217,7 @@ func (o *BrokeredSshEntitlement) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -224,7 +227,7 @@ func (o *BrokeredSshEntitlement) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -232,7 +235,7 @@ func (o *BrokeredSshEntitlement) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *BrokeredSshEntitlement) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -256,7 +259,7 @@ func (o *BrokeredSshEntitlement) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -264,7 +267,7 @@ func (o *BrokeredSshEntitlement) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -278,7 +281,7 @@ func (o *BrokeredSshEntitlement) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -288,7 +291,7 @@ func (o *BrokeredSshEntitlement) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -296,7 +299,7 @@ func (o *BrokeredSshEntitlement) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -310,7 +313,7 @@ func (o *BrokeredSshEntitlement) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -320,7 +323,7 @@ func (o *BrokeredSshEntitlement) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -328,7 +331,7 @@ func (o *BrokeredSshEntitlement) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -342,7 +345,7 @@ func (o *BrokeredSshEntitlement) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -352,7 +355,7 @@ func (o *BrokeredSshEntitlement) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -360,7 +363,7 @@ func (o *BrokeredSshEntitlement) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -374,7 +377,7 @@ func (o *BrokeredSshEntitlement) SetType(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -384,7 +387,7 @@ func (o *BrokeredSshEntitlement) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -392,7 +395,7 @@ func (o *BrokeredSshEntitlement) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -430,7 +433,7 @@ func (o *BrokeredSshEntitlement) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -440,7 +443,7 @@ func (o *BrokeredSshEntitlement) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -448,7 +451,7 @@ func (o *BrokeredSshEntitlement) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -462,7 +465,7 @@ func (o *BrokeredSshEntitlement) SetSiteName(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -472,7 +475,7 @@ func (o *BrokeredSshEntitlement) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -480,7 +483,7 @@ func (o *BrokeredSshEntitlement) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -518,7 +521,7 @@ func (o *BrokeredSshEntitlement) SetConditions(v []string) {
 
 // GetOptimizationScore returns the OptimizationScore field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetOptimizationScore() string {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		var ret string
 		return ret
 	}
@@ -528,7 +531,7 @@ func (o *BrokeredSshEntitlement) GetOptimizationScore() string {
 // GetOptimizationScoreOk returns a tuple with the OptimizationScore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetOptimizationScoreOk() (*string, bool) {
-	if o == nil || o.OptimizationScore == nil {
+	if o == nil || IsNil(o.OptimizationScore) {
 		return nil, false
 	}
 	return o.OptimizationScore, true
@@ -536,7 +539,7 @@ func (o *BrokeredSshEntitlement) GetOptimizationScoreOk() (*string, bool) {
 
 // HasOptimizationScore returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasOptimizationScore() bool {
-	if o != nil && o.OptimizationScore != nil {
+	if o != nil && !IsNil(o.OptimizationScore) {
 		return true
 	}
 
@@ -550,7 +553,7 @@ func (o *BrokeredSshEntitlement) SetOptimizationScore(v string) {
 
 // GetOptimizationScorePercentage returns the OptimizationScorePercentage field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetOptimizationScorePercentage() int32 {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		var ret int32
 		return ret
 	}
@@ -560,7 +563,7 @@ func (o *BrokeredSshEntitlement) GetOptimizationScorePercentage() int32 {
 // GetOptimizationScorePercentageOk returns a tuple with the OptimizationScorePercentage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetOptimizationScorePercentageOk() (*int32, bool) {
-	if o == nil || o.OptimizationScorePercentage == nil {
+	if o == nil || IsNil(o.OptimizationScorePercentage) {
 		return nil, false
 	}
 	return o.OptimizationScorePercentage, true
@@ -568,7 +571,7 @@ func (o *BrokeredSshEntitlement) GetOptimizationScorePercentageOk() (*int32, boo
 
 // HasOptimizationScorePercentage returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasOptimizationScorePercentage() bool {
-	if o != nil && o.OptimizationScorePercentage != nil {
+	if o != nil && !IsNil(o.OptimizationScorePercentage) {
 		return true
 	}
 
@@ -630,7 +633,7 @@ func (o *BrokeredSshEntitlement) SetPort(v int32) {
 
 // GetSessionRecording returns the SessionRecording field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetSessionRecording() SessionRecording {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		var ret SessionRecording
 		return ret
 	}
@@ -640,7 +643,7 @@ func (o *BrokeredSshEntitlement) GetSessionRecording() SessionRecording {
 // GetSessionRecordingOk returns a tuple with the SessionRecording field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetSessionRecordingOk() (*SessionRecording, bool) {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		return nil, false
 	}
 	return o.SessionRecording, true
@@ -648,7 +651,7 @@ func (o *BrokeredSshEntitlement) GetSessionRecordingOk() (*SessionRecording, boo
 
 // HasSessionRecording returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasSessionRecording() bool {
-	if o != nil && o.SessionRecording != nil {
+	if o != nil && !IsNil(o.SessionRecording) {
 		return true
 	}
 
@@ -662,7 +665,7 @@ func (o *BrokeredSshEntitlement) SetSessionRecording(v SessionRecording) {
 
 // GetCredentials returns the Credentials field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetCredentials() string {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		var ret string
 		return ret
 	}
@@ -672,7 +675,7 @@ func (o *BrokeredSshEntitlement) GetCredentials() string {
 // GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetCredentialsOk() (*string, bool) {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		return nil, false
 	}
 	return o.Credentials, true
@@ -680,7 +683,7 @@ func (o *BrokeredSshEntitlement) GetCredentialsOk() (*string, bool) {
 
 // HasCredentials returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasCredentials() bool {
-	if o != nil && o.Credentials != nil {
+	if o != nil && !IsNil(o.Credentials) {
 		return true
 	}
 
@@ -718,7 +721,7 @@ func (o *BrokeredSshEntitlement) SetAppShortcut(v BrokeredShortcut) {
 
 // GetClipboardSharing returns the ClipboardSharing field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetClipboardSharing() bool {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		var ret bool
 		return ret
 	}
@@ -728,7 +731,7 @@ func (o *BrokeredSshEntitlement) GetClipboardSharing() bool {
 // GetClipboardSharingOk returns a tuple with the ClipboardSharing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetClipboardSharingOk() (*bool, bool) {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		return nil, false
 	}
 	return o.ClipboardSharing, true
@@ -736,7 +739,7 @@ func (o *BrokeredSshEntitlement) GetClipboardSharingOk() (*bool, bool) {
 
 // HasClipboardSharing returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasClipboardSharing() bool {
-	if o != nil && o.ClipboardSharing != nil {
+	if o != nil && !IsNil(o.ClipboardSharing) {
 		return true
 	}
 
@@ -750,7 +753,7 @@ func (o *BrokeredSshEntitlement) SetClipboardSharing(v bool) {
 
 // GetFileTransfer returns the FileTransfer field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetFileTransfer() bool {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		var ret bool
 		return ret
 	}
@@ -760,7 +763,7 @@ func (o *BrokeredSshEntitlement) GetFileTransfer() bool {
 // GetFileTransferOk returns a tuple with the FileTransfer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetFileTransferOk() (*bool, bool) {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		return nil, false
 	}
 	return o.FileTransfer, true
@@ -768,7 +771,7 @@ func (o *BrokeredSshEntitlement) GetFileTransferOk() (*bool, bool) {
 
 // HasFileTransfer returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasFileTransfer() bool {
-	if o != nil && o.FileTransfer != nil {
+	if o != nil && !IsNil(o.FileTransfer) {
 		return true
 	}
 
@@ -782,7 +785,7 @@ func (o *BrokeredSshEntitlement) SetFileTransfer(v bool) {
 
 // GetIdleTimeoutMinutes returns the IdleTimeoutMinutes field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetIdleTimeoutMinutes() int32 {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -792,7 +795,7 @@ func (o *BrokeredSshEntitlement) GetIdleTimeoutMinutes() int32 {
 // GetIdleTimeoutMinutesOk returns a tuple with the IdleTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetIdleTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		return nil, false
 	}
 	return o.IdleTimeoutMinutes, true
@@ -800,7 +803,7 @@ func (o *BrokeredSshEntitlement) GetIdleTimeoutMinutesOk() (*int32, bool) {
 
 // HasIdleTimeoutMinutes returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasIdleTimeoutMinutes() bool {
-	if o != nil && o.IdleTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.IdleTimeoutMinutes) {
 		return true
 	}
 
@@ -814,7 +817,7 @@ func (o *BrokeredSshEntitlement) SetIdleTimeoutMinutes(v int32) {
 
 // GetTerminalType returns the TerminalType field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetTerminalType() string {
-	if o == nil || o.TerminalType == nil {
+	if o == nil || IsNil(o.TerminalType) {
 		var ret string
 		return ret
 	}
@@ -824,7 +827,7 @@ func (o *BrokeredSshEntitlement) GetTerminalType() string {
 // GetTerminalTypeOk returns a tuple with the TerminalType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetTerminalTypeOk() (*string, bool) {
-	if o == nil || o.TerminalType == nil {
+	if o == nil || IsNil(o.TerminalType) {
 		return nil, false
 	}
 	return o.TerminalType, true
@@ -832,7 +835,7 @@ func (o *BrokeredSshEntitlement) GetTerminalTypeOk() (*string, bool) {
 
 // HasTerminalType returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasTerminalType() bool {
-	if o != nil && o.TerminalType != nil {
+	if o != nil && !IsNil(o.TerminalType) {
 		return true
 	}
 
@@ -846,7 +849,7 @@ func (o *BrokeredSshEntitlement) SetTerminalType(v string) {
 
 // GetKeepAliveIntervalSeconds returns the KeepAliveIntervalSeconds field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetKeepAliveIntervalSeconds() int32 {
-	if o == nil || o.KeepAliveIntervalSeconds == nil {
+	if o == nil || IsNil(o.KeepAliveIntervalSeconds) {
 		var ret int32
 		return ret
 	}
@@ -856,7 +859,7 @@ func (o *BrokeredSshEntitlement) GetKeepAliveIntervalSeconds() int32 {
 // GetKeepAliveIntervalSecondsOk returns a tuple with the KeepAliveIntervalSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetKeepAliveIntervalSecondsOk() (*int32, bool) {
-	if o == nil || o.KeepAliveIntervalSeconds == nil {
+	if o == nil || IsNil(o.KeepAliveIntervalSeconds) {
 		return nil, false
 	}
 	return o.KeepAliveIntervalSeconds, true
@@ -864,7 +867,7 @@ func (o *BrokeredSshEntitlement) GetKeepAliveIntervalSecondsOk() (*int32, bool) 
 
 // HasKeepAliveIntervalSeconds returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasKeepAliveIntervalSeconds() bool {
-	if o != nil && o.KeepAliveIntervalSeconds != nil {
+	if o != nil && !IsNil(o.KeepAliveIntervalSeconds) {
 		return true
 	}
 
@@ -878,7 +881,7 @@ func (o *BrokeredSshEntitlement) SetKeepAliveIntervalSeconds(v int32) {
 
 // GetHostKeyVerificationPolicy returns the HostKeyVerificationPolicy field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlement) GetHostKeyVerificationPolicy() string {
-	if o == nil || o.HostKeyVerificationPolicy == nil {
+	if o == nil || IsNil(o.HostKeyVerificationPolicy) {
 		var ret string
 		return ret
 	}
@@ -888,7 +891,7 @@ func (o *BrokeredSshEntitlement) GetHostKeyVerificationPolicy() string {
 // GetHostKeyVerificationPolicyOk returns a tuple with the HostKeyVerificationPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlement) GetHostKeyVerificationPolicyOk() (*string, bool) {
-	if o == nil || o.HostKeyVerificationPolicy == nil {
+	if o == nil || IsNil(o.HostKeyVerificationPolicy) {
 		return nil, false
 	}
 	return o.HostKeyVerificationPolicy, true
@@ -896,7 +899,7 @@ func (o *BrokeredSshEntitlement) GetHostKeyVerificationPolicyOk() (*string, bool
 
 // HasHostKeyVerificationPolicy returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlement) HasHostKeyVerificationPolicy() bool {
-	if o != nil && o.HostKeyVerificationPolicy != nil {
+	if o != nil && !IsNil(o.HostKeyVerificationPolicy) {
 		return true
 	}
 
@@ -909,86 +912,82 @@ func (o *BrokeredSshEntitlement) SetHostKeyVerificationPolicy(v string) {
 }
 
 func (o BrokeredSshEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if o.OptimizationScore != nil {
-		toSerialize["optimizationScore"] = o.OptimizationScore
-	}
-	if o.OptimizationScorePercentage != nil {
-		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
-	}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SessionRecording != nil {
-		toSerialize["sessionRecording"] = o.SessionRecording
-	}
-	if o.Credentials != nil {
-		toSerialize["credentials"] = o.Credentials
-	}
-	if true {
-		toSerialize["appShortcut"] = o.AppShortcut
-	}
-	if o.ClipboardSharing != nil {
-		toSerialize["clipboardSharing"] = o.ClipboardSharing
-	}
-	if o.FileTransfer != nil {
-		toSerialize["fileTransfer"] = o.FileTransfer
-	}
-	if o.IdleTimeoutMinutes != nil {
-		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
-	}
-	if o.TerminalType != nil {
-		toSerialize["terminalType"] = o.TerminalType
-	}
-	if o.KeepAliveIntervalSeconds != nil {
-		toSerialize["keepAliveIntervalSeconds"] = o.KeepAliveIntervalSeconds
-	}
-	if o.HostKeyVerificationPolicy != nil {
-		toSerialize["hostKeyVerificationPolicy"] = o.HostKeyVerificationPolicy
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredSshEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	if !IsNil(o.OptimizationScore) {
+		toSerialize["optimizationScore"] = o.OptimizationScore
+	}
+	if !IsNil(o.OptimizationScorePercentage) {
+		toSerialize["optimizationScorePercentage"] = o.OptimizationScorePercentage
+	}
+	toSerialize["host"] = o.Host
+	toSerialize["port"] = o.Port
+	if !IsNil(o.SessionRecording) {
+		toSerialize["sessionRecording"] = o.SessionRecording
+	}
+	if !IsNil(o.Credentials) {
+		toSerialize["credentials"] = o.Credentials
+	}
+	toSerialize["appShortcut"] = o.AppShortcut
+	if !IsNil(o.ClipboardSharing) {
+		toSerialize["clipboardSharing"] = o.ClipboardSharing
+	}
+	if !IsNil(o.FileTransfer) {
+		toSerialize["fileTransfer"] = o.FileTransfer
+	}
+	if !IsNil(o.IdleTimeoutMinutes) {
+		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	}
+	if !IsNil(o.TerminalType) {
+		toSerialize["terminalType"] = o.TerminalType
+	}
+	if !IsNil(o.KeepAliveIntervalSeconds) {
+		toSerialize["keepAliveIntervalSeconds"] = o.KeepAliveIntervalSeconds
+	}
+	if !IsNil(o.HostKeyVerificationPolicy) {
+		toSerialize["hostKeyVerificationPolicy"] = o.HostKeyVerificationPolicy
+	}
+	return toSerialize, nil
 }
 
 type NullableBrokeredSshEntitlement struct {

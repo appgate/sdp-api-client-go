@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,11 +15,14 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfLogForwarder type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfLogForwarder{}
+
 // ApplianceAllOfLogForwarder LogForwarder settings. LogForwarder collects audit logs from the appliances in the given sites and sends them to the given endpoints.
 type ApplianceAllOfLogForwarder struct {
 	// Whether the LogForwarder is enabled on this appliance or not.
-	Enabled       *bool                 `json:"enabled,omitempty"`
-	Elasticsearch NullableElasticsearch `json:"elasticsearch,omitempty"`
+	Enabled       *bool          `json:"enabled,omitempty"`
+	Elasticsearch *Elasticsearch `json:"elasticsearch,omitempty"`
 	// TCP endpoints to connect and send the audit logs with the given format.
 	TcpClients []TcpClient `json:"tcpClients,omitempty"`
 	// AWS Kinesis endpoints to connect and send the audit logs with the given format.
@@ -63,7 +66,7 @@ func NewApplianceAllOfLogForwarderWithDefaults() *ApplianceAllOfLogForwarder {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -73,7 +76,7 @@ func (o *ApplianceAllOfLogForwarder) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -81,7 +84,7 @@ func (o *ApplianceAllOfLogForwarder) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -93,52 +96,41 @@ func (o *ApplianceAllOfLogForwarder) SetEnabled(v bool) {
 	o.Enabled = &v
 }
 
-// GetElasticsearch returns the Elasticsearch field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetElasticsearch returns the Elasticsearch field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetElasticsearch() Elasticsearch {
-	if o == nil || o.Elasticsearch.Get() == nil {
+	if o == nil || IsNil(o.Elasticsearch) {
 		var ret Elasticsearch
 		return ret
 	}
-	return *o.Elasticsearch.Get()
+	return *o.Elasticsearch
 }
 
 // GetElasticsearchOk returns a tuple with the Elasticsearch field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ApplianceAllOfLogForwarder) GetElasticsearchOk() (*Elasticsearch, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Elasticsearch) {
 		return nil, false
 	}
-	return o.Elasticsearch.Get(), o.Elasticsearch.IsSet()
+	return o.Elasticsearch, true
 }
 
 // HasElasticsearch returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasElasticsearch() bool {
-	if o != nil && o.Elasticsearch.IsSet() {
+	if o != nil && !IsNil(o.Elasticsearch) {
 		return true
 	}
 
 	return false
 }
 
-// SetElasticsearch gets a reference to the given NullableElasticsearch and assigns it to the Elasticsearch field.
+// SetElasticsearch gets a reference to the given Elasticsearch and assigns it to the Elasticsearch field.
 func (o *ApplianceAllOfLogForwarder) SetElasticsearch(v Elasticsearch) {
-	o.Elasticsearch.Set(&v)
-}
-
-// SetElasticsearchNil sets the value for Elasticsearch to be an explicit nil
-func (o *ApplianceAllOfLogForwarder) SetElasticsearchNil() {
-	o.Elasticsearch.Set(nil)
-}
-
-// UnsetElasticsearch ensures that no value is present for Elasticsearch, not even an explicit nil
-func (o *ApplianceAllOfLogForwarder) UnsetElasticsearch() {
-	o.Elasticsearch.Unset()
+	o.Elasticsearch = &v
 }
 
 // GetTcpClients returns the TcpClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetTcpClients() []TcpClient {
-	if o == nil || o.TcpClients == nil {
+	if o == nil || IsNil(o.TcpClients) {
 		var ret []TcpClient
 		return ret
 	}
@@ -148,7 +140,7 @@ func (o *ApplianceAllOfLogForwarder) GetTcpClients() []TcpClient {
 // GetTcpClientsOk returns a tuple with the TcpClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetTcpClientsOk() ([]TcpClient, bool) {
-	if o == nil || o.TcpClients == nil {
+	if o == nil || IsNil(o.TcpClients) {
 		return nil, false
 	}
 	return o.TcpClients, true
@@ -156,7 +148,7 @@ func (o *ApplianceAllOfLogForwarder) GetTcpClientsOk() ([]TcpClient, bool) {
 
 // HasTcpClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasTcpClients() bool {
-	if o != nil && o.TcpClients != nil {
+	if o != nil && !IsNil(o.TcpClients) {
 		return true
 	}
 
@@ -170,7 +162,7 @@ func (o *ApplianceAllOfLogForwarder) SetTcpClients(v []TcpClient) {
 
 // GetAwsKineses returns the AwsKineses field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetAwsKineses() []AwsKinesis {
-	if o == nil || o.AwsKineses == nil {
+	if o == nil || IsNil(o.AwsKineses) {
 		var ret []AwsKinesis
 		return ret
 	}
@@ -180,7 +172,7 @@ func (o *ApplianceAllOfLogForwarder) GetAwsKineses() []AwsKinesis {
 // GetAwsKinesesOk returns a tuple with the AwsKineses field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetAwsKinesesOk() ([]AwsKinesis, bool) {
-	if o == nil || o.AwsKineses == nil {
+	if o == nil || IsNil(o.AwsKineses) {
 		return nil, false
 	}
 	return o.AwsKineses, true
@@ -188,7 +180,7 @@ func (o *ApplianceAllOfLogForwarder) GetAwsKinesesOk() ([]AwsKinesis, bool) {
 
 // HasAwsKineses returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasAwsKineses() bool {
-	if o != nil && o.AwsKineses != nil {
+	if o != nil && !IsNil(o.AwsKineses) {
 		return true
 	}
 
@@ -202,7 +194,7 @@ func (o *ApplianceAllOfLogForwarder) SetAwsKineses(v []AwsKinesis) {
 
 // GetSumoLogicClients returns the SumoLogicClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetSumoLogicClients() []SumoLogic {
-	if o == nil || o.SumoLogicClients == nil {
+	if o == nil || IsNil(o.SumoLogicClients) {
 		var ret []SumoLogic
 		return ret
 	}
@@ -212,7 +204,7 @@ func (o *ApplianceAllOfLogForwarder) GetSumoLogicClients() []SumoLogic {
 // GetSumoLogicClientsOk returns a tuple with the SumoLogicClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetSumoLogicClientsOk() ([]SumoLogic, bool) {
-	if o == nil || o.SumoLogicClients == nil {
+	if o == nil || IsNil(o.SumoLogicClients) {
 		return nil, false
 	}
 	return o.SumoLogicClients, true
@@ -220,7 +212,7 @@ func (o *ApplianceAllOfLogForwarder) GetSumoLogicClientsOk() ([]SumoLogic, bool)
 
 // HasSumoLogicClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasSumoLogicClients() bool {
-	if o != nil && o.SumoLogicClients != nil {
+	if o != nil && !IsNil(o.SumoLogicClients) {
 		return true
 	}
 
@@ -234,7 +226,7 @@ func (o *ApplianceAllOfLogForwarder) SetSumoLogicClients(v []SumoLogic) {
 
 // GetSplunkClients returns the SplunkClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetSplunkClients() []Splunk {
-	if o == nil || o.SplunkClients == nil {
+	if o == nil || IsNil(o.SplunkClients) {
 		var ret []Splunk
 		return ret
 	}
@@ -244,7 +236,7 @@ func (o *ApplianceAllOfLogForwarder) GetSplunkClients() []Splunk {
 // GetSplunkClientsOk returns a tuple with the SplunkClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetSplunkClientsOk() ([]Splunk, bool) {
-	if o == nil || o.SplunkClients == nil {
+	if o == nil || IsNil(o.SplunkClients) {
 		return nil, false
 	}
 	return o.SplunkClients, true
@@ -252,7 +244,7 @@ func (o *ApplianceAllOfLogForwarder) GetSplunkClientsOk() ([]Splunk, bool) {
 
 // HasSplunkClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasSplunkClients() bool {
-	if o != nil && o.SplunkClients != nil {
+	if o != nil && !IsNil(o.SplunkClients) {
 		return true
 	}
 
@@ -266,7 +258,7 @@ func (o *ApplianceAllOfLogForwarder) SetSplunkClients(v []Splunk) {
 
 // GetAzureMonitors returns the AzureMonitors field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetAzureMonitors() []AzureMonitor {
-	if o == nil || o.AzureMonitors == nil {
+	if o == nil || IsNil(o.AzureMonitors) {
 		var ret []AzureMonitor
 		return ret
 	}
@@ -276,7 +268,7 @@ func (o *ApplianceAllOfLogForwarder) GetAzureMonitors() []AzureMonitor {
 // GetAzureMonitorsOk returns a tuple with the AzureMonitors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetAzureMonitorsOk() ([]AzureMonitor, bool) {
-	if o == nil || o.AzureMonitors == nil {
+	if o == nil || IsNil(o.AzureMonitors) {
 		return nil, false
 	}
 	return o.AzureMonitors, true
@@ -284,7 +276,7 @@ func (o *ApplianceAllOfLogForwarder) GetAzureMonitorsOk() ([]AzureMonitor, bool)
 
 // HasAzureMonitors returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasAzureMonitors() bool {
-	if o != nil && o.AzureMonitors != nil {
+	if o != nil && !IsNil(o.AzureMonitors) {
 		return true
 	}
 
@@ -298,7 +290,7 @@ func (o *ApplianceAllOfLogForwarder) SetAzureMonitors(v []AzureMonitor) {
 
 // GetFalconLogScales returns the FalconLogScales field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetFalconLogScales() []FalconLogScale {
-	if o == nil || o.FalconLogScales == nil {
+	if o == nil || IsNil(o.FalconLogScales) {
 		var ret []FalconLogScale
 		return ret
 	}
@@ -308,7 +300,7 @@ func (o *ApplianceAllOfLogForwarder) GetFalconLogScales() []FalconLogScale {
 // GetFalconLogScalesOk returns a tuple with the FalconLogScales field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetFalconLogScalesOk() ([]FalconLogScale, bool) {
-	if o == nil || o.FalconLogScales == nil {
+	if o == nil || IsNil(o.FalconLogScales) {
 		return nil, false
 	}
 	return o.FalconLogScales, true
@@ -316,7 +308,7 @@ func (o *ApplianceAllOfLogForwarder) GetFalconLogScalesOk() ([]FalconLogScale, b
 
 // HasFalconLogScales returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasFalconLogScales() bool {
-	if o != nil && o.FalconLogScales != nil {
+	if o != nil && !IsNil(o.FalconLogScales) {
 		return true
 	}
 
@@ -330,7 +322,7 @@ func (o *ApplianceAllOfLogForwarder) SetFalconLogScales(v []FalconLogScale) {
 
 // GetDatadogs returns the Datadogs field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetDatadogs() []Datadog {
-	if o == nil || o.Datadogs == nil {
+	if o == nil || IsNil(o.Datadogs) {
 		var ret []Datadog
 		return ret
 	}
@@ -340,7 +332,7 @@ func (o *ApplianceAllOfLogForwarder) GetDatadogs() []Datadog {
 // GetDatadogsOk returns a tuple with the Datadogs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetDatadogsOk() ([]Datadog, bool) {
-	if o == nil || o.Datadogs == nil {
+	if o == nil || IsNil(o.Datadogs) {
 		return nil, false
 	}
 	return o.Datadogs, true
@@ -348,7 +340,7 @@ func (o *ApplianceAllOfLogForwarder) GetDatadogsOk() ([]Datadog, bool) {
 
 // HasDatadogs returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasDatadogs() bool {
-	if o != nil && o.Datadogs != nil {
+	if o != nil && !IsNil(o.Datadogs) {
 		return true
 	}
 
@@ -362,7 +354,7 @@ func (o *ApplianceAllOfLogForwarder) SetDatadogs(v []Datadog) {
 
 // GetCoralogixs returns the Coralogixs field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetCoralogixs() []Coralogix {
-	if o == nil || o.Coralogixs == nil {
+	if o == nil || IsNil(o.Coralogixs) {
 		var ret []Coralogix
 		return ret
 	}
@@ -372,7 +364,7 @@ func (o *ApplianceAllOfLogForwarder) GetCoralogixs() []Coralogix {
 // GetCoralogixsOk returns a tuple with the Coralogixs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetCoralogixsOk() ([]Coralogix, bool) {
-	if o == nil || o.Coralogixs == nil {
+	if o == nil || IsNil(o.Coralogixs) {
 		return nil, false
 	}
 	return o.Coralogixs, true
@@ -380,7 +372,7 @@ func (o *ApplianceAllOfLogForwarder) GetCoralogixsOk() ([]Coralogix, bool) {
 
 // HasCoralogixs returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasCoralogixs() bool {
-	if o != nil && o.Coralogixs != nil {
+	if o != nil && !IsNil(o.Coralogixs) {
 		return true
 	}
 
@@ -394,7 +386,7 @@ func (o *ApplianceAllOfLogForwarder) SetCoralogixs(v []Coralogix) {
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ApplianceAllOfLogForwarder) GetSites() []string {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret []string
 		return ret
 	}
@@ -404,7 +396,7 @@ func (o *ApplianceAllOfLogForwarder) GetSites() []string {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfLogForwarder) GetSitesOk() ([]string, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -412,7 +404,7 @@ func (o *ApplianceAllOfLogForwarder) GetSitesOk() ([]string, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *ApplianceAllOfLogForwarder) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -425,41 +417,49 @@ func (o *ApplianceAllOfLogForwarder) SetSites(v []string) {
 }
 
 func (o ApplianceAllOfLogForwarder) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Elasticsearch.IsSet() {
-		toSerialize["elasticsearch"] = o.Elasticsearch.Get()
-	}
-	if o.TcpClients != nil {
-		toSerialize["tcpClients"] = o.TcpClients
-	}
-	if o.AwsKineses != nil {
-		toSerialize["awsKineses"] = o.AwsKineses
-	}
-	if o.SumoLogicClients != nil {
-		toSerialize["sumoLogicClients"] = o.SumoLogicClients
-	}
-	if o.SplunkClients != nil {
-		toSerialize["splunkClients"] = o.SplunkClients
-	}
-	if o.AzureMonitors != nil {
-		toSerialize["azureMonitors"] = o.AzureMonitors
-	}
-	if o.FalconLogScales != nil {
-		toSerialize["falconLogScales"] = o.FalconLogScales
-	}
-	if o.Datadogs != nil {
-		toSerialize["datadogs"] = o.Datadogs
-	}
-	if o.Coralogixs != nil {
-		toSerialize["coralogixs"] = o.Coralogixs
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfLogForwarder) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Elasticsearch) {
+		toSerialize["elasticsearch"] = o.Elasticsearch
+	}
+	if !IsNil(o.TcpClients) {
+		toSerialize["tcpClients"] = o.TcpClients
+	}
+	if !IsNil(o.AwsKineses) {
+		toSerialize["awsKineses"] = o.AwsKineses
+	}
+	if !IsNil(o.SumoLogicClients) {
+		toSerialize["sumoLogicClients"] = o.SumoLogicClients
+	}
+	if !IsNil(o.SplunkClients) {
+		toSerialize["splunkClients"] = o.SplunkClients
+	}
+	if !IsNil(o.AzureMonitors) {
+		toSerialize["azureMonitors"] = o.AzureMonitors
+	}
+	if !IsNil(o.FalconLogScales) {
+		toSerialize["falconLogScales"] = o.FalconLogScales
+	}
+	if !IsNil(o.Datadogs) {
+		toSerialize["datadogs"] = o.Datadogs
+	}
+	if !IsNil(o.Coralogixs) {
+		toSerialize["coralogixs"] = o.Coralogixs
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfLogForwarder struct {

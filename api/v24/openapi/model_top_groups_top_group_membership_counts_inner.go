@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TopGroupsTopGroupMembershipCountsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TopGroupsTopGroupMembershipCountsInner{}
+
 // TopGroupsTopGroupMembershipCountsInner struct for TopGroupsTopGroupMembershipCountsInner
 type TopGroupsTopGroupMembershipCountsInner struct {
 	// Name of the user group.
@@ -44,7 +47,7 @@ func NewTopGroupsTopGroupMembershipCountsInnerWithDefaults() *TopGroupsTopGroupM
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -62,7 +65,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetGroupNameOk() (*string, bool
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) SetGroupName(v string) {
 
 // GetMemberCount returns the MemberCount field value if set, zero value otherwise.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCount() int32 {
-	if o == nil || o.MemberCount == nil {
+	if o == nil || IsNil(o.MemberCount) {
 		var ret int32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCount() int32 {
 // GetMemberCountOk returns a tuple with the MemberCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCountOk() (*int32, bool) {
-	if o == nil || o.MemberCount == nil {
+	if o == nil || IsNil(o.MemberCount) {
 		return nil, false
 	}
 	return o.MemberCount, true
@@ -94,7 +97,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetMemberCountOk() (*int32, boo
 
 // HasMemberCount returns a boolean if a field has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) HasMemberCount() bool {
-	if o != nil && o.MemberCount != nil {
+	if o != nil && !IsNil(o.MemberCount) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) SetMemberCount(v int32) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -126,7 +129,7 @@ func (o *TopGroupsTopGroupMembershipCountsInner) GetProviderNameOk() (*string, b
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *TopGroupsTopGroupMembershipCountsInner) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *TopGroupsTopGroupMembershipCountsInner) SetProviderName(v string) {
 }
 
 func (o TopGroupsTopGroupMembershipCountsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.GroupName != nil {
-		toSerialize["groupName"] = o.GroupName
-	}
-	if o.MemberCount != nil {
-		toSerialize["memberCount"] = o.MemberCount
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TopGroupsTopGroupMembershipCountsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.GroupName) {
+		toSerialize["groupName"] = o.GroupName
+	}
+	if !IsNil(o.MemberCount) {
+		toSerialize["memberCount"] = o.MemberCount
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	return toSerialize, nil
 }
 
 type NullableTopGroupsTopGroupMembershipCountsInner struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GeoIpSettingsMaxmind type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GeoIpSettingsMaxmind{}
+
 // GeoIpSettingsMaxmind MaxMind provider configuration. Required if provider is Maxmind.
 type GeoIpSettingsMaxmind struct {
 	// MaxMind account ID.
@@ -42,7 +45,7 @@ func NewGeoIpSettingsMaxmindWithDefaults() *GeoIpSettingsMaxmind {
 
 // GetAccountId returns the AccountId field value if set, zero value otherwise.
 func (o *GeoIpSettingsMaxmind) GetAccountId() int32 {
-	if o == nil || o.AccountId == nil {
+	if o == nil || IsNil(o.AccountId) {
 		var ret int32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *GeoIpSettingsMaxmind) GetAccountId() int32 {
 // GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettingsMaxmind) GetAccountIdOk() (*int32, bool) {
-	if o == nil || o.AccountId == nil {
+	if o == nil || IsNil(o.AccountId) {
 		return nil, false
 	}
 	return o.AccountId, true
@@ -60,7 +63,7 @@ func (o *GeoIpSettingsMaxmind) GetAccountIdOk() (*int32, bool) {
 
 // HasAccountId returns a boolean if a field has been set.
 func (o *GeoIpSettingsMaxmind) HasAccountId() bool {
-	if o != nil && o.AccountId != nil {
+	if o != nil && !IsNil(o.AccountId) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *GeoIpSettingsMaxmind) SetAccountId(v int32) {
 
 // GetLicenseKey returns the LicenseKey field value if set, zero value otherwise.
 func (o *GeoIpSettingsMaxmind) GetLicenseKey() string {
-	if o == nil || o.LicenseKey == nil {
+	if o == nil || IsNil(o.LicenseKey) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *GeoIpSettingsMaxmind) GetLicenseKey() string {
 // GetLicenseKeyOk returns a tuple with the LicenseKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettingsMaxmind) GetLicenseKeyOk() (*string, bool) {
-	if o == nil || o.LicenseKey == nil {
+	if o == nil || IsNil(o.LicenseKey) {
 		return nil, false
 	}
 	return o.LicenseKey, true
@@ -92,7 +95,7 @@ func (o *GeoIpSettingsMaxmind) GetLicenseKeyOk() (*string, bool) {
 
 // HasLicenseKey returns a boolean if a field has been set.
 func (o *GeoIpSettingsMaxmind) HasLicenseKey() bool {
-	if o != nil && o.LicenseKey != nil {
+	if o != nil && !IsNil(o.LicenseKey) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *GeoIpSettingsMaxmind) SetLicenseKey(v string) {
 }
 
 func (o GeoIpSettingsMaxmind) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccountId != nil {
-		toSerialize["accountId"] = o.AccountId
-	}
-	if o.LicenseKey != nil {
-		toSerialize["licenseKey"] = o.LicenseKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GeoIpSettingsMaxmind) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccountId) {
+		toSerialize["accountId"] = o.AccountId
+	}
+	if !IsNil(o.LicenseKey) {
+		toSerialize["licenseKey"] = o.LicenseKey
+	}
+	return toSerialize, nil
 }
 
 type NullableGeoIpSettingsMaxmind struct {

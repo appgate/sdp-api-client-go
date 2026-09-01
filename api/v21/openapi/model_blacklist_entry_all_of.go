@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the BlacklistEntryAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BlacklistEntryAllOf{}
+
 // BlacklistEntryAllOf Blacklisting details.
 type BlacklistEntryAllOf struct {
 	// The date and time of the blacklisting.
@@ -43,7 +46,7 @@ func NewBlacklistEntryAllOfWithDefaults() *BlacklistEntryAllOf {
 
 // GetBlacklistedAt returns the BlacklistedAt field value if set, zero value otherwise.
 func (o *BlacklistEntryAllOf) GetBlacklistedAt() time.Time {
-	if o == nil || o.BlacklistedAt == nil {
+	if o == nil || IsNil(o.BlacklistedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *BlacklistEntryAllOf) GetBlacklistedAt() time.Time {
 // GetBlacklistedAtOk returns a tuple with the BlacklistedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntryAllOf) GetBlacklistedAtOk() (*time.Time, bool) {
-	if o == nil || o.BlacklistedAt == nil {
+	if o == nil || IsNil(o.BlacklistedAt) {
 		return nil, false
 	}
 	return o.BlacklistedAt, true
@@ -61,7 +64,7 @@ func (o *BlacklistEntryAllOf) GetBlacklistedAtOk() (*time.Time, bool) {
 
 // HasBlacklistedAt returns a boolean if a field has been set.
 func (o *BlacklistEntryAllOf) HasBlacklistedAt() bool {
-	if o != nil && o.BlacklistedAt != nil {
+	if o != nil && !IsNil(o.BlacklistedAt) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *BlacklistEntryAllOf) SetBlacklistedAt(v time.Time) {
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *BlacklistEntryAllOf) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *BlacklistEntryAllOf) GetReason() string {
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntryAllOf) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -93,7 +96,7 @@ func (o *BlacklistEntryAllOf) GetReasonOk() (*string, bool) {
 
 // HasReason returns a boolean if a field has been set.
 func (o *BlacklistEntryAllOf) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -106,14 +109,22 @@ func (o *BlacklistEntryAllOf) SetReason(v string) {
 }
 
 func (o BlacklistEntryAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.BlacklistedAt != nil {
-		toSerialize["blacklistedAt"] = o.BlacklistedAt
-	}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BlacklistEntryAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.BlacklistedAt) {
+		toSerialize["blacklistedAt"] = o.BlacklistedAt
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	return toSerialize, nil
 }
 
 type NullableBlacklistEntryAllOf struct {

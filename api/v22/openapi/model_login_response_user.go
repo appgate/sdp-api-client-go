@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the LoginResponseUser type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginResponseUser{}
 
 // LoginResponseUser Information about logged in user, such as username and email address, if exists.
 type LoginResponseUser struct {
@@ -46,7 +49,7 @@ func NewLoginResponseUserWithDefaults() *LoginResponseUser {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *LoginResponseUser) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -64,7 +67,7 @@ func (o *LoginResponseUser) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *LoginResponseUser) SetName(v string) {
 
 // GetNeedTwoFactorAuth returns the NeedTwoFactorAuth field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetNeedTwoFactorAuth() bool {
-	if o == nil || o.NeedTwoFactorAuth == nil {
+	if o == nil || IsNil(o.NeedTwoFactorAuth) {
 		var ret bool
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *LoginResponseUser) GetNeedTwoFactorAuth() bool {
 // GetNeedTwoFactorAuthOk returns a tuple with the NeedTwoFactorAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetNeedTwoFactorAuthOk() (*bool, bool) {
-	if o == nil || o.NeedTwoFactorAuth == nil {
+	if o == nil || IsNil(o.NeedTwoFactorAuth) {
 		return nil, false
 	}
 	return o.NeedTwoFactorAuth, true
@@ -96,7 +99,7 @@ func (o *LoginResponseUser) GetNeedTwoFactorAuthOk() (*bool, bool) {
 
 // HasNeedTwoFactorAuth returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasNeedTwoFactorAuth() bool {
-	if o != nil && o.NeedTwoFactorAuth != nil {
+	if o != nil && !IsNil(o.NeedTwoFactorAuth) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *LoginResponseUser) SetNeedTwoFactorAuth(v bool) {
 
 // GetCanAccessAuditLogs returns the CanAccessAuditLogs field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetCanAccessAuditLogs() bool {
-	if o == nil || o.CanAccessAuditLogs == nil {
+	if o == nil || IsNil(o.CanAccessAuditLogs) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *LoginResponseUser) GetCanAccessAuditLogs() bool {
 // GetCanAccessAuditLogsOk returns a tuple with the CanAccessAuditLogs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetCanAccessAuditLogsOk() (*bool, bool) {
-	if o == nil || o.CanAccessAuditLogs == nil {
+	if o == nil || IsNil(o.CanAccessAuditLogs) {
 		return nil, false
 	}
 	return o.CanAccessAuditLogs, true
@@ -128,7 +131,7 @@ func (o *LoginResponseUser) GetCanAccessAuditLogsOk() (*bool, bool) {
 
 // HasCanAccessAuditLogs returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasCanAccessAuditLogs() bool {
-	if o != nil && o.CanAccessAuditLogs != nil {
+	if o != nil && !IsNil(o.CanAccessAuditLogs) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *LoginResponseUser) SetCanAccessAuditLogs(v bool) {
 
 // GetPrivileges returns the Privileges field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetPrivileges() []AdministrativePrivilege {
-	if o == nil || o.Privileges == nil {
+	if o == nil || IsNil(o.Privileges) {
 		var ret []AdministrativePrivilege
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *LoginResponseUser) GetPrivileges() []AdministrativePrivilege {
 // GetPrivilegesOk returns a tuple with the Privileges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetPrivilegesOk() ([]AdministrativePrivilege, bool) {
-	if o == nil || o.Privileges == nil {
+	if o == nil || IsNil(o.Privileges) {
 		return nil, false
 	}
 	return o.Privileges, true
@@ -160,7 +163,7 @@ func (o *LoginResponseUser) GetPrivilegesOk() ([]AdministrativePrivilege, bool) 
 
 // HasPrivileges returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasPrivileges() bool {
-	if o != nil && o.Privileges != nil {
+	if o != nil && !IsNil(o.Privileges) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *LoginResponseUser) SetPrivileges(v []AdministrativePrivilege) {
 }
 
 func (o LoginResponseUser) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.NeedTwoFactorAuth != nil {
-		toSerialize["needTwoFactorAuth"] = o.NeedTwoFactorAuth
-	}
-	if o.CanAccessAuditLogs != nil {
-		toSerialize["canAccessAuditLogs"] = o.CanAccessAuditLogs
-	}
-	if o.Privileges != nil {
-		toSerialize["privileges"] = o.Privileges
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginResponseUser) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NeedTwoFactorAuth) {
+		toSerialize["needTwoFactorAuth"] = o.NeedTwoFactorAuth
+	}
+	if !IsNil(o.CanAccessAuditLogs) {
+		toSerialize["canAccessAuditLogs"] = o.CanAccessAuditLogs
+	}
+	if !IsNil(o.Privileges) {
+		toSerialize["privileges"] = o.Privileges
+	}
+	return toSerialize, nil
 }
 
 type NullableLoginResponseUser struct {

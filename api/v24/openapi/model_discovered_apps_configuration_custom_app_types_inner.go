@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DiscoveredAppsConfigurationCustomAppTypesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DiscoveredAppsConfigurationCustomAppTypesInner{}
+
 // DiscoveredAppsConfigurationCustomAppTypesInner struct for DiscoveredAppsConfigurationCustomAppTypesInner
 type DiscoveredAppsConfigurationCustomAppTypesInner struct {
 	// Name of the custom app type.
@@ -91,14 +94,18 @@ func (o *DiscoveredAppsConfigurationCustomAppTypesInner) SetPorts(v []string) {
 }
 
 func (o DiscoveredAppsConfigurationCustomAppTypesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["ports"] = o.Ports
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DiscoveredAppsConfigurationCustomAppTypesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["ports"] = o.Ports
+	return toSerialize, nil
 }
 
 type NullableDiscoveredAppsConfigurationCustomAppTypesInner struct {

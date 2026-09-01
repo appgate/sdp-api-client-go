@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationReportItem type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationReportItem{}
+
 // ReplicationReportItem struct for ReplicationReportItem
 type ReplicationReportItem struct {
 	// Number of successful replications for this object type.
@@ -118,17 +121,19 @@ func (o *ReplicationReportItem) SetErrors(v []ReplicationReportError) {
 }
 
 func (o ReplicationReportItem) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["successCount"] = o.SuccessCount
-	}
-	if true {
-		toSerialize["failureCount"] = o.FailureCount
-	}
-	if true {
-		toSerialize["errors"] = o.Errors
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationReportItem) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["successCount"] = o.SuccessCount
+	toSerialize["failureCount"] = o.FailureCount
+	toSerialize["errors"] = o.Errors
+	return toSerialize, nil
 }
 
 type NullableReplicationReportItem struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the LocalUserAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LocalUserAllOf{}
 
 // LocalUserAllOf Represents a Local User.
 type LocalUserAllOf struct {
@@ -105,7 +108,7 @@ func (o *LocalUserAllOf) SetLastName(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -115,7 +118,7 @@ func (o *LocalUserAllOf) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -123,7 +126,7 @@ func (o *LocalUserAllOf) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -137,7 +140,7 @@ func (o *LocalUserAllOf) SetPassword(v string) {
 
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetEmail() string {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
@@ -147,7 +150,7 @@ func (o *LocalUserAllOf) GetEmail() string {
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetEmailOk() (*string, bool) {
-	if o == nil || o.Email == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
 	return o.Email, true
@@ -155,7 +158,7 @@ func (o *LocalUserAllOf) GetEmailOk() (*string, bool) {
 
 // HasEmail returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasEmail() bool {
-	if o != nil && o.Email != nil {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
@@ -169,7 +172,7 @@ func (o *LocalUserAllOf) SetEmail(v string) {
 
 // GetPhone returns the Phone field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetPhone() string {
-	if o == nil || o.Phone == nil {
+	if o == nil || IsNil(o.Phone) {
 		var ret string
 		return ret
 	}
@@ -179,7 +182,7 @@ func (o *LocalUserAllOf) GetPhone() string {
 // GetPhoneOk returns a tuple with the Phone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetPhoneOk() (*string, bool) {
-	if o == nil || o.Phone == nil {
+	if o == nil || IsNil(o.Phone) {
 		return nil, false
 	}
 	return o.Phone, true
@@ -187,7 +190,7 @@ func (o *LocalUserAllOf) GetPhoneOk() (*string, bool) {
 
 // HasPhone returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasPhone() bool {
-	if o != nil && o.Phone != nil {
+	if o != nil && !IsNil(o.Phone) {
 		return true
 	}
 
@@ -201,7 +204,7 @@ func (o *LocalUserAllOf) SetPhone(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -211,7 +214,7 @@ func (o *LocalUserAllOf) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -219,7 +222,7 @@ func (o *LocalUserAllOf) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -233,7 +236,7 @@ func (o *LocalUserAllOf) SetDisabled(v bool) {
 
 // GetFailedLoginAttempts returns the FailedLoginAttempts field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetFailedLoginAttempts() float32 {
-	if o == nil || o.FailedLoginAttempts == nil {
+	if o == nil || IsNil(o.FailedLoginAttempts) {
 		var ret float32
 		return ret
 	}
@@ -243,7 +246,7 @@ func (o *LocalUserAllOf) GetFailedLoginAttempts() float32 {
 // GetFailedLoginAttemptsOk returns a tuple with the FailedLoginAttempts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetFailedLoginAttemptsOk() (*float32, bool) {
-	if o == nil || o.FailedLoginAttempts == nil {
+	if o == nil || IsNil(o.FailedLoginAttempts) {
 		return nil, false
 	}
 	return o.FailedLoginAttempts, true
@@ -251,7 +254,7 @@ func (o *LocalUserAllOf) GetFailedLoginAttemptsOk() (*float32, bool) {
 
 // HasFailedLoginAttempts returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasFailedLoginAttempts() bool {
-	if o != nil && o.FailedLoginAttempts != nil {
+	if o != nil && !IsNil(o.FailedLoginAttempts) {
 		return true
 	}
 
@@ -265,7 +268,7 @@ func (o *LocalUserAllOf) SetFailedLoginAttempts(v float32) {
 
 // GetLockStart returns the LockStart field value if set, zero value otherwise.
 func (o *LocalUserAllOf) GetLockStart() time.Time {
-	if o == nil || o.LockStart == nil {
+	if o == nil || IsNil(o.LockStart) {
 		var ret time.Time
 		return ret
 	}
@@ -275,7 +278,7 @@ func (o *LocalUserAllOf) GetLockStart() time.Time {
 // GetLockStartOk returns a tuple with the LockStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LocalUserAllOf) GetLockStartOk() (*time.Time, bool) {
-	if o == nil || o.LockStart == nil {
+	if o == nil || IsNil(o.LockStart) {
 		return nil, false
 	}
 	return o.LockStart, true
@@ -283,7 +286,7 @@ func (o *LocalUserAllOf) GetLockStartOk() (*time.Time, bool) {
 
 // HasLockStart returns a boolean if a field has been set.
 func (o *LocalUserAllOf) HasLockStart() bool {
-	if o != nil && o.LockStart != nil {
+	if o != nil && !IsNil(o.LockStart) {
 		return true
 	}
 
@@ -296,32 +299,36 @@ func (o *LocalUserAllOf) SetLockStart(v time.Time) {
 }
 
 func (o LocalUserAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["firstName"] = o.FirstName
-	}
-	if true {
-		toSerialize["lastName"] = o.LastName
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
-	}
-	if o.Phone != nil {
-		toSerialize["phone"] = o.Phone
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if o.FailedLoginAttempts != nil {
-		toSerialize["failedLoginAttempts"] = o.FailedLoginAttempts
-	}
-	if o.LockStart != nil {
-		toSerialize["lockStart"] = o.LockStart
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LocalUserAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["firstName"] = o.FirstName
+	toSerialize["lastName"] = o.LastName
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.Phone) {
+		toSerialize["phone"] = o.Phone
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	if !IsNil(o.FailedLoginAttempts) {
+		toSerialize["failedLoginAttempts"] = o.FailedLoginAttempts
+	}
+	if !IsNil(o.LockStart) {
+		toSerialize["lockStart"] = o.LockStart
+	}
+	return toSerialize, nil
 }
 
 type NullableLocalUserAllOf struct {

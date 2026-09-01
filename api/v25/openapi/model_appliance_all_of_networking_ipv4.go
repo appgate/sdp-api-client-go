@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworkingIpv4 type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingIpv4{}
+
 // ApplianceAllOfNetworkingIpv4 IPv4 settings for this NIC.
 type ApplianceAllOfNetworkingIpv4 struct {
 	Dhcp *ApplianceAllOfNetworkingIpv4Dhcp `json:"dhcp,omitempty"`
@@ -43,7 +46,7 @@ func NewApplianceAllOfNetworkingIpv4WithDefaults() *ApplianceAllOfNetworkingIpv4
 
 // GetDhcp returns the Dhcp field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4) GetDhcp() ApplianceAllOfNetworkingIpv4Dhcp {
-	if o == nil || o.Dhcp == nil {
+	if o == nil || IsNil(o.Dhcp) {
 		var ret ApplianceAllOfNetworkingIpv4Dhcp
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetDhcp() ApplianceAllOfNetworkingIpv4Dhc
 // GetDhcpOk returns a tuple with the Dhcp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4) GetDhcpOk() (*ApplianceAllOfNetworkingIpv4Dhcp, bool) {
-	if o == nil || o.Dhcp == nil {
+	if o == nil || IsNil(o.Dhcp) {
 		return nil, false
 	}
 	return o.Dhcp, true
@@ -61,7 +64,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetDhcpOk() (*ApplianceAllOfNetworkingIpv
 
 // HasDhcp returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4) HasDhcp() bool {
-	if o != nil && o.Dhcp != nil {
+	if o != nil && !IsNil(o.Dhcp) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *ApplianceAllOfNetworkingIpv4) SetDhcp(v ApplianceAllOfNetworkingIpv4Dhc
 
 // GetStatic returns the Static field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4) GetStatic() []ApplianceAllOfNetworkingIpv4Static {
-	if o == nil || o.Static == nil {
+	if o == nil || IsNil(o.Static) {
 		var ret []ApplianceAllOfNetworkingIpv4Static
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetStatic() []ApplianceAllOfNetworkingIpv
 // GetStaticOk returns a tuple with the Static field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4) GetStaticOk() ([]ApplianceAllOfNetworkingIpv4Static, bool) {
-	if o == nil || o.Static == nil {
+	if o == nil || IsNil(o.Static) {
 		return nil, false
 	}
 	return o.Static, true
@@ -93,7 +96,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetStaticOk() ([]ApplianceAllOfNetworking
 
 // HasStatic returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4) HasStatic() bool {
-	if o != nil && o.Static != nil {
+	if o != nil && !IsNil(o.Static) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ApplianceAllOfNetworkingIpv4) SetStatic(v []ApplianceAllOfNetworkingIpv
 
 // GetVirtualIp returns the VirtualIp field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4) GetVirtualIp() string {
-	if o == nil || o.VirtualIp == nil {
+	if o == nil || IsNil(o.VirtualIp) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetVirtualIp() string {
 // GetVirtualIpOk returns a tuple with the VirtualIp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4) GetVirtualIpOk() (*string, bool) {
-	if o == nil || o.VirtualIp == nil {
+	if o == nil || IsNil(o.VirtualIp) {
 		return nil, false
 	}
 	return o.VirtualIp, true
@@ -125,7 +128,7 @@ func (o *ApplianceAllOfNetworkingIpv4) GetVirtualIpOk() (*string, bool) {
 
 // HasVirtualIp returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4) HasVirtualIp() bool {
-	if o != nil && o.VirtualIp != nil {
+	if o != nil && !IsNil(o.VirtualIp) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *ApplianceAllOfNetworkingIpv4) SetVirtualIp(v string) {
 }
 
 func (o ApplianceAllOfNetworkingIpv4) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Dhcp != nil {
-		toSerialize["dhcp"] = o.Dhcp
-	}
-	if o.Static != nil {
-		toSerialize["static"] = o.Static
-	}
-	if o.VirtualIp != nil {
-		toSerialize["virtualIp"] = o.VirtualIp
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingIpv4) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Dhcp) {
+		toSerialize["dhcp"] = o.Dhcp
+	}
+	if !IsNil(o.Static) {
+		toSerialize["static"] = o.Static
+	}
+	if !IsNil(o.VirtualIp) {
+		toSerialize["virtualIp"] = o.VirtualIp
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworkingIpv4 struct {

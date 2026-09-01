@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GeolocationQuery type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GeolocationQuery{}
+
 // GeolocationQuery Query parameters for finding active sessions in a given radius in the world.
 type GeolocationQuery struct {
 	// Latitude of the central point of the query.
@@ -44,7 +47,7 @@ func NewGeolocationQueryWithDefaults() *GeolocationQuery {
 
 // GetLatitude returns the Latitude field value if set, zero value otherwise.
 func (o *GeolocationQuery) GetLatitude() float64 {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		var ret float64
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *GeolocationQuery) GetLatitude() float64 {
 // GetLatitudeOk returns a tuple with the Latitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeolocationQuery) GetLatitudeOk() (*float64, bool) {
-	if o == nil || o.Latitude == nil {
+	if o == nil || IsNil(o.Latitude) {
 		return nil, false
 	}
 	return o.Latitude, true
@@ -62,7 +65,7 @@ func (o *GeolocationQuery) GetLatitudeOk() (*float64, bool) {
 
 // HasLatitude returns a boolean if a field has been set.
 func (o *GeolocationQuery) HasLatitude() bool {
-	if o != nil && o.Latitude != nil {
+	if o != nil && !IsNil(o.Latitude) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *GeolocationQuery) SetLatitude(v float64) {
 
 // GetLongitude returns the Longitude field value if set, zero value otherwise.
 func (o *GeolocationQuery) GetLongitude() float64 {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		var ret float64
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *GeolocationQuery) GetLongitude() float64 {
 // GetLongitudeOk returns a tuple with the Longitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeolocationQuery) GetLongitudeOk() (*float64, bool) {
-	if o == nil || o.Longitude == nil {
+	if o == nil || IsNil(o.Longitude) {
 		return nil, false
 	}
 	return o.Longitude, true
@@ -94,7 +97,7 @@ func (o *GeolocationQuery) GetLongitudeOk() (*float64, bool) {
 
 // HasLongitude returns a boolean if a field has been set.
 func (o *GeolocationQuery) HasLongitude() bool {
-	if o != nil && o.Longitude != nil {
+	if o != nil && !IsNil(o.Longitude) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *GeolocationQuery) SetLongitude(v float64) {
 
 // GetRadiusKilometers returns the RadiusKilometers field value if set, zero value otherwise.
 func (o *GeolocationQuery) GetRadiusKilometers() float64 {
-	if o == nil || o.RadiusKilometers == nil {
+	if o == nil || IsNil(o.RadiusKilometers) {
 		var ret float64
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *GeolocationQuery) GetRadiusKilometers() float64 {
 // GetRadiusKilometersOk returns a tuple with the RadiusKilometers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeolocationQuery) GetRadiusKilometersOk() (*float64, bool) {
-	if o == nil || o.RadiusKilometers == nil {
+	if o == nil || IsNil(o.RadiusKilometers) {
 		return nil, false
 	}
 	return o.RadiusKilometers, true
@@ -126,7 +129,7 @@ func (o *GeolocationQuery) GetRadiusKilometersOk() (*float64, bool) {
 
 // HasRadiusKilometers returns a boolean if a field has been set.
 func (o *GeolocationQuery) HasRadiusKilometers() bool {
-	if o != nil && o.RadiusKilometers != nil {
+	if o != nil && !IsNil(o.RadiusKilometers) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *GeolocationQuery) SetRadiusKilometers(v float64) {
 }
 
 func (o GeolocationQuery) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Latitude != nil {
-		toSerialize["latitude"] = o.Latitude
-	}
-	if o.Longitude != nil {
-		toSerialize["longitude"] = o.Longitude
-	}
-	if o.RadiusKilometers != nil {
-		toSerialize["radiusKilometers"] = o.RadiusKilometers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GeolocationQuery) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Latitude) {
+		toSerialize["latitude"] = o.Latitude
+	}
+	if !IsNil(o.Longitude) {
+		toSerialize["longitude"] = o.Longitude
+	}
+	if !IsNil(o.RadiusKilometers) {
+		toSerialize["radiusKilometers"] = o.RadiusKilometers
+	}
+	return toSerialize, nil
 }
 
 type NullableGeolocationQuery struct {

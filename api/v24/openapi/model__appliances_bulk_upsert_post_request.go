@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesBulkUpsertPostRequest{}
+
 // AppliancesBulkUpsertPostRequest struct for AppliancesBulkUpsertPostRequest
 type AppliancesBulkUpsertPostRequest struct {
 	Data []Appliance `json:"data"`
@@ -63,11 +66,17 @@ func (o *AppliancesBulkUpsertPostRequest) SetData(v []Appliance) {
 }
 
 func (o AppliancesBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableAppliancesBulkUpsertPostRequest struct {
