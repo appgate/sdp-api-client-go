@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the ApplianceCustomization type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceCustomization{}
+
 // ApplianceCustomization struct for ApplianceCustomization
 type ApplianceCustomization struct {
 	// ID of the object.
@@ -60,7 +63,7 @@ func NewApplianceCustomizationWithDefaults() *ApplianceCustomization {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *ApplianceCustomization) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -78,7 +81,7 @@ func (o *ApplianceCustomization) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *ApplianceCustomization) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *ApplianceCustomization) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -134,7 +137,7 @@ func (o *ApplianceCustomization) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *ApplianceCustomization) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *ApplianceCustomization) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -166,7 +169,7 @@ func (o *ApplianceCustomization) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *ApplianceCustomization) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *ApplianceCustomization) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -198,7 +201,7 @@ func (o *ApplianceCustomization) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *ApplianceCustomization) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *ApplianceCustomization) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -230,7 +233,7 @@ func (o *ApplianceCustomization) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *ApplianceCustomization) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *ApplianceCustomization) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -262,7 +265,7 @@ func (o *ApplianceCustomization) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -276,7 +279,7 @@ func (o *ApplianceCustomization) SetTags(v []string) {
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -286,7 +289,7 @@ func (o *ApplianceCustomization) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -294,7 +297,7 @@ func (o *ApplianceCustomization) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -308,7 +311,7 @@ func (o *ApplianceCustomization) SetFile(v string) {
 
 // GetChecksum returns the Checksum field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetChecksum() string {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		var ret string
 		return ret
 	}
@@ -318,7 +321,7 @@ func (o *ApplianceCustomization) GetChecksum() string {
 // GetChecksumOk returns a tuple with the Checksum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetChecksumOk() (*string, bool) {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		return nil, false
 	}
 	return o.Checksum, true
@@ -326,7 +329,7 @@ func (o *ApplianceCustomization) GetChecksumOk() (*string, bool) {
 
 // HasChecksum returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasChecksum() bool {
-	if o != nil && o.Checksum != nil {
+	if o != nil && !IsNil(o.Checksum) {
 		return true
 	}
 
@@ -340,7 +343,7 @@ func (o *ApplianceCustomization) SetChecksum(v string) {
 
 // GetSize returns the Size field value if set, zero value otherwise.
 func (o *ApplianceCustomization) GetSize() float32 {
-	if o == nil || o.Size == nil {
+	if o == nil || IsNil(o.Size) {
 		var ret float32
 		return ret
 	}
@@ -350,7 +353,7 @@ func (o *ApplianceCustomization) GetSize() float32 {
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomization) GetSizeOk() (*float32, bool) {
-	if o == nil || o.Size == nil {
+	if o == nil || IsNil(o.Size) {
 		return nil, false
 	}
 	return o.Size, true
@@ -358,7 +361,7 @@ func (o *ApplianceCustomization) GetSizeOk() (*float32, bool) {
 
 // HasSize returns a boolean if a field has been set.
 func (o *ApplianceCustomization) HasSize() bool {
-	if o != nil && o.Size != nil {
+	if o != nil && !IsNil(o.Size) {
 		return true
 	}
 
@@ -371,38 +374,44 @@ func (o *ApplianceCustomization) SetSize(v float32) {
 }
 
 func (o ApplianceCustomization) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.File != nil {
-		toSerialize["file"] = o.File
-	}
-	if o.Checksum != nil {
-		toSerialize["checksum"] = o.Checksum
-	}
-	if o.Size != nil {
-		toSerialize["size"] = o.Size
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceCustomization) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	if !IsNil(o.Checksum) {
+		toSerialize["checksum"] = o.Checksum
+	}
+	if !IsNil(o.Size) {
+		toSerialize["size"] = o.Size
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceCustomization struct {

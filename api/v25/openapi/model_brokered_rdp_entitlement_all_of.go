@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BrokeredRdpEntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredRdpEntitlementAllOf{}
+
 // BrokeredRdpEntitlementAllOf Represents a Brokered RDP Entitlement providing interactive RDP access to a target host.
 type BrokeredRdpEntitlementAllOf struct {
 	Type *string `json:"type,omitempty"`
@@ -67,7 +70,7 @@ func NewBrokeredRdpEntitlementAllOfWithDefaults() *BrokeredRdpEntitlementAllOf {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -85,7 +88,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -99,7 +102,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetType(v string) {
 
 // GetResolution returns the Resolution field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetResolution() string {
-	if o == nil || o.Resolution == nil {
+	if o == nil || IsNil(o.Resolution) {
 		var ret string
 		return ret
 	}
@@ -109,7 +112,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetResolution() string {
 // GetResolutionOk returns a tuple with the Resolution field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetResolutionOk() (*string, bool) {
-	if o == nil || o.Resolution == nil {
+	if o == nil || IsNil(o.Resolution) {
 		return nil, false
 	}
 	return o.Resolution, true
@@ -117,7 +120,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetResolutionOk() (*string, bool) {
 
 // HasResolution returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasResolution() bool {
-	if o != nil && o.Resolution != nil {
+	if o != nil && !IsNil(o.Resolution) {
 		return true
 	}
 
@@ -131,7 +134,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetResolution(v string) {
 
 // GetColorDepth returns the ColorDepth field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetColorDepth() int32 {
-	if o == nil || o.ColorDepth == nil {
+	if o == nil || IsNil(o.ColorDepth) {
 		var ret int32
 		return ret
 	}
@@ -141,7 +144,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetColorDepth() int32 {
 // GetColorDepthOk returns a tuple with the ColorDepth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetColorDepthOk() (*int32, bool) {
-	if o == nil || o.ColorDepth == nil {
+	if o == nil || IsNil(o.ColorDepth) {
 		return nil, false
 	}
 	return o.ColorDepth, true
@@ -149,7 +152,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetColorDepthOk() (*int32, bool) {
 
 // HasColorDepth returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasColorDepth() bool {
-	if o != nil && o.ColorDepth != nil {
+	if o != nil && !IsNil(o.ColorDepth) {
 		return true
 	}
 
@@ -163,7 +166,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetColorDepth(v int32) {
 
 // GetKeyboardLayout returns the KeyboardLayout field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetKeyboardLayout() string {
-	if o == nil || o.KeyboardLayout == nil {
+	if o == nil || IsNil(o.KeyboardLayout) {
 		var ret string
 		return ret
 	}
@@ -173,7 +176,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetKeyboardLayout() string {
 // GetKeyboardLayoutOk returns a tuple with the KeyboardLayout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetKeyboardLayoutOk() (*string, bool) {
-	if o == nil || o.KeyboardLayout == nil {
+	if o == nil || IsNil(o.KeyboardLayout) {
 		return nil, false
 	}
 	return o.KeyboardLayout, true
@@ -181,7 +184,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetKeyboardLayoutOk() (*string, bool) {
 
 // HasKeyboardLayout returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasKeyboardLayout() bool {
-	if o != nil && o.KeyboardLayout != nil {
+	if o != nil && !IsNil(o.KeyboardLayout) {
 		return true
 	}
 
@@ -195,7 +198,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetKeyboardLayout(v string) {
 
 // GetWindowsDomain returns the WindowsDomain field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetWindowsDomain() string {
-	if o == nil || o.WindowsDomain == nil {
+	if o == nil || IsNil(o.WindowsDomain) {
 		var ret string
 		return ret
 	}
@@ -205,7 +208,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetWindowsDomain() string {
 // GetWindowsDomainOk returns a tuple with the WindowsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetWindowsDomainOk() (*string, bool) {
-	if o == nil || o.WindowsDomain == nil {
+	if o == nil || IsNil(o.WindowsDomain) {
 		return nil, false
 	}
 	return o.WindowsDomain, true
@@ -213,7 +216,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetWindowsDomainOk() (*string, bool) {
 
 // HasWindowsDomain returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasWindowsDomain() bool {
-	if o != nil && o.WindowsDomain != nil {
+	if o != nil && !IsNil(o.WindowsDomain) {
 		return true
 	}
 
@@ -227,7 +230,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetWindowsDomain(v string) {
 
 // GetSecurityMode returns the SecurityMode field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetSecurityMode() string {
-	if o == nil || o.SecurityMode == nil {
+	if o == nil || IsNil(o.SecurityMode) {
 		var ret string
 		return ret
 	}
@@ -237,7 +240,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetSecurityMode() string {
 // GetSecurityModeOk returns a tuple with the SecurityMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetSecurityModeOk() (*string, bool) {
-	if o == nil || o.SecurityMode == nil {
+	if o == nil || IsNil(o.SecurityMode) {
 		return nil, false
 	}
 	return o.SecurityMode, true
@@ -245,7 +248,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetSecurityModeOk() (*string, bool) {
 
 // HasSecurityMode returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasSecurityMode() bool {
-	if o != nil && o.SecurityMode != nil {
+	if o != nil && !IsNil(o.SecurityMode) {
 		return true
 	}
 
@@ -259,7 +262,7 @@ func (o *BrokeredRdpEntitlementAllOf) SetSecurityMode(v string) {
 
 // GetAudioRedirection returns the AudioRedirection field value if set, zero value otherwise.
 func (o *BrokeredRdpEntitlementAllOf) GetAudioRedirection() bool {
-	if o == nil || o.AudioRedirection == nil {
+	if o == nil || IsNil(o.AudioRedirection) {
 		var ret bool
 		return ret
 	}
@@ -269,7 +272,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetAudioRedirection() bool {
 // GetAudioRedirectionOk returns a tuple with the AudioRedirection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredRdpEntitlementAllOf) GetAudioRedirectionOk() (*bool, bool) {
-	if o == nil || o.AudioRedirection == nil {
+	if o == nil || IsNil(o.AudioRedirection) {
 		return nil, false
 	}
 	return o.AudioRedirection, true
@@ -277,7 +280,7 @@ func (o *BrokeredRdpEntitlementAllOf) GetAudioRedirectionOk() (*bool, bool) {
 
 // HasAudioRedirection returns a boolean if a field has been set.
 func (o *BrokeredRdpEntitlementAllOf) HasAudioRedirection() bool {
-	if o != nil && o.AudioRedirection != nil {
+	if o != nil && !IsNil(o.AudioRedirection) {
 		return true
 	}
 
@@ -290,29 +293,37 @@ func (o *BrokeredRdpEntitlementAllOf) SetAudioRedirection(v bool) {
 }
 
 func (o BrokeredRdpEntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Resolution != nil {
-		toSerialize["resolution"] = o.Resolution
-	}
-	if o.ColorDepth != nil {
-		toSerialize["colorDepth"] = o.ColorDepth
-	}
-	if o.KeyboardLayout != nil {
-		toSerialize["keyboardLayout"] = o.KeyboardLayout
-	}
-	if o.WindowsDomain != nil {
-		toSerialize["windowsDomain"] = o.WindowsDomain
-	}
-	if o.SecurityMode != nil {
-		toSerialize["securityMode"] = o.SecurityMode
-	}
-	if o.AudioRedirection != nil {
-		toSerialize["audioRedirection"] = o.AudioRedirection
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredRdpEntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Resolution) {
+		toSerialize["resolution"] = o.Resolution
+	}
+	if !IsNil(o.ColorDepth) {
+		toSerialize["colorDepth"] = o.ColorDepth
+	}
+	if !IsNil(o.KeyboardLayout) {
+		toSerialize["keyboardLayout"] = o.KeyboardLayout
+	}
+	if !IsNil(o.WindowsDomain) {
+		toSerialize["windowsDomain"] = o.WindowsDomain
+	}
+	if !IsNil(o.SecurityMode) {
+		toSerialize["securityMode"] = o.SecurityMode
+	}
+	if !IsNil(o.AudioRedirection) {
+		toSerialize["audioRedirection"] = o.AudioRedirection
+	}
+	return toSerialize, nil
 }
 
 type NullableBrokeredRdpEntitlementAllOf struct {

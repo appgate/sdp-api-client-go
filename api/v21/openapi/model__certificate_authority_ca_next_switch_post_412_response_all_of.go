@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityCaNextSwitchPost412ResponseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityCaNextSwitchPost412ResponseAllOf{}
+
 // CertificateAuthorityCaNextSwitchPost412ResponseAllOf struct for CertificateAuthorityCaNextSwitchPost412ResponseAllOf
 type CertificateAuthorityCaNextSwitchPost412ResponseAllOf struct {
 	// A dictionary of Appliance name and failure reason.
@@ -40,7 +43,7 @@ func NewCertificateAuthorityCaNextSwitchPost412ResponseAllOfWithDefaults() *Cert
 
 // GetFailedAppliances returns the FailedAppliances field value if set, zero value otherwise.
 func (o *CertificateAuthorityCaNextSwitchPost412ResponseAllOf) GetFailedAppliances() map[string]interface{} {
-	if o == nil || o.FailedAppliances == nil {
+	if o == nil || IsNil(o.FailedAppliances) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -50,15 +53,15 @@ func (o *CertificateAuthorityCaNextSwitchPost412ResponseAllOf) GetFailedApplianc
 // GetFailedAppliancesOk returns a tuple with the FailedAppliances field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412ResponseAllOf) GetFailedAppliancesOk() (map[string]interface{}, bool) {
-	if o == nil || o.FailedAppliances == nil {
-		return nil, false
+	if o == nil || IsNil(o.FailedAppliances) {
+		return map[string]interface{}{}, false
 	}
 	return o.FailedAppliances, true
 }
 
 // HasFailedAppliances returns a boolean if a field has been set.
 func (o *CertificateAuthorityCaNextSwitchPost412ResponseAllOf) HasFailedAppliances() bool {
-	if o != nil && o.FailedAppliances != nil {
+	if o != nil && !IsNil(o.FailedAppliances) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *CertificateAuthorityCaNextSwitchPost412ResponseAllOf) SetFailedApplianc
 }
 
 func (o CertificateAuthorityCaNextSwitchPost412ResponseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.FailedAppliances != nil {
-		toSerialize["failedAppliances"] = o.FailedAppliances
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityCaNextSwitchPost412ResponseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.FailedAppliances) {
+		toSerialize["failedAppliances"] = o.FailedAppliances
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityCaNextSwitchPost412ResponseAllOf struct {

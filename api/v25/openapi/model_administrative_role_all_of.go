@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdministrativeRoleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdministrativeRoleAllOf{}
+
 // AdministrativeRoleAllOf Represents an Administrative Role.
 type AdministrativeRoleAllOf struct {
 	// Administrative privilege list.
@@ -64,11 +67,17 @@ func (o *AdministrativeRoleAllOf) SetPrivileges(v []AdministrativePrivilege) {
 }
 
 func (o AdministrativeRoleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["privileges"] = o.Privileges
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdministrativeRoleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["privileges"] = o.Privileges
+	return toSerialize, nil
 }
 
 type NullableAdministrativeRoleAllOf struct {

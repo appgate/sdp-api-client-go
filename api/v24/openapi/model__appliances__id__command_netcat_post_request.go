@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandNetcatPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandNetcatPostRequest{}
+
 // AppliancesIdCommandNetcatPostRequest struct for AppliancesIdCommandNetcatPostRequest
 type AppliancesIdCommandNetcatPostRequest struct {
 	// The destination to connect. Can be numerical IP address or a symbolic hostname.
@@ -106,7 +109,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) SetPort(v int32) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *AppliancesIdCommandNetcatPostRequest) GetVersion() int32 {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret int32
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetVersion() int32 {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) GetVersionOk() (*int32, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -124,7 +127,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetVersionOk() (*int32, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -138,7 +141,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) SetVersion(v int32) {
 
 // GetProtocol returns the Protocol field value if set, zero value otherwise.
 func (o *AppliancesIdCommandNetcatPostRequest) GetProtocol() string {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		var ret string
 		return ret
 	}
@@ -148,7 +151,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetProtocol() string {
 // GetProtocolOk returns a tuple with the Protocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) GetProtocolOk() (*string, bool) {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		return nil, false
 	}
 	return o.Protocol, true
@@ -156,7 +159,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetProtocolOk() (*string, bool) {
 
 // HasProtocol returns a boolean if a field has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) HasProtocol() bool {
-	if o != nil && o.Protocol != nil {
+	if o != nil && !IsNil(o.Protocol) {
 		return true
 	}
 
@@ -170,7 +173,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) SetProtocol(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandNetcatPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -180,7 +183,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -188,7 +191,7 @@ func (o *AppliancesIdCommandNetcatPostRequest) GetProcessTimeoutOk() (*int32, bo
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandNetcatPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -201,23 +204,27 @@ func (o *AppliancesIdCommandNetcatPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandNetcatPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["destination"] = o.Destination
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.Protocol != nil {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandNetcatPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["destination"] = o.Destination
+	toSerialize["port"] = o.Port
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.Protocol) {
+		toSerialize["protocol"] = o.Protocol
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandNetcatPostRequest struct {

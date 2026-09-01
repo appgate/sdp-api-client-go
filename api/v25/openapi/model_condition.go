@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Condition type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Condition{}
+
 // Condition struct for Condition
 type Condition struct {
 	// ID of the object.
@@ -67,7 +70,7 @@ func NewConditionWithDefaults() *Condition {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Condition) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *Condition) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -85,7 +88,7 @@ func (o *Condition) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Condition) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -123,7 +126,7 @@ func (o *Condition) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Condition) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -133,7 +136,7 @@ func (o *Condition) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -141,7 +144,7 @@ func (o *Condition) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Condition) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -155,7 +158,7 @@ func (o *Condition) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Condition) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -165,7 +168,7 @@ func (o *Condition) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -173,7 +176,7 @@ func (o *Condition) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Condition) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -187,7 +190,7 @@ func (o *Condition) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *Condition) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -197,7 +200,7 @@ func (o *Condition) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -205,7 +208,7 @@ func (o *Condition) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *Condition) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -219,7 +222,7 @@ func (o *Condition) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *Condition) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -229,7 +232,7 @@ func (o *Condition) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -237,7 +240,7 @@ func (o *Condition) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *Condition) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -251,7 +254,7 @@ func (o *Condition) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Condition) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -261,7 +264,7 @@ func (o *Condition) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -269,7 +272,7 @@ func (o *Condition) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Condition) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -307,7 +310,7 @@ func (o *Condition) SetExpression(v string) {
 
 // GetRepeatSchedules returns the RepeatSchedules field value if set, zero value otherwise.
 func (o *Condition) GetRepeatSchedules() []string {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		var ret []string
 		return ret
 	}
@@ -317,7 +320,7 @@ func (o *Condition) GetRepeatSchedules() []string {
 // GetRepeatSchedulesOk returns a tuple with the RepeatSchedules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRepeatSchedulesOk() ([]string, bool) {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		return nil, false
 	}
 	return o.RepeatSchedules, true
@@ -325,7 +328,7 @@ func (o *Condition) GetRepeatSchedulesOk() ([]string, bool) {
 
 // HasRepeatSchedules returns a boolean if a field has been set.
 func (o *Condition) HasRepeatSchedules() bool {
-	if o != nil && o.RepeatSchedules != nil {
+	if o != nil && !IsNil(o.RepeatSchedules) {
 		return true
 	}
 
@@ -339,7 +342,7 @@ func (o *Condition) SetRepeatSchedules(v []string) {
 
 // GetRemedyLogic returns the RemedyLogic field value if set, zero value otherwise.
 func (o *Condition) GetRemedyLogic() string {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		var ret string
 		return ret
 	}
@@ -349,7 +352,7 @@ func (o *Condition) GetRemedyLogic() string {
 // GetRemedyLogicOk returns a tuple with the RemedyLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRemedyLogicOk() (*string, bool) {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		return nil, false
 	}
 	return o.RemedyLogic, true
@@ -357,7 +360,7 @@ func (o *Condition) GetRemedyLogicOk() (*string, bool) {
 
 // HasRemedyLogic returns a boolean if a field has been set.
 func (o *Condition) HasRemedyLogic() bool {
-	if o != nil && o.RemedyLogic != nil {
+	if o != nil && !IsNil(o.RemedyLogic) {
 		return true
 	}
 
@@ -371,7 +374,7 @@ func (o *Condition) SetRemedyLogic(v string) {
 
 // GetRemedyMethods returns the RemedyMethods field value if set, zero value otherwise.
 func (o *Condition) GetRemedyMethods() []RemedyMethod {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		var ret []RemedyMethod
 		return ret
 	}
@@ -381,7 +384,7 @@ func (o *Condition) GetRemedyMethods() []RemedyMethod {
 // GetRemedyMethodsOk returns a tuple with the RemedyMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Condition) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		return nil, false
 	}
 	return o.RemedyMethods, true
@@ -389,7 +392,7 @@ func (o *Condition) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
 
 // HasRemedyMethods returns a boolean if a field has been set.
 func (o *Condition) HasRemedyMethods() bool {
-	if o != nil && o.RemedyMethods != nil {
+	if o != nil && !IsNil(o.RemedyMethods) {
 		return true
 	}
 
@@ -402,41 +405,45 @@ func (o *Condition) SetRemedyMethods(v []RemedyMethod) {
 }
 
 func (o Condition) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.RepeatSchedules != nil {
-		toSerialize["repeatSchedules"] = o.RepeatSchedules
-	}
-	if o.RemedyLogic != nil {
-		toSerialize["remedyLogic"] = o.RemedyLogic
-	}
-	if o.RemedyMethods != nil {
-		toSerialize["remedyMethods"] = o.RemedyMethods
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Condition) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.RepeatSchedules) {
+		toSerialize["repeatSchedules"] = o.RepeatSchedules
+	}
+	if !IsNil(o.RemedyLogic) {
+		toSerialize["remedyLogic"] = o.RemedyLogic
+	}
+	if !IsNil(o.RemedyMethods) {
+		toSerialize["remedyMethods"] = o.RemedyMethods
+	}
+	return toSerialize, nil
 }
 
 type NullableCondition struct {

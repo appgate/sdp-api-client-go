@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetailsUsagePolicies type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetailsUsagePolicies{}
+
 // LicenseDetailsUsagePolicies The amount of Policies in the system at present broken out by type.
 type LicenseDetailsUsagePolicies struct {
 	Access *float32 `json:"access,omitempty"`
@@ -44,7 +47,7 @@ func NewLicenseDetailsUsagePoliciesWithDefaults() *LicenseDetailsUsagePolicies {
 
 // GetAccess returns the Access field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetAccess() float32 {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		var ret float32
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *LicenseDetailsUsagePolicies) GetAccess() float32 {
 // GetAccessOk returns a tuple with the Access field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetAccessOk() (*float32, bool) {
-	if o == nil || o.Access == nil {
+	if o == nil || IsNil(o.Access) {
 		return nil, false
 	}
 	return o.Access, true
@@ -62,7 +65,7 @@ func (o *LicenseDetailsUsagePolicies) GetAccessOk() (*float32, bool) {
 
 // HasAccess returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasAccess() bool {
-	if o != nil && o.Access != nil {
+	if o != nil && !IsNil(o.Access) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *LicenseDetailsUsagePolicies) SetAccess(v float32) {
 
 // GetStop returns the Stop field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetStop() float32 {
-	if o == nil || o.Stop == nil {
+	if o == nil || IsNil(o.Stop) {
 		var ret float32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *LicenseDetailsUsagePolicies) GetStop() float32 {
 // GetStopOk returns a tuple with the Stop field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetStopOk() (*float32, bool) {
-	if o == nil || o.Stop == nil {
+	if o == nil || IsNil(o.Stop) {
 		return nil, false
 	}
 	return o.Stop, true
@@ -94,7 +97,7 @@ func (o *LicenseDetailsUsagePolicies) GetStopOk() (*float32, bool) {
 
 // HasStop returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasStop() bool {
-	if o != nil && o.Stop != nil {
+	if o != nil && !IsNil(o.Stop) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *LicenseDetailsUsagePolicies) SetStop(v float32) {
 
 // GetDevice returns the Device field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetDevice() float32 {
-	if o == nil || o.Device == nil {
+	if o == nil || IsNil(o.Device) {
 		var ret float32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *LicenseDetailsUsagePolicies) GetDevice() float32 {
 // GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetDeviceOk() (*float32, bool) {
-	if o == nil || o.Device == nil {
+	if o == nil || IsNil(o.Device) {
 		return nil, false
 	}
 	return o.Device, true
@@ -126,7 +129,7 @@ func (o *LicenseDetailsUsagePolicies) GetDeviceOk() (*float32, bool) {
 
 // HasDevice returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasDevice() bool {
-	if o != nil && o.Device != nil {
+	if o != nil && !IsNil(o.Device) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *LicenseDetailsUsagePolicies) SetDevice(v float32) {
 
 // GetDns returns the Dns field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetDns() float32 {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		var ret float32
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *LicenseDetailsUsagePolicies) GetDns() float32 {
 // GetDnsOk returns a tuple with the Dns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetDnsOk() (*float32, bool) {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		return nil, false
 	}
 	return o.Dns, true
@@ -158,7 +161,7 @@ func (o *LicenseDetailsUsagePolicies) GetDnsOk() (*float32, bool) {
 
 // HasDns returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasDns() bool {
-	if o != nil && o.Dns != nil {
+	if o != nil && !IsNil(o.Dns) {
 		return true
 	}
 
@@ -172,7 +175,7 @@ func (o *LicenseDetailsUsagePolicies) SetDns(v float32) {
 
 // GetAdmin returns the Admin field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetAdmin() float32 {
-	if o == nil || o.Admin == nil {
+	if o == nil || IsNil(o.Admin) {
 		var ret float32
 		return ret
 	}
@@ -182,7 +185,7 @@ func (o *LicenseDetailsUsagePolicies) GetAdmin() float32 {
 // GetAdminOk returns a tuple with the Admin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetAdminOk() (*float32, bool) {
-	if o == nil || o.Admin == nil {
+	if o == nil || IsNil(o.Admin) {
 		return nil, false
 	}
 	return o.Admin, true
@@ -190,7 +193,7 @@ func (o *LicenseDetailsUsagePolicies) GetAdminOk() (*float32, bool) {
 
 // HasAdmin returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasAdmin() bool {
-	if o != nil && o.Admin != nil {
+	if o != nil && !IsNil(o.Admin) {
 		return true
 	}
 
@@ -204,7 +207,7 @@ func (o *LicenseDetailsUsagePolicies) SetAdmin(v float32) {
 
 // GetMixed returns the Mixed field value if set, zero value otherwise.
 func (o *LicenseDetailsUsagePolicies) GetMixed() float32 {
-	if o == nil || o.Mixed == nil {
+	if o == nil || IsNil(o.Mixed) {
 		var ret float32
 		return ret
 	}
@@ -214,7 +217,7 @@ func (o *LicenseDetailsUsagePolicies) GetMixed() float32 {
 // GetMixedOk returns a tuple with the Mixed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsagePolicies) GetMixedOk() (*float32, bool) {
-	if o == nil || o.Mixed == nil {
+	if o == nil || IsNil(o.Mixed) {
 		return nil, false
 	}
 	return o.Mixed, true
@@ -222,7 +225,7 @@ func (o *LicenseDetailsUsagePolicies) GetMixedOk() (*float32, bool) {
 
 // HasMixed returns a boolean if a field has been set.
 func (o *LicenseDetailsUsagePolicies) HasMixed() bool {
-	if o != nil && o.Mixed != nil {
+	if o != nil && !IsNil(o.Mixed) {
 		return true
 	}
 
@@ -235,26 +238,34 @@ func (o *LicenseDetailsUsagePolicies) SetMixed(v float32) {
 }
 
 func (o LicenseDetailsUsagePolicies) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Access != nil {
-		toSerialize["access"] = o.Access
-	}
-	if o.Stop != nil {
-		toSerialize["stop"] = o.Stop
-	}
-	if o.Device != nil {
-		toSerialize["device"] = o.Device
-	}
-	if o.Dns != nil {
-		toSerialize["dns"] = o.Dns
-	}
-	if o.Admin != nil {
-		toSerialize["admin"] = o.Admin
-	}
-	if o.Mixed != nil {
-		toSerialize["mixed"] = o.Mixed
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetailsUsagePolicies) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Access) {
+		toSerialize["access"] = o.Access
+	}
+	if !IsNil(o.Stop) {
+		toSerialize["stop"] = o.Stop
+	}
+	if !IsNil(o.Device) {
+		toSerialize["device"] = o.Device
+	}
+	if !IsNil(o.Dns) {
+		toSerialize["dns"] = o.Dns
+	}
+	if !IsNil(o.Admin) {
+		toSerialize["admin"] = o.Admin
+	}
+	if !IsNil(o.Mixed) {
+		toSerialize["mixed"] = o.Mixed
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetailsUsagePolicies struct {

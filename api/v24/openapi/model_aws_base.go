@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AwsBase type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AwsBase{}
+
 // AwsBase struct for AwsBase
 type AwsBase struct {
 	// AWS ID to login. Only required if AWS Access Keys are being used to authenticate.
@@ -46,7 +49,7 @@ func NewAwsBaseWithDefaults() *AwsBase {
 
 // GetAwsId returns the AwsId field value if set, zero value otherwise.
 func (o *AwsBase) GetAwsId() string {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *AwsBase) GetAwsId() string {
 // GetAwsIdOk returns a tuple with the AwsId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsBase) GetAwsIdOk() (*string, bool) {
-	if o == nil || o.AwsId == nil {
+	if o == nil || IsNil(o.AwsId) {
 		return nil, false
 	}
 	return o.AwsId, true
@@ -64,7 +67,7 @@ func (o *AwsBase) GetAwsIdOk() (*string, bool) {
 
 // HasAwsId returns a boolean if a field has been set.
 func (o *AwsBase) HasAwsId() bool {
-	if o != nil && o.AwsId != nil {
+	if o != nil && !IsNil(o.AwsId) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *AwsBase) SetAwsId(v string) {
 
 // GetAwsSecret returns the AwsSecret field value if set, zero value otherwise.
 func (o *AwsBase) GetAwsSecret() string {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *AwsBase) GetAwsSecret() string {
 // GetAwsSecretOk returns a tuple with the AwsSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsBase) GetAwsSecretOk() (*string, bool) {
-	if o == nil || o.AwsSecret == nil {
+	if o == nil || IsNil(o.AwsSecret) {
 		return nil, false
 	}
 	return o.AwsSecret, true
@@ -96,7 +99,7 @@ func (o *AwsBase) GetAwsSecretOk() (*string, bool) {
 
 // HasAwsSecret returns a boolean if a field has been set.
 func (o *AwsBase) HasAwsSecret() bool {
-	if o != nil && o.AwsSecret != nil {
+	if o != nil && !IsNil(o.AwsSecret) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *AwsBase) SetAwsSecret(v string) {
 
 // GetAwsRegion returns the AwsRegion field value if set, zero value otherwise.
 func (o *AwsBase) GetAwsRegion() string {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *AwsBase) GetAwsRegion() string {
 // GetAwsRegionOk returns a tuple with the AwsRegion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsBase) GetAwsRegionOk() (*string, bool) {
-	if o == nil || o.AwsRegion == nil {
+	if o == nil || IsNil(o.AwsRegion) {
 		return nil, false
 	}
 	return o.AwsRegion, true
@@ -128,7 +131,7 @@ func (o *AwsBase) GetAwsRegionOk() (*string, bool) {
 
 // HasAwsRegion returns a boolean if a field has been set.
 func (o *AwsBase) HasAwsRegion() bool {
-	if o != nil && o.AwsRegion != nil {
+	if o != nil && !IsNil(o.AwsRegion) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *AwsBase) SetAwsRegion(v string) {
 
 // GetUseInstanceCredentials returns the UseInstanceCredentials field value if set, zero value otherwise.
 func (o *AwsBase) GetUseInstanceCredentials() bool {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *AwsBase) GetUseInstanceCredentials() bool {
 // GetUseInstanceCredentialsOk returns a tuple with the UseInstanceCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AwsBase) GetUseInstanceCredentialsOk() (*bool, bool) {
-	if o == nil || o.UseInstanceCredentials == nil {
+	if o == nil || IsNil(o.UseInstanceCredentials) {
 		return nil, false
 	}
 	return o.UseInstanceCredentials, true
@@ -160,7 +163,7 @@ func (o *AwsBase) GetUseInstanceCredentialsOk() (*bool, bool) {
 
 // HasUseInstanceCredentials returns a boolean if a field has been set.
 func (o *AwsBase) HasUseInstanceCredentials() bool {
-	if o != nil && o.UseInstanceCredentials != nil {
+	if o != nil && !IsNil(o.UseInstanceCredentials) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *AwsBase) SetUseInstanceCredentials(v bool) {
 }
 
 func (o AwsBase) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AwsId != nil {
-		toSerialize["awsId"] = o.AwsId
-	}
-	if o.AwsSecret != nil {
-		toSerialize["awsSecret"] = o.AwsSecret
-	}
-	if o.AwsRegion != nil {
-		toSerialize["awsRegion"] = o.AwsRegion
-	}
-	if o.UseInstanceCredentials != nil {
-		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AwsBase) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AwsId) {
+		toSerialize["awsId"] = o.AwsId
+	}
+	if !IsNil(o.AwsSecret) {
+		toSerialize["awsSecret"] = o.AwsSecret
+	}
+	if !IsNil(o.AwsRegion) {
+		toSerialize["awsRegion"] = o.AwsRegion
+	}
+	if !IsNil(o.UseInstanceCredentials) {
+		toSerialize["useInstanceCredentials"] = o.UseInstanceCredentials
+	}
+	return toSerialize, nil
 }
 
 type NullableAwsBase struct {

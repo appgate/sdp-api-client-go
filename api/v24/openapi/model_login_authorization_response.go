@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the LoginAuthorizationResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginAuthorizationResponse{}
+
 // LoginAuthorizationResponse struct for LoginAuthorizationResponse
 type LoginAuthorizationResponse struct {
 	User *LoginAuthorizationResponseUser `json:"user,omitempty"`
@@ -66,7 +69,7 @@ func NewLoginAuthorizationResponseWithDefaults() *LoginAuthorizationResponse {
 
 // GetUser returns the User field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetUser() LoginAuthorizationResponseUser {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		var ret LoginAuthorizationResponseUser
 		return ret
 	}
@@ -76,7 +79,7 @@ func (o *LoginAuthorizationResponse) GetUser() LoginAuthorizationResponseUser {
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetUserOk() (*LoginAuthorizationResponseUser, bool) {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		return nil, false
 	}
 	return o.User, true
@@ -84,7 +87,7 @@ func (o *LoginAuthorizationResponse) GetUserOk() (*LoginAuthorizationResponseUse
 
 // HasUser returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasUser() bool {
-	if o != nil && o.User != nil {
+	if o != nil && !IsNil(o.User) {
 		return true
 	}
 
@@ -98,7 +101,7 @@ func (o *LoginAuthorizationResponse) SetUser(v LoginAuthorizationResponseUser) {
 
 // GetToken returns the Token field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetToken() string {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
@@ -108,7 +111,7 @@ func (o *LoginAuthorizationResponse) GetToken() string {
 // GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetTokenOk() (*string, bool) {
-	if o == nil || o.Token == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
 	return o.Token, true
@@ -116,7 +119,7 @@ func (o *LoginAuthorizationResponse) GetTokenOk() (*string, bool) {
 
 // HasToken returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasToken() bool {
-	if o != nil && o.Token != nil {
+	if o != nil && !IsNil(o.Token) {
 		return true
 	}
 
@@ -130,7 +133,7 @@ func (o *LoginAuthorizationResponse) SetToken(v string) {
 
 // GetExpires returns the Expires field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetExpires() time.Time {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		var ret time.Time
 		return ret
 	}
@@ -140,7 +143,7 @@ func (o *LoginAuthorizationResponse) GetExpires() time.Time {
 // GetExpiresOk returns a tuple with the Expires field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetExpiresOk() (*time.Time, bool) {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		return nil, false
 	}
 	return o.Expires, true
@@ -148,7 +151,7 @@ func (o *LoginAuthorizationResponse) GetExpiresOk() (*time.Time, bool) {
 
 // HasExpires returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasExpires() bool {
-	if o != nil && o.Expires != nil {
+	if o != nil && !IsNil(o.Expires) {
 		return true
 	}
 
@@ -162,7 +165,7 @@ func (o *LoginAuthorizationResponse) SetExpires(v time.Time) {
 
 // GetMessageOfTheDay returns the MessageOfTheDay field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetMessageOfTheDay() string {
-	if o == nil || o.MessageOfTheDay == nil {
+	if o == nil || IsNil(o.MessageOfTheDay) {
 		var ret string
 		return ret
 	}
@@ -172,7 +175,7 @@ func (o *LoginAuthorizationResponse) GetMessageOfTheDay() string {
 // GetMessageOfTheDayOk returns a tuple with the MessageOfTheDay field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetMessageOfTheDayOk() (*string, bool) {
-	if o == nil || o.MessageOfTheDay == nil {
+	if o == nil || IsNil(o.MessageOfTheDay) {
 		return nil, false
 	}
 	return o.MessageOfTheDay, true
@@ -180,7 +183,7 @@ func (o *LoginAuthorizationResponse) GetMessageOfTheDayOk() (*string, bool) {
 
 // HasMessageOfTheDay returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasMessageOfTheDay() bool {
-	if o != nil && o.MessageOfTheDay != nil {
+	if o != nil && !IsNil(o.MessageOfTheDay) {
 		return true
 	}
 
@@ -194,7 +197,7 @@ func (o *LoginAuthorizationResponse) SetMessageOfTheDay(v string) {
 
 // GetZtpCollectiveType returns the ZtpCollectiveType field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetZtpCollectiveType() string {
-	if o == nil || o.ZtpCollectiveType == nil {
+	if o == nil || IsNil(o.ZtpCollectiveType) {
 		var ret string
 		return ret
 	}
@@ -204,7 +207,7 @@ func (o *LoginAuthorizationResponse) GetZtpCollectiveType() string {
 // GetZtpCollectiveTypeOk returns a tuple with the ZtpCollectiveType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetZtpCollectiveTypeOk() (*string, bool) {
-	if o == nil || o.ZtpCollectiveType == nil {
+	if o == nil || IsNil(o.ZtpCollectiveType) {
 		return nil, false
 	}
 	return o.ZtpCollectiveType, true
@@ -212,7 +215,7 @@ func (o *LoginAuthorizationResponse) GetZtpCollectiveTypeOk() (*string, bool) {
 
 // HasZtpCollectiveType returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasZtpCollectiveType() bool {
-	if o != nil && o.ZtpCollectiveType != nil {
+	if o != nil && !IsNil(o.ZtpCollectiveType) {
 		return true
 	}
 
@@ -226,7 +229,7 @@ func (o *LoginAuthorizationResponse) SetZtpCollectiveType(v string) {
 
 // GetZtpAccountType returns the ZtpAccountType field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetZtpAccountType() string {
-	if o == nil || o.ZtpAccountType == nil {
+	if o == nil || IsNil(o.ZtpAccountType) {
 		var ret string
 		return ret
 	}
@@ -236,7 +239,7 @@ func (o *LoginAuthorizationResponse) GetZtpAccountType() string {
 // GetZtpAccountTypeOk returns a tuple with the ZtpAccountType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetZtpAccountTypeOk() (*string, bool) {
-	if o == nil || o.ZtpAccountType == nil {
+	if o == nil || IsNil(o.ZtpAccountType) {
 		return nil, false
 	}
 	return o.ZtpAccountType, true
@@ -244,7 +247,7 @@ func (o *LoginAuthorizationResponse) GetZtpAccountTypeOk() (*string, bool) {
 
 // HasZtpAccountType returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasZtpAccountType() bool {
-	if o != nil && o.ZtpAccountType != nil {
+	if o != nil && !IsNil(o.ZtpAccountType) {
 		return true
 	}
 
@@ -258,7 +261,7 @@ func (o *LoginAuthorizationResponse) SetZtpAccountType(v string) {
 
 // GetCrlEnabled returns the CrlEnabled field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetCrlEnabled() bool {
-	if o == nil || o.CrlEnabled == nil {
+	if o == nil || IsNil(o.CrlEnabled) {
 		var ret bool
 		return ret
 	}
@@ -268,7 +271,7 @@ func (o *LoginAuthorizationResponse) GetCrlEnabled() bool {
 // GetCrlEnabledOk returns a tuple with the CrlEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetCrlEnabledOk() (*bool, bool) {
-	if o == nil || o.CrlEnabled == nil {
+	if o == nil || IsNil(o.CrlEnabled) {
 		return nil, false
 	}
 	return o.CrlEnabled, true
@@ -276,7 +279,7 @@ func (o *LoginAuthorizationResponse) GetCrlEnabledOk() (*bool, bool) {
 
 // HasCrlEnabled returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasCrlEnabled() bool {
-	if o != nil && o.CrlEnabled != nil {
+	if o != nil && !IsNil(o.CrlEnabled) {
 		return true
 	}
 
@@ -290,7 +293,7 @@ func (o *LoginAuthorizationResponse) SetCrlEnabled(v bool) {
 
 // GetPpModeEnabled returns the PpModeEnabled field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetPpModeEnabled() bool {
-	if o == nil || o.PpModeEnabled == nil {
+	if o == nil || IsNil(o.PpModeEnabled) {
 		var ret bool
 		return ret
 	}
@@ -300,7 +303,7 @@ func (o *LoginAuthorizationResponse) GetPpModeEnabled() bool {
 // GetPpModeEnabledOk returns a tuple with the PpModeEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetPpModeEnabledOk() (*bool, bool) {
-	if o == nil || o.PpModeEnabled == nil {
+	if o == nil || IsNil(o.PpModeEnabled) {
 		return nil, false
 	}
 	return o.PpModeEnabled, true
@@ -308,7 +311,7 @@ func (o *LoginAuthorizationResponse) GetPpModeEnabledOk() (*bool, bool) {
 
 // HasPpModeEnabled returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasPpModeEnabled() bool {
-	if o != nil && o.PpModeEnabled != nil {
+	if o != nil && !IsNil(o.PpModeEnabled) {
 		return true
 	}
 
@@ -322,7 +325,7 @@ func (o *LoginAuthorizationResponse) SetPpModeEnabled(v bool) {
 
 // GetInactivityTimeoutEnabled returns the InactivityTimeoutEnabled field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetInactivityTimeoutEnabled() bool {
-	if o == nil || o.InactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.InactivityTimeoutEnabled) {
 		var ret bool
 		return ret
 	}
@@ -332,7 +335,7 @@ func (o *LoginAuthorizationResponse) GetInactivityTimeoutEnabled() bool {
 // GetInactivityTimeoutEnabledOk returns a tuple with the InactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetInactivityTimeoutEnabledOk() (*bool, bool) {
-	if o == nil || o.InactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.InactivityTimeoutEnabled) {
 		return nil, false
 	}
 	return o.InactivityTimeoutEnabled, true
@@ -340,7 +343,7 @@ func (o *LoginAuthorizationResponse) GetInactivityTimeoutEnabledOk() (*bool, boo
 
 // HasInactivityTimeoutEnabled returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasInactivityTimeoutEnabled() bool {
-	if o != nil && o.InactivityTimeoutEnabled != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutEnabled) {
 		return true
 	}
 
@@ -354,7 +357,7 @@ func (o *LoginAuthorizationResponse) SetInactivityTimeoutEnabled(v bool) {
 
 // GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
 func (o *LoginAuthorizationResponse) GetInactivityTimeoutMinutes() float32 {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		var ret float32
 		return ret
 	}
@@ -364,7 +367,7 @@ func (o *LoginAuthorizationResponse) GetInactivityTimeoutMinutes() float32 {
 // GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginAuthorizationResponse) GetInactivityTimeoutMinutesOk() (*float32, bool) {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		return nil, false
 	}
 	return o.InactivityTimeoutMinutes, true
@@ -372,7 +375,7 @@ func (o *LoginAuthorizationResponse) GetInactivityTimeoutMinutesOk() (*float32, 
 
 // HasInactivityTimeoutMinutes returns a boolean if a field has been set.
 func (o *LoginAuthorizationResponse) HasInactivityTimeoutMinutes() bool {
-	if o != nil && o.InactivityTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutMinutes) {
 		return true
 	}
 
@@ -385,38 +388,46 @@ func (o *LoginAuthorizationResponse) SetInactivityTimeoutMinutes(v float32) {
 }
 
 func (o LoginAuthorizationResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.User != nil {
-		toSerialize["user"] = o.User
-	}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
-	}
-	if o.Expires != nil {
-		toSerialize["expires"] = o.Expires
-	}
-	if o.MessageOfTheDay != nil {
-		toSerialize["messageOfTheDay"] = o.MessageOfTheDay
-	}
-	if o.ZtpCollectiveType != nil {
-		toSerialize["ztpCollectiveType"] = o.ZtpCollectiveType
-	}
-	if o.ZtpAccountType != nil {
-		toSerialize["ztpAccountType"] = o.ZtpAccountType
-	}
-	if o.CrlEnabled != nil {
-		toSerialize["crlEnabled"] = o.CrlEnabled
-	}
-	if o.PpModeEnabled != nil {
-		toSerialize["ppModeEnabled"] = o.PpModeEnabled
-	}
-	if o.InactivityTimeoutEnabled != nil {
-		toSerialize["inactivityTimeoutEnabled"] = o.InactivityTimeoutEnabled
-	}
-	if o.InactivityTimeoutMinutes != nil {
-		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginAuthorizationResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.User) {
+		toSerialize["user"] = o.User
+	}
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.Expires) {
+		toSerialize["expires"] = o.Expires
+	}
+	if !IsNil(o.MessageOfTheDay) {
+		toSerialize["messageOfTheDay"] = o.MessageOfTheDay
+	}
+	if !IsNil(o.ZtpCollectiveType) {
+		toSerialize["ztpCollectiveType"] = o.ZtpCollectiveType
+	}
+	if !IsNil(o.ZtpAccountType) {
+		toSerialize["ztpAccountType"] = o.ZtpAccountType
+	}
+	if !IsNil(o.CrlEnabled) {
+		toSerialize["crlEnabled"] = o.CrlEnabled
+	}
+	if !IsNil(o.PpModeEnabled) {
+		toSerialize["ppModeEnabled"] = o.PpModeEnabled
+	}
+	if !IsNil(o.InactivityTimeoutEnabled) {
+		toSerialize["inactivityTimeoutEnabled"] = o.InactivityTimeoutEnabled
+	}
+	if !IsNil(o.InactivityTimeoutMinutes) {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	return toSerialize, nil
 }
 
 type NullableLoginAuthorizationResponse struct {

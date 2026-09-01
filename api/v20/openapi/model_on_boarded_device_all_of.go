@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the OnBoardedDeviceAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnBoardedDeviceAllOf{}
+
 // OnBoardedDeviceAllOf struct for OnBoardedDeviceAllOf
 type OnBoardedDeviceAllOf struct {
 	// Type of the registered device.
@@ -47,7 +50,7 @@ func NewOnBoardedDeviceAllOfWithDefaults() *OnBoardedDeviceAllOf {
 
 // GetDeviceType returns the DeviceType field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetDeviceType() string {
-	if o == nil || o.DeviceType == nil {
+	if o == nil || IsNil(o.DeviceType) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *OnBoardedDeviceAllOf) GetDeviceType() string {
 // GetDeviceTypeOk returns a tuple with the DeviceType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetDeviceTypeOk() (*string, bool) {
-	if o == nil || o.DeviceType == nil {
+	if o == nil || IsNil(o.DeviceType) {
 		return nil, false
 	}
 	return o.DeviceType, true
@@ -65,7 +68,7 @@ func (o *OnBoardedDeviceAllOf) GetDeviceTypeOk() (*string, bool) {
 
 // HasDeviceType returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasDeviceType() bool {
-	if o != nil && o.DeviceType != nil {
+	if o != nil && !IsNil(o.DeviceType) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *OnBoardedDeviceAllOf) SetDeviceType(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *OnBoardedDeviceAllOf) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -97,7 +100,7 @@ func (o *OnBoardedDeviceAllOf) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *OnBoardedDeviceAllOf) SetHostname(v string) {
 
 // GetOnBoardedAt returns the OnBoardedAt field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetOnBoardedAt() time.Time {
-	if o == nil || o.OnBoardedAt == nil {
+	if o == nil || IsNil(o.OnBoardedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *OnBoardedDeviceAllOf) GetOnBoardedAt() time.Time {
 // GetOnBoardedAtOk returns a tuple with the OnBoardedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetOnBoardedAtOk() (*time.Time, bool) {
-	if o == nil || o.OnBoardedAt == nil {
+	if o == nil || IsNil(o.OnBoardedAt) {
 		return nil, false
 	}
 	return o.OnBoardedAt, true
@@ -129,7 +132,7 @@ func (o *OnBoardedDeviceAllOf) GetOnBoardedAtOk() (*time.Time, bool) {
 
 // HasOnBoardedAt returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasOnBoardedAt() bool {
-	if o != nil && o.OnBoardedAt != nil {
+	if o != nil && !IsNil(o.OnBoardedAt) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *OnBoardedDeviceAllOf) SetOnBoardedAt(v time.Time) {
 
 // GetLastSeenAt returns the LastSeenAt field value if set, zero value otherwise.
 func (o *OnBoardedDeviceAllOf) GetLastSeenAt() time.Time {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		var ret time.Time
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *OnBoardedDeviceAllOf) GetLastSeenAt() time.Time {
 // GetLastSeenAtOk returns a tuple with the LastSeenAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDeviceAllOf) GetLastSeenAtOk() (*time.Time, bool) {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		return nil, false
 	}
 	return o.LastSeenAt, true
@@ -161,7 +164,7 @@ func (o *OnBoardedDeviceAllOf) GetLastSeenAtOk() (*time.Time, bool) {
 
 // HasLastSeenAt returns a boolean if a field has been set.
 func (o *OnBoardedDeviceAllOf) HasLastSeenAt() bool {
-	if o != nil && o.LastSeenAt != nil {
+	if o != nil && !IsNil(o.LastSeenAt) {
 		return true
 	}
 
@@ -174,20 +177,28 @@ func (o *OnBoardedDeviceAllOf) SetLastSeenAt(v time.Time) {
 }
 
 func (o OnBoardedDeviceAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DeviceType != nil {
-		toSerialize["device_type"] = o.DeviceType
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.OnBoardedAt != nil {
-		toSerialize["onBoardedAt"] = o.OnBoardedAt
-	}
-	if o.LastSeenAt != nil {
-		toSerialize["lastSeenAt"] = o.LastSeenAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnBoardedDeviceAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DeviceType) {
+		toSerialize["device_type"] = o.DeviceType
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.OnBoardedAt) {
+		toSerialize["onBoardedAt"] = o.OnBoardedAt
+	}
+	if !IsNil(o.LastSeenAt) {
+		toSerialize["lastSeenAt"] = o.LastSeenAt
+	}
+	return toSerialize, nil
 }
 
 type NullableOnBoardedDeviceAllOf struct {

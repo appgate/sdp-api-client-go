@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandChronycPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandChronycPostRequest{}
+
 // AppliancesIdCommandChronycPostRequest struct for AppliancesIdCommandChronycPostRequest
 type AppliancesIdCommandChronycPostRequest struct {
 	// The chronyc subcommand to run.
@@ -46,7 +49,7 @@ func NewAppliancesIdCommandChronycPostRequestWithDefaults() *AppliancesIdCommand
 
 // GetSubcommand returns the Subcommand field value if set, zero value otherwise.
 func (o *AppliancesIdCommandChronycPostRequest) GetSubcommand() string {
-	if o == nil || o.Subcommand == nil {
+	if o == nil || IsNil(o.Subcommand) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *AppliancesIdCommandChronycPostRequest) GetSubcommand() string {
 // GetSubcommandOk returns a tuple with the Subcommand field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandChronycPostRequest) GetSubcommandOk() (*string, bool) {
-	if o == nil || o.Subcommand == nil {
+	if o == nil || IsNil(o.Subcommand) {
 		return nil, false
 	}
 	return o.Subcommand, true
@@ -64,7 +67,7 @@ func (o *AppliancesIdCommandChronycPostRequest) GetSubcommandOk() (*string, bool
 
 // HasSubcommand returns a boolean if a field has been set.
 func (o *AppliancesIdCommandChronycPostRequest) HasSubcommand() bool {
-	if o != nil && o.Subcommand != nil {
+	if o != nil && !IsNil(o.Subcommand) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *AppliancesIdCommandChronycPostRequest) SetSubcommand(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandChronycPostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *AppliancesIdCommandChronycPostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandChronycPostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -96,7 +99,7 @@ func (o *AppliancesIdCommandChronycPostRequest) GetProcessTimeoutOk() (*int32, b
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandChronycPostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *AppliancesIdCommandChronycPostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandChronycPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Subcommand != nil {
-		toSerialize["subcommand"] = o.Subcommand
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandChronycPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Subcommand) {
+		toSerialize["subcommand"] = o.Subcommand
+	}
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandChronycPostRequest struct {

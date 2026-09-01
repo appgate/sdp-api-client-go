@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ElasticsearchAllOfAuthentication type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ElasticsearchAllOfAuthentication{}
+
 // ElasticsearchAllOfAuthentication Optional authentication settings used when sending logs to an elasticsearch instance.
 type ElasticsearchAllOfAuthentication struct {
 	// The type of authentication to use.
@@ -91,14 +94,18 @@ func (o *ElasticsearchAllOfAuthentication) SetToken(v string) {
 }
 
 func (o ElasticsearchAllOfAuthentication) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["token"] = o.Token
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ElasticsearchAllOfAuthentication) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["token"] = o.Token
+	return toSerialize, nil
 }
 
 type NullableElasticsearchAllOfAuthentication struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the UnhealthyAppNameErrorsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UnhealthyAppNameErrorsInner{}
 
 // UnhealthyAppNameErrorsInner struct for UnhealthyAppNameErrorsInner
 type UnhealthyAppNameErrorsInner struct {
@@ -51,7 +54,7 @@ func NewUnhealthyAppNameErrorsInnerWithDefaults() *UnhealthyAppNameErrorsInner {
 
 // GetHost returns the Host field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetHost() string {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *UnhealthyAppNameErrorsInner) GetHost() string {
 // GetHostOk returns a tuple with the Host field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetHostOk() (*string, bool) {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		return nil, false
 	}
 	return o.Host, true
@@ -69,7 +72,7 @@ func (o *UnhealthyAppNameErrorsInner) GetHostOk() (*string, bool) {
 
 // HasHost returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasHost() bool {
-	if o != nil && o.Host != nil {
+	if o != nil && !IsNil(o.Host) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *UnhealthyAppNameErrorsInner) SetHost(v string) {
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetErrors() []string {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *UnhealthyAppNameErrorsInner) GetErrors() []string {
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetErrorsOk() ([]string, bool) {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
@@ -101,7 +104,7 @@ func (o *UnhealthyAppNameErrorsInner) GetErrorsOk() ([]string, bool) {
 
 // HasErrors returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasErrors() bool {
-	if o != nil && o.Errors != nil {
+	if o != nil && !IsNil(o.Errors) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *UnhealthyAppNameErrorsInner) SetErrors(v []string) {
 
 // GetUserCount returns the UserCount field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetUserCount() int32 {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		var ret int32
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *UnhealthyAppNameErrorsInner) GetUserCount() int32 {
 // GetUserCountOk returns a tuple with the UserCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetUserCountOk() (*int32, bool) {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		return nil, false
 	}
 	return o.UserCount, true
@@ -133,7 +136,7 @@ func (o *UnhealthyAppNameErrorsInner) GetUserCountOk() (*int32, bool) {
 
 // HasUserCount returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasUserCount() bool {
-	if o != nil && o.UserCount != nil {
+	if o != nil && !IsNil(o.UserCount) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *UnhealthyAppNameErrorsInner) SetUserCount(v int32) {
 
 // GetAppliance returns the Appliance field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetAppliance() string {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *UnhealthyAppNameErrorsInner) GetAppliance() string {
 // GetApplianceOk returns a tuple with the Appliance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetApplianceOk() (*string, bool) {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		return nil, false
 	}
 	return o.Appliance, true
@@ -165,7 +168,7 @@ func (o *UnhealthyAppNameErrorsInner) GetApplianceOk() (*string, bool) {
 
 // HasAppliance returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasAppliance() bool {
-	if o != nil && o.Appliance != nil {
+	if o != nil && !IsNil(o.Appliance) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *UnhealthyAppNameErrorsInner) SetAppliance(v string) {
 
 // GetGatewayName returns the GatewayName field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetGatewayName() string {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		var ret string
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *UnhealthyAppNameErrorsInner) GetGatewayName() string {
 // GetGatewayNameOk returns a tuple with the GatewayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetGatewayNameOk() (*string, bool) {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		return nil, false
 	}
 	return o.GatewayName, true
@@ -197,7 +200,7 @@ func (o *UnhealthyAppNameErrorsInner) GetGatewayNameOk() (*string, bool) {
 
 // HasGatewayName returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasGatewayName() bool {
-	if o != nil && o.GatewayName != nil {
+	if o != nil && !IsNil(o.GatewayName) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *UnhealthyAppNameErrorsInner) SetGatewayName(v string) {
 
 // GetLastReported returns the LastReported field value if set, zero value otherwise.
 func (o *UnhealthyAppNameErrorsInner) GetLastReported() time.Time {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		var ret time.Time
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *UnhealthyAppNameErrorsInner) GetLastReported() time.Time {
 // GetLastReportedOk returns a tuple with the LastReported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppNameErrorsInner) GetLastReportedOk() (*time.Time, bool) {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		return nil, false
 	}
 	return o.LastReported, true
@@ -229,7 +232,7 @@ func (o *UnhealthyAppNameErrorsInner) GetLastReportedOk() (*time.Time, bool) {
 
 // HasLastReported returns a boolean if a field has been set.
 func (o *UnhealthyAppNameErrorsInner) HasLastReported() bool {
-	if o != nil && o.LastReported != nil {
+	if o != nil && !IsNil(o.LastReported) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *UnhealthyAppNameErrorsInner) SetLastReported(v time.Time) {
 }
 
 func (o UnhealthyAppNameErrorsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Host != nil {
-		toSerialize["host"] = o.Host
-	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
-	}
-	if o.UserCount != nil {
-		toSerialize["userCount"] = o.UserCount
-	}
-	if o.Appliance != nil {
-		toSerialize["appliance"] = o.Appliance
-	}
-	if o.GatewayName != nil {
-		toSerialize["gatewayName"] = o.GatewayName
-	}
-	if o.LastReported != nil {
-		toSerialize["lastReported"] = o.LastReported
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UnhealthyAppNameErrorsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Host) {
+		toSerialize["host"] = o.Host
+	}
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
+	if !IsNil(o.UserCount) {
+		toSerialize["userCount"] = o.UserCount
+	}
+	if !IsNil(o.Appliance) {
+		toSerialize["appliance"] = o.Appliance
+	}
+	if !IsNil(o.GatewayName) {
+		toSerialize["gatewayName"] = o.GatewayName
+	}
+	if !IsNil(o.LastReported) {
+		toSerialize["lastReported"] = o.LastReported
+	}
+	return toSerialize, nil
 }
 
 type NullableUnhealthyAppNameErrorsInner struct {

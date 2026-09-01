@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the ClientProfileGroup type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfileGroup{}
+
 // ClientProfileGroup struct for ClientProfileGroup
 type ClientProfileGroup struct {
 	// ID of the object.
@@ -60,7 +63,7 @@ func NewClientProfileGroupWithDefaults() *ClientProfileGroup {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -70,7 +73,7 @@ func (o *ClientProfileGroup) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -78,7 +81,7 @@ func (o *ClientProfileGroup) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *ClientProfileGroup) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *ClientProfileGroup) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -134,7 +137,7 @@ func (o *ClientProfileGroup) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *ClientProfileGroup) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *ClientProfileGroup) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -166,7 +169,7 @@ func (o *ClientProfileGroup) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *ClientProfileGroup) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *ClientProfileGroup) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -198,7 +201,7 @@ func (o *ClientProfileGroup) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *ClientProfileGroup) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *ClientProfileGroup) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -230,7 +233,7 @@ func (o *ClientProfileGroup) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *ClientProfileGroup) SetTags(v []string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *ClientProfileGroup) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -262,7 +265,7 @@ func (o *ClientProfileGroup) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -276,7 +279,7 @@ func (o *ClientProfileGroup) SetType(v string) {
 
 // GetProfileUrls returns the ProfileUrls field value if set, zero value otherwise.
 func (o *ClientProfileGroup) GetProfileUrls() []WeightedExternalProfile {
-	if o == nil || o.ProfileUrls == nil {
+	if o == nil || IsNil(o.ProfileUrls) {
 		var ret []WeightedExternalProfile
 		return ret
 	}
@@ -286,7 +289,7 @@ func (o *ClientProfileGroup) GetProfileUrls() []WeightedExternalProfile {
 // GetProfileUrlsOk returns a tuple with the ProfileUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroup) GetProfileUrlsOk() ([]WeightedExternalProfile, bool) {
-	if o == nil || o.ProfileUrls == nil {
+	if o == nil || IsNil(o.ProfileUrls) {
 		return nil, false
 	}
 	return o.ProfileUrls, true
@@ -294,7 +297,7 @@ func (o *ClientProfileGroup) GetProfileUrlsOk() ([]WeightedExternalProfile, bool
 
 // HasProfileUrls returns a boolean if a field has been set.
 func (o *ClientProfileGroup) HasProfileUrls() bool {
-	if o != nil && o.ProfileUrls != nil {
+	if o != nil && !IsNil(o.ProfileUrls) {
 		return true
 	}
 
@@ -307,32 +310,38 @@ func (o *ClientProfileGroup) SetProfileUrls(v []WeightedExternalProfile) {
 }
 
 func (o ClientProfileGroup) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.ProfileUrls != nil {
-		toSerialize["profileUrls"] = o.ProfileUrls
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfileGroup) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.ProfileUrls) {
+		toSerialize["profileUrls"] = o.ProfileUrls
+	}
+	return toSerialize, nil
 }
 
 type NullableClientProfileGroup struct {

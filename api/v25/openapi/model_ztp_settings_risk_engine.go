@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpSettingsRiskEngine type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpSettingsRiskEngine{}
+
 // ZtpSettingsRiskEngine Settings for Risk Engine integration.
 type ZtpSettingsRiskEngine struct {
 	// Whether the Risk Engine integration is enabled or not.
@@ -51,7 +54,7 @@ func NewZtpSettingsRiskEngineWithDefaults() *ZtpSettingsRiskEngine {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngine) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *ZtpSettingsRiskEngine) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngine) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -69,7 +72,7 @@ func (o *ZtpSettingsRiskEngine) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngine) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *ZtpSettingsRiskEngine) SetEnabled(v bool) {
 
 // GetDynamicAlerts returns the DynamicAlerts field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngine) GetDynamicAlerts() bool {
-	if o == nil || o.DynamicAlerts == nil {
+	if o == nil || IsNil(o.DynamicAlerts) {
 		var ret bool
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *ZtpSettingsRiskEngine) GetDynamicAlerts() bool {
 // GetDynamicAlertsOk returns a tuple with the DynamicAlerts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngine) GetDynamicAlertsOk() (*bool, bool) {
-	if o == nil || o.DynamicAlerts == nil {
+	if o == nil || IsNil(o.DynamicAlerts) {
 		return nil, false
 	}
 	return o.DynamicAlerts, true
@@ -101,7 +104,7 @@ func (o *ZtpSettingsRiskEngine) GetDynamicAlertsOk() (*bool, bool) {
 
 // HasDynamicAlerts returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngine) HasDynamicAlerts() bool {
-	if o != nil && o.DynamicAlerts != nil {
+	if o != nil && !IsNil(o.DynamicAlerts) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *ZtpSettingsRiskEngine) SetDynamicAlerts(v bool) {
 
 // GetFallbackValues returns the FallbackValues field value if set, zero value otherwise.
 func (o *ZtpSettingsRiskEngine) GetFallbackValues() ZtpSettingsRiskEngineFallbackValues {
-	if o == nil || o.FallbackValues == nil {
+	if o == nil || IsNil(o.FallbackValues) {
 		var ret ZtpSettingsRiskEngineFallbackValues
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *ZtpSettingsRiskEngine) GetFallbackValues() ZtpSettingsRiskEngineFallbac
 // GetFallbackValuesOk returns a tuple with the FallbackValues field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpSettingsRiskEngine) GetFallbackValuesOk() (*ZtpSettingsRiskEngineFallbackValues, bool) {
-	if o == nil || o.FallbackValues == nil {
+	if o == nil || IsNil(o.FallbackValues) {
 		return nil, false
 	}
 	return o.FallbackValues, true
@@ -133,7 +136,7 @@ func (o *ZtpSettingsRiskEngine) GetFallbackValuesOk() (*ZtpSettingsRiskEngineFal
 
 // HasFallbackValues returns a boolean if a field has been set.
 func (o *ZtpSettingsRiskEngine) HasFallbackValues() bool {
-	if o != nil && o.FallbackValues != nil {
+	if o != nil && !IsNil(o.FallbackValues) {
 		return true
 	}
 
@@ -146,17 +149,25 @@ func (o *ZtpSettingsRiskEngine) SetFallbackValues(v ZtpSettingsRiskEngineFallbac
 }
 
 func (o ZtpSettingsRiskEngine) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.DynamicAlerts != nil {
-		toSerialize["dynamicAlerts"] = o.DynamicAlerts
-	}
-	if o.FallbackValues != nil {
-		toSerialize["fallbackValues"] = o.FallbackValues
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpSettingsRiskEngine) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.DynamicAlerts) {
+		toSerialize["dynamicAlerts"] = o.DynamicAlerts
+	}
+	if !IsNil(o.FallbackValues) {
+		toSerialize["fallbackValues"] = o.FallbackValues
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpSettingsRiskEngine struct {

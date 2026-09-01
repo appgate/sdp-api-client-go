@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesForceDisableControllersPost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesForceDisableControllersPost200Response{}
+
 // AppliancesForceDisableControllersPost200Response The result of the disabling action.
 type AppliancesForceDisableControllersPost200Response struct {
 	// IDs of the Controllers that were offline during the process and as a result, did not receive the update.
@@ -40,7 +43,7 @@ func NewAppliancesForceDisableControllersPost200ResponseWithDefaults() *Applianc
 
 // GetOfflineControllers returns the OfflineControllers field value if set, zero value otherwise.
 func (o *AppliancesForceDisableControllersPost200Response) GetOfflineControllers() []string {
-	if o == nil || o.OfflineControllers == nil {
+	if o == nil || IsNil(o.OfflineControllers) {
 		var ret []string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesForceDisableControllersPost200Response) GetOfflineControllers
 // GetOfflineControllersOk returns a tuple with the OfflineControllers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesForceDisableControllersPost200Response) GetOfflineControllersOk() ([]string, bool) {
-	if o == nil || o.OfflineControllers == nil {
+	if o == nil || IsNil(o.OfflineControllers) {
 		return nil, false
 	}
 	return o.OfflineControllers, true
@@ -58,7 +61,7 @@ func (o *AppliancesForceDisableControllersPost200Response) GetOfflineControllers
 
 // HasOfflineControllers returns a boolean if a field has been set.
 func (o *AppliancesForceDisableControllersPost200Response) HasOfflineControllers() bool {
-	if o != nil && o.OfflineControllers != nil {
+	if o != nil && !IsNil(o.OfflineControllers) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesForceDisableControllersPost200Response) SetOfflineControllers
 }
 
 func (o AppliancesForceDisableControllersPost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.OfflineControllers != nil {
-		toSerialize["offlineControllers"] = o.OfflineControllers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesForceDisableControllersPost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.OfflineControllers) {
+		toSerialize["offlineControllers"] = o.OfflineControllers
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesForceDisableControllersPost200Response struct {

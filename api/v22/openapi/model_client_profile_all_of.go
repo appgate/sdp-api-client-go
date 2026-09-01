@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the ClientProfileAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfileAllOf{}
 
 // ClientProfileAllOf Represents a Client Profile.
 type ClientProfileAllOf struct {
@@ -52,7 +55,7 @@ func NewClientProfileAllOfWithDefaults() *ClientProfileAllOf {
 // GetSpaKeyName returns the SpaKeyName field value if set, zero value otherwise.
 // Deprecated
 func (o *ClientProfileAllOf) GetSpaKeyName() string {
-	if o == nil || o.SpaKeyName == nil {
+	if o == nil || IsNil(o.SpaKeyName) {
 		var ret string
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *ClientProfileAllOf) GetSpaKeyName() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *ClientProfileAllOf) GetSpaKeyNameOk() (*string, bool) {
-	if o == nil || o.SpaKeyName == nil {
+	if o == nil || IsNil(o.SpaKeyName) {
 		return nil, false
 	}
 	return o.SpaKeyName, true
@@ -71,7 +74,7 @@ func (o *ClientProfileAllOf) GetSpaKeyNameOk() (*string, bool) {
 
 // HasSpaKeyName returns a boolean if a field has been set.
 func (o *ClientProfileAllOf) HasSpaKeyName() bool {
-	if o != nil && o.SpaKeyName != nil {
+	if o != nil && !IsNil(o.SpaKeyName) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ClientProfileAllOf) SetIdentityProviderName(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *ClientProfileAllOf) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ClientProfileAllOf) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileAllOf) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -128,7 +131,7 @@ func (o *ClientProfileAllOf) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *ClientProfileAllOf) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ClientProfileAllOf) SetHostname(v string) {
 
 // GetGlobalHostname returns the GlobalHostname field value if set, zero value otherwise.
 func (o *ClientProfileAllOf) GetGlobalHostname() string {
-	if o == nil || o.GlobalHostname == nil {
+	if o == nil || IsNil(o.GlobalHostname) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ClientProfileAllOf) GetGlobalHostname() string {
 // GetGlobalHostnameOk returns a tuple with the GlobalHostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileAllOf) GetGlobalHostnameOk() (*string, bool) {
-	if o == nil || o.GlobalHostname == nil {
+	if o == nil || IsNil(o.GlobalHostname) {
 		return nil, false
 	}
 	return o.GlobalHostname, true
@@ -160,7 +163,7 @@ func (o *ClientProfileAllOf) GetGlobalHostnameOk() (*string, bool) {
 
 // HasGlobalHostname returns a boolean if a field has been set.
 func (o *ClientProfileAllOf) HasGlobalHostname() bool {
-	if o != nil && o.GlobalHostname != nil {
+	if o != nil && !IsNil(o.GlobalHostname) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *ClientProfileAllOf) SetGlobalHostname(v string) {
 
 // GetExported returns the Exported field value if set, zero value otherwise.
 func (o *ClientProfileAllOf) GetExported() time.Time {
-	if o == nil || o.Exported == nil {
+	if o == nil || IsNil(o.Exported) {
 		var ret time.Time
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *ClientProfileAllOf) GetExported() time.Time {
 // GetExportedOk returns a tuple with the Exported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileAllOf) GetExportedOk() (*time.Time, bool) {
-	if o == nil || o.Exported == nil {
+	if o == nil || IsNil(o.Exported) {
 		return nil, false
 	}
 	return o.Exported, true
@@ -192,7 +195,7 @@ func (o *ClientProfileAllOf) GetExportedOk() (*time.Time, bool) {
 
 // HasExported returns a boolean if a field has been set.
 func (o *ClientProfileAllOf) HasExported() bool {
-	if o != nil && o.Exported != nil {
+	if o != nil && !IsNil(o.Exported) {
 		return true
 	}
 
@@ -205,23 +208,29 @@ func (o *ClientProfileAllOf) SetExported(v time.Time) {
 }
 
 func (o ClientProfileAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SpaKeyName != nil {
-		toSerialize["spaKeyName"] = o.SpaKeyName
-	}
-	if true {
-		toSerialize["identityProviderName"] = o.IdentityProviderName
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.GlobalHostname != nil {
-		toSerialize["globalHostname"] = o.GlobalHostname
-	}
-	if o.Exported != nil {
-		toSerialize["exported"] = o.Exported
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfileAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SpaKeyName) {
+		toSerialize["spaKeyName"] = o.SpaKeyName
+	}
+	toSerialize["identityProviderName"] = o.IdentityProviderName
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.GlobalHostname) {
+		toSerialize["globalHostname"] = o.GlobalHostname
+	}
+	if !IsNil(o.Exported) {
+		toSerialize["exported"] = o.Exported
+	}
+	return toSerialize, nil
 }
 
 type NullableClientProfileAllOf struct {

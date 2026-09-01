@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PolicyAllOfDnsSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfDnsSettings{}
+
 // PolicyAllOfDnsSettings A domain name and a list of DNS servers.
 type PolicyAllOfDnsSettings struct {
 	// The domain for which the DNS servers should be used by the client.
@@ -90,14 +93,18 @@ func (o *PolicyAllOfDnsSettings) SetServers(v []string) {
 }
 
 func (o PolicyAllOfDnsSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["domain"] = o.Domain
-	}
-	if true {
-		toSerialize["servers"] = o.Servers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfDnsSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["domain"] = o.Domain
+	toSerialize["servers"] = o.Servers
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfDnsSettings struct {

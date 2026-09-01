@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNtpServers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNtpServers{}
+
 // ApplianceAllOfNtpServers NTP server.
 type ApplianceAllOfNtpServers struct {
 	// Hostname or IP of the NTP server.
@@ -71,7 +74,7 @@ func (o *ApplianceAllOfNtpServers) SetHostname(v string) {
 
 // GetKeyType returns the KeyType field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKeyType() string {
-	if o == nil || o.KeyType == nil {
+	if o == nil || IsNil(o.KeyType) {
 		var ret string
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyType() string {
 // GetKeyTypeOk returns a tuple with the KeyType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyTypeOk() (*string, bool) {
-	if o == nil || o.KeyType == nil {
+	if o == nil || IsNil(o.KeyType) {
 		return nil, false
 	}
 	return o.KeyType, true
@@ -89,7 +92,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyTypeOk() (*string, bool) {
 
 // HasKeyType returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKeyType() bool {
-	if o != nil && o.KeyType != nil {
+	if o != nil && !IsNil(o.KeyType) {
 		return true
 	}
 
@@ -103,7 +106,7 @@ func (o *ApplianceAllOfNtpServers) SetKeyType(v string) {
 
 // GetKeyNo returns the KeyNo field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKeyNo() int32 {
-	if o == nil || o.KeyNo == nil {
+	if o == nil || IsNil(o.KeyNo) {
 		var ret int32
 		return ret
 	}
@@ -113,7 +116,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyNo() int32 {
 // GetKeyNoOk returns a tuple with the KeyNo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyNoOk() (*int32, bool) {
-	if o == nil || o.KeyNo == nil {
+	if o == nil || IsNil(o.KeyNo) {
 		return nil, false
 	}
 	return o.KeyNo, true
@@ -121,7 +124,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyNoOk() (*int32, bool) {
 
 // HasKeyNo returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKeyNo() bool {
-	if o != nil && o.KeyNo != nil {
+	if o != nil && !IsNil(o.KeyNo) {
 		return true
 	}
 
@@ -135,7 +138,7 @@ func (o *ApplianceAllOfNtpServers) SetKeyNo(v int32) {
 
 // GetKey returns the Key field value if set, zero value otherwise.
 func (o *ApplianceAllOfNtpServers) GetKey() string {
-	if o == nil || o.Key == nil {
+	if o == nil || IsNil(o.Key) {
 		var ret string
 		return ret
 	}
@@ -145,7 +148,7 @@ func (o *ApplianceAllOfNtpServers) GetKey() string {
 // GetKeyOk returns a tuple with the Key field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNtpServers) GetKeyOk() (*string, bool) {
-	if o == nil || o.Key == nil {
+	if o == nil || IsNil(o.Key) {
 		return nil, false
 	}
 	return o.Key, true
@@ -153,7 +156,7 @@ func (o *ApplianceAllOfNtpServers) GetKeyOk() (*string, bool) {
 
 // HasKey returns a boolean if a field has been set.
 func (o *ApplianceAllOfNtpServers) HasKey() bool {
-	if o != nil && o.Key != nil {
+	if o != nil && !IsNil(o.Key) {
 		return true
 	}
 
@@ -166,20 +169,26 @@ func (o *ApplianceAllOfNtpServers) SetKey(v string) {
 }
 
 func (o ApplianceAllOfNtpServers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.KeyType != nil {
-		toSerialize["keyType"] = o.KeyType
-	}
-	if o.KeyNo != nil {
-		toSerialize["keyNo"] = o.KeyNo
-	}
-	if o.Key != nil {
-		toSerialize["key"] = o.Key
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNtpServers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.KeyType) {
+		toSerialize["keyType"] = o.KeyType
+	}
+	if !IsNil(o.KeyNo) {
+		toSerialize["keyNo"] = o.KeyNo
+	}
+	if !IsNil(o.Key) {
+		toSerialize["key"] = o.Key
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNtpServers struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConvertRecordingResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConvertRecordingResponse{}
+
 // ConvertRecordingResponse struct for ConvertRecordingResponse
 type ConvertRecordingResponse struct {
 	// The MP4 export lifecycle state after the request.
@@ -40,7 +43,7 @@ func NewConvertRecordingResponseWithDefaults() *ConvertRecordingResponse {
 
 // GetExportStatus returns the ExportStatus field value if set, zero value otherwise.
 func (o *ConvertRecordingResponse) GetExportStatus() string {
-	if o == nil || o.ExportStatus == nil {
+	if o == nil || IsNil(o.ExportStatus) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ConvertRecordingResponse) GetExportStatus() string {
 // GetExportStatusOk returns a tuple with the ExportStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConvertRecordingResponse) GetExportStatusOk() (*string, bool) {
-	if o == nil || o.ExportStatus == nil {
+	if o == nil || IsNil(o.ExportStatus) {
 		return nil, false
 	}
 	return o.ExportStatus, true
@@ -58,7 +61,7 @@ func (o *ConvertRecordingResponse) GetExportStatusOk() (*string, bool) {
 
 // HasExportStatus returns a boolean if a field has been set.
 func (o *ConvertRecordingResponse) HasExportStatus() bool {
-	if o != nil && o.ExportStatus != nil {
+	if o != nil && !IsNil(o.ExportStatus) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ConvertRecordingResponse) SetExportStatus(v string) {
 }
 
 func (o ConvertRecordingResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ExportStatus != nil {
-		toSerialize["exportStatus"] = o.ExportStatus
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConvertRecordingResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ExportStatus) {
+		toSerialize["exportStatus"] = o.ExportStatus
+	}
+	return toSerialize, nil
 }
 
 type NullableConvertRecordingResponse struct {

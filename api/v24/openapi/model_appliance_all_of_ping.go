@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfPing type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfPing{}
+
 // ApplianceAllOfPing Rules for allowing ping.
 type ApplianceAllOfPing struct {
 	// Source configuration to allow via iptables.
@@ -40,7 +43,7 @@ func NewApplianceAllOfPingWithDefaults() *ApplianceAllOfPing {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfPing) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ApplianceAllOfPing) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfPing) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -58,7 +61,7 @@ func (o *ApplianceAllOfPing) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfPing) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ApplianceAllOfPing) SetAllowSources(v []AllowSourcesInner) {
 }
 
 func (o ApplianceAllOfPing) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfPing) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfPing struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppDetailsAllOfUserGroups type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDetailsAllOfUserGroups{}
+
 // AppDetailsAllOfUserGroups Maps users to group indices, with a corresponding array of group names for lookup.
 type AppDetailsAllOfUserGroups struct {
 	// Map of user distinguished names to their assigned group indices.
@@ -42,7 +45,7 @@ func NewAppDetailsAllOfUserGroupsWithDefaults() *AppDetailsAllOfUserGroups {
 
 // GetUsersToGroups returns the UsersToGroups field value if set, zero value otherwise.
 func (o *AppDetailsAllOfUserGroups) GetUsersToGroups() map[string][]int32 {
-	if o == nil || o.UsersToGroups == nil {
+	if o == nil || IsNil(o.UsersToGroups) {
 		var ret map[string][]int32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *AppDetailsAllOfUserGroups) GetUsersToGroups() map[string][]int32 {
 // GetUsersToGroupsOk returns a tuple with the UsersToGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOfUserGroups) GetUsersToGroupsOk() (*map[string][]int32, bool) {
-	if o == nil || o.UsersToGroups == nil {
+	if o == nil || IsNil(o.UsersToGroups) {
 		return nil, false
 	}
 	return o.UsersToGroups, true
@@ -60,7 +63,7 @@ func (o *AppDetailsAllOfUserGroups) GetUsersToGroupsOk() (*map[string][]int32, b
 
 // HasUsersToGroups returns a boolean if a field has been set.
 func (o *AppDetailsAllOfUserGroups) HasUsersToGroups() bool {
-	if o != nil && o.UsersToGroups != nil {
+	if o != nil && !IsNil(o.UsersToGroups) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *AppDetailsAllOfUserGroups) SetUsersToGroups(v map[string][]int32) {
 
 // GetGroups returns the Groups field value if set, zero value otherwise.
 func (o *AppDetailsAllOfUserGroups) GetGroups() []string {
-	if o == nil || o.Groups == nil {
+	if o == nil || IsNil(o.Groups) {
 		var ret []string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *AppDetailsAllOfUserGroups) GetGroups() []string {
 // GetGroupsOk returns a tuple with the Groups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOfUserGroups) GetGroupsOk() ([]string, bool) {
-	if o == nil || o.Groups == nil {
+	if o == nil || IsNil(o.Groups) {
 		return nil, false
 	}
 	return o.Groups, true
@@ -92,7 +95,7 @@ func (o *AppDetailsAllOfUserGroups) GetGroupsOk() ([]string, bool) {
 
 // HasGroups returns a boolean if a field has been set.
 func (o *AppDetailsAllOfUserGroups) HasGroups() bool {
-	if o != nil && o.Groups != nil {
+	if o != nil && !IsNil(o.Groups) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *AppDetailsAllOfUserGroups) SetGroups(v []string) {
 }
 
 func (o AppDetailsAllOfUserGroups) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UsersToGroups != nil {
-		toSerialize["usersToGroups"] = o.UsersToGroups
-	}
-	if o.Groups != nil {
-		toSerialize["groups"] = o.Groups
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDetailsAllOfUserGroups) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UsersToGroups) {
+		toSerialize["usersToGroups"] = o.UsersToGroups
+	}
+	if !IsNil(o.Groups) {
+		toSerialize["groups"] = o.Groups
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDetailsAllOfUserGroups struct {

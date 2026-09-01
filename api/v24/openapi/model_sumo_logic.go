@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SumoLogic type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SumoLogic{}
+
 // SumoLogic struct for SumoLogic
 type SumoLogic struct {
 	// URL of the Sumo Logic collector to connect to.
@@ -64,11 +67,17 @@ func (o *SumoLogic) SetUrl(v string) {
 }
 
 func (o SumoLogic) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["url"] = o.Url
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SumoLogic) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["url"] = o.Url
+	return toSerialize, nil
 }
 
 type NullableSumoLogic struct {

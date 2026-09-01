@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the PrometheusExporter type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PrometheusExporter{}
 
 // PrometheusExporter Prometheus Exporter configuration.
 type PrometheusExporter struct {
@@ -69,7 +72,7 @@ func NewPrometheusExporterWithDefaults() *PrometheusExporter {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -79,7 +82,7 @@ func (o *PrometheusExporter) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -87,7 +90,7 @@ func (o *PrometheusExporter) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -101,7 +104,7 @@ func (o *PrometheusExporter) SetEnabled(v bool) {
 
 // GetPort returns the Port field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetPort() int32 {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		var ret int32
 		return ret
 	}
@@ -111,7 +114,7 @@ func (o *PrometheusExporter) GetPort() int32 {
 // GetPortOk returns a tuple with the Port field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetPortOk() (*int32, bool) {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		return nil, false
 	}
 	return o.Port, true
@@ -119,7 +122,7 @@ func (o *PrometheusExporter) GetPortOk() (*int32, bool) {
 
 // HasPort returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasPort() bool {
-	if o != nil && o.Port != nil {
+	if o != nil && !IsNil(o.Port) {
 		return true
 	}
 
@@ -133,7 +136,7 @@ func (o *PrometheusExporter) SetPort(v int32) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -143,7 +146,7 @@ func (o *PrometheusExporter) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -151,7 +154,7 @@ func (o *PrometheusExporter) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -165,7 +168,7 @@ func (o *PrometheusExporter) SetAllowSources(v []AllowSourcesInner) {
 
 // GetUseHTTPS returns the UseHTTPS field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetUseHTTPS() bool {
-	if o == nil || o.UseHTTPS == nil {
+	if o == nil || IsNil(o.UseHTTPS) {
 		var ret bool
 		return ret
 	}
@@ -175,7 +178,7 @@ func (o *PrometheusExporter) GetUseHTTPS() bool {
 // GetUseHTTPSOk returns a tuple with the UseHTTPS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetUseHTTPSOk() (*bool, bool) {
-	if o == nil || o.UseHTTPS == nil {
+	if o == nil || IsNil(o.UseHTTPS) {
 		return nil, false
 	}
 	return o.UseHTTPS, true
@@ -183,7 +186,7 @@ func (o *PrometheusExporter) GetUseHTTPSOk() (*bool, bool) {
 
 // HasUseHTTPS returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasUseHTTPS() bool {
-	if o != nil && o.UseHTTPS != nil {
+	if o != nil && !IsNil(o.UseHTTPS) {
 		return true
 	}
 
@@ -197,7 +200,7 @@ func (o *PrometheusExporter) SetUseHTTPS(v bool) {
 
 // GetHttpsP12 returns the HttpsP12 field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetHttpsP12() P12 {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		var ret P12
 		return ret
 	}
@@ -207,7 +210,7 @@ func (o *PrometheusExporter) GetHttpsP12() P12 {
 // GetHttpsP12Ok returns a tuple with the HttpsP12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetHttpsP12Ok() (*P12, bool) {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		return nil, false
 	}
 	return o.HttpsP12, true
@@ -215,7 +218,7 @@ func (o *PrometheusExporter) GetHttpsP12Ok() (*P12, bool) {
 
 // HasHttpsP12 returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasHttpsP12() bool {
-	if o != nil && o.HttpsP12 != nil {
+	if o != nil && !IsNil(o.HttpsP12) {
 		return true
 	}
 
@@ -229,7 +232,7 @@ func (o *PrometheusExporter) SetHttpsP12(v P12) {
 
 // GetBasicAuth returns the BasicAuth field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetBasicAuth() bool {
-	if o == nil || o.BasicAuth == nil {
+	if o == nil || IsNil(o.BasicAuth) {
 		var ret bool
 		return ret
 	}
@@ -239,7 +242,7 @@ func (o *PrometheusExporter) GetBasicAuth() bool {
 // GetBasicAuthOk returns a tuple with the BasicAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetBasicAuthOk() (*bool, bool) {
-	if o == nil || o.BasicAuth == nil {
+	if o == nil || IsNil(o.BasicAuth) {
 		return nil, false
 	}
 	return o.BasicAuth, true
@@ -247,7 +250,7 @@ func (o *PrometheusExporter) GetBasicAuthOk() (*bool, bool) {
 
 // HasBasicAuth returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasBasicAuth() bool {
-	if o != nil && o.BasicAuth != nil {
+	if o != nil && !IsNil(o.BasicAuth) {
 		return true
 	}
 
@@ -261,7 +264,7 @@ func (o *PrometheusExporter) SetBasicAuth(v bool) {
 
 // GetAllowedUsers returns the AllowedUsers field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetAllowedUsers() []PrometheusExporterAllowedUsersInner {
-	if o == nil || o.AllowedUsers == nil {
+	if o == nil || IsNil(o.AllowedUsers) {
 		var ret []PrometheusExporterAllowedUsersInner
 		return ret
 	}
@@ -271,7 +274,7 @@ func (o *PrometheusExporter) GetAllowedUsers() []PrometheusExporterAllowedUsersI
 // GetAllowedUsersOk returns a tuple with the AllowedUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetAllowedUsersOk() ([]PrometheusExporterAllowedUsersInner, bool) {
-	if o == nil || o.AllowedUsers == nil {
+	if o == nil || IsNil(o.AllowedUsers) {
 		return nil, false
 	}
 	return o.AllowedUsers, true
@@ -279,7 +282,7 @@ func (o *PrometheusExporter) GetAllowedUsersOk() ([]PrometheusExporterAllowedUse
 
 // HasAllowedUsers returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasAllowedUsers() bool {
-	if o != nil && o.AllowedUsers != nil {
+	if o != nil && !IsNil(o.AllowedUsers) {
 		return true
 	}
 
@@ -293,7 +296,7 @@ func (o *PrometheusExporter) SetAllowedUsers(v []PrometheusExporterAllowedUsersI
 
 // GetLabelsDisabled returns the LabelsDisabled field value if set, zero value otherwise.
 func (o *PrometheusExporter) GetLabelsDisabled() []string {
-	if o == nil || o.LabelsDisabled == nil {
+	if o == nil || IsNil(o.LabelsDisabled) {
 		var ret []string
 		return ret
 	}
@@ -303,7 +306,7 @@ func (o *PrometheusExporter) GetLabelsDisabled() []string {
 // GetLabelsDisabledOk returns a tuple with the LabelsDisabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PrometheusExporter) GetLabelsDisabledOk() ([]string, bool) {
-	if o == nil || o.LabelsDisabled == nil {
+	if o == nil || IsNil(o.LabelsDisabled) {
 		return nil, false
 	}
 	return o.LabelsDisabled, true
@@ -311,7 +314,7 @@ func (o *PrometheusExporter) GetLabelsDisabledOk() ([]string, bool) {
 
 // HasLabelsDisabled returns a boolean if a field has been set.
 func (o *PrometheusExporter) HasLabelsDisabled() bool {
-	if o != nil && o.LabelsDisabled != nil {
+	if o != nil && !IsNil(o.LabelsDisabled) {
 		return true
 	}
 
@@ -324,32 +327,40 @@ func (o *PrometheusExporter) SetLabelsDisabled(v []string) {
 }
 
 func (o PrometheusExporter) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Port != nil {
-		toSerialize["port"] = o.Port
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
-	}
-	if o.UseHTTPS != nil {
-		toSerialize["useHTTPS"] = o.UseHTTPS
-	}
-	if o.HttpsP12 != nil {
-		toSerialize["httpsP12"] = o.HttpsP12
-	}
-	if o.BasicAuth != nil {
-		toSerialize["basicAuth"] = o.BasicAuth
-	}
-	if o.AllowedUsers != nil {
-		toSerialize["allowedUsers"] = o.AllowedUsers
-	}
-	if o.LabelsDisabled != nil {
-		toSerialize["labelsDisabled"] = o.LabelsDisabled
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PrometheusExporter) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	if !IsNil(o.UseHTTPS) {
+		toSerialize["useHTTPS"] = o.UseHTTPS
+	}
+	if !IsNil(o.HttpsP12) {
+		toSerialize["httpsP12"] = o.HttpsP12
+	}
+	if !IsNil(o.BasicAuth) {
+		toSerialize["basicAuth"] = o.BasicAuth
+	}
+	if !IsNil(o.AllowedUsers) {
+		toSerialize["allowedUsers"] = o.AllowedUsers
+	}
+	if !IsNil(o.LabelsDisabled) {
+		toSerialize["labelsDisabled"] = o.LabelsDisabled
+	}
+	return toSerialize, nil
 }
 
 type NullablePrometheusExporter struct {

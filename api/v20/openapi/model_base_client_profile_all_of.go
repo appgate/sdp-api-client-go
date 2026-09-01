@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BaseClientProfileAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BaseClientProfileAllOf{}
+
 // BaseClientProfileAllOf struct for BaseClientProfileAllOf
 type BaseClientProfileAllOf struct {
 	// A name to identify the client profile. It will appear on the client UI.
@@ -71,7 +74,7 @@ func (o *BaseClientProfileAllOf) SetName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BaseClientProfileAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *BaseClientProfileAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseClientProfileAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -89,7 +92,7 @@ func (o *BaseClientProfileAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BaseClientProfileAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -102,14 +105,20 @@ func (o *BaseClientProfileAllOf) SetType(v string) {
 }
 
 func (o BaseClientProfileAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BaseClientProfileAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	return toSerialize, nil
 }
 
 type NullableBaseClientProfileAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LdapCertificateProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LdapCertificateProviderAllOf{}
+
 // LdapCertificateProviderAllOf Represents an LDAP Certificate Identity Provider.
 type LdapCertificateProviderAllOf struct {
 	// CA certificates to verify the Client certificates. In PEM format.
@@ -77,7 +80,7 @@ func (o *LdapCertificateProviderAllOf) SetCaCertificates(v []string) {
 
 // GetCertificateUserAttribute returns the CertificateUserAttribute field value if set, zero value otherwise.
 func (o *LdapCertificateProviderAllOf) GetCertificateUserAttribute() string {
-	if o == nil || o.CertificateUserAttribute == nil {
+	if o == nil || IsNil(o.CertificateUserAttribute) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificateUserAttribute() string {
 // GetCertificateUserAttributeOk returns a tuple with the CertificateUserAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProviderAllOf) GetCertificateUserAttributeOk() (*string, bool) {
-	if o == nil || o.CertificateUserAttribute == nil {
+	if o == nil || IsNil(o.CertificateUserAttribute) {
 		return nil, false
 	}
 	return o.CertificateUserAttribute, true
@@ -95,7 +98,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificateUserAttributeOk() (*string,
 
 // HasCertificateUserAttribute returns a boolean if a field has been set.
 func (o *LdapCertificateProviderAllOf) HasCertificateUserAttribute() bool {
-	if o != nil && o.CertificateUserAttribute != nil {
+	if o != nil && !IsNil(o.CertificateUserAttribute) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *LdapCertificateProviderAllOf) SetCertificateUserAttribute(v string) {
 
 // GetCertificateAttribute returns the CertificateAttribute field value if set, zero value otherwise.
 func (o *LdapCertificateProviderAllOf) GetCertificateAttribute() string {
-	if o == nil || o.CertificateAttribute == nil {
+	if o == nil || IsNil(o.CertificateAttribute) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificateAttribute() string {
 // GetCertificateAttributeOk returns a tuple with the CertificateAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProviderAllOf) GetCertificateAttributeOk() (*string, bool) {
-	if o == nil || o.CertificateAttribute == nil {
+	if o == nil || IsNil(o.CertificateAttribute) {
 		return nil, false
 	}
 	return o.CertificateAttribute, true
@@ -127,7 +130,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificateAttributeOk() (*string, boo
 
 // HasCertificateAttribute returns a boolean if a field has been set.
 func (o *LdapCertificateProviderAllOf) HasCertificateAttribute() bool {
-	if o != nil && o.CertificateAttribute != nil {
+	if o != nil && !IsNil(o.CertificateAttribute) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *LdapCertificateProviderAllOf) SetCertificateAttribute(v string) {
 
 // GetSkipX509ExternalChecks returns the SkipX509ExternalChecks field value if set, zero value otherwise.
 func (o *LdapCertificateProviderAllOf) GetSkipX509ExternalChecks() bool {
-	if o == nil || o.SkipX509ExternalChecks == nil {
+	if o == nil || IsNil(o.SkipX509ExternalChecks) {
 		var ret bool
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *LdapCertificateProviderAllOf) GetSkipX509ExternalChecks() bool {
 // GetSkipX509ExternalChecksOk returns a tuple with the SkipX509ExternalChecks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProviderAllOf) GetSkipX509ExternalChecksOk() (*bool, bool) {
-	if o == nil || o.SkipX509ExternalChecks == nil {
+	if o == nil || IsNil(o.SkipX509ExternalChecks) {
 		return nil, false
 	}
 	return o.SkipX509ExternalChecks, true
@@ -159,7 +162,7 @@ func (o *LdapCertificateProviderAllOf) GetSkipX509ExternalChecksOk() (*bool, boo
 
 // HasSkipX509ExternalChecks returns a boolean if a field has been set.
 func (o *LdapCertificateProviderAllOf) HasSkipX509ExternalChecks() bool {
-	if o != nil && o.SkipX509ExternalChecks != nil {
+	if o != nil && !IsNil(o.SkipX509ExternalChecks) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *LdapCertificateProviderAllOf) SetSkipX509ExternalChecks(v bool) {
 
 // GetCertificatePriorities returns the CertificatePriorities field value if set, zero value otherwise.
 func (o *LdapCertificateProviderAllOf) GetCertificatePriorities() []LdapCertificateProviderAllOfCertificatePriorities {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		var ret []LdapCertificateProviderAllOfCertificatePriorities
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificatePriorities() []LdapCertific
 // GetCertificatePrioritiesOk returns a tuple with the CertificatePriorities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapCertificateProviderAllOf) GetCertificatePrioritiesOk() ([]LdapCertificateProviderAllOfCertificatePriorities, bool) {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		return nil, false
 	}
 	return o.CertificatePriorities, true
@@ -191,7 +194,7 @@ func (o *LdapCertificateProviderAllOf) GetCertificatePrioritiesOk() ([]LdapCerti
 
 // HasCertificatePriorities returns a boolean if a field has been set.
 func (o *LdapCertificateProviderAllOf) HasCertificatePriorities() bool {
-	if o != nil && o.CertificatePriorities != nil {
+	if o != nil && !IsNil(o.CertificatePriorities) {
 		return true
 	}
 
@@ -204,23 +207,29 @@ func (o *LdapCertificateProviderAllOf) SetCertificatePriorities(v []LdapCertific
 }
 
 func (o LdapCertificateProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["caCertificates"] = o.CaCertificates
-	}
-	if o.CertificateUserAttribute != nil {
-		toSerialize["certificateUserAttribute"] = o.CertificateUserAttribute
-	}
-	if o.CertificateAttribute != nil {
-		toSerialize["certificateAttribute"] = o.CertificateAttribute
-	}
-	if o.SkipX509ExternalChecks != nil {
-		toSerialize["skipX509ExternalChecks"] = o.SkipX509ExternalChecks
-	}
-	if o.CertificatePriorities != nil {
-		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LdapCertificateProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["caCertificates"] = o.CaCertificates
+	if !IsNil(o.CertificateUserAttribute) {
+		toSerialize["certificateUserAttribute"] = o.CertificateUserAttribute
+	}
+	if !IsNil(o.CertificateAttribute) {
+		toSerialize["certificateAttribute"] = o.CertificateAttribute
+	}
+	if !IsNil(o.SkipX509ExternalChecks) {
+		toSerialize["skipX509ExternalChecks"] = o.SkipX509ExternalChecks
+	}
+	if !IsNil(o.CertificatePriorities) {
+		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	}
+	return toSerialize, nil
 }
 
 type NullableLdapCertificateProviderAllOf struct {

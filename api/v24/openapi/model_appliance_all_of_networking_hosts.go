@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworkingHosts type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingHosts{}
+
 // ApplianceAllOfNetworkingHosts struct for ApplianceAllOfNetworkingHosts
 type ApplianceAllOfNetworkingHosts struct {
 	// Hostname to map IP to.
@@ -91,14 +94,18 @@ func (o *ApplianceAllOfNetworkingHosts) SetAddress(v string) {
 }
 
 func (o ApplianceAllOfNetworkingHosts) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if true {
-		toSerialize["address"] = o.Address
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingHosts) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	toSerialize["address"] = o.Address
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworkingHosts struct {

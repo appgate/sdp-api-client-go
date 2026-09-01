@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the TagDetailsAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TagDetailsAllOf{}
+
 // TagDetailsAllOf Represents a Tag with details.
 type TagDetailsAllOf struct {
 	// The number of entities tagged with this Tag grouped by entity type.
@@ -42,7 +45,7 @@ func NewTagDetailsAllOfWithDefaults() *TagDetailsAllOf {
 
 // GetTaggedOccurrencesByEntityType returns the TaggedOccurrencesByEntityType field value if set, zero value otherwise.
 func (o *TagDetailsAllOf) GetTaggedOccurrencesByEntityType() map[string]interface{} {
-	if o == nil || o.TaggedOccurrencesByEntityType == nil {
+	if o == nil || IsNil(o.TaggedOccurrencesByEntityType) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -52,15 +55,15 @@ func (o *TagDetailsAllOf) GetTaggedOccurrencesByEntityType() map[string]interfac
 // GetTaggedOccurrencesByEntityTypeOk returns a tuple with the TaggedOccurrencesByEntityType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetailsAllOf) GetTaggedOccurrencesByEntityTypeOk() (map[string]interface{}, bool) {
-	if o == nil || o.TaggedOccurrencesByEntityType == nil {
-		return nil, false
+	if o == nil || IsNil(o.TaggedOccurrencesByEntityType) {
+		return map[string]interface{}{}, false
 	}
 	return o.TaggedOccurrencesByEntityType, true
 }
 
 // HasTaggedOccurrencesByEntityType returns a boolean if a field has been set.
 func (o *TagDetailsAllOf) HasTaggedOccurrencesByEntityType() bool {
-	if o != nil && o.TaggedOccurrencesByEntityType != nil {
+	if o != nil && !IsNil(o.TaggedOccurrencesByEntityType) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *TagDetailsAllOf) SetTaggedOccurrencesByEntityType(v map[string]interfac
 
 // GetLinkedOccurrencesByEntityType returns the LinkedOccurrencesByEntityType field value if set, zero value otherwise.
 func (o *TagDetailsAllOf) GetLinkedOccurrencesByEntityType() map[string]interface{} {
-	if o == nil || o.LinkedOccurrencesByEntityType == nil {
+	if o == nil || IsNil(o.LinkedOccurrencesByEntityType) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -84,15 +87,15 @@ func (o *TagDetailsAllOf) GetLinkedOccurrencesByEntityType() map[string]interfac
 // GetLinkedOccurrencesByEntityTypeOk returns a tuple with the LinkedOccurrencesByEntityType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TagDetailsAllOf) GetLinkedOccurrencesByEntityTypeOk() (map[string]interface{}, bool) {
-	if o == nil || o.LinkedOccurrencesByEntityType == nil {
-		return nil, false
+	if o == nil || IsNil(o.LinkedOccurrencesByEntityType) {
+		return map[string]interface{}{}, false
 	}
 	return o.LinkedOccurrencesByEntityType, true
 }
 
 // HasLinkedOccurrencesByEntityType returns a boolean if a field has been set.
 func (o *TagDetailsAllOf) HasLinkedOccurrencesByEntityType() bool {
-	if o != nil && o.LinkedOccurrencesByEntityType != nil {
+	if o != nil && !IsNil(o.LinkedOccurrencesByEntityType) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *TagDetailsAllOf) SetLinkedOccurrencesByEntityType(v map[string]interfac
 }
 
 func (o TagDetailsAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TaggedOccurrencesByEntityType != nil {
-		toSerialize["taggedOccurrencesByEntityType"] = o.TaggedOccurrencesByEntityType
-	}
-	if o.LinkedOccurrencesByEntityType != nil {
-		toSerialize["linkedOccurrencesByEntityType"] = o.LinkedOccurrencesByEntityType
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TagDetailsAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TaggedOccurrencesByEntityType) {
+		toSerialize["taggedOccurrencesByEntityType"] = o.TaggedOccurrencesByEntityType
+	}
+	if !IsNil(o.LinkedOccurrencesByEntityType) {
+		toSerialize["linkedOccurrencesByEntityType"] = o.LinkedOccurrencesByEntityType
+	}
+	return toSerialize, nil
 }
 
 type NullableTagDetailsAllOf struct {

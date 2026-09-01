@@ -14,7 +14,7 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -106,19 +106,19 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "")
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "range", r.range_, "")
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderBy", r.orderBy, "")
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "descending", r.descending, "")
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filterBy", r.filterBy, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -147,9 +147,9 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -166,6 +166,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -176,6 +177,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -186,6 +188,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -196,6 +199,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsGetExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -233,7 +237,7 @@ func (r ApiActiveBrokeredSessionsIdObserveGetRequest) DistinguishedName(distingu
 	return r
 }
 
-func (r ApiActiveBrokeredSessionsIdObserveGetRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiActiveBrokeredSessionsIdObserveGetRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.ActiveBrokeredSessionsIdObserveGetExecute(r)
 }
 
@@ -257,12 +261,12 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGet(ct
 // Execute executes the request
 //
 //	@return *os.File
-func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExecute(r ApiActiveBrokeredSessionsIdObserveGetRequest) (**os.File, *http.Response, error) {
+func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExecute(r ApiActiveBrokeredSessionsIdObserveGetRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue **os.File
+		localVarReturnValue *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ActiveBrokeredSessionsApiService.ActiveBrokeredSessionsIdObserveGet")
@@ -271,7 +275,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 	}
 
 	localVarPath := localBasePath + "/active-brokered-sessions/{id}/observe"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -283,8 +287,8 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 		return localVarReturnValue, nil, reportError("distinguishedName is required and must be specified")
 	}
 
-	localVarQueryParams.Add("gatewayId", parameterToString(*r.gatewayId, ""))
-	localVarQueryParams.Add("distinguishedName", parameterToString(*r.distinguishedName, ""))
+	parameterAddToHeaderOrQuery(localVarQueryParams, "gatewayId", r.gatewayId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "distinguishedName", r.distinguishedName, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -312,9 +316,9 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -331,6 +335,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -341,6 +346,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -351,6 +357,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -361,6 +368,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -371,6 +379,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdObserveGetExe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -435,7 +444,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 	}
 
 	localVarPath := localBasePath + "/active-brokered-sessions/{id}/terminate"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -473,9 +482,9 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -492,6 +501,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -502,6 +512,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -512,6 +523,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -522,6 +534,7 @@ func (a *ActiveBrokeredSessionsApiService) ActiveBrokeredSessionsIdTerminatePost
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

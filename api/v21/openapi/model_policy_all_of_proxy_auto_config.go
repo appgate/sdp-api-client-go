@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PolicyAllOfProxyAutoConfig type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfProxyAutoConfig{}
+
 // PolicyAllOfProxyAutoConfig Client configures PAC URL on the client OS.
 type PolicyAllOfProxyAutoConfig struct {
 	Enabled *bool `json:"enabled,omitempty"`
@@ -47,7 +50,7 @@ func NewPolicyAllOfProxyAutoConfigWithDefaults() *PolicyAllOfProxyAutoConfig {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *PolicyAllOfProxyAutoConfig) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfProxyAutoConfig) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -65,7 +68,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *PolicyAllOfProxyAutoConfig) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *PolicyAllOfProxyAutoConfig) SetEnabled(v bool) {
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *PolicyAllOfProxyAutoConfig) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfProxyAutoConfig) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -97,7 +100,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *PolicyAllOfProxyAutoConfig) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *PolicyAllOfProxyAutoConfig) SetUrl(v string) {
 
 // GetPersist returns the Persist field value if set, zero value otherwise.
 func (o *PolicyAllOfProxyAutoConfig) GetPersist() bool {
-	if o == nil || o.Persist == nil {
+	if o == nil || IsNil(o.Persist) {
 		var ret bool
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetPersist() bool {
 // GetPersistOk returns a tuple with the Persist field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfProxyAutoConfig) GetPersistOk() (*bool, bool) {
-	if o == nil || o.Persist == nil {
+	if o == nil || IsNil(o.Persist) {
 		return nil, false
 	}
 	return o.Persist, true
@@ -129,7 +132,7 @@ func (o *PolicyAllOfProxyAutoConfig) GetPersistOk() (*bool, bool) {
 
 // HasPersist returns a boolean if a field has been set.
 func (o *PolicyAllOfProxyAutoConfig) HasPersist() bool {
-	if o != nil && o.Persist != nil {
+	if o != nil && !IsNil(o.Persist) {
 		return true
 	}
 
@@ -142,17 +145,25 @@ func (o *PolicyAllOfProxyAutoConfig) SetPersist(v bool) {
 }
 
 func (o PolicyAllOfProxyAutoConfig) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
-	}
-	if o.Persist != nil {
-		toSerialize["persist"] = o.Persist
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfProxyAutoConfig) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	if !IsNil(o.Persist) {
+		toSerialize["persist"] = o.Persist
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfProxyAutoConfig struct {

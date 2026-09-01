@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the UserLicenseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserLicenseAllOf{}
+
 // UserLicenseAllOf struct for UserLicenseAllOf
 type UserLicenseAllOf struct {
 	// Type of User License.
@@ -47,7 +50,7 @@ func NewUserLicenseAllOfWithDefaults() *UserLicenseAllOf {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *UserLicenseAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *UserLicenseAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicenseAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -65,7 +68,7 @@ func (o *UserLicenseAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *UserLicenseAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *UserLicenseAllOf) SetType(v string) {
 
 // GetProfileName returns the ProfileName field value if set, zero value otherwise.
 func (o *UserLicenseAllOf) GetProfileName() string {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *UserLicenseAllOf) GetProfileName() string {
 // GetProfileNameOk returns a tuple with the ProfileName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicenseAllOf) GetProfileNameOk() (*string, bool) {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		return nil, false
 	}
 	return o.ProfileName, true
@@ -97,7 +100,7 @@ func (o *UserLicenseAllOf) GetProfileNameOk() (*string, bool) {
 
 // HasProfileName returns a boolean if a field has been set.
 func (o *UserLicenseAllOf) HasProfileName() bool {
-	if o != nil && o.ProfileName != nil {
+	if o != nil && !IsNil(o.ProfileName) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *UserLicenseAllOf) SetProfileName(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *UserLicenseAllOf) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *UserLicenseAllOf) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicenseAllOf) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -129,7 +132,7 @@ func (o *UserLicenseAllOf) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *UserLicenseAllOf) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *UserLicenseAllOf) SetCreated(v time.Time) {
 
 // GetLastSeenAt returns the LastSeenAt field value if set, zero value otherwise.
 func (o *UserLicenseAllOf) GetLastSeenAt() time.Time {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		var ret time.Time
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *UserLicenseAllOf) GetLastSeenAt() time.Time {
 // GetLastSeenAtOk returns a tuple with the LastSeenAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLicenseAllOf) GetLastSeenAtOk() (*time.Time, bool) {
-	if o == nil || o.LastSeenAt == nil {
+	if o == nil || IsNil(o.LastSeenAt) {
 		return nil, false
 	}
 	return o.LastSeenAt, true
@@ -161,7 +164,7 @@ func (o *UserLicenseAllOf) GetLastSeenAtOk() (*time.Time, bool) {
 
 // HasLastSeenAt returns a boolean if a field has been set.
 func (o *UserLicenseAllOf) HasLastSeenAt() bool {
-	if o != nil && o.LastSeenAt != nil {
+	if o != nil && !IsNil(o.LastSeenAt) {
 		return true
 	}
 
@@ -174,20 +177,28 @@ func (o *UserLicenseAllOf) SetLastSeenAt(v time.Time) {
 }
 
 func (o UserLicenseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.ProfileName != nil {
-		toSerialize["profileName"] = o.ProfileName
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.LastSeenAt != nil {
-		toSerialize["lastSeenAt"] = o.LastSeenAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserLicenseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.ProfileName) {
+		toSerialize["profileName"] = o.ProfileName
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.LastSeenAt) {
+		toSerialize["lastSeenAt"] = o.LastSeenAt
+	}
+	return toSerialize, nil
 }
 
 type NullableUserLicenseAllOf struct {

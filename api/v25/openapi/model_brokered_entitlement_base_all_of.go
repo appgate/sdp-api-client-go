@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BrokeredEntitlementBaseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredEntitlementBaseAllOf{}
+
 // BrokeredEntitlementBaseAllOf Access configuration fields shared by all brokered entitlement types.
 type BrokeredEntitlementBaseAllOf struct {
 	// Hostname or IP address of the target host.
@@ -115,7 +118,7 @@ func (o *BrokeredEntitlementBaseAllOf) SetPort(v int32) {
 
 // GetSessionRecording returns the SessionRecording field value if set, zero value otherwise.
 func (o *BrokeredEntitlementBaseAllOf) GetSessionRecording() SessionRecording {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		var ret SessionRecording
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetSessionRecording() SessionRecording {
 // GetSessionRecordingOk returns a tuple with the SessionRecording field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredEntitlementBaseAllOf) GetSessionRecordingOk() (*SessionRecording, bool) {
-	if o == nil || o.SessionRecording == nil {
+	if o == nil || IsNil(o.SessionRecording) {
 		return nil, false
 	}
 	return o.SessionRecording, true
@@ -133,7 +136,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetSessionRecordingOk() (*SessionRecordin
 
 // HasSessionRecording returns a boolean if a field has been set.
 func (o *BrokeredEntitlementBaseAllOf) HasSessionRecording() bool {
-	if o != nil && o.SessionRecording != nil {
+	if o != nil && !IsNil(o.SessionRecording) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *BrokeredEntitlementBaseAllOf) SetSessionRecording(v SessionRecording) {
 
 // GetCredentials returns the Credentials field value if set, zero value otherwise.
 func (o *BrokeredEntitlementBaseAllOf) GetCredentials() string {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetCredentials() string {
 // GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredEntitlementBaseAllOf) GetCredentialsOk() (*string, bool) {
-	if o == nil || o.Credentials == nil {
+	if o == nil || IsNil(o.Credentials) {
 		return nil, false
 	}
 	return o.Credentials, true
@@ -165,7 +168,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetCredentialsOk() (*string, bool) {
 
 // HasCredentials returns a boolean if a field has been set.
 func (o *BrokeredEntitlementBaseAllOf) HasCredentials() bool {
-	if o != nil && o.Credentials != nil {
+	if o != nil && !IsNil(o.Credentials) {
 		return true
 	}
 
@@ -203,7 +206,7 @@ func (o *BrokeredEntitlementBaseAllOf) SetAppShortcut(v BrokeredShortcut) {
 
 // GetClipboardSharing returns the ClipboardSharing field value if set, zero value otherwise.
 func (o *BrokeredEntitlementBaseAllOf) GetClipboardSharing() bool {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		var ret bool
 		return ret
 	}
@@ -213,7 +216,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetClipboardSharing() bool {
 // GetClipboardSharingOk returns a tuple with the ClipboardSharing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredEntitlementBaseAllOf) GetClipboardSharingOk() (*bool, bool) {
-	if o == nil || o.ClipboardSharing == nil {
+	if o == nil || IsNil(o.ClipboardSharing) {
 		return nil, false
 	}
 	return o.ClipboardSharing, true
@@ -221,7 +224,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetClipboardSharingOk() (*bool, bool) {
 
 // HasClipboardSharing returns a boolean if a field has been set.
 func (o *BrokeredEntitlementBaseAllOf) HasClipboardSharing() bool {
-	if o != nil && o.ClipboardSharing != nil {
+	if o != nil && !IsNil(o.ClipboardSharing) {
 		return true
 	}
 
@@ -235,7 +238,7 @@ func (o *BrokeredEntitlementBaseAllOf) SetClipboardSharing(v bool) {
 
 // GetFileTransfer returns the FileTransfer field value if set, zero value otherwise.
 func (o *BrokeredEntitlementBaseAllOf) GetFileTransfer() bool {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		var ret bool
 		return ret
 	}
@@ -245,7 +248,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetFileTransfer() bool {
 // GetFileTransferOk returns a tuple with the FileTransfer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredEntitlementBaseAllOf) GetFileTransferOk() (*bool, bool) {
-	if o == nil || o.FileTransfer == nil {
+	if o == nil || IsNil(o.FileTransfer) {
 		return nil, false
 	}
 	return o.FileTransfer, true
@@ -253,7 +256,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetFileTransferOk() (*bool, bool) {
 
 // HasFileTransfer returns a boolean if a field has been set.
 func (o *BrokeredEntitlementBaseAllOf) HasFileTransfer() bool {
-	if o != nil && o.FileTransfer != nil {
+	if o != nil && !IsNil(o.FileTransfer) {
 		return true
 	}
 
@@ -267,7 +270,7 @@ func (o *BrokeredEntitlementBaseAllOf) SetFileTransfer(v bool) {
 
 // GetIdleTimeoutMinutes returns the IdleTimeoutMinutes field value if set, zero value otherwise.
 func (o *BrokeredEntitlementBaseAllOf) GetIdleTimeoutMinutes() int32 {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -277,7 +280,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetIdleTimeoutMinutes() int32 {
 // GetIdleTimeoutMinutesOk returns a tuple with the IdleTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredEntitlementBaseAllOf) GetIdleTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.IdleTimeoutMinutes == nil {
+	if o == nil || IsNil(o.IdleTimeoutMinutes) {
 		return nil, false
 	}
 	return o.IdleTimeoutMinutes, true
@@ -285,7 +288,7 @@ func (o *BrokeredEntitlementBaseAllOf) GetIdleTimeoutMinutesOk() (*int32, bool) 
 
 // HasIdleTimeoutMinutes returns a boolean if a field has been set.
 func (o *BrokeredEntitlementBaseAllOf) HasIdleTimeoutMinutes() bool {
-	if o != nil && o.IdleTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.IdleTimeoutMinutes) {
 		return true
 	}
 
@@ -298,32 +301,34 @@ func (o *BrokeredEntitlementBaseAllOf) SetIdleTimeoutMinutes(v int32) {
 }
 
 func (o BrokeredEntitlementBaseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["host"] = o.Host
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SessionRecording != nil {
-		toSerialize["sessionRecording"] = o.SessionRecording
-	}
-	if o.Credentials != nil {
-		toSerialize["credentials"] = o.Credentials
-	}
-	if true {
-		toSerialize["appShortcut"] = o.AppShortcut
-	}
-	if o.ClipboardSharing != nil {
-		toSerialize["clipboardSharing"] = o.ClipboardSharing
-	}
-	if o.FileTransfer != nil {
-		toSerialize["fileTransfer"] = o.FileTransfer
-	}
-	if o.IdleTimeoutMinutes != nil {
-		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredEntitlementBaseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["host"] = o.Host
+	toSerialize["port"] = o.Port
+	if !IsNil(o.SessionRecording) {
+		toSerialize["sessionRecording"] = o.SessionRecording
+	}
+	if !IsNil(o.Credentials) {
+		toSerialize["credentials"] = o.Credentials
+	}
+	toSerialize["appShortcut"] = o.AppShortcut
+	if !IsNil(o.ClipboardSharing) {
+		toSerialize["clipboardSharing"] = o.ClipboardSharing
+	}
+	if !IsNil(o.FileTransfer) {
+		toSerialize["fileTransfer"] = o.FileTransfer
+	}
+	if !IsNil(o.IdleTimeoutMinutes) {
+		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	}
+	return toSerialize, nil
 }
 
 type NullableBrokeredEntitlementBaseAllOf struct {

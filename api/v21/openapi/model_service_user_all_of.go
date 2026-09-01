@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the ServiceUserAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServiceUserAllOf{}
+
 // ServiceUserAllOf Represents a Service User.
 type ServiceUserAllOf struct {
 	// Labels of the service. Will be used as claim.
@@ -49,7 +52,7 @@ func NewServiceUserAllOfWithDefaults() *ServiceUserAllOf {
 
 // GetLabels returns the Labels field value if set, zero value otherwise.
 func (o *ServiceUserAllOf) GetLabels() map[string]string {
-	if o == nil || o.Labels == nil {
+	if o == nil || IsNil(o.Labels) {
 		var ret map[string]string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *ServiceUserAllOf) GetLabels() map[string]string {
 // GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserAllOf) GetLabelsOk() (*map[string]string, bool) {
-	if o == nil || o.Labels == nil {
+	if o == nil || IsNil(o.Labels) {
 		return nil, false
 	}
 	return o.Labels, true
@@ -67,7 +70,7 @@ func (o *ServiceUserAllOf) GetLabelsOk() (*map[string]string, bool) {
 
 // HasLabels returns a boolean if a field has been set.
 func (o *ServiceUserAllOf) HasLabels() bool {
-	if o != nil && o.Labels != nil {
+	if o != nil && !IsNil(o.Labels) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *ServiceUserAllOf) SetLabels(v map[string]string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *ServiceUserAllOf) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *ServiceUserAllOf) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserAllOf) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -99,7 +102,7 @@ func (o *ServiceUserAllOf) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *ServiceUserAllOf) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *ServiceUserAllOf) SetPassword(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *ServiceUserAllOf) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *ServiceUserAllOf) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserAllOf) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -131,7 +134,7 @@ func (o *ServiceUserAllOf) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *ServiceUserAllOf) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *ServiceUserAllOf) SetDisabled(v bool) {
 
 // GetFailedLoginAttempts returns the FailedLoginAttempts field value if set, zero value otherwise.
 func (o *ServiceUserAllOf) GetFailedLoginAttempts() float32 {
-	if o == nil || o.FailedLoginAttempts == nil {
+	if o == nil || IsNil(o.FailedLoginAttempts) {
 		var ret float32
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *ServiceUserAllOf) GetFailedLoginAttempts() float32 {
 // GetFailedLoginAttemptsOk returns a tuple with the FailedLoginAttempts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserAllOf) GetFailedLoginAttemptsOk() (*float32, bool) {
-	if o == nil || o.FailedLoginAttempts == nil {
+	if o == nil || IsNil(o.FailedLoginAttempts) {
 		return nil, false
 	}
 	return o.FailedLoginAttempts, true
@@ -163,7 +166,7 @@ func (o *ServiceUserAllOf) GetFailedLoginAttemptsOk() (*float32, bool) {
 
 // HasFailedLoginAttempts returns a boolean if a field has been set.
 func (o *ServiceUserAllOf) HasFailedLoginAttempts() bool {
-	if o != nil && o.FailedLoginAttempts != nil {
+	if o != nil && !IsNil(o.FailedLoginAttempts) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *ServiceUserAllOf) SetFailedLoginAttempts(v float32) {
 
 // GetLockStart returns the LockStart field value if set, zero value otherwise.
 func (o *ServiceUserAllOf) GetLockStart() time.Time {
-	if o == nil || o.LockStart == nil {
+	if o == nil || IsNil(o.LockStart) {
 		var ret time.Time
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *ServiceUserAllOf) GetLockStart() time.Time {
 // GetLockStartOk returns a tuple with the LockStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserAllOf) GetLockStartOk() (*time.Time, bool) {
-	if o == nil || o.LockStart == nil {
+	if o == nil || IsNil(o.LockStart) {
 		return nil, false
 	}
 	return o.LockStart, true
@@ -195,7 +198,7 @@ func (o *ServiceUserAllOf) GetLockStartOk() (*time.Time, bool) {
 
 // HasLockStart returns a boolean if a field has been set.
 func (o *ServiceUserAllOf) HasLockStart() bool {
-	if o != nil && o.LockStart != nil {
+	if o != nil && !IsNil(o.LockStart) {
 		return true
 	}
 
@@ -208,23 +211,31 @@ func (o *ServiceUserAllOf) SetLockStart(v time.Time) {
 }
 
 func (o ServiceUserAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Labels != nil {
-		toSerialize["labels"] = o.Labels
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if o.FailedLoginAttempts != nil {
-		toSerialize["failedLoginAttempts"] = o.FailedLoginAttempts
-	}
-	if o.LockStart != nil {
-		toSerialize["lockStart"] = o.LockStart
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServiceUserAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	if !IsNil(o.FailedLoginAttempts) {
+		toSerialize["failedLoginAttempts"] = o.FailedLoginAttempts
+	}
+	if !IsNil(o.LockStart) {
+		toSerialize["lockStart"] = o.LockStart
+	}
+	return toSerialize, nil
 }
 
 type NullableServiceUserAllOf struct {

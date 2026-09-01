@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ConfigurableIdentityProviderAllOfOnBoarding2FA type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConfigurableIdentityProviderAllOfOnBoarding2FA{}
 
 // ConfigurableIdentityProviderAllOfOnBoarding2FA On-boarding two-factor authentication settings. Leave it empty keep it disabled.
 type ConfigurableIdentityProviderAllOfOnBoarding2FA struct {
@@ -75,7 +78,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetMfaProviderId(v stri
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -93,7 +96,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetMessageOk() (*string
 
 // HasMessage returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetMessage(v string) {
 
 // GetClaimSuffix returns the ClaimSuffix field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffix() string {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffix() string
 // GetClaimSuffixOk returns a tuple with the ClaimSuffix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffixOk() (*string, bool) {
-	if o == nil || o.ClaimSuffix == nil {
+	if o == nil || IsNil(o.ClaimSuffix) {
 		return nil, false
 	}
 	return o.ClaimSuffix, true
@@ -125,7 +128,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetClaimSuffixOk() (*st
 
 // HasClaimSuffix returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasClaimSuffix() bool {
-	if o != nil && o.ClaimSuffix != nil {
+	if o != nil && !IsNil(o.ClaimSuffix) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetClaimSuffix(v string
 
 // GetAlwaysRequired returns the AlwaysRequired field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequired() bool {
-	if o == nil || o.AlwaysRequired == nil {
+	if o == nil || IsNil(o.AlwaysRequired) {
 		var ret bool
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequired() boo
 // GetAlwaysRequiredOk returns a tuple with the AlwaysRequired field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequiredOk() (*bool, bool) {
-	if o == nil || o.AlwaysRequired == nil {
+	if o == nil || IsNil(o.AlwaysRequired) {
 		return nil, false
 	}
 	return o.AlwaysRequired, true
@@ -157,7 +160,7 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) GetAlwaysRequiredOk() (
 
 // HasAlwaysRequired returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) HasAlwaysRequired() bool {
-	if o != nil && o.AlwaysRequired != nil {
+	if o != nil && !IsNil(o.AlwaysRequired) {
 		return true
 	}
 
@@ -170,20 +173,26 @@ func (o *ConfigurableIdentityProviderAllOfOnBoarding2FA) SetAlwaysRequired(v boo
 }
 
 func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["mfaProviderId"] = o.MfaProviderId
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.ClaimSuffix != nil {
-		toSerialize["claimSuffix"] = o.ClaimSuffix
-	}
-	if o.AlwaysRequired != nil {
-		toSerialize["alwaysRequired"] = o.AlwaysRequired
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConfigurableIdentityProviderAllOfOnBoarding2FA) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["mfaProviderId"] = o.MfaProviderId
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ClaimSuffix) {
+		toSerialize["claimSuffix"] = o.ClaimSuffix
+	}
+	if !IsNil(o.AlwaysRequired) {
+		toSerialize["alwaysRequired"] = o.AlwaysRequired
+	}
+	return toSerialize, nil
 }
 
 type NullableConfigurableIdentityProviderAllOfOnBoarding2FA struct {

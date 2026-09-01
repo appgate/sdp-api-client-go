@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AuthenticationOtpPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationOtpPostRequest{}
+
 // AuthenticationOtpPostRequest struct for AuthenticationOtpPostRequest
 type AuthenticationOtpPostRequest struct {
 	// Depending on the type of the MFA flow, this could be an OTP generated from a device, user password or some dummy value.
@@ -67,7 +70,7 @@ func (o *AuthenticationOtpPostRequest) SetOtp(v string) {
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *AuthenticationOtpPostRequest) GetState() string {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret string
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *AuthenticationOtpPostRequest) GetState() string {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationOtpPostRequest) GetStateOk() (*string, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -85,7 +88,7 @@ func (o *AuthenticationOtpPostRequest) GetStateOk() (*string, bool) {
 
 // HasState returns a boolean if a field has been set.
 func (o *AuthenticationOtpPostRequest) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -98,14 +101,20 @@ func (o *AuthenticationOtpPostRequest) SetState(v string) {
 }
 
 func (o AuthenticationOtpPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["otp"] = o.Otp
-	}
-	if o.State != nil {
-		toSerialize["state"] = o.State
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationOtpPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["otp"] = o.Otp
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationOtpPostRequest struct {

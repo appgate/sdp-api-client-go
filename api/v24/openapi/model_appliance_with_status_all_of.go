@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceWithStatusAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceWithStatusAllOf{}
+
 // ApplianceWithStatusAllOf struct for ApplianceWithStatusAllOf
 type ApplianceWithStatusAllOf struct {
 	// State of the Appliance. For internal use.
@@ -57,7 +60,7 @@ func NewApplianceWithStatusAllOfWithDefaults() *ApplianceWithStatusAllOf {
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetState() string {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *ApplianceWithStatusAllOf) GetState() string {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetStateOk() (*string, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -75,7 +78,7 @@ func (o *ApplianceWithStatusAllOf) GetStateOk() (*string, bool) {
 
 // HasState returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *ApplianceWithStatusAllOf) SetState(v string) {
 
 // GetFunctions returns the Functions field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetFunctions() []ApplianceFunction {
-	if o == nil || o.Functions == nil {
+	if o == nil || IsNil(o.Functions) {
 		var ret []ApplianceFunction
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *ApplianceWithStatusAllOf) GetFunctions() []ApplianceFunction {
 // GetFunctionsOk returns a tuple with the Functions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetFunctionsOk() ([]ApplianceFunction, bool) {
-	if o == nil || o.Functions == nil {
+	if o == nil || IsNil(o.Functions) {
 		return nil, false
 	}
 	return o.Functions, true
@@ -107,7 +110,7 @@ func (o *ApplianceWithStatusAllOf) GetFunctionsOk() ([]ApplianceFunction, bool) 
 
 // HasFunctions returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasFunctions() bool {
-	if o != nil && o.Functions != nil {
+	if o != nil && !IsNil(o.Functions) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *ApplianceWithStatusAllOf) SetFunctions(v []ApplianceFunction) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *ApplianceWithStatusAllOf) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -139,7 +142,7 @@ func (o *ApplianceWithStatusAllOf) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *ApplianceWithStatusAllOf) SetStatus(v string) {
 
 // GetCustomizationName returns the CustomizationName field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetCustomizationName() string {
-	if o == nil || o.CustomizationName == nil {
+	if o == nil || IsNil(o.CustomizationName) {
 		var ret string
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *ApplianceWithStatusAllOf) GetCustomizationName() string {
 // GetCustomizationNameOk returns a tuple with the CustomizationName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetCustomizationNameOk() (*string, bool) {
-	if o == nil || o.CustomizationName == nil {
+	if o == nil || IsNil(o.CustomizationName) {
 		return nil, false
 	}
 	return o.CustomizationName, true
@@ -171,7 +174,7 @@ func (o *ApplianceWithStatusAllOf) GetCustomizationNameOk() (*string, bool) {
 
 // HasCustomizationName returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasCustomizationName() bool {
-	if o != nil && o.CustomizationName != nil {
+	if o != nil && !IsNil(o.CustomizationName) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *ApplianceWithStatusAllOf) SetCustomizationName(v string) {
 
 // GetCpu returns the Cpu field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetCpu() float32 {
-	if o == nil || o.Cpu == nil {
+	if o == nil || IsNil(o.Cpu) {
 		var ret float32
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *ApplianceWithStatusAllOf) GetCpu() float32 {
 // GetCpuOk returns a tuple with the Cpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetCpuOk() (*float32, bool) {
-	if o == nil || o.Cpu == nil {
+	if o == nil || IsNil(o.Cpu) {
 		return nil, false
 	}
 	return o.Cpu, true
@@ -203,7 +206,7 @@ func (o *ApplianceWithStatusAllOf) GetCpuOk() (*float32, bool) {
 
 // HasCpu returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasCpu() bool {
-	if o != nil && o.Cpu != nil {
+	if o != nil && !IsNil(o.Cpu) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *ApplianceWithStatusAllOf) SetCpu(v float32) {
 
 // GetMemory returns the Memory field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetMemory() float32 {
-	if o == nil || o.Memory == nil {
+	if o == nil || IsNil(o.Memory) {
 		var ret float32
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *ApplianceWithStatusAllOf) GetMemory() float32 {
 // GetMemoryOk returns a tuple with the Memory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetMemoryOk() (*float32, bool) {
-	if o == nil || o.Memory == nil {
+	if o == nil || IsNil(o.Memory) {
 		return nil, false
 	}
 	return o.Memory, true
@@ -235,7 +238,7 @@ func (o *ApplianceWithStatusAllOf) GetMemoryOk() (*float32, bool) {
 
 // HasMemory returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasMemory() bool {
-	if o != nil && o.Memory != nil {
+	if o != nil && !IsNil(o.Memory) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *ApplianceWithStatusAllOf) SetMemory(v float32) {
 
 // GetDisk returns the Disk field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetDisk() float32 {
-	if o == nil || o.Disk == nil {
+	if o == nil || IsNil(o.Disk) {
 		var ret float32
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *ApplianceWithStatusAllOf) GetDisk() float32 {
 // GetDiskOk returns a tuple with the Disk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetDiskOk() (*float32, bool) {
-	if o == nil || o.Disk == nil {
+	if o == nil || IsNil(o.Disk) {
 		return nil, false
 	}
 	return o.Disk, true
@@ -267,7 +270,7 @@ func (o *ApplianceWithStatusAllOf) GetDiskOk() (*float32, bool) {
 
 // HasDisk returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasDisk() bool {
-	if o != nil && o.Disk != nil {
+	if o != nil && !IsNil(o.Disk) {
 		return true
 	}
 
@@ -281,7 +284,7 @@ func (o *ApplianceWithStatusAllOf) SetDisk(v float32) {
 
 // GetNumberOfSessions returns the NumberOfSessions field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetNumberOfSessions() int32 {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		var ret int32
 		return ret
 	}
@@ -291,7 +294,7 @@ func (o *ApplianceWithStatusAllOf) GetNumberOfSessions() int32 {
 // GetNumberOfSessionsOk returns a tuple with the NumberOfSessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetNumberOfSessionsOk() (*int32, bool) {
-	if o == nil || o.NumberOfSessions == nil {
+	if o == nil || IsNil(o.NumberOfSessions) {
 		return nil, false
 	}
 	return o.NumberOfSessions, true
@@ -299,7 +302,7 @@ func (o *ApplianceWithStatusAllOf) GetNumberOfSessionsOk() (*int32, bool) {
 
 // HasNumberOfSessions returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasNumberOfSessions() bool {
-	if o != nil && o.NumberOfSessions != nil {
+	if o != nil && !IsNil(o.NumberOfSessions) {
 		return true
 	}
 
@@ -313,7 +316,7 @@ func (o *ApplianceWithStatusAllOf) SetNumberOfSessions(v int32) {
 
 // GetApplianceVersion returns the ApplianceVersion field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetApplianceVersion() string {
-	if o == nil || o.ApplianceVersion == nil {
+	if o == nil || IsNil(o.ApplianceVersion) {
 		var ret string
 		return ret
 	}
@@ -323,7 +326,7 @@ func (o *ApplianceWithStatusAllOf) GetApplianceVersion() string {
 // GetApplianceVersionOk returns a tuple with the ApplianceVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetApplianceVersionOk() (*string, bool) {
-	if o == nil || o.ApplianceVersion == nil {
+	if o == nil || IsNil(o.ApplianceVersion) {
 		return nil, false
 	}
 	return o.ApplianceVersion, true
@@ -331,7 +334,7 @@ func (o *ApplianceWithStatusAllOf) GetApplianceVersionOk() (*string, bool) {
 
 // HasApplianceVersion returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasApplianceVersion() bool {
-	if o != nil && o.ApplianceVersion != nil {
+	if o != nil && !IsNil(o.ApplianceVersion) {
 		return true
 	}
 
@@ -345,7 +348,7 @@ func (o *ApplianceWithStatusAllOf) SetApplianceVersion(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *ApplianceWithStatusAllOf) GetDetails() ApplianceWithStatusAllOfDetails {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret ApplianceWithStatusAllOfDetails
 		return ret
 	}
@@ -355,7 +358,7 @@ func (o *ApplianceWithStatusAllOf) GetDetails() ApplianceWithStatusAllOfDetails 
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceWithStatusAllOf) GetDetailsOk() (*ApplianceWithStatusAllOfDetails, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -363,7 +366,7 @@ func (o *ApplianceWithStatusAllOf) GetDetailsOk() (*ApplianceWithStatusAllOfDeta
 
 // HasDetails returns a boolean if a field has been set.
 func (o *ApplianceWithStatusAllOf) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -376,38 +379,46 @@ func (o *ApplianceWithStatusAllOf) SetDetails(v ApplianceWithStatusAllOfDetails)
 }
 
 func (o ApplianceWithStatusAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.State != nil {
-		toSerialize["state"] = o.State
-	}
-	if o.Functions != nil {
-		toSerialize["functions"] = o.Functions
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.CustomizationName != nil {
-		toSerialize["customizationName"] = o.CustomizationName
-	}
-	if o.Cpu != nil {
-		toSerialize["cpu"] = o.Cpu
-	}
-	if o.Memory != nil {
-		toSerialize["memory"] = o.Memory
-	}
-	if o.Disk != nil {
-		toSerialize["disk"] = o.Disk
-	}
-	if o.NumberOfSessions != nil {
-		toSerialize["numberOfSessions"] = o.NumberOfSessions
-	}
-	if o.ApplianceVersion != nil {
-		toSerialize["applianceVersion"] = o.ApplianceVersion
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceWithStatusAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	if !IsNil(o.Functions) {
+		toSerialize["functions"] = o.Functions
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.CustomizationName) {
+		toSerialize["customizationName"] = o.CustomizationName
+	}
+	if !IsNil(o.Cpu) {
+		toSerialize["cpu"] = o.Cpu
+	}
+	if !IsNil(o.Memory) {
+		toSerialize["memory"] = o.Memory
+	}
+	if !IsNil(o.Disk) {
+		toSerialize["disk"] = o.Disk
+	}
+	if !IsNil(o.NumberOfSessions) {
+		toSerialize["numberOfSessions"] = o.NumberOfSessions
+	}
+	if !IsNil(o.ApplianceVersion) {
+		toSerialize["applianceVersion"] = o.ApplianceVersion
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceWithStatusAllOf struct {

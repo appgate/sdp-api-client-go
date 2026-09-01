@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppAccessPolicy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppAccessPolicy{}
+
 // AppAccessPolicy Policy configured for app access.
 type AppAccessPolicy struct {
 	// The ID of the Policy.
@@ -91,14 +94,18 @@ func (o *AppAccessPolicy) SetName(v string) {
 }
 
 func (o AppAccessPolicy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppAccessPolicy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
+	return toSerialize, nil
 }
 
 type NullableAppAccessPolicy struct {

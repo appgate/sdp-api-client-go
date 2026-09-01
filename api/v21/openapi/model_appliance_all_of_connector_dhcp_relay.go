@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfConnectorDhcpRelay type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnectorDhcpRelay{}
+
 // ApplianceAllOfConnectorDhcpRelay Enable DHCP relay for this Connector.
 type ApplianceAllOfConnectorDhcpRelay struct {
 	// DHCP servers to relay.
@@ -40,7 +43,7 @@ func NewApplianceAllOfConnectorDhcpRelayWithDefaults() *ApplianceAllOfConnectorD
 
 // GetServers returns the Servers field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorDhcpRelay) GetServers() []string {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		var ret []string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ApplianceAllOfConnectorDhcpRelay) GetServers() []string {
 // GetServersOk returns a tuple with the Servers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorDhcpRelay) GetServersOk() ([]string, bool) {
-	if o == nil || o.Servers == nil {
+	if o == nil || IsNil(o.Servers) {
 		return nil, false
 	}
 	return o.Servers, true
@@ -58,7 +61,7 @@ func (o *ApplianceAllOfConnectorDhcpRelay) GetServersOk() ([]string, bool) {
 
 // HasServers returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorDhcpRelay) HasServers() bool {
-	if o != nil && o.Servers != nil {
+	if o != nil && !IsNil(o.Servers) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ApplianceAllOfConnectorDhcpRelay) SetServers(v []string) {
 }
 
 func (o ApplianceAllOfConnectorDhcpRelay) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Servers != nil {
-		toSerialize["servers"] = o.Servers
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnectorDhcpRelay) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Servers) {
+		toSerialize["servers"] = o.Servers
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnectorDhcpRelay struct {

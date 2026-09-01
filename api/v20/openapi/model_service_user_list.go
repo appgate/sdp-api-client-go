@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServiceUserList type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServiceUserList{}
+
 // ServiceUserList struct for ServiceUserList
 type ServiceUserList struct {
 	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.
@@ -52,7 +55,7 @@ func NewServiceUserListWithDefaults() *ServiceUserList {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *ServiceUserList) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *ServiceUserList) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -70,7 +73,7 @@ func (o *ServiceUserList) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *ServiceUserList) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *ServiceUserList) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *ServiceUserList) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *ServiceUserList) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -102,7 +105,7 @@ func (o *ServiceUserList) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *ServiceUserList) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *ServiceUserList) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *ServiceUserList) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *ServiceUserList) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -134,7 +137,7 @@ func (o *ServiceUserList) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *ServiceUserList) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -148,7 +151,7 @@ func (o *ServiceUserList) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *ServiceUserList) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -158,7 +161,7 @@ func (o *ServiceUserList) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -166,7 +169,7 @@ func (o *ServiceUserList) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *ServiceUserList) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -180,7 +183,7 @@ func (o *ServiceUserList) SetQueries(v []string) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *ServiceUserList) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *ServiceUserList) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -198,7 +201,7 @@ func (o *ServiceUserList) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *ServiceUserList) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -212,7 +215,7 @@ func (o *ServiceUserList) SetTotalCount(v int32) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *ServiceUserList) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -222,7 +225,7 @@ func (o *ServiceUserList) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -230,7 +233,7 @@ func (o *ServiceUserList) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *ServiceUserList) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -244,7 +247,7 @@ func (o *ServiceUserList) SetFilterBy(v []FilterBy) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ServiceUserList) GetData() []ServiceUser {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []ServiceUser
 		return ret
 	}
@@ -254,7 +257,7 @@ func (o *ServiceUserList) GetData() []ServiceUser {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ServiceUserList) GetDataOk() ([]ServiceUser, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -262,7 +265,7 @@ func (o *ServiceUserList) GetDataOk() ([]ServiceUser, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ServiceUserList) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -275,29 +278,37 @@ func (o *ServiceUserList) SetData(v []ServiceUser) {
 }
 
 func (o ServiceUserList) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.TotalCount != nil {
-		toSerialize["totalCount"] = o.TotalCount
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServiceUserList) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["totalCount"] = o.TotalCount
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableServiceUserList struct {

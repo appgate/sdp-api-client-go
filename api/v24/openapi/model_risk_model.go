@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RiskModel type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RiskModel{}
+
 // RiskModel struct for RiskModel
 type RiskModel struct {
 	// ID of the rule in ZTP to use as the source of the risk score.
@@ -43,7 +46,7 @@ func NewRiskModelWithDefaults() *RiskModel {
 
 // GetZtpRuleId returns the ZtpRuleId field value if set, zero value otherwise.
 func (o *RiskModel) GetZtpRuleId() string {
-	if o == nil || o.ZtpRuleId == nil {
+	if o == nil || IsNil(o.ZtpRuleId) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *RiskModel) GetZtpRuleId() string {
 // GetZtpRuleIdOk returns a tuple with the ZtpRuleId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskModel) GetZtpRuleIdOk() (*string, bool) {
-	if o == nil || o.ZtpRuleId == nil {
+	if o == nil || IsNil(o.ZtpRuleId) {
 		return nil, false
 	}
 	return o.ZtpRuleId, true
@@ -61,7 +64,7 @@ func (o *RiskModel) GetZtpRuleIdOk() (*string, bool) {
 
 // HasZtpRuleId returns a boolean if a field has been set.
 func (o *RiskModel) HasZtpRuleId() bool {
-	if o != nil && o.ZtpRuleId != nil {
+	if o != nil && !IsNil(o.ZtpRuleId) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *RiskModel) SetZtpRuleId(v string) {
 
 // GetLowSensitivity returns the LowSensitivity field value if set, zero value otherwise.
 func (o *RiskModel) GetLowSensitivity() Sensitivity {
-	if o == nil || o.LowSensitivity == nil {
+	if o == nil || IsNil(o.LowSensitivity) {
 		var ret Sensitivity
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *RiskModel) GetLowSensitivity() Sensitivity {
 // GetLowSensitivityOk returns a tuple with the LowSensitivity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskModel) GetLowSensitivityOk() (*Sensitivity, bool) {
-	if o == nil || o.LowSensitivity == nil {
+	if o == nil || IsNil(o.LowSensitivity) {
 		return nil, false
 	}
 	return o.LowSensitivity, true
@@ -93,7 +96,7 @@ func (o *RiskModel) GetLowSensitivityOk() (*Sensitivity, bool) {
 
 // HasLowSensitivity returns a boolean if a field has been set.
 func (o *RiskModel) HasLowSensitivity() bool {
-	if o != nil && o.LowSensitivity != nil {
+	if o != nil && !IsNil(o.LowSensitivity) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *RiskModel) SetLowSensitivity(v Sensitivity) {
 
 // GetMediumSensitivity returns the MediumSensitivity field value if set, zero value otherwise.
 func (o *RiskModel) GetMediumSensitivity() Sensitivity {
-	if o == nil || o.MediumSensitivity == nil {
+	if o == nil || IsNil(o.MediumSensitivity) {
 		var ret Sensitivity
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *RiskModel) GetMediumSensitivity() Sensitivity {
 // GetMediumSensitivityOk returns a tuple with the MediumSensitivity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskModel) GetMediumSensitivityOk() (*Sensitivity, bool) {
-	if o == nil || o.MediumSensitivity == nil {
+	if o == nil || IsNil(o.MediumSensitivity) {
 		return nil, false
 	}
 	return o.MediumSensitivity, true
@@ -125,7 +128,7 @@ func (o *RiskModel) GetMediumSensitivityOk() (*Sensitivity, bool) {
 
 // HasMediumSensitivity returns a boolean if a field has been set.
 func (o *RiskModel) HasMediumSensitivity() bool {
-	if o != nil && o.MediumSensitivity != nil {
+	if o != nil && !IsNil(o.MediumSensitivity) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *RiskModel) SetMediumSensitivity(v Sensitivity) {
 
 // GetHighSensitivity returns the HighSensitivity field value if set, zero value otherwise.
 func (o *RiskModel) GetHighSensitivity() Sensitivity {
-	if o == nil || o.HighSensitivity == nil {
+	if o == nil || IsNil(o.HighSensitivity) {
 		var ret Sensitivity
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *RiskModel) GetHighSensitivity() Sensitivity {
 // GetHighSensitivityOk returns a tuple with the HighSensitivity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RiskModel) GetHighSensitivityOk() (*Sensitivity, bool) {
-	if o == nil || o.HighSensitivity == nil {
+	if o == nil || IsNil(o.HighSensitivity) {
 		return nil, false
 	}
 	return o.HighSensitivity, true
@@ -157,7 +160,7 @@ func (o *RiskModel) GetHighSensitivityOk() (*Sensitivity, bool) {
 
 // HasHighSensitivity returns a boolean if a field has been set.
 func (o *RiskModel) HasHighSensitivity() bool {
-	if o != nil && o.HighSensitivity != nil {
+	if o != nil && !IsNil(o.HighSensitivity) {
 		return true
 	}
 
@@ -170,20 +173,28 @@ func (o *RiskModel) SetHighSensitivity(v Sensitivity) {
 }
 
 func (o RiskModel) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ZtpRuleId != nil {
-		toSerialize["ztpRuleId"] = o.ZtpRuleId
-	}
-	if o.LowSensitivity != nil {
-		toSerialize["lowSensitivity"] = o.LowSensitivity
-	}
-	if o.MediumSensitivity != nil {
-		toSerialize["mediumSensitivity"] = o.MediumSensitivity
-	}
-	if o.HighSensitivity != nil {
-		toSerialize["highSensitivity"] = o.HighSensitivity
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RiskModel) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ZtpRuleId) {
+		toSerialize["ztpRuleId"] = o.ZtpRuleId
+	}
+	if !IsNil(o.LowSensitivity) {
+		toSerialize["lowSensitivity"] = o.LowSensitivity
+	}
+	if !IsNil(o.MediumSensitivity) {
+		toSerialize["mediumSensitivity"] = o.MediumSensitivity
+	}
+	if !IsNil(o.HighSensitivity) {
+		toSerialize["highSensitivity"] = o.HighSensitivity
+	}
+	return toSerialize, nil
 }
 
 type NullableRiskModel struct {

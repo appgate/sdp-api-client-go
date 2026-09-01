@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DnsSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DnsSettings{}
+
 // DnsSettings struct for DnsSettings
 type DnsSettings struct {
 	// The DNS servers to be assigned to the Clients of the users in this Identity Provider. Deprecated as of 6.6. Use either the Automatic Client DNS feature in Site DNS resolvers or DNS Policies.
@@ -45,7 +48,7 @@ func NewDnsSettingsWithDefaults() *DnsSettings {
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 // Deprecated
 func (o *DnsSettings) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *DnsSettings) GetDnsServers() []string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *DnsSettings) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -64,7 +67,7 @@ func (o *DnsSettings) GetDnsServersOk() ([]string, bool) {
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *DnsSettings) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *DnsSettings) SetDnsServers(v []string) {
 // GetDnsSearchDomains returns the DnsSearchDomains field value if set, zero value otherwise.
 // Deprecated
 func (o *DnsSettings) GetDnsSearchDomains() []string {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		var ret []string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *DnsSettings) GetDnsSearchDomains() []string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *DnsSettings) GetDnsSearchDomainsOk() ([]string, bool) {
-	if o == nil || o.DnsSearchDomains == nil {
+	if o == nil || IsNil(o.DnsSearchDomains) {
 		return nil, false
 	}
 	return o.DnsSearchDomains, true
@@ -99,7 +102,7 @@ func (o *DnsSettings) GetDnsSearchDomainsOk() ([]string, bool) {
 
 // HasDnsSearchDomains returns a boolean if a field has been set.
 func (o *DnsSettings) HasDnsSearchDomains() bool {
-	if o != nil && o.DnsSearchDomains != nil {
+	if o != nil && !IsNil(o.DnsSearchDomains) {
 		return true
 	}
 
@@ -113,14 +116,22 @@ func (o *DnsSettings) SetDnsSearchDomains(v []string) {
 }
 
 func (o DnsSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if o.DnsSearchDomains != nil {
-		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DnsSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	if !IsNil(o.DnsSearchDomains) {
+		toSerialize["dnsSearchDomains"] = o.DnsSearchDomains
+	}
+	return toSerialize, nil
 }
 
 type NullableDnsSettings struct {

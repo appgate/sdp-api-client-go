@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SiteAllOfNameResolutionAwsResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionAwsResolvers{}
 
 // SiteAllOfNameResolutionAwsResolvers struct for SiteAllOfNameResolutionAwsResolvers
 type SiteAllOfNameResolutionAwsResolvers struct {
@@ -113,7 +116,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -131,7 +134,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetUpdateIntervalOk() (*int32, boo
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetUpdateInterval(v int32) {
 
 // GetVpcs returns the Vpcs field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcs() []string {
-	if o == nil || o.Vpcs == nil {
+	if o == nil || IsNil(o.Vpcs) {
 		var ret []string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcs() []string {
 // GetVpcsOk returns a tuple with the Vpcs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcsOk() ([]string, bool) {
-	if o == nil || o.Vpcs == nil {
+	if o == nil || IsNil(o.Vpcs) {
 		return nil, false
 	}
 	return o.Vpcs, true
@@ -163,7 +166,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcsOk() ([]string, bool) {
 
 // HasVpcs returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasVpcs() bool {
-	if o != nil && o.Vpcs != nil {
+	if o != nil && !IsNil(o.Vpcs) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetVpcs(v []string) {
 
 // GetVpcAutoDiscovery returns the VpcAutoDiscovery field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcAutoDiscovery() bool {
-	if o == nil || o.VpcAutoDiscovery == nil {
+	if o == nil || IsNil(o.VpcAutoDiscovery) {
 		var ret bool
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcAutoDiscovery() bool {
 // GetVpcAutoDiscoveryOk returns a tuple with the VpcAutoDiscovery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcAutoDiscoveryOk() (*bool, bool) {
-	if o == nil || o.VpcAutoDiscovery == nil {
+	if o == nil || IsNil(o.VpcAutoDiscovery) {
 		return nil, false
 	}
 	return o.VpcAutoDiscovery, true
@@ -195,7 +198,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetVpcAutoDiscoveryOk() (*bool, bo
 
 // HasVpcAutoDiscovery returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasVpcAutoDiscovery() bool {
-	if o != nil && o.VpcAutoDiscovery != nil {
+	if o != nil && !IsNil(o.VpcAutoDiscovery) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetVpcAutoDiscovery(v bool) {
 
 // GetRegions returns the Regions field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetRegions() []string {
-	if o == nil || o.Regions == nil {
+	if o == nil || IsNil(o.Regions) {
 		var ret []string
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetRegions() []string {
 // GetRegionsOk returns a tuple with the Regions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetRegionsOk() ([]string, bool) {
-	if o == nil || o.Regions == nil {
+	if o == nil || IsNil(o.Regions) {
 		return nil, false
 	}
 	return o.Regions, true
@@ -227,7 +230,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetRegionsOk() ([]string, bool) {
 
 // HasRegions returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasRegions() bool {
-	if o != nil && o.Regions != nil {
+	if o != nil && !IsNil(o.Regions) {
 		return true
 	}
 
@@ -241,7 +244,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetRegions(v []string) {
 
 // GetUseIAMRole returns the UseIAMRole field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetUseIAMRole() bool {
-	if o == nil || o.UseIAMRole == nil {
+	if o == nil || IsNil(o.UseIAMRole) {
 		var ret bool
 		return ret
 	}
@@ -251,7 +254,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetUseIAMRole() bool {
 // GetUseIAMRoleOk returns a tuple with the UseIAMRole field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetUseIAMRoleOk() (*bool, bool) {
-	if o == nil || o.UseIAMRole == nil {
+	if o == nil || IsNil(o.UseIAMRole) {
 		return nil, false
 	}
 	return o.UseIAMRole, true
@@ -259,7 +262,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetUseIAMRoleOk() (*bool, bool) {
 
 // HasUseIAMRole returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasUseIAMRole() bool {
-	if o != nil && o.UseIAMRole != nil {
+	if o != nil && !IsNil(o.UseIAMRole) {
 		return true
 	}
 
@@ -273,7 +276,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetUseIAMRole(v bool) {
 
 // GetAccessKeyId returns the AccessKeyId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetAccessKeyId() string {
-	if o == nil || o.AccessKeyId == nil {
+	if o == nil || IsNil(o.AccessKeyId) {
 		var ret string
 		return ret
 	}
@@ -283,7 +286,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetAccessKeyId() string {
 // GetAccessKeyIdOk returns a tuple with the AccessKeyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetAccessKeyIdOk() (*string, bool) {
-	if o == nil || o.AccessKeyId == nil {
+	if o == nil || IsNil(o.AccessKeyId) {
 		return nil, false
 	}
 	return o.AccessKeyId, true
@@ -291,7 +294,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetAccessKeyIdOk() (*string, bool)
 
 // HasAccessKeyId returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasAccessKeyId() bool {
-	if o != nil && o.AccessKeyId != nil {
+	if o != nil && !IsNil(o.AccessKeyId) {
 		return true
 	}
 
@@ -305,7 +308,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetAccessKeyId(v string) {
 
 // GetSecretAccessKey returns the SecretAccessKey field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetSecretAccessKey() string {
-	if o == nil || o.SecretAccessKey == nil {
+	if o == nil || IsNil(o.SecretAccessKey) {
 		var ret string
 		return ret
 	}
@@ -315,7 +318,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetSecretAccessKey() string {
 // GetSecretAccessKeyOk returns a tuple with the SecretAccessKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetSecretAccessKeyOk() (*string, bool) {
-	if o == nil || o.SecretAccessKey == nil {
+	if o == nil || IsNil(o.SecretAccessKey) {
 		return nil, false
 	}
 	return o.SecretAccessKey, true
@@ -323,7 +326,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetSecretAccessKeyOk() (*string, b
 
 // HasSecretAccessKey returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasSecretAccessKey() bool {
-	if o != nil && o.SecretAccessKey != nil {
+	if o != nil && !IsNil(o.SecretAccessKey) {
 		return true
 	}
 
@@ -337,7 +340,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetSecretAccessKey(v string) {
 
 // GetHttpsProxy returns the HttpsProxy field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetHttpsProxy() string {
-	if o == nil || o.HttpsProxy == nil {
+	if o == nil || IsNil(o.HttpsProxy) {
 		var ret string
 		return ret
 	}
@@ -347,7 +350,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetHttpsProxy() string {
 // GetHttpsProxyOk returns a tuple with the HttpsProxy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetHttpsProxyOk() (*string, bool) {
-	if o == nil || o.HttpsProxy == nil {
+	if o == nil || IsNil(o.HttpsProxy) {
 		return nil, false
 	}
 	return o.HttpsProxy, true
@@ -355,7 +358,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetHttpsProxyOk() (*string, bool) 
 
 // HasHttpsProxy returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasHttpsProxy() bool {
-	if o != nil && o.HttpsProxy != nil {
+	if o != nil && !IsNil(o.HttpsProxy) {
 		return true
 	}
 
@@ -369,7 +372,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetHttpsProxy(v string) {
 
 // GetResolveWithMasterCredentials returns the ResolveWithMasterCredentials field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetResolveWithMasterCredentials() bool {
-	if o == nil || o.ResolveWithMasterCredentials == nil {
+	if o == nil || IsNil(o.ResolveWithMasterCredentials) {
 		var ret bool
 		return ret
 	}
@@ -379,7 +382,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetResolveWithMasterCredentials() 
 // GetResolveWithMasterCredentialsOk returns a tuple with the ResolveWithMasterCredentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetResolveWithMasterCredentialsOk() (*bool, bool) {
-	if o == nil || o.ResolveWithMasterCredentials == nil {
+	if o == nil || IsNil(o.ResolveWithMasterCredentials) {
 		return nil, false
 	}
 	return o.ResolveWithMasterCredentials, true
@@ -387,7 +390,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetResolveWithMasterCredentialsOk(
 
 // HasResolveWithMasterCredentials returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasResolveWithMasterCredentials() bool {
-	if o != nil && o.ResolveWithMasterCredentials != nil {
+	if o != nil && !IsNil(o.ResolveWithMasterCredentials) {
 		return true
 	}
 
@@ -401,7 +404,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetResolveWithMasterCredentials(v 
 
 // GetPartition returns the Partition field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetPartition() string {
-	if o == nil || o.Partition == nil {
+	if o == nil || IsNil(o.Partition) {
 		var ret string
 		return ret
 	}
@@ -411,7 +414,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetPartition() string {
 // GetPartitionOk returns a tuple with the Partition field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetPartitionOk() (*string, bool) {
-	if o == nil || o.Partition == nil {
+	if o == nil || IsNil(o.Partition) {
 		return nil, false
 	}
 	return o.Partition, true
@@ -419,7 +422,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetPartitionOk() (*string, bool) {
 
 // HasPartition returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasPartition() bool {
-	if o != nil && o.Partition != nil {
+	if o != nil && !IsNil(o.Partition) {
 		return true
 	}
 
@@ -433,7 +436,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetPartition(v string) {
 
 // GetEc2 returns the Ec2 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetEc2() bool {
-	if o == nil || o.Ec2 == nil {
+	if o == nil || IsNil(o.Ec2) {
 		var ret bool
 		return ret
 	}
@@ -443,7 +446,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetEc2() bool {
 // GetEc2Ok returns a tuple with the Ec2 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetEc2Ok() (*bool, bool) {
-	if o == nil || o.Ec2 == nil {
+	if o == nil || IsNil(o.Ec2) {
 		return nil, false
 	}
 	return o.Ec2, true
@@ -451,7 +454,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetEc2Ok() (*bool, bool) {
 
 // HasEc2 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasEc2() bool {
-	if o != nil && o.Ec2 != nil {
+	if o != nil && !IsNil(o.Ec2) {
 		return true
 	}
 
@@ -465,7 +468,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetEc2(v bool) {
 
 // GetEks returns the Eks field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetEks() bool {
-	if o == nil || o.Eks == nil {
+	if o == nil || IsNil(o.Eks) {
 		var ret bool
 		return ret
 	}
@@ -475,7 +478,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetEks() bool {
 // GetEksOk returns a tuple with the Eks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetEksOk() (*bool, bool) {
-	if o == nil || o.Eks == nil {
+	if o == nil || IsNil(o.Eks) {
 		return nil, false
 	}
 	return o.Eks, true
@@ -483,7 +486,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetEksOk() (*bool, bool) {
 
 // HasEks returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasEks() bool {
-	if o != nil && o.Eks != nil {
+	if o != nil && !IsNil(o.Eks) {
 		return true
 	}
 
@@ -497,7 +500,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetEks(v bool) {
 
 // GetRds returns the Rds field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetRds() bool {
-	if o == nil || o.Rds == nil {
+	if o == nil || IsNil(o.Rds) {
 		var ret bool
 		return ret
 	}
@@ -507,7 +510,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetRds() bool {
 // GetRdsOk returns a tuple with the Rds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetRdsOk() (*bool, bool) {
-	if o == nil || o.Rds == nil {
+	if o == nil || IsNil(o.Rds) {
 		return nil, false
 	}
 	return o.Rds, true
@@ -515,7 +518,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetRdsOk() (*bool, bool) {
 
 // HasRds returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasRds() bool {
-	if o != nil && o.Rds != nil {
+	if o != nil && !IsNil(o.Rds) {
 		return true
 	}
 
@@ -529,7 +532,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetRds(v bool) {
 
 // GetAssumedRoles returns the AssumedRoles field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRoles() []SiteAllOfNameResolutionAssumedRoles {
-	if o == nil || o.AssumedRoles == nil {
+	if o == nil || IsNil(o.AssumedRoles) {
 		var ret []SiteAllOfNameResolutionAssumedRoles
 		return ret
 	}
@@ -539,7 +542,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRoles() []SiteAllOfNameR
 // GetAssumedRolesOk returns a tuple with the AssumedRoles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRolesOk() ([]SiteAllOfNameResolutionAssumedRoles, bool) {
-	if o == nil || o.AssumedRoles == nil {
+	if o == nil || IsNil(o.AssumedRoles) {
 		return nil, false
 	}
 	return o.AssumedRoles, true
@@ -547,7 +550,7 @@ func (o *SiteAllOfNameResolutionAwsResolvers) GetAssumedRolesOk() ([]SiteAllOfNa
 
 // HasAssumedRoles returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAwsResolvers) HasAssumedRoles() bool {
-	if o != nil && o.AssumedRoles != nil {
+	if o != nil && !IsNil(o.AssumedRoles) {
 		return true
 	}
 
@@ -560,53 +563,59 @@ func (o *SiteAllOfNameResolutionAwsResolvers) SetAssumedRoles(v []SiteAllOfNameR
 }
 
 func (o SiteAllOfNameResolutionAwsResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if o.Vpcs != nil {
-		toSerialize["vpcs"] = o.Vpcs
-	}
-	if o.VpcAutoDiscovery != nil {
-		toSerialize["vpcAutoDiscovery"] = o.VpcAutoDiscovery
-	}
-	if o.Regions != nil {
-		toSerialize["regions"] = o.Regions
-	}
-	if o.UseIAMRole != nil {
-		toSerialize["useIAMRole"] = o.UseIAMRole
-	}
-	if o.AccessKeyId != nil {
-		toSerialize["accessKeyId"] = o.AccessKeyId
-	}
-	if o.SecretAccessKey != nil {
-		toSerialize["secretAccessKey"] = o.SecretAccessKey
-	}
-	if o.HttpsProxy != nil {
-		toSerialize["httpsProxy"] = o.HttpsProxy
-	}
-	if o.ResolveWithMasterCredentials != nil {
-		toSerialize["resolveWithMasterCredentials"] = o.ResolveWithMasterCredentials
-	}
-	if o.Partition != nil {
-		toSerialize["partition"] = o.Partition
-	}
-	if o.Ec2 != nil {
-		toSerialize["ec2"] = o.Ec2
-	}
-	if o.Eks != nil {
-		toSerialize["eks"] = o.Eks
-	}
-	if o.Rds != nil {
-		toSerialize["rds"] = o.Rds
-	}
-	if o.AssumedRoles != nil {
-		toSerialize["assumedRoles"] = o.AssumedRoles
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionAwsResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.Vpcs) {
+		toSerialize["vpcs"] = o.Vpcs
+	}
+	if !IsNil(o.VpcAutoDiscovery) {
+		toSerialize["vpcAutoDiscovery"] = o.VpcAutoDiscovery
+	}
+	if !IsNil(o.Regions) {
+		toSerialize["regions"] = o.Regions
+	}
+	if !IsNil(o.UseIAMRole) {
+		toSerialize["useIAMRole"] = o.UseIAMRole
+	}
+	if !IsNil(o.AccessKeyId) {
+		toSerialize["accessKeyId"] = o.AccessKeyId
+	}
+	if !IsNil(o.SecretAccessKey) {
+		toSerialize["secretAccessKey"] = o.SecretAccessKey
+	}
+	if !IsNil(o.HttpsProxy) {
+		toSerialize["httpsProxy"] = o.HttpsProxy
+	}
+	if !IsNil(o.ResolveWithMasterCredentials) {
+		toSerialize["resolveWithMasterCredentials"] = o.ResolveWithMasterCredentials
+	}
+	if !IsNil(o.Partition) {
+		toSerialize["partition"] = o.Partition
+	}
+	if !IsNil(o.Ec2) {
+		toSerialize["ec2"] = o.Ec2
+	}
+	if !IsNil(o.Eks) {
+		toSerialize["eks"] = o.Eks
+	}
+	if !IsNil(o.Rds) {
+		toSerialize["rds"] = o.Rds
+	}
+	if !IsNil(o.AssumedRoles) {
+		toSerialize["assumedRoles"] = o.AssumedRoles
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionAwsResolvers struct {

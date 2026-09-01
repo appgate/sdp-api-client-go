@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the TokenRevocation type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TokenRevocation{}
+
 // TokenRevocation Response for token revocation response.
 type TokenRevocation struct {
 	// The ID assigned to the token.
@@ -65,7 +68,7 @@ func NewTokenRevocationWithDefaults() *TokenRevocation {
 
 // GetTokenId returns the TokenId field value if set, zero value otherwise.
 func (o *TokenRevocation) GetTokenId() string {
-	if o == nil || o.TokenId == nil {
+	if o == nil || IsNil(o.TokenId) {
 		var ret string
 		return ret
 	}
@@ -75,7 +78,7 @@ func (o *TokenRevocation) GetTokenId() string {
 // GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetTokenIdOk() (*string, bool) {
-	if o == nil || o.TokenId == nil {
+	if o == nil || IsNil(o.TokenId) {
 		return nil, false
 	}
 	return o.TokenId, true
@@ -83,7 +86,7 @@ func (o *TokenRevocation) GetTokenIdOk() (*string, bool) {
 
 // HasTokenId returns a boolean if a field has been set.
 func (o *TokenRevocation) HasTokenId() bool {
-	if o != nil && o.TokenId != nil {
+	if o != nil && !IsNil(o.TokenId) {
 		return true
 	}
 
@@ -97,7 +100,7 @@ func (o *TokenRevocation) SetTokenId(v string) {
 
 // GetTokenType returns the TokenType field value if set, zero value otherwise.
 func (o *TokenRevocation) GetTokenType() string {
-	if o == nil || o.TokenType == nil {
+	if o == nil || IsNil(o.TokenType) {
 		var ret string
 		return ret
 	}
@@ -107,7 +110,7 @@ func (o *TokenRevocation) GetTokenType() string {
 // GetTokenTypeOk returns a tuple with the TokenType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetTokenTypeOk() (*string, bool) {
-	if o == nil || o.TokenType == nil {
+	if o == nil || IsNil(o.TokenType) {
 		return nil, false
 	}
 	return o.TokenType, true
@@ -115,7 +118,7 @@ func (o *TokenRevocation) GetTokenTypeOk() (*string, bool) {
 
 // HasTokenType returns a boolean if a field has been set.
 func (o *TokenRevocation) HasTokenType() bool {
-	if o != nil && o.TokenType != nil {
+	if o != nil && !IsNil(o.TokenType) {
 		return true
 	}
 
@@ -129,7 +132,7 @@ func (o *TokenRevocation) SetTokenType(v string) {
 
 // GetDistinguishedName returns the DistinguishedName field value if set, zero value otherwise.
 func (o *TokenRevocation) GetDistinguishedName() string {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *TokenRevocation) GetDistinguishedName() string {
 // GetDistinguishedNameOk returns a tuple with the DistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		return nil, false
 	}
 	return o.DistinguishedName, true
@@ -147,7 +150,7 @@ func (o *TokenRevocation) GetDistinguishedNameOk() (*string, bool) {
 
 // HasDistinguishedName returns a boolean if a field has been set.
 func (o *TokenRevocation) HasDistinguishedName() bool {
-	if o != nil && o.DistinguishedName != nil {
+	if o != nil && !IsNil(o.DistinguishedName) {
 		return true
 	}
 
@@ -161,7 +164,7 @@ func (o *TokenRevocation) SetDistinguishedName(v string) {
 
 // GetIssued returns the Issued field value if set, zero value otherwise.
 func (o *TokenRevocation) GetIssued() time.Time {
-	if o == nil || o.Issued == nil {
+	if o == nil || IsNil(o.Issued) {
 		var ret time.Time
 		return ret
 	}
@@ -171,7 +174,7 @@ func (o *TokenRevocation) GetIssued() time.Time {
 // GetIssuedOk returns a tuple with the Issued field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetIssuedOk() (*time.Time, bool) {
-	if o == nil || o.Issued == nil {
+	if o == nil || IsNil(o.Issued) {
 		return nil, false
 	}
 	return o.Issued, true
@@ -179,7 +182,7 @@ func (o *TokenRevocation) GetIssuedOk() (*time.Time, bool) {
 
 // HasIssued returns a boolean if a field has been set.
 func (o *TokenRevocation) HasIssued() bool {
-	if o != nil && o.Issued != nil {
+	if o != nil && !IsNil(o.Issued) {
 		return true
 	}
 
@@ -193,7 +196,7 @@ func (o *TokenRevocation) SetIssued(v time.Time) {
 
 // GetExpires returns the Expires field value if set, zero value otherwise.
 func (o *TokenRevocation) GetExpires() time.Time {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		var ret time.Time
 		return ret
 	}
@@ -203,7 +206,7 @@ func (o *TokenRevocation) GetExpires() time.Time {
 // GetExpiresOk returns a tuple with the Expires field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetExpiresOk() (*time.Time, bool) {
-	if o == nil || o.Expires == nil {
+	if o == nil || IsNil(o.Expires) {
 		return nil, false
 	}
 	return o.Expires, true
@@ -211,7 +214,7 @@ func (o *TokenRevocation) GetExpiresOk() (*time.Time, bool) {
 
 // HasExpires returns a boolean if a field has been set.
 func (o *TokenRevocation) HasExpires() bool {
-	if o != nil && o.Expires != nil {
+	if o != nil && !IsNil(o.Expires) {
 		return true
 	}
 
@@ -225,7 +228,7 @@ func (o *TokenRevocation) SetExpires(v time.Time) {
 
 // GetRevoked returns the Revoked field value if set, zero value otherwise.
 func (o *TokenRevocation) GetRevoked() bool {
-	if o == nil || o.Revoked == nil {
+	if o == nil || IsNil(o.Revoked) {
 		var ret bool
 		return ret
 	}
@@ -235,7 +238,7 @@ func (o *TokenRevocation) GetRevoked() bool {
 // GetRevokedOk returns a tuple with the Revoked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetRevokedOk() (*bool, bool) {
-	if o == nil || o.Revoked == nil {
+	if o == nil || IsNil(o.Revoked) {
 		return nil, false
 	}
 	return o.Revoked, true
@@ -243,7 +246,7 @@ func (o *TokenRevocation) GetRevokedOk() (*bool, bool) {
 
 // HasRevoked returns a boolean if a field has been set.
 func (o *TokenRevocation) HasRevoked() bool {
-	if o != nil && o.Revoked != nil {
+	if o != nil && !IsNil(o.Revoked) {
 		return true
 	}
 
@@ -257,7 +260,7 @@ func (o *TokenRevocation) SetRevoked(v bool) {
 
 // GetSiteId returns the SiteId field value if set, zero value otherwise.
 func (o *TokenRevocation) GetSiteId() string {
-	if o == nil || o.SiteId == nil {
+	if o == nil || IsNil(o.SiteId) {
 		var ret string
 		return ret
 	}
@@ -267,7 +270,7 @@ func (o *TokenRevocation) GetSiteId() string {
 // GetSiteIdOk returns a tuple with the SiteId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetSiteIdOk() (*string, bool) {
-	if o == nil || o.SiteId == nil {
+	if o == nil || IsNil(o.SiteId) {
 		return nil, false
 	}
 	return o.SiteId, true
@@ -275,7 +278,7 @@ func (o *TokenRevocation) GetSiteIdOk() (*string, bool) {
 
 // HasSiteId returns a boolean if a field has been set.
 func (o *TokenRevocation) HasSiteId() bool {
-	if o != nil && o.SiteId != nil {
+	if o != nil && !IsNil(o.SiteId) {
 		return true
 	}
 
@@ -289,7 +292,7 @@ func (o *TokenRevocation) SetSiteId(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *TokenRevocation) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -299,7 +302,7 @@ func (o *TokenRevocation) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -307,7 +310,7 @@ func (o *TokenRevocation) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *TokenRevocation) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -321,7 +324,7 @@ func (o *TokenRevocation) SetSiteName(v string) {
 
 // GetRevocationTime returns the RevocationTime field value if set, zero value otherwise.
 func (o *TokenRevocation) GetRevocationTime() time.Time {
-	if o == nil || o.RevocationTime == nil {
+	if o == nil || IsNil(o.RevocationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -331,7 +334,7 @@ func (o *TokenRevocation) GetRevocationTime() time.Time {
 // GetRevocationTimeOk returns a tuple with the RevocationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetRevocationTimeOk() (*time.Time, bool) {
-	if o == nil || o.RevocationTime == nil {
+	if o == nil || IsNil(o.RevocationTime) {
 		return nil, false
 	}
 	return o.RevocationTime, true
@@ -339,7 +342,7 @@ func (o *TokenRevocation) GetRevocationTimeOk() (*time.Time, bool) {
 
 // HasRevocationTime returns a boolean if a field has been set.
 func (o *TokenRevocation) HasRevocationTime() bool {
-	if o != nil && o.RevocationTime != nil {
+	if o != nil && !IsNil(o.RevocationTime) {
 		return true
 	}
 
@@ -353,7 +356,7 @@ func (o *TokenRevocation) SetRevocationTime(v time.Time) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *TokenRevocation) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -363,7 +366,7 @@ func (o *TokenRevocation) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -371,7 +374,7 @@ func (o *TokenRevocation) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *TokenRevocation) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -385,7 +388,7 @@ func (o *TokenRevocation) SetDeviceId(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *TokenRevocation) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -395,7 +398,7 @@ func (o *TokenRevocation) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -403,7 +406,7 @@ func (o *TokenRevocation) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *TokenRevocation) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -417,7 +420,7 @@ func (o *TokenRevocation) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *TokenRevocation) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -427,7 +430,7 @@ func (o *TokenRevocation) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -435,7 +438,7 @@ func (o *TokenRevocation) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *TokenRevocation) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -449,7 +452,7 @@ func (o *TokenRevocation) SetProviderName(v string) {
 
 // GetControllerHostname returns the ControllerHostname field value if set, zero value otherwise.
 func (o *TokenRevocation) GetControllerHostname() string {
-	if o == nil || o.ControllerHostname == nil {
+	if o == nil || IsNil(o.ControllerHostname) {
 		var ret string
 		return ret
 	}
@@ -459,7 +462,7 @@ func (o *TokenRevocation) GetControllerHostname() string {
 // GetControllerHostnameOk returns a tuple with the ControllerHostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TokenRevocation) GetControllerHostnameOk() (*string, bool) {
-	if o == nil || o.ControllerHostname == nil {
+	if o == nil || IsNil(o.ControllerHostname) {
 		return nil, false
 	}
 	return o.ControllerHostname, true
@@ -467,7 +470,7 @@ func (o *TokenRevocation) GetControllerHostnameOk() (*string, bool) {
 
 // HasControllerHostname returns a boolean if a field has been set.
 func (o *TokenRevocation) HasControllerHostname() bool {
-	if o != nil && o.ControllerHostname != nil {
+	if o != nil && !IsNil(o.ControllerHostname) {
 		return true
 	}
 
@@ -480,47 +483,55 @@ func (o *TokenRevocation) SetControllerHostname(v string) {
 }
 
 func (o TokenRevocation) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TokenId != nil {
-		toSerialize["tokenId"] = o.TokenId
-	}
-	if o.TokenType != nil {
-		toSerialize["tokenType"] = o.TokenType
-	}
-	if o.DistinguishedName != nil {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if o.Issued != nil {
-		toSerialize["issued"] = o.Issued
-	}
-	if o.Expires != nil {
-		toSerialize["expires"] = o.Expires
-	}
-	if o.Revoked != nil {
-		toSerialize["revoked"] = o.Revoked
-	}
-	if o.SiteId != nil {
-		toSerialize["siteId"] = o.SiteId
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.RevocationTime != nil {
-		toSerialize["revocationTime"] = o.RevocationTime
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.ControllerHostname != nil {
-		toSerialize["controllerHostname"] = o.ControllerHostname
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o TokenRevocation) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TokenId) {
+		toSerialize["tokenId"] = o.TokenId
+	}
+	if !IsNil(o.TokenType) {
+		toSerialize["tokenType"] = o.TokenType
+	}
+	if !IsNil(o.DistinguishedName) {
+		toSerialize["distinguishedName"] = o.DistinguishedName
+	}
+	if !IsNil(o.Issued) {
+		toSerialize["issued"] = o.Issued
+	}
+	if !IsNil(o.Expires) {
+		toSerialize["expires"] = o.Expires
+	}
+	if !IsNil(o.Revoked) {
+		toSerialize["revoked"] = o.Revoked
+	}
+	if !IsNil(o.SiteId) {
+		toSerialize["siteId"] = o.SiteId
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.RevocationTime) {
+		toSerialize["revocationTime"] = o.RevocationTime
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.ControllerHostname) {
+		toSerialize["controllerHostname"] = o.ControllerHostname
+	}
+	return toSerialize, nil
 }
 
 type NullableTokenRevocation struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CertificateAuthorityCrlGet200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CertificateAuthorityCrlGet200Response{}
+
 // CertificateAuthorityCrlGet200Response struct for CertificateAuthorityCrlGet200Response
 type CertificateAuthorityCrlGet200Response struct {
 	// CRL file in base64 format.
@@ -40,7 +43,7 @@ func NewCertificateAuthorityCrlGet200ResponseWithDefaults() *CertificateAuthorit
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *CertificateAuthorityCrlGet200Response) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CertificateAuthorityCrlGet200Response) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CertificateAuthorityCrlGet200Response) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -58,7 +61,7 @@ func (o *CertificateAuthorityCrlGet200Response) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *CertificateAuthorityCrlGet200Response) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *CertificateAuthorityCrlGet200Response) SetFile(v string) {
 }
 
 func (o CertificateAuthorityCrlGet200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.File != nil {
-		toSerialize["file"] = o.File
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CertificateAuthorityCrlGet200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	return toSerialize, nil
 }
 
 type NullableCertificateAuthorityCrlGet200Response struct {

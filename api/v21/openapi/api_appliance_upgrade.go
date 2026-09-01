@@ -14,7 +14,7 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -81,7 +81,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/complete"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -107,7 +107,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	// body params
 	localVarPostBody = r.appliancesIdUpgradeCompletePostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -120,9 +120,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -139,6 +139,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -149,6 +150,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -159,6 +161,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -169,6 +172,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -179,6 +183,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -189,6 +194,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -199,6 +205,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeCompletePostExecute(r Ap
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -267,7 +274,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -293,7 +300,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -304,9 +311,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -323,6 +330,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -333,6 +341,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -343,6 +352,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -353,6 +363,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -363,6 +374,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -373,6 +385,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeDeleteExecute(r ApiAppli
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -403,7 +416,7 @@ func (r ApiAppliancesIdUpgradeGetRequest) Authorization(authorization string) Ap
 	return r
 }
 
-func (r ApiAppliancesIdUpgradeGetRequest) Execute() (*AppliancesIdUpgradeDelete200Response, *http.Response, error) {
+func (r ApiAppliancesIdUpgradeGetRequest) Execute() (*AppliancesIdUpgradeGet200Response, *http.Response, error) {
 	return r.ApiService.AppliancesIdUpgradeGetExecute(r)
 }
 
@@ -426,13 +439,13 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGet(ctx context.Context,
 
 // Execute executes the request
 //
-//	@return AppliancesIdUpgradeDelete200Response
-func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (*AppliancesIdUpgradeDelete200Response, *http.Response, error) {
+//	@return AppliancesIdUpgradeGet200Response
+func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiAppliancesIdUpgradeGetRequest) (*AppliancesIdUpgradeGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *AppliancesIdUpgradeDelete200Response
+		localVarReturnValue *AppliancesIdUpgradeGet200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApplianceUpgradeApiService.AppliancesIdUpgradeGet")
@@ -441,7 +454,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -467,7 +480,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -478,9 +491,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -497,6 +510,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -507,6 +521,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -517,6 +532,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -527,6 +543,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -537,6 +554,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -547,6 +565,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeGetExecute(r ApiApplianc
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -621,7 +640,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -650,7 +669,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	// body params
 	localVarPostBody = r.applianceUpgrade
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -663,9 +682,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -682,6 +701,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -692,6 +712,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -702,6 +723,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -712,6 +734,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -722,6 +745,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -732,6 +756,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -742,6 +767,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePostExecute(r ApiApplian
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -816,7 +842,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/prepare"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -845,7 +871,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	// body params
 	localVarPostBody = r.applianceUpgrade
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -858,9 +884,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -877,6 +903,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -887,6 +914,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -897,6 +925,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -907,6 +936,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -917,6 +947,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -927,6 +958,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -937,6 +969,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradePreparePostExecute(r Api
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1005,7 +1038,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 	}
 
 	localVarPath := localBasePath + "/appliances/{id}/upgrade/switch-partition"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1031,7 +1064,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1042,9 +1075,9 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1061,6 +1094,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1071,6 +1105,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1081,6 +1116,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1091,6 +1127,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1101,6 +1138,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1111,6 +1149,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1121,6 +1160,7 @@ func (a *ApplianceUpgradeApiService) AppliancesIdUpgradeSwitchPartitionPostExecu
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1193,7 +1233,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 	}
 
 	localVarPath := localBasePath + "/files/{filename}"
-	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterToString(r.filename, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterValueToString(r.filename, "filename")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1203,7 +1243,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 	}
 
 	if r.checksum != nil {
-		localVarQueryParams.Add("checksum", parameterToString(*r.checksum, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "checksum", r.checksum, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1222,7 +1262,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -1233,9 +1273,9 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1252,6 +1292,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1262,6 +1303,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1272,6 +1314,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1282,6 +1325,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1292,6 +1336,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1302,6 +1347,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameDeleteExecute(r ApiFilesFilena
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -1368,7 +1414,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 	}
 
 	localVarPath := localBasePath + "/files/{filename}"
-	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterToString(r.filename, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterValueToString(r.filename, "filename")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1378,7 +1424,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 	}
 
 	if r.checksum != nil {
-		localVarQueryParams.Add("checksum", parameterToString(*r.checksum, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "checksum", r.checksum, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1397,7 +1443,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1408,9 +1454,9 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1427,6 +1473,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1437,6 +1484,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1447,6 +1495,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1457,6 +1506,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1467,6 +1517,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1477,6 +1528,7 @@ func (a *ApplianceUpgradeApiService) FilesFilenameGetExecute(r ApiFilesFilenameG
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1558,7 +1610,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 	}
 
 	if r.checksum != nil {
-		localVarQueryParams.Add("checksum", parameterToString(*r.checksum, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "checksum", r.checksum, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1577,7 +1629,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1588,9 +1640,9 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1607,6 +1659,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1617,6 +1670,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1627,6 +1681,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
@@ -1637,6 +1692,7 @@ func (a *ApplianceUpgradeApiService) FilesGetExecute(r ApiFilesGetRequest) (*Fil
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
@@ -1658,7 +1714,7 @@ type ApiFilesPostRequest struct {
 	ctx              context.Context
 	ApiService       *ApplianceUpgradeApiService
 	authorization    *string
-	filesGetRequest1 *FilesGetRequest1
+	filesPostRequest *FilesPostRequest
 }
 
 // The Token from the LoginResponse.
@@ -1667,8 +1723,8 @@ func (r ApiFilesPostRequest) Authorization(authorization string) ApiFilesPostReq
 	return r
 }
 
-func (r ApiFilesPostRequest) FilesGetRequest1(filesGetRequest1 FilesGetRequest1) ApiFilesPostRequest {
-	r.filesGetRequest1 = &filesGetRequest1
+func (r ApiFilesPostRequest) FilesPostRequest(filesPostRequest FilesPostRequest) ApiFilesPostRequest {
+	r.filesPostRequest = &filesPostRequest
 	return r
 }
 
@@ -1730,9 +1786,9 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	// body params
-	localVarPostBody = r.filesGetRequest1
+	localVarPostBody = r.filesPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -1743,9 +1799,9 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1762,6 +1818,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1772,6 +1829,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1782,6 +1840,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1792,6 +1851,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1802,6 +1862,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1812,6 +1873,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1822,6 +1884,7 @@ func (a *ApplianceUpgradeApiService) FilesPostExecute(r ApiFilesPostRequest) (*h
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
@@ -1834,7 +1897,7 @@ type ApiFilesPutRequest struct {
 	ctx           context.Context
 	ApiService    *ApplianceUpgradeApiService
 	authorization *string
-	file          **os.File
+	file          *os.File
 }
 
 // The Token from the LoginResponse.
@@ -1845,7 +1908,7 @@ func (r ApiFilesPutRequest) Authorization(authorization string) ApiFilesPutReque
 
 // The File to upload. \\\&quot;filename\\\&quot;w must be included in in Content-Disposition.
 func (r ApiFilesPutRequest) File(file *os.File) ApiFilesPutRequest {
-	r.file = &file
+	r.file = file
 	return r
 }
 
@@ -1907,24 +1970,23 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	localVarHeaderParams["Authorization"] = parameterToString(*r.authorization, "")
+	parameterAddToHeaderOrQuery(localVarHeaderParams, "Authorization", r.authorization, "")
 	var fileLocalVarFormFileName string
 	var fileLocalVarFileName string
 	var fileLocalVarFileBytes []byte
 
 	fileLocalVarFormFileName = "file"
 
-	var fileLocalVarFile *os.File
-	if r.file != nil {
-		fileLocalVarFile = *r.file
-	}
+	fileLocalVarFile := r.file
+
 	if fileLocalVarFile != nil {
-		fbs, _ := ioutil.ReadAll(fileLocalVarFile)
+		fbs, _ := io.ReadAll(fileLocalVarFile)
+
 		fileLocalVarFileBytes = fbs
 		fileLocalVarFileName = fileLocalVarFile.Name()
 		fileLocalVarFile.Close()
+		formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
 	}
-	formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -1935,9 +1997,9 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1954,6 +2016,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1964,6 +2027,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1974,6 +2038,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1984,6 +2049,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -1994,6 +2060,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
@@ -2004,6 +2071,7 @@ func (a *ApplianceUpgradeApiService) FilesPutExecute(r ApiFilesPutRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr

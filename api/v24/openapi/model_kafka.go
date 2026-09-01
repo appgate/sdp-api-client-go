@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Kafka type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Kafka{}
+
 // Kafka struct for Kafka
 type Kafka struct {
 	// Topic to publish logs to.
@@ -62,7 +65,7 @@ func NewKafkaWithDefaults() *Kafka {
 
 // GetTopic returns the Topic field value if set, zero value otherwise.
 func (o *Kafka) GetTopic() string {
-	if o == nil || o.Topic == nil {
+	if o == nil || IsNil(o.Topic) {
 		var ret string
 		return ret
 	}
@@ -72,7 +75,7 @@ func (o *Kafka) GetTopic() string {
 // GetTopicOk returns a tuple with the Topic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetTopicOk() (*string, bool) {
-	if o == nil || o.Topic == nil {
+	if o == nil || IsNil(o.Topic) {
 		return nil, false
 	}
 	return o.Topic, true
@@ -80,7 +83,7 @@ func (o *Kafka) GetTopicOk() (*string, bool) {
 
 // HasTopic returns a boolean if a field has been set.
 func (o *Kafka) HasTopic() bool {
-	if o != nil && o.Topic != nil {
+	if o != nil && !IsNil(o.Topic) {
 		return true
 	}
 
@@ -94,7 +97,7 @@ func (o *Kafka) SetTopic(v string) {
 
 // GetCompression returns the Compression field value if set, zero value otherwise.
 func (o *Kafka) GetCompression() string {
-	if o == nil || o.Compression == nil {
+	if o == nil || IsNil(o.Compression) {
 		var ret string
 		return ret
 	}
@@ -104,7 +107,7 @@ func (o *Kafka) GetCompression() string {
 // GetCompressionOk returns a tuple with the Compression field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetCompressionOk() (*string, bool) {
-	if o == nil || o.Compression == nil {
+	if o == nil || IsNil(o.Compression) {
 		return nil, false
 	}
 	return o.Compression, true
@@ -112,7 +115,7 @@ func (o *Kafka) GetCompressionOk() (*string, bool) {
 
 // HasCompression returns a boolean if a field has been set.
 func (o *Kafka) HasCompression() bool {
-	if o != nil && o.Compression != nil {
+	if o != nil && !IsNil(o.Compression) {
 		return true
 	}
 
@@ -150,7 +153,7 @@ func (o *Kafka) SetBootstrapServers(v []string) {
 
 // GetUseTLS returns the UseTLS field value if set, zero value otherwise.
 func (o *Kafka) GetUseTLS() bool {
-	if o == nil || o.UseTLS == nil {
+	if o == nil || IsNil(o.UseTLS) {
 		var ret bool
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *Kafka) GetUseTLS() bool {
 // GetUseTLSOk returns a tuple with the UseTLS field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetUseTLSOk() (*bool, bool) {
-	if o == nil || o.UseTLS == nil {
+	if o == nil || IsNil(o.UseTLS) {
 		return nil, false
 	}
 	return o.UseTLS, true
@@ -168,7 +171,7 @@ func (o *Kafka) GetUseTLSOk() (*bool, bool) {
 
 // HasUseTLS returns a boolean if a field has been set.
 func (o *Kafka) HasUseTLS() bool {
-	if o != nil && o.UseTLS != nil {
+	if o != nil && !IsNil(o.UseTLS) {
 		return true
 	}
 
@@ -206,7 +209,7 @@ func (o *Kafka) SetAuthenticationType(v string) {
 
 // GetAuthorizationToken returns the AuthorizationToken field value if set, zero value otherwise.
 func (o *Kafka) GetAuthorizationToken() string {
-	if o == nil || o.AuthorizationToken == nil {
+	if o == nil || IsNil(o.AuthorizationToken) {
 		var ret string
 		return ret
 	}
@@ -216,7 +219,7 @@ func (o *Kafka) GetAuthorizationToken() string {
 // GetAuthorizationTokenOk returns a tuple with the AuthorizationToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetAuthorizationTokenOk() (*string, bool) {
-	if o == nil || o.AuthorizationToken == nil {
+	if o == nil || IsNil(o.AuthorizationToken) {
 		return nil, false
 	}
 	return o.AuthorizationToken, true
@@ -224,7 +227,7 @@ func (o *Kafka) GetAuthorizationTokenOk() (*string, bool) {
 
 // HasAuthorizationToken returns a boolean if a field has been set.
 func (o *Kafka) HasAuthorizationToken() bool {
-	if o != nil && o.AuthorizationToken != nil {
+	if o != nil && !IsNil(o.AuthorizationToken) {
 		return true
 	}
 
@@ -238,7 +241,7 @@ func (o *Kafka) SetAuthorizationToken(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *Kafka) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -248,7 +251,7 @@ func (o *Kafka) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -256,7 +259,7 @@ func (o *Kafka) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *Kafka) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -270,7 +273,7 @@ func (o *Kafka) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *Kafka) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -280,7 +283,7 @@ func (o *Kafka) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Kafka) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -288,7 +291,7 @@ func (o *Kafka) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *Kafka) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -301,32 +304,36 @@ func (o *Kafka) SetPassword(v string) {
 }
 
 func (o Kafka) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Topic != nil {
-		toSerialize["topic"] = o.Topic
-	}
-	if o.Compression != nil {
-		toSerialize["compression"] = o.Compression
-	}
-	if true {
-		toSerialize["bootstrapServers"] = o.BootstrapServers
-	}
-	if o.UseTLS != nil {
-		toSerialize["useTLS"] = o.UseTLS
-	}
-	if true {
-		toSerialize["authenticationType"] = o.AuthenticationType
-	}
-	if o.AuthorizationToken != nil {
-		toSerialize["authorizationToken"] = o.AuthorizationToken
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Kafka) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Topic) {
+		toSerialize["topic"] = o.Topic
+	}
+	if !IsNil(o.Compression) {
+		toSerialize["compression"] = o.Compression
+	}
+	toSerialize["bootstrapServers"] = o.BootstrapServers
+	if !IsNil(o.UseTLS) {
+		toSerialize["useTLS"] = o.UseTLS
+	}
+	toSerialize["authenticationType"] = o.AuthenticationType
+	if !IsNil(o.AuthorizationToken) {
+		toSerialize["authorizationToken"] = o.AuthorizationToken
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
 }
 
 type NullableKafka struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UserScriptListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserScriptListAllOf{}
+
 // UserScriptListAllOf Represents a list of User Claim Scripts.
 type UserScriptListAllOf struct {
 	// List of User Claim Scripts.
@@ -40,7 +43,7 @@ func NewUserScriptListAllOfWithDefaults() *UserScriptListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *UserScriptListAllOf) GetData() []UserScript {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []UserScript
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *UserScriptListAllOf) GetData() []UserScript {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserScriptListAllOf) GetDataOk() ([]UserScript, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *UserScriptListAllOf) GetDataOk() ([]UserScript, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *UserScriptListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *UserScriptListAllOf) SetData(v []UserScript) {
 }
 
 func (o UserScriptListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserScriptListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableUserScriptListAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RadiusProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RadiusProviderAllOf{}
+
 // RadiusProviderAllOf Represents a Radius Identity Provider.
 type RadiusProviderAllOf struct {
 	// Hostnames/IP addresses to connect.
@@ -80,7 +83,7 @@ func (o *RadiusProviderAllOf) SetHostnames(v []string) {
 
 // GetPort returns the Port field value if set, zero value otherwise.
 func (o *RadiusProviderAllOf) GetPort() int32 {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		var ret int32
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *RadiusProviderAllOf) GetPort() int32 {
 // GetPortOk returns a tuple with the Port field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RadiusProviderAllOf) GetPortOk() (*int32, bool) {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		return nil, false
 	}
 	return o.Port, true
@@ -98,7 +101,7 @@ func (o *RadiusProviderAllOf) GetPortOk() (*int32, bool) {
 
 // HasPort returns a boolean if a field has been set.
 func (o *RadiusProviderAllOf) HasPort() bool {
-	if o != nil && o.Port != nil {
+	if o != nil && !IsNil(o.Port) {
 		return true
 	}
 
@@ -136,7 +139,7 @@ func (o *RadiusProviderAllOf) SetSharedSecret(v string) {
 
 // GetAuthenticationProtocol returns the AuthenticationProtocol field value if set, zero value otherwise.
 func (o *RadiusProviderAllOf) GetAuthenticationProtocol() string {
-	if o == nil || o.AuthenticationProtocol == nil {
+	if o == nil || IsNil(o.AuthenticationProtocol) {
 		var ret string
 		return ret
 	}
@@ -146,7 +149,7 @@ func (o *RadiusProviderAllOf) GetAuthenticationProtocol() string {
 // GetAuthenticationProtocolOk returns a tuple with the AuthenticationProtocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RadiusProviderAllOf) GetAuthenticationProtocolOk() (*string, bool) {
-	if o == nil || o.AuthenticationProtocol == nil {
+	if o == nil || IsNil(o.AuthenticationProtocol) {
 		return nil, false
 	}
 	return o.AuthenticationProtocol, true
@@ -154,7 +157,7 @@ func (o *RadiusProviderAllOf) GetAuthenticationProtocolOk() (*string, bool) {
 
 // HasAuthenticationProtocol returns a boolean if a field has been set.
 func (o *RadiusProviderAllOf) HasAuthenticationProtocol() bool {
-	if o != nil && o.AuthenticationProtocol != nil {
+	if o != nil && !IsNil(o.AuthenticationProtocol) {
 		return true
 	}
 
@@ -167,20 +170,24 @@ func (o *RadiusProviderAllOf) SetAuthenticationProtocol(v string) {
 }
 
 func (o RadiusProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostnames"] = o.Hostnames
-	}
-	if o.Port != nil {
-		toSerialize["port"] = o.Port
-	}
-	if true {
-		toSerialize["sharedSecret"] = o.SharedSecret
-	}
-	if o.AuthenticationProtocol != nil {
-		toSerialize["authenticationProtocol"] = o.AuthenticationProtocol
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RadiusProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostnames"] = o.Hostnames
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	toSerialize["sharedSecret"] = o.SharedSecret
+	if !IsNil(o.AuthenticationProtocol) {
+		toSerialize["authenticationProtocol"] = o.AuthenticationProtocol
+	}
+	return toSerialize, nil
 }
 
 type NullableRadiusProviderAllOf struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SiteAllOfNameResolutionDnsForwarding type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionDnsForwarding{}
 
 // SiteAllOfNameResolutionDnsForwarding DNS Forwarding feature. Always enabled and will be filled if there is no object is passed.
 type SiteAllOfNameResolutionDnsForwarding struct {
@@ -58,7 +61,7 @@ func NewSiteAllOfNameResolutionDnsForwardingWithDefaults() *SiteAllOfNameResolut
 
 // GetSiteIpv4 returns the SiteIpv4 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		var ret string
 		return ret
 	}
@@ -68,7 +71,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4() string {
 // GetSiteIpv4Ok returns a tuple with the SiteIpv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
-	if o == nil || o.SiteIpv4 == nil {
+	if o == nil || IsNil(o.SiteIpv4) {
 		return nil, false
 	}
 	return o.SiteIpv4, true
@@ -76,7 +79,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv4Ok() (*string, bool) {
 
 // HasSiteIpv4 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv4() bool {
-	if o != nil && o.SiteIpv4 != nil {
+	if o != nil && !IsNil(o.SiteIpv4) {
 		return true
 	}
 
@@ -90,7 +93,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetSiteIpv4(v string) {
 
 // GetSiteIpv6 returns the SiteIpv6 field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		var ret string
 		return ret
 	}
@@ -100,7 +103,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6() string {
 // GetSiteIpv6Ok returns a tuple with the SiteIpv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
-	if o == nil || o.SiteIpv6 == nil {
+	if o == nil || IsNil(o.SiteIpv6) {
 		return nil, false
 	}
 	return o.SiteIpv6, true
@@ -108,7 +111,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetSiteIpv6Ok() (*string, bool) {
 
 // HasSiteIpv6 returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasSiteIpv6() bool {
-	if o != nil && o.SiteIpv6 != nil {
+	if o != nil && !IsNil(o.SiteIpv6) {
 		return true
 	}
 
@@ -122,7 +125,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetSiteIpv6(v string) {
 
 // GetDnsServers returns the DnsServers field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServers() []string {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		var ret []string
 		return ret
 	}
@@ -132,7 +135,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServers() []string {
 // GetDnsServersOk returns a tuple with the DnsServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServersOk() ([]string, bool) {
-	if o == nil || o.DnsServers == nil {
+	if o == nil || IsNil(o.DnsServers) {
 		return nil, false
 	}
 	return o.DnsServers, true
@@ -140,7 +143,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDnsServersOk() ([]string, bool
 
 // HasDnsServers returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasDnsServers() bool {
-	if o != nil && o.DnsServers != nil {
+	if o != nil && !IsNil(o.DnsServers) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAllowDestinations(v []AllowRes
 // GetDefaultTtlSeconds returns the DefaultTtlSeconds field value if set, zero value otherwise.
 // Deprecated
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSeconds() int32 {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		var ret int32
 		return ret
 	}
@@ -190,7 +193,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSeconds() int32 {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSecondsOk() (*int32, bool) {
-	if o == nil || o.DefaultTtlSeconds == nil {
+	if o == nil || IsNil(o.DefaultTtlSeconds) {
 		return nil, false
 	}
 	return o.DefaultTtlSeconds, true
@@ -198,7 +201,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetDefaultTtlSecondsOk() (*int32,
 
 // HasDefaultTtlSeconds returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasDefaultTtlSeconds() bool {
-	if o != nil && o.DefaultTtlSeconds != nil {
+	if o != nil && !IsNil(o.DefaultTtlSeconds) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetDefaultTtlSeconds(v int32) {
 
 // GetMatchDomains returns the MatchDomains field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomains() []string {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		var ret []string
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomains() []string {
 // GetMatchDomainsOk returns a tuple with the MatchDomains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomainsOk() ([]string, bool) {
-	if o == nil || o.MatchDomains == nil {
+	if o == nil || IsNil(o.MatchDomains) {
 		return nil, false
 	}
 	return o.MatchDomains, true
@@ -231,7 +234,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetMatchDomainsOk() ([]string, bo
 
 // HasMatchDomains returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasMatchDomains() bool {
-	if o != nil && o.MatchDomains != nil {
+	if o != nil && !IsNil(o.MatchDomains) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetMatchDomains(v []string) {
 
 // GetAutoClientDns returns the AutoClientDns field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDns() bool {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		var ret bool
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDns() bool {
 // GetAutoClientDnsOk returns a tuple with the AutoClientDns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDnsOk() (*bool, bool) {
-	if o == nil || o.AutoClientDns == nil {
+	if o == nil || IsNil(o.AutoClientDns) {
 		return nil, false
 	}
 	return o.AutoClientDns, true
@@ -263,7 +266,7 @@ func (o *SiteAllOfNameResolutionDnsForwarding) GetAutoClientDnsOk() (*bool, bool
 
 // HasAutoClientDns returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionDnsForwarding) HasAutoClientDns() bool {
-	if o != nil && o.AutoClientDns != nil {
+	if o != nil && !IsNil(o.AutoClientDns) {
 		return true
 	}
 
@@ -276,29 +279,35 @@ func (o *SiteAllOfNameResolutionDnsForwarding) SetAutoClientDns(v bool) {
 }
 
 func (o SiteAllOfNameResolutionDnsForwarding) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SiteIpv4 != nil {
-		toSerialize["siteIpv4"] = o.SiteIpv4
-	}
-	if o.SiteIpv6 != nil {
-		toSerialize["siteIpv6"] = o.SiteIpv6
-	}
-	if o.DnsServers != nil {
-		toSerialize["dnsServers"] = o.DnsServers
-	}
-	if true {
-		toSerialize["allowDestinations"] = o.AllowDestinations
-	}
-	if o.DefaultTtlSeconds != nil {
-		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
-	}
-	if o.MatchDomains != nil {
-		toSerialize["matchDomains"] = o.MatchDomains
-	}
-	if o.AutoClientDns != nil {
-		toSerialize["autoClientDns"] = o.AutoClientDns
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionDnsForwarding) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SiteIpv4) {
+		toSerialize["siteIpv4"] = o.SiteIpv4
+	}
+	if !IsNil(o.SiteIpv6) {
+		toSerialize["siteIpv6"] = o.SiteIpv6
+	}
+	if !IsNil(o.DnsServers) {
+		toSerialize["dnsServers"] = o.DnsServers
+	}
+	toSerialize["allowDestinations"] = o.AllowDestinations
+	if !IsNil(o.DefaultTtlSeconds) {
+		toSerialize["defaultTtlSeconds"] = o.DefaultTtlSeconds
+	}
+	if !IsNil(o.MatchDomains) {
+		toSerialize["matchDomains"] = o.MatchDomains
+	}
+	if !IsNil(o.AutoClientDns) {
+		toSerialize["autoClientDns"] = o.AutoClientDns
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionDnsForwarding struct {

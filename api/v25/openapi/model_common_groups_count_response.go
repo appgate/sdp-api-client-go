@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CommonGroupsCountResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CommonGroupsCountResponse{}
+
 // CommonGroupsCountResponse Response body for common user groups count across the groups.
 type CommonGroupsCountResponse struct {
 	// Number of common user groups.
@@ -40,7 +43,7 @@ func NewCommonGroupsCountResponseWithDefaults() *CommonGroupsCountResponse {
 
 // GetCount returns the Count field value if set, zero value otherwise.
 func (o *CommonGroupsCountResponse) GetCount() int32 {
-	if o == nil || o.Count == nil {
+	if o == nil || IsNil(o.Count) {
 		var ret int32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *CommonGroupsCountResponse) GetCount() int32 {
 // GetCountOk returns a tuple with the Count field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CommonGroupsCountResponse) GetCountOk() (*int32, bool) {
-	if o == nil || o.Count == nil {
+	if o == nil || IsNil(o.Count) {
 		return nil, false
 	}
 	return o.Count, true
@@ -58,7 +61,7 @@ func (o *CommonGroupsCountResponse) GetCountOk() (*int32, bool) {
 
 // HasCount returns a boolean if a field has been set.
 func (o *CommonGroupsCountResponse) HasCount() bool {
-	if o != nil && o.Count != nil {
+	if o != nil && !IsNil(o.Count) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *CommonGroupsCountResponse) SetCount(v int32) {
 }
 
 func (o CommonGroupsCountResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Count != nil {
-		toSerialize["count"] = o.Count
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CommonGroupsCountResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Count) {
+		toSerialize["count"] = o.Count
+	}
+	return toSerialize, nil
 }
 
 type NullableCommonGroupsCountResponse struct {

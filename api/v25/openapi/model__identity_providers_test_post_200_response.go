@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IdentityProvidersTestPost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersTestPost200Response{}
+
 // IdentityProvidersTestPost200Response struct for IdentityProvidersTestPost200Response
 type IdentityProvidersTestPost200Response struct {
 	// Whether the connection succeeded or not.
@@ -42,7 +45,7 @@ func NewIdentityProvidersTestPost200ResponseWithDefaults() *IdentityProvidersTes
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
 func (o *IdentityProvidersTestPost200Response) GetSuccess() bool {
-	if o == nil || o.Success == nil {
+	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *IdentityProvidersTestPost200Response) GetSuccess() bool {
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersTestPost200Response) GetSuccessOk() (*bool, bool) {
-	if o == nil || o.Success == nil {
+	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
 	return o.Success, true
@@ -60,7 +63,7 @@ func (o *IdentityProvidersTestPost200Response) GetSuccessOk() (*bool, bool) {
 
 // HasSuccess returns a boolean if a field has been set.
 func (o *IdentityProvidersTestPost200Response) HasSuccess() bool {
-	if o != nil && o.Success != nil {
+	if o != nil && !IsNil(o.Success) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *IdentityProvidersTestPost200Response) SetSuccess(v bool) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *IdentityProvidersTestPost200Response) GetError() bool {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret bool
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *IdentityProvidersTestPost200Response) GetError() bool {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersTestPost200Response) GetErrorOk() (*bool, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -92,7 +95,7 @@ func (o *IdentityProvidersTestPost200Response) GetErrorOk() (*bool, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *IdentityProvidersTestPost200Response) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *IdentityProvidersTestPost200Response) SetError(v bool) {
 }
 
 func (o IdentityProvidersTestPost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Success != nil {
-		toSerialize["success"] = o.Success
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersTestPost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Success) {
+		toSerialize["success"] = o.Success
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersTestPost200Response struct {

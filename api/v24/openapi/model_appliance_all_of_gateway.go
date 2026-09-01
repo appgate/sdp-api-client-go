@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfGateway type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfGateway{}
+
 // ApplianceAllOfGateway Gateway settings.
 type ApplianceAllOfGateway struct {
 	// Whether the Gateway is enabled on this appliance or not.
@@ -51,7 +54,7 @@ func NewApplianceAllOfGatewayWithDefaults() *ApplianceAllOfGateway {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfGateway) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *ApplianceAllOfGateway) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfGateway) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -69,7 +72,7 @@ func (o *ApplianceAllOfGateway) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfGateway) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *ApplianceAllOfGateway) SetEnabled(v bool) {
 
 // GetSuspended returns the Suspended field value if set, zero value otherwise.
 func (o *ApplianceAllOfGateway) GetSuspended() bool {
-	if o == nil || o.Suspended == nil {
+	if o == nil || IsNil(o.Suspended) {
 		var ret bool
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *ApplianceAllOfGateway) GetSuspended() bool {
 // GetSuspendedOk returns a tuple with the Suspended field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfGateway) GetSuspendedOk() (*bool, bool) {
-	if o == nil || o.Suspended == nil {
+	if o == nil || IsNil(o.Suspended) {
 		return nil, false
 	}
 	return o.Suspended, true
@@ -101,7 +104,7 @@ func (o *ApplianceAllOfGateway) GetSuspendedOk() (*bool, bool) {
 
 // HasSuspended returns a boolean if a field has been set.
 func (o *ApplianceAllOfGateway) HasSuspended() bool {
-	if o != nil && o.Suspended != nil {
+	if o != nil && !IsNil(o.Suspended) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *ApplianceAllOfGateway) SetSuspended(v bool) {
 
 // GetVpn returns the Vpn field value if set, zero value otherwise.
 func (o *ApplianceAllOfGateway) GetVpn() ApplianceAllOfGatewayVpn {
-	if o == nil || o.Vpn == nil {
+	if o == nil || IsNil(o.Vpn) {
 		var ret ApplianceAllOfGatewayVpn
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *ApplianceAllOfGateway) GetVpn() ApplianceAllOfGatewayVpn {
 // GetVpnOk returns a tuple with the Vpn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfGateway) GetVpnOk() (*ApplianceAllOfGatewayVpn, bool) {
-	if o == nil || o.Vpn == nil {
+	if o == nil || IsNil(o.Vpn) {
 		return nil, false
 	}
 	return o.Vpn, true
@@ -133,7 +136,7 @@ func (o *ApplianceAllOfGateway) GetVpnOk() (*ApplianceAllOfGatewayVpn, bool) {
 
 // HasVpn returns a boolean if a field has been set.
 func (o *ApplianceAllOfGateway) HasVpn() bool {
-	if o != nil && o.Vpn != nil {
+	if o != nil && !IsNil(o.Vpn) {
 		return true
 	}
 
@@ -146,17 +149,25 @@ func (o *ApplianceAllOfGateway) SetVpn(v ApplianceAllOfGatewayVpn) {
 }
 
 func (o ApplianceAllOfGateway) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Suspended != nil {
-		toSerialize["suspended"] = o.Suspended
-	}
-	if o.Vpn != nil {
-		toSerialize["vpn"] = o.Vpn
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfGateway) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Suspended) {
+		toSerialize["suspended"] = o.Suspended
+	}
+	if !IsNil(o.Vpn) {
+		toSerialize["vpn"] = o.Vpn
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfGateway struct {

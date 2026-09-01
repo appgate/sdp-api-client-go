@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AppStatsEntry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppStatsEntry{}
+
 // AppStatsEntry struct for AppStatsEntry
 type AppStatsEntry struct {
 	// When the most recent entry was added.
@@ -41,7 +44,7 @@ func NewAppStatsEntryWithDefaults() *AppStatsEntry {
 
 // GetLatestEntryReceivedAt returns the LatestEntryReceivedAt field value if set, zero value otherwise.
 func (o *AppStatsEntry) GetLatestEntryReceivedAt() time.Time {
-	if o == nil || o.LatestEntryReceivedAt == nil {
+	if o == nil || IsNil(o.LatestEntryReceivedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *AppStatsEntry) GetLatestEntryReceivedAt() time.Time {
 // GetLatestEntryReceivedAtOk returns a tuple with the LatestEntryReceivedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppStatsEntry) GetLatestEntryReceivedAtOk() (*time.Time, bool) {
-	if o == nil || o.LatestEntryReceivedAt == nil {
+	if o == nil || IsNil(o.LatestEntryReceivedAt) {
 		return nil, false
 	}
 	return o.LatestEntryReceivedAt, true
@@ -59,7 +62,7 @@ func (o *AppStatsEntry) GetLatestEntryReceivedAtOk() (*time.Time, bool) {
 
 // HasLatestEntryReceivedAt returns a boolean if a field has been set.
 func (o *AppStatsEntry) HasLatestEntryReceivedAt() bool {
-	if o != nil && o.LatestEntryReceivedAt != nil {
+	if o != nil && !IsNil(o.LatestEntryReceivedAt) {
 		return true
 	}
 
@@ -72,11 +75,19 @@ func (o *AppStatsEntry) SetLatestEntryReceivedAt(v time.Time) {
 }
 
 func (o AppStatsEntry) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.LatestEntryReceivedAt != nil {
-		toSerialize["latestEntryReceivedAt"] = o.LatestEntryReceivedAt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppStatsEntry) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.LatestEntryReceivedAt) {
+		toSerialize["latestEntryReceivedAt"] = o.LatestEntryReceivedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableAppStatsEntry struct {

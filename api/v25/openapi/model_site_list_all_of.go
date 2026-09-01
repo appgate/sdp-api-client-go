@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteListAllOf{}
+
 // SiteListAllOf Represents a list of Sites.
 type SiteListAllOf struct {
 	// List of Sites.
@@ -40,7 +43,7 @@ func NewSiteListAllOfWithDefaults() *SiteListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *SiteListAllOf) GetData() []Site {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []Site
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *SiteListAllOf) GetData() []Site {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteListAllOf) GetDataOk() ([]Site, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *SiteListAllOf) GetDataOk() ([]Site, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *SiteListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *SiteListAllOf) SetData(v []Site) {
 }
 
 func (o SiteListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteListAllOf struct {

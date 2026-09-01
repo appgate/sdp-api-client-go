@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementOptimizerStatsGraphDataInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementOptimizerStatsGraphDataInner{}
+
 // EntitlementOptimizerStatsGraphDataInner struct for EntitlementOptimizerStatsGraphDataInner
 type EntitlementOptimizerStatsGraphDataInner struct {
 	// Number of days before today this sample represents.
@@ -42,7 +45,7 @@ func NewEntitlementOptimizerStatsGraphDataInnerWithDefaults() *EntitlementOptimi
 
 // GetDaysAgo returns the DaysAgo field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStatsGraphDataInner) GetDaysAgo() int32 {
-	if o == nil || o.DaysAgo == nil {
+	if o == nil || IsNil(o.DaysAgo) {
 		var ret int32
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *EntitlementOptimizerStatsGraphDataInner) GetDaysAgo() int32 {
 // GetDaysAgoOk returns a tuple with the DaysAgo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStatsGraphDataInner) GetDaysAgoOk() (*int32, bool) {
-	if o == nil || o.DaysAgo == nil {
+	if o == nil || IsNil(o.DaysAgo) {
 		return nil, false
 	}
 	return o.DaysAgo, true
@@ -60,7 +63,7 @@ func (o *EntitlementOptimizerStatsGraphDataInner) GetDaysAgoOk() (*int32, bool) 
 
 // HasDaysAgo returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStatsGraphDataInner) HasDaysAgo() bool {
-	if o != nil && o.DaysAgo != nil {
+	if o != nil && !IsNil(o.DaysAgo) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *EntitlementOptimizerStatsGraphDataInner) SetDaysAgo(v int32) {
 
 // GetPercent returns the Percent field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStatsGraphDataInner) GetPercent() int32 {
-	if o == nil || o.Percent == nil {
+	if o == nil || IsNil(o.Percent) {
 		var ret int32
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *EntitlementOptimizerStatsGraphDataInner) GetPercent() int32 {
 // GetPercentOk returns a tuple with the Percent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStatsGraphDataInner) GetPercentOk() (*int32, bool) {
-	if o == nil || o.Percent == nil {
+	if o == nil || IsNil(o.Percent) {
 		return nil, false
 	}
 	return o.Percent, true
@@ -92,7 +95,7 @@ func (o *EntitlementOptimizerStatsGraphDataInner) GetPercentOk() (*int32, bool) 
 
 // HasPercent returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStatsGraphDataInner) HasPercent() bool {
-	if o != nil && o.Percent != nil {
+	if o != nil && !IsNil(o.Percent) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *EntitlementOptimizerStatsGraphDataInner) SetPercent(v int32) {
 }
 
 func (o EntitlementOptimizerStatsGraphDataInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DaysAgo != nil {
-		toSerialize["daysAgo"] = o.DaysAgo
-	}
-	if o.Percent != nil {
-		toSerialize["percent"] = o.Percent
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementOptimizerStatsGraphDataInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DaysAgo) {
+		toSerialize["daysAgo"] = o.DaysAgo
+	}
+	if !IsNil(o.Percent) {
+		toSerialize["percent"] = o.Percent
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementOptimizerStatsGraphDataInner struct {

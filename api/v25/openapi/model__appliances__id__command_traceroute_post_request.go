@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdCommandTraceroutePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdCommandTraceroutePostRequest{}
+
 // AppliancesIdCommandTraceroutePostRequest struct for AppliancesIdCommandTraceroutePostRequest
 type AppliancesIdCommandTraceroutePostRequest struct {
 	// The destination to trace.
@@ -71,7 +74,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) SetDestination(v string) {
 
 // GetProcessTimeout returns the ProcessTimeout field value if set, zero value otherwise.
 func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeout() int32 {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		var ret int32
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeout() int32 {
 // GetProcessTimeoutOk returns a tuple with the ProcessTimeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeoutOk() (*int32, bool) {
-	if o == nil || o.ProcessTimeout == nil {
+	if o == nil || IsNil(o.ProcessTimeout) {
 		return nil, false
 	}
 	return o.ProcessTimeout, true
@@ -89,7 +92,7 @@ func (o *AppliancesIdCommandTraceroutePostRequest) GetProcessTimeoutOk() (*int32
 
 // HasProcessTimeout returns a boolean if a field has been set.
 func (o *AppliancesIdCommandTraceroutePostRequest) HasProcessTimeout() bool {
-	if o != nil && o.ProcessTimeout != nil {
+	if o != nil && !IsNil(o.ProcessTimeout) {
 		return true
 	}
 
@@ -102,14 +105,20 @@ func (o *AppliancesIdCommandTraceroutePostRequest) SetProcessTimeout(v int32) {
 }
 
 func (o AppliancesIdCommandTraceroutePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["destination"] = o.Destination
-	}
-	if o.ProcessTimeout != nil {
-		toSerialize["processTimeout"] = o.ProcessTimeout
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdCommandTraceroutePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["destination"] = o.Destination
+	if !IsNil(o.ProcessTimeout) {
+		toSerialize["processTimeout"] = o.ProcessTimeout
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdCommandTraceroutePostRequest struct {

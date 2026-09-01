@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Coralogix type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Coralogix{}
+
 // Coralogix struct for Coralogix
 type Coralogix struct {
 	// URL of the Coralogix collector to connect to.
@@ -172,23 +175,21 @@ func (o *Coralogix) SetSubsystemName(v string) {
 }
 
 func (o Coralogix) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if true {
-		toSerialize["privateKey"] = o.PrivateKey
-	}
-	if true {
-		toSerialize["uuid"] = o.Uuid
-	}
-	if true {
-		toSerialize["applicationName"] = o.ApplicationName
-	}
-	if true {
-		toSerialize["subsystemName"] = o.SubsystemName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Coralogix) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["url"] = o.Url
+	toSerialize["privateKey"] = o.PrivateKey
+	toSerialize["uuid"] = o.Uuid
+	toSerialize["applicationName"] = o.ApplicationName
+	toSerialize["subsystemName"] = o.SubsystemName
+	return toSerialize, nil
 }
 
 type NullableCoralogix struct {

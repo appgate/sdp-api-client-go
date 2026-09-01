@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfLocalSiteDetection type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfLocalSiteDetection{}
+
 // SiteAllOfLocalSiteDetection Local Site Detection feature settings.
 type SiteAllOfLocalSiteDetection struct {
 	// Enables the Local Site Detection feature.
@@ -46,7 +49,7 @@ func NewSiteAllOfLocalSiteDetectionWithDefaults() *SiteAllOfLocalSiteDetection {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *SiteAllOfLocalSiteDetection) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *SiteAllOfLocalSiteDetection) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfLocalSiteDetection) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -64,7 +67,7 @@ func (o *SiteAllOfLocalSiteDetection) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *SiteAllOfLocalSiteDetection) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *SiteAllOfLocalSiteDetection) SetEnabled(v bool) {
 
 // GetPublicIps returns the PublicIps field value if set, zero value otherwise.
 func (o *SiteAllOfLocalSiteDetection) GetPublicIps() []string {
-	if o == nil || o.PublicIps == nil {
+	if o == nil || IsNil(o.PublicIps) {
 		var ret []string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *SiteAllOfLocalSiteDetection) GetPublicIps() []string {
 // GetPublicIpsOk returns a tuple with the PublicIps field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfLocalSiteDetection) GetPublicIpsOk() ([]string, bool) {
-	if o == nil || o.PublicIps == nil {
+	if o == nil || IsNil(o.PublicIps) {
 		return nil, false
 	}
 	return o.PublicIps, true
@@ -96,7 +99,7 @@ func (o *SiteAllOfLocalSiteDetection) GetPublicIpsOk() ([]string, bool) {
 
 // HasPublicIps returns a boolean if a field has been set.
 func (o *SiteAllOfLocalSiteDetection) HasPublicIps() bool {
-	if o != nil && o.PublicIps != nil {
+	if o != nil && !IsNil(o.PublicIps) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *SiteAllOfLocalSiteDetection) SetPublicIps(v []string) {
 }
 
 func (o SiteAllOfLocalSiteDetection) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.PublicIps != nil {
-		toSerialize["publicIps"] = o.PublicIps
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfLocalSiteDetection) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.PublicIps) {
+		toSerialize["publicIps"] = o.PublicIps
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfLocalSiteDetection struct {

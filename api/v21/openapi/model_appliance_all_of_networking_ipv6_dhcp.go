@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworkingIpv6Dhcp type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingIpv6Dhcp{}
+
 // ApplianceAllOfNetworkingIpv6Dhcp IPv6 DHCP configuration for the NIC.
 type ApplianceAllOfNetworkingIpv6Dhcp struct {
 	// Whether DHCP for IPv6 is enabled.
@@ -46,7 +49,7 @@ func NewApplianceAllOfNetworkingIpv6DhcpWithDefaults() *ApplianceAllOfNetworking
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -64,7 +67,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetEnabled(v bool) {
 
 // GetDns returns the Dns field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetDns() bool {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		var ret bool
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetDns() bool {
 // GetDnsOk returns a tuple with the Dns field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetDnsOk() (*bool, bool) {
-	if o == nil || o.Dns == nil {
+	if o == nil || IsNil(o.Dns) {
 		return nil, false
 	}
 	return o.Dns, true
@@ -96,7 +99,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetDnsOk() (*bool, bool) {
 
 // HasDns returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) HasDns() bool {
-	if o != nil && o.Dns != nil {
+	if o != nil && !IsNil(o.Dns) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetDns(v bool) {
 
 // GetNtp returns the Ntp field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetNtp() bool {
-	if o == nil || o.Ntp == nil {
+	if o == nil || IsNil(o.Ntp) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetNtp() bool {
 // GetNtpOk returns a tuple with the Ntp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetNtpOk() (*bool, bool) {
-	if o == nil || o.Ntp == nil {
+	if o == nil || IsNil(o.Ntp) {
 		return nil, false
 	}
 	return o.Ntp, true
@@ -128,7 +131,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetNtpOk() (*bool, bool) {
 
 // HasNtp returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) HasNtp() bool {
-	if o != nil && o.Ntp != nil {
+	if o != nil && !IsNil(o.Ntp) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetNtp(v bool) {
 
 // GetMtu returns the Mtu field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetMtu() bool {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetMtu() bool {
 // GetMtuOk returns a tuple with the Mtu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetMtuOk() (*bool, bool) {
-	if o == nil || o.Mtu == nil {
+	if o == nil || IsNil(o.Mtu) {
 		return nil, false
 	}
 	return o.Mtu, true
@@ -160,7 +163,7 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetMtuOk() (*bool, bool) {
 
 // HasMtu returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) HasMtu() bool {
-	if o != nil && o.Mtu != nil {
+	if o != nil && !IsNil(o.Mtu) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetMtu(v bool) {
 }
 
 func (o ApplianceAllOfNetworkingIpv6Dhcp) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.Dns != nil {
-		toSerialize["dns"] = o.Dns
-	}
-	if o.Ntp != nil {
-		toSerialize["ntp"] = o.Ntp
-	}
-	if o.Mtu != nil {
-		toSerialize["mtu"] = o.Mtu
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingIpv6Dhcp) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Dns) {
+		toSerialize["dns"] = o.Dns
+	}
+	if !IsNil(o.Ntp) {
+		toSerialize["ntp"] = o.Ntp
+	}
+	if !IsNil(o.Mtu) {
+		toSerialize["mtu"] = o.Mtu
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworkingIpv6Dhcp struct {

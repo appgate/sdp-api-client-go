@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ZtpStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ZtpStatus{}
+
 // ZtpStatus struct for ZtpStatus
 type ZtpStatus struct {
 	// Whether the collective has registered to ZTP or not.
@@ -44,7 +47,7 @@ func NewZtpStatusWithDefaults() *ZtpStatus {
 
 // GetRegistered returns the Registered field value if set, zero value otherwise.
 func (o *ZtpStatus) GetRegistered() bool {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ZtpStatus) GetRegistered() bool {
 // GetRegisteredOk returns a tuple with the Registered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetRegisteredOk() (*bool, bool) {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		return nil, false
 	}
 	return o.Registered, true
@@ -62,7 +65,7 @@ func (o *ZtpStatus) GetRegisteredOk() (*bool, bool) {
 
 // HasRegistered returns a boolean if a field has been set.
 func (o *ZtpStatus) HasRegistered() bool {
-	if o != nil && o.Registered != nil {
+	if o != nil && !IsNil(o.Registered) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ZtpStatus) SetRegistered(v bool) {
 
 // GetServiceNames returns the ServiceNames field value if set, zero value otherwise.
 func (o *ZtpStatus) GetServiceNames() []string {
-	if o == nil || o.ServiceNames == nil {
+	if o == nil || IsNil(o.ServiceNames) {
 		var ret []string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ZtpStatus) GetServiceNames() []string {
 // GetServiceNamesOk returns a tuple with the ServiceNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetServiceNamesOk() ([]string, bool) {
-	if o == nil || o.ServiceNames == nil {
+	if o == nil || IsNil(o.ServiceNames) {
 		return nil, false
 	}
 	return o.ServiceNames, true
@@ -94,7 +97,7 @@ func (o *ZtpStatus) GetServiceNamesOk() ([]string, bool) {
 
 // HasServiceNames returns a boolean if a field has been set.
 func (o *ZtpStatus) HasServiceNames() bool {
-	if o != nil && o.ServiceNames != nil {
+	if o != nil && !IsNil(o.ServiceNames) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ZtpStatus) SetServiceNames(v []string) {
 
 // GetConsoleUrl returns the ConsoleUrl field value if set, zero value otherwise.
 func (o *ZtpStatus) GetConsoleUrl() string {
-	if o == nil || o.ConsoleUrl == nil {
+	if o == nil || IsNil(o.ConsoleUrl) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ZtpStatus) GetConsoleUrl() string {
 // GetConsoleUrlOk returns a tuple with the ConsoleUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ZtpStatus) GetConsoleUrlOk() (*string, bool) {
-	if o == nil || o.ConsoleUrl == nil {
+	if o == nil || IsNil(o.ConsoleUrl) {
 		return nil, false
 	}
 	return o.ConsoleUrl, true
@@ -126,7 +129,7 @@ func (o *ZtpStatus) GetConsoleUrlOk() (*string, bool) {
 
 // HasConsoleUrl returns a boolean if a field has been set.
 func (o *ZtpStatus) HasConsoleUrl() bool {
-	if o != nil && o.ConsoleUrl != nil {
+	if o != nil && !IsNil(o.ConsoleUrl) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ZtpStatus) SetConsoleUrl(v string) {
 }
 
 func (o ZtpStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Registered != nil {
-		toSerialize["registered"] = o.Registered
-	}
-	if o.ServiceNames != nil {
-		toSerialize["serviceNames"] = o.ServiceNames
-	}
-	if o.ConsoleUrl != nil {
-		toSerialize["consoleUrl"] = o.ConsoleUrl
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ZtpStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Registered) {
+		toSerialize["registered"] = o.Registered
+	}
+	if !IsNil(o.ServiceNames) {
+		toSerialize["serviceNames"] = o.ServiceNames
+	}
+	if !IsNil(o.ConsoleUrl) {
+		toSerialize["consoleUrl"] = o.ConsoleUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableZtpStatus struct {

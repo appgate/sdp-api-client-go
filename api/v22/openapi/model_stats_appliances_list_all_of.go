@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the StatsAppliancesListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesListAllOf{}
 
 // StatsAppliancesListAllOf struct for StatsAppliancesListAllOf
 type StatsAppliancesListAllOf struct {
@@ -57,7 +60,7 @@ func NewStatsAppliancesListAllOfWithDefaults() *StatsAppliancesListAllOf {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *StatsAppliancesListAllOf) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -75,7 +78,7 @@ func (o *StatsAppliancesListAllOf) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *StatsAppliancesListAllOf) SetQueries(v []string) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *StatsAppliancesListAllOf) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -107,7 +110,7 @@ func (o *StatsAppliancesListAllOf) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *StatsAppliancesListAllOf) SetFilterBy(v []FilterBy) {
 
 // GetControllerCount returns the ControllerCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetControllerCount() float32 {
-	if o == nil || o.ControllerCount == nil {
+	if o == nil || IsNil(o.ControllerCount) {
 		var ret float32
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *StatsAppliancesListAllOf) GetControllerCount() float32 {
 // GetControllerCountOk returns a tuple with the ControllerCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetControllerCountOk() (*float32, bool) {
-	if o == nil || o.ControllerCount == nil {
+	if o == nil || IsNil(o.ControllerCount) {
 		return nil, false
 	}
 	return o.ControllerCount, true
@@ -139,7 +142,7 @@ func (o *StatsAppliancesListAllOf) GetControllerCountOk() (*float32, bool) {
 
 // HasControllerCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasControllerCount() bool {
-	if o != nil && o.ControllerCount != nil {
+	if o != nil && !IsNil(o.ControllerCount) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *StatsAppliancesListAllOf) SetControllerCount(v float32) {
 
 // GetGatewayCount returns the GatewayCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetGatewayCount() float32 {
-	if o == nil || o.GatewayCount == nil {
+	if o == nil || IsNil(o.GatewayCount) {
 		var ret float32
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *StatsAppliancesListAllOf) GetGatewayCount() float32 {
 // GetGatewayCountOk returns a tuple with the GatewayCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetGatewayCountOk() (*float32, bool) {
-	if o == nil || o.GatewayCount == nil {
+	if o == nil || IsNil(o.GatewayCount) {
 		return nil, false
 	}
 	return o.GatewayCount, true
@@ -171,7 +174,7 @@ func (o *StatsAppliancesListAllOf) GetGatewayCountOk() (*float32, bool) {
 
 // HasGatewayCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasGatewayCount() bool {
-	if o != nil && o.GatewayCount != nil {
+	if o != nil && !IsNil(o.GatewayCount) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *StatsAppliancesListAllOf) SetGatewayCount(v float32) {
 
 // GetApplianceCount returns the ApplianceCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetApplianceCount() float32 {
-	if o == nil || o.ApplianceCount == nil {
+	if o == nil || IsNil(o.ApplianceCount) {
 		var ret float32
 		return ret
 	}
@@ -195,7 +198,7 @@ func (o *StatsAppliancesListAllOf) GetApplianceCount() float32 {
 // GetApplianceCountOk returns a tuple with the ApplianceCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetApplianceCountOk() (*float32, bool) {
-	if o == nil || o.ApplianceCount == nil {
+	if o == nil || IsNil(o.ApplianceCount) {
 		return nil, false
 	}
 	return o.ApplianceCount, true
@@ -203,7 +206,7 @@ func (o *StatsAppliancesListAllOf) GetApplianceCountOk() (*float32, bool) {
 
 // HasApplianceCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasApplianceCount() bool {
-	if o != nil && o.ApplianceCount != nil {
+	if o != nil && !IsNil(o.ApplianceCount) {
 		return true
 	}
 
@@ -217,7 +220,7 @@ func (o *StatsAppliancesListAllOf) SetApplianceCount(v float32) {
 
 // GetLogServerCount returns the LogServerCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetLogServerCount() float32 {
-	if o == nil || o.LogServerCount == nil {
+	if o == nil || IsNil(o.LogServerCount) {
 		var ret float32
 		return ret
 	}
@@ -227,7 +230,7 @@ func (o *StatsAppliancesListAllOf) GetLogServerCount() float32 {
 // GetLogServerCountOk returns a tuple with the LogServerCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetLogServerCountOk() (*float32, bool) {
-	if o == nil || o.LogServerCount == nil {
+	if o == nil || IsNil(o.LogServerCount) {
 		return nil, false
 	}
 	return o.LogServerCount, true
@@ -235,7 +238,7 @@ func (o *StatsAppliancesListAllOf) GetLogServerCountOk() (*float32, bool) {
 
 // HasLogServerCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasLogServerCount() bool {
-	if o != nil && o.LogServerCount != nil {
+	if o != nil && !IsNil(o.LogServerCount) {
 		return true
 	}
 
@@ -249,7 +252,7 @@ func (o *StatsAppliancesListAllOf) SetLogServerCount(v float32) {
 
 // GetLogForwarderCount returns the LogForwarderCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetLogForwarderCount() float32 {
-	if o == nil || o.LogForwarderCount == nil {
+	if o == nil || IsNil(o.LogForwarderCount) {
 		var ret float32
 		return ret
 	}
@@ -259,7 +262,7 @@ func (o *StatsAppliancesListAllOf) GetLogForwarderCount() float32 {
 // GetLogForwarderCountOk returns a tuple with the LogForwarderCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetLogForwarderCountOk() (*float32, bool) {
-	if o == nil || o.LogForwarderCount == nil {
+	if o == nil || IsNil(o.LogForwarderCount) {
 		return nil, false
 	}
 	return o.LogForwarderCount, true
@@ -267,7 +270,7 @@ func (o *StatsAppliancesListAllOf) GetLogForwarderCountOk() (*float32, bool) {
 
 // HasLogForwarderCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasLogForwarderCount() bool {
-	if o != nil && o.LogForwarderCount != nil {
+	if o != nil && !IsNil(o.LogForwarderCount) {
 		return true
 	}
 
@@ -281,7 +284,7 @@ func (o *StatsAppliancesListAllOf) SetLogForwarderCount(v float32) {
 
 // GetConnectorCount returns the ConnectorCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetConnectorCount() float32 {
-	if o == nil || o.ConnectorCount == nil {
+	if o == nil || IsNil(o.ConnectorCount) {
 		var ret float32
 		return ret
 	}
@@ -291,7 +294,7 @@ func (o *StatsAppliancesListAllOf) GetConnectorCount() float32 {
 // GetConnectorCountOk returns a tuple with the ConnectorCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetConnectorCountOk() (*float32, bool) {
-	if o == nil || o.ConnectorCount == nil {
+	if o == nil || IsNil(o.ConnectorCount) {
 		return nil, false
 	}
 	return o.ConnectorCount, true
@@ -299,7 +302,7 @@ func (o *StatsAppliancesListAllOf) GetConnectorCountOk() (*float32, bool) {
 
 // HasConnectorCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasConnectorCount() bool {
-	if o != nil && o.ConnectorCount != nil {
+	if o != nil && !IsNil(o.ConnectorCount) {
 		return true
 	}
 
@@ -313,7 +316,7 @@ func (o *StatsAppliancesListAllOf) SetConnectorCount(v float32) {
 
 // GetPortalCount returns the PortalCount field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetPortalCount() float32 {
-	if o == nil || o.PortalCount == nil {
+	if o == nil || IsNil(o.PortalCount) {
 		var ret float32
 		return ret
 	}
@@ -323,7 +326,7 @@ func (o *StatsAppliancesListAllOf) GetPortalCount() float32 {
 // GetPortalCountOk returns a tuple with the PortalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetPortalCountOk() (*float32, bool) {
-	if o == nil || o.PortalCount == nil {
+	if o == nil || IsNil(o.PortalCount) {
 		return nil, false
 	}
 	return o.PortalCount, true
@@ -331,7 +334,7 @@ func (o *StatsAppliancesListAllOf) GetPortalCountOk() (*float32, bool) {
 
 // HasPortalCount returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasPortalCount() bool {
-	if o != nil && o.PortalCount != nil {
+	if o != nil && !IsNil(o.PortalCount) {
 		return true
 	}
 
@@ -345,7 +348,7 @@ func (o *StatsAppliancesListAllOf) SetPortalCount(v float32) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOf) GetData() []StatsAppliancesListAllOfData {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []StatsAppliancesListAllOfData
 		return ret
 	}
@@ -355,7 +358,7 @@ func (o *StatsAppliancesListAllOf) GetData() []StatsAppliancesListAllOfData {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOf) GetDataOk() ([]StatsAppliancesListAllOfData, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -363,7 +366,7 @@ func (o *StatsAppliancesListAllOf) GetDataOk() ([]StatsAppliancesListAllOfData, 
 
 // HasData returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -376,38 +379,46 @@ func (o *StatsAppliancesListAllOf) SetData(v []StatsAppliancesListAllOfData) {
 }
 
 func (o StatsAppliancesListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.ControllerCount != nil {
-		toSerialize["controllerCount"] = o.ControllerCount
-	}
-	if o.GatewayCount != nil {
-		toSerialize["gatewayCount"] = o.GatewayCount
-	}
-	if o.ApplianceCount != nil {
-		toSerialize["applianceCount"] = o.ApplianceCount
-	}
-	if o.LogServerCount != nil {
-		toSerialize["logServerCount"] = o.LogServerCount
-	}
-	if o.LogForwarderCount != nil {
-		toSerialize["logForwarderCount"] = o.LogForwarderCount
-	}
-	if o.ConnectorCount != nil {
-		toSerialize["connectorCount"] = o.ConnectorCount
-	}
-	if o.PortalCount != nil {
-		toSerialize["portalCount"] = o.PortalCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.ControllerCount) {
+		toSerialize["controllerCount"] = o.ControllerCount
+	}
+	if !IsNil(o.GatewayCount) {
+		toSerialize["gatewayCount"] = o.GatewayCount
+	}
+	if !IsNil(o.ApplianceCount) {
+		toSerialize["applianceCount"] = o.ApplianceCount
+	}
+	if !IsNil(o.LogServerCount) {
+		toSerialize["logServerCount"] = o.LogServerCount
+	}
+	if !IsNil(o.LogForwarderCount) {
+		toSerialize["logForwarderCount"] = o.LogForwarderCount
+	}
+	if !IsNil(o.ConnectorCount) {
+		toSerialize["connectorCount"] = o.ConnectorCount
+	}
+	if !IsNil(o.PortalCount) {
+		toSerialize["portalCount"] = o.PortalCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesListAllOf struct {

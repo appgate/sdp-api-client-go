@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementOptimization type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementOptimization{}
+
 // EntitlementOptimization Optimization details and suggestions for an Entitlement based on usage data.
 type EntitlementOptimization struct {
 	Entitlement *Entitlement `json:"entitlement,omitempty"`
@@ -53,7 +56,7 @@ func NewEntitlementOptimizationWithDefaults() *EntitlementOptimization {
 
 // GetEntitlement returns the Entitlement field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetEntitlement() Entitlement {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		var ret Entitlement
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *EntitlementOptimization) GetEntitlement() Entitlement {
 // GetEntitlementOk returns a tuple with the Entitlement field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetEntitlementOk() (*Entitlement, bool) {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		return nil, false
 	}
 	return o.Entitlement, true
@@ -71,7 +74,7 @@ func (o *EntitlementOptimization) GetEntitlementOk() (*Entitlement, bool) {
 
 // HasEntitlement returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasEntitlement() bool {
-	if o != nil && o.Entitlement != nil {
+	if o != nil && !IsNil(o.Entitlement) {
 		return true
 	}
 
@@ -85,7 +88,7 @@ func (o *EntitlementOptimization) SetEntitlement(v Entitlement) {
 
 // GetSuggestedOperation returns the SuggestedOperation field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetSuggestedOperation() string {
-	if o == nil || o.SuggestedOperation == nil {
+	if o == nil || IsNil(o.SuggestedOperation) {
 		var ret string
 		return ret
 	}
@@ -95,7 +98,7 @@ func (o *EntitlementOptimization) GetSuggestedOperation() string {
 // GetSuggestedOperationOk returns a tuple with the SuggestedOperation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetSuggestedOperationOk() (*string, bool) {
-	if o == nil || o.SuggestedOperation == nil {
+	if o == nil || IsNil(o.SuggestedOperation) {
 		return nil, false
 	}
 	return o.SuggestedOperation, true
@@ -103,7 +106,7 @@ func (o *EntitlementOptimization) GetSuggestedOperationOk() (*string, bool) {
 
 // HasSuggestedOperation returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasSuggestedOperation() bool {
-	if o != nil && o.SuggestedOperation != nil {
+	if o != nil && !IsNil(o.SuggestedOperation) {
 		return true
 	}
 
@@ -117,7 +120,7 @@ func (o *EntitlementOptimization) SetSuggestedOperation(v string) {
 
 // GetActions returns the Actions field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetActions() []OptimizationAction {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		var ret []OptimizationAction
 		return ret
 	}
@@ -127,7 +130,7 @@ func (o *EntitlementOptimization) GetActions() []OptimizationAction {
 // GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetActionsOk() ([]OptimizationAction, bool) {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
 	return o.Actions, true
@@ -135,7 +138,7 @@ func (o *EntitlementOptimization) GetActionsOk() ([]OptimizationAction, bool) {
 
 // HasActions returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasActions() bool {
-	if o != nil && o.Actions != nil {
+	if o != nil && !IsNil(o.Actions) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *EntitlementOptimization) SetActions(v []OptimizationAction) {
 
 // GetPoliciesLinked returns the PoliciesLinked field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetPoliciesLinked() []string {
-	if o == nil || o.PoliciesLinked == nil {
+	if o == nil || IsNil(o.PoliciesLinked) {
 		var ret []string
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *EntitlementOptimization) GetPoliciesLinked() []string {
 // GetPoliciesLinkedOk returns a tuple with the PoliciesLinked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetPoliciesLinkedOk() ([]string, bool) {
-	if o == nil || o.PoliciesLinked == nil {
+	if o == nil || IsNil(o.PoliciesLinked) {
 		return nil, false
 	}
 	return o.PoliciesLinked, true
@@ -167,7 +170,7 @@ func (o *EntitlementOptimization) GetPoliciesLinkedOk() ([]string, bool) {
 
 // HasPoliciesLinked returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasPoliciesLinked() bool {
-	if o != nil && o.PoliciesLinked != nil {
+	if o != nil && !IsNil(o.PoliciesLinked) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *EntitlementOptimization) SetPoliciesLinked(v []string) {
 
 // GetActionUsage returns the ActionUsage field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetActionUsage() string {
-	if o == nil || o.ActionUsage == nil {
+	if o == nil || IsNil(o.ActionUsage) {
 		var ret string
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *EntitlementOptimization) GetActionUsage() string {
 // GetActionUsageOk returns a tuple with the ActionUsage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetActionUsageOk() (*string, bool) {
-	if o == nil || o.ActionUsage == nil {
+	if o == nil || IsNil(o.ActionUsage) {
 		return nil, false
 	}
 	return o.ActionUsage, true
@@ -199,7 +202,7 @@ func (o *EntitlementOptimization) GetActionUsageOk() (*string, bool) {
 
 // HasActionUsage returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasActionUsage() bool {
-	if o != nil && o.ActionUsage != nil {
+	if o != nil && !IsNil(o.ActionUsage) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *EntitlementOptimization) SetActionUsage(v string) {
 
 // GetBroadRules returns the BroadRules field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetBroadRules() string {
-	if o == nil || o.BroadRules == nil {
+	if o == nil || IsNil(o.BroadRules) {
 		var ret string
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *EntitlementOptimization) GetBroadRules() string {
 // GetBroadRulesOk returns a tuple with the BroadRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetBroadRulesOk() (*string, bool) {
-	if o == nil || o.BroadRules == nil {
+	if o == nil || IsNil(o.BroadRules) {
 		return nil, false
 	}
 	return o.BroadRules, true
@@ -231,7 +234,7 @@ func (o *EntitlementOptimization) GetBroadRulesOk() (*string, bool) {
 
 // HasBroadRules returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasBroadRules() bool {
-	if o != nil && o.BroadRules != nil {
+	if o != nil && !IsNil(o.BroadRules) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *EntitlementOptimization) SetBroadRules(v string) {
 
 // GetRecommendedDays returns the RecommendedDays field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetRecommendedDays() int32 {
-	if o == nil || o.RecommendedDays == nil {
+	if o == nil || IsNil(o.RecommendedDays) {
 		var ret int32
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *EntitlementOptimization) GetRecommendedDays() int32 {
 // GetRecommendedDaysOk returns a tuple with the RecommendedDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetRecommendedDaysOk() (*int32, bool) {
-	if o == nil || o.RecommendedDays == nil {
+	if o == nil || IsNil(o.RecommendedDays) {
 		return nil, false
 	}
 	return o.RecommendedDays, true
@@ -263,7 +266,7 @@ func (o *EntitlementOptimization) GetRecommendedDaysOk() (*int32, bool) {
 
 // HasRecommendedDays returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasRecommendedDays() bool {
-	if o != nil && o.RecommendedDays != nil {
+	if o != nil && !IsNil(o.RecommendedDays) {
 		return true
 	}
 
@@ -277,7 +280,7 @@ func (o *EntitlementOptimization) SetRecommendedDays(v int32) {
 
 // GetRemainingDays returns the RemainingDays field value if set, zero value otherwise.
 func (o *EntitlementOptimization) GetRemainingDays() int32 {
-	if o == nil || o.RemainingDays == nil {
+	if o == nil || IsNil(o.RemainingDays) {
 		var ret int32
 		return ret
 	}
@@ -287,7 +290,7 @@ func (o *EntitlementOptimization) GetRemainingDays() int32 {
 // GetRemainingDaysOk returns a tuple with the RemainingDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimization) GetRemainingDaysOk() (*int32, bool) {
-	if o == nil || o.RemainingDays == nil {
+	if o == nil || IsNil(o.RemainingDays) {
 		return nil, false
 	}
 	return o.RemainingDays, true
@@ -295,7 +298,7 @@ func (o *EntitlementOptimization) GetRemainingDaysOk() (*int32, bool) {
 
 // HasRemainingDays returns a boolean if a field has been set.
 func (o *EntitlementOptimization) HasRemainingDays() bool {
-	if o != nil && o.RemainingDays != nil {
+	if o != nil && !IsNil(o.RemainingDays) {
 		return true
 	}
 
@@ -308,32 +311,40 @@ func (o *EntitlementOptimization) SetRemainingDays(v int32) {
 }
 
 func (o EntitlementOptimization) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Entitlement != nil {
-		toSerialize["entitlement"] = o.Entitlement
-	}
-	if o.SuggestedOperation != nil {
-		toSerialize["suggestedOperation"] = o.SuggestedOperation
-	}
-	if o.Actions != nil {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.PoliciesLinked != nil {
-		toSerialize["policiesLinked"] = o.PoliciesLinked
-	}
-	if o.ActionUsage != nil {
-		toSerialize["actionUsage"] = o.ActionUsage
-	}
-	if o.BroadRules != nil {
-		toSerialize["broadRules"] = o.BroadRules
-	}
-	if o.RecommendedDays != nil {
-		toSerialize["recommendedDays"] = o.RecommendedDays
-	}
-	if o.RemainingDays != nil {
-		toSerialize["remainingDays"] = o.RemainingDays
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementOptimization) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Entitlement) {
+		toSerialize["entitlement"] = o.Entitlement
+	}
+	if !IsNil(o.SuggestedOperation) {
+		toSerialize["suggestedOperation"] = o.SuggestedOperation
+	}
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	if !IsNil(o.PoliciesLinked) {
+		toSerialize["policiesLinked"] = o.PoliciesLinked
+	}
+	if !IsNil(o.ActionUsage) {
+		toSerialize["actionUsage"] = o.ActionUsage
+	}
+	if !IsNil(o.BroadRules) {
+		toSerialize["broadRules"] = o.BroadRules
+	}
+	if !IsNil(o.RecommendedDays) {
+		toSerialize["recommendedDays"] = o.RecommendedDays
+	}
+	if !IsNil(o.RemainingDays) {
+		toSerialize["remainingDays"] = o.RemainingDays
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementOptimization struct {

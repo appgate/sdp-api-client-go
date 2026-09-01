@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClaimNamesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClaimNamesInner{}
+
 // ClaimNamesInner Details of a Claim.
 type ClaimNamesInner struct {
 	// Name of the Claim that's available to the JavaScript engine.
@@ -44,7 +47,7 @@ func NewClaimNamesInnerWithDefaults() *ClaimNamesInner {
 
 // GetClaimName returns the ClaimName field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetClaimName() string {
-	if o == nil || o.ClaimName == nil {
+	if o == nil || IsNil(o.ClaimName) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ClaimNamesInner) GetClaimName() string {
 // GetClaimNameOk returns a tuple with the ClaimName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetClaimNameOk() (*string, bool) {
-	if o == nil || o.ClaimName == nil {
+	if o == nil || IsNil(o.ClaimName) {
 		return nil, false
 	}
 	return o.ClaimName, true
@@ -62,7 +65,7 @@ func (o *ClaimNamesInner) GetClaimNameOk() (*string, bool) {
 
 // HasClaimName returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasClaimName() bool {
-	if o != nil && o.ClaimName != nil {
+	if o != nil && !IsNil(o.ClaimName) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ClaimNamesInner) SetClaimName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ClaimNamesInner) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -94,7 +97,7 @@ func (o *ClaimNamesInner) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ClaimNamesInner) SetType(v string) {
 
 // GetAvailableForPolicy returns the AvailableForPolicy field value if set, zero value otherwise.
 func (o *ClaimNamesInner) GetAvailableForPolicy() bool {
-	if o == nil || o.AvailableForPolicy == nil {
+	if o == nil || IsNil(o.AvailableForPolicy) {
 		var ret bool
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ClaimNamesInner) GetAvailableForPolicy() bool {
 // GetAvailableForPolicyOk returns a tuple with the AvailableForPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesInner) GetAvailableForPolicyOk() (*bool, bool) {
-	if o == nil || o.AvailableForPolicy == nil {
+	if o == nil || IsNil(o.AvailableForPolicy) {
 		return nil, false
 	}
 	return o.AvailableForPolicy, true
@@ -126,7 +129,7 @@ func (o *ClaimNamesInner) GetAvailableForPolicyOk() (*bool, bool) {
 
 // HasAvailableForPolicy returns a boolean if a field has been set.
 func (o *ClaimNamesInner) HasAvailableForPolicy() bool {
-	if o != nil && o.AvailableForPolicy != nil {
+	if o != nil && !IsNil(o.AvailableForPolicy) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ClaimNamesInner) SetAvailableForPolicy(v bool) {
 }
 
 func (o ClaimNamesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ClaimName != nil {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.AvailableForPolicy != nil {
-		toSerialize["availableForPolicy"] = o.AvailableForPolicy
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClaimNamesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ClaimName) {
+		toSerialize["claimName"] = o.ClaimName
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.AvailableForPolicy) {
+		toSerialize["availableForPolicy"] = o.AvailableForPolicy
+	}
+	return toSerialize, nil
 }
 
 type NullableClaimNamesInner struct {

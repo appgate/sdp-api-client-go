@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ExternalProfile type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ExternalProfile{}
 
 // ExternalProfile struct for ExternalProfile
 type ExternalProfile struct {
@@ -46,7 +49,7 @@ func NewExternalProfileWithDefaults() *ExternalProfile {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ExternalProfile) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ExternalProfile) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExternalProfile) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -64,7 +67,7 @@ func (o *ExternalProfile) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ExternalProfile) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ExternalProfile) SetId(v string) {
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *ExternalProfile) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ExternalProfile) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExternalProfile) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -96,7 +99,7 @@ func (o *ExternalProfile) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *ExternalProfile) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ExternalProfile) SetUrl(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *ExternalProfile) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ExternalProfile) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExternalProfile) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -128,7 +131,7 @@ func (o *ExternalProfile) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *ExternalProfile) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ExternalProfile) SetHostname(v string) {
 
 // GetProfileName returns the ProfileName field value if set, zero value otherwise.
 func (o *ExternalProfile) GetProfileName() string {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ExternalProfile) GetProfileName() string {
 // GetProfileNameOk returns a tuple with the ProfileName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExternalProfile) GetProfileNameOk() (*string, bool) {
-	if o == nil || o.ProfileName == nil {
+	if o == nil || IsNil(o.ProfileName) {
 		return nil, false
 	}
 	return o.ProfileName, true
@@ -160,7 +163,7 @@ func (o *ExternalProfile) GetProfileNameOk() (*string, bool) {
 
 // HasProfileName returns a boolean if a field has been set.
 func (o *ExternalProfile) HasProfileName() bool {
-	if o != nil && o.ProfileName != nil {
+	if o != nil && !IsNil(o.ProfileName) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ExternalProfile) SetProfileName(v string) {
 }
 
 func (o ExternalProfile) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.ProfileName != nil {
-		toSerialize["profileName"] = o.ProfileName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ExternalProfile) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.ProfileName) {
+		toSerialize["profileName"] = o.ProfileName
+	}
+	return toSerialize, nil
 }
 
 type NullableExternalProfile struct {

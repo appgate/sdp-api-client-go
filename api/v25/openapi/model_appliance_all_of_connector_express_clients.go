@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfConnectorExpressClients type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnectorExpressClients{}
+
 // ApplianceAllOfConnectorExpressClients struct for ApplianceAllOfConnectorExpressClients
 type ApplianceAllOfConnectorExpressClients struct {
 	// Name for the Client. It will be mapped to the user claim 'clientName'.
@@ -81,7 +84,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -99,7 +102,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDeviceIdOk() (*string, bool) 
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetDeviceId(v string) {
 
 // GetAllowResources returns the AllowResources field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetAllowResources() []AllowResourcesInner {
-	if o == nil || o.AllowResources == nil {
+	if o == nil || IsNil(o.AllowResources) {
 		var ret []AllowResourcesInner
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetAllowResources() []AllowResou
 // GetAllowResourcesOk returns a tuple with the AllowResources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetAllowResourcesOk() ([]AllowResourcesInner, bool) {
-	if o == nil || o.AllowResources == nil {
+	if o == nil || IsNil(o.AllowResources) {
 		return nil, false
 	}
 	return o.AllowResources, true
@@ -131,7 +134,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetAllowResourcesOk() ([]AllowRe
 
 // HasAllowResources returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasAllowResources() bool {
-	if o != nil && o.AllowResources != nil {
+	if o != nil && !IsNil(o.AllowResources) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetAllowResources(v []AllowResou
 
 // GetSnatToResources returns the SnatToResources field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResources() bool {
-	if o == nil || o.SnatToResources == nil {
+	if o == nil || IsNil(o.SnatToResources) {
 		var ret bool
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResources() bool {
 // GetSnatToResourcesOk returns a tuple with the SnatToResources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResourcesOk() (*bool, bool) {
-	if o == nil || o.SnatToResources == nil {
+	if o == nil || IsNil(o.SnatToResources) {
 		return nil, false
 	}
 	return o.SnatToResources, true
@@ -163,7 +166,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResourcesOk() (*bool, b
 
 // HasSnatToResources returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasSnatToResources() bool {
-	if o != nil && o.SnatToResources != nil {
+	if o != nil && !IsNil(o.SnatToResources) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetSnatToResources(v bool) {
 
 // GetDnatToResource returns the DnatToResource field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResource() bool {
-	if o == nil || o.DnatToResource == nil {
+	if o == nil || IsNil(o.DnatToResource) {
 		var ret bool
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResource() bool {
 // GetDnatToResourceOk returns a tuple with the DnatToResource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResourceOk() (*bool, bool) {
-	if o == nil || o.DnatToResource == nil {
+	if o == nil || IsNil(o.DnatToResource) {
 		return nil, false
 	}
 	return o.DnatToResource, true
@@ -195,7 +198,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResourceOk() (*bool, bo
 
 // HasDnatToResource returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasDnatToResource() bool {
-	if o != nil && o.DnatToResource != nil {
+	if o != nil && !IsNil(o.DnatToResource) {
 		return true
 	}
 
@@ -208,23 +211,29 @@ func (o *ApplianceAllOfConnectorExpressClients) SetDnatToResource(v bool) {
 }
 
 func (o ApplianceAllOfConnectorExpressClients) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.AllowResources != nil {
-		toSerialize["allowResources"] = o.AllowResources
-	}
-	if o.SnatToResources != nil {
-		toSerialize["snatToResources"] = o.SnatToResources
-	}
-	if o.DnatToResource != nil {
-		toSerialize["dnatToResource"] = o.DnatToResource
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnectorExpressClients) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.AllowResources) {
+		toSerialize["allowResources"] = o.AllowResources
+	}
+	if !IsNil(o.SnatToResources) {
+		toSerialize["snatToResources"] = o.SnatToResources
+	}
+	if !IsNil(o.DnatToResource) {
+		toSerialize["dnatToResource"] = o.DnatToResource
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnectorExpressClients struct {

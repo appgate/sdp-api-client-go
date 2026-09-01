@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RecordedSessionAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RecordedSessionAllOf{}
+
 // RecordedSessionAllOf struct for RecordedSessionAllOf
 type RecordedSessionAllOf struct {
 	// The recording session id (Gateway session token).
@@ -78,7 +81,7 @@ func NewRecordedSessionAllOfWithDefaults() *RecordedSessionAllOf {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *RecordedSessionAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -96,7 +99,7 @@ func (o *RecordedSessionAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *RecordedSessionAllOf) SetId(v string) {
 
 // GetGatewayId returns the GatewayId field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetGatewayId() string {
-	if o == nil || o.GatewayId == nil {
+	if o == nil || IsNil(o.GatewayId) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *RecordedSessionAllOf) GetGatewayId() string {
 // GetGatewayIdOk returns a tuple with the GatewayId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetGatewayIdOk() (*string, bool) {
-	if o == nil || o.GatewayId == nil {
+	if o == nil || IsNil(o.GatewayId) {
 		return nil, false
 	}
 	return o.GatewayId, true
@@ -128,7 +131,7 @@ func (o *RecordedSessionAllOf) GetGatewayIdOk() (*string, bool) {
 
 // HasGatewayId returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasGatewayId() bool {
-	if o != nil && o.GatewayId != nil {
+	if o != nil && !IsNil(o.GatewayId) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *RecordedSessionAllOf) SetGatewayId(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *RecordedSessionAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -160,7 +163,7 @@ func (o *RecordedSessionAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *RecordedSessionAllOf) SetType(v string) {
 
 // GetSite returns the Site field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetSite() string {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		var ret string
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *RecordedSessionAllOf) GetSite() string {
 // GetSiteOk returns a tuple with the Site field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetSiteOk() (*string, bool) {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		return nil, false
 	}
 	return o.Site, true
@@ -192,7 +195,7 @@ func (o *RecordedSessionAllOf) GetSiteOk() (*string, bool) {
 
 // HasSite returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasSite() bool {
-	if o != nil && o.Site != nil {
+	if o != nil && !IsNil(o.Site) {
 		return true
 	}
 
@@ -206,7 +209,7 @@ func (o *RecordedSessionAllOf) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -216,7 +219,7 @@ func (o *RecordedSessionAllOf) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -224,7 +227,7 @@ func (o *RecordedSessionAllOf) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -238,7 +241,7 @@ func (o *RecordedSessionAllOf) SetSiteName(v string) {
 
 // GetEntitlementName returns the EntitlementName field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetEntitlementName() string {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		var ret string
 		return ret
 	}
@@ -248,7 +251,7 @@ func (o *RecordedSessionAllOf) GetEntitlementName() string {
 // GetEntitlementNameOk returns a tuple with the EntitlementName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetEntitlementNameOk() (*string, bool) {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		return nil, false
 	}
 	return o.EntitlementName, true
@@ -256,7 +259,7 @@ func (o *RecordedSessionAllOf) GetEntitlementNameOk() (*string, bool) {
 
 // HasEntitlementName returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasEntitlementName() bool {
-	if o != nil && o.EntitlementName != nil {
+	if o != nil && !IsNil(o.EntitlementName) {
 		return true
 	}
 
@@ -270,7 +273,7 @@ func (o *RecordedSessionAllOf) SetEntitlementName(v string) {
 
 // GetHost returns the Host field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetHost() string {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		var ret string
 		return ret
 	}
@@ -280,7 +283,7 @@ func (o *RecordedSessionAllOf) GetHost() string {
 // GetHostOk returns a tuple with the Host field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetHostOk() (*string, bool) {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		return nil, false
 	}
 	return o.Host, true
@@ -288,7 +291,7 @@ func (o *RecordedSessionAllOf) GetHostOk() (*string, bool) {
 
 // HasHost returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasHost() bool {
-	if o != nil && o.Host != nil {
+	if o != nil && !IsNil(o.Host) {
 		return true
 	}
 
@@ -302,7 +305,7 @@ func (o *RecordedSessionAllOf) SetHost(v string) {
 
 // GetSessionStart returns the SessionStart field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetSessionStart() string {
-	if o == nil || o.SessionStart == nil {
+	if o == nil || IsNil(o.SessionStart) {
 		var ret string
 		return ret
 	}
@@ -312,7 +315,7 @@ func (o *RecordedSessionAllOf) GetSessionStart() string {
 // GetSessionStartOk returns a tuple with the SessionStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetSessionStartOk() (*string, bool) {
-	if o == nil || o.SessionStart == nil {
+	if o == nil || IsNil(o.SessionStart) {
 		return nil, false
 	}
 	return o.SessionStart, true
@@ -320,7 +323,7 @@ func (o *RecordedSessionAllOf) GetSessionStartOk() (*string, bool) {
 
 // HasSessionStart returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasSessionStart() bool {
-	if o != nil && o.SessionStart != nil {
+	if o != nil && !IsNil(o.SessionStart) {
 		return true
 	}
 
@@ -334,7 +337,7 @@ func (o *RecordedSessionAllOf) SetSessionStart(v string) {
 
 // GetSessionEnd returns the SessionEnd field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetSessionEnd() string {
-	if o == nil || o.SessionEnd == nil {
+	if o == nil || IsNil(o.SessionEnd) {
 		var ret string
 		return ret
 	}
@@ -344,7 +347,7 @@ func (o *RecordedSessionAllOf) GetSessionEnd() string {
 // GetSessionEndOk returns a tuple with the SessionEnd field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetSessionEndOk() (*string, bool) {
-	if o == nil || o.SessionEnd == nil {
+	if o == nil || IsNil(o.SessionEnd) {
 		return nil, false
 	}
 	return o.SessionEnd, true
@@ -352,7 +355,7 @@ func (o *RecordedSessionAllOf) GetSessionEndOk() (*string, bool) {
 
 // HasSessionEnd returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasSessionEnd() bool {
-	if o != nil && o.SessionEnd != nil {
+	if o != nil && !IsNil(o.SessionEnd) {
 		return true
 	}
 
@@ -366,7 +369,7 @@ func (o *RecordedSessionAllOf) SetSessionEnd(v string) {
 
 // GetSourceIp returns the SourceIp field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetSourceIp() string {
-	if o == nil || o.SourceIp == nil {
+	if o == nil || IsNil(o.SourceIp) {
 		var ret string
 		return ret
 	}
@@ -376,7 +379,7 @@ func (o *RecordedSessionAllOf) GetSourceIp() string {
 // GetSourceIpOk returns a tuple with the SourceIp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetSourceIpOk() (*string, bool) {
-	if o == nil || o.SourceIp == nil {
+	if o == nil || IsNil(o.SourceIp) {
 		return nil, false
 	}
 	return o.SourceIp, true
@@ -384,7 +387,7 @@ func (o *RecordedSessionAllOf) GetSourceIpOk() (*string, bool) {
 
 // HasSourceIp returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasSourceIp() bool {
-	if o != nil && o.SourceIp != nil {
+	if o != nil && !IsNil(o.SourceIp) {
 		return true
 	}
 
@@ -398,7 +401,7 @@ func (o *RecordedSessionAllOf) SetSourceIp(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -408,7 +411,7 @@ func (o *RecordedSessionAllOf) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -416,7 +419,7 @@ func (o *RecordedSessionAllOf) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -430,7 +433,7 @@ func (o *RecordedSessionAllOf) SetStatus(v string) {
 
 // GetFailureReason returns the FailureReason field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetFailureReason() string {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		var ret string
 		return ret
 	}
@@ -440,7 +443,7 @@ func (o *RecordedSessionAllOf) GetFailureReason() string {
 // GetFailureReasonOk returns a tuple with the FailureReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetFailureReasonOk() (*string, bool) {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		return nil, false
 	}
 	return o.FailureReason, true
@@ -448,7 +451,7 @@ func (o *RecordedSessionAllOf) GetFailureReasonOk() (*string, bool) {
 
 // HasFailureReason returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasFailureReason() bool {
-	if o != nil && o.FailureReason != nil {
+	if o != nil && !IsNil(o.FailureReason) {
 		return true
 	}
 
@@ -462,7 +465,7 @@ func (o *RecordedSessionAllOf) SetFailureReason(v string) {
 
 // GetHasExport returns the HasExport field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetHasExport() bool {
-	if o == nil || o.HasExport == nil {
+	if o == nil || IsNil(o.HasExport) {
 		var ret bool
 		return ret
 	}
@@ -472,7 +475,7 @@ func (o *RecordedSessionAllOf) GetHasExport() bool {
 // GetHasExportOk returns a tuple with the HasExport field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetHasExportOk() (*bool, bool) {
-	if o == nil || o.HasExport == nil {
+	if o == nil || IsNil(o.HasExport) {
 		return nil, false
 	}
 	return o.HasExport, true
@@ -480,7 +483,7 @@ func (o *RecordedSessionAllOf) GetHasExportOk() (*bool, bool) {
 
 // HasHasExport returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasHasExport() bool {
-	if o != nil && o.HasExport != nil {
+	if o != nil && !IsNil(o.HasExport) {
 		return true
 	}
 
@@ -494,7 +497,7 @@ func (o *RecordedSessionAllOf) SetHasExport(v bool) {
 
 // GetDownloadFormat returns the DownloadFormat field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetDownloadFormat() string {
-	if o == nil || o.DownloadFormat == nil {
+	if o == nil || IsNil(o.DownloadFormat) {
 		var ret string
 		return ret
 	}
@@ -504,7 +507,7 @@ func (o *RecordedSessionAllOf) GetDownloadFormat() string {
 // GetDownloadFormatOk returns a tuple with the DownloadFormat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetDownloadFormatOk() (*string, bool) {
-	if o == nil || o.DownloadFormat == nil {
+	if o == nil || IsNil(o.DownloadFormat) {
 		return nil, false
 	}
 	return o.DownloadFormat, true
@@ -512,7 +515,7 @@ func (o *RecordedSessionAllOf) GetDownloadFormatOk() (*string, bool) {
 
 // HasDownloadFormat returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasDownloadFormat() bool {
-	if o != nil && o.DownloadFormat != nil {
+	if o != nil && !IsNil(o.DownloadFormat) {
 		return true
 	}
 
@@ -526,7 +529,7 @@ func (o *RecordedSessionAllOf) SetDownloadFormat(v string) {
 
 // GetExportStatus returns the ExportStatus field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetExportStatus() string {
-	if o == nil || o.ExportStatus == nil {
+	if o == nil || IsNil(o.ExportStatus) {
 		var ret string
 		return ret
 	}
@@ -536,7 +539,7 @@ func (o *RecordedSessionAllOf) GetExportStatus() string {
 // GetExportStatusOk returns a tuple with the ExportStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetExportStatusOk() (*string, bool) {
-	if o == nil || o.ExportStatus == nil {
+	if o == nil || IsNil(o.ExportStatus) {
 		return nil, false
 	}
 	return o.ExportStatus, true
@@ -544,7 +547,7 @@ func (o *RecordedSessionAllOf) GetExportStatusOk() (*string, bool) {
 
 // HasExportStatus returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasExportStatus() bool {
-	if o != nil && o.ExportStatus != nil {
+	if o != nil && !IsNil(o.ExportStatus) {
 		return true
 	}
 
@@ -558,7 +561,7 @@ func (o *RecordedSessionAllOf) SetExportStatus(v string) {
 
 // GetExportProgress returns the ExportProgress field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetExportProgress() int32 {
-	if o == nil || o.ExportProgress == nil {
+	if o == nil || IsNil(o.ExportProgress) {
 		var ret int32
 		return ret
 	}
@@ -568,7 +571,7 @@ func (o *RecordedSessionAllOf) GetExportProgress() int32 {
 // GetExportProgressOk returns a tuple with the ExportProgress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetExportProgressOk() (*int32, bool) {
-	if o == nil || o.ExportProgress == nil {
+	if o == nil || IsNil(o.ExportProgress) {
 		return nil, false
 	}
 	return o.ExportProgress, true
@@ -576,7 +579,7 @@ func (o *RecordedSessionAllOf) GetExportProgressOk() (*int32, bool) {
 
 // HasExportProgress returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasExportProgress() bool {
-	if o != nil && o.ExportProgress != nil {
+	if o != nil && !IsNil(o.ExportProgress) {
 		return true
 	}
 
@@ -590,7 +593,7 @@ func (o *RecordedSessionAllOf) SetExportProgress(v int32) {
 
 // GetIntegrityHash returns the IntegrityHash field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetIntegrityHash() string {
-	if o == nil || o.IntegrityHash == nil {
+	if o == nil || IsNil(o.IntegrityHash) {
 		var ret string
 		return ret
 	}
@@ -600,7 +603,7 @@ func (o *RecordedSessionAllOf) GetIntegrityHash() string {
 // GetIntegrityHashOk returns a tuple with the IntegrityHash field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetIntegrityHashOk() (*string, bool) {
-	if o == nil || o.IntegrityHash == nil {
+	if o == nil || IsNil(o.IntegrityHash) {
 		return nil, false
 	}
 	return o.IntegrityHash, true
@@ -608,7 +611,7 @@ func (o *RecordedSessionAllOf) GetIntegrityHashOk() (*string, bool) {
 
 // HasIntegrityHash returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasIntegrityHash() bool {
-	if o != nil && o.IntegrityHash != nil {
+	if o != nil && !IsNil(o.IntegrityHash) {
 		return true
 	}
 
@@ -622,7 +625,7 @@ func (o *RecordedSessionAllOf) SetIntegrityHash(v string) {
 
 // GetExportHash returns the ExportHash field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetExportHash() string {
-	if o == nil || o.ExportHash == nil {
+	if o == nil || IsNil(o.ExportHash) {
 		var ret string
 		return ret
 	}
@@ -632,7 +635,7 @@ func (o *RecordedSessionAllOf) GetExportHash() string {
 // GetExportHashOk returns a tuple with the ExportHash field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetExportHashOk() (*string, bool) {
-	if o == nil || o.ExportHash == nil {
+	if o == nil || IsNil(o.ExportHash) {
 		return nil, false
 	}
 	return o.ExportHash, true
@@ -640,7 +643,7 @@ func (o *RecordedSessionAllOf) GetExportHashOk() (*string, bool) {
 
 // HasExportHash returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasExportHash() bool {
-	if o != nil && o.ExportHash != nil {
+	if o != nil && !IsNil(o.ExportHash) {
 		return true
 	}
 
@@ -654,7 +657,7 @@ func (o *RecordedSessionAllOf) SetExportHash(v string) {
 
 // GetRecordingBytes returns the RecordingBytes field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetRecordingBytes() int64 {
-	if o == nil || o.RecordingBytes == nil {
+	if o == nil || IsNil(o.RecordingBytes) {
 		var ret int64
 		return ret
 	}
@@ -664,7 +667,7 @@ func (o *RecordedSessionAllOf) GetRecordingBytes() int64 {
 // GetRecordingBytesOk returns a tuple with the RecordingBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetRecordingBytesOk() (*int64, bool) {
-	if o == nil || o.RecordingBytes == nil {
+	if o == nil || IsNil(o.RecordingBytes) {
 		return nil, false
 	}
 	return o.RecordingBytes, true
@@ -672,7 +675,7 @@ func (o *RecordedSessionAllOf) GetRecordingBytesOk() (*int64, bool) {
 
 // HasRecordingBytes returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasRecordingBytes() bool {
-	if o != nil && o.RecordingBytes != nil {
+	if o != nil && !IsNil(o.RecordingBytes) {
 		return true
 	}
 
@@ -686,7 +689,7 @@ func (o *RecordedSessionAllOf) SetRecordingBytes(v int64) {
 
 // GetExportBytes returns the ExportBytes field value if set, zero value otherwise.
 func (o *RecordedSessionAllOf) GetExportBytes() int64 {
-	if o == nil || o.ExportBytes == nil {
+	if o == nil || IsNil(o.ExportBytes) {
 		var ret int64
 		return ret
 	}
@@ -696,7 +699,7 @@ func (o *RecordedSessionAllOf) GetExportBytes() int64 {
 // GetExportBytesOk returns a tuple with the ExportBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RecordedSessionAllOf) GetExportBytesOk() (*int64, bool) {
-	if o == nil || o.ExportBytes == nil {
+	if o == nil || IsNil(o.ExportBytes) {
 		return nil, false
 	}
 	return o.ExportBytes, true
@@ -704,7 +707,7 @@ func (o *RecordedSessionAllOf) GetExportBytesOk() (*int64, bool) {
 
 // HasExportBytes returns a boolean if a field has been set.
 func (o *RecordedSessionAllOf) HasExportBytes() bool {
-	if o != nil && o.ExportBytes != nil {
+	if o != nil && !IsNil(o.ExportBytes) {
 		return true
 	}
 
@@ -717,68 +720,76 @@ func (o *RecordedSessionAllOf) SetExportBytes(v int64) {
 }
 
 func (o RecordedSessionAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.GatewayId != nil {
-		toSerialize["gatewayId"] = o.GatewayId
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Site != nil {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.EntitlementName != nil {
-		toSerialize["entitlementName"] = o.EntitlementName
-	}
-	if o.Host != nil {
-		toSerialize["host"] = o.Host
-	}
-	if o.SessionStart != nil {
-		toSerialize["sessionStart"] = o.SessionStart
-	}
-	if o.SessionEnd != nil {
-		toSerialize["sessionEnd"] = o.SessionEnd
-	}
-	if o.SourceIp != nil {
-		toSerialize["sourceIp"] = o.SourceIp
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.FailureReason != nil {
-		toSerialize["failureReason"] = o.FailureReason
-	}
-	if o.HasExport != nil {
-		toSerialize["hasExport"] = o.HasExport
-	}
-	if o.DownloadFormat != nil {
-		toSerialize["downloadFormat"] = o.DownloadFormat
-	}
-	if o.ExportStatus != nil {
-		toSerialize["exportStatus"] = o.ExportStatus
-	}
-	if o.ExportProgress != nil {
-		toSerialize["exportProgress"] = o.ExportProgress
-	}
-	if o.IntegrityHash != nil {
-		toSerialize["integrityHash"] = o.IntegrityHash
-	}
-	if o.ExportHash != nil {
-		toSerialize["exportHash"] = o.ExportHash
-	}
-	if o.RecordingBytes != nil {
-		toSerialize["recordingBytes"] = o.RecordingBytes
-	}
-	if o.ExportBytes != nil {
-		toSerialize["exportBytes"] = o.ExportBytes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RecordedSessionAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.GatewayId) {
+		toSerialize["gatewayId"] = o.GatewayId
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Site) {
+		toSerialize["site"] = o.Site
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.EntitlementName) {
+		toSerialize["entitlementName"] = o.EntitlementName
+	}
+	if !IsNil(o.Host) {
+		toSerialize["host"] = o.Host
+	}
+	if !IsNil(o.SessionStart) {
+		toSerialize["sessionStart"] = o.SessionStart
+	}
+	if !IsNil(o.SessionEnd) {
+		toSerialize["sessionEnd"] = o.SessionEnd
+	}
+	if !IsNil(o.SourceIp) {
+		toSerialize["sourceIp"] = o.SourceIp
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.FailureReason) {
+		toSerialize["failureReason"] = o.FailureReason
+	}
+	if !IsNil(o.HasExport) {
+		toSerialize["hasExport"] = o.HasExport
+	}
+	if !IsNil(o.DownloadFormat) {
+		toSerialize["downloadFormat"] = o.DownloadFormat
+	}
+	if !IsNil(o.ExportStatus) {
+		toSerialize["exportStatus"] = o.ExportStatus
+	}
+	if !IsNil(o.ExportProgress) {
+		toSerialize["exportProgress"] = o.ExportProgress
+	}
+	if !IsNil(o.IntegrityHash) {
+		toSerialize["integrityHash"] = o.IntegrityHash
+	}
+	if !IsNil(o.ExportHash) {
+		toSerialize["exportHash"] = o.ExportHash
+	}
+	if !IsNil(o.RecordingBytes) {
+		toSerialize["recordingBytes"] = o.RecordingBytes
+	}
+	if !IsNil(o.ExportBytes) {
+		toSerialize["exportBytes"] = o.ExportBytes
+	}
+	return toSerialize, nil
 }
 
 type NullableRecordedSessionAllOf struct {

@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the UnhealthyApp type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UnhealthyApp{}
+
 // UnhealthyApp Represents an unhealthy app on a specific Gateway.
 type UnhealthyApp struct {
 	// ID of the Entitlement.
@@ -63,7 +66,7 @@ func NewUnhealthyAppWithDefaults() *UnhealthyApp {
 
 // GetEntitlement returns the Entitlement field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetEntitlement() string {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		var ret string
 		return ret
 	}
@@ -73,7 +76,7 @@ func (o *UnhealthyApp) GetEntitlement() string {
 // GetEntitlementOk returns a tuple with the Entitlement field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetEntitlementOk() (*string, bool) {
-	if o == nil || o.Entitlement == nil {
+	if o == nil || IsNil(o.Entitlement) {
 		return nil, false
 	}
 	return o.Entitlement, true
@@ -81,7 +84,7 @@ func (o *UnhealthyApp) GetEntitlementOk() (*string, bool) {
 
 // HasEntitlement returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasEntitlement() bool {
-	if o != nil && o.Entitlement != nil {
+	if o != nil && !IsNil(o.Entitlement) {
 		return true
 	}
 
@@ -95,7 +98,7 @@ func (o *UnhealthyApp) SetEntitlement(v string) {
 
 // GetEntitlementName returns the EntitlementName field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetEntitlementName() string {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		var ret string
 		return ret
 	}
@@ -105,7 +108,7 @@ func (o *UnhealthyApp) GetEntitlementName() string {
 // GetEntitlementNameOk returns a tuple with the EntitlementName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetEntitlementNameOk() (*string, bool) {
-	if o == nil || o.EntitlementName == nil {
+	if o == nil || IsNil(o.EntitlementName) {
 		return nil, false
 	}
 	return o.EntitlementName, true
@@ -113,7 +116,7 @@ func (o *UnhealthyApp) GetEntitlementNameOk() (*string, bool) {
 
 // HasEntitlementName returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasEntitlementName() bool {
-	if o != nil && o.EntitlementName != nil {
+	if o != nil && !IsNil(o.EntitlementName) {
 		return true
 	}
 
@@ -127,7 +130,7 @@ func (o *UnhealthyApp) SetEntitlementName(v string) {
 
 // GetReportCount returns the ReportCount field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetReportCount() int32 {
-	if o == nil || o.ReportCount == nil {
+	if o == nil || IsNil(o.ReportCount) {
 		var ret int32
 		return ret
 	}
@@ -137,7 +140,7 @@ func (o *UnhealthyApp) GetReportCount() int32 {
 // GetReportCountOk returns a tuple with the ReportCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetReportCountOk() (*int32, bool) {
-	if o == nil || o.ReportCount == nil {
+	if o == nil || IsNil(o.ReportCount) {
 		return nil, false
 	}
 	return o.ReportCount, true
@@ -145,7 +148,7 @@ func (o *UnhealthyApp) GetReportCountOk() (*int32, bool) {
 
 // HasReportCount returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasReportCount() bool {
-	if o != nil && o.ReportCount != nil {
+	if o != nil && !IsNil(o.ReportCount) {
 		return true
 	}
 
@@ -159,7 +162,7 @@ func (o *UnhealthyApp) SetReportCount(v int32) {
 
 // GetUserCount returns the UserCount field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetUserCount() int32 {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		var ret int32
 		return ret
 	}
@@ -169,7 +172,7 @@ func (o *UnhealthyApp) GetUserCount() int32 {
 // GetUserCountOk returns a tuple with the UserCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetUserCountOk() (*int32, bool) {
-	if o == nil || o.UserCount == nil {
+	if o == nil || IsNil(o.UserCount) {
 		return nil, false
 	}
 	return o.UserCount, true
@@ -177,7 +180,7 @@ func (o *UnhealthyApp) GetUserCountOk() (*int32, bool) {
 
 // HasUserCount returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasUserCount() bool {
-	if o != nil && o.UserCount != nil {
+	if o != nil && !IsNil(o.UserCount) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *UnhealthyApp) SetUserCount(v int32) {
 
 // GetSite returns the Site field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetSite() string {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		var ret string
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *UnhealthyApp) GetSite() string {
 // GetSiteOk returns a tuple with the Site field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetSiteOk() (*string, bool) {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		return nil, false
 	}
 	return o.Site, true
@@ -209,7 +212,7 @@ func (o *UnhealthyApp) GetSiteOk() (*string, bool) {
 
 // HasSite returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasSite() bool {
-	if o != nil && o.Site != nil {
+	if o != nil && !IsNil(o.Site) {
 		return true
 	}
 
@@ -223,7 +226,7 @@ func (o *UnhealthyApp) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -233,7 +236,7 @@ func (o *UnhealthyApp) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -241,7 +244,7 @@ func (o *UnhealthyApp) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -255,7 +258,7 @@ func (o *UnhealthyApp) SetSiteName(v string) {
 
 // GetAppliance returns the Appliance field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetAppliance() string {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		var ret string
 		return ret
 	}
@@ -265,7 +268,7 @@ func (o *UnhealthyApp) GetAppliance() string {
 // GetApplianceOk returns a tuple with the Appliance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetApplianceOk() (*string, bool) {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		return nil, false
 	}
 	return o.Appliance, true
@@ -273,7 +276,7 @@ func (o *UnhealthyApp) GetApplianceOk() (*string, bool) {
 
 // HasAppliance returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasAppliance() bool {
-	if o != nil && o.Appliance != nil {
+	if o != nil && !IsNil(o.Appliance) {
 		return true
 	}
 
@@ -287,7 +290,7 @@ func (o *UnhealthyApp) SetAppliance(v string) {
 
 // GetGatewayName returns the GatewayName field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetGatewayName() string {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		var ret string
 		return ret
 	}
@@ -297,7 +300,7 @@ func (o *UnhealthyApp) GetGatewayName() string {
 // GetGatewayNameOk returns a tuple with the GatewayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetGatewayNameOk() (*string, bool) {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		return nil, false
 	}
 	return o.GatewayName, true
@@ -305,7 +308,7 @@ func (o *UnhealthyApp) GetGatewayNameOk() (*string, bool) {
 
 // HasGatewayName returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasGatewayName() bool {
-	if o != nil && o.GatewayName != nil {
+	if o != nil && !IsNil(o.GatewayName) {
 		return true
 	}
 
@@ -319,7 +322,7 @@ func (o *UnhealthyApp) SetGatewayName(v string) {
 
 // GetGatewaysReportingCount returns the GatewaysReportingCount field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetGatewaysReportingCount() int32 {
-	if o == nil || o.GatewaysReportingCount == nil {
+	if o == nil || IsNil(o.GatewaysReportingCount) {
 		var ret int32
 		return ret
 	}
@@ -329,7 +332,7 @@ func (o *UnhealthyApp) GetGatewaysReportingCount() int32 {
 // GetGatewaysReportingCountOk returns a tuple with the GatewaysReportingCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetGatewaysReportingCountOk() (*int32, bool) {
-	if o == nil || o.GatewaysReportingCount == nil {
+	if o == nil || IsNil(o.GatewaysReportingCount) {
 		return nil, false
 	}
 	return o.GatewaysReportingCount, true
@@ -337,7 +340,7 @@ func (o *UnhealthyApp) GetGatewaysReportingCountOk() (*int32, bool) {
 
 // HasGatewaysReportingCount returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasGatewaysReportingCount() bool {
-	if o != nil && o.GatewaysReportingCount != nil {
+	if o != nil && !IsNil(o.GatewaysReportingCount) {
 		return true
 	}
 
@@ -351,7 +354,7 @@ func (o *UnhealthyApp) SetGatewaysReportingCount(v int32) {
 
 // GetGatewayCountInSite returns the GatewayCountInSite field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetGatewayCountInSite() int32 {
-	if o == nil || o.GatewayCountInSite == nil {
+	if o == nil || IsNil(o.GatewayCountInSite) {
 		var ret int32
 		return ret
 	}
@@ -361,7 +364,7 @@ func (o *UnhealthyApp) GetGatewayCountInSite() int32 {
 // GetGatewayCountInSiteOk returns a tuple with the GatewayCountInSite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetGatewayCountInSiteOk() (*int32, bool) {
-	if o == nil || o.GatewayCountInSite == nil {
+	if o == nil || IsNil(o.GatewayCountInSite) {
 		return nil, false
 	}
 	return o.GatewayCountInSite, true
@@ -369,7 +372,7 @@ func (o *UnhealthyApp) GetGatewayCountInSiteOk() (*int32, bool) {
 
 // HasGatewayCountInSite returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasGatewayCountInSite() bool {
-	if o != nil && o.GatewayCountInSite != nil {
+	if o != nil && !IsNil(o.GatewayCountInSite) {
 		return true
 	}
 
@@ -383,7 +386,7 @@ func (o *UnhealthyApp) SetGatewayCountInSite(v int32) {
 
 // GetLastReported returns the LastReported field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetLastReported() time.Time {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		var ret time.Time
 		return ret
 	}
@@ -393,7 +396,7 @@ func (o *UnhealthyApp) GetLastReported() time.Time {
 // GetLastReportedOk returns a tuple with the LastReported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetLastReportedOk() (*time.Time, bool) {
-	if o == nil || o.LastReported == nil {
+	if o == nil || IsNil(o.LastReported) {
 		return nil, false
 	}
 	return o.LastReported, true
@@ -401,7 +404,7 @@ func (o *UnhealthyApp) GetLastReportedOk() (*time.Time, bool) {
 
 // HasLastReported returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasLastReported() bool {
-	if o != nil && o.LastReported != nil {
+	if o != nil && !IsNil(o.LastReported) {
 		return true
 	}
 
@@ -415,7 +418,7 @@ func (o *UnhealthyApp) SetLastReported(v time.Time) {
 
 // GetActions returns the Actions field value if set, zero value otherwise.
 func (o *UnhealthyApp) GetActions() []UnhealthyAppActionsInner {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		var ret []UnhealthyAppActionsInner
 		return ret
 	}
@@ -425,7 +428,7 @@ func (o *UnhealthyApp) GetActions() []UnhealthyAppActionsInner {
 // GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyApp) GetActionsOk() ([]UnhealthyAppActionsInner, bool) {
-	if o == nil || o.Actions == nil {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
 	return o.Actions, true
@@ -433,7 +436,7 @@ func (o *UnhealthyApp) GetActionsOk() ([]UnhealthyAppActionsInner, bool) {
 
 // HasActions returns a boolean if a field has been set.
 func (o *UnhealthyApp) HasActions() bool {
-	if o != nil && o.Actions != nil {
+	if o != nil && !IsNil(o.Actions) {
 		return true
 	}
 
@@ -446,44 +449,52 @@ func (o *UnhealthyApp) SetActions(v []UnhealthyAppActionsInner) {
 }
 
 func (o UnhealthyApp) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Entitlement != nil {
-		toSerialize["entitlement"] = o.Entitlement
-	}
-	if o.EntitlementName != nil {
-		toSerialize["entitlementName"] = o.EntitlementName
-	}
-	if o.ReportCount != nil {
-		toSerialize["reportCount"] = o.ReportCount
-	}
-	if o.UserCount != nil {
-		toSerialize["userCount"] = o.UserCount
-	}
-	if o.Site != nil {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.Appliance != nil {
-		toSerialize["appliance"] = o.Appliance
-	}
-	if o.GatewayName != nil {
-		toSerialize["gatewayName"] = o.GatewayName
-	}
-	if o.GatewaysReportingCount != nil {
-		toSerialize["gatewaysReportingCount"] = o.GatewaysReportingCount
-	}
-	if o.GatewayCountInSite != nil {
-		toSerialize["gatewayCountInSite"] = o.GatewayCountInSite
-	}
-	if o.LastReported != nil {
-		toSerialize["lastReported"] = o.LastReported
-	}
-	if o.Actions != nil {
-		toSerialize["actions"] = o.Actions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UnhealthyApp) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Entitlement) {
+		toSerialize["entitlement"] = o.Entitlement
+	}
+	if !IsNil(o.EntitlementName) {
+		toSerialize["entitlementName"] = o.EntitlementName
+	}
+	if !IsNil(o.ReportCount) {
+		toSerialize["reportCount"] = o.ReportCount
+	}
+	if !IsNil(o.UserCount) {
+		toSerialize["userCount"] = o.UserCount
+	}
+	if !IsNil(o.Site) {
+		toSerialize["site"] = o.Site
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.Appliance) {
+		toSerialize["appliance"] = o.Appliance
+	}
+	if !IsNil(o.GatewayName) {
+		toSerialize["gatewayName"] = o.GatewayName
+	}
+	if !IsNil(o.GatewaysReportingCount) {
+		toSerialize["gatewaysReportingCount"] = o.GatewaysReportingCount
+	}
+	if !IsNil(o.GatewayCountInSite) {
+		toSerialize["gatewayCountInSite"] = o.GatewayCountInSite
+	}
+	if !IsNil(o.LastReported) {
+		toSerialize["lastReported"] = o.LastReported
+	}
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	return toSerialize, nil
 }
 
 type NullableUnhealthyApp struct {

@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the UserLogins type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UserLogins{}
+
 // UserLogins struct for UserLogins
 type UserLogins struct {
 	// User-friendly name for the stats. Deprecated as of 6.4
@@ -51,7 +54,7 @@ func NewUserLoginsWithDefaults() *UserLogins {
 // GetName returns the Name field value if set, zero value otherwise.
 // Deprecated
 func (o *UserLogins) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *UserLogins) GetName() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *UserLogins) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -70,7 +73,7 @@ func (o *UserLogins) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *UserLogins) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -86,7 +89,7 @@ func (o *UserLogins) SetName(v string) {
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 // Deprecated
 func (o *UserLogins) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -97,7 +100,7 @@ func (o *UserLogins) GetCreationDate() time.Time {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *UserLogins) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -105,7 +108,7 @@ func (o *UserLogins) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *UserLogins) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *UserLogins) SetCreationDate(v time.Time) {
 // GetRefreshInterval returns the RefreshInterval field value if set, zero value otherwise.
 // Deprecated
 func (o *UserLogins) GetRefreshInterval() float32 {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		var ret float32
 		return ret
 	}
@@ -132,7 +135,7 @@ func (o *UserLogins) GetRefreshInterval() float32 {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *UserLogins) GetRefreshIntervalOk() (*float32, bool) {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		return nil, false
 	}
 	return o.RefreshInterval, true
@@ -140,7 +143,7 @@ func (o *UserLogins) GetRefreshIntervalOk() (*float32, bool) {
 
 // HasRefreshInterval returns a boolean if a field has been set.
 func (o *UserLogins) HasRefreshInterval() bool {
-	if o != nil && o.RefreshInterval != nil {
+	if o != nil && !IsNil(o.RefreshInterval) {
 		return true
 	}
 
@@ -155,7 +158,7 @@ func (o *UserLogins) SetRefreshInterval(v float32) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *UserLogins) GetData() map[string]float32 {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]float32
 		return ret
 	}
@@ -165,7 +168,7 @@ func (o *UserLogins) GetData() map[string]float32 {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserLogins) GetDataOk() (*map[string]float32, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -173,7 +176,7 @@ func (o *UserLogins) GetDataOk() (*map[string]float32, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *UserLogins) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -186,20 +189,28 @@ func (o *UserLogins) SetData(v map[string]float32) {
 }
 
 func (o UserLogins) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.CreationDate != nil {
-		toSerialize["creationDate"] = o.CreationDate
-	}
-	if o.RefreshInterval != nil {
-		toSerialize["refreshInterval"] = o.RefreshInterval
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UserLogins) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creationDate"] = o.CreationDate
+	}
+	if !IsNil(o.RefreshInterval) {
+		toSerialize["refreshInterval"] = o.RefreshInterval
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableUserLogins struct {

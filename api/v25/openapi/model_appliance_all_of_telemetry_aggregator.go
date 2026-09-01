@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfTelemetryAggregator type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfTelemetryAggregator{}
+
 // ApplianceAllOfTelemetryAggregator TelemetryAggregator settings. It aggregates telemetry from the appliances in the given sites and exports it to the configured destinations.
 type ApplianceAllOfTelemetryAggregator struct {
 	// Whether TelemetryAggregator is enabled on this appliance or not.
@@ -50,7 +53,7 @@ func NewApplianceAllOfTelemetryAggregatorWithDefaults() *ApplianceAllOfTelemetry
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregator) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregator) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -68,7 +71,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregator) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *ApplianceAllOfTelemetryAggregator) SetEnabled(v bool) {
 
 // GetDatadogExporters returns the DatadogExporters field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregator) GetDatadogExporters() []ApplianceAllOfTelemetryAggregatorDatadogExporters {
-	if o == nil || o.DatadogExporters == nil {
+	if o == nil || IsNil(o.DatadogExporters) {
 		var ret []ApplianceAllOfTelemetryAggregatorDatadogExporters
 		return ret
 	}
@@ -92,7 +95,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetDatadogExporters() []ApplianceAll
 // GetDatadogExportersOk returns a tuple with the DatadogExporters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregator) GetDatadogExportersOk() ([]ApplianceAllOfTelemetryAggregatorDatadogExporters, bool) {
-	if o == nil || o.DatadogExporters == nil {
+	if o == nil || IsNil(o.DatadogExporters) {
 		return nil, false
 	}
 	return o.DatadogExporters, true
@@ -100,7 +103,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetDatadogExportersOk() ([]Appliance
 
 // HasDatadogExporters returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregator) HasDatadogExporters() bool {
-	if o != nil && o.DatadogExporters != nil {
+	if o != nil && !IsNil(o.DatadogExporters) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *ApplianceAllOfTelemetryAggregator) SetDatadogExporters(v []ApplianceAll
 
 // GetOtlpExporters returns the OtlpExporters field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregator) GetOtlpExporters() []ApplianceAllOfTelemetryAggregatorOtlpExporters {
-	if o == nil || o.OtlpExporters == nil {
+	if o == nil || IsNil(o.OtlpExporters) {
 		var ret []ApplianceAllOfTelemetryAggregatorOtlpExporters
 		return ret
 	}
@@ -124,7 +127,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetOtlpExporters() []ApplianceAllOfT
 // GetOtlpExportersOk returns a tuple with the OtlpExporters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregator) GetOtlpExportersOk() ([]ApplianceAllOfTelemetryAggregatorOtlpExporters, bool) {
-	if o == nil || o.OtlpExporters == nil {
+	if o == nil || IsNil(o.OtlpExporters) {
 		return nil, false
 	}
 	return o.OtlpExporters, true
@@ -132,7 +135,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetOtlpExportersOk() ([]ApplianceAll
 
 // HasOtlpExporters returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregator) HasOtlpExporters() bool {
-	if o != nil && o.OtlpExporters != nil {
+	if o != nil && !IsNil(o.OtlpExporters) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *ApplianceAllOfTelemetryAggregator) SetOtlpExporters(v []ApplianceAllOfT
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregator) GetSites() []string {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret []string
 		return ret
 	}
@@ -156,7 +159,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetSites() []string {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregator) GetSitesOk() ([]string, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -164,7 +167,7 @@ func (o *ApplianceAllOfTelemetryAggregator) GetSitesOk() ([]string, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *ApplianceAllOfTelemetryAggregator) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -177,20 +180,28 @@ func (o *ApplianceAllOfTelemetryAggregator) SetSites(v []string) {
 }
 
 func (o ApplianceAllOfTelemetryAggregator) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.DatadogExporters != nil {
-		toSerialize["datadogExporters"] = o.DatadogExporters
-	}
-	if o.OtlpExporters != nil {
-		toSerialize["otlpExporters"] = o.OtlpExporters
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfTelemetryAggregator) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.DatadogExporters) {
+		toSerialize["datadogExporters"] = o.DatadogExporters
+	}
+	if !IsNil(o.OtlpExporters) {
+		toSerialize["otlpExporters"] = o.OtlpExporters
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfTelemetryAggregator struct {

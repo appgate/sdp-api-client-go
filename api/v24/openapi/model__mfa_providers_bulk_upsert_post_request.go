@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the MfaProvidersBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &MfaProvidersBulkUpsertPostRequest{}
+
 // MfaProvidersBulkUpsertPostRequest struct for MfaProvidersBulkUpsertPostRequest
 type MfaProvidersBulkUpsertPostRequest struct {
 	Data []MfaProvider `json:"data"`
@@ -63,11 +66,17 @@ func (o *MfaProvidersBulkUpsertPostRequest) SetData(v []MfaProvider) {
 }
 
 func (o MfaProvidersBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o MfaProvidersBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableMfaProvidersBulkUpsertPostRequest struct {

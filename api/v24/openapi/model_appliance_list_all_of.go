@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceListAllOf{}
+
 // ApplianceListAllOf Represents a list of Appliances.
 type ApplianceListAllOf struct {
 	// List of Appliances.
@@ -40,7 +43,7 @@ func NewApplianceListAllOfWithDefaults() *ApplianceListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ApplianceListAllOf) GetData() []Appliance {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []Appliance
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ApplianceListAllOf) GetData() []Appliance {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceListAllOf) GetDataOk() ([]Appliance, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *ApplianceListAllOf) GetDataOk() ([]Appliance, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ApplianceListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ApplianceListAllOf) SetData(v []Appliance) {
 }
 
 func (o ApplianceListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceListAllOf struct {

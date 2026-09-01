@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GeoIpSettingsCustom type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GeoIpSettingsCustom{}
+
 // GeoIpSettingsCustom Custom provider configuration. Required if provider is Custom.
 type GeoIpSettingsCustom struct {
 	// Custom provider base URL.
@@ -40,7 +43,7 @@ func NewGeoIpSettingsCustomWithDefaults() *GeoIpSettingsCustom {
 
 // GetUrl returns the Url field value if set, zero value otherwise.
 func (o *GeoIpSettingsCustom) GetUrl() string {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *GeoIpSettingsCustom) GetUrl() string {
 // GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettingsCustom) GetUrlOk() (*string, bool) {
-	if o == nil || o.Url == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
 	return o.Url, true
@@ -58,7 +61,7 @@ func (o *GeoIpSettingsCustom) GetUrlOk() (*string, bool) {
 
 // HasUrl returns a boolean if a field has been set.
 func (o *GeoIpSettingsCustom) HasUrl() bool {
-	if o != nil && o.Url != nil {
+	if o != nil && !IsNil(o.Url) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *GeoIpSettingsCustom) SetUrl(v string) {
 }
 
 func (o GeoIpSettingsCustom) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Url != nil {
-		toSerialize["url"] = o.Url
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GeoIpSettingsCustom) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	return toSerialize, nil
 }
 
 type NullableGeoIpSettingsCustom struct {

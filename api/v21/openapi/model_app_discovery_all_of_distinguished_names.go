@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppDiscoveryAllOfDistinguishedNames type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDiscoveryAllOfDistinguishedNames{}
+
 // AppDiscoveryAllOfDistinguishedNames struct for AppDiscoveryAllOfDistinguishedNames
 type AppDiscoveryAllOfDistinguishedNames struct {
 	// The distinguished user name.
@@ -44,7 +47,7 @@ func NewAppDiscoveryAllOfDistinguishedNamesWithDefaults() *AppDiscoveryAllOfDist
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -62,7 +65,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) SetUsername(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -94,7 +97,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) SetDeviceId(v string) {
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetProvider() string {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetProvider() string {
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) GetProviderOk() (*string, bool) {
-	if o == nil || o.Provider == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
 	return o.Provider, true
@@ -126,7 +129,7 @@ func (o *AppDiscoveryAllOfDistinguishedNames) GetProviderOk() (*string, bool) {
 
 // HasProvider returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOfDistinguishedNames) HasProvider() bool {
-	if o != nil && o.Provider != nil {
+	if o != nil && !IsNil(o.Provider) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *AppDiscoveryAllOfDistinguishedNames) SetProvider(v string) {
 }
 
 func (o AppDiscoveryAllOfDistinguishedNames) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Provider != nil {
-		toSerialize["provider"] = o.Provider
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDiscoveryAllOfDistinguishedNames) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDiscoveryAllOfDistinguishedNames struct {

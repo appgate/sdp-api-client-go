@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the MfaProvider type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &MfaProvider{}
+
 // MfaProvider struct for MfaProvider
 type MfaProvider struct {
 	// ID of the object.
@@ -89,7 +92,7 @@ func NewMfaProviderWithDefaults() *MfaProvider {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *MfaProvider) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *MfaProvider) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -107,7 +110,7 @@ func (o *MfaProvider) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *MfaProvider) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *MfaProvider) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *MfaProvider) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *MfaProvider) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -163,7 +166,7 @@ func (o *MfaProvider) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *MfaProvider) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *MfaProvider) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *MfaProvider) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *MfaProvider) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -195,7 +198,7 @@ func (o *MfaProvider) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *MfaProvider) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -209,7 +212,7 @@ func (o *MfaProvider) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *MfaProvider) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -219,7 +222,7 @@ func (o *MfaProvider) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -227,7 +230,7 @@ func (o *MfaProvider) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *MfaProvider) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -241,7 +244,7 @@ func (o *MfaProvider) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *MfaProvider) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -251,7 +254,7 @@ func (o *MfaProvider) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -259,7 +262,7 @@ func (o *MfaProvider) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *MfaProvider) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -297,7 +300,7 @@ func (o *MfaProvider) SetType(v string) {
 
 // GetHostnames returns the Hostnames field value if set, zero value otherwise.
 func (o *MfaProvider) GetHostnames() []string {
-	if o == nil || o.Hostnames == nil {
+	if o == nil || IsNil(o.Hostnames) {
 		var ret []string
 		return ret
 	}
@@ -307,7 +310,7 @@ func (o *MfaProvider) GetHostnames() []string {
 // GetHostnamesOk returns a tuple with the Hostnames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetHostnamesOk() ([]string, bool) {
-	if o == nil || o.Hostnames == nil {
+	if o == nil || IsNil(o.Hostnames) {
 		return nil, false
 	}
 	return o.Hostnames, true
@@ -315,7 +318,7 @@ func (o *MfaProvider) GetHostnamesOk() ([]string, bool) {
 
 // HasHostnames returns a boolean if a field has been set.
 func (o *MfaProvider) HasHostnames() bool {
-	if o != nil && o.Hostnames != nil {
+	if o != nil && !IsNil(o.Hostnames) {
 		return true
 	}
 
@@ -329,7 +332,7 @@ func (o *MfaProvider) SetHostnames(v []string) {
 
 // GetPort returns the Port field value if set, zero value otherwise.
 func (o *MfaProvider) GetPort() float32 {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		var ret float32
 		return ret
 	}
@@ -339,7 +342,7 @@ func (o *MfaProvider) GetPort() float32 {
 // GetPortOk returns a tuple with the Port field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetPortOk() (*float32, bool) {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		return nil, false
 	}
 	return o.Port, true
@@ -347,7 +350,7 @@ func (o *MfaProvider) GetPortOk() (*float32, bool) {
 
 // HasPort returns a boolean if a field has been set.
 func (o *MfaProvider) HasPort() bool {
-	if o != nil && o.Port != nil {
+	if o != nil && !IsNil(o.Port) {
 		return true
 	}
 
@@ -361,7 +364,7 @@ func (o *MfaProvider) SetPort(v float32) {
 
 // GetInputType returns the InputType field value if set, zero value otherwise.
 func (o *MfaProvider) GetInputType() string {
-	if o == nil || o.InputType == nil {
+	if o == nil || IsNil(o.InputType) {
 		var ret string
 		return ret
 	}
@@ -371,7 +374,7 @@ func (o *MfaProvider) GetInputType() string {
 // GetInputTypeOk returns a tuple with the InputType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetInputTypeOk() (*string, bool) {
-	if o == nil || o.InputType == nil {
+	if o == nil || IsNil(o.InputType) {
 		return nil, false
 	}
 	return o.InputType, true
@@ -379,7 +382,7 @@ func (o *MfaProvider) GetInputTypeOk() (*string, bool) {
 
 // HasInputType returns a boolean if a field has been set.
 func (o *MfaProvider) HasInputType() bool {
-	if o != nil && o.InputType != nil {
+	if o != nil && !IsNil(o.InputType) {
 		return true
 	}
 
@@ -393,7 +396,7 @@ func (o *MfaProvider) SetInputType(v string) {
 
 // GetSharedSecret returns the SharedSecret field value if set, zero value otherwise.
 func (o *MfaProvider) GetSharedSecret() string {
-	if o == nil || o.SharedSecret == nil {
+	if o == nil || IsNil(o.SharedSecret) {
 		var ret string
 		return ret
 	}
@@ -403,7 +406,7 @@ func (o *MfaProvider) GetSharedSecret() string {
 // GetSharedSecretOk returns a tuple with the SharedSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetSharedSecretOk() (*string, bool) {
-	if o == nil || o.SharedSecret == nil {
+	if o == nil || IsNil(o.SharedSecret) {
 		return nil, false
 	}
 	return o.SharedSecret, true
@@ -411,7 +414,7 @@ func (o *MfaProvider) GetSharedSecretOk() (*string, bool) {
 
 // HasSharedSecret returns a boolean if a field has been set.
 func (o *MfaProvider) HasSharedSecret() bool {
-	if o != nil && o.SharedSecret != nil {
+	if o != nil && !IsNil(o.SharedSecret) {
 		return true
 	}
 
@@ -425,7 +428,7 @@ func (o *MfaProvider) SetSharedSecret(v string) {
 
 // GetAuthenticationProtocol returns the AuthenticationProtocol field value if set, zero value otherwise.
 func (o *MfaProvider) GetAuthenticationProtocol() string {
-	if o == nil || o.AuthenticationProtocol == nil {
+	if o == nil || IsNil(o.AuthenticationProtocol) {
 		var ret string
 		return ret
 	}
@@ -435,7 +438,7 @@ func (o *MfaProvider) GetAuthenticationProtocol() string {
 // GetAuthenticationProtocolOk returns a tuple with the AuthenticationProtocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetAuthenticationProtocolOk() (*string, bool) {
-	if o == nil || o.AuthenticationProtocol == nil {
+	if o == nil || IsNil(o.AuthenticationProtocol) {
 		return nil, false
 	}
 	return o.AuthenticationProtocol, true
@@ -443,7 +446,7 @@ func (o *MfaProvider) GetAuthenticationProtocolOk() (*string, bool) {
 
 // HasAuthenticationProtocol returns a boolean if a field has been set.
 func (o *MfaProvider) HasAuthenticationProtocol() bool {
-	if o != nil && o.AuthenticationProtocol != nil {
+	if o != nil && !IsNil(o.AuthenticationProtocol) {
 		return true
 	}
 
@@ -457,7 +460,7 @@ func (o *MfaProvider) SetAuthenticationProtocol(v string) {
 
 // GetTimeout returns the Timeout field value if set, zero value otherwise.
 func (o *MfaProvider) GetTimeout() float32 {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		var ret float32
 		return ret
 	}
@@ -467,7 +470,7 @@ func (o *MfaProvider) GetTimeout() float32 {
 // GetTimeoutOk returns a tuple with the Timeout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetTimeoutOk() (*float32, bool) {
-	if o == nil || o.Timeout == nil {
+	if o == nil || IsNil(o.Timeout) {
 		return nil, false
 	}
 	return o.Timeout, true
@@ -475,7 +478,7 @@ func (o *MfaProvider) GetTimeoutOk() (*float32, bool) {
 
 // HasTimeout returns a boolean if a field has been set.
 func (o *MfaProvider) HasTimeout() bool {
-	if o != nil && o.Timeout != nil {
+	if o != nil && !IsNil(o.Timeout) {
 		return true
 	}
 
@@ -489,7 +492,7 @@ func (o *MfaProvider) SetTimeout(v float32) {
 
 // GetMode returns the Mode field value if set, zero value otherwise.
 func (o *MfaProvider) GetMode() string {
-	if o == nil || o.Mode == nil {
+	if o == nil || IsNil(o.Mode) {
 		var ret string
 		return ret
 	}
@@ -499,7 +502,7 @@ func (o *MfaProvider) GetMode() string {
 // GetModeOk returns a tuple with the Mode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetModeOk() (*string, bool) {
-	if o == nil || o.Mode == nil {
+	if o == nil || IsNil(o.Mode) {
 		return nil, false
 	}
 	return o.Mode, true
@@ -507,7 +510,7 @@ func (o *MfaProvider) GetModeOk() (*string, bool) {
 
 // HasMode returns a boolean if a field has been set.
 func (o *MfaProvider) HasMode() bool {
-	if o != nil && o.Mode != nil {
+	if o != nil && !IsNil(o.Mode) {
 		return true
 	}
 
@@ -521,7 +524,7 @@ func (o *MfaProvider) SetMode(v string) {
 
 // GetUseUserPassword returns the UseUserPassword field value if set, zero value otherwise.
 func (o *MfaProvider) GetUseUserPassword() bool {
-	if o == nil || o.UseUserPassword == nil {
+	if o == nil || IsNil(o.UseUserPassword) {
 		var ret bool
 		return ret
 	}
@@ -531,7 +534,7 @@ func (o *MfaProvider) GetUseUserPassword() bool {
 // GetUseUserPasswordOk returns a tuple with the UseUserPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetUseUserPasswordOk() (*bool, bool) {
-	if o == nil || o.UseUserPassword == nil {
+	if o == nil || IsNil(o.UseUserPassword) {
 		return nil, false
 	}
 	return o.UseUserPassword, true
@@ -539,7 +542,7 @@ func (o *MfaProvider) GetUseUserPasswordOk() (*bool, bool) {
 
 // HasUseUserPassword returns a boolean if a field has been set.
 func (o *MfaProvider) HasUseUserPassword() bool {
-	if o != nil && o.UseUserPassword != nil {
+	if o != nil && !IsNil(o.UseUserPassword) {
 		return true
 	}
 
@@ -553,7 +556,7 @@ func (o *MfaProvider) SetUseUserPassword(v bool) {
 
 // GetChallengeSharedSecret returns the ChallengeSharedSecret field value if set, zero value otherwise.
 func (o *MfaProvider) GetChallengeSharedSecret() string {
-	if o == nil || o.ChallengeSharedSecret == nil {
+	if o == nil || IsNil(o.ChallengeSharedSecret) {
 		var ret string
 		return ret
 	}
@@ -563,7 +566,7 @@ func (o *MfaProvider) GetChallengeSharedSecret() string {
 // GetChallengeSharedSecretOk returns a tuple with the ChallengeSharedSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProvider) GetChallengeSharedSecretOk() (*string, bool) {
-	if o == nil || o.ChallengeSharedSecret == nil {
+	if o == nil || IsNil(o.ChallengeSharedSecret) {
 		return nil, false
 	}
 	return o.ChallengeSharedSecret, true
@@ -571,7 +574,7 @@ func (o *MfaProvider) GetChallengeSharedSecretOk() (*string, bool) {
 
 // HasChallengeSharedSecret returns a boolean if a field has been set.
 func (o *MfaProvider) HasChallengeSharedSecret() bool {
-	if o != nil && o.ChallengeSharedSecret != nil {
+	if o != nil && !IsNil(o.ChallengeSharedSecret) {
 		return true
 	}
 
@@ -584,56 +587,60 @@ func (o *MfaProvider) SetChallengeSharedSecret(v string) {
 }
 
 func (o MfaProvider) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if o.Hostnames != nil {
-		toSerialize["hostnames"] = o.Hostnames
-	}
-	if o.Port != nil {
-		toSerialize["port"] = o.Port
-	}
-	if o.InputType != nil {
-		toSerialize["inputType"] = o.InputType
-	}
-	if o.SharedSecret != nil {
-		toSerialize["sharedSecret"] = o.SharedSecret
-	}
-	if o.AuthenticationProtocol != nil {
-		toSerialize["authenticationProtocol"] = o.AuthenticationProtocol
-	}
-	if o.Timeout != nil {
-		toSerialize["timeout"] = o.Timeout
-	}
-	if o.Mode != nil {
-		toSerialize["mode"] = o.Mode
-	}
-	if o.UseUserPassword != nil {
-		toSerialize["useUserPassword"] = o.UseUserPassword
-	}
-	if o.ChallengeSharedSecret != nil {
-		toSerialize["challengeSharedSecret"] = o.ChallengeSharedSecret
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o MfaProvider) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	toSerialize["type"] = o.Type
+	if !IsNil(o.Hostnames) {
+		toSerialize["hostnames"] = o.Hostnames
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	if !IsNil(o.InputType) {
+		toSerialize["inputType"] = o.InputType
+	}
+	if !IsNil(o.SharedSecret) {
+		toSerialize["sharedSecret"] = o.SharedSecret
+	}
+	if !IsNil(o.AuthenticationProtocol) {
+		toSerialize["authenticationProtocol"] = o.AuthenticationProtocol
+	}
+	if !IsNil(o.Timeout) {
+		toSerialize["timeout"] = o.Timeout
+	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
+	}
+	if !IsNil(o.UseUserPassword) {
+		toSerialize["useUserPassword"] = o.UseUserPassword
+	}
+	if !IsNil(o.ChallengeSharedSecret) {
+		toSerialize["challengeSharedSecret"] = o.ChallengeSharedSecret
+	}
+	return toSerialize, nil
 }
 
 type NullableMfaProvider struct {

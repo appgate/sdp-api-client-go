@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OptimizationAction type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OptimizationAction{}
+
 // OptimizationAction An IP access action with optimization analysis results for its hosts and ports/types.
 type OptimizationAction struct {
 	Action  *IpAccessActionType `json:"action,omitempty"`
@@ -44,7 +47,7 @@ func NewOptimizationActionWithDefaults() *OptimizationAction {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *OptimizationAction) GetAction() IpAccessActionType {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret IpAccessActionType
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *OptimizationAction) GetAction() IpAccessActionType {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizationAction) GetActionOk() (*IpAccessActionType, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -62,7 +65,7 @@ func (o *OptimizationAction) GetActionOk() (*IpAccessActionType, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *OptimizationAction) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *OptimizationAction) SetAction(v IpAccessActionType) {
 
 // GetSubtype returns the Subtype field value if set, zero value otherwise.
 func (o *OptimizationAction) GetSubtype() IpAccessSubtype {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		var ret IpAccessSubtype
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *OptimizationAction) GetSubtype() IpAccessSubtype {
 // GetSubtypeOk returns a tuple with the Subtype field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizationAction) GetSubtypeOk() (*IpAccessSubtype, bool) {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		return nil, false
 	}
 	return o.Subtype, true
@@ -94,7 +97,7 @@ func (o *OptimizationAction) GetSubtypeOk() (*IpAccessSubtype, bool) {
 
 // HasSubtype returns a boolean if a field has been set.
 func (o *OptimizationAction) HasSubtype() bool {
-	if o != nil && o.Subtype != nil {
+	if o != nil && !IsNil(o.Subtype) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *OptimizationAction) SetSubtype(v IpAccessSubtype) {
 
 // GetHosts returns the Hosts field value if set, zero value otherwise.
 func (o *OptimizationAction) GetHosts() []OptimizableValue {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		var ret []OptimizableValue
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *OptimizationAction) GetHosts() []OptimizableValue {
 // GetHostsOk returns a tuple with the Hosts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizationAction) GetHostsOk() ([]OptimizableValue, bool) {
-	if o == nil || o.Hosts == nil {
+	if o == nil || IsNil(o.Hosts) {
 		return nil, false
 	}
 	return o.Hosts, true
@@ -126,7 +129,7 @@ func (o *OptimizationAction) GetHostsOk() ([]OptimizableValue, bool) {
 
 // HasHosts returns a boolean if a field has been set.
 func (o *OptimizationAction) HasHosts() bool {
-	if o != nil && o.Hosts != nil {
+	if o != nil && !IsNil(o.Hosts) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *OptimizationAction) SetHosts(v []OptimizableValue) {
 
 // GetPortsOrTypes returns the PortsOrTypes field value if set, zero value otherwise.
 func (o *OptimizationAction) GetPortsOrTypes() []OptimizableValue {
-	if o == nil || o.PortsOrTypes == nil {
+	if o == nil || IsNil(o.PortsOrTypes) {
 		var ret []OptimizableValue
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *OptimizationAction) GetPortsOrTypes() []OptimizableValue {
 // GetPortsOrTypesOk returns a tuple with the PortsOrTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizationAction) GetPortsOrTypesOk() ([]OptimizableValue, bool) {
-	if o == nil || o.PortsOrTypes == nil {
+	if o == nil || IsNil(o.PortsOrTypes) {
 		return nil, false
 	}
 	return o.PortsOrTypes, true
@@ -158,7 +161,7 @@ func (o *OptimizationAction) GetPortsOrTypesOk() ([]OptimizableValue, bool) {
 
 // HasPortsOrTypes returns a boolean if a field has been set.
 func (o *OptimizationAction) HasPortsOrTypes() bool {
-	if o != nil && o.PortsOrTypes != nil {
+	if o != nil && !IsNil(o.PortsOrTypes) {
 		return true
 	}
 
@@ -171,20 +174,28 @@ func (o *OptimizationAction) SetPortsOrTypes(v []OptimizableValue) {
 }
 
 func (o OptimizationAction) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Subtype != nil {
-		toSerialize["subtype"] = o.Subtype
-	}
-	if o.Hosts != nil {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.PortsOrTypes != nil {
-		toSerialize["portsOrTypes"] = o.PortsOrTypes
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OptimizationAction) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.Subtype) {
+		toSerialize["subtype"] = o.Subtype
+	}
+	if !IsNil(o.Hosts) {
+		toSerialize["hosts"] = o.Hosts
+	}
+	if !IsNil(o.PortsOrTypes) {
+		toSerialize["portsOrTypes"] = o.PortsOrTypes
+	}
+	return toSerialize, nil
 }
 
 type NullableOptimizationAction struct {

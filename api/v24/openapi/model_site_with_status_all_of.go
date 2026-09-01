@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteWithStatusAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteWithStatusAllOf{}
+
 // SiteWithStatusAllOf Represents a Site with its health status.
 type SiteWithStatusAllOf struct {
 	// Health status of the Site. Depends on the status of the Appliances in this Site.
@@ -41,7 +44,7 @@ func NewSiteWithStatusAllOfWithDefaults() *SiteWithStatusAllOf {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *SiteWithStatusAllOf) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *SiteWithStatusAllOf) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatusAllOf) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -59,7 +62,7 @@ func (o *SiteWithStatusAllOf) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *SiteWithStatusAllOf) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *SiteWithStatusAllOf) SetStatus(v string) {
 
 // GetSessionCounts returns the SessionCounts field value if set, zero value otherwise.
 func (o *SiteWithStatusAllOf) GetSessionCounts() SessionCounts {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		var ret SessionCounts
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *SiteWithStatusAllOf) GetSessionCounts() SessionCounts {
 // GetSessionCountsOk returns a tuple with the SessionCounts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatusAllOf) GetSessionCountsOk() (*SessionCounts, bool) {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		return nil, false
 	}
 	return o.SessionCounts, true
@@ -91,7 +94,7 @@ func (o *SiteWithStatusAllOf) GetSessionCountsOk() (*SessionCounts, bool) {
 
 // HasSessionCounts returns a boolean if a field has been set.
 func (o *SiteWithStatusAllOf) HasSessionCounts() bool {
-	if o != nil && o.SessionCounts != nil {
+	if o != nil && !IsNil(o.SessionCounts) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *SiteWithStatusAllOf) SetSessionCounts(v SessionCounts) {
 }
 
 func (o SiteWithStatusAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.SessionCounts != nil {
-		toSerialize["sessionCounts"] = o.SessionCounts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteWithStatusAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.SessionCounts) {
+		toSerialize["sessionCounts"] = o.SessionCounts
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteWithStatusAllOf struct {

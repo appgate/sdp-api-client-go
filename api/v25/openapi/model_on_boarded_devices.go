@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OnBoardedDevices type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OnBoardedDevices{}
+
 // OnBoardedDevices struct for OnBoardedDevices
 type OnBoardedDevices struct {
 	// A dictionary of Device On-Boardings Per hour. The key is the hour, the value is the amount of on-boards. For example 8:24 means, between 08:00 - 09:00, 24 on-boards have occurred. Times are UTC based and if the hour number is after the current time, it represents the day before.
@@ -40,7 +43,7 @@ func NewOnBoardedDevicesWithDefaults() *OnBoardedDevices {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *OnBoardedDevices) GetData() map[string]float32 {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]float32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *OnBoardedDevices) GetData() map[string]float32 {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OnBoardedDevices) GetDataOk() (*map[string]float32, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *OnBoardedDevices) GetDataOk() (*map[string]float32, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *OnBoardedDevices) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *OnBoardedDevices) SetData(v map[string]float32) {
 }
 
 func (o OnBoardedDevices) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OnBoardedDevices) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableOnBoardedDevices struct {

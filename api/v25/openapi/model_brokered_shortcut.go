@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BrokeredShortcut type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredShortcut{}
+
 // BrokeredShortcut Shortcut configuration for the brokered session, displayed to the user in the client.
 type BrokeredShortcut struct {
 	// Name for the shortcut which will be visible on the Client UI.
@@ -79,7 +82,7 @@ func (o *BrokeredShortcut) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *BrokeredShortcut) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
 	return o.Description, true
@@ -97,7 +100,7 @@ func (o *BrokeredShortcut) GetDescriptionOk() (*string, bool) {
 
 // HasDescription returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *BrokeredShortcut) SetDescription(v string) {
 
 // GetGroupName returns the GroupName field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetGroupName() string {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		var ret string
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *BrokeredShortcut) GetGroupName() string {
 // GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetGroupNameOk() (*string, bool) {
-	if o == nil || o.GroupName == nil {
+	if o == nil || IsNil(o.GroupName) {
 		return nil, false
 	}
 	return o.GroupName, true
@@ -129,7 +132,7 @@ func (o *BrokeredShortcut) GetGroupNameOk() (*string, bool) {
 
 // HasGroupName returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasGroupName() bool {
-	if o != nil && o.GroupName != nil {
+	if o != nil && !IsNil(o.GroupName) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *BrokeredShortcut) SetGroupName(v string) {
 
 // GetColorCode returns the ColorCode field value if set, zero value otherwise.
 func (o *BrokeredShortcut) GetColorCode() int32 {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		var ret int32
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *BrokeredShortcut) GetColorCode() int32 {
 // GetColorCodeOk returns a tuple with the ColorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredShortcut) GetColorCodeOk() (*int32, bool) {
-	if o == nil || o.ColorCode == nil {
+	if o == nil || IsNil(o.ColorCode) {
 		return nil, false
 	}
 	return o.ColorCode, true
@@ -161,7 +164,7 @@ func (o *BrokeredShortcut) GetColorCodeOk() (*int32, bool) {
 
 // HasColorCode returns a boolean if a field has been set.
 func (o *BrokeredShortcut) HasColorCode() bool {
-	if o != nil && o.ColorCode != nil {
+	if o != nil && !IsNil(o.ColorCode) {
 		return true
 	}
 
@@ -174,20 +177,26 @@ func (o *BrokeredShortcut) SetColorCode(v int32) {
 }
 
 func (o BrokeredShortcut) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
-	if o.GroupName != nil {
-		toSerialize["groupName"] = o.GroupName
-	}
-	if o.ColorCode != nil {
-		toSerialize["colorCode"] = o.ColorCode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredShortcut) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.GroupName) {
+		toSerialize["groupName"] = o.GroupName
+	}
+	if !IsNil(o.ColorCode) {
+		toSerialize["colorCode"] = o.ColorCode
+	}
+	return toSerialize, nil
 }
 
 type NullableBrokeredShortcut struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SshKeySecretAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SshKeySecretAllOf{}
+
 // SshKeySecretAllOf Represents an SSH key Secret.
 type SshKeySecretAllOf struct {
 	// Username for the SSH key.
@@ -67,7 +70,7 @@ func (o *SshKeySecretAllOf) SetUsername(v string) {
 
 // GetPrivateKey returns the PrivateKey field value if set, zero value otherwise.
 func (o *SshKeySecretAllOf) GetPrivateKey() string {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		var ret string
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *SshKeySecretAllOf) GetPrivateKey() string {
 // GetPrivateKeyOk returns a tuple with the PrivateKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SshKeySecretAllOf) GetPrivateKeyOk() (*string, bool) {
-	if o == nil || o.PrivateKey == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		return nil, false
 	}
 	return o.PrivateKey, true
@@ -85,7 +88,7 @@ func (o *SshKeySecretAllOf) GetPrivateKeyOk() (*string, bool) {
 
 // HasPrivateKey returns a boolean if a field has been set.
 func (o *SshKeySecretAllOf) HasPrivateKey() bool {
-	if o != nil && o.PrivateKey != nil {
+	if o != nil && !IsNil(o.PrivateKey) {
 		return true
 	}
 
@@ -98,14 +101,20 @@ func (o *SshKeySecretAllOf) SetPrivateKey(v string) {
 }
 
 func (o SshKeySecretAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if o.PrivateKey != nil {
-		toSerialize["privateKey"] = o.PrivateKey
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SshKeySecretAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["username"] = o.Username
+	if !IsNil(o.PrivateKey) {
+		toSerialize["privateKey"] = o.PrivateKey
+	}
+	return toSerialize, nil
 }
 
 type NullableSshKeySecretAllOf struct {

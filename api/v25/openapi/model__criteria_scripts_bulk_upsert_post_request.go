@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CriteriaScriptsBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CriteriaScriptsBulkUpsertPostRequest{}
+
 // CriteriaScriptsBulkUpsertPostRequest struct for CriteriaScriptsBulkUpsertPostRequest
 type CriteriaScriptsBulkUpsertPostRequest struct {
 	Data []CriteriaScript `json:"data"`
@@ -63,11 +66,17 @@ func (o *CriteriaScriptsBulkUpsertPostRequest) SetData(v []CriteriaScript) {
 }
 
 func (o CriteriaScriptsBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CriteriaScriptsBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableCriteriaScriptsBulkUpsertPostRequest struct {

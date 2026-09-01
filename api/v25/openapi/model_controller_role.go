@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ControllerRole type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ControllerRole{}
+
 // ControllerRole struct for ControllerRole
 type ControllerRole struct {
 	// Status of the role.
@@ -46,7 +49,7 @@ func NewControllerRoleWithDefaults() *ControllerRole {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ControllerRole) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ControllerRole) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ControllerRole) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -64,7 +67,7 @@ func (o *ControllerRole) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ControllerRole) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ControllerRole) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *ControllerRole) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ControllerRole) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ControllerRole) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -96,7 +99,7 @@ func (o *ControllerRole) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *ControllerRole) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ControllerRole) SetDetails(v string) {
 
 // GetMaintenanceMode returns the MaintenanceMode field value if set, zero value otherwise.
 func (o *ControllerRole) GetMaintenanceMode() bool {
-	if o == nil || o.MaintenanceMode == nil {
+	if o == nil || IsNil(o.MaintenanceMode) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ControllerRole) GetMaintenanceMode() bool {
 // GetMaintenanceModeOk returns a tuple with the MaintenanceMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ControllerRole) GetMaintenanceModeOk() (*bool, bool) {
-	if o == nil || o.MaintenanceMode == nil {
+	if o == nil || IsNil(o.MaintenanceMode) {
 		return nil, false
 	}
 	return o.MaintenanceMode, true
@@ -128,7 +131,7 @@ func (o *ControllerRole) GetMaintenanceModeOk() (*bool, bool) {
 
 // HasMaintenanceMode returns a boolean if a field has been set.
 func (o *ControllerRole) HasMaintenanceMode() bool {
-	if o != nil && o.MaintenanceMode != nil {
+	if o != nil && !IsNil(o.MaintenanceMode) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ControllerRole) SetMaintenanceMode(v bool) {
 
 // GetDatabaseSize returns the DatabaseSize field value if set, zero value otherwise.
 func (o *ControllerRole) GetDatabaseSize() string {
-	if o == nil || o.DatabaseSize == nil {
+	if o == nil || IsNil(o.DatabaseSize) {
 		var ret string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ControllerRole) GetDatabaseSize() string {
 // GetDatabaseSizeOk returns a tuple with the DatabaseSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ControllerRole) GetDatabaseSizeOk() (*string, bool) {
-	if o == nil || o.DatabaseSize == nil {
+	if o == nil || IsNil(o.DatabaseSize) {
 		return nil, false
 	}
 	return o.DatabaseSize, true
@@ -160,7 +163,7 @@ func (o *ControllerRole) GetDatabaseSizeOk() (*string, bool) {
 
 // HasDatabaseSize returns a boolean if a field has been set.
 func (o *ControllerRole) HasDatabaseSize() bool {
-	if o != nil && o.DatabaseSize != nil {
+	if o != nil && !IsNil(o.DatabaseSize) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ControllerRole) SetDatabaseSize(v string) {
 }
 
 func (o ControllerRole) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
-	}
-	if o.MaintenanceMode != nil {
-		toSerialize["maintenanceMode"] = o.MaintenanceMode
-	}
-	if o.DatabaseSize != nil {
-		toSerialize["databaseSize"] = o.DatabaseSize
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ControllerRole) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.MaintenanceMode) {
+		toSerialize["maintenanceMode"] = o.MaintenanceMode
+	}
+	if !IsNil(o.DatabaseSize) {
+		toSerialize["databaseSize"] = o.DatabaseSize
+	}
+	return toSerialize, nil
 }
 
 type NullableControllerRole struct {

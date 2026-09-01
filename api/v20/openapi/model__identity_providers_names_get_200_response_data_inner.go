@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the IdentityProvidersNamesGet200ResponseDataInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &IdentityProvidersNamesGet200ResponseDataInner{}
+
 // IdentityProvidersNamesGet200ResponseDataInner Details of an identity provider required for logging in.
 type IdentityProvidersNamesGet200ResponseDataInner struct {
 	// Name of the identity provider.
@@ -56,7 +59,7 @@ func NewIdentityProvidersNamesGet200ResponseDataInnerWithDefaults() *IdentityPro
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -74,7 +77,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetNameOk() (*string, bo
 
 // HasName returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetName(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -106,7 +109,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTypeOk() (*string, bo
 
 // HasType returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetType(v string) {
 
 // GetRedirectUrl returns the RedirectUrl field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetRedirectUrl() string {
-	if o == nil || o.RedirectUrl == nil {
+	if o == nil || IsNil(o.RedirectUrl) {
 		var ret string
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetRedirectUrl() string 
 // GetRedirectUrlOk returns a tuple with the RedirectUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetRedirectUrlOk() (*string, bool) {
-	if o == nil || o.RedirectUrl == nil {
+	if o == nil || IsNil(o.RedirectUrl) {
 		return nil, false
 	}
 	return o.RedirectUrl, true
@@ -138,7 +141,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetRedirectUrlOk() (*str
 
 // HasRedirectUrl returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasRedirectUrl() bool {
-	if o != nil && o.RedirectUrl != nil {
+	if o != nil && !IsNil(o.RedirectUrl) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetRedirectUrl(v string)
 
 // GetCertificatePriorities returns the CertificatePriorities field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificatePriorities() []map[string]interface{} {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		var ret []map[string]interface{}
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificatePriorities
 // GetCertificatePrioritiesOk returns a tuple with the CertificatePriorities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificatePrioritiesOk() ([]map[string]interface{}, bool) {
-	if o == nil || o.CertificatePriorities == nil {
+	if o == nil || IsNil(o.CertificatePriorities) {
 		return nil, false
 	}
 	return o.CertificatePriorities, true
@@ -170,7 +173,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificatePriorities
 
 // HasCertificatePriorities returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasCertificatePriorities() bool {
-	if o != nil && o.CertificatePriorities != nil {
+	if o != nil && !IsNil(o.CertificatePriorities) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetCertificatePriorities
 
 // GetAuthUrl returns the AuthUrl field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetAuthUrl() string {
-	if o == nil || o.AuthUrl == nil {
+	if o == nil || IsNil(o.AuthUrl) {
 		var ret string
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetAuthUrl() string {
 // GetAuthUrlOk returns a tuple with the AuthUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetAuthUrlOk() (*string, bool) {
-	if o == nil || o.AuthUrl == nil {
+	if o == nil || IsNil(o.AuthUrl) {
 		return nil, false
 	}
 	return o.AuthUrl, true
@@ -202,7 +205,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetAuthUrlOk() (*string,
 
 // HasAuthUrl returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasAuthUrl() bool {
-	if o != nil && o.AuthUrl != nil {
+	if o != nil && !IsNil(o.AuthUrl) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetAuthUrl(v string) {
 
 // GetTokenUrl returns the TokenUrl field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTokenUrl() string {
-	if o == nil || o.TokenUrl == nil {
+	if o == nil || IsNil(o.TokenUrl) {
 		var ret string
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTokenUrl() string {
 // GetTokenUrlOk returns a tuple with the TokenUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTokenUrlOk() (*string, bool) {
-	if o == nil || o.TokenUrl == nil {
+	if o == nil || IsNil(o.TokenUrl) {
 		return nil, false
 	}
 	return o.TokenUrl, true
@@ -234,7 +237,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetTokenUrlOk() (*string
 
 // HasTokenUrl returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasTokenUrl() bool {
-	if o != nil && o.TokenUrl != nil {
+	if o != nil && !IsNil(o.TokenUrl) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetTokenUrl(v string) {
 
 // GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetClientId() string {
-	if o == nil || o.ClientId == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetClientId() string {
 // GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetClientIdOk() (*string, bool) {
-	if o == nil || o.ClientId == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
 	return o.ClientId, true
@@ -266,7 +269,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetClientIdOk() (*string
 
 // HasClientId returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasClientId() bool {
-	if o != nil && o.ClientId != nil {
+	if o != nil && !IsNil(o.ClientId) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetClientId(v string) {
 
 // GetScope returns the Scope field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetScope() string {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetScope() string {
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetScopeOk() (*string, bool) {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
 	return o.Scope, true
@@ -298,7 +301,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetScopeOk() (*string, b
 
 // HasScope returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasScope() bool {
-	if o != nil && o.Scope != nil {
+	if o != nil && !IsNil(o.Scope) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetScope(v string) {
 
 // GetGoogleClientSecret returns the GoogleClientSecret field value if set, zero value otherwise.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecret() string {
-	if o == nil || o.GoogleClientSecret == nil {
+	if o == nil || IsNil(o.GoogleClientSecret) {
 		var ret string
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecret() 
 // GetGoogleClientSecretOk returns a tuple with the GoogleClientSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecretOk() (*string, bool) {
-	if o == nil || o.GoogleClientSecret == nil {
+	if o == nil || IsNil(o.GoogleClientSecret) {
 		return nil, false
 	}
 	return o.GoogleClientSecret, true
@@ -330,7 +333,7 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) GetGoogleClientSecretOk(
 
 // HasGoogleClientSecret returns a boolean if a field has been set.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) HasGoogleClientSecret() bool {
-	if o != nil && o.GoogleClientSecret != nil {
+	if o != nil && !IsNil(o.GoogleClientSecret) {
 		return true
 	}
 
@@ -343,35 +346,43 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) SetGoogleClientSecret(v 
 }
 
 func (o IdentityProvidersNamesGet200ResponseDataInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.RedirectUrl != nil {
-		toSerialize["redirectUrl"] = o.RedirectUrl
-	}
-	if o.CertificatePriorities != nil {
-		toSerialize["certificatePriorities"] = o.CertificatePriorities
-	}
-	if o.AuthUrl != nil {
-		toSerialize["authUrl"] = o.AuthUrl
-	}
-	if o.TokenUrl != nil {
-		toSerialize["tokenUrl"] = o.TokenUrl
-	}
-	if o.ClientId != nil {
-		toSerialize["clientId"] = o.ClientId
-	}
-	if o.Scope != nil {
-		toSerialize["scope"] = o.Scope
-	}
-	if o.GoogleClientSecret != nil {
-		toSerialize["googleClientSecret"] = o.GoogleClientSecret
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o IdentityProvidersNamesGet200ResponseDataInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.RedirectUrl) {
+		toSerialize["redirectUrl"] = o.RedirectUrl
+	}
+	if !IsNil(o.CertificatePriorities) {
+		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	}
+	if !IsNil(o.AuthUrl) {
+		toSerialize["authUrl"] = o.AuthUrl
+	}
+	if !IsNil(o.TokenUrl) {
+		toSerialize["tokenUrl"] = o.TokenUrl
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["clientId"] = o.ClientId
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.GoogleClientSecret) {
+		toSerialize["googleClientSecret"] = o.GoogleClientSecret
+	}
+	return toSerialize, nil
 }
 
 type NullableIdentityProvidersNamesGet200ResponseDataInner struct {

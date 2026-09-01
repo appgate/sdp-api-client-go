@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue{}
+
 // AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue Resolution result.
 type AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue struct {
 	// Whether the resolution is for the resource is complete or partial.
@@ -46,7 +49,7 @@ func NewAppliancesIdNameResolutionStatusGet200ResponseResolutionsValueWithDefaul
 
 // GetPartial returns the Partial field value if set, zero value otherwise.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPartial() bool {
-	if o == nil || o.Partial == nil {
+	if o == nil || IsNil(o.Partial) {
 		var ret bool
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPart
 // GetPartialOk returns a tuple with the Partial field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPartialOk() (*bool, bool) {
-	if o == nil || o.Partial == nil {
+	if o == nil || IsNil(o.Partial) {
 		return nil, false
 	}
 	return o.Partial, true
@@ -64,7 +67,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPart
 
 // HasPartial returns a boolean if a field has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) HasPartial() bool {
-	if o != nil && o.Partial != nil {
+	if o != nil && !IsNil(o.Partial) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) SetPart
 
 // GetFinals returns the Finals field value if set, zero value otherwise.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetFinals() []string {
-	if o == nil || o.Finals == nil {
+	if o == nil || IsNil(o.Finals) {
 		var ret []string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetFina
 // GetFinalsOk returns a tuple with the Finals field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetFinalsOk() ([]string, bool) {
-	if o == nil || o.Finals == nil {
+	if o == nil || IsNil(o.Finals) {
 		return nil, false
 	}
 	return o.Finals, true
@@ -96,7 +99,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetFina
 
 // HasFinals returns a boolean if a field has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) HasFinals() bool {
-	if o != nil && o.Finals != nil {
+	if o != nil && !IsNil(o.Finals) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) SetFina
 
 // GetPartials returns the Partials field value if set, zero value otherwise.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPartials() []string {
-	if o == nil || o.Partials == nil {
+	if o == nil || IsNil(o.Partials) {
 		var ret []string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPart
 // GetPartialsOk returns a tuple with the Partials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPartialsOk() ([]string, bool) {
-	if o == nil || o.Partials == nil {
+	if o == nil || IsNil(o.Partials) {
 		return nil, false
 	}
 	return o.Partials, true
@@ -128,7 +131,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetPart
 
 // HasPartials returns a boolean if a field has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) HasPartials() bool {
-	if o != nil && o.Partials != nil {
+	if o != nil && !IsNil(o.Partials) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) SetPart
 
 // GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetErrors() []string {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []string
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetErro
 // GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetErrorsOk() ([]string, bool) {
-	if o == nil || o.Errors == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
@@ -160,7 +163,7 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) GetErro
 
 // HasErrors returns a boolean if a field has been set.
 func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) HasErrors() bool {
-	if o != nil && o.Errors != nil {
+	if o != nil && !IsNil(o.Errors) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) SetErro
 }
 
 func (o AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Partial != nil {
-		toSerialize["partial"] = o.Partial
-	}
-	if o.Finals != nil {
-		toSerialize["finals"] = o.Finals
-	}
-	if o.Partials != nil {
-		toSerialize["partials"] = o.Partials
-	}
-	if o.Errors != nil {
-		toSerialize["errors"] = o.Errors
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdNameResolutionStatusGet200ResponseResolutionsValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Partial) {
+		toSerialize["partial"] = o.Partial
+	}
+	if !IsNil(o.Finals) {
+		toSerialize["finals"] = o.Finals
+	}
+	if !IsNil(o.Partials) {
+		toSerialize["partials"] = o.Partials
+	}
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdNameResolutionStatusGet200ResponseResolutionsValue struct {

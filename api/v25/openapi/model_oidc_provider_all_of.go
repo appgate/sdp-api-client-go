@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OidcProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OidcProviderAllOf{}
+
 // OidcProviderAllOf Represents an OIDC Identity Provider.
 type OidcProviderAllOf struct {
 	// OIDC issuer URL.
@@ -99,7 +102,7 @@ func (o *OidcProviderAllOf) SetAudience(v string) {
 
 // GetScope returns the Scope field value if set, zero value otherwise.
 func (o *OidcProviderAllOf) GetScope() string {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
 	}
@@ -109,7 +112,7 @@ func (o *OidcProviderAllOf) GetScope() string {
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OidcProviderAllOf) GetScopeOk() (*string, bool) {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
 	return o.Scope, true
@@ -117,7 +120,7 @@ func (o *OidcProviderAllOf) GetScopeOk() (*string, bool) {
 
 // HasScope returns a boolean if a field has been set.
 func (o *OidcProviderAllOf) HasScope() bool {
-	if o != nil && o.Scope != nil {
+	if o != nil && !IsNil(o.Scope) {
 		return true
 	}
 
@@ -131,7 +134,7 @@ func (o *OidcProviderAllOf) SetScope(v string) {
 
 // GetGoogle returns the Google field value if set, zero value otherwise.
 func (o *OidcProviderAllOf) GetGoogle() OidcProviderAllOfGoogle {
-	if o == nil || o.Google == nil {
+	if o == nil || IsNil(o.Google) {
 		var ret OidcProviderAllOfGoogle
 		return ret
 	}
@@ -141,7 +144,7 @@ func (o *OidcProviderAllOf) GetGoogle() OidcProviderAllOfGoogle {
 // GetGoogleOk returns a tuple with the Google field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OidcProviderAllOf) GetGoogleOk() (*OidcProviderAllOfGoogle, bool) {
-	if o == nil || o.Google == nil {
+	if o == nil || IsNil(o.Google) {
 		return nil, false
 	}
 	return o.Google, true
@@ -149,7 +152,7 @@ func (o *OidcProviderAllOf) GetGoogleOk() (*OidcProviderAllOfGoogle, bool) {
 
 // HasGoogle returns a boolean if a field has been set.
 func (o *OidcProviderAllOf) HasGoogle() bool {
-	if o != nil && o.Google != nil {
+	if o != nil && !IsNil(o.Google) {
 		return true
 	}
 
@@ -162,20 +165,24 @@ func (o *OidcProviderAllOf) SetGoogle(v OidcProviderAllOfGoogle) {
 }
 
 func (o OidcProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["issuer"] = o.Issuer
-	}
-	if true {
-		toSerialize["audience"] = o.Audience
-	}
-	if o.Scope != nil {
-		toSerialize["scope"] = o.Scope
-	}
-	if o.Google != nil {
-		toSerialize["google"] = o.Google
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OidcProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["issuer"] = o.Issuer
+	toSerialize["audience"] = o.Audience
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.Google) {
+		toSerialize["google"] = o.Google
+	}
+	return toSerialize, nil
 }
 
 type NullableOidcProviderAllOf struct {

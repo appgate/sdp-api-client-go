@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -19,7 +19,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -33,18 +32,18 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
-
-	"golang.org/x/oauth2"
 )
 
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
-	redact    = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
-	redactPW  = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+	jsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
+	xmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	redact          = regexp.MustCompile(`(Authorization: Bearer )(.+)`)
+	redactPW        = regexp.MustCompile(`(?:"password":\w?")(.+?)(?:")`)
+	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
+	queryDescape    = strings.NewReplacer("%5B", "[", "%5D", "]")
 )
 
-// APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 22.4
+// APIClient manages communication with the Appgate SDP Controller REST API API vAPI version 22.5
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -158,19 +157,13 @@ type APIClient struct {
 
 	ZTPApi *ZTPApiService
 	// PATCH seperate API services for each discriminator identity provider
-	LdapIdentityProvidersApi *LdapIdentityProvidersApiService
-
-	RadiusIdentityProvidersApi *RadiusIdentityProvidersApiService
-
-	SamlIdentityProvidersApi *SamlIdentityProvidersApiService
-
-	LocalDatabaseIdentityProvidersApi *LocalDatabaseIdentityProvidersApiService
-
+	LdapIdentityProvidersApi            *LdapIdentityProvidersApiService
+	RadiusIdentityProvidersApi          *RadiusIdentityProvidersApiService
+	SamlIdentityProvidersApi            *SamlIdentityProvidersApiService
+	LocalDatabaseIdentityProvidersApi   *LocalDatabaseIdentityProvidersApiService
 	LdapCertificateIdentityProvidersApi *LdapCertificateIdentityProvidersApiService
-
-	ConnectorIdentityProvidersApi *ConnectorIdentityProvidersApiService
-
-	OidcIdentityProvidersApi *OidcIdentityProvidersApiService
+	ConnectorIdentityProvidersApi       *ConnectorIdentityProvidersApiService
+	OidcIdentityProvidersApi            *OidcIdentityProvidersApiService
 }
 
 type service struct {
@@ -286,7 +279,7 @@ func selectHeaderAccept(accepts []string) string {
 // contains is a case insensitive match, finding needle in a haystack
 func contains(haystack []string, needle string) bool {
 	for _, a := range haystack {
-		if strings.ToLower(a) == strings.ToLower(needle) {
+		if strings.EqualFold(a, needle) {
 			return true
 		}
 	}
@@ -302,33 +295,111 @@ func typeCheckParameter(obj interface{}, expected string, name string) error {
 
 	// Check the type is as expected.
 	if reflect.TypeOf(obj).String() != expected {
-		return fmt.Errorf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String())
+		return fmt.Errorf("expected %s to be of type %s but received %s", name, expected, reflect.TypeOf(obj).String())
 	}
 	return nil
 }
 
-// parameterToString convert interface{} parameters to string, using a delimiter if format is provided.
-func parameterToString(obj interface{}, collectionFormat string) string {
-	var delimiter string
+func parameterValueToString(obj interface{}, key string) string {
+	if reflect.TypeOf(obj).Kind() != reflect.Ptr {
+		return fmt.Sprintf("%v", obj)
+	}
+	var param, ok = obj.(MappedNullable)
+	if !ok {
+		return ""
+	}
+	dataMap, err := param.ToMap()
+	if err != nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", dataMap[key])
+}
 
-	switch collectionFormat {
-	case "pipes":
-		delimiter = "|"
-	case "ssv":
-		delimiter = " "
-	case "tsv":
-		delimiter = "\t"
-	case "csv":
-		delimiter = ","
+// parameterAddToHeaderOrQuery adds the provided object to the request header or url query
+// supporting deep object syntax
+func parameterAddToHeaderOrQuery(headerOrQueryParams interface{}, keyPrefix string, obj interface{}, collectionType string) {
+	var v = reflect.ValueOf(obj)
+	var value = ""
+	if v == reflect.ValueOf(nil) {
+		value = "null"
+	} else {
+		switch v.Kind() {
+		case reflect.Invalid:
+			value = "invalid"
+
+		case reflect.Struct:
+			if t, ok := obj.(MappedNullable); ok {
+				dataMap, err := t.ToMap()
+				if err != nil {
+					return
+				}
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, dataMap, collectionType)
+				return
+			}
+			if t, ok := obj.(time.Time); ok {
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, t.Format(time.RFC3339), collectionType)
+				return
+			}
+			value = v.Type().String() + " value"
+		case reflect.Slice:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
+				return
+			}
+			var lenIndValue = indValue.Len()
+			for i := 0; i < lenIndValue; i++ {
+				var arrayValue = indValue.Index(i)
+				parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, arrayValue.Interface(), collectionType)
+			}
+			return
+
+		case reflect.Map:
+			var indValue = reflect.ValueOf(obj)
+			if indValue == reflect.ValueOf(nil) {
+				return
+			}
+			iter := indValue.MapRange()
+			for iter.Next() {
+				k, v := iter.Key(), iter.Value()
+				parameterAddToHeaderOrQuery(headerOrQueryParams, fmt.Sprintf("%s[%s]", keyPrefix, k.String()), v.Interface(), collectionType)
+			}
+			return
+
+		case reflect.Interface:
+			fallthrough
+		case reflect.Ptr:
+			parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, v.Elem().Interface(), collectionType)
+			return
+
+		case reflect.Int, reflect.Int8, reflect.Int16,
+			reflect.Int32, reflect.Int64:
+			value = strconv.FormatInt(v.Int(), 10)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16,
+			reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			value = strconv.FormatUint(v.Uint(), 10)
+		case reflect.Float32, reflect.Float64:
+			value = strconv.FormatFloat(v.Float(), 'g', -1, 32)
+		case reflect.Bool:
+			value = strconv.FormatBool(v.Bool())
+		case reflect.String:
+			value = v.String()
+		default:
+			value = v.Type().String() + " value"
+		}
 	}
 
-	if reflect.TypeOf(obj).Kind() == reflect.Slice {
-		return strings.Trim(strings.Replace(fmt.Sprint(obj), " ", delimiter, -1), "[]")
-	} else if t, ok := obj.(time.Time); ok {
-		return t.Format(time.RFC3339)
+	switch valuesMap := headerOrQueryParams.(type) {
+	case url.Values:
+		if collectionType == "csv" && valuesMap.Get(keyPrefix) != "" {
+			valuesMap.Set(keyPrefix, valuesMap.Get(keyPrefix)+","+value)
+		} else {
+			valuesMap.Add(keyPrefix, value)
+		}
+		break
+	case map[string]string:
+		valuesMap[keyPrefix] = value
+		break
 	}
-
-	return fmt.Sprintf("%v", obj)
 }
 
 // helper for converting interface{} parameters to json strings
@@ -480,7 +551,11 @@ func (c *APIClient) prepareRequest(
 	}
 
 	// Encode the parameters.
-	url.RawQuery = query.Encode()
+	url.RawQuery = queryParamSplit.ReplaceAllStringFunc(query.Encode(), func(s string) string {
+		pieces := strings.Split(s, "=")
+		pieces[0] = queryDescape.Replace(pieces[0])
+		return strings.Join(pieces, "=")
+	})
 
 	// Generate a new request
 	if body != nil {
@@ -523,35 +598,21 @@ func (c *APIClient) prepareRequest(
 		// Since there is already a Accept header present, we want to replace it, and we can not do that with Add()
 		localVarRequest.Header.Set(header, value)
 	}
+
 	if ctx != nil {
 		// add context to the request
 		localVarRequest = localVarRequest.WithContext(ctx)
 
+		// Accept Header, Overwrites any existing Accept headers
+		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
+			localVarRequest.Header.Set("Accept", accept)
+		}
+
 		// Walk through any authentication.
-
-		// OAuth2 authentication
-		if tok, ok := ctx.Value(ContextOAuth2).(oauth2.TokenSource); ok {
-			// We were able to grab an oauth2 token from the context
-			var latestToken *oauth2.Token
-			if latestToken, err = tok.Token(); err != nil {
-				return nil, err
-			}
-
-			latestToken.SetAuthHeader(localVarRequest)
-		}
-
-		// Basic HTTP Authentication
-		if auth, ok := ctx.Value(ContextBasicAuth).(BasicAuth); ok {
-			localVarRequest.SetBasicAuth(auth.UserName, auth.Password)
-		}
 
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
-		}
-		// Accept Header, Overwrites any existing Accept headers
-		if accept, ok := ctx.Value(ContextAcceptHeader).(string); ok {
-			localVarRequest.Header.Set("Accept", accept)
 		}
 
 	}
@@ -567,8 +628,12 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 		*s = string(b)
 		return nil
 	}
+	// The single-pointer (*os.File) branch emitted by openapi-generator v6.6 is
+	// a no-op: it reassigns the local f to a fresh temp file the caller never
+	// sees (and staticcheck flags it as SA4006). Drop it; downloads use the
+	// **os.File / ***os.File branches below.
 	if f, ok := v.(**os.File); ok {
-		*f, err = ioutil.TempFile("", "HttpClientFile")
+		*f, err = os.CreateTemp("", "HttpClientFile")
 		if err != nil {
 			return
 		}
@@ -582,7 +647,7 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 	// https://github.com/OpenAPITools/openapi-generator/issues/11965
 	if file, ok := v.(***os.File); ok {
 		var tmp *os.File
-		tmp, err = ioutil.TempFile("", "HttpClientFile")
+		tmp, err = os.CreateTemp("", "HttpClientFile")
 		if err != nil {
 			return
 		}
@@ -619,11 +684,14 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 
 // Add a file to the multipart request
 func addFile(w *multipart.Writer, fieldName, path string) error {
-	file, err := os.Open(path)
+	file, err := os.Open(filepath.Clean(path))
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	err = file.Close()
+	if err != nil {
+		return err
+	}
 
 	part, err := w.CreateFormFile(fieldName, filepath.Base(path))
 	if err != nil {
@@ -654,8 +722,8 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 
 	if reader, ok := body.(io.Reader); ok {
 		_, err = bodyBuf.ReadFrom(reader)
-	} else if fp, ok := body.(**os.File); ok {
-		_, err = bodyBuf.ReadFrom(*fp)
+	} else if fp, ok := body.(*os.File); ok {
+		_, err = bodyBuf.ReadFrom(fp)
 	} else if b, ok := body.([]byte); ok {
 		_, err = bodyBuf.Write(b)
 	} else if s, ok := body.(string); ok {
@@ -673,7 +741,7 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 	}
 
 	if bodyBuf.Len() == 0 {
-		err = fmt.Errorf("Invalid body type %s\n", contentType)
+		err = fmt.Errorf("invalid body type %s\n", contentType)
 		return nil, err
 	}
 	return bodyBuf, nil
@@ -774,4 +842,24 @@ func (e GenericOpenAPIError) Body() []byte {
 // Model returns the unpacked model of the error
 func (e GenericOpenAPIError) Model() interface{} {
 	return e.model
+}
+
+// format error message using title and detail when model implements rfc7807
+func formatErrorMessage(status string, v interface{}) string {
+	str := ""
+	metaValue := reflect.ValueOf(v).Elem()
+
+	if metaValue.Kind() == reflect.Struct {
+		field := metaValue.FieldByName("Title")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s", field.Interface())
+		}
+
+		field = metaValue.FieldByName("Detail")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s (%s)", str, field.Interface())
+		}
+	}
+
+	return strings.TrimSpace(fmt.Sprintf("%s %s", status, str))
 }

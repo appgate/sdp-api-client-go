@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOf{}
+
 // EntitlementAllOf Represents an Entitlement.
 type EntitlementAllOf struct {
 	// If true, the Entitlement will be disregarded during authorization.
@@ -68,7 +71,7 @@ func NewEntitlementAllOfWithDefaults() *EntitlementAllOf {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -78,7 +81,7 @@ func (o *EntitlementAllOf) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -86,7 +89,7 @@ func (o *EntitlementAllOf) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -124,7 +127,7 @@ func (o *EntitlementAllOf) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -134,7 +137,7 @@ func (o *EntitlementAllOf) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -142,7 +145,7 @@ func (o *EntitlementAllOf) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -157,7 +160,7 @@ func (o *EntitlementAllOf) SetSiteName(v string) {
 // GetRiskSensitivity returns the RiskSensitivity field value if set, zero value otherwise.
 // Deprecated
 func (o *EntitlementAllOf) GetRiskSensitivity() string {
-	if o == nil || o.RiskSensitivity == nil {
+	if o == nil || IsNil(o.RiskSensitivity) {
 		var ret string
 		return ret
 	}
@@ -168,7 +171,7 @@ func (o *EntitlementAllOf) GetRiskSensitivity() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *EntitlementAllOf) GetRiskSensitivityOk() (*string, bool) {
-	if o == nil || o.RiskSensitivity == nil {
+	if o == nil || IsNil(o.RiskSensitivity) {
 		return nil, false
 	}
 	return o.RiskSensitivity, true
@@ -176,7 +179,7 @@ func (o *EntitlementAllOf) GetRiskSensitivityOk() (*string, bool) {
 
 // HasRiskSensitivity returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasRiskSensitivity() bool {
-	if o != nil && o.RiskSensitivity != nil {
+	if o != nil && !IsNil(o.RiskSensitivity) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *EntitlementAllOf) SetRiskSensitivity(v string) {
 
 // GetConditionLogic returns the ConditionLogic field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetConditionLogic() string {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		var ret string
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *EntitlementAllOf) GetConditionLogic() string {
 // GetConditionLogicOk returns a tuple with the ConditionLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetConditionLogicOk() (*string, bool) {
-	if o == nil || o.ConditionLogic == nil {
+	if o == nil || IsNil(o.ConditionLogic) {
 		return nil, false
 	}
 	return o.ConditionLogic, true
@@ -209,7 +212,7 @@ func (o *EntitlementAllOf) GetConditionLogicOk() (*string, bool) {
 
 // HasConditionLogic returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasConditionLogic() bool {
-	if o != nil && o.ConditionLogic != nil {
+	if o != nil && !IsNil(o.ConditionLogic) {
 		return true
 	}
 
@@ -271,7 +274,7 @@ func (o *EntitlementAllOf) SetActions(v []EntitlementAllOfActions) {
 
 // GetAppShortcuts returns the AppShortcuts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		var ret []AppShortcut
 		return ret
 	}
@@ -281,7 +284,7 @@ func (o *EntitlementAllOf) GetAppShortcuts() []AppShortcut {
 // GetAppShortcutsOk returns a tuple with the AppShortcuts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
-	if o == nil || o.AppShortcuts == nil {
+	if o == nil || IsNil(o.AppShortcuts) {
 		return nil, false
 	}
 	return o.AppShortcuts, true
@@ -289,7 +292,7 @@ func (o *EntitlementAllOf) GetAppShortcutsOk() ([]AppShortcut, bool) {
 
 // HasAppShortcuts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcuts() bool {
-	if o != nil && o.AppShortcuts != nil {
+	if o != nil && !IsNil(o.AppShortcuts) {
 		return true
 	}
 
@@ -303,7 +306,7 @@ func (o *EntitlementAllOf) SetAppShortcuts(v []AppShortcut) {
 
 // GetAppShortcutScripts returns the AppShortcutScripts field value if set, zero value otherwise.
 func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		var ret []string
 		return ret
 	}
@@ -313,7 +316,7 @@ func (o *EntitlementAllOf) GetAppShortcutScripts() []string {
 // GetAppShortcutScriptsOk returns a tuple with the AppShortcutScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
-	if o == nil || o.AppShortcutScripts == nil {
+	if o == nil || IsNil(o.AppShortcutScripts) {
 		return nil, false
 	}
 	return o.AppShortcutScripts, true
@@ -321,7 +324,7 @@ func (o *EntitlementAllOf) GetAppShortcutScriptsOk() ([]string, bool) {
 
 // HasAppShortcutScripts returns a boolean if a field has been set.
 func (o *EntitlementAllOf) HasAppShortcutScripts() bool {
-	if o != nil && o.AppShortcutScripts != nil {
+	if o != nil && !IsNil(o.AppShortcutScripts) {
 		return true
 	}
 
@@ -334,35 +337,37 @@ func (o *EntitlementAllOf) SetAppShortcutScripts(v []string) {
 }
 
 func (o EntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.RiskSensitivity != nil {
-		toSerialize["riskSensitivity"] = o.RiskSensitivity
-	}
-	if o.ConditionLogic != nil {
-		toSerialize["conditionLogic"] = o.ConditionLogic
-	}
-	if true {
-		toSerialize["conditions"] = o.Conditions
-	}
-	if true {
-		toSerialize["actions"] = o.Actions
-	}
-	if o.AppShortcuts != nil {
-		toSerialize["appShortcuts"] = o.AppShortcuts
-	}
-	if o.AppShortcutScripts != nil {
-		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["site"] = o.Site
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.RiskSensitivity) {
+		toSerialize["riskSensitivity"] = o.RiskSensitivity
+	}
+	if !IsNil(o.ConditionLogic) {
+		toSerialize["conditionLogic"] = o.ConditionLogic
+	}
+	toSerialize["conditions"] = o.Conditions
+	toSerialize["actions"] = o.Actions
+	if !IsNil(o.AppShortcuts) {
+		toSerialize["appShortcuts"] = o.AppShortcuts
+	}
+	if !IsNil(o.AppShortcutScripts) {
+		toSerialize["appShortcutScripts"] = o.AppShortcutScripts
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementAllOf struct {

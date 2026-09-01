@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CommonGroup type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CommonGroup{}
+
 // CommonGroup struct for CommonGroup
 type CommonGroup struct {
 	// The name of the group.
@@ -41,7 +44,7 @@ func NewCommonGroupWithDefaults() *CommonGroup {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *CommonGroup) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *CommonGroup) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CommonGroup) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -59,7 +62,7 @@ func (o *CommonGroup) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *CommonGroup) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *CommonGroup) SetName(v string) {
 
 // GetProviderNames returns the ProviderNames field value if set, zero value otherwise.
 func (o *CommonGroup) GetProviderNames() []string {
-	if o == nil || o.ProviderNames == nil {
+	if o == nil || IsNil(o.ProviderNames) {
 		var ret []string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *CommonGroup) GetProviderNames() []string {
 // GetProviderNamesOk returns a tuple with the ProviderNames field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CommonGroup) GetProviderNamesOk() ([]string, bool) {
-	if o == nil || o.ProviderNames == nil {
+	if o == nil || IsNil(o.ProviderNames) {
 		return nil, false
 	}
 	return o.ProviderNames, true
@@ -91,7 +94,7 @@ func (o *CommonGroup) GetProviderNamesOk() ([]string, bool) {
 
 // HasProviderNames returns a boolean if a field has been set.
 func (o *CommonGroup) HasProviderNames() bool {
-	if o != nil && o.ProviderNames != nil {
+	if o != nil && !IsNil(o.ProviderNames) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *CommonGroup) SetProviderNames(v []string) {
 }
 
 func (o CommonGroup) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.ProviderNames != nil {
-		toSerialize["providerNames"] = o.ProviderNames
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CommonGroup) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.ProviderNames) {
+		toSerialize["providerNames"] = o.ProviderNames
+	}
+	return toSerialize, nil
 }
 
 type NullableCommonGroup struct {

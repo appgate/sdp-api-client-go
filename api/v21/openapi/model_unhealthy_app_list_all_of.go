@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the UnhealthyAppListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UnhealthyAppListAllOf{}
+
 // UnhealthyAppListAllOf Represents a list of unhealthy apps.
 type UnhealthyAppListAllOf struct {
 	// List of unhealthy apps.
@@ -40,7 +43,7 @@ func NewUnhealthyAppListAllOfWithDefaults() *UnhealthyAppListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *UnhealthyAppListAllOf) GetData() []UnhealthyApp {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []UnhealthyApp
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *UnhealthyAppListAllOf) GetData() []UnhealthyApp {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UnhealthyAppListAllOf) GetDataOk() ([]UnhealthyApp, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *UnhealthyAppListAllOf) GetDataOk() ([]UnhealthyApp, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *UnhealthyAppListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *UnhealthyAppListAllOf) SetData(v []UnhealthyApp) {
 }
 
 func (o UnhealthyAppListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o UnhealthyAppListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableUnhealthyAppListAllOf struct {

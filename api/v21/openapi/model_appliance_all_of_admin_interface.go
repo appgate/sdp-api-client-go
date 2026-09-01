@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfAdminInterface type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfAdminInterface{}
+
 // ApplianceAllOfAdminInterface The details of the admin connection interface. Required on Controllers and LogServers.
 type ApplianceAllOfAdminInterface struct {
 	// Hostname to connect to the admin interface. This hostname will be used to validate the appliance certificate. Set it to \"automatic.hostname.assignment\" for cloud appliances in order for it to automatically configure the hostname on activation.
@@ -77,7 +80,7 @@ func (o *ApplianceAllOfAdminInterface) SetHostname(v string) {
 
 // GetHttpsPort returns the HttpsPort field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetHttpsPort() int32 {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		var ret int32
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsPort() int32 {
 // GetHttpsPortOk returns a tuple with the HttpsPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetHttpsPortOk() (*int32, bool) {
-	if o == nil || o.HttpsPort == nil {
+	if o == nil || IsNil(o.HttpsPort) {
 		return nil, false
 	}
 	return o.HttpsPort, true
@@ -95,7 +98,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsPortOk() (*int32, bool) {
 
 // HasHttpsPort returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasHttpsPort() bool {
-	if o != nil && o.HttpsPort != nil {
+	if o != nil && !IsNil(o.HttpsPort) {
 		return true
 	}
 
@@ -133,7 +136,7 @@ func (o *ApplianceAllOfAdminInterface) SetHttpsCiphers(v []string) {
 
 // GetAllowSources returns the AllowSources field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetAllowSources() []AllowSourcesInner {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		var ret []AllowSourcesInner
 		return ret
 	}
@@ -143,7 +146,7 @@ func (o *ApplianceAllOfAdminInterface) GetAllowSources() []AllowSourcesInner {
 // GetAllowSourcesOk returns a tuple with the AllowSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() ([]AllowSourcesInner, bool) {
-	if o == nil || o.AllowSources == nil {
+	if o == nil || IsNil(o.AllowSources) {
 		return nil, false
 	}
 	return o.AllowSources, true
@@ -151,7 +154,7 @@ func (o *ApplianceAllOfAdminInterface) GetAllowSourcesOk() ([]AllowSourcesInner,
 
 // HasAllowSources returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasAllowSources() bool {
-	if o != nil && o.AllowSources != nil {
+	if o != nil && !IsNil(o.AllowSources) {
 		return true
 	}
 
@@ -165,7 +168,7 @@ func (o *ApplianceAllOfAdminInterface) SetAllowSources(v []AllowSourcesInner) {
 
 // GetHttpsP12 returns the HttpsP12 field value if set, zero value otherwise.
 func (o *ApplianceAllOfAdminInterface) GetHttpsP12() P12 {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		var ret P12
 		return ret
 	}
@@ -175,7 +178,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsP12() P12 {
 // GetHttpsP12Ok returns a tuple with the HttpsP12 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfAdminInterface) GetHttpsP12Ok() (*P12, bool) {
-	if o == nil || o.HttpsP12 == nil {
+	if o == nil || IsNil(o.HttpsP12) {
 		return nil, false
 	}
 	return o.HttpsP12, true
@@ -183,7 +186,7 @@ func (o *ApplianceAllOfAdminInterface) GetHttpsP12Ok() (*P12, bool) {
 
 // HasHttpsP12 returns a boolean if a field has been set.
 func (o *ApplianceAllOfAdminInterface) HasHttpsP12() bool {
-	if o != nil && o.HttpsP12 != nil {
+	if o != nil && !IsNil(o.HttpsP12) {
 		return true
 	}
 
@@ -196,23 +199,27 @@ func (o *ApplianceAllOfAdminInterface) SetHttpsP12(v P12) {
 }
 
 func (o ApplianceAllOfAdminInterface) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.HttpsPort != nil {
-		toSerialize["httpsPort"] = o.HttpsPort
-	}
-	if true {
-		toSerialize["httpsCiphers"] = o.HttpsCiphers
-	}
-	if o.AllowSources != nil {
-		toSerialize["allowSources"] = o.AllowSources
-	}
-	if o.HttpsP12 != nil {
-		toSerialize["httpsP12"] = o.HttpsP12
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfAdminInterface) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.HttpsPort) {
+		toSerialize["httpsPort"] = o.HttpsPort
+	}
+	toSerialize["httpsCiphers"] = o.HttpsCiphers
+	if !IsNil(o.AllowSources) {
+		toSerialize["allowSources"] = o.AllowSources
+	}
+	if !IsNil(o.HttpsP12) {
+		toSerialize["httpsP12"] = o.HttpsP12
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfAdminInterface struct {

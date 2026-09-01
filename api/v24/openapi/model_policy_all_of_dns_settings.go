@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PolicyAllOfDnsSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PolicyAllOfDnsSettings{}
+
 // PolicyAllOfDnsSettings A domain name and a list of DNS servers.
 type PolicyAllOfDnsSettings struct {
 	// The domain for which the DNS servers should be used by the client.
@@ -93,7 +96,7 @@ func (o *PolicyAllOfDnsSettings) SetServers(v []string) {
 
 // GetRegisterTunIpsToActiveDirectory returns the RegisterTunIpsToActiveDirectory field value if set, zero value otherwise.
 func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectory() bool {
-	if o == nil || o.RegisterTunIpsToActiveDirectory == nil {
+	if o == nil || IsNil(o.RegisterTunIpsToActiveDirectory) {
 		var ret bool
 		return ret
 	}
@@ -103,7 +106,7 @@ func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectory() bool {
 // GetRegisterTunIpsToActiveDirectoryOk returns a tuple with the RegisterTunIpsToActiveDirectory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectoryOk() (*bool, bool) {
-	if o == nil || o.RegisterTunIpsToActiveDirectory == nil {
+	if o == nil || IsNil(o.RegisterTunIpsToActiveDirectory) {
 		return nil, false
 	}
 	return o.RegisterTunIpsToActiveDirectory, true
@@ -111,7 +114,7 @@ func (o *PolicyAllOfDnsSettings) GetRegisterTunIpsToActiveDirectoryOk() (*bool, 
 
 // HasRegisterTunIpsToActiveDirectory returns a boolean if a field has been set.
 func (o *PolicyAllOfDnsSettings) HasRegisterTunIpsToActiveDirectory() bool {
-	if o != nil && o.RegisterTunIpsToActiveDirectory != nil {
+	if o != nil && !IsNil(o.RegisterTunIpsToActiveDirectory) {
 		return true
 	}
 
@@ -124,17 +127,21 @@ func (o *PolicyAllOfDnsSettings) SetRegisterTunIpsToActiveDirectory(v bool) {
 }
 
 func (o PolicyAllOfDnsSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["domain"] = o.Domain
-	}
-	if true {
-		toSerialize["servers"] = o.Servers
-	}
-	if o.RegisterTunIpsToActiveDirectory != nil {
-		toSerialize["registerTunIpsToActiveDirectory"] = o.RegisterTunIpsToActiveDirectory
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PolicyAllOfDnsSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["domain"] = o.Domain
+	toSerialize["servers"] = o.Servers
+	if !IsNil(o.RegisterTunIpsToActiveDirectory) {
+		toSerialize["registerTunIpsToActiveDirectory"] = o.RegisterTunIpsToActiveDirectory
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicyAllOfDnsSettings struct {

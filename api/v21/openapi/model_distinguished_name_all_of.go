@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DistinguishedNameAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DistinguishedNameAllOf{}
+
 // DistinguishedNameAllOf Represents a user and device combination.
 type DistinguishedNameAllOf struct {
 	// The last time a Token issued to this user&device.
@@ -42,7 +45,7 @@ func NewDistinguishedNameAllOfWithDefaults() *DistinguishedNameAllOf {
 
 // GetLastTokenIssuedAt returns the LastTokenIssuedAt field value if set, zero value otherwise.
 func (o *DistinguishedNameAllOf) GetLastTokenIssuedAt() string {
-	if o == nil || o.LastTokenIssuedAt == nil {
+	if o == nil || IsNil(o.LastTokenIssuedAt) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *DistinguishedNameAllOf) GetLastTokenIssuedAt() string {
 // GetLastTokenIssuedAtOk returns a tuple with the LastTokenIssuedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedNameAllOf) GetLastTokenIssuedAtOk() (*string, bool) {
-	if o == nil || o.LastTokenIssuedAt == nil {
+	if o == nil || IsNil(o.LastTokenIssuedAt) {
 		return nil, false
 	}
 	return o.LastTokenIssuedAt, true
@@ -60,7 +63,7 @@ func (o *DistinguishedNameAllOf) GetLastTokenIssuedAtOk() (*string, bool) {
 
 // HasLastTokenIssuedAt returns a boolean if a field has been set.
 func (o *DistinguishedNameAllOf) HasLastTokenIssuedAt() bool {
-	if o != nil && o.LastTokenIssuedAt != nil {
+	if o != nil && !IsNil(o.LastTokenIssuedAt) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *DistinguishedNameAllOf) SetLastTokenIssuedAt(v string) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *DistinguishedNameAllOf) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *DistinguishedNameAllOf) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DistinguishedNameAllOf) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -92,7 +95,7 @@ func (o *DistinguishedNameAllOf) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *DistinguishedNameAllOf) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *DistinguishedNameAllOf) SetHostname(v string) {
 }
 
 func (o DistinguishedNameAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.LastTokenIssuedAt != nil {
-		toSerialize["lastTokenIssuedAt"] = o.LastTokenIssuedAt
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DistinguishedNameAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.LastTokenIssuedAt) {
+		toSerialize["lastTokenIssuedAt"] = o.LastTokenIssuedAt
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	return toSerialize, nil
 }
 
 type NullableDistinguishedNameAllOf struct {

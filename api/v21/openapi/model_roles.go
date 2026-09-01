@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Roles type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Roles{}
+
 // Roles Appliance roles.
 type Roles struct {
 	Controller        *ControllerRole            `json:"controller,omitempty"`
@@ -46,7 +49,7 @@ func NewRolesWithDefaults() *Roles {
 
 // GetController returns the Controller field value if set, zero value otherwise.
 func (o *Roles) GetController() ControllerRole {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		var ret ControllerRole
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *Roles) GetController() ControllerRole {
 // GetControllerOk returns a tuple with the Controller field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetControllerOk() (*ControllerRole, bool) {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		return nil, false
 	}
 	return o.Controller, true
@@ -64,7 +67,7 @@ func (o *Roles) GetControllerOk() (*ControllerRole, bool) {
 
 // HasController returns a boolean if a field has been set.
 func (o *Roles) HasController() bool {
-	if o != nil && o.Controller != nil {
+	if o != nil && !IsNil(o.Controller) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *Roles) SetController(v ControllerRole) {
 
 // GetLogServer returns the LogServer field value if set, zero value otherwise.
 func (o *Roles) GetLogServer() ApplianceRole {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		var ret ApplianceRole
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *Roles) GetLogServer() ApplianceRole {
 // GetLogServerOk returns a tuple with the LogServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetLogServerOk() (*ApplianceRole, bool) {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		return nil, false
 	}
 	return o.LogServer, true
@@ -96,7 +99,7 @@ func (o *Roles) GetLogServerOk() (*ApplianceRole, bool) {
 
 // HasLogServer returns a boolean if a field has been set.
 func (o *Roles) HasLogServer() bool {
-	if o != nil && o.LogServer != nil {
+	if o != nil && !IsNil(o.LogServer) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *Roles) SetLogServer(v ApplianceRole) {
 
 // GetLogForwarder returns the LogForwarder field value if set, zero value otherwise.
 func (o *Roles) GetLogForwarder() ApplianceRole {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		var ret ApplianceRole
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *Roles) GetLogForwarder() ApplianceRole {
 // GetLogForwarderOk returns a tuple with the LogForwarder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetLogForwarderOk() (*ApplianceRole, bool) {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		return nil, false
 	}
 	return o.LogForwarder, true
@@ -128,7 +131,7 @@ func (o *Roles) GetLogForwarderOk() (*ApplianceRole, bool) {
 
 // HasLogForwarder returns a boolean if a field has been set.
 func (o *Roles) HasLogForwarder() bool {
-	if o != nil && o.LogForwarder != nil {
+	if o != nil && !IsNil(o.LogForwarder) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *Roles) SetLogForwarder(v ApplianceRole) {
 
 // GetMetricsAggregator returns the MetricsAggregator field value if set, zero value otherwise.
 func (o *Roles) GetMetricsAggregator() ApplianceRole {
-	if o == nil || o.MetricsAggregator == nil {
+	if o == nil || IsNil(o.MetricsAggregator) {
 		var ret ApplianceRole
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *Roles) GetMetricsAggregator() ApplianceRole {
 // GetMetricsAggregatorOk returns a tuple with the MetricsAggregator field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetMetricsAggregatorOk() (*ApplianceRole, bool) {
-	if o == nil || o.MetricsAggregator == nil {
+	if o == nil || IsNil(o.MetricsAggregator) {
 		return nil, false
 	}
 	return o.MetricsAggregator, true
@@ -160,7 +163,7 @@ func (o *Roles) GetMetricsAggregatorOk() (*ApplianceRole, bool) {
 
 // HasMetricsAggregator returns a boolean if a field has been set.
 func (o *Roles) HasMetricsAggregator() bool {
-	if o != nil && o.MetricsAggregator != nil {
+	if o != nil && !IsNil(o.MetricsAggregator) {
 		return true
 	}
 
@@ -174,7 +177,7 @@ func (o *Roles) SetMetricsAggregator(v ApplianceRole) {
 
 // GetGateway returns the Gateway field value if set, zero value otherwise.
 func (o *Roles) GetGateway() ApplianceWithSessionsRole {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -184,7 +187,7 @@ func (o *Roles) GetGateway() ApplianceWithSessionsRole {
 // GetGatewayOk returns a tuple with the Gateway field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetGatewayOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		return nil, false
 	}
 	return o.Gateway, true
@@ -192,7 +195,7 @@ func (o *Roles) GetGatewayOk() (*ApplianceWithSessionsRole, bool) {
 
 // HasGateway returns a boolean if a field has been set.
 func (o *Roles) HasGateway() bool {
-	if o != nil && o.Gateway != nil {
+	if o != nil && !IsNil(o.Gateway) {
 		return true
 	}
 
@@ -206,7 +209,7 @@ func (o *Roles) SetGateway(v ApplianceWithSessionsRole) {
 
 // GetConnector returns the Connector field value if set, zero value otherwise.
 func (o *Roles) GetConnector() ApplianceWithSessionsRole {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -216,7 +219,7 @@ func (o *Roles) GetConnector() ApplianceWithSessionsRole {
 // GetConnectorOk returns a tuple with the Connector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetConnectorOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		return nil, false
 	}
 	return o.Connector, true
@@ -224,7 +227,7 @@ func (o *Roles) GetConnectorOk() (*ApplianceWithSessionsRole, bool) {
 
 // HasConnector returns a boolean if a field has been set.
 func (o *Roles) HasConnector() bool {
-	if o != nil && o.Connector != nil {
+	if o != nil && !IsNil(o.Connector) {
 		return true
 	}
 
@@ -238,7 +241,7 @@ func (o *Roles) SetConnector(v ApplianceWithSessionsRole) {
 
 // GetPortal returns the Portal field value if set, zero value otherwise.
 func (o *Roles) GetPortal() ApplianceWithSessionsRole {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		var ret ApplianceWithSessionsRole
 		return ret
 	}
@@ -248,7 +251,7 @@ func (o *Roles) GetPortal() ApplianceWithSessionsRole {
 // GetPortalOk returns a tuple with the Portal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetPortalOk() (*ApplianceWithSessionsRole, bool) {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		return nil, false
 	}
 	return o.Portal, true
@@ -256,7 +259,7 @@ func (o *Roles) GetPortalOk() (*ApplianceWithSessionsRole, bool) {
 
 // HasPortal returns a boolean if a field has been set.
 func (o *Roles) HasPortal() bool {
-	if o != nil && o.Portal != nil {
+	if o != nil && !IsNil(o.Portal) {
 		return true
 	}
 
@@ -270,7 +273,7 @@ func (o *Roles) SetPortal(v ApplianceWithSessionsRole) {
 
 // GetAppliance returns the Appliance field value if set, zero value otherwise.
 func (o *Roles) GetAppliance() ApplianceBaseRole {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		var ret ApplianceBaseRole
 		return ret
 	}
@@ -280,7 +283,7 @@ func (o *Roles) GetAppliance() ApplianceBaseRole {
 // GetApplianceOk returns a tuple with the Appliance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Roles) GetApplianceOk() (*ApplianceBaseRole, bool) {
-	if o == nil || o.Appliance == nil {
+	if o == nil || IsNil(o.Appliance) {
 		return nil, false
 	}
 	return o.Appliance, true
@@ -288,7 +291,7 @@ func (o *Roles) GetApplianceOk() (*ApplianceBaseRole, bool) {
 
 // HasAppliance returns a boolean if a field has been set.
 func (o *Roles) HasAppliance() bool {
-	if o != nil && o.Appliance != nil {
+	if o != nil && !IsNil(o.Appliance) {
 		return true
 	}
 
@@ -301,32 +304,40 @@ func (o *Roles) SetAppliance(v ApplianceBaseRole) {
 }
 
 func (o Roles) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Controller != nil {
-		toSerialize["controller"] = o.Controller
-	}
-	if o.LogServer != nil {
-		toSerialize["logServer"] = o.LogServer
-	}
-	if o.LogForwarder != nil {
-		toSerialize["logForwarder"] = o.LogForwarder
-	}
-	if o.MetricsAggregator != nil {
-		toSerialize["metricsAggregator"] = o.MetricsAggregator
-	}
-	if o.Gateway != nil {
-		toSerialize["gateway"] = o.Gateway
-	}
-	if o.Connector != nil {
-		toSerialize["connector"] = o.Connector
-	}
-	if o.Portal != nil {
-		toSerialize["portal"] = o.Portal
-	}
-	if o.Appliance != nil {
-		toSerialize["appliance"] = o.Appliance
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Roles) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Controller) {
+		toSerialize["controller"] = o.Controller
+	}
+	if !IsNil(o.LogServer) {
+		toSerialize["logServer"] = o.LogServer
+	}
+	if !IsNil(o.LogForwarder) {
+		toSerialize["logForwarder"] = o.LogForwarder
+	}
+	if !IsNil(o.MetricsAggregator) {
+		toSerialize["metricsAggregator"] = o.MetricsAggregator
+	}
+	if !IsNil(o.Gateway) {
+		toSerialize["gateway"] = o.Gateway
+	}
+	if !IsNil(o.Connector) {
+		toSerialize["connector"] = o.Connector
+	}
+	if !IsNil(o.Portal) {
+		toSerialize["portal"] = o.Portal
+	}
+	if !IsNil(o.Appliance) {
+		toSerialize["appliance"] = o.Appliance
+	}
+	return toSerialize, nil
 }
 
 type NullableRoles struct {

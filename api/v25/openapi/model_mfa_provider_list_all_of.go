@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the MfaProviderListAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &MfaProviderListAllOf{}
+
 // MfaProviderListAllOf Represents a list of MFA Providers.
 type MfaProviderListAllOf struct {
 	// List of MFA Providers.
@@ -40,7 +43,7 @@ func NewMfaProviderListAllOfWithDefaults() *MfaProviderListAllOf {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *MfaProviderListAllOf) GetData() []MfaProvider {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []MfaProvider
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *MfaProviderListAllOf) GetData() []MfaProvider {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MfaProviderListAllOf) GetDataOk() ([]MfaProvider, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -58,7 +61,7 @@ func (o *MfaProviderListAllOf) GetDataOk() ([]MfaProvider, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *MfaProviderListAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *MfaProviderListAllOf) SetData(v []MfaProvider) {
 }
 
 func (o MfaProviderListAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o MfaProviderListAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableMfaProviderListAllOf struct {

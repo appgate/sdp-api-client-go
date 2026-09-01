@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the LicenseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseAllOf{}
+
 // LicenseAllOf License details.
 type LicenseAllOf struct {
 	// Unique ID for the license.
@@ -51,7 +54,7 @@ func NewLicenseAllOfWithDefaults() *LicenseAllOf {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *LicenseAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -69,7 +72,7 @@ func (o *LicenseAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *LicenseAllOf) SetId(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetVersion() float32 {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret float32
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *LicenseAllOf) GetVersion() float32 {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetVersionOk() (*float32, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -101,7 +104,7 @@ func (o *LicenseAllOf) GetVersionOk() (*float32, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *LicenseAllOf) SetVersion(v float32) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetType() float32 {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret float32
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *LicenseAllOf) GetType() float32 {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetTypeOk() (*float32, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -133,7 +136,7 @@ func (o *LicenseAllOf) GetTypeOk() (*float32, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *LicenseAllOf) SetType(v float32) {
 
 // GetRequest returns the Request field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetRequest() string {
-	if o == nil || o.Request == nil {
+	if o == nil || IsNil(o.Request) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *LicenseAllOf) GetRequest() string {
 // GetRequestOk returns a tuple with the Request field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetRequestOk() (*string, bool) {
-	if o == nil || o.Request == nil {
+	if o == nil || IsNil(o.Request) {
 		return nil, false
 	}
 	return o.Request, true
@@ -165,7 +168,7 @@ func (o *LicenseAllOf) GetRequestOk() (*string, bool) {
 
 // HasRequest returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasRequest() bool {
-	if o != nil && o.Request != nil {
+	if o != nil && !IsNil(o.Request) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *LicenseAllOf) SetRequest(v string) {
 
 // GetExpiration returns the Expiration field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetExpiration() time.Time {
-	if o == nil || o.Expiration == nil {
+	if o == nil || IsNil(o.Expiration) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *LicenseAllOf) GetExpiration() time.Time {
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetExpirationOk() (*time.Time, bool) {
-	if o == nil || o.Expiration == nil {
+	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
 	return o.Expiration, true
@@ -197,7 +200,7 @@ func (o *LicenseAllOf) GetExpirationOk() (*time.Time, bool) {
 
 // HasExpiration returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasExpiration() bool {
-	if o != nil && o.Expiration != nil {
+	if o != nil && !IsNil(o.Expiration) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *LicenseAllOf) SetExpiration(v time.Time) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *LicenseAllOf) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -229,7 +232,7 @@ func (o *LicenseAllOf) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *LicenseAllOf) SetError(v string) {
 }
 
 func (o LicenseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Request != nil {
-		toSerialize["request"] = o.Request
-	}
-	if o.Expiration != nil {
-		toSerialize["expiration"] = o.Expiration
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Request) {
+		toSerialize["request"] = o.Request
+	}
+	if !IsNil(o.Expiration) {
+		toSerialize["expiration"] = o.Expiration
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseAllOf struct {

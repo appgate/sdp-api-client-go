@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the BlacklistEntry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BlacklistEntry{}
+
 // BlacklistEntry struct for BlacklistEntry
 type BlacklistEntry struct {
 	// Distinguished name of a user. Format: \"CN=,OU=\"
@@ -49,7 +52,7 @@ func NewBlacklistEntryWithDefaults() *BlacklistEntry {
 
 // GetUserDistinguishedName returns the UserDistinguishedName field value if set, zero value otherwise.
 func (o *BlacklistEntry) GetUserDistinguishedName() string {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *BlacklistEntry) GetUserDistinguishedName() string {
 // GetUserDistinguishedNameOk returns a tuple with the UserDistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntry) GetUserDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		return nil, false
 	}
 	return o.UserDistinguishedName, true
@@ -67,7 +70,7 @@ func (o *BlacklistEntry) GetUserDistinguishedNameOk() (*string, bool) {
 
 // HasUserDistinguishedName returns a boolean if a field has been set.
 func (o *BlacklistEntry) HasUserDistinguishedName() bool {
-	if o != nil && o.UserDistinguishedName != nil {
+	if o != nil && !IsNil(o.UserDistinguishedName) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *BlacklistEntry) SetUserDistinguishedName(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *BlacklistEntry) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *BlacklistEntry) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntry) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -99,7 +102,7 @@ func (o *BlacklistEntry) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *BlacklistEntry) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *BlacklistEntry) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *BlacklistEntry) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *BlacklistEntry) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntry) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -131,7 +134,7 @@ func (o *BlacklistEntry) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *BlacklistEntry) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *BlacklistEntry) SetProviderName(v string) {
 
 // GetBlacklistedAt returns the BlacklistedAt field value if set, zero value otherwise.
 func (o *BlacklistEntry) GetBlacklistedAt() time.Time {
-	if o == nil || o.BlacklistedAt == nil {
+	if o == nil || IsNil(o.BlacklistedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *BlacklistEntry) GetBlacklistedAt() time.Time {
 // GetBlacklistedAtOk returns a tuple with the BlacklistedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntry) GetBlacklistedAtOk() (*time.Time, bool) {
-	if o == nil || o.BlacklistedAt == nil {
+	if o == nil || IsNil(o.BlacklistedAt) {
 		return nil, false
 	}
 	return o.BlacklistedAt, true
@@ -163,7 +166,7 @@ func (o *BlacklistEntry) GetBlacklistedAtOk() (*time.Time, bool) {
 
 // HasBlacklistedAt returns a boolean if a field has been set.
 func (o *BlacklistEntry) HasBlacklistedAt() bool {
-	if o != nil && o.BlacklistedAt != nil {
+	if o != nil && !IsNil(o.BlacklistedAt) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *BlacklistEntry) SetBlacklistedAt(v time.Time) {
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *BlacklistEntry) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *BlacklistEntry) GetReason() string {
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BlacklistEntry) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -195,7 +198,7 @@ func (o *BlacklistEntry) GetReasonOk() (*string, bool) {
 
 // HasReason returns a boolean if a field has been set.
 func (o *BlacklistEntry) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -208,23 +211,31 @@ func (o *BlacklistEntry) SetReason(v string) {
 }
 
 func (o BlacklistEntry) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserDistinguishedName != nil {
-		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.BlacklistedAt != nil {
-		toSerialize["blacklistedAt"] = o.BlacklistedAt
-	}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BlacklistEntry) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserDistinguishedName) {
+		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.BlacklistedAt) {
+		toSerialize["blacklistedAt"] = o.BlacklistedAt
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	return toSerialize, nil
 }
 
 type NullableBlacklistEntry struct {

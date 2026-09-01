@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementScriptAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementScriptAllOf{}
+
 // EntitlementScriptAllOf Represents an Entitlement Script.
 type EntitlementScriptAllOf struct {
 	// The type of the field to use the script for.
@@ -47,7 +50,7 @@ func NewEntitlementScriptAllOfWithDefaults() *EntitlementScriptAllOf {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *EntitlementScriptAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *EntitlementScriptAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -65,7 +68,7 @@ func (o *EntitlementScriptAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *EntitlementScriptAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -102,14 +105,20 @@ func (o *EntitlementScriptAllOf) SetExpression(v string) {
 }
 
 func (o EntitlementScriptAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["expression"] = o.Expression
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementScriptAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	toSerialize["expression"] = o.Expression
+	return toSerialize, nil
 }
 
 type NullableEntitlementScriptAllOf struct {

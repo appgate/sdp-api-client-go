@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the File type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &File{}
+
 // File File details and status.
 type File struct {
 	// Filename.
@@ -51,7 +54,7 @@ func NewFileWithDefaults() *File {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *File) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *File) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -69,7 +72,7 @@ func (o *File) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *File) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *File) SetName(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *File) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *File) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -101,7 +104,7 @@ func (o *File) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *File) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *File) SetStatus(v string) {
 
 // GetFailureReason returns the FailureReason field value if set, zero value otherwise.
 func (o *File) GetFailureReason() string {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *File) GetFailureReason() string {
 // GetFailureReasonOk returns a tuple with the FailureReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetFailureReasonOk() (*string, bool) {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		return nil, false
 	}
 	return o.FailureReason, true
@@ -133,7 +136,7 @@ func (o *File) GetFailureReasonOk() (*string, bool) {
 
 // HasFailureReason returns a boolean if a field has been set.
 func (o *File) HasFailureReason() bool {
-	if o != nil && o.FailureReason != nil {
+	if o != nil && !IsNil(o.FailureReason) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *File) SetFailureReason(v string) {
 
 // GetChecksum returns the Checksum field value if set, zero value otherwise.
 func (o *File) GetChecksum() string {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *File) GetChecksum() string {
 // GetChecksumOk returns a tuple with the Checksum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetChecksumOk() (*string, bool) {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		return nil, false
 	}
 	return o.Checksum, true
@@ -165,7 +168,7 @@ func (o *File) GetChecksumOk() (*string, bool) {
 
 // HasChecksum returns a boolean if a field has been set.
 func (o *File) HasChecksum() bool {
-	if o != nil && o.Checksum != nil {
+	if o != nil && !IsNil(o.Checksum) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *File) SetChecksum(v string) {
 
 // GetCreationTime returns the CreationTime field value if set, zero value otherwise.
 func (o *File) GetCreationTime() time.Time {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *File) GetCreationTime() time.Time {
 // GetCreationTimeOk returns a tuple with the CreationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetCreationTimeOk() (*time.Time, bool) {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		return nil, false
 	}
 	return o.CreationTime, true
@@ -197,7 +200,7 @@ func (o *File) GetCreationTimeOk() (*time.Time, bool) {
 
 // HasCreationTime returns a boolean if a field has been set.
 func (o *File) HasCreationTime() bool {
-	if o != nil && o.CreationTime != nil {
+	if o != nil && !IsNil(o.CreationTime) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *File) SetCreationTime(v time.Time) {
 
 // GetLastModifiedTime returns the LastModifiedTime field value if set, zero value otherwise.
 func (o *File) GetLastModifiedTime() time.Time {
-	if o == nil || o.LastModifiedTime == nil {
+	if o == nil || IsNil(o.LastModifiedTime) {
 		var ret time.Time
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *File) GetLastModifiedTime() time.Time {
 // GetLastModifiedTimeOk returns a tuple with the LastModifiedTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetLastModifiedTimeOk() (*time.Time, bool) {
-	if o == nil || o.LastModifiedTime == nil {
+	if o == nil || IsNil(o.LastModifiedTime) {
 		return nil, false
 	}
 	return o.LastModifiedTime, true
@@ -229,7 +232,7 @@ func (o *File) GetLastModifiedTimeOk() (*time.Time, bool) {
 
 // HasLastModifiedTime returns a boolean if a field has been set.
 func (o *File) HasLastModifiedTime() bool {
-	if o != nil && o.LastModifiedTime != nil {
+	if o != nil && !IsNil(o.LastModifiedTime) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *File) SetLastModifiedTime(v time.Time) {
 }
 
 func (o File) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.FailureReason != nil {
-		toSerialize["failureReason"] = o.FailureReason
-	}
-	if o.Checksum != nil {
-		toSerialize["checksum"] = o.Checksum
-	}
-	if o.CreationTime != nil {
-		toSerialize["creationTime"] = o.CreationTime
-	}
-	if o.LastModifiedTime != nil {
-		toSerialize["lastModifiedTime"] = o.LastModifiedTime
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o File) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.FailureReason) {
+		toSerialize["failureReason"] = o.FailureReason
+	}
+	if !IsNil(o.Checksum) {
+		toSerialize["checksum"] = o.Checksum
+	}
+	if !IsNil(o.CreationTime) {
+		toSerialize["creationTime"] = o.CreationTime
+	}
+	if !IsNil(o.LastModifiedTime) {
+		toSerialize["lastModifiedTime"] = o.LastModifiedTime
+	}
+	return toSerialize, nil
 }
 
 type NullableFile struct {

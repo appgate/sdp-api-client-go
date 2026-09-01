@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfDefaultGateway type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfDefaultGateway{}
+
 // SiteAllOfDefaultGateway Default Gateway configuration.
 type SiteAllOfDefaultGateway struct {
 	// When enabled, the Client uses this Site as the Default Default for all IPV4 traffic.
@@ -52,7 +55,7 @@ func NewSiteAllOfDefaultGatewayWithDefaults() *SiteAllOfDefaultGateway {
 
 // GetEnabledV4 returns the EnabledV4 field value if set, zero value otherwise.
 func (o *SiteAllOfDefaultGateway) GetEnabledV4() bool {
-	if o == nil || o.EnabledV4 == nil {
+	if o == nil || IsNil(o.EnabledV4) {
 		var ret bool
 		return ret
 	}
@@ -62,7 +65,7 @@ func (o *SiteAllOfDefaultGateway) GetEnabledV4() bool {
 // GetEnabledV4Ok returns a tuple with the EnabledV4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfDefaultGateway) GetEnabledV4Ok() (*bool, bool) {
-	if o == nil || o.EnabledV4 == nil {
+	if o == nil || IsNil(o.EnabledV4) {
 		return nil, false
 	}
 	return o.EnabledV4, true
@@ -70,7 +73,7 @@ func (o *SiteAllOfDefaultGateway) GetEnabledV4Ok() (*bool, bool) {
 
 // HasEnabledV4 returns a boolean if a field has been set.
 func (o *SiteAllOfDefaultGateway) HasEnabledV4() bool {
-	if o != nil && o.EnabledV4 != nil {
+	if o != nil && !IsNil(o.EnabledV4) {
 		return true
 	}
 
@@ -84,7 +87,7 @@ func (o *SiteAllOfDefaultGateway) SetEnabledV4(v bool) {
 
 // GetEnabledV6 returns the EnabledV6 field value if set, zero value otherwise.
 func (o *SiteAllOfDefaultGateway) GetEnabledV6() bool {
-	if o == nil || o.EnabledV6 == nil {
+	if o == nil || IsNil(o.EnabledV6) {
 		var ret bool
 		return ret
 	}
@@ -94,7 +97,7 @@ func (o *SiteAllOfDefaultGateway) GetEnabledV6() bool {
 // GetEnabledV6Ok returns a tuple with the EnabledV6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfDefaultGateway) GetEnabledV6Ok() (*bool, bool) {
-	if o == nil || o.EnabledV6 == nil {
+	if o == nil || IsNil(o.EnabledV6) {
 		return nil, false
 	}
 	return o.EnabledV6, true
@@ -102,7 +105,7 @@ func (o *SiteAllOfDefaultGateway) GetEnabledV6Ok() (*bool, bool) {
 
 // HasEnabledV6 returns a boolean if a field has been set.
 func (o *SiteAllOfDefaultGateway) HasEnabledV6() bool {
-	if o != nil && o.EnabledV6 != nil {
+	if o != nil && !IsNil(o.EnabledV6) {
 		return true
 	}
 
@@ -116,7 +119,7 @@ func (o *SiteAllOfDefaultGateway) SetEnabledV6(v bool) {
 
 // GetExcludedSubnets returns the ExcludedSubnets field value if set, zero value otherwise.
 func (o *SiteAllOfDefaultGateway) GetExcludedSubnets() []string {
-	if o == nil || o.ExcludedSubnets == nil {
+	if o == nil || IsNil(o.ExcludedSubnets) {
 		var ret []string
 		return ret
 	}
@@ -126,7 +129,7 @@ func (o *SiteAllOfDefaultGateway) GetExcludedSubnets() []string {
 // GetExcludedSubnetsOk returns a tuple with the ExcludedSubnets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfDefaultGateway) GetExcludedSubnetsOk() ([]string, bool) {
-	if o == nil || o.ExcludedSubnets == nil {
+	if o == nil || IsNil(o.ExcludedSubnets) {
 		return nil, false
 	}
 	return o.ExcludedSubnets, true
@@ -134,7 +137,7 @@ func (o *SiteAllOfDefaultGateway) GetExcludedSubnetsOk() ([]string, bool) {
 
 // HasExcludedSubnets returns a boolean if a field has been set.
 func (o *SiteAllOfDefaultGateway) HasExcludedSubnets() bool {
-	if o != nil && o.ExcludedSubnets != nil {
+	if o != nil && !IsNil(o.ExcludedSubnets) {
 		return true
 	}
 
@@ -147,17 +150,25 @@ func (o *SiteAllOfDefaultGateway) SetExcludedSubnets(v []string) {
 }
 
 func (o SiteAllOfDefaultGateway) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.EnabledV4 != nil {
-		toSerialize["enabledV4"] = o.EnabledV4
-	}
-	if o.EnabledV6 != nil {
-		toSerialize["enabledV6"] = o.EnabledV6
-	}
-	if o.ExcludedSubnets != nil {
-		toSerialize["excludedSubnets"] = o.ExcludedSubnets
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfDefaultGateway) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.EnabledV4) {
+		toSerialize["enabledV4"] = o.EnabledV4
+	}
+	if !IsNil(o.EnabledV6) {
+		toSerialize["enabledV6"] = o.EnabledV6
+	}
+	if !IsNil(o.ExcludedSubnets) {
+		toSerialize["excludedSubnets"] = o.ExcludedSubnets
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfDefaultGateway struct {

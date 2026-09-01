@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the OptimizableValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OptimizableValue{}
+
 // OptimizableValue A single value (host, port, or type) with its optimization analysis metadata.
 type OptimizableValue struct {
 	// The host, port, or type value.
@@ -46,7 +49,7 @@ func NewOptimizableValueWithDefaults() *OptimizableValue {
 
 // GetValue returns the Value field value if set, zero value otherwise.
 func (o *OptimizableValue) GetValue() string {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *OptimizableValue) GetValue() string {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizableValue) GetValueOk() (*string, bool) {
-	if o == nil || o.Value == nil {
+	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
 	return o.Value, true
@@ -64,7 +67,7 @@ func (o *OptimizableValue) GetValueOk() (*string, bool) {
 
 // HasValue returns a boolean if a field has been set.
 func (o *OptimizableValue) HasValue() bool {
-	if o != nil && o.Value != nil {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *OptimizableValue) SetValue(v string) {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *OptimizableValue) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *OptimizableValue) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizableValue) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -96,7 +99,7 @@ func (o *OptimizableValue) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *OptimizableValue) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *OptimizableValue) SetRange(v string) {
 
 // GetExempted returns the Exempted field value if set, zero value otherwise.
 func (o *OptimizableValue) GetExempted() bool {
-	if o == nil || o.Exempted == nil {
+	if o == nil || IsNil(o.Exempted) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *OptimizableValue) GetExempted() bool {
 // GetExemptedOk returns a tuple with the Exempted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizableValue) GetExemptedOk() (*bool, bool) {
-	if o == nil || o.Exempted == nil {
+	if o == nil || IsNil(o.Exempted) {
 		return nil, false
 	}
 	return o.Exempted, true
@@ -128,7 +131,7 @@ func (o *OptimizableValue) GetExemptedOk() (*bool, bool) {
 
 // HasExempted returns a boolean if a field has been set.
 func (o *OptimizableValue) HasExempted() bool {
-	if o != nil && o.Exempted != nil {
+	if o != nil && !IsNil(o.Exempted) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *OptimizableValue) SetExempted(v bool) {
 
 // GetSuggestedForRemoval returns the SuggestedForRemoval field value if set, zero value otherwise.
 func (o *OptimizableValue) GetSuggestedForRemoval() bool {
-	if o == nil || o.SuggestedForRemoval == nil {
+	if o == nil || IsNil(o.SuggestedForRemoval) {
 		var ret bool
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *OptimizableValue) GetSuggestedForRemoval() bool {
 // GetSuggestedForRemovalOk returns a tuple with the SuggestedForRemoval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *OptimizableValue) GetSuggestedForRemovalOk() (*bool, bool) {
-	if o == nil || o.SuggestedForRemoval == nil {
+	if o == nil || IsNil(o.SuggestedForRemoval) {
 		return nil, false
 	}
 	return o.SuggestedForRemoval, true
@@ -160,7 +163,7 @@ func (o *OptimizableValue) GetSuggestedForRemovalOk() (*bool, bool) {
 
 // HasSuggestedForRemoval returns a boolean if a field has been set.
 func (o *OptimizableValue) HasSuggestedForRemoval() bool {
-	if o != nil && o.SuggestedForRemoval != nil {
+	if o != nil && !IsNil(o.SuggestedForRemoval) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *OptimizableValue) SetSuggestedForRemoval(v bool) {
 }
 
 func (o OptimizableValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Value != nil {
-		toSerialize["value"] = o.Value
-	}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.Exempted != nil {
-		toSerialize["exempted"] = o.Exempted
-	}
-	if o.SuggestedForRemoval != nil {
-		toSerialize["suggestedForRemoval"] = o.SuggestedForRemoval
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o OptimizableValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Value) {
+		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.Exempted) {
+		toSerialize["exempted"] = o.Exempted
+	}
+	if !IsNil(o.SuggestedForRemoval) {
+		toSerialize["suggestedForRemoval"] = o.SuggestedForRemoval
+	}
+	return toSerialize, nil
 }
 
 type NullableOptimizableValue struct {

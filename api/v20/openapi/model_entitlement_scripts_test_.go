@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the EntitlementScriptsTest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementScriptsTest{}
+
 // EntitlementScriptsTest struct for EntitlementScriptsTest
 type EntitlementScriptsTest struct {
 	// The javascript expression to evaluate.
@@ -73,7 +76,7 @@ func (o *EntitlementScriptsTest) SetExpression(v string) {
 
 // GetUserClaims returns the UserClaims field value if set, zero value otherwise.
 func (o *EntitlementScriptsTest) GetUserClaims() map[string]interface{} {
-	if o == nil || o.UserClaims == nil {
+	if o == nil || IsNil(o.UserClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -83,15 +86,15 @@ func (o *EntitlementScriptsTest) GetUserClaims() map[string]interface{} {
 // GetUserClaimsOk returns a tuple with the UserClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptsTest) GetUserClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.UserClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.UserClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.UserClaims, true
 }
 
 // HasUserClaims returns a boolean if a field has been set.
 func (o *EntitlementScriptsTest) HasUserClaims() bool {
-	if o != nil && o.UserClaims != nil {
+	if o != nil && !IsNil(o.UserClaims) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *EntitlementScriptsTest) SetUserClaims(v map[string]interface{}) {
 
 // GetDeviceClaims returns the DeviceClaims field value if set, zero value otherwise.
 func (o *EntitlementScriptsTest) GetDeviceClaims() map[string]interface{} {
-	if o == nil || o.DeviceClaims == nil {
+	if o == nil || IsNil(o.DeviceClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -115,15 +118,15 @@ func (o *EntitlementScriptsTest) GetDeviceClaims() map[string]interface{} {
 // GetDeviceClaimsOk returns a tuple with the DeviceClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptsTest) GetDeviceClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.DeviceClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.DeviceClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.DeviceClaims, true
 }
 
 // HasDeviceClaims returns a boolean if a field has been set.
 func (o *EntitlementScriptsTest) HasDeviceClaims() bool {
-	if o != nil && o.DeviceClaims != nil {
+	if o != nil && !IsNil(o.DeviceClaims) {
 		return true
 	}
 
@@ -137,7 +140,7 @@ func (o *EntitlementScriptsTest) SetDeviceClaims(v map[string]interface{}) {
 
 // GetSystemClaims returns the SystemClaims field value if set, zero value otherwise.
 func (o *EntitlementScriptsTest) GetSystemClaims() map[string]interface{} {
-	if o == nil || o.SystemClaims == nil {
+	if o == nil || IsNil(o.SystemClaims) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -147,15 +150,15 @@ func (o *EntitlementScriptsTest) GetSystemClaims() map[string]interface{} {
 // GetSystemClaimsOk returns a tuple with the SystemClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptsTest) GetSystemClaimsOk() (map[string]interface{}, bool) {
-	if o == nil || o.SystemClaims == nil {
-		return nil, false
+	if o == nil || IsNil(o.SystemClaims) {
+		return map[string]interface{}{}, false
 	}
 	return o.SystemClaims, true
 }
 
 // HasSystemClaims returns a boolean if a field has been set.
 func (o *EntitlementScriptsTest) HasSystemClaims() bool {
-	if o != nil && o.SystemClaims != nil {
+	if o != nil && !IsNil(o.SystemClaims) {
 		return true
 	}
 
@@ -169,7 +172,7 @@ func (o *EntitlementScriptsTest) SetSystemClaims(v map[string]interface{}) {
 
 // GetTime returns the Time field value if set, zero value otherwise.
 func (o *EntitlementScriptsTest) GetTime() time.Time {
-	if o == nil || o.Time == nil {
+	if o == nil || IsNil(o.Time) {
 		var ret time.Time
 		return ret
 	}
@@ -179,7 +182,7 @@ func (o *EntitlementScriptsTest) GetTime() time.Time {
 // GetTimeOk returns a tuple with the Time field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptsTest) GetTimeOk() (*time.Time, bool) {
-	if o == nil || o.Time == nil {
+	if o == nil || IsNil(o.Time) {
 		return nil, false
 	}
 	return o.Time, true
@@ -187,7 +190,7 @@ func (o *EntitlementScriptsTest) GetTimeOk() (*time.Time, bool) {
 
 // HasTime returns a boolean if a field has been set.
 func (o *EntitlementScriptsTest) HasTime() bool {
-	if o != nil && o.Time != nil {
+	if o != nil && !IsNil(o.Time) {
 		return true
 	}
 
@@ -224,26 +227,30 @@ func (o *EntitlementScriptsTest) SetType(v string) {
 }
 
 func (o EntitlementScriptsTest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.UserClaims != nil {
-		toSerialize["userClaims"] = o.UserClaims
-	}
-	if o.DeviceClaims != nil {
-		toSerialize["deviceClaims"] = o.DeviceClaims
-	}
-	if o.SystemClaims != nil {
-		toSerialize["systemClaims"] = o.SystemClaims
-	}
-	if o.Time != nil {
-		toSerialize["time"] = o.Time
-	}
-	if true {
-		toSerialize["type"] = o.Type
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementScriptsTest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.UserClaims) {
+		toSerialize["userClaims"] = o.UserClaims
+	}
+	if !IsNil(o.DeviceClaims) {
+		toSerialize["deviceClaims"] = o.DeviceClaims
+	}
+	if !IsNil(o.SystemClaims) {
+		toSerialize["systemClaims"] = o.SystemClaims
+	}
+	if !IsNil(o.Time) {
+		toSerialize["time"] = o.Time
+	}
+	toSerialize["type"] = o.Type
+	return toSerialize, nil
 }
 
 type NullableEntitlementScriptsTest struct {

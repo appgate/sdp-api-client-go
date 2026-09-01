@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AzureMonitor type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AzureMonitor{}
+
 // AzureMonitor struct for AzureMonitor
 type AzureMonitor struct {
 	// App ID to use for authentication.
@@ -78,7 +81,7 @@ func (o *AzureMonitor) SetAppId(v string) {
 
 // GetAppSecret returns the AppSecret field value if set, zero value otherwise.
 func (o *AzureMonitor) GetAppSecret() string {
-	if o == nil || o.AppSecret == nil {
+	if o == nil || IsNil(o.AppSecret) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *AzureMonitor) GetAppSecret() string {
 // GetAppSecretOk returns a tuple with the AppSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AzureMonitor) GetAppSecretOk() (*string, bool) {
-	if o == nil || o.AppSecret == nil {
+	if o == nil || IsNil(o.AppSecret) {
 		return nil, false
 	}
 	return o.AppSecret, true
@@ -96,7 +99,7 @@ func (o *AzureMonitor) GetAppSecretOk() (*string, bool) {
 
 // HasAppSecret returns a boolean if a field has been set.
 func (o *AzureMonitor) HasAppSecret() bool {
-	if o != nil && o.AppSecret != nil {
+	if o != nil && !IsNil(o.AppSecret) {
 		return true
 	}
 
@@ -181,23 +184,23 @@ func (o *AzureMonitor) SetScope(v string) {
 }
 
 func (o AzureMonitor) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["appId"] = o.AppId
-	}
-	if o.AppSecret != nil {
-		toSerialize["appSecret"] = o.AppSecret
-	}
-	if true {
-		toSerialize["tokenRequestUrl"] = o.TokenRequestUrl
-	}
-	if true {
-		toSerialize["logDestinationUrl"] = o.LogDestinationUrl
-	}
-	if true {
-		toSerialize["scope"] = o.Scope
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AzureMonitor) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["appId"] = o.AppId
+	if !IsNil(o.AppSecret) {
+		toSerialize["appSecret"] = o.AppSecret
+	}
+	toSerialize["tokenRequestUrl"] = o.TokenRequestUrl
+	toSerialize["logDestinationUrl"] = o.LogDestinationUrl
+	toSerialize["scope"] = o.Scope
+	return toSerialize, nil
 }
 
 type NullableAzureMonitor struct {

@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Appliance type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Appliance{}
+
 // Appliance struct for Appliance
 type Appliance struct {
 	// ID of the object.
@@ -93,7 +96,7 @@ func NewApplianceWithDefaults() *Appliance {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Appliance) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -103,7 +106,7 @@ func (o *Appliance) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -111,7 +114,7 @@ func (o *Appliance) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Appliance) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *Appliance) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Appliance) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -159,7 +162,7 @@ func (o *Appliance) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -167,7 +170,7 @@ func (o *Appliance) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Appliance) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *Appliance) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Appliance) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *Appliance) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -199,7 +202,7 @@ func (o *Appliance) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Appliance) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *Appliance) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *Appliance) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *Appliance) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -231,7 +234,7 @@ func (o *Appliance) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *Appliance) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -245,7 +248,7 @@ func (o *Appliance) SetUpdated(v time.Time) {
 
 // GetReadOnly returns the ReadOnly field value if set, zero value otherwise.
 func (o *Appliance) GetReadOnly() bool {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		var ret bool
 		return ret
 	}
@@ -255,7 +258,7 @@ func (o *Appliance) GetReadOnly() bool {
 // GetReadOnlyOk returns a tuple with the ReadOnly field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetReadOnlyOk() (*bool, bool) {
-	if o == nil || o.ReadOnly == nil {
+	if o == nil || IsNil(o.ReadOnly) {
 		return nil, false
 	}
 	return o.ReadOnly, true
@@ -263,7 +266,7 @@ func (o *Appliance) GetReadOnlyOk() (*bool, bool) {
 
 // HasReadOnly returns a boolean if a field has been set.
 func (o *Appliance) HasReadOnly() bool {
-	if o != nil && o.ReadOnly != nil {
+	if o != nil && !IsNil(o.ReadOnly) {
 		return true
 	}
 
@@ -277,7 +280,7 @@ func (o *Appliance) SetReadOnly(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Appliance) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -287,7 +290,7 @@ func (o *Appliance) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -295,7 +298,7 @@ func (o *Appliance) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Appliance) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -309,7 +312,7 @@ func (o *Appliance) SetTags(v []string) {
 
 // GetActivated returns the Activated field value if set, zero value otherwise.
 func (o *Appliance) GetActivated() bool {
-	if o == nil || o.Activated == nil {
+	if o == nil || IsNil(o.Activated) {
 		var ret bool
 		return ret
 	}
@@ -319,7 +322,7 @@ func (o *Appliance) GetActivated() bool {
 // GetActivatedOk returns a tuple with the Activated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetActivatedOk() (*bool, bool) {
-	if o == nil || o.Activated == nil {
+	if o == nil || IsNil(o.Activated) {
 		return nil, false
 	}
 	return o.Activated, true
@@ -327,7 +330,7 @@ func (o *Appliance) GetActivatedOk() (*bool, bool) {
 
 // HasActivated returns a boolean if a field has been set.
 func (o *Appliance) HasActivated() bool {
-	if o != nil && o.Activated != nil {
+	if o != nil && !IsNil(o.Activated) {
 		return true
 	}
 
@@ -341,7 +344,7 @@ func (o *Appliance) SetActivated(v bool) {
 
 // GetPendingCertificateRenewal returns the PendingCertificateRenewal field value if set, zero value otherwise.
 func (o *Appliance) GetPendingCertificateRenewal() bool {
-	if o == nil || o.PendingCertificateRenewal == nil {
+	if o == nil || IsNil(o.PendingCertificateRenewal) {
 		var ret bool
 		return ret
 	}
@@ -351,7 +354,7 @@ func (o *Appliance) GetPendingCertificateRenewal() bool {
 // GetPendingCertificateRenewalOk returns a tuple with the PendingCertificateRenewal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetPendingCertificateRenewalOk() (*bool, bool) {
-	if o == nil || o.PendingCertificateRenewal == nil {
+	if o == nil || IsNil(o.PendingCertificateRenewal) {
 		return nil, false
 	}
 	return o.PendingCertificateRenewal, true
@@ -359,7 +362,7 @@ func (o *Appliance) GetPendingCertificateRenewalOk() (*bool, bool) {
 
 // HasPendingCertificateRenewal returns a boolean if a field has been set.
 func (o *Appliance) HasPendingCertificateRenewal() bool {
-	if o != nil && o.PendingCertificateRenewal != nil {
+	if o != nil && !IsNil(o.PendingCertificateRenewal) {
 		return true
 	}
 
@@ -373,7 +376,7 @@ func (o *Appliance) SetPendingCertificateRenewal(v bool) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *Appliance) GetVersion() int32 {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret int32
 		return ret
 	}
@@ -383,7 +386,7 @@ func (o *Appliance) GetVersion() int32 {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetVersionOk() (*int32, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -391,7 +394,7 @@ func (o *Appliance) GetVersionOk() (*int32, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *Appliance) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -429,7 +432,7 @@ func (o *Appliance) SetHostname(v string) {
 
 // GetSite returns the Site field value if set, zero value otherwise.
 func (o *Appliance) GetSite() string {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		var ret string
 		return ret
 	}
@@ -439,7 +442,7 @@ func (o *Appliance) GetSite() string {
 // GetSiteOk returns a tuple with the Site field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetSiteOk() (*string, bool) {
-	if o == nil || o.Site == nil {
+	if o == nil || IsNil(o.Site) {
 		return nil, false
 	}
 	return o.Site, true
@@ -447,7 +450,7 @@ func (o *Appliance) GetSiteOk() (*string, bool) {
 
 // HasSite returns a boolean if a field has been set.
 func (o *Appliance) HasSite() bool {
-	if o != nil && o.Site != nil {
+	if o != nil && !IsNil(o.Site) {
 		return true
 	}
 
@@ -461,7 +464,7 @@ func (o *Appliance) SetSite(v string) {
 
 // GetSiteName returns the SiteName field value if set, zero value otherwise.
 func (o *Appliance) GetSiteName() string {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		var ret string
 		return ret
 	}
@@ -471,7 +474,7 @@ func (o *Appliance) GetSiteName() string {
 // GetSiteNameOk returns a tuple with the SiteName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetSiteNameOk() (*string, bool) {
-	if o == nil || o.SiteName == nil {
+	if o == nil || IsNil(o.SiteName) {
 		return nil, false
 	}
 	return o.SiteName, true
@@ -479,7 +482,7 @@ func (o *Appliance) GetSiteNameOk() (*string, bool) {
 
 // HasSiteName returns a boolean if a field has been set.
 func (o *Appliance) HasSiteName() bool {
-	if o != nil && o.SiteName != nil {
+	if o != nil && !IsNil(o.SiteName) {
 		return true
 	}
 
@@ -493,7 +496,7 @@ func (o *Appliance) SetSiteName(v string) {
 
 // GetCustomization returns the Customization field value if set, zero value otherwise.
 func (o *Appliance) GetCustomization() string {
-	if o == nil || o.Customization == nil {
+	if o == nil || IsNil(o.Customization) {
 		var ret string
 		return ret
 	}
@@ -503,7 +506,7 @@ func (o *Appliance) GetCustomization() string {
 // GetCustomizationOk returns a tuple with the Customization field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetCustomizationOk() (*string, bool) {
-	if o == nil || o.Customization == nil {
+	if o == nil || IsNil(o.Customization) {
 		return nil, false
 	}
 	return o.Customization, true
@@ -511,7 +514,7 @@ func (o *Appliance) GetCustomizationOk() (*string, bool) {
 
 // HasCustomization returns a boolean if a field has been set.
 func (o *Appliance) HasCustomization() bool {
-	if o != nil && o.Customization != nil {
+	if o != nil && !IsNil(o.Customization) {
 		return true
 	}
 
@@ -549,7 +552,7 @@ func (o *Appliance) SetClientInterface(v ApplianceAllOfClientInterface) {
 
 // GetAdminInterface returns the AdminInterface field value if set, zero value otherwise.
 func (o *Appliance) GetAdminInterface() ApplianceAllOfAdminInterface {
-	if o == nil || o.AdminInterface == nil {
+	if o == nil || IsNil(o.AdminInterface) {
 		var ret ApplianceAllOfAdminInterface
 		return ret
 	}
@@ -559,7 +562,7 @@ func (o *Appliance) GetAdminInterface() ApplianceAllOfAdminInterface {
 // GetAdminInterfaceOk returns a tuple with the AdminInterface field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetAdminInterfaceOk() (*ApplianceAllOfAdminInterface, bool) {
-	if o == nil || o.AdminInterface == nil {
+	if o == nil || IsNil(o.AdminInterface) {
 		return nil, false
 	}
 	return o.AdminInterface, true
@@ -567,7 +570,7 @@ func (o *Appliance) GetAdminInterfaceOk() (*ApplianceAllOfAdminInterface, bool) 
 
 // HasAdminInterface returns a boolean if a field has been set.
 func (o *Appliance) HasAdminInterface() bool {
-	if o != nil && o.AdminInterface != nil {
+	if o != nil && !IsNil(o.AdminInterface) {
 		return true
 	}
 
@@ -605,7 +608,7 @@ func (o *Appliance) SetNetworking(v ApplianceAllOfNetworking) {
 
 // GetNtp returns the Ntp field value if set, zero value otherwise.
 func (o *Appliance) GetNtp() ApplianceAllOfNtp {
-	if o == nil || o.Ntp == nil {
+	if o == nil || IsNil(o.Ntp) {
 		var ret ApplianceAllOfNtp
 		return ret
 	}
@@ -615,7 +618,7 @@ func (o *Appliance) GetNtp() ApplianceAllOfNtp {
 // GetNtpOk returns a tuple with the Ntp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetNtpOk() (*ApplianceAllOfNtp, bool) {
-	if o == nil || o.Ntp == nil {
+	if o == nil || IsNil(o.Ntp) {
 		return nil, false
 	}
 	return o.Ntp, true
@@ -623,7 +626,7 @@ func (o *Appliance) GetNtpOk() (*ApplianceAllOfNtp, bool) {
 
 // HasNtp returns a boolean if a field has been set.
 func (o *Appliance) HasNtp() bool {
-	if o != nil && o.Ntp != nil {
+	if o != nil && !IsNil(o.Ntp) {
 		return true
 	}
 
@@ -637,7 +640,7 @@ func (o *Appliance) SetNtp(v ApplianceAllOfNtp) {
 
 // GetSshServer returns the SshServer field value if set, zero value otherwise.
 func (o *Appliance) GetSshServer() ApplianceAllOfSshServer {
-	if o == nil || o.SshServer == nil {
+	if o == nil || IsNil(o.SshServer) {
 		var ret ApplianceAllOfSshServer
 		return ret
 	}
@@ -647,7 +650,7 @@ func (o *Appliance) GetSshServer() ApplianceAllOfSshServer {
 // GetSshServerOk returns a tuple with the SshServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetSshServerOk() (*ApplianceAllOfSshServer, bool) {
-	if o == nil || o.SshServer == nil {
+	if o == nil || IsNil(o.SshServer) {
 		return nil, false
 	}
 	return o.SshServer, true
@@ -655,7 +658,7 @@ func (o *Appliance) GetSshServerOk() (*ApplianceAllOfSshServer, bool) {
 
 // HasSshServer returns a boolean if a field has been set.
 func (o *Appliance) HasSshServer() bool {
-	if o != nil && o.SshServer != nil {
+	if o != nil && !IsNil(o.SshServer) {
 		return true
 	}
 
@@ -669,7 +672,7 @@ func (o *Appliance) SetSshServer(v ApplianceAllOfSshServer) {
 
 // GetSnmpServer returns the SnmpServer field value if set, zero value otherwise.
 func (o *Appliance) GetSnmpServer() ApplianceAllOfSnmpServer {
-	if o == nil || o.SnmpServer == nil {
+	if o == nil || IsNil(o.SnmpServer) {
 		var ret ApplianceAllOfSnmpServer
 		return ret
 	}
@@ -679,7 +682,7 @@ func (o *Appliance) GetSnmpServer() ApplianceAllOfSnmpServer {
 // GetSnmpServerOk returns a tuple with the SnmpServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetSnmpServerOk() (*ApplianceAllOfSnmpServer, bool) {
-	if o == nil || o.SnmpServer == nil {
+	if o == nil || IsNil(o.SnmpServer) {
 		return nil, false
 	}
 	return o.SnmpServer, true
@@ -687,7 +690,7 @@ func (o *Appliance) GetSnmpServerOk() (*ApplianceAllOfSnmpServer, bool) {
 
 // HasSnmpServer returns a boolean if a field has been set.
 func (o *Appliance) HasSnmpServer() bool {
-	if o != nil && o.SnmpServer != nil {
+	if o != nil && !IsNil(o.SnmpServer) {
 		return true
 	}
 
@@ -701,7 +704,7 @@ func (o *Appliance) SetSnmpServer(v ApplianceAllOfSnmpServer) {
 
 // GetHealthcheckServer returns the HealthcheckServer field value if set, zero value otherwise.
 func (o *Appliance) GetHealthcheckServer() ApplianceAllOfHealthcheckServer {
-	if o == nil || o.HealthcheckServer == nil {
+	if o == nil || IsNil(o.HealthcheckServer) {
 		var ret ApplianceAllOfHealthcheckServer
 		return ret
 	}
@@ -711,7 +714,7 @@ func (o *Appliance) GetHealthcheckServer() ApplianceAllOfHealthcheckServer {
 // GetHealthcheckServerOk returns a tuple with the HealthcheckServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetHealthcheckServerOk() (*ApplianceAllOfHealthcheckServer, bool) {
-	if o == nil || o.HealthcheckServer == nil {
+	if o == nil || IsNil(o.HealthcheckServer) {
 		return nil, false
 	}
 	return o.HealthcheckServer, true
@@ -719,7 +722,7 @@ func (o *Appliance) GetHealthcheckServerOk() (*ApplianceAllOfHealthcheckServer, 
 
 // HasHealthcheckServer returns a boolean if a field has been set.
 func (o *Appliance) HasHealthcheckServer() bool {
-	if o != nil && o.HealthcheckServer != nil {
+	if o != nil && !IsNil(o.HealthcheckServer) {
 		return true
 	}
 
@@ -733,7 +736,7 @@ func (o *Appliance) SetHealthcheckServer(v ApplianceAllOfHealthcheckServer) {
 
 // GetPrometheusExporter returns the PrometheusExporter field value if set, zero value otherwise.
 func (o *Appliance) GetPrometheusExporter() PrometheusExporter {
-	if o == nil || o.PrometheusExporter == nil {
+	if o == nil || IsNil(o.PrometheusExporter) {
 		var ret PrometheusExporter
 		return ret
 	}
@@ -743,7 +746,7 @@ func (o *Appliance) GetPrometheusExporter() PrometheusExporter {
 // GetPrometheusExporterOk returns a tuple with the PrometheusExporter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetPrometheusExporterOk() (*PrometheusExporter, bool) {
-	if o == nil || o.PrometheusExporter == nil {
+	if o == nil || IsNil(o.PrometheusExporter) {
 		return nil, false
 	}
 	return o.PrometheusExporter, true
@@ -751,7 +754,7 @@ func (o *Appliance) GetPrometheusExporterOk() (*PrometheusExporter, bool) {
 
 // HasPrometheusExporter returns a boolean if a field has been set.
 func (o *Appliance) HasPrometheusExporter() bool {
-	if o != nil && o.PrometheusExporter != nil {
+	if o != nil && !IsNil(o.PrometheusExporter) {
 		return true
 	}
 
@@ -765,7 +768,7 @@ func (o *Appliance) SetPrometheusExporter(v PrometheusExporter) {
 
 // GetPing returns the Ping field value if set, zero value otherwise.
 func (o *Appliance) GetPing() ApplianceAllOfPing {
-	if o == nil || o.Ping == nil {
+	if o == nil || IsNil(o.Ping) {
 		var ret ApplianceAllOfPing
 		return ret
 	}
@@ -775,7 +778,7 @@ func (o *Appliance) GetPing() ApplianceAllOfPing {
 // GetPingOk returns a tuple with the Ping field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetPingOk() (*ApplianceAllOfPing, bool) {
-	if o == nil || o.Ping == nil {
+	if o == nil || IsNil(o.Ping) {
 		return nil, false
 	}
 	return o.Ping, true
@@ -783,7 +786,7 @@ func (o *Appliance) GetPingOk() (*ApplianceAllOfPing, bool) {
 
 // HasPing returns a boolean if a field has been set.
 func (o *Appliance) HasPing() bool {
-	if o != nil && o.Ping != nil {
+	if o != nil && !IsNil(o.Ping) {
 		return true
 	}
 
@@ -797,7 +800,7 @@ func (o *Appliance) SetPing(v ApplianceAllOfPing) {
 
 // GetCollectiveReplication returns the CollectiveReplication field value if set, zero value otherwise.
 func (o *Appliance) GetCollectiveReplication() ApplianceAllOfCollectiveReplication {
-	if o == nil || o.CollectiveReplication == nil {
+	if o == nil || IsNil(o.CollectiveReplication) {
 		var ret ApplianceAllOfCollectiveReplication
 		return ret
 	}
@@ -807,7 +810,7 @@ func (o *Appliance) GetCollectiveReplication() ApplianceAllOfCollectiveReplicati
 // GetCollectiveReplicationOk returns a tuple with the CollectiveReplication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetCollectiveReplicationOk() (*ApplianceAllOfCollectiveReplication, bool) {
-	if o == nil || o.CollectiveReplication == nil {
+	if o == nil || IsNil(o.CollectiveReplication) {
 		return nil, false
 	}
 	return o.CollectiveReplication, true
@@ -815,7 +818,7 @@ func (o *Appliance) GetCollectiveReplicationOk() (*ApplianceAllOfCollectiveRepli
 
 // HasCollectiveReplication returns a boolean if a field has been set.
 func (o *Appliance) HasCollectiveReplication() bool {
-	if o != nil && o.CollectiveReplication != nil {
+	if o != nil && !IsNil(o.CollectiveReplication) {
 		return true
 	}
 
@@ -829,7 +832,7 @@ func (o *Appliance) SetCollectiveReplication(v ApplianceAllOfCollectiveReplicati
 
 // GetLogServer returns the LogServer field value if set, zero value otherwise.
 func (o *Appliance) GetLogServer() ApplianceAllOfLogServer {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		var ret ApplianceAllOfLogServer
 		return ret
 	}
@@ -839,7 +842,7 @@ func (o *Appliance) GetLogServer() ApplianceAllOfLogServer {
 // GetLogServerOk returns a tuple with the LogServer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetLogServerOk() (*ApplianceAllOfLogServer, bool) {
-	if o == nil || o.LogServer == nil {
+	if o == nil || IsNil(o.LogServer) {
 		return nil, false
 	}
 	return o.LogServer, true
@@ -847,7 +850,7 @@ func (o *Appliance) GetLogServerOk() (*ApplianceAllOfLogServer, bool) {
 
 // HasLogServer returns a boolean if a field has been set.
 func (o *Appliance) HasLogServer() bool {
-	if o != nil && o.LogServer != nil {
+	if o != nil && !IsNil(o.LogServer) {
 		return true
 	}
 
@@ -861,7 +864,7 @@ func (o *Appliance) SetLogServer(v ApplianceAllOfLogServer) {
 
 // GetController returns the Controller field value if set, zero value otherwise.
 func (o *Appliance) GetController() ApplianceAllOfController {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		var ret ApplianceAllOfController
 		return ret
 	}
@@ -871,7 +874,7 @@ func (o *Appliance) GetController() ApplianceAllOfController {
 // GetControllerOk returns a tuple with the Controller field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetControllerOk() (*ApplianceAllOfController, bool) {
-	if o == nil || o.Controller == nil {
+	if o == nil || IsNil(o.Controller) {
 		return nil, false
 	}
 	return o.Controller, true
@@ -879,7 +882,7 @@ func (o *Appliance) GetControllerOk() (*ApplianceAllOfController, bool) {
 
 // HasController returns a boolean if a field has been set.
 func (o *Appliance) HasController() bool {
-	if o != nil && o.Controller != nil {
+	if o != nil && !IsNil(o.Controller) {
 		return true
 	}
 
@@ -893,7 +896,7 @@ func (o *Appliance) SetController(v ApplianceAllOfController) {
 
 // GetGateway returns the Gateway field value if set, zero value otherwise.
 func (o *Appliance) GetGateway() ApplianceAllOfGateway {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		var ret ApplianceAllOfGateway
 		return ret
 	}
@@ -903,7 +906,7 @@ func (o *Appliance) GetGateway() ApplianceAllOfGateway {
 // GetGatewayOk returns a tuple with the Gateway field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetGatewayOk() (*ApplianceAllOfGateway, bool) {
-	if o == nil || o.Gateway == nil {
+	if o == nil || IsNil(o.Gateway) {
 		return nil, false
 	}
 	return o.Gateway, true
@@ -911,7 +914,7 @@ func (o *Appliance) GetGatewayOk() (*ApplianceAllOfGateway, bool) {
 
 // HasGateway returns a boolean if a field has been set.
 func (o *Appliance) HasGateway() bool {
-	if o != nil && o.Gateway != nil {
+	if o != nil && !IsNil(o.Gateway) {
 		return true
 	}
 
@@ -925,7 +928,7 @@ func (o *Appliance) SetGateway(v ApplianceAllOfGateway) {
 
 // GetLogForwarder returns the LogForwarder field value if set, zero value otherwise.
 func (o *Appliance) GetLogForwarder() ApplianceAllOfLogForwarder {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		var ret ApplianceAllOfLogForwarder
 		return ret
 	}
@@ -935,7 +938,7 @@ func (o *Appliance) GetLogForwarder() ApplianceAllOfLogForwarder {
 // GetLogForwarderOk returns a tuple with the LogForwarder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetLogForwarderOk() (*ApplianceAllOfLogForwarder, bool) {
-	if o == nil || o.LogForwarder == nil {
+	if o == nil || IsNil(o.LogForwarder) {
 		return nil, false
 	}
 	return o.LogForwarder, true
@@ -943,7 +946,7 @@ func (o *Appliance) GetLogForwarderOk() (*ApplianceAllOfLogForwarder, bool) {
 
 // HasLogForwarder returns a boolean if a field has been set.
 func (o *Appliance) HasLogForwarder() bool {
-	if o != nil && o.LogForwarder != nil {
+	if o != nil && !IsNil(o.LogForwarder) {
 		return true
 	}
 
@@ -957,7 +960,7 @@ func (o *Appliance) SetLogForwarder(v ApplianceAllOfLogForwarder) {
 
 // GetMetricsAggregator returns the MetricsAggregator field value if set, zero value otherwise.
 func (o *Appliance) GetMetricsAggregator() ApplianceAllOfMetricsAggregator {
-	if o == nil || o.MetricsAggregator == nil {
+	if o == nil || IsNil(o.MetricsAggregator) {
 		var ret ApplianceAllOfMetricsAggregator
 		return ret
 	}
@@ -967,7 +970,7 @@ func (o *Appliance) GetMetricsAggregator() ApplianceAllOfMetricsAggregator {
 // GetMetricsAggregatorOk returns a tuple with the MetricsAggregator field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetMetricsAggregatorOk() (*ApplianceAllOfMetricsAggregator, bool) {
-	if o == nil || o.MetricsAggregator == nil {
+	if o == nil || IsNil(o.MetricsAggregator) {
 		return nil, false
 	}
 	return o.MetricsAggregator, true
@@ -975,7 +978,7 @@ func (o *Appliance) GetMetricsAggregatorOk() (*ApplianceAllOfMetricsAggregator, 
 
 // HasMetricsAggregator returns a boolean if a field has been set.
 func (o *Appliance) HasMetricsAggregator() bool {
-	if o != nil && o.MetricsAggregator != nil {
+	if o != nil && !IsNil(o.MetricsAggregator) {
 		return true
 	}
 
@@ -989,7 +992,7 @@ func (o *Appliance) SetMetricsAggregator(v ApplianceAllOfMetricsAggregator) {
 
 // GetConnectionBroker returns the ConnectionBroker field value if set, zero value otherwise.
 func (o *Appliance) GetConnectionBroker() ApplianceAllOfConnectionBroker {
-	if o == nil || o.ConnectionBroker == nil {
+	if o == nil || IsNil(o.ConnectionBroker) {
 		var ret ApplianceAllOfConnectionBroker
 		return ret
 	}
@@ -999,7 +1002,7 @@ func (o *Appliance) GetConnectionBroker() ApplianceAllOfConnectionBroker {
 // GetConnectionBrokerOk returns a tuple with the ConnectionBroker field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetConnectionBrokerOk() (*ApplianceAllOfConnectionBroker, bool) {
-	if o == nil || o.ConnectionBroker == nil {
+	if o == nil || IsNil(o.ConnectionBroker) {
 		return nil, false
 	}
 	return o.ConnectionBroker, true
@@ -1007,7 +1010,7 @@ func (o *Appliance) GetConnectionBrokerOk() (*ApplianceAllOfConnectionBroker, bo
 
 // HasConnectionBroker returns a boolean if a field has been set.
 func (o *Appliance) HasConnectionBroker() bool {
-	if o != nil && o.ConnectionBroker != nil {
+	if o != nil && !IsNil(o.ConnectionBroker) {
 		return true
 	}
 
@@ -1021,7 +1024,7 @@ func (o *Appliance) SetConnectionBroker(v ApplianceAllOfConnectionBroker) {
 
 // GetConnector returns the Connector field value if set, zero value otherwise.
 func (o *Appliance) GetConnector() ApplianceAllOfConnector {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		var ret ApplianceAllOfConnector
 		return ret
 	}
@@ -1031,7 +1034,7 @@ func (o *Appliance) GetConnector() ApplianceAllOfConnector {
 // GetConnectorOk returns a tuple with the Connector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetConnectorOk() (*ApplianceAllOfConnector, bool) {
-	if o == nil || o.Connector == nil {
+	if o == nil || IsNil(o.Connector) {
 		return nil, false
 	}
 	return o.Connector, true
@@ -1039,7 +1042,7 @@ func (o *Appliance) GetConnectorOk() (*ApplianceAllOfConnector, bool) {
 
 // HasConnector returns a boolean if a field has been set.
 func (o *Appliance) HasConnector() bool {
-	if o != nil && o.Connector != nil {
+	if o != nil && !IsNil(o.Connector) {
 		return true
 	}
 
@@ -1053,7 +1056,7 @@ func (o *Appliance) SetConnector(v ApplianceAllOfConnector) {
 
 // GetPortal returns the Portal field value if set, zero value otherwise.
 func (o *Appliance) GetPortal() Portal {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		var ret Portal
 		return ret
 	}
@@ -1063,7 +1066,7 @@ func (o *Appliance) GetPortal() Portal {
 // GetPortalOk returns a tuple with the Portal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetPortalOk() (*Portal, bool) {
-	if o == nil || o.Portal == nil {
+	if o == nil || IsNil(o.Portal) {
 		return nil, false
 	}
 	return o.Portal, true
@@ -1071,7 +1074,7 @@ func (o *Appliance) GetPortalOk() (*Portal, bool) {
 
 // HasPortal returns a boolean if a field has been set.
 func (o *Appliance) HasPortal() bool {
-	if o != nil && o.Portal != nil {
+	if o != nil && !IsNil(o.Portal) {
 		return true
 	}
 
@@ -1085,7 +1088,7 @@ func (o *Appliance) SetPortal(v Portal) {
 
 // GetRsyslogDestinations returns the RsyslogDestinations field value if set, zero value otherwise.
 func (o *Appliance) GetRsyslogDestinations() []ApplianceAllOfRsyslogDestinations {
-	if o == nil || o.RsyslogDestinations == nil {
+	if o == nil || IsNil(o.RsyslogDestinations) {
 		var ret []ApplianceAllOfRsyslogDestinations
 		return ret
 	}
@@ -1095,7 +1098,7 @@ func (o *Appliance) GetRsyslogDestinations() []ApplianceAllOfRsyslogDestinations
 // GetRsyslogDestinationsOk returns a tuple with the RsyslogDestinations field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetRsyslogDestinationsOk() ([]ApplianceAllOfRsyslogDestinations, bool) {
-	if o == nil || o.RsyslogDestinations == nil {
+	if o == nil || IsNil(o.RsyslogDestinations) {
 		return nil, false
 	}
 	return o.RsyslogDestinations, true
@@ -1103,7 +1106,7 @@ func (o *Appliance) GetRsyslogDestinationsOk() ([]ApplianceAllOfRsyslogDestinati
 
 // HasRsyslogDestinations returns a boolean if a field has been set.
 func (o *Appliance) HasRsyslogDestinations() bool {
-	if o != nil && o.RsyslogDestinations != nil {
+	if o != nil && !IsNil(o.RsyslogDestinations) {
 		return true
 	}
 
@@ -1117,7 +1120,7 @@ func (o *Appliance) SetRsyslogDestinations(v []ApplianceAllOfRsyslogDestinations
 
 // GetHostnameAliases returns the HostnameAliases field value if set, zero value otherwise.
 func (o *Appliance) GetHostnameAliases() []string {
-	if o == nil || o.HostnameAliases == nil {
+	if o == nil || IsNil(o.HostnameAliases) {
 		var ret []string
 		return ret
 	}
@@ -1127,7 +1130,7 @@ func (o *Appliance) GetHostnameAliases() []string {
 // GetHostnameAliasesOk returns a tuple with the HostnameAliases field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Appliance) GetHostnameAliasesOk() ([]string, bool) {
-	if o == nil || o.HostnameAliases == nil {
+	if o == nil || IsNil(o.HostnameAliases) {
 		return nil, false
 	}
 	return o.HostnameAliases, true
@@ -1135,7 +1138,7 @@ func (o *Appliance) GetHostnameAliasesOk() ([]string, bool) {
 
 // HasHostnameAliases returns a boolean if a field has been set.
 func (o *Appliance) HasHostnameAliases() bool {
-	if o != nil && o.HostnameAliases != nil {
+	if o != nil && !IsNil(o.HostnameAliases) {
 		return true
 	}
 
@@ -1148,110 +1151,110 @@ func (o *Appliance) SetHostnameAliases(v []string) {
 }
 
 func (o Appliance) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReadOnly != nil {
-		toSerialize["readOnly"] = o.ReadOnly
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Activated != nil {
-		toSerialize["activated"] = o.Activated
-	}
-	if o.PendingCertificateRenewal != nil {
-		toSerialize["pendingCertificateRenewal"] = o.PendingCertificateRenewal
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if true {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.Site != nil {
-		toSerialize["site"] = o.Site
-	}
-	if o.SiteName != nil {
-		toSerialize["siteName"] = o.SiteName
-	}
-	if o.Customization != nil {
-		toSerialize["customization"] = o.Customization
-	}
-	if true {
-		toSerialize["clientInterface"] = o.ClientInterface
-	}
-	if o.AdminInterface != nil {
-		toSerialize["adminInterface"] = o.AdminInterface
-	}
-	if true {
-		toSerialize["networking"] = o.Networking
-	}
-	if o.Ntp != nil {
-		toSerialize["ntp"] = o.Ntp
-	}
-	if o.SshServer != nil {
-		toSerialize["sshServer"] = o.SshServer
-	}
-	if o.SnmpServer != nil {
-		toSerialize["snmpServer"] = o.SnmpServer
-	}
-	if o.HealthcheckServer != nil {
-		toSerialize["healthcheckServer"] = o.HealthcheckServer
-	}
-	if o.PrometheusExporter != nil {
-		toSerialize["prometheusExporter"] = o.PrometheusExporter
-	}
-	if o.Ping != nil {
-		toSerialize["ping"] = o.Ping
-	}
-	if o.CollectiveReplication != nil {
-		toSerialize["collectiveReplication"] = o.CollectiveReplication
-	}
-	if o.LogServer != nil {
-		toSerialize["logServer"] = o.LogServer
-	}
-	if o.Controller != nil {
-		toSerialize["controller"] = o.Controller
-	}
-	if o.Gateway != nil {
-		toSerialize["gateway"] = o.Gateway
-	}
-	if o.LogForwarder != nil {
-		toSerialize["logForwarder"] = o.LogForwarder
-	}
-	if o.MetricsAggregator != nil {
-		toSerialize["metricsAggregator"] = o.MetricsAggregator
-	}
-	if o.ConnectionBroker != nil {
-		toSerialize["connectionBroker"] = o.ConnectionBroker
-	}
-	if o.Connector != nil {
-		toSerialize["connector"] = o.Connector
-	}
-	if o.Portal != nil {
-		toSerialize["portal"] = o.Portal
-	}
-	if o.RsyslogDestinations != nil {
-		toSerialize["rsyslogDestinations"] = o.RsyslogDestinations
-	}
-	if o.HostnameAliases != nil {
-		toSerialize["hostnameAliases"] = o.HostnameAliases
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Appliance) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReadOnly) {
+		toSerialize["readOnly"] = o.ReadOnly
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Activated) {
+		toSerialize["activated"] = o.Activated
+	}
+	if !IsNil(o.PendingCertificateRenewal) {
+		toSerialize["pendingCertificateRenewal"] = o.PendingCertificateRenewal
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	toSerialize["hostname"] = o.Hostname
+	if !IsNil(o.Site) {
+		toSerialize["site"] = o.Site
+	}
+	if !IsNil(o.SiteName) {
+		toSerialize["siteName"] = o.SiteName
+	}
+	if !IsNil(o.Customization) {
+		toSerialize["customization"] = o.Customization
+	}
+	toSerialize["clientInterface"] = o.ClientInterface
+	if !IsNil(o.AdminInterface) {
+		toSerialize["adminInterface"] = o.AdminInterface
+	}
+	toSerialize["networking"] = o.Networking
+	if !IsNil(o.Ntp) {
+		toSerialize["ntp"] = o.Ntp
+	}
+	if !IsNil(o.SshServer) {
+		toSerialize["sshServer"] = o.SshServer
+	}
+	if !IsNil(o.SnmpServer) {
+		toSerialize["snmpServer"] = o.SnmpServer
+	}
+	if !IsNil(o.HealthcheckServer) {
+		toSerialize["healthcheckServer"] = o.HealthcheckServer
+	}
+	if !IsNil(o.PrometheusExporter) {
+		toSerialize["prometheusExporter"] = o.PrometheusExporter
+	}
+	if !IsNil(o.Ping) {
+		toSerialize["ping"] = o.Ping
+	}
+	if !IsNil(o.CollectiveReplication) {
+		toSerialize["collectiveReplication"] = o.CollectiveReplication
+	}
+	if !IsNil(o.LogServer) {
+		toSerialize["logServer"] = o.LogServer
+	}
+	if !IsNil(o.Controller) {
+		toSerialize["controller"] = o.Controller
+	}
+	if !IsNil(o.Gateway) {
+		toSerialize["gateway"] = o.Gateway
+	}
+	if !IsNil(o.LogForwarder) {
+		toSerialize["logForwarder"] = o.LogForwarder
+	}
+	if !IsNil(o.MetricsAggregator) {
+		toSerialize["metricsAggregator"] = o.MetricsAggregator
+	}
+	if !IsNil(o.ConnectionBroker) {
+		toSerialize["connectionBroker"] = o.ConnectionBroker
+	}
+	if !IsNil(o.Connector) {
+		toSerialize["connector"] = o.Connector
+	}
+	if !IsNil(o.Portal) {
+		toSerialize["portal"] = o.Portal
+	}
+	if !IsNil(o.RsyslogDestinations) {
+		toSerialize["rsyslogDestinations"] = o.RsyslogDestinations
+	}
+	if !IsNil(o.HostnameAliases) {
+		toSerialize["hostnameAliases"] = o.HostnameAliases
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliance struct {

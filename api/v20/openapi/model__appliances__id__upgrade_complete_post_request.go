@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdUpgradeCompletePostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdUpgradeCompletePostRequest{}
+
 // AppliancesIdUpgradeCompletePostRequest struct for AppliancesIdUpgradeCompletePostRequest
 type AppliancesIdUpgradeCompletePostRequest struct {
 	// Whether to reboot and switch partition to finalize the Upgrade.
@@ -40,7 +43,7 @@ func NewAppliancesIdUpgradeCompletePostRequestWithDefaults() *AppliancesIdUpgrad
 
 // GetSwitchPartition returns the SwitchPartition field value if set, zero value otherwise.
 func (o *AppliancesIdUpgradeCompletePostRequest) GetSwitchPartition() bool {
-	if o == nil || o.SwitchPartition == nil {
+	if o == nil || IsNil(o.SwitchPartition) {
 		var ret bool
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AppliancesIdUpgradeCompletePostRequest) GetSwitchPartition() bool {
 // GetSwitchPartitionOk returns a tuple with the SwitchPartition field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdUpgradeCompletePostRequest) GetSwitchPartitionOk() (*bool, bool) {
-	if o == nil || o.SwitchPartition == nil {
+	if o == nil || IsNil(o.SwitchPartition) {
 		return nil, false
 	}
 	return o.SwitchPartition, true
@@ -58,7 +61,7 @@ func (o *AppliancesIdUpgradeCompletePostRequest) GetSwitchPartitionOk() (*bool, 
 
 // HasSwitchPartition returns a boolean if a field has been set.
 func (o *AppliancesIdUpgradeCompletePostRequest) HasSwitchPartition() bool {
-	if o != nil && o.SwitchPartition != nil {
+	if o != nil && !IsNil(o.SwitchPartition) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AppliancesIdUpgradeCompletePostRequest) SetSwitchPartition(v bool) {
 }
 
 func (o AppliancesIdUpgradeCompletePostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SwitchPartition != nil {
-		toSerialize["switchPartition"] = o.SwitchPartition
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdUpgradeCompletePostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SwitchPartition) {
+		toSerialize["switchPartition"] = o.SwitchPartition
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdUpgradeCompletePostRequest struct {

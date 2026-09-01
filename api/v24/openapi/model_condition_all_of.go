@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConditionAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConditionAllOf{}
+
 // ConditionAllOf Represents a Condition.
 type ConditionAllOf struct {
 	// Boolean expression in JavaScript.
@@ -75,7 +78,7 @@ func (o *ConditionAllOf) SetExpression(v string) {
 
 // GetRepeatSchedules returns the RepeatSchedules field value if set, zero value otherwise.
 func (o *ConditionAllOf) GetRepeatSchedules() []string {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		var ret []string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *ConditionAllOf) GetRepeatSchedules() []string {
 // GetRepeatSchedulesOk returns a tuple with the RepeatSchedules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionAllOf) GetRepeatSchedulesOk() ([]string, bool) {
-	if o == nil || o.RepeatSchedules == nil {
+	if o == nil || IsNil(o.RepeatSchedules) {
 		return nil, false
 	}
 	return o.RepeatSchedules, true
@@ -93,7 +96,7 @@ func (o *ConditionAllOf) GetRepeatSchedulesOk() ([]string, bool) {
 
 // HasRepeatSchedules returns a boolean if a field has been set.
 func (o *ConditionAllOf) HasRepeatSchedules() bool {
-	if o != nil && o.RepeatSchedules != nil {
+	if o != nil && !IsNil(o.RepeatSchedules) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *ConditionAllOf) SetRepeatSchedules(v []string) {
 
 // GetRemedyLogic returns the RemedyLogic field value if set, zero value otherwise.
 func (o *ConditionAllOf) GetRemedyLogic() string {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *ConditionAllOf) GetRemedyLogic() string {
 // GetRemedyLogicOk returns a tuple with the RemedyLogic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionAllOf) GetRemedyLogicOk() (*string, bool) {
-	if o == nil || o.RemedyLogic == nil {
+	if o == nil || IsNil(o.RemedyLogic) {
 		return nil, false
 	}
 	return o.RemedyLogic, true
@@ -125,7 +128,7 @@ func (o *ConditionAllOf) GetRemedyLogicOk() (*string, bool) {
 
 // HasRemedyLogic returns a boolean if a field has been set.
 func (o *ConditionAllOf) HasRemedyLogic() bool {
-	if o != nil && o.RemedyLogic != nil {
+	if o != nil && !IsNil(o.RemedyLogic) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *ConditionAllOf) SetRemedyLogic(v string) {
 
 // GetRemedyMethods returns the RemedyMethods field value if set, zero value otherwise.
 func (o *ConditionAllOf) GetRemedyMethods() []RemedyMethod {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		var ret []RemedyMethod
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *ConditionAllOf) GetRemedyMethods() []RemedyMethod {
 // GetRemedyMethodsOk returns a tuple with the RemedyMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionAllOf) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
-	if o == nil || o.RemedyMethods == nil {
+	if o == nil || IsNil(o.RemedyMethods) {
 		return nil, false
 	}
 	return o.RemedyMethods, true
@@ -157,7 +160,7 @@ func (o *ConditionAllOf) GetRemedyMethodsOk() ([]RemedyMethod, bool) {
 
 // HasRemedyMethods returns a boolean if a field has been set.
 func (o *ConditionAllOf) HasRemedyMethods() bool {
-	if o != nil && o.RemedyMethods != nil {
+	if o != nil && !IsNil(o.RemedyMethods) {
 		return true
 	}
 
@@ -170,20 +173,26 @@ func (o *ConditionAllOf) SetRemedyMethods(v []RemedyMethod) {
 }
 
 func (o ConditionAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.RepeatSchedules != nil {
-		toSerialize["repeatSchedules"] = o.RepeatSchedules
-	}
-	if o.RemedyLogic != nil {
-		toSerialize["remedyLogic"] = o.RemedyLogic
-	}
-	if o.RemedyMethods != nil {
-		toSerialize["remedyMethods"] = o.RemedyMethods
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConditionAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.RepeatSchedules) {
+		toSerialize["repeatSchedules"] = o.RepeatSchedules
+	}
+	if !IsNil(o.RemedyLogic) {
+		toSerialize["remedyLogic"] = o.RemedyLogic
+	}
+	if !IsNil(o.RemedyMethods) {
+		toSerialize["remedyMethods"] = o.RemedyMethods
+	}
+	return toSerialize, nil
 }
 
 type NullableConditionAllOf struct {

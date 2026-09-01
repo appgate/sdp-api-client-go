@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConfigurableIdentityProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConfigurableIdentityProviderAllOf{}
+
 // ConfigurableIdentityProviderAllOf struct for ConfigurableIdentityProviderAllOf
 type ConfigurableIdentityProviderAllOf struct {
 	// Whether the provider will be listed in the Admin UI or not.
@@ -67,7 +70,7 @@ func NewConfigurableIdentityProviderAllOfWithDefaults() *ConfigurableIdentityPro
 
 // GetAdminProvider returns the AdminProvider field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetAdminProvider() bool {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		var ret bool
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetAdminProvider() bool {
 // GetAdminProviderOk returns a tuple with the AdminProvider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetAdminProviderOk() (*bool, bool) {
-	if o == nil || o.AdminProvider == nil {
+	if o == nil || IsNil(o.AdminProvider) {
 		return nil, false
 	}
 	return o.AdminProvider, true
@@ -85,7 +88,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetAdminProviderOk() (*bool, bool) {
 
 // HasAdminProvider returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasAdminProvider() bool {
-	if o != nil && o.AdminProvider != nil {
+	if o != nil && !IsNil(o.AdminProvider) {
 		return true
 	}
 
@@ -99,7 +102,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetAdminProvider(v bool) {
 
 // GetOnBoarding2FA returns the OnBoarding2FA field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetOnBoarding2FA() ConfigurableIdentityProviderAllOfOnBoarding2FA {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		var ret ConfigurableIdentityProviderAllOfOnBoarding2FA
 		return ret
 	}
@@ -109,7 +112,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetOnBoarding2FA() ConfigurableIdent
 // GetOnBoarding2FAOk returns a tuple with the OnBoarding2FA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetOnBoarding2FAOk() (*ConfigurableIdentityProviderAllOfOnBoarding2FA, bool) {
-	if o == nil || o.OnBoarding2FA == nil {
+	if o == nil || IsNil(o.OnBoarding2FA) {
 		return nil, false
 	}
 	return o.OnBoarding2FA, true
@@ -117,7 +120,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetOnBoarding2FAOk() (*ConfigurableI
 
 // HasOnBoarding2FA returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasOnBoarding2FA() bool {
-	if o != nil && o.OnBoarding2FA != nil {
+	if o != nil && !IsNil(o.OnBoarding2FA) {
 		return true
 	}
 
@@ -131,7 +134,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetOnBoarding2FA(v ConfigurableIdent
 
 // GetInactivityTimeoutMinutes returns the InactivityTimeoutMinutes field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetInactivityTimeoutMinutes() int32 {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		var ret int32
 		return ret
 	}
@@ -141,7 +144,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetInactivityTimeoutMinutes() int32 
 // GetInactivityTimeoutMinutesOk returns a tuple with the InactivityTimeoutMinutes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetInactivityTimeoutMinutesOk() (*int32, bool) {
-	if o == nil || o.InactivityTimeoutMinutes == nil {
+	if o == nil || IsNil(o.InactivityTimeoutMinutes) {
 		return nil, false
 	}
 	return o.InactivityTimeoutMinutes, true
@@ -149,7 +152,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetInactivityTimeoutMinutesOk() (*in
 
 // HasInactivityTimeoutMinutes returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasInactivityTimeoutMinutes() bool {
-	if o != nil && o.InactivityTimeoutMinutes != nil {
+	if o != nil && !IsNil(o.InactivityTimeoutMinutes) {
 		return true
 	}
 
@@ -163,7 +166,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetInactivityTimeoutMinutes(v int32)
 
 // GetNetworkInactivityTimeoutEnabled returns the NetworkInactivityTimeoutEnabled field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetNetworkInactivityTimeoutEnabled() bool {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		var ret bool
 		return ret
 	}
@@ -173,7 +176,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetNetworkInactivityTimeoutEnabled()
 // GetNetworkInactivityTimeoutEnabledOk returns a tuple with the NetworkInactivityTimeoutEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetNetworkInactivityTimeoutEnabledOk() (*bool, bool) {
-	if o == nil || o.NetworkInactivityTimeoutEnabled == nil {
+	if o == nil || IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return nil, false
 	}
 	return o.NetworkInactivityTimeoutEnabled, true
@@ -181,7 +184,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetNetworkInactivityTimeoutEnabledOk
 
 // HasNetworkInactivityTimeoutEnabled returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasNetworkInactivityTimeoutEnabled() bool {
-	if o != nil && o.NetworkInactivityTimeoutEnabled != nil {
+	if o != nil && !IsNil(o.NetworkInactivityTimeoutEnabled) {
 		return true
 	}
 
@@ -195,7 +198,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetNetworkInactivityTimeoutEnabled(v
 
 // GetEnforceWindowsNetworkProfileAsDomain returns the EnforceWindowsNetworkProfileAsDomain field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetEnforceWindowsNetworkProfileAsDomain() bool {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		var ret bool
 		return ret
 	}
@@ -205,7 +208,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetEnforceWindowsNetworkProfileAsDom
 // GetEnforceWindowsNetworkProfileAsDomainOk returns a tuple with the EnforceWindowsNetworkProfileAsDomain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetEnforceWindowsNetworkProfileAsDomainOk() (*bool, bool) {
-	if o == nil || o.EnforceWindowsNetworkProfileAsDomain == nil {
+	if o == nil || IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return nil, false
 	}
 	return o.EnforceWindowsNetworkProfileAsDomain, true
@@ -213,7 +216,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetEnforceWindowsNetworkProfileAsDom
 
 // HasEnforceWindowsNetworkProfileAsDomain returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasEnforceWindowsNetworkProfileAsDomain() bool {
-	if o != nil && o.EnforceWindowsNetworkProfileAsDomain != nil {
+	if o != nil && !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
 		return true
 	}
 
@@ -227,7 +230,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetEnforceWindowsNetworkProfileAsDom
 
 // GetBlockLocalDnsRequests returns the BlockLocalDnsRequests field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetBlockLocalDnsRequests() bool {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		var ret bool
 		return ret
 	}
@@ -237,7 +240,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetBlockLocalDnsRequests() bool {
 // GetBlockLocalDnsRequestsOk returns a tuple with the BlockLocalDnsRequests field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetBlockLocalDnsRequestsOk() (*bool, bool) {
-	if o == nil || o.BlockLocalDnsRequests == nil {
+	if o == nil || IsNil(o.BlockLocalDnsRequests) {
 		return nil, false
 	}
 	return o.BlockLocalDnsRequests, true
@@ -245,7 +248,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetBlockLocalDnsRequestsOk() (*bool,
 
 // HasBlockLocalDnsRequests returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasBlockLocalDnsRequests() bool {
-	if o != nil && o.BlockLocalDnsRequests != nil {
+	if o != nil && !IsNil(o.BlockLocalDnsRequests) {
 		return true
 	}
 
@@ -259,7 +262,7 @@ func (o *ConfigurableIdentityProviderAllOf) SetBlockLocalDnsRequests(v bool) {
 
 // GetOnDemandClaimMappings returns the OnDemandClaimMappings field value if set, zero value otherwise.
 func (o *ConfigurableIdentityProviderAllOf) GetOnDemandClaimMappings() []OnDemandClaimMappingsInner {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		var ret []OnDemandClaimMappingsInner
 		return ret
 	}
@@ -269,7 +272,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetOnDemandClaimMappings() []OnDeman
 // GetOnDemandClaimMappingsOk returns a tuple with the OnDemandClaimMappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConfigurableIdentityProviderAllOf) GetOnDemandClaimMappingsOk() ([]OnDemandClaimMappingsInner, bool) {
-	if o == nil || o.OnDemandClaimMappings == nil {
+	if o == nil || IsNil(o.OnDemandClaimMappings) {
 		return nil, false
 	}
 	return o.OnDemandClaimMappings, true
@@ -277,7 +280,7 @@ func (o *ConfigurableIdentityProviderAllOf) GetOnDemandClaimMappingsOk() ([]OnDe
 
 // HasOnDemandClaimMappings returns a boolean if a field has been set.
 func (o *ConfigurableIdentityProviderAllOf) HasOnDemandClaimMappings() bool {
-	if o != nil && o.OnDemandClaimMappings != nil {
+	if o != nil && !IsNil(o.OnDemandClaimMappings) {
 		return true
 	}
 
@@ -290,29 +293,37 @@ func (o *ConfigurableIdentityProviderAllOf) SetOnDemandClaimMappings(v []OnDeman
 }
 
 func (o ConfigurableIdentityProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AdminProvider != nil {
-		toSerialize["adminProvider"] = o.AdminProvider
-	}
-	if o.OnBoarding2FA != nil {
-		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
-	}
-	if o.InactivityTimeoutMinutes != nil {
-		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
-	}
-	if o.NetworkInactivityTimeoutEnabled != nil {
-		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
-	}
-	if o.EnforceWindowsNetworkProfileAsDomain != nil {
-		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
-	}
-	if o.BlockLocalDnsRequests != nil {
-		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
-	}
-	if o.OnDemandClaimMappings != nil {
-		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConfigurableIdentityProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AdminProvider) {
+		toSerialize["adminProvider"] = o.AdminProvider
+	}
+	if !IsNil(o.OnBoarding2FA) {
+		toSerialize["onBoarding2FA"] = o.OnBoarding2FA
+	}
+	if !IsNil(o.InactivityTimeoutMinutes) {
+		toSerialize["inactivityTimeoutMinutes"] = o.InactivityTimeoutMinutes
+	}
+	if !IsNil(o.NetworkInactivityTimeoutEnabled) {
+		toSerialize["networkInactivityTimeoutEnabled"] = o.NetworkInactivityTimeoutEnabled
+	}
+	if !IsNil(o.EnforceWindowsNetworkProfileAsDomain) {
+		toSerialize["enforceWindowsNetworkProfileAsDomain"] = o.EnforceWindowsNetworkProfileAsDomain
+	}
+	if !IsNil(o.BlockLocalDnsRequests) {
+		toSerialize["blockLocalDnsRequests"] = o.BlockLocalDnsRequests
+	}
+	if !IsNil(o.OnDemandClaimMappings) {
+		toSerialize["onDemandClaimMappings"] = o.OnDemandClaimMappings
+	}
+	return toSerialize, nil
 }
 
 type NullableConfigurableIdentityProviderAllOf struct {

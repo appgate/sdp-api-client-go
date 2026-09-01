@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the File type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &File{}
 
 // File File details and status.
 type File struct {
@@ -51,7 +54,7 @@ func NewFileWithDefaults() *File {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *File) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *File) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -69,7 +72,7 @@ func (o *File) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *File) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *File) SetName(v string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *File) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *File) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -101,7 +104,7 @@ func (o *File) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *File) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *File) SetStatus(v string) {
 
 // GetFailureReason returns the FailureReason field value if set, zero value otherwise.
 func (o *File) GetFailureReason() string {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *File) GetFailureReason() string {
 // GetFailureReasonOk returns a tuple with the FailureReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetFailureReasonOk() (*string, bool) {
-	if o == nil || o.FailureReason == nil {
+	if o == nil || IsNil(o.FailureReason) {
 		return nil, false
 	}
 	return o.FailureReason, true
@@ -133,7 +136,7 @@ func (o *File) GetFailureReasonOk() (*string, bool) {
 
 // HasFailureReason returns a boolean if a field has been set.
 func (o *File) HasFailureReason() bool {
-	if o != nil && o.FailureReason != nil {
+	if o != nil && !IsNil(o.FailureReason) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *File) SetFailureReason(v string) {
 
 // GetChecksum returns the Checksum field value if set, zero value otherwise.
 func (o *File) GetChecksum() string {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *File) GetChecksum() string {
 // GetChecksumOk returns a tuple with the Checksum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetChecksumOk() (*string, bool) {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		return nil, false
 	}
 	return o.Checksum, true
@@ -165,7 +168,7 @@ func (o *File) GetChecksumOk() (*string, bool) {
 
 // HasChecksum returns a boolean if a field has been set.
 func (o *File) HasChecksum() bool {
-	if o != nil && o.Checksum != nil {
+	if o != nil && !IsNil(o.Checksum) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *File) SetChecksum(v string) {
 
 // GetCreationTime returns the CreationTime field value if set, zero value otherwise.
 func (o *File) GetCreationTime() time.Time {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *File) GetCreationTime() time.Time {
 // GetCreationTimeOk returns a tuple with the CreationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetCreationTimeOk() (*time.Time, bool) {
-	if o == nil || o.CreationTime == nil {
+	if o == nil || IsNil(o.CreationTime) {
 		return nil, false
 	}
 	return o.CreationTime, true
@@ -197,7 +200,7 @@ func (o *File) GetCreationTimeOk() (*time.Time, bool) {
 
 // HasCreationTime returns a boolean if a field has been set.
 func (o *File) HasCreationTime() bool {
-	if o != nil && o.CreationTime != nil {
+	if o != nil && !IsNil(o.CreationTime) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *File) SetCreationTime(v time.Time) {
 
 // GetLastModifiedTime returns the LastModifiedTime field value if set, zero value otherwise.
 func (o *File) GetLastModifiedTime() time.Time {
-	if o == nil || o.LastModifiedTime == nil {
+	if o == nil || IsNil(o.LastModifiedTime) {
 		var ret time.Time
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *File) GetLastModifiedTime() time.Time {
 // GetLastModifiedTimeOk returns a tuple with the LastModifiedTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *File) GetLastModifiedTimeOk() (*time.Time, bool) {
-	if o == nil || o.LastModifiedTime == nil {
+	if o == nil || IsNil(o.LastModifiedTime) {
 		return nil, false
 	}
 	return o.LastModifiedTime, true
@@ -229,7 +232,7 @@ func (o *File) GetLastModifiedTimeOk() (*time.Time, bool) {
 
 // HasLastModifiedTime returns a boolean if a field has been set.
 func (o *File) HasLastModifiedTime() bool {
-	if o != nil && o.LastModifiedTime != nil {
+	if o != nil && !IsNil(o.LastModifiedTime) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *File) SetLastModifiedTime(v time.Time) {
 }
 
 func (o File) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.FailureReason != nil {
-		toSerialize["failureReason"] = o.FailureReason
-	}
-	if o.Checksum != nil {
-		toSerialize["checksum"] = o.Checksum
-	}
-	if o.CreationTime != nil {
-		toSerialize["creationTime"] = o.CreationTime
-	}
-	if o.LastModifiedTime != nil {
-		toSerialize["lastModifiedTime"] = o.LastModifiedTime
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o File) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.FailureReason) {
+		toSerialize["failureReason"] = o.FailureReason
+	}
+	if !IsNil(o.Checksum) {
+		toSerialize["checksum"] = o.Checksum
+	}
+	if !IsNil(o.CreationTime) {
+		toSerialize["creationTime"] = o.CreationTime
+	}
+	if !IsNil(o.LastModifiedTime) {
+		toSerialize["lastModifiedTime"] = o.LastModifiedTime
+	}
+	return toSerialize, nil
 }
 
 type NullableFile struct {

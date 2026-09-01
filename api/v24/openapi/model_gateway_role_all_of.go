@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GatewayRoleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GatewayRoleAllOf{}
+
 // GatewayRoleAllOf struct for GatewayRoleAllOf
 type GatewayRoleAllOf struct {
 	SessionCounts *SessionCounts `json:"sessionCounts,omitempty"`
@@ -39,7 +42,7 @@ func NewGatewayRoleAllOfWithDefaults() *GatewayRoleAllOf {
 
 // GetSessionCounts returns the SessionCounts field value if set, zero value otherwise.
 func (o *GatewayRoleAllOf) GetSessionCounts() SessionCounts {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		var ret SessionCounts
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *GatewayRoleAllOf) GetSessionCounts() SessionCounts {
 // GetSessionCountsOk returns a tuple with the SessionCounts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GatewayRoleAllOf) GetSessionCountsOk() (*SessionCounts, bool) {
-	if o == nil || o.SessionCounts == nil {
+	if o == nil || IsNil(o.SessionCounts) {
 		return nil, false
 	}
 	return o.SessionCounts, true
@@ -57,7 +60,7 @@ func (o *GatewayRoleAllOf) GetSessionCountsOk() (*SessionCounts, bool) {
 
 // HasSessionCounts returns a boolean if a field has been set.
 func (o *GatewayRoleAllOf) HasSessionCounts() bool {
-	if o != nil && o.SessionCounts != nil {
+	if o != nil && !IsNil(o.SessionCounts) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *GatewayRoleAllOf) SetSessionCounts(v SessionCounts) {
 }
 
 func (o GatewayRoleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SessionCounts != nil {
-		toSerialize["sessionCounts"] = o.SessionCounts
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GatewayRoleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SessionCounts) {
+		toSerialize["sessionCounts"] = o.SessionCounts
+	}
+	return toSerialize, nil
 }
 
 type NullableGatewayRoleAllOf struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ConditionsTestPost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConditionsTestPost200Response{}
 
 // ConditionsTestPost200Response struct for ConditionsTestPost200Response
 type ConditionsTestPost200Response struct {
@@ -46,7 +49,7 @@ func NewConditionsTestPost200ResponseWithDefaults() *ConditionsTestPost200Respon
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *ConditionsTestPost200Response) GetResult() bool {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret bool
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *ConditionsTestPost200Response) GetResult() bool {
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionsTestPost200Response) GetResultOk() (*bool, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -64,7 +67,7 @@ func (o *ConditionsTestPost200Response) GetResultOk() (*bool, bool) {
 
 // HasResult returns a boolean if a field has been set.
 func (o *ConditionsTestPost200Response) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *ConditionsTestPost200Response) SetResult(v bool) {
 
 // GetOutput returns the Output field value if set, zero value otherwise.
 func (o *ConditionsTestPost200Response) GetOutput() string {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *ConditionsTestPost200Response) GetOutput() string {
 // GetOutputOk returns a tuple with the Output field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionsTestPost200Response) GetOutputOk() (*string, bool) {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		return nil, false
 	}
 	return o.Output, true
@@ -96,7 +99,7 @@ func (o *ConditionsTestPost200Response) GetOutputOk() (*string, bool) {
 
 // HasOutput returns a boolean if a field has been set.
 func (o *ConditionsTestPost200Response) HasOutput() bool {
-	if o != nil && o.Output != nil {
+	if o != nil && !IsNil(o.Output) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *ConditionsTestPost200Response) SetOutput(v string) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *ConditionsTestPost200Response) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *ConditionsTestPost200Response) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionsTestPost200Response) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -128,7 +131,7 @@ func (o *ConditionsTestPost200Response) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *ConditionsTestPost200Response) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *ConditionsTestPost200Response) SetError(v string) {
 
 // GetExecutionMs returns the ExecutionMs field value if set, zero value otherwise.
 func (o *ConditionsTestPost200Response) GetExecutionMs() float32 {
-	if o == nil || o.ExecutionMs == nil {
+	if o == nil || IsNil(o.ExecutionMs) {
 		var ret float32
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *ConditionsTestPost200Response) GetExecutionMs() float32 {
 // GetExecutionMsOk returns a tuple with the ExecutionMs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConditionsTestPost200Response) GetExecutionMsOk() (*float32, bool) {
-	if o == nil || o.ExecutionMs == nil {
+	if o == nil || IsNil(o.ExecutionMs) {
 		return nil, false
 	}
 	return o.ExecutionMs, true
@@ -160,7 +163,7 @@ func (o *ConditionsTestPost200Response) GetExecutionMsOk() (*float32, bool) {
 
 // HasExecutionMs returns a boolean if a field has been set.
 func (o *ConditionsTestPost200Response) HasExecutionMs() bool {
-	if o != nil && o.ExecutionMs != nil {
+	if o != nil && !IsNil(o.ExecutionMs) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *ConditionsTestPost200Response) SetExecutionMs(v float32) {
 }
 
 func (o ConditionsTestPost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if o.Output != nil {
-		toSerialize["output"] = o.Output
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
-	}
-	if o.ExecutionMs != nil {
-		toSerialize["executionMs"] = o.ExecutionMs
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConditionsTestPost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.Output) {
+		toSerialize["output"] = o.Output
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	if !IsNil(o.ExecutionMs) {
+		toSerialize["executionMs"] = o.ExecutionMs
+	}
+	return toSerialize, nil
 }
 
 type NullableConditionsTestPost200Response struct {

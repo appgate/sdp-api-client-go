@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RingfenceRuleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RingfenceRuleAllOf{}
+
 // RingfenceRuleAllOf Represents an Ringfence Rule.
 type RingfenceRuleAllOf struct {
 	// List of all ringfence actions in this Ringfence Rule.
@@ -64,11 +67,17 @@ func (o *RingfenceRuleAllOf) SetActions(v []RingfenceRuleAllOfActions) {
 }
 
 func (o RingfenceRuleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["actions"] = o.Actions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RingfenceRuleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["actions"] = o.Actions
+	return toSerialize, nil
 }
 
 type NullableRingfenceRuleAllOf struct {

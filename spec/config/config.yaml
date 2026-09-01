@@ -1,6 +1,6 @@
 config_version: '1.6'
 container_opts:
-  image: openapitools/openapi-generator-cli:v6.0.0
+  image: openapitools/openapi-generator-cli:v6.6.0
 languages:
   go:
     generation:
@@ -19,6 +19,7 @@ languages:
             - template-patches/go/utils_big_int.patch
             - template-patches/go/download_file.patch
             - template-patches/go/redact_http_auth.patch
+            - template-patches/go/serialize_readonly.patch
         commands:
           - commandline:
             - docker-entrypoint.sh
@@ -48,14 +49,6 @@ languages:
             - -rf
             - api
             description: Remove openapi yaml
-          - commandline:
-            - go
-            - mod
-            - download
-            - golang.org/x/oauth2
-            description: go dep
-            container_opts:
-              system: true
           - commandline:
             - gofmt
             - -w

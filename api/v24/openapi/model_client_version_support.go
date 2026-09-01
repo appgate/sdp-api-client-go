@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClientVersionSupport type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientVersionSupport{}
+
 // ClientVersionSupport Information about the client versions in use.
 type ClientVersionSupport struct {
 	// The support status of the client version.
@@ -42,7 +45,7 @@ func NewClientVersionSupportWithDefaults() *ClientVersionSupport {
 
 // GetSupportStatus returns the SupportStatus field value if set, zero value otherwise.
 func (o *ClientVersionSupport) GetSupportStatus() string {
-	if o == nil || o.SupportStatus == nil {
+	if o == nil || IsNil(o.SupportStatus) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *ClientVersionSupport) GetSupportStatus() string {
 // GetSupportStatusOk returns a tuple with the SupportStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientVersionSupport) GetSupportStatusOk() (*string, bool) {
-	if o == nil || o.SupportStatus == nil {
+	if o == nil || IsNil(o.SupportStatus) {
 		return nil, false
 	}
 	return o.SupportStatus, true
@@ -60,7 +63,7 @@ func (o *ClientVersionSupport) GetSupportStatusOk() (*string, bool) {
 
 // HasSupportStatus returns a boolean if a field has been set.
 func (o *ClientVersionSupport) HasSupportStatus() bool {
-	if o != nil && o.SupportStatus != nil {
+	if o != nil && !IsNil(o.SupportStatus) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *ClientVersionSupport) SetSupportStatus(v string) {
 
 // GetSessionCount returns the SessionCount field value if set, zero value otherwise.
 func (o *ClientVersionSupport) GetSessionCount() int32 {
-	if o == nil || o.SessionCount == nil {
+	if o == nil || IsNil(o.SessionCount) {
 		var ret int32
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ClientVersionSupport) GetSessionCount() int32 {
 // GetSessionCountOk returns a tuple with the SessionCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientVersionSupport) GetSessionCountOk() (*int32, bool) {
-	if o == nil || o.SessionCount == nil {
+	if o == nil || IsNil(o.SessionCount) {
 		return nil, false
 	}
 	return o.SessionCount, true
@@ -92,7 +95,7 @@ func (o *ClientVersionSupport) GetSessionCountOk() (*int32, bool) {
 
 // HasSessionCount returns a boolean if a field has been set.
 func (o *ClientVersionSupport) HasSessionCount() bool {
-	if o != nil && o.SessionCount != nil {
+	if o != nil && !IsNil(o.SessionCount) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *ClientVersionSupport) SetSessionCount(v int32) {
 }
 
 func (o ClientVersionSupport) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.SupportStatus != nil {
-		toSerialize["supportStatus"] = o.SupportStatus
-	}
-	if o.SessionCount != nil {
-		toSerialize["sessionCount"] = o.SessionCount
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientVersionSupport) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.SupportStatus) {
+		toSerialize["supportStatus"] = o.SupportStatus
+	}
+	if !IsNil(o.SessionCount) {
+		toSerialize["sessionCount"] = o.SessionCount
+	}
+	return toSerialize, nil
 }
 
 type NullableClientVersionSupport struct {

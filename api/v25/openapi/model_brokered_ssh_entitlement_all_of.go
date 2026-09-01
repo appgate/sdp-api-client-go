@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BrokeredSshEntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BrokeredSshEntitlementAllOf{}
+
 // BrokeredSshEntitlementAllOf Represents a Brokered SSH Entitlement providing interactive SSH access to a target host.
 type BrokeredSshEntitlementAllOf struct {
 	Type *string `json:"type,omitempty"`
@@ -57,7 +60,7 @@ func NewBrokeredSshEntitlementAllOfWithDefaults() *BrokeredSshEntitlementAllOf {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlementAllOf) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -67,7 +70,7 @@ func (o *BrokeredSshEntitlementAllOf) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlementAllOf) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -75,7 +78,7 @@ func (o *BrokeredSshEntitlementAllOf) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlementAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -89,7 +92,7 @@ func (o *BrokeredSshEntitlementAllOf) SetType(v string) {
 
 // GetTerminalType returns the TerminalType field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlementAllOf) GetTerminalType() string {
-	if o == nil || o.TerminalType == nil {
+	if o == nil || IsNil(o.TerminalType) {
 		var ret string
 		return ret
 	}
@@ -99,7 +102,7 @@ func (o *BrokeredSshEntitlementAllOf) GetTerminalType() string {
 // GetTerminalTypeOk returns a tuple with the TerminalType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlementAllOf) GetTerminalTypeOk() (*string, bool) {
-	if o == nil || o.TerminalType == nil {
+	if o == nil || IsNil(o.TerminalType) {
 		return nil, false
 	}
 	return o.TerminalType, true
@@ -107,7 +110,7 @@ func (o *BrokeredSshEntitlementAllOf) GetTerminalTypeOk() (*string, bool) {
 
 // HasTerminalType returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlementAllOf) HasTerminalType() bool {
-	if o != nil && o.TerminalType != nil {
+	if o != nil && !IsNil(o.TerminalType) {
 		return true
 	}
 
@@ -121,7 +124,7 @@ func (o *BrokeredSshEntitlementAllOf) SetTerminalType(v string) {
 
 // GetKeepAliveIntervalSeconds returns the KeepAliveIntervalSeconds field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlementAllOf) GetKeepAliveIntervalSeconds() int32 {
-	if o == nil || o.KeepAliveIntervalSeconds == nil {
+	if o == nil || IsNil(o.KeepAliveIntervalSeconds) {
 		var ret int32
 		return ret
 	}
@@ -131,7 +134,7 @@ func (o *BrokeredSshEntitlementAllOf) GetKeepAliveIntervalSeconds() int32 {
 // GetKeepAliveIntervalSecondsOk returns a tuple with the KeepAliveIntervalSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlementAllOf) GetKeepAliveIntervalSecondsOk() (*int32, bool) {
-	if o == nil || o.KeepAliveIntervalSeconds == nil {
+	if o == nil || IsNil(o.KeepAliveIntervalSeconds) {
 		return nil, false
 	}
 	return o.KeepAliveIntervalSeconds, true
@@ -139,7 +142,7 @@ func (o *BrokeredSshEntitlementAllOf) GetKeepAliveIntervalSecondsOk() (*int32, b
 
 // HasKeepAliveIntervalSeconds returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlementAllOf) HasKeepAliveIntervalSeconds() bool {
-	if o != nil && o.KeepAliveIntervalSeconds != nil {
+	if o != nil && !IsNil(o.KeepAliveIntervalSeconds) {
 		return true
 	}
 
@@ -153,7 +156,7 @@ func (o *BrokeredSshEntitlementAllOf) SetKeepAliveIntervalSeconds(v int32) {
 
 // GetHostKeyVerificationPolicy returns the HostKeyVerificationPolicy field value if set, zero value otherwise.
 func (o *BrokeredSshEntitlementAllOf) GetHostKeyVerificationPolicy() string {
-	if o == nil || o.HostKeyVerificationPolicy == nil {
+	if o == nil || IsNil(o.HostKeyVerificationPolicy) {
 		var ret string
 		return ret
 	}
@@ -163,7 +166,7 @@ func (o *BrokeredSshEntitlementAllOf) GetHostKeyVerificationPolicy() string {
 // GetHostKeyVerificationPolicyOk returns a tuple with the HostKeyVerificationPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BrokeredSshEntitlementAllOf) GetHostKeyVerificationPolicyOk() (*string, bool) {
-	if o == nil || o.HostKeyVerificationPolicy == nil {
+	if o == nil || IsNil(o.HostKeyVerificationPolicy) {
 		return nil, false
 	}
 	return o.HostKeyVerificationPolicy, true
@@ -171,7 +174,7 @@ func (o *BrokeredSshEntitlementAllOf) GetHostKeyVerificationPolicyOk() (*string,
 
 // HasHostKeyVerificationPolicy returns a boolean if a field has been set.
 func (o *BrokeredSshEntitlementAllOf) HasHostKeyVerificationPolicy() bool {
-	if o != nil && o.HostKeyVerificationPolicy != nil {
+	if o != nil && !IsNil(o.HostKeyVerificationPolicy) {
 		return true
 	}
 
@@ -184,20 +187,28 @@ func (o *BrokeredSshEntitlementAllOf) SetHostKeyVerificationPolicy(v string) {
 }
 
 func (o BrokeredSshEntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.TerminalType != nil {
-		toSerialize["terminalType"] = o.TerminalType
-	}
-	if o.KeepAliveIntervalSeconds != nil {
-		toSerialize["keepAliveIntervalSeconds"] = o.KeepAliveIntervalSeconds
-	}
-	if o.HostKeyVerificationPolicy != nil {
-		toSerialize["hostKeyVerificationPolicy"] = o.HostKeyVerificationPolicy
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BrokeredSshEntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.TerminalType) {
+		toSerialize["terminalType"] = o.TerminalType
+	}
+	if !IsNil(o.KeepAliveIntervalSeconds) {
+		toSerialize["keepAliveIntervalSeconds"] = o.KeepAliveIntervalSeconds
+	}
+	if !IsNil(o.HostKeyVerificationPolicy) {
+		toSerialize["hostKeyVerificationPolicy"] = o.HostKeyVerificationPolicy
+	}
+	return toSerialize, nil
 }
 
 type NullableBrokeredSshEntitlementAllOf struct {

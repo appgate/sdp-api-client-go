@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the SiteAllOfVpn type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfVpn{}
 
 // SiteAllOfVpn VPN configuration for this Site.
 type SiteAllOfVpn struct {
@@ -63,7 +66,7 @@ func NewSiteAllOfVpnWithDefaults() *SiteAllOfVpn {
 
 // GetSnat returns the Snat field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetSnat() bool {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		var ret bool
 		return ret
 	}
@@ -73,7 +76,7 @@ func (o *SiteAllOfVpn) GetSnat() bool {
 // GetSnatOk returns a tuple with the Snat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetSnatOk() (*bool, bool) {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		return nil, false
 	}
 	return o.Snat, true
@@ -81,7 +84,7 @@ func (o *SiteAllOfVpn) GetSnatOk() (*bool, bool) {
 
 // HasSnat returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasSnat() bool {
-	if o != nil && o.Snat != nil {
+	if o != nil && !IsNil(o.Snat) {
 		return true
 	}
 
@@ -95,7 +98,7 @@ func (o *SiteAllOfVpn) SetSnat(v bool) {
 
 // GetTls returns the Tls field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetTls() SiteAllOfVpnTls {
-	if o == nil || o.Tls == nil {
+	if o == nil || IsNil(o.Tls) {
 		var ret SiteAllOfVpnTls
 		return ret
 	}
@@ -105,7 +108,7 @@ func (o *SiteAllOfVpn) GetTls() SiteAllOfVpnTls {
 // GetTlsOk returns a tuple with the Tls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetTlsOk() (*SiteAllOfVpnTls, bool) {
-	if o == nil || o.Tls == nil {
+	if o == nil || IsNil(o.Tls) {
 		return nil, false
 	}
 	return o.Tls, true
@@ -113,7 +116,7 @@ func (o *SiteAllOfVpn) GetTlsOk() (*SiteAllOfVpnTls, bool) {
 
 // HasTls returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasTls() bool {
-	if o != nil && o.Tls != nil {
+	if o != nil && !IsNil(o.Tls) {
 		return true
 	}
 
@@ -127,7 +130,7 @@ func (o *SiteAllOfVpn) SetTls(v SiteAllOfVpnTls) {
 
 // GetDtls returns the Dtls field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetDtls() SiteAllOfVpnDtls {
-	if o == nil || o.Dtls == nil {
+	if o == nil || IsNil(o.Dtls) {
 		var ret SiteAllOfVpnDtls
 		return ret
 	}
@@ -137,7 +140,7 @@ func (o *SiteAllOfVpn) GetDtls() SiteAllOfVpnDtls {
 // GetDtlsOk returns a tuple with the Dtls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetDtlsOk() (*SiteAllOfVpnDtls, bool) {
-	if o == nil || o.Dtls == nil {
+	if o == nil || IsNil(o.Dtls) {
 		return nil, false
 	}
 	return o.Dtls, true
@@ -145,7 +148,7 @@ func (o *SiteAllOfVpn) GetDtlsOk() (*SiteAllOfVpnDtls, bool) {
 
 // HasDtls returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasDtls() bool {
-	if o != nil && o.Dtls != nil {
+	if o != nil && !IsNil(o.Dtls) {
 		return true
 	}
 
@@ -159,7 +162,7 @@ func (o *SiteAllOfVpn) SetDtls(v SiteAllOfVpnDtls) {
 
 // GetRouteVia returns the RouteVia field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetRouteVia() SiteAllOfVpnRouteVia {
-	if o == nil || o.RouteVia == nil {
+	if o == nil || IsNil(o.RouteVia) {
 		var ret SiteAllOfVpnRouteVia
 		return ret
 	}
@@ -169,7 +172,7 @@ func (o *SiteAllOfVpn) GetRouteVia() SiteAllOfVpnRouteVia {
 // GetRouteViaOk returns a tuple with the RouteVia field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetRouteViaOk() (*SiteAllOfVpnRouteVia, bool) {
-	if o == nil || o.RouteVia == nil {
+	if o == nil || IsNil(o.RouteVia) {
 		return nil, false
 	}
 	return o.RouteVia, true
@@ -177,7 +180,7 @@ func (o *SiteAllOfVpn) GetRouteViaOk() (*SiteAllOfVpnRouteVia, bool) {
 
 // HasRouteVia returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasRouteVia() bool {
-	if o != nil && o.RouteVia != nil {
+	if o != nil && !IsNil(o.RouteVia) {
 		return true
 	}
 
@@ -191,7 +194,7 @@ func (o *SiteAllOfVpn) SetRouteVia(v SiteAllOfVpnRouteVia) {
 
 // GetUrlAccessEnabled returns the UrlAccessEnabled field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetUrlAccessEnabled() bool {
-	if o == nil || o.UrlAccessEnabled == nil {
+	if o == nil || IsNil(o.UrlAccessEnabled) {
 		var ret bool
 		return ret
 	}
@@ -201,7 +204,7 @@ func (o *SiteAllOfVpn) GetUrlAccessEnabled() bool {
 // GetUrlAccessEnabledOk returns a tuple with the UrlAccessEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetUrlAccessEnabledOk() (*bool, bool) {
-	if o == nil || o.UrlAccessEnabled == nil {
+	if o == nil || IsNil(o.UrlAccessEnabled) {
 		return nil, false
 	}
 	return o.UrlAccessEnabled, true
@@ -209,7 +212,7 @@ func (o *SiteAllOfVpn) GetUrlAccessEnabledOk() (*bool, bool) {
 
 // HasUrlAccessEnabled returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasUrlAccessEnabled() bool {
-	if o != nil && o.UrlAccessEnabled != nil {
+	if o != nil && !IsNil(o.UrlAccessEnabled) {
 		return true
 	}
 
@@ -223,7 +226,7 @@ func (o *SiteAllOfVpn) SetUrlAccessEnabled(v bool) {
 
 // GetUrlAccessP12s returns the UrlAccessP12s field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetUrlAccessP12s() []P12 {
-	if o == nil || o.UrlAccessP12s == nil {
+	if o == nil || IsNil(o.UrlAccessP12s) {
 		var ret []P12
 		return ret
 	}
@@ -233,7 +236,7 @@ func (o *SiteAllOfVpn) GetUrlAccessP12s() []P12 {
 // GetUrlAccessP12sOk returns a tuple with the UrlAccessP12s field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetUrlAccessP12sOk() ([]P12, bool) {
-	if o == nil || o.UrlAccessP12s == nil {
+	if o == nil || IsNil(o.UrlAccessP12s) {
 		return nil, false
 	}
 	return o.UrlAccessP12s, true
@@ -241,7 +244,7 @@ func (o *SiteAllOfVpn) GetUrlAccessP12sOk() ([]P12, bool) {
 
 // HasUrlAccessP12s returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasUrlAccessP12s() bool {
-	if o != nil && o.UrlAccessP12s != nil {
+	if o != nil && !IsNil(o.UrlAccessP12s) {
 		return true
 	}
 
@@ -255,7 +258,7 @@ func (o *SiteAllOfVpn) SetUrlAccessP12s(v []P12) {
 
 // GetIpAccessLogIntervalSeconds returns the IpAccessLogIntervalSeconds field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetIpAccessLogIntervalSeconds() float32 {
-	if o == nil || o.IpAccessLogIntervalSeconds == nil {
+	if o == nil || IsNil(o.IpAccessLogIntervalSeconds) {
 		var ret float32
 		return ret
 	}
@@ -265,7 +268,7 @@ func (o *SiteAllOfVpn) GetIpAccessLogIntervalSeconds() float32 {
 // GetIpAccessLogIntervalSecondsOk returns a tuple with the IpAccessLogIntervalSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetIpAccessLogIntervalSecondsOk() (*float32, bool) {
-	if o == nil || o.IpAccessLogIntervalSeconds == nil {
+	if o == nil || IsNil(o.IpAccessLogIntervalSeconds) {
 		return nil, false
 	}
 	return o.IpAccessLogIntervalSeconds, true
@@ -273,7 +276,7 @@ func (o *SiteAllOfVpn) GetIpAccessLogIntervalSecondsOk() (*float32, bool) {
 
 // HasIpAccessLogIntervalSeconds returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasIpAccessLogIntervalSeconds() bool {
-	if o != nil && o.IpAccessLogIntervalSeconds != nil {
+	if o != nil && !IsNil(o.IpAccessLogIntervalSeconds) {
 		return true
 	}
 
@@ -287,7 +290,7 @@ func (o *SiteAllOfVpn) SetIpAccessLogIntervalSeconds(v float32) {
 
 // GetLogNatIpAndNatPort returns the LogNatIpAndNatPort field value if set, zero value otherwise.
 func (o *SiteAllOfVpn) GetLogNatIpAndNatPort() bool {
-	if o == nil || o.LogNatIpAndNatPort == nil {
+	if o == nil || IsNil(o.LogNatIpAndNatPort) {
 		var ret bool
 		return ret
 	}
@@ -297,7 +300,7 @@ func (o *SiteAllOfVpn) GetLogNatIpAndNatPort() bool {
 // GetLogNatIpAndNatPortOk returns a tuple with the LogNatIpAndNatPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpn) GetLogNatIpAndNatPortOk() (*bool, bool) {
-	if o == nil || o.LogNatIpAndNatPort == nil {
+	if o == nil || IsNil(o.LogNatIpAndNatPort) {
 		return nil, false
 	}
 	return o.LogNatIpAndNatPort, true
@@ -305,7 +308,7 @@ func (o *SiteAllOfVpn) GetLogNatIpAndNatPortOk() (*bool, bool) {
 
 // HasLogNatIpAndNatPort returns a boolean if a field has been set.
 func (o *SiteAllOfVpn) HasLogNatIpAndNatPort() bool {
-	if o != nil && o.LogNatIpAndNatPort != nil {
+	if o != nil && !IsNil(o.LogNatIpAndNatPort) {
 		return true
 	}
 
@@ -318,32 +321,40 @@ func (o *SiteAllOfVpn) SetLogNatIpAndNatPort(v bool) {
 }
 
 func (o SiteAllOfVpn) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Snat != nil {
-		toSerialize["snat"] = o.Snat
-	}
-	if o.Tls != nil {
-		toSerialize["tls"] = o.Tls
-	}
-	if o.Dtls != nil {
-		toSerialize["dtls"] = o.Dtls
-	}
-	if o.RouteVia != nil {
-		toSerialize["routeVia"] = o.RouteVia
-	}
-	if o.UrlAccessEnabled != nil {
-		toSerialize["urlAccessEnabled"] = o.UrlAccessEnabled
-	}
-	if o.UrlAccessP12s != nil {
-		toSerialize["urlAccessP12s"] = o.UrlAccessP12s
-	}
-	if o.IpAccessLogIntervalSeconds != nil {
-		toSerialize["ipAccessLogIntervalSeconds"] = o.IpAccessLogIntervalSeconds
-	}
-	if o.LogNatIpAndNatPort != nil {
-		toSerialize["logNatIpAndNatPort"] = o.LogNatIpAndNatPort
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfVpn) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Snat) {
+		toSerialize["snat"] = o.Snat
+	}
+	if !IsNil(o.Tls) {
+		toSerialize["tls"] = o.Tls
+	}
+	if !IsNil(o.Dtls) {
+		toSerialize["dtls"] = o.Dtls
+	}
+	if !IsNil(o.RouteVia) {
+		toSerialize["routeVia"] = o.RouteVia
+	}
+	if !IsNil(o.UrlAccessEnabled) {
+		toSerialize["urlAccessEnabled"] = o.UrlAccessEnabled
+	}
+	if !IsNil(o.UrlAccessP12s) {
+		toSerialize["urlAccessP12s"] = o.UrlAccessP12s
+	}
+	if !IsNil(o.IpAccessLogIntervalSeconds) {
+		toSerialize["ipAccessLogIntervalSeconds"] = o.IpAccessLogIntervalSeconds
+	}
+	if !IsNil(o.LogNatIpAndNatPort) {
+		toSerialize["logNatIpAndNatPort"] = o.LogNatIpAndNatPort
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfVpn struct {

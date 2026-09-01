@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StatsAppliancesListAllOfUpgrade type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StatsAppliancesListAllOfUpgrade{}
+
 // StatsAppliancesListAllOfUpgrade Upgrade Status if there is one going.
 type StatsAppliancesListAllOfUpgrade struct {
 	// The Upgrade status
@@ -42,7 +45,7 @@ func NewStatsAppliancesListAllOfUpgradeWithDefaults() *StatsAppliancesListAllOfU
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfUpgrade) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *StatsAppliancesListAllOfUpgrade) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfUpgrade) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -60,7 +63,7 @@ func (o *StatsAppliancesListAllOfUpgrade) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfUpgrade) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *StatsAppliancesListAllOfUpgrade) SetStatus(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *StatsAppliancesListAllOfUpgrade) GetDetails() string {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *StatsAppliancesListAllOfUpgrade) GetDetails() string {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *StatsAppliancesListAllOfUpgrade) GetDetailsOk() (*string, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -92,7 +95,7 @@ func (o *StatsAppliancesListAllOfUpgrade) GetDetailsOk() (*string, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *StatsAppliancesListAllOfUpgrade) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *StatsAppliancesListAllOfUpgrade) SetDetails(v string) {
 }
 
 func (o StatsAppliancesListAllOfUpgrade) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o StatsAppliancesListAllOfUpgrade) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
 }
 
 type NullableStatsAppliancesListAllOfUpgrade struct {

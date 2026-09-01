@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ControllerRoleAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ControllerRoleAllOf{}
+
 // ControllerRoleAllOf struct for ControllerRoleAllOf
 type ControllerRoleAllOf struct {
 	// Whether the maintenance mode is active or not on this Controller.
@@ -40,7 +43,7 @@ func NewControllerRoleAllOfWithDefaults() *ControllerRoleAllOf {
 
 // GetMaintenanceMode returns the MaintenanceMode field value if set, zero value otherwise.
 func (o *ControllerRoleAllOf) GetMaintenanceMode() bool {
-	if o == nil || o.MaintenanceMode == nil {
+	if o == nil || IsNil(o.MaintenanceMode) {
 		var ret bool
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ControllerRoleAllOf) GetMaintenanceMode() bool {
 // GetMaintenanceModeOk returns a tuple with the MaintenanceMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ControllerRoleAllOf) GetMaintenanceModeOk() (*bool, bool) {
-	if o == nil || o.MaintenanceMode == nil {
+	if o == nil || IsNil(o.MaintenanceMode) {
 		return nil, false
 	}
 	return o.MaintenanceMode, true
@@ -58,7 +61,7 @@ func (o *ControllerRoleAllOf) GetMaintenanceModeOk() (*bool, bool) {
 
 // HasMaintenanceMode returns a boolean if a field has been set.
 func (o *ControllerRoleAllOf) HasMaintenanceMode() bool {
-	if o != nil && o.MaintenanceMode != nil {
+	if o != nil && !IsNil(o.MaintenanceMode) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ControllerRoleAllOf) SetMaintenanceMode(v bool) {
 }
 
 func (o ControllerRoleAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.MaintenanceMode != nil {
-		toSerialize["maintenanceMode"] = o.MaintenanceMode
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ControllerRoleAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MaintenanceMode) {
+		toSerialize["maintenanceMode"] = o.MaintenanceMode
+	}
+	return toSerialize, nil
 }
 
 type NullableControllerRoleAllOf struct {

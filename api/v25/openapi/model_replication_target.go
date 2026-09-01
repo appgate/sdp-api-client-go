@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the ReplicationTarget type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationTarget{}
+
 // ReplicationTarget Represents a Replication Target.
 type ReplicationTarget struct {
 	// ID of the object.
@@ -59,7 +62,7 @@ func NewReplicationTargetWithDefaults() *ReplicationTarget {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -69,7 +72,7 @@ func (o *ReplicationTarget) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -77,7 +80,7 @@ func (o *ReplicationTarget) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *ReplicationTarget) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *ReplicationTarget) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -133,7 +136,7 @@ func (o *ReplicationTarget) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *ReplicationTarget) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *ReplicationTarget) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -165,7 +168,7 @@ func (o *ReplicationTarget) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *ReplicationTarget) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *ReplicationTarget) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -197,7 +200,7 @@ func (o *ReplicationTarget) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *ReplicationTarget) SetUpdated(v time.Time) {
 
 // GetReplicationTags returns the ReplicationTags field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetReplicationTags() []string {
-	if o == nil || o.ReplicationTags == nil {
+	if o == nil || IsNil(o.ReplicationTags) {
 		var ret []string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *ReplicationTarget) GetReplicationTags() []string {
 // GetReplicationTagsOk returns a tuple with the ReplicationTags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetReplicationTagsOk() ([]string, bool) {
-	if o == nil || o.ReplicationTags == nil {
+	if o == nil || IsNil(o.ReplicationTags) {
 		return nil, false
 	}
 	return o.ReplicationTags, true
@@ -229,7 +232,7 @@ func (o *ReplicationTarget) GetReplicationTagsOk() ([]string, bool) {
 
 // HasReplicationTags returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasReplicationTags() bool {
-	if o != nil && o.ReplicationTags != nil {
+	if o != nil && !IsNil(o.ReplicationTags) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *ReplicationTarget) SetReplicationTags(v []string) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *ReplicationTarget) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -261,7 +264,7 @@ func (o *ReplicationTarget) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -275,7 +278,7 @@ func (o *ReplicationTarget) SetStatus(v string) {
 
 // GetLastReplicationTime returns the LastReplicationTime field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetLastReplicationTime() time.Time {
-	if o == nil || o.LastReplicationTime == nil {
+	if o == nil || IsNil(o.LastReplicationTime) {
 		var ret time.Time
 		return ret
 	}
@@ -285,7 +288,7 @@ func (o *ReplicationTarget) GetLastReplicationTime() time.Time {
 // GetLastReplicationTimeOk returns a tuple with the LastReplicationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetLastReplicationTimeOk() (*time.Time, bool) {
-	if o == nil || o.LastReplicationTime == nil {
+	if o == nil || IsNil(o.LastReplicationTime) {
 		return nil, false
 	}
 	return o.LastReplicationTime, true
@@ -293,7 +296,7 @@ func (o *ReplicationTarget) GetLastReplicationTimeOk() (*time.Time, bool) {
 
 // HasLastReplicationTime returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasLastReplicationTime() bool {
-	if o != nil && o.LastReplicationTime != nil {
+	if o != nil && !IsNil(o.LastReplicationTime) {
 		return true
 	}
 
@@ -307,7 +310,7 @@ func (o *ReplicationTarget) SetLastReplicationTime(v time.Time) {
 
 // GetSourceHealthMessage returns the SourceHealthMessage field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetSourceHealthMessage() string {
-	if o == nil || o.SourceHealthMessage == nil {
+	if o == nil || IsNil(o.SourceHealthMessage) {
 		var ret string
 		return ret
 	}
@@ -317,7 +320,7 @@ func (o *ReplicationTarget) GetSourceHealthMessage() string {
 // GetSourceHealthMessageOk returns a tuple with the SourceHealthMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetSourceHealthMessageOk() (*string, bool) {
-	if o == nil || o.SourceHealthMessage == nil {
+	if o == nil || IsNil(o.SourceHealthMessage) {
 		return nil, false
 	}
 	return o.SourceHealthMessage, true
@@ -325,7 +328,7 @@ func (o *ReplicationTarget) GetSourceHealthMessageOk() (*string, bool) {
 
 // HasSourceHealthMessage returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasSourceHealthMessage() bool {
-	if o != nil && o.SourceHealthMessage != nil {
+	if o != nil && !IsNil(o.SourceHealthMessage) {
 		return true
 	}
 
@@ -339,7 +342,7 @@ func (o *ReplicationTarget) SetSourceHealthMessage(v string) {
 
 // GetLastReplicationDetails returns the LastReplicationDetails field value if set, zero value otherwise.
 func (o *ReplicationTarget) GetLastReplicationDetails() ReplicationDetails {
-	if o == nil || o.LastReplicationDetails == nil {
+	if o == nil || IsNil(o.LastReplicationDetails) {
 		var ret ReplicationDetails
 		return ret
 	}
@@ -349,7 +352,7 @@ func (o *ReplicationTarget) GetLastReplicationDetails() ReplicationDetails {
 // GetLastReplicationDetailsOk returns a tuple with the LastReplicationDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ReplicationTarget) GetLastReplicationDetailsOk() (*ReplicationDetails, bool) {
-	if o == nil || o.LastReplicationDetails == nil {
+	if o == nil || IsNil(o.LastReplicationDetails) {
 		return nil, false
 	}
 	return o.LastReplicationDetails, true
@@ -357,7 +360,7 @@ func (o *ReplicationTarget) GetLastReplicationDetailsOk() (*ReplicationDetails, 
 
 // HasLastReplicationDetails returns a boolean if a field has been set.
 func (o *ReplicationTarget) HasLastReplicationDetails() bool {
-	if o != nil && o.LastReplicationDetails != nil {
+	if o != nil && !IsNil(o.LastReplicationDetails) {
 		return true
 	}
 
@@ -370,38 +373,44 @@ func (o *ReplicationTarget) SetLastReplicationDetails(v ReplicationDetails) {
 }
 
 func (o ReplicationTarget) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.ReplicationTags != nil {
-		toSerialize["replicationTags"] = o.ReplicationTags
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.LastReplicationTime != nil {
-		toSerialize["lastReplicationTime"] = o.LastReplicationTime
-	}
-	if o.SourceHealthMessage != nil {
-		toSerialize["sourceHealthMessage"] = o.SourceHealthMessage
-	}
-	if o.LastReplicationDetails != nil {
-		toSerialize["lastReplicationDetails"] = o.LastReplicationDetails
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationTarget) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.ReplicationTags) {
+		toSerialize["replicationTags"] = o.ReplicationTags
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.LastReplicationTime) {
+		toSerialize["lastReplicationTime"] = o.LastReplicationTime
+	}
+	if !IsNil(o.SourceHealthMessage) {
+		toSerialize["sourceHealthMessage"] = o.SourceHealthMessage
+	}
+	if !IsNil(o.LastReplicationDetails) {
+		toSerialize["lastReplicationDetails"] = o.LastReplicationDetails
+	}
+	return toSerialize, nil
 }
 
 type NullableReplicationTarget struct {

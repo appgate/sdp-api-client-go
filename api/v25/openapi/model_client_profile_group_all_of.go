@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClientProfileGroupAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClientProfileGroupAllOf{}
+
 // ClientProfileGroupAllOf Represents a group of client profiles.
 type ClientProfileGroupAllOf struct {
 	// List of Client Profile URLs in this group.
@@ -40,7 +43,7 @@ func NewClientProfileGroupAllOfWithDefaults() *ClientProfileGroupAllOf {
 
 // GetProfileUrls returns the ProfileUrls field value if set, zero value otherwise.
 func (o *ClientProfileGroupAllOf) GetProfileUrls() []WeightedExternalProfile {
-	if o == nil || o.ProfileUrls == nil {
+	if o == nil || IsNil(o.ProfileUrls) {
 		var ret []WeightedExternalProfile
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *ClientProfileGroupAllOf) GetProfileUrls() []WeightedExternalProfile {
 // GetProfileUrlsOk returns a tuple with the ProfileUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientProfileGroupAllOf) GetProfileUrlsOk() ([]WeightedExternalProfile, bool) {
-	if o == nil || o.ProfileUrls == nil {
+	if o == nil || IsNil(o.ProfileUrls) {
 		return nil, false
 	}
 	return o.ProfileUrls, true
@@ -58,7 +61,7 @@ func (o *ClientProfileGroupAllOf) GetProfileUrlsOk() ([]WeightedExternalProfile,
 
 // HasProfileUrls returns a boolean if a field has been set.
 func (o *ClientProfileGroupAllOf) HasProfileUrls() bool {
-	if o != nil && o.ProfileUrls != nil {
+	if o != nil && !IsNil(o.ProfileUrls) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *ClientProfileGroupAllOf) SetProfileUrls(v []WeightedExternalProfile) {
 }
 
 func (o ClientProfileGroupAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProfileUrls != nil {
-		toSerialize["profileUrls"] = o.ProfileUrls
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClientProfileGroupAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProfileUrls) {
+		toSerialize["profileUrls"] = o.ProfileUrls
+	}
+	return toSerialize, nil
 }
 
 type NullableClientProfileGroupAllOf struct {

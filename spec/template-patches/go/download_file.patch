@@ -1,26 +1,47 @@
 diff --git a/go/client.mustache b/go/client.mustache
-index bceb7fc..11d649d 100644
 --- a/go/client.mustache
 +++ b/go/client.mustache
-@@ -472,6 +472,21 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
- 		_, err = (*f).Seek(0, io.SeekStart)
+@@ -511,28 +511,35 @@
+ 		*s = string(b)
+ 		return nil
+ 	}
+-	if f, ok := v.(*os.File); ok {
+-		f, err = os.CreateTemp("", "HttpClientFile")
++	// The single-pointer (*os.File) branch emitted by openapi-generator v6.6 is
++	// a no-op: it reassigns the local f to a fresh temp file the caller never
++	// sees (and staticcheck flags it as SA4006). Drop it; downloads use the
++	// **os.File / ***os.File branches below.
++	if f, ok := v.(**os.File); ok {
++		*f, err = os.CreateTemp("", "HttpClientFile")
+ 		if err != nil {
+ 			return
+ 		}
+-		_, err = f.Write(b)
++		_, err = (*f).Write(b)
+ 		if err != nil {
+ 			return
+ 		}
+-		_, err = f.Seek(0, io.SeekStart)
++		_, err = (*f).Seek(0, io.SeekStart)
  		return
  	}
+-	if f, ok := v.(**os.File); ok {
+-		*f, err = os.CreateTemp("", "HttpClientFile")
 +	// https://github.com/OpenAPITools/openapi-generator/issues/11965
 +	if file, ok := v.(***os.File); ok {
 +		var tmp *os.File
-+		tmp, err = ioutil.TempFile("", "HttpClientFile")
-+		if err != nil {
-+			return
-+		}
++		tmp, err = os.CreateTemp("", "HttpClientFile")
+ 		if err != nil {
+ 			return
+ 		}
+-		_, err = (*f).Write(b)
 +		_, err = tmp.Write(b)
-+		if err != nil {
-+			return
-+		}
+ 		if err != nil {
+ 			return
+ 		}
+-		_, err = (*f).Seek(0, io.SeekStart)
 +		_, err = tmp.Seek(0, io.SeekStart)
 +		*file = &tmp
-+		return
-+	}
+ 		return
+ 	}
  	if xmlCheck.MatchString(contentType) {
- 		if err = xml.Unmarshal(b, v); err != nil {
- 			return err

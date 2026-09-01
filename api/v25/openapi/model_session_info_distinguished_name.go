@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SessionInfoDistinguishedName type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SessionInfoDistinguishedName{}
+
 // SessionInfoDistinguishedName struct for SessionInfoDistinguishedName
 type SessionInfoDistinguishedName struct {
 	// The device ID, same as the one in the Distinguished Name.
@@ -46,7 +49,7 @@ func NewSessionInfoDistinguishedNameWithDefaults() *SessionInfoDistinguishedName
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedName) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *SessionInfoDistinguishedName) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedName) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -64,7 +67,7 @@ func (o *SessionInfoDistinguishedName) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedName) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *SessionInfoDistinguishedName) SetDeviceId(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedName) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *SessionInfoDistinguishedName) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedName) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -96,7 +99,7 @@ func (o *SessionInfoDistinguishedName) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedName) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *SessionInfoDistinguishedName) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedName) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *SessionInfoDistinguishedName) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedName) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -128,7 +131,7 @@ func (o *SessionInfoDistinguishedName) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedName) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *SessionInfoDistinguishedName) SetProviderName(v string) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *SessionInfoDistinguishedName) GetData() map[string]SessionInfoDistinguishedNameDataValue {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret map[string]SessionInfoDistinguishedNameDataValue
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *SessionInfoDistinguishedName) GetData() map[string]SessionInfoDistingui
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SessionInfoDistinguishedName) GetDataOk() (*map[string]SessionInfoDistinguishedNameDataValue, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -160,7 +163,7 @@ func (o *SessionInfoDistinguishedName) GetDataOk() (*map[string]SessionInfoDisti
 
 // HasData returns a boolean if a field has been set.
 func (o *SessionInfoDistinguishedName) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *SessionInfoDistinguishedName) SetData(v map[string]SessionInfoDistingui
 }
 
 func (o SessionInfoDistinguishedName) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SessionInfoDistinguishedName) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableSessionInfoDistinguishedName struct {

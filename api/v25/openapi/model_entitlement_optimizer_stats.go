@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementOptimizerStats type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementOptimizerStats{}
+
 // EntitlementOptimizerStats Aggregate counts of Entitlements grouped by optimization score.
 type EntitlementOptimizerStats struct {
 	// Total number of Entitlements considered by the optimizer.
@@ -56,7 +59,7 @@ func NewEntitlementOptimizerStatsWithDefaults() *EntitlementOptimizerStats {
 
 // GetTotal returns the Total field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetTotal() int32 {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret int32
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *EntitlementOptimizerStats) GetTotal() int32 {
 // GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetTotalOk() (*int32, bool) {
-	if o == nil || o.Total == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
 	return o.Total, true
@@ -74,7 +77,7 @@ func (o *EntitlementOptimizerStats) GetTotalOk() (*int32, bool) {
 
 // HasTotal returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasTotal() bool {
-	if o != nil && o.Total != nil {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *EntitlementOptimizerStats) SetTotal(v int32) {
 
 // GetOptimizedPercent returns the OptimizedPercent field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetOptimizedPercent() int32 {
-	if o == nil || o.OptimizedPercent == nil {
+	if o == nil || IsNil(o.OptimizedPercent) {
 		var ret int32
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *EntitlementOptimizerStats) GetOptimizedPercent() int32 {
 // GetOptimizedPercentOk returns a tuple with the OptimizedPercent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetOptimizedPercentOk() (*int32, bool) {
-	if o == nil || o.OptimizedPercent == nil {
+	if o == nil || IsNil(o.OptimizedPercent) {
 		return nil, false
 	}
 	return o.OptimizedPercent, true
@@ -106,7 +109,7 @@ func (o *EntitlementOptimizerStats) GetOptimizedPercentOk() (*int32, bool) {
 
 // HasOptimizedPercent returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasOptimizedPercent() bool {
-	if o != nil && o.OptimizedPercent != nil {
+	if o != nil && !IsNil(o.OptimizedPercent) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *EntitlementOptimizerStats) SetOptimizedPercent(v int32) {
 
 // GetOptimized returns the Optimized field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetOptimized() int32 {
-	if o == nil || o.Optimized == nil {
+	if o == nil || IsNil(o.Optimized) {
 		var ret int32
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *EntitlementOptimizerStats) GetOptimized() int32 {
 // GetOptimizedOk returns a tuple with the Optimized field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetOptimizedOk() (*int32, bool) {
-	if o == nil || o.Optimized == nil {
+	if o == nil || IsNil(o.Optimized) {
 		return nil, false
 	}
 	return o.Optimized, true
@@ -138,7 +141,7 @@ func (o *EntitlementOptimizerStats) GetOptimizedOk() (*int32, bool) {
 
 // HasOptimized returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasOptimized() bool {
-	if o != nil && o.Optimized != nil {
+	if o != nil && !IsNil(o.Optimized) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *EntitlementOptimizerStats) SetOptimized(v int32) {
 
 // GetOverprovisioned returns the Overprovisioned field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetOverprovisioned() int32 {
-	if o == nil || o.Overprovisioned == nil {
+	if o == nil || IsNil(o.Overprovisioned) {
 		var ret int32
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *EntitlementOptimizerStats) GetOverprovisioned() int32 {
 // GetOverprovisionedOk returns a tuple with the Overprovisioned field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetOverprovisionedOk() (*int32, bool) {
-	if o == nil || o.Overprovisioned == nil {
+	if o == nil || IsNil(o.Overprovisioned) {
 		return nil, false
 	}
 	return o.Overprovisioned, true
@@ -170,7 +173,7 @@ func (o *EntitlementOptimizerStats) GetOverprovisionedOk() (*int32, bool) {
 
 // HasOverprovisioned returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasOverprovisioned() bool {
-	if o != nil && o.Overprovisioned != nil {
+	if o != nil && !IsNil(o.Overprovisioned) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *EntitlementOptimizerStats) SetOverprovisioned(v int32) {
 
 // GetUnused returns the Unused field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetUnused() int32 {
-	if o == nil || o.Unused == nil {
+	if o == nil || IsNil(o.Unused) {
 		var ret int32
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *EntitlementOptimizerStats) GetUnused() int32 {
 // GetUnusedOk returns a tuple with the Unused field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetUnusedOk() (*int32, bool) {
-	if o == nil || o.Unused == nil {
+	if o == nil || IsNil(o.Unused) {
 		return nil, false
 	}
 	return o.Unused, true
@@ -202,7 +205,7 @@ func (o *EntitlementOptimizerStats) GetUnusedOk() (*int32, bool) {
 
 // HasUnused returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasUnused() bool {
-	if o != nil && o.Unused != nil {
+	if o != nil && !IsNil(o.Unused) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *EntitlementOptimizerStats) SetUnused(v int32) {
 
 // GetUnlinked returns the Unlinked field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetUnlinked() int32 {
-	if o == nil || o.Unlinked == nil {
+	if o == nil || IsNil(o.Unlinked) {
 		var ret int32
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *EntitlementOptimizerStats) GetUnlinked() int32 {
 // GetUnlinkedOk returns a tuple with the Unlinked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetUnlinkedOk() (*int32, bool) {
-	if o == nil || o.Unlinked == nil {
+	if o == nil || IsNil(o.Unlinked) {
 		return nil, false
 	}
 	return o.Unlinked, true
@@ -234,7 +237,7 @@ func (o *EntitlementOptimizerStats) GetUnlinkedOk() (*int32, bool) {
 
 // HasUnlinked returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasUnlinked() bool {
-	if o != nil && o.Unlinked != nil {
+	if o != nil && !IsNil(o.Unlinked) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *EntitlementOptimizerStats) SetUnlinked(v int32) {
 
 // GetInsufficientData returns the InsufficientData field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetInsufficientData() int32 {
-	if o == nil || o.InsufficientData == nil {
+	if o == nil || IsNil(o.InsufficientData) {
 		var ret int32
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *EntitlementOptimizerStats) GetInsufficientData() int32 {
 // GetInsufficientDataOk returns a tuple with the InsufficientData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetInsufficientDataOk() (*int32, bool) {
-	if o == nil || o.InsufficientData == nil {
+	if o == nil || IsNil(o.InsufficientData) {
 		return nil, false
 	}
 	return o.InsufficientData, true
@@ -266,7 +269,7 @@ func (o *EntitlementOptimizerStats) GetInsufficientDataOk() (*int32, bool) {
 
 // HasInsufficientData returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasInsufficientData() bool {
-	if o != nil && o.InsufficientData != nil {
+	if o != nil && !IsNil(o.InsufficientData) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *EntitlementOptimizerStats) SetInsufficientData(v int32) {
 
 // GetNotInUse returns the NotInUse field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetNotInUse() int32 {
-	if o == nil || o.NotInUse == nil {
+	if o == nil || IsNil(o.NotInUse) {
 		var ret int32
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *EntitlementOptimizerStats) GetNotInUse() int32 {
 // GetNotInUseOk returns a tuple with the NotInUse field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetNotInUseOk() (*int32, bool) {
-	if o == nil || o.NotInUse == nil {
+	if o == nil || IsNil(o.NotInUse) {
 		return nil, false
 	}
 	return o.NotInUse, true
@@ -298,7 +301,7 @@ func (o *EntitlementOptimizerStats) GetNotInUseOk() (*int32, bool) {
 
 // HasNotInUse returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasNotInUse() bool {
-	if o != nil && o.NotInUse != nil {
+	if o != nil && !IsNil(o.NotInUse) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *EntitlementOptimizerStats) SetNotInUse(v int32) {
 
 // GetGraphData returns the GraphData field value if set, zero value otherwise.
 func (o *EntitlementOptimizerStats) GetGraphData() []EntitlementOptimizerStatsGraphDataInner {
-	if o == nil || o.GraphData == nil {
+	if o == nil || IsNil(o.GraphData) {
 		var ret []EntitlementOptimizerStatsGraphDataInner
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *EntitlementOptimizerStats) GetGraphData() []EntitlementOptimizerStatsGr
 // GetGraphDataOk returns a tuple with the GraphData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementOptimizerStats) GetGraphDataOk() ([]EntitlementOptimizerStatsGraphDataInner, bool) {
-	if o == nil || o.GraphData == nil {
+	if o == nil || IsNil(o.GraphData) {
 		return nil, false
 	}
 	return o.GraphData, true
@@ -330,7 +333,7 @@ func (o *EntitlementOptimizerStats) GetGraphDataOk() ([]EntitlementOptimizerStat
 
 // HasGraphData returns a boolean if a field has been set.
 func (o *EntitlementOptimizerStats) HasGraphData() bool {
-	if o != nil && o.GraphData != nil {
+	if o != nil && !IsNil(o.GraphData) {
 		return true
 	}
 
@@ -343,35 +346,43 @@ func (o *EntitlementOptimizerStats) SetGraphData(v []EntitlementOptimizerStatsGr
 }
 
 func (o EntitlementOptimizerStats) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Total != nil {
-		toSerialize["total"] = o.Total
-	}
-	if o.OptimizedPercent != nil {
-		toSerialize["optimizedPercent"] = o.OptimizedPercent
-	}
-	if o.Optimized != nil {
-		toSerialize["optimized"] = o.Optimized
-	}
-	if o.Overprovisioned != nil {
-		toSerialize["overprovisioned"] = o.Overprovisioned
-	}
-	if o.Unused != nil {
-		toSerialize["unused"] = o.Unused
-	}
-	if o.Unlinked != nil {
-		toSerialize["unlinked"] = o.Unlinked
-	}
-	if o.InsufficientData != nil {
-		toSerialize["insufficientData"] = o.InsufficientData
-	}
-	if o.NotInUse != nil {
-		toSerialize["notInUse"] = o.NotInUse
-	}
-	if o.GraphData != nil {
-		toSerialize["graphData"] = o.GraphData
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementOptimizerStats) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.OptimizedPercent) {
+		toSerialize["optimizedPercent"] = o.OptimizedPercent
+	}
+	if !IsNil(o.Optimized) {
+		toSerialize["optimized"] = o.Optimized
+	}
+	if !IsNil(o.Overprovisioned) {
+		toSerialize["overprovisioned"] = o.Overprovisioned
+	}
+	if !IsNil(o.Unused) {
+		toSerialize["unused"] = o.Unused
+	}
+	if !IsNil(o.Unlinked) {
+		toSerialize["unlinked"] = o.Unlinked
+	}
+	if !IsNil(o.InsufficientData) {
+		toSerialize["insufficientData"] = o.InsufficientData
+	}
+	if !IsNil(o.NotInUse) {
+		toSerialize["notInUse"] = o.NotInUse
+	}
+	if !IsNil(o.GraphData) {
+		toSerialize["graphData"] = o.GraphData
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementOptimizerStats struct {

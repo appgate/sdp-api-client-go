@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BulkUpsertFailure type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BulkUpsertFailure{}
+
 // BulkUpsertFailure struct for BulkUpsertFailure
 type BulkUpsertFailure struct {
 	// ID from the request item, if available.
@@ -43,7 +46,7 @@ func NewBulkUpsertFailureWithDefaults() *BulkUpsertFailure {
 
 // GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BulkUpsertFailure) GetId() string {
-	if o == nil || o.Id.Get() == nil {
+	if o == nil || IsNil(o.Id.Get()) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *BulkUpsertFailure) UnsetId() {
 
 // GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *BulkUpsertFailure) GetName() string {
-	if o == nil || o.Name.Get() == nil {
+	if o == nil || IsNil(o.Name.Get()) {
 		var ret string
 		return ret
 	}
@@ -129,7 +132,7 @@ func (o *BulkUpsertFailure) UnsetName() {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *BulkUpsertFailure) GetError() ValidationError {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret ValidationError
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *BulkUpsertFailure) GetError() ValidationError {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertFailure) GetErrorOk() (*ValidationError, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -147,7 +150,7 @@ func (o *BulkUpsertFailure) GetErrorOk() (*ValidationError, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *BulkUpsertFailure) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -160,6 +163,14 @@ func (o *BulkUpsertFailure) SetError(v ValidationError) {
 }
 
 func (o BulkUpsertFailure) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o BulkUpsertFailure) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id.IsSet() {
 		toSerialize["id"] = o.Id.Get()
@@ -167,10 +178,10 @@ func (o BulkUpsertFailure) MarshalJSON() ([]byte, error) {
 	if o.Name.IsSet() {
 		toSerialize["name"] = o.Name.Get()
 	}
-	if o.Error != nil {
+	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableBulkUpsertFailure struct {

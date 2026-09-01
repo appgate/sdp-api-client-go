@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AppDetailsAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDetailsAllOf{}
+
 // AppDetailsAllOf struct for AppDetailsAllOf
 type AppDetailsAllOf struct {
 	// The rule applied.
@@ -25,25 +28,17 @@ type AppDetailsAllOf struct {
 	// The direction of the access.
 	Direction *string `json:"direction,omitempty"`
 	// Users accessed this app.
-	Users []User `json:"users,omitempty"`
-	// Common groups of the users which have accessed this app.
-	CommonGroups []CommonGroup `json:"commonGroups,omitempty"`
+	Users []AppDetailsAllOfUsersInner `json:"users,omitempty"`
 	// Data for hit count chart per day.
 	HitChartData []map[string]float32 `json:"hitChartData,omitempty"`
 	// Timestamp of the last time the app was reset.
 	LastResetAt *time.Time `json:"lastResetAt,omitempty"`
 	// Timestamp of the last time the analysis is done for all apps.
 	LastAnalysisAt *time.Time `json:"lastAnalysisAt,omitempty"`
-	// The ID of the Policy generated when access is configured to this app.
-	PolicyId *string `json:"policyId,omitempty"`
-	// The ID of the Entitlement generated when access is configured to this app.
-	EntitlementId *string `json:"entitlementId,omitempty"`
-	// The Entitlements that were used to access the app.
-	OriginatingEntitlements []interface{} `json:"originatingEntitlements,omitempty"`
-	// The IPs used to access the app.
-	Ips []string `json:"ips,omitempty"`
-	// History of the actions taken on this app.
-	History []interface{} `json:"history,omitempty"`
+	// List of policies configured for access to this app.
+	Policies           []AppAccessPolicy                  `json:"policies,omitempty"`
+	EntitlementDetails *AppDetailsAllOfEntitlementDetails `json:"entitlementDetails,omitempty"`
+	UserGroups         *AppDetailsAllOfUserGroups         `json:"userGroups,omitempty"`
 }
 
 // NewAppDetailsAllOf instantiates a new AppDetailsAllOf object
@@ -65,7 +60,7 @@ func NewAppDetailsAllOfWithDefaults() *AppDetailsAllOf {
 
 // GetRule returns the Rule field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetRule() string {
-	if o == nil || o.Rule == nil {
+	if o == nil || IsNil(o.Rule) {
 		var ret string
 		return ret
 	}
@@ -75,7 +70,7 @@ func (o *AppDetailsAllOf) GetRule() string {
 // GetRuleOk returns a tuple with the Rule field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetRuleOk() (*string, bool) {
-	if o == nil || o.Rule == nil {
+	if o == nil || IsNil(o.Rule) {
 		return nil, false
 	}
 	return o.Rule, true
@@ -83,7 +78,7 @@ func (o *AppDetailsAllOf) GetRuleOk() (*string, bool) {
 
 // HasRule returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasRule() bool {
-	if o != nil && o.Rule != nil {
+	if o != nil && !IsNil(o.Rule) {
 		return true
 	}
 
@@ -97,7 +92,7 @@ func (o *AppDetailsAllOf) SetRule(v string) {
 
 // GetProtocol returns the Protocol field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetProtocol() string {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		var ret string
 		return ret
 	}
@@ -107,7 +102,7 @@ func (o *AppDetailsAllOf) GetProtocol() string {
 // GetProtocolOk returns a tuple with the Protocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetProtocolOk() (*string, bool) {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		return nil, false
 	}
 	return o.Protocol, true
@@ -115,7 +110,7 @@ func (o *AppDetailsAllOf) GetProtocolOk() (*string, bool) {
 
 // HasProtocol returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasProtocol() bool {
-	if o != nil && o.Protocol != nil {
+	if o != nil && !IsNil(o.Protocol) {
 		return true
 	}
 
@@ -129,7 +124,7 @@ func (o *AppDetailsAllOf) SetProtocol(v string) {
 
 // GetDirection returns the Direction field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetDirection() string {
-	if o == nil || o.Direction == nil {
+	if o == nil || IsNil(o.Direction) {
 		var ret string
 		return ret
 	}
@@ -139,7 +134,7 @@ func (o *AppDetailsAllOf) GetDirection() string {
 // GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetDirectionOk() (*string, bool) {
-	if o == nil || o.Direction == nil {
+	if o == nil || IsNil(o.Direction) {
 		return nil, false
 	}
 	return o.Direction, true
@@ -147,7 +142,7 @@ func (o *AppDetailsAllOf) GetDirectionOk() (*string, bool) {
 
 // HasDirection returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasDirection() bool {
-	if o != nil && o.Direction != nil {
+	if o != nil && !IsNil(o.Direction) {
 		return true
 	}
 
@@ -160,9 +155,9 @@ func (o *AppDetailsAllOf) SetDirection(v string) {
 }
 
 // GetUsers returns the Users field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetUsers() []User {
-	if o == nil || o.Users == nil {
-		var ret []User
+func (o *AppDetailsAllOf) GetUsers() []AppDetailsAllOfUsersInner {
+	if o == nil || IsNil(o.Users) {
+		var ret []AppDetailsAllOfUsersInner
 		return ret
 	}
 	return o.Users
@@ -170,8 +165,8 @@ func (o *AppDetailsAllOf) GetUsers() []User {
 
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetUsersOk() ([]User, bool) {
-	if o == nil || o.Users == nil {
+func (o *AppDetailsAllOf) GetUsersOk() ([]AppDetailsAllOfUsersInner, bool) {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
@@ -179,53 +174,21 @@ func (o *AppDetailsAllOf) GetUsersOk() ([]User, bool) {
 
 // HasUsers returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasUsers() bool {
-	if o != nil && o.Users != nil {
+	if o != nil && !IsNil(o.Users) {
 		return true
 	}
 
 	return false
 }
 
-// SetUsers gets a reference to the given []User and assigns it to the Users field.
-func (o *AppDetailsAllOf) SetUsers(v []User) {
+// SetUsers gets a reference to the given []AppDetailsAllOfUsersInner and assigns it to the Users field.
+func (o *AppDetailsAllOf) SetUsers(v []AppDetailsAllOfUsersInner) {
 	o.Users = v
-}
-
-// GetCommonGroups returns the CommonGroups field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetCommonGroups() []CommonGroup {
-	if o == nil || o.CommonGroups == nil {
-		var ret []CommonGroup
-		return ret
-	}
-	return o.CommonGroups
-}
-
-// GetCommonGroupsOk returns a tuple with the CommonGroups field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetCommonGroupsOk() ([]CommonGroup, bool) {
-	if o == nil || o.CommonGroups == nil {
-		return nil, false
-	}
-	return o.CommonGroups, true
-}
-
-// HasCommonGroups returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasCommonGroups() bool {
-	if o != nil && o.CommonGroups != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCommonGroups gets a reference to the given []CommonGroup and assigns it to the CommonGroups field.
-func (o *AppDetailsAllOf) SetCommonGroups(v []CommonGroup) {
-	o.CommonGroups = v
 }
 
 // GetHitChartData returns the HitChartData field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetHitChartData() []map[string]float32 {
-	if o == nil || o.HitChartData == nil {
+	if o == nil || IsNil(o.HitChartData) {
 		var ret []map[string]float32
 		return ret
 	}
@@ -235,7 +198,7 @@ func (o *AppDetailsAllOf) GetHitChartData() []map[string]float32 {
 // GetHitChartDataOk returns a tuple with the HitChartData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetHitChartDataOk() ([]map[string]float32, bool) {
-	if o == nil || o.HitChartData == nil {
+	if o == nil || IsNil(o.HitChartData) {
 		return nil, false
 	}
 	return o.HitChartData, true
@@ -243,7 +206,7 @@ func (o *AppDetailsAllOf) GetHitChartDataOk() ([]map[string]float32, bool) {
 
 // HasHitChartData returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasHitChartData() bool {
-	if o != nil && o.HitChartData != nil {
+	if o != nil && !IsNil(o.HitChartData) {
 		return true
 	}
 
@@ -257,7 +220,7 @@ func (o *AppDetailsAllOf) SetHitChartData(v []map[string]float32) {
 
 // GetLastResetAt returns the LastResetAt field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetLastResetAt() time.Time {
-	if o == nil || o.LastResetAt == nil {
+	if o == nil || IsNil(o.LastResetAt) {
 		var ret time.Time
 		return ret
 	}
@@ -267,7 +230,7 @@ func (o *AppDetailsAllOf) GetLastResetAt() time.Time {
 // GetLastResetAtOk returns a tuple with the LastResetAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetLastResetAtOk() (*time.Time, bool) {
-	if o == nil || o.LastResetAt == nil {
+	if o == nil || IsNil(o.LastResetAt) {
 		return nil, false
 	}
 	return o.LastResetAt, true
@@ -275,7 +238,7 @@ func (o *AppDetailsAllOf) GetLastResetAtOk() (*time.Time, bool) {
 
 // HasLastResetAt returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasLastResetAt() bool {
-	if o != nil && o.LastResetAt != nil {
+	if o != nil && !IsNil(o.LastResetAt) {
 		return true
 	}
 
@@ -289,7 +252,7 @@ func (o *AppDetailsAllOf) SetLastResetAt(v time.Time) {
 
 // GetLastAnalysisAt returns the LastAnalysisAt field value if set, zero value otherwise.
 func (o *AppDetailsAllOf) GetLastAnalysisAt() time.Time {
-	if o == nil || o.LastAnalysisAt == nil {
+	if o == nil || IsNil(o.LastAnalysisAt) {
 		var ret time.Time
 		return ret
 	}
@@ -299,7 +262,7 @@ func (o *AppDetailsAllOf) GetLastAnalysisAt() time.Time {
 // GetLastAnalysisAtOk returns a tuple with the LastAnalysisAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetailsAllOf) GetLastAnalysisAtOk() (*time.Time, bool) {
-	if o == nil || o.LastAnalysisAt == nil {
+	if o == nil || IsNil(o.LastAnalysisAt) {
 		return nil, false
 	}
 	return o.LastAnalysisAt, true
@@ -307,7 +270,7 @@ func (o *AppDetailsAllOf) GetLastAnalysisAtOk() (*time.Time, bool) {
 
 // HasLastAnalysisAt returns a boolean if a field has been set.
 func (o *AppDetailsAllOf) HasLastAnalysisAt() bool {
-	if o != nil && o.LastAnalysisAt != nil {
+	if o != nil && !IsNil(o.LastAnalysisAt) {
 		return true
 	}
 
@@ -319,208 +282,143 @@ func (o *AppDetailsAllOf) SetLastAnalysisAt(v time.Time) {
 	o.LastAnalysisAt = &v
 }
 
-// GetPolicyId returns the PolicyId field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetPolicyId() string {
-	if o == nil || o.PolicyId == nil {
-		var ret string
+// GetPolicies returns the Policies field value if set, zero value otherwise.
+func (o *AppDetailsAllOf) GetPolicies() []AppAccessPolicy {
+	if o == nil || IsNil(o.Policies) {
+		var ret []AppAccessPolicy
 		return ret
 	}
-	return *o.PolicyId
+	return o.Policies
 }
 
-// GetPolicyIdOk returns a tuple with the PolicyId field value if set, nil otherwise
+// GetPoliciesOk returns a tuple with the Policies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetPolicyIdOk() (*string, bool) {
-	if o == nil || o.PolicyId == nil {
+func (o *AppDetailsAllOf) GetPoliciesOk() ([]AppAccessPolicy, bool) {
+	if o == nil || IsNil(o.Policies) {
 		return nil, false
 	}
-	return o.PolicyId, true
+	return o.Policies, true
 }
 
-// HasPolicyId returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasPolicyId() bool {
-	if o != nil && o.PolicyId != nil {
+// HasPolicies returns a boolean if a field has been set.
+func (o *AppDetailsAllOf) HasPolicies() bool {
+	if o != nil && !IsNil(o.Policies) {
 		return true
 	}
 
 	return false
 }
 
-// SetPolicyId gets a reference to the given string and assigns it to the PolicyId field.
-func (o *AppDetailsAllOf) SetPolicyId(v string) {
-	o.PolicyId = &v
+// SetPolicies gets a reference to the given []AppAccessPolicy and assigns it to the Policies field.
+func (o *AppDetailsAllOf) SetPolicies(v []AppAccessPolicy) {
+	o.Policies = v
 }
 
-// GetEntitlementId returns the EntitlementId field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetEntitlementId() string {
-	if o == nil || o.EntitlementId == nil {
-		var ret string
+// GetEntitlementDetails returns the EntitlementDetails field value if set, zero value otherwise.
+func (o *AppDetailsAllOf) GetEntitlementDetails() AppDetailsAllOfEntitlementDetails {
+	if o == nil || IsNil(o.EntitlementDetails) {
+		var ret AppDetailsAllOfEntitlementDetails
 		return ret
 	}
-	return *o.EntitlementId
+	return *o.EntitlementDetails
 }
 
-// GetEntitlementIdOk returns a tuple with the EntitlementId field value if set, nil otherwise
+// GetEntitlementDetailsOk returns a tuple with the EntitlementDetails field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetEntitlementIdOk() (*string, bool) {
-	if o == nil || o.EntitlementId == nil {
+func (o *AppDetailsAllOf) GetEntitlementDetailsOk() (*AppDetailsAllOfEntitlementDetails, bool) {
+	if o == nil || IsNil(o.EntitlementDetails) {
 		return nil, false
 	}
-	return o.EntitlementId, true
+	return o.EntitlementDetails, true
 }
 
-// HasEntitlementId returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasEntitlementId() bool {
-	if o != nil && o.EntitlementId != nil {
+// HasEntitlementDetails returns a boolean if a field has been set.
+func (o *AppDetailsAllOf) HasEntitlementDetails() bool {
+	if o != nil && !IsNil(o.EntitlementDetails) {
 		return true
 	}
 
 	return false
 }
 
-// SetEntitlementId gets a reference to the given string and assigns it to the EntitlementId field.
-func (o *AppDetailsAllOf) SetEntitlementId(v string) {
-	o.EntitlementId = &v
+// SetEntitlementDetails gets a reference to the given AppDetailsAllOfEntitlementDetails and assigns it to the EntitlementDetails field.
+func (o *AppDetailsAllOf) SetEntitlementDetails(v AppDetailsAllOfEntitlementDetails) {
+	o.EntitlementDetails = &v
 }
 
-// GetOriginatingEntitlements returns the OriginatingEntitlements field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetOriginatingEntitlements() []interface{} {
-	if o == nil || o.OriginatingEntitlements == nil {
-		var ret []interface{}
+// GetUserGroups returns the UserGroups field value if set, zero value otherwise.
+func (o *AppDetailsAllOf) GetUserGroups() AppDetailsAllOfUserGroups {
+	if o == nil || IsNil(o.UserGroups) {
+		var ret AppDetailsAllOfUserGroups
 		return ret
 	}
-	return o.OriginatingEntitlements
+	return *o.UserGroups
 }
 
-// GetOriginatingEntitlementsOk returns a tuple with the OriginatingEntitlements field value if set, nil otherwise
+// GetUserGroupsOk returns a tuple with the UserGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetOriginatingEntitlementsOk() ([]interface{}, bool) {
-	if o == nil || o.OriginatingEntitlements == nil {
+func (o *AppDetailsAllOf) GetUserGroupsOk() (*AppDetailsAllOfUserGroups, bool) {
+	if o == nil || IsNil(o.UserGroups) {
 		return nil, false
 	}
-	return o.OriginatingEntitlements, true
+	return o.UserGroups, true
 }
 
-// HasOriginatingEntitlements returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasOriginatingEntitlements() bool {
-	if o != nil && o.OriginatingEntitlements != nil {
+// HasUserGroups returns a boolean if a field has been set.
+func (o *AppDetailsAllOf) HasUserGroups() bool {
+	if o != nil && !IsNil(o.UserGroups) {
 		return true
 	}
 
 	return false
 }
 
-// SetOriginatingEntitlements gets a reference to the given []interface{} and assigns it to the OriginatingEntitlements field.
-func (o *AppDetailsAllOf) SetOriginatingEntitlements(v []interface{}) {
-	o.OriginatingEntitlements = v
-}
-
-// GetIps returns the Ips field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetIps() []string {
-	if o == nil || o.Ips == nil {
-		var ret []string
-		return ret
-	}
-	return o.Ips
-}
-
-// GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetIpsOk() ([]string, bool) {
-	if o == nil || o.Ips == nil {
-		return nil, false
-	}
-	return o.Ips, true
-}
-
-// HasIps returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasIps() bool {
-	if o != nil && o.Ips != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIps gets a reference to the given []string and assigns it to the Ips field.
-func (o *AppDetailsAllOf) SetIps(v []string) {
-	o.Ips = v
-}
-
-// GetHistory returns the History field value if set, zero value otherwise.
-func (o *AppDetailsAllOf) GetHistory() []interface{} {
-	if o == nil || o.History == nil {
-		var ret []interface{}
-		return ret
-	}
-	return o.History
-}
-
-// GetHistoryOk returns a tuple with the History field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AppDetailsAllOf) GetHistoryOk() ([]interface{}, bool) {
-	if o == nil || o.History == nil {
-		return nil, false
-	}
-	return o.History, true
-}
-
-// HasHistory returns a boolean if a field has been set.
-func (o *AppDetailsAllOf) HasHistory() bool {
-	if o != nil && o.History != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetHistory gets a reference to the given []interface{} and assigns it to the History field.
-func (o *AppDetailsAllOf) SetHistory(v []interface{}) {
-	o.History = v
+// SetUserGroups gets a reference to the given AppDetailsAllOfUserGroups and assigns it to the UserGroups field.
+func (o *AppDetailsAllOf) SetUserGroups(v AppDetailsAllOfUserGroups) {
+	o.UserGroups = &v
 }
 
 func (o AppDetailsAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Rule != nil {
-		toSerialize["rule"] = o.Rule
-	}
-	if o.Protocol != nil {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if o.Direction != nil {
-		toSerialize["direction"] = o.Direction
-	}
-	if o.Users != nil {
-		toSerialize["users"] = o.Users
-	}
-	if o.CommonGroups != nil {
-		toSerialize["commonGroups"] = o.CommonGroups
-	}
-	if o.HitChartData != nil {
-		toSerialize["hitChartData"] = o.HitChartData
-	}
-	if o.LastResetAt != nil {
-		toSerialize["lastResetAt"] = o.LastResetAt
-	}
-	if o.LastAnalysisAt != nil {
-		toSerialize["lastAnalysisAt"] = o.LastAnalysisAt
-	}
-	if o.PolicyId != nil {
-		toSerialize["policyId"] = o.PolicyId
-	}
-	if o.EntitlementId != nil {
-		toSerialize["entitlementId"] = o.EntitlementId
-	}
-	if o.OriginatingEntitlements != nil {
-		toSerialize["originatingEntitlements"] = o.OriginatingEntitlements
-	}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
-	}
-	if o.History != nil {
-		toSerialize["history"] = o.History
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDetailsAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Rule) {
+		toSerialize["rule"] = o.Rule
+	}
+	if !IsNil(o.Protocol) {
+		toSerialize["protocol"] = o.Protocol
+	}
+	if !IsNil(o.Direction) {
+		toSerialize["direction"] = o.Direction
+	}
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	if !IsNil(o.HitChartData) {
+		toSerialize["hitChartData"] = o.HitChartData
+	}
+	if !IsNil(o.LastResetAt) {
+		toSerialize["lastResetAt"] = o.LastResetAt
+	}
+	if !IsNil(o.LastAnalysisAt) {
+		toSerialize["lastAnalysisAt"] = o.LastAnalysisAt
+	}
+	if !IsNil(o.Policies) {
+		toSerialize["policies"] = o.Policies
+	}
+	if !IsNil(o.EntitlementDetails) {
+		toSerialize["entitlementDetails"] = o.EntitlementDetails
+	}
+	if !IsNil(o.UserGroups) {
+		toSerialize["userGroups"] = o.UserGroups
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDetailsAllOf struct {

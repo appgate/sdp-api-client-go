@@ -1,24 +1,24 @@
 diff --git a/go/utils.mustache b/go/utils.mustache
-index 5ae789a996c..4766b5eb3fe 100644
 --- a/go/utils.mustache
 +++ b/go/utils.mustache
-@@ -4,6 +4,8 @@ package {{packageName}}
+@@ -3,6 +3,8 @@
+ 
  import (
  	"encoding/json"
- 	"time"
 +	"fmt"
 +	"math/big"
+ 	"reflect"
+ 	"time"
  )
-
- // PtrBool is a helper routine that returns a pointer to given boolean value.
-@@ -317,3 +319,28 @@ func (v *NullableTime) UnmarshalJSON(src []byte) error {
- 	v.isSet = true
- 	return json.Unmarshal(src, &v.value)
- }
+@@ -335,4 +337,29 @@
+ 
+ type MappedNullable interface {
+ 	ToMap() (map[string]interface{}, error)
++}
 +
 +type BigInt struct {
 +	big.Int
-+}
+ }
 +
 +func (b BigInt) MarshalJSON() ([]byte, error) {
 +	return []byte(b.String()), nil

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LdapProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LdapProviderAllOf{}
+
 // LdapProviderAllOf Represents an LDAP Identity Provider.
 type LdapProviderAllOf struct {
 	// Hostnames/IP addresses to connect.
@@ -125,7 +128,7 @@ func (o *LdapProviderAllOf) SetPort(v int32) {
 
 // GetSslEnabled returns the SslEnabled field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetSslEnabled() bool {
-	if o == nil || o.SslEnabled == nil {
+	if o == nil || IsNil(o.SslEnabled) {
 		var ret bool
 		return ret
 	}
@@ -135,7 +138,7 @@ func (o *LdapProviderAllOf) GetSslEnabled() bool {
 // GetSslEnabledOk returns a tuple with the SslEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetSslEnabledOk() (*bool, bool) {
-	if o == nil || o.SslEnabled == nil {
+	if o == nil || IsNil(o.SslEnabled) {
 		return nil, false
 	}
 	return o.SslEnabled, true
@@ -143,7 +146,7 @@ func (o *LdapProviderAllOf) GetSslEnabledOk() (*bool, bool) {
 
 // HasSslEnabled returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasSslEnabled() bool {
-	if o != nil && o.SslEnabled != nil {
+	if o != nil && !IsNil(o.SslEnabled) {
 		return true
 	}
 
@@ -181,7 +184,7 @@ func (o *LdapProviderAllOf) SetAdminDistinguishedName(v string) {
 
 // GetAdminPassword returns the AdminPassword field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetAdminPassword() string {
-	if o == nil || o.AdminPassword == nil {
+	if o == nil || IsNil(o.AdminPassword) {
 		var ret string
 		return ret
 	}
@@ -191,7 +194,7 @@ func (o *LdapProviderAllOf) GetAdminPassword() string {
 // GetAdminPasswordOk returns a tuple with the AdminPassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetAdminPasswordOk() (*string, bool) {
-	if o == nil || o.AdminPassword == nil {
+	if o == nil || IsNil(o.AdminPassword) {
 		return nil, false
 	}
 	return o.AdminPassword, true
@@ -199,7 +202,7 @@ func (o *LdapProviderAllOf) GetAdminPasswordOk() (*string, bool) {
 
 // HasAdminPassword returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasAdminPassword() bool {
-	if o != nil && o.AdminPassword != nil {
+	if o != nil && !IsNil(o.AdminPassword) {
 		return true
 	}
 
@@ -213,7 +216,7 @@ func (o *LdapProviderAllOf) SetAdminPassword(v string) {
 
 // GetBaseDn returns the BaseDn field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetBaseDn() string {
-	if o == nil || o.BaseDn == nil {
+	if o == nil || IsNil(o.BaseDn) {
 		var ret string
 		return ret
 	}
@@ -223,7 +226,7 @@ func (o *LdapProviderAllOf) GetBaseDn() string {
 // GetBaseDnOk returns a tuple with the BaseDn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetBaseDnOk() (*string, bool) {
-	if o == nil || o.BaseDn == nil {
+	if o == nil || IsNil(o.BaseDn) {
 		return nil, false
 	}
 	return o.BaseDn, true
@@ -231,7 +234,7 @@ func (o *LdapProviderAllOf) GetBaseDnOk() (*string, bool) {
 
 // HasBaseDn returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasBaseDn() bool {
-	if o != nil && o.BaseDn != nil {
+	if o != nil && !IsNil(o.BaseDn) {
 		return true
 	}
 
@@ -246,7 +249,7 @@ func (o *LdapProviderAllOf) SetBaseDn(v string) {
 // GetObjectClass returns the ObjectClass field value if set, zero value otherwise.
 // Deprecated
 func (o *LdapProviderAllOf) GetObjectClass() string {
-	if o == nil || o.ObjectClass == nil {
+	if o == nil || IsNil(o.ObjectClass) {
 		var ret string
 		return ret
 	}
@@ -257,7 +260,7 @@ func (o *LdapProviderAllOf) GetObjectClass() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *LdapProviderAllOf) GetObjectClassOk() (*string, bool) {
-	if o == nil || o.ObjectClass == nil {
+	if o == nil || IsNil(o.ObjectClass) {
 		return nil, false
 	}
 	return o.ObjectClass, true
@@ -265,7 +268,7 @@ func (o *LdapProviderAllOf) GetObjectClassOk() (*string, bool) {
 
 // HasObjectClass returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasObjectClass() bool {
-	if o != nil && o.ObjectClass != nil {
+	if o != nil && !IsNil(o.ObjectClass) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *LdapProviderAllOf) SetObjectClass(v string) {
 
 // GetUserFilter returns the UserFilter field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetUserFilter() string {
-	if o == nil || o.UserFilter == nil {
+	if o == nil || IsNil(o.UserFilter) {
 		var ret string
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *LdapProviderAllOf) GetUserFilter() string {
 // GetUserFilterOk returns a tuple with the UserFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetUserFilterOk() (*string, bool) {
-	if o == nil || o.UserFilter == nil {
+	if o == nil || IsNil(o.UserFilter) {
 		return nil, false
 	}
 	return o.UserFilter, true
@@ -298,7 +301,7 @@ func (o *LdapProviderAllOf) GetUserFilterOk() (*string, bool) {
 
 // HasUserFilter returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasUserFilter() bool {
-	if o != nil && o.UserFilter != nil {
+	if o != nil && !IsNil(o.UserFilter) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *LdapProviderAllOf) SetUserFilter(v string) {
 
 // GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetUsernameAttribute() string {
-	if o == nil || o.UsernameAttribute == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		var ret string
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *LdapProviderAllOf) GetUsernameAttribute() string {
 // GetUsernameAttributeOk returns a tuple with the UsernameAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetUsernameAttributeOk() (*string, bool) {
-	if o == nil || o.UsernameAttribute == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		return nil, false
 	}
 	return o.UsernameAttribute, true
@@ -330,7 +333,7 @@ func (o *LdapProviderAllOf) GetUsernameAttributeOk() (*string, bool) {
 
 // HasUsernameAttribute returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasUsernameAttribute() bool {
-	if o != nil && o.UsernameAttribute != nil {
+	if o != nil && !IsNil(o.UsernameAttribute) {
 		return true
 	}
 
@@ -344,7 +347,7 @@ func (o *LdapProviderAllOf) SetUsernameAttribute(v string) {
 
 // GetMembershipFilter returns the MembershipFilter field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetMembershipFilter() string {
-	if o == nil || o.MembershipFilter == nil {
+	if o == nil || IsNil(o.MembershipFilter) {
 		var ret string
 		return ret
 	}
@@ -354,7 +357,7 @@ func (o *LdapProviderAllOf) GetMembershipFilter() string {
 // GetMembershipFilterOk returns a tuple with the MembershipFilter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetMembershipFilterOk() (*string, bool) {
-	if o == nil || o.MembershipFilter == nil {
+	if o == nil || IsNil(o.MembershipFilter) {
 		return nil, false
 	}
 	return o.MembershipFilter, true
@@ -362,7 +365,7 @@ func (o *LdapProviderAllOf) GetMembershipFilterOk() (*string, bool) {
 
 // HasMembershipFilter returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasMembershipFilter() bool {
-	if o != nil && o.MembershipFilter != nil {
+	if o != nil && !IsNil(o.MembershipFilter) {
 		return true
 	}
 
@@ -376,7 +379,7 @@ func (o *LdapProviderAllOf) SetMembershipFilter(v string) {
 
 // GetMembershipBaseDn returns the MembershipBaseDn field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetMembershipBaseDn() string {
-	if o == nil || o.MembershipBaseDn == nil {
+	if o == nil || IsNil(o.MembershipBaseDn) {
 		var ret string
 		return ret
 	}
@@ -386,7 +389,7 @@ func (o *LdapProviderAllOf) GetMembershipBaseDn() string {
 // GetMembershipBaseDnOk returns a tuple with the MembershipBaseDn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetMembershipBaseDnOk() (*string, bool) {
-	if o == nil || o.MembershipBaseDn == nil {
+	if o == nil || IsNil(o.MembershipBaseDn) {
 		return nil, false
 	}
 	return o.MembershipBaseDn, true
@@ -394,7 +397,7 @@ func (o *LdapProviderAllOf) GetMembershipBaseDnOk() (*string, bool) {
 
 // HasMembershipBaseDn returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasMembershipBaseDn() bool {
-	if o != nil && o.MembershipBaseDn != nil {
+	if o != nil && !IsNil(o.MembershipBaseDn) {
 		return true
 	}
 
@@ -408,7 +411,7 @@ func (o *LdapProviderAllOf) SetMembershipBaseDn(v string) {
 
 // GetPasswordWarning returns the PasswordWarning field value if set, zero value otherwise.
 func (o *LdapProviderAllOf) GetPasswordWarning() LdapProviderAllOfPasswordWarning {
-	if o == nil || o.PasswordWarning == nil {
+	if o == nil || IsNil(o.PasswordWarning) {
 		var ret LdapProviderAllOfPasswordWarning
 		return ret
 	}
@@ -418,7 +421,7 @@ func (o *LdapProviderAllOf) GetPasswordWarning() LdapProviderAllOfPasswordWarnin
 // GetPasswordWarningOk returns a tuple with the PasswordWarning field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOf) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWarning, bool) {
-	if o == nil || o.PasswordWarning == nil {
+	if o == nil || IsNil(o.PasswordWarning) {
 		return nil, false
 	}
 	return o.PasswordWarning, true
@@ -426,7 +429,7 @@ func (o *LdapProviderAllOf) GetPasswordWarningOk() (*LdapProviderAllOfPasswordWa
 
 // HasPasswordWarning returns a boolean if a field has been set.
 func (o *LdapProviderAllOf) HasPasswordWarning() bool {
-	if o != nil && o.PasswordWarning != nil {
+	if o != nil && !IsNil(o.PasswordWarning) {
 		return true
 	}
 
@@ -439,44 +442,46 @@ func (o *LdapProviderAllOf) SetPasswordWarning(v LdapProviderAllOfPasswordWarnin
 }
 
 func (o LdapProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["hostnames"] = o.Hostnames
-	}
-	if true {
-		toSerialize["port"] = o.Port
-	}
-	if o.SslEnabled != nil {
-		toSerialize["sslEnabled"] = o.SslEnabled
-	}
-	if true {
-		toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
-	}
-	if o.AdminPassword != nil {
-		toSerialize["adminPassword"] = o.AdminPassword
-	}
-	if o.BaseDn != nil {
-		toSerialize["baseDn"] = o.BaseDn
-	}
-	if o.ObjectClass != nil {
-		toSerialize["objectClass"] = o.ObjectClass
-	}
-	if o.UserFilter != nil {
-		toSerialize["userFilter"] = o.UserFilter
-	}
-	if o.UsernameAttribute != nil {
-		toSerialize["usernameAttribute"] = o.UsernameAttribute
-	}
-	if o.MembershipFilter != nil {
-		toSerialize["membershipFilter"] = o.MembershipFilter
-	}
-	if o.MembershipBaseDn != nil {
-		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
-	}
-	if o.PasswordWarning != nil {
-		toSerialize["passwordWarning"] = o.PasswordWarning
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LdapProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["hostnames"] = o.Hostnames
+	toSerialize["port"] = o.Port
+	if !IsNil(o.SslEnabled) {
+		toSerialize["sslEnabled"] = o.SslEnabled
+	}
+	toSerialize["adminDistinguishedName"] = o.AdminDistinguishedName
+	if !IsNil(o.AdminPassword) {
+		toSerialize["adminPassword"] = o.AdminPassword
+	}
+	if !IsNil(o.BaseDn) {
+		toSerialize["baseDn"] = o.BaseDn
+	}
+	if !IsNil(o.ObjectClass) {
+		toSerialize["objectClass"] = o.ObjectClass
+	}
+	if !IsNil(o.UserFilter) {
+		toSerialize["userFilter"] = o.UserFilter
+	}
+	if !IsNil(o.UsernameAttribute) {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
+	}
+	if !IsNil(o.MembershipFilter) {
+		toSerialize["membershipFilter"] = o.MembershipFilter
+	}
+	if !IsNil(o.MembershipBaseDn) {
+		toSerialize["membershipBaseDn"] = o.MembershipBaseDn
+	}
+	if !IsNil(o.PasswordWarning) {
+		toSerialize["passwordWarning"] = o.PasswordWarning
+	}
+	return toSerialize, nil
 }
 
 type NullableLdapProviderAllOf struct {

@@ -105,19 +105,19 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersGetExecute(r ApiLdapI
 	localVarFormParams := url.Values{}
 
 	if r.query != nil {
-		localVarQueryParams.Add("query", parameterToString(*r.query, ""))
+		localVarQueryParams.Add("query", parameterValueToString(*r.query, ""))
 	}
 	if r.range_ != nil {
-		localVarQueryParams.Add("range", parameterToString(*r.range_, ""))
+		localVarQueryParams.Add("range", parameterValueToString(*r.range_, ""))
 	}
 	if r.orderBy != nil {
-		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
+		localVarQueryParams.Add("orderBy", parameterValueToString(*r.orderBy, ""))
 	}
 	if r.descending != nil {
-		localVarQueryParams.Add("descending", parameterToString(*r.descending, ""))
+		localVarQueryParams.Add("descending", parameterValueToString(*r.descending, ""))
 	}
 	if r.filterBy != nil {
-		localVarQueryParams.Add("filterBy", parameterToString(*r.filterBy, ""))
+		localVarQueryParams.Add("filterBy", parameterValueToString(*r.filterBy, ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -263,7 +263,7 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdAttributesPostExecu
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}/attributes"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -435,7 +435,7 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdDeleteExecute(r Api
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -579,7 +579,7 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdGetExecute(r ApiLda
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -739,7 +739,7 @@ func (a *LdapIdentityProvidersApiService) IdentityProvidersIdPutExecute(r ApiLda
 	}
 
 	localVarPath := localBasePath + "/identity-providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterToString(r.id, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

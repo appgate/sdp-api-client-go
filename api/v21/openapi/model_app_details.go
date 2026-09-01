@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AppDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDetails{}
+
 // AppDetails struct for AppDetails
 type AppDetails struct {
 	// ID of the app.
@@ -41,9 +44,9 @@ type AppDetails struct {
 	// The direction of the access.
 	Direction *string `json:"direction,omitempty"`
 	// Users accessed this app.
-	Users []User `json:"users,omitempty"`
+	Users []AppDetailsAllOfUsersInner `json:"users,omitempty"`
 	// Common groups of the users which have accessed this app.
-	CommonGroups []CommonGroup `json:"commonGroups,omitempty"`
+	CommonGroups []AppDetailsAllOfCommonGroupsInner `json:"commonGroups,omitempty"`
 	// Data for hit count chart per day.
 	HitChartData []map[string]float32 `json:"hitChartData,omitempty"`
 	// Timestamp of the last time the app was reset.
@@ -55,7 +58,7 @@ type AppDetails struct {
 	// The ID of the Entitlement generated when access is granted to this app.
 	EntitlementId *string `json:"entitlementId,omitempty"`
 	// History of the actions taken on this app.
-	History []interface{} `json:"history,omitempty"`
+	History []AppDetailsAllOfHistoryInner `json:"history,omitempty"`
 }
 
 // NewAppDetails instantiates a new AppDetails object
@@ -77,7 +80,7 @@ func NewAppDetailsWithDefaults() *AppDetails {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AppDetails) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *AppDetails) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -95,7 +98,7 @@ func (o *AppDetails) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AppDetails) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *AppDetails) SetId(v string) {
 
 // GetHost returns the Host field value if set, zero value otherwise.
 func (o *AppDetails) GetHost() string {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *AppDetails) GetHost() string {
 // GetHostOk returns a tuple with the Host field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetHostOk() (*string, bool) {
-	if o == nil || o.Host == nil {
+	if o == nil || IsNil(o.Host) {
 		return nil, false
 	}
 	return o.Host, true
@@ -127,7 +130,7 @@ func (o *AppDetails) GetHostOk() (*string, bool) {
 
 // HasHost returns a boolean if a field has been set.
 func (o *AppDetails) HasHost() bool {
-	if o != nil && o.Host != nil {
+	if o != nil && !IsNil(o.Host) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *AppDetails) SetHost(v string) {
 
 // GetPort returns the Port field value if set, zero value otherwise.
 func (o *AppDetails) GetPort() int32 {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		var ret int32
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *AppDetails) GetPort() int32 {
 // GetPortOk returns a tuple with the Port field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetPortOk() (*int32, bool) {
-	if o == nil || o.Port == nil {
+	if o == nil || IsNil(o.Port) {
 		return nil, false
 	}
 	return o.Port, true
@@ -159,7 +162,7 @@ func (o *AppDetails) GetPortOk() (*int32, bool) {
 
 // HasPort returns a boolean if a field has been set.
 func (o *AppDetails) HasPort() bool {
-	if o != nil && o.Port != nil {
+	if o != nil && !IsNil(o.Port) {
 		return true
 	}
 
@@ -173,7 +176,7 @@ func (o *AppDetails) SetPort(v int32) {
 
 // GetUsersCount returns the UsersCount field value if set, zero value otherwise.
 func (o *AppDetails) GetUsersCount() int32 {
-	if o == nil || o.UsersCount == nil {
+	if o == nil || IsNil(o.UsersCount) {
 		var ret int32
 		return ret
 	}
@@ -183,7 +186,7 @@ func (o *AppDetails) GetUsersCount() int32 {
 // GetUsersCountOk returns a tuple with the UsersCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetUsersCountOk() (*int32, bool) {
-	if o == nil || o.UsersCount == nil {
+	if o == nil || IsNil(o.UsersCount) {
 		return nil, false
 	}
 	return o.UsersCount, true
@@ -191,7 +194,7 @@ func (o *AppDetails) GetUsersCountOk() (*int32, bool) {
 
 // HasUsersCount returns a boolean if a field has been set.
 func (o *AppDetails) HasUsersCount() bool {
-	if o != nil && o.UsersCount != nil {
+	if o != nil && !IsNil(o.UsersCount) {
 		return true
 	}
 
@@ -205,7 +208,7 @@ func (o *AppDetails) SetUsersCount(v int32) {
 
 // GetLastAccessedAt returns the LastAccessedAt field value if set, zero value otherwise.
 func (o *AppDetails) GetLastAccessedAt() time.Time {
-	if o == nil || o.LastAccessedAt == nil {
+	if o == nil || IsNil(o.LastAccessedAt) {
 		var ret time.Time
 		return ret
 	}
@@ -215,7 +218,7 @@ func (o *AppDetails) GetLastAccessedAt() time.Time {
 // GetLastAccessedAtOk returns a tuple with the LastAccessedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetLastAccessedAtOk() (*time.Time, bool) {
-	if o == nil || o.LastAccessedAt == nil {
+	if o == nil || IsNil(o.LastAccessedAt) {
 		return nil, false
 	}
 	return o.LastAccessedAt, true
@@ -223,7 +226,7 @@ func (o *AppDetails) GetLastAccessedAtOk() (*time.Time, bool) {
 
 // HasLastAccessedAt returns a boolean if a field has been set.
 func (o *AppDetails) HasLastAccessedAt() bool {
-	if o != nil && o.LastAccessedAt != nil {
+	if o != nil && !IsNil(o.LastAccessedAt) {
 		return true
 	}
 
@@ -237,7 +240,7 @@ func (o *AppDetails) SetLastAccessedAt(v time.Time) {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *AppDetails) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -247,7 +250,7 @@ func (o *AppDetails) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -255,7 +258,7 @@ func (o *AppDetails) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *AppDetails) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -269,7 +272,7 @@ func (o *AppDetails) SetStatus(v string) {
 
 // GetAlias returns the Alias field value if set, zero value otherwise.
 func (o *AppDetails) GetAlias() string {
-	if o == nil || o.Alias == nil {
+	if o == nil || IsNil(o.Alias) {
 		var ret string
 		return ret
 	}
@@ -279,7 +282,7 @@ func (o *AppDetails) GetAlias() string {
 // GetAliasOk returns a tuple with the Alias field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetAliasOk() (*string, bool) {
-	if o == nil || o.Alias == nil {
+	if o == nil || IsNil(o.Alias) {
 		return nil, false
 	}
 	return o.Alias, true
@@ -287,7 +290,7 @@ func (o *AppDetails) GetAliasOk() (*string, bool) {
 
 // HasAlias returns a boolean if a field has been set.
 func (o *AppDetails) HasAlias() bool {
-	if o != nil && o.Alias != nil {
+	if o != nil && !IsNil(o.Alias) {
 		return true
 	}
 
@@ -301,7 +304,7 @@ func (o *AppDetails) SetAlias(v string) {
 
 // GetLastModified returns the LastModified field value if set, zero value otherwise.
 func (o *AppDetails) GetLastModified() time.Time {
-	if o == nil || o.LastModified == nil {
+	if o == nil || IsNil(o.LastModified) {
 		var ret time.Time
 		return ret
 	}
@@ -311,7 +314,7 @@ func (o *AppDetails) GetLastModified() time.Time {
 // GetLastModifiedOk returns a tuple with the LastModified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetLastModifiedOk() (*time.Time, bool) {
-	if o == nil || o.LastModified == nil {
+	if o == nil || IsNil(o.LastModified) {
 		return nil, false
 	}
 	return o.LastModified, true
@@ -319,7 +322,7 @@ func (o *AppDetails) GetLastModifiedOk() (*time.Time, bool) {
 
 // HasLastModified returns a boolean if a field has been set.
 func (o *AppDetails) HasLastModified() bool {
-	if o != nil && o.LastModified != nil {
+	if o != nil && !IsNil(o.LastModified) {
 		return true
 	}
 
@@ -333,7 +336,7 @@ func (o *AppDetails) SetLastModified(v time.Time) {
 
 // GetRule returns the Rule field value if set, zero value otherwise.
 func (o *AppDetails) GetRule() string {
-	if o == nil || o.Rule == nil {
+	if o == nil || IsNil(o.Rule) {
 		var ret string
 		return ret
 	}
@@ -343,7 +346,7 @@ func (o *AppDetails) GetRule() string {
 // GetRuleOk returns a tuple with the Rule field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetRuleOk() (*string, bool) {
-	if o == nil || o.Rule == nil {
+	if o == nil || IsNil(o.Rule) {
 		return nil, false
 	}
 	return o.Rule, true
@@ -351,7 +354,7 @@ func (o *AppDetails) GetRuleOk() (*string, bool) {
 
 // HasRule returns a boolean if a field has been set.
 func (o *AppDetails) HasRule() bool {
-	if o != nil && o.Rule != nil {
+	if o != nil && !IsNil(o.Rule) {
 		return true
 	}
 
@@ -365,7 +368,7 @@ func (o *AppDetails) SetRule(v string) {
 
 // GetProtocol returns the Protocol field value if set, zero value otherwise.
 func (o *AppDetails) GetProtocol() string {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		var ret string
 		return ret
 	}
@@ -375,7 +378,7 @@ func (o *AppDetails) GetProtocol() string {
 // GetProtocolOk returns a tuple with the Protocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetProtocolOk() (*string, bool) {
-	if o == nil || o.Protocol == nil {
+	if o == nil || IsNil(o.Protocol) {
 		return nil, false
 	}
 	return o.Protocol, true
@@ -383,7 +386,7 @@ func (o *AppDetails) GetProtocolOk() (*string, bool) {
 
 // HasProtocol returns a boolean if a field has been set.
 func (o *AppDetails) HasProtocol() bool {
-	if o != nil && o.Protocol != nil {
+	if o != nil && !IsNil(o.Protocol) {
 		return true
 	}
 
@@ -397,7 +400,7 @@ func (o *AppDetails) SetProtocol(v string) {
 
 // GetDirection returns the Direction field value if set, zero value otherwise.
 func (o *AppDetails) GetDirection() string {
-	if o == nil || o.Direction == nil {
+	if o == nil || IsNil(o.Direction) {
 		var ret string
 		return ret
 	}
@@ -407,7 +410,7 @@ func (o *AppDetails) GetDirection() string {
 // GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetDirectionOk() (*string, bool) {
-	if o == nil || o.Direction == nil {
+	if o == nil || IsNil(o.Direction) {
 		return nil, false
 	}
 	return o.Direction, true
@@ -415,7 +418,7 @@ func (o *AppDetails) GetDirectionOk() (*string, bool) {
 
 // HasDirection returns a boolean if a field has been set.
 func (o *AppDetails) HasDirection() bool {
-	if o != nil && o.Direction != nil {
+	if o != nil && !IsNil(o.Direction) {
 		return true
 	}
 
@@ -428,9 +431,9 @@ func (o *AppDetails) SetDirection(v string) {
 }
 
 // GetUsers returns the Users field value if set, zero value otherwise.
-func (o *AppDetails) GetUsers() []User {
-	if o == nil || o.Users == nil {
-		var ret []User
+func (o *AppDetails) GetUsers() []AppDetailsAllOfUsersInner {
+	if o == nil || IsNil(o.Users) {
+		var ret []AppDetailsAllOfUsersInner
 		return ret
 	}
 	return o.Users
@@ -438,8 +441,8 @@ func (o *AppDetails) GetUsers() []User {
 
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetails) GetUsersOk() ([]User, bool) {
-	if o == nil || o.Users == nil {
+func (o *AppDetails) GetUsersOk() ([]AppDetailsAllOfUsersInner, bool) {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
@@ -447,22 +450,22 @@ func (o *AppDetails) GetUsersOk() ([]User, bool) {
 
 // HasUsers returns a boolean if a field has been set.
 func (o *AppDetails) HasUsers() bool {
-	if o != nil && o.Users != nil {
+	if o != nil && !IsNil(o.Users) {
 		return true
 	}
 
 	return false
 }
 
-// SetUsers gets a reference to the given []User and assigns it to the Users field.
-func (o *AppDetails) SetUsers(v []User) {
+// SetUsers gets a reference to the given []AppDetailsAllOfUsersInner and assigns it to the Users field.
+func (o *AppDetails) SetUsers(v []AppDetailsAllOfUsersInner) {
 	o.Users = v
 }
 
 // GetCommonGroups returns the CommonGroups field value if set, zero value otherwise.
-func (o *AppDetails) GetCommonGroups() []CommonGroup {
-	if o == nil || o.CommonGroups == nil {
-		var ret []CommonGroup
+func (o *AppDetails) GetCommonGroups() []AppDetailsAllOfCommonGroupsInner {
+	if o == nil || IsNil(o.CommonGroups) {
+		var ret []AppDetailsAllOfCommonGroupsInner
 		return ret
 	}
 	return o.CommonGroups
@@ -470,8 +473,8 @@ func (o *AppDetails) GetCommonGroups() []CommonGroup {
 
 // GetCommonGroupsOk returns a tuple with the CommonGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetails) GetCommonGroupsOk() ([]CommonGroup, bool) {
-	if o == nil || o.CommonGroups == nil {
+func (o *AppDetails) GetCommonGroupsOk() ([]AppDetailsAllOfCommonGroupsInner, bool) {
+	if o == nil || IsNil(o.CommonGroups) {
 		return nil, false
 	}
 	return o.CommonGroups, true
@@ -479,21 +482,21 @@ func (o *AppDetails) GetCommonGroupsOk() ([]CommonGroup, bool) {
 
 // HasCommonGroups returns a boolean if a field has been set.
 func (o *AppDetails) HasCommonGroups() bool {
-	if o != nil && o.CommonGroups != nil {
+	if o != nil && !IsNil(o.CommonGroups) {
 		return true
 	}
 
 	return false
 }
 
-// SetCommonGroups gets a reference to the given []CommonGroup and assigns it to the CommonGroups field.
-func (o *AppDetails) SetCommonGroups(v []CommonGroup) {
+// SetCommonGroups gets a reference to the given []AppDetailsAllOfCommonGroupsInner and assigns it to the CommonGroups field.
+func (o *AppDetails) SetCommonGroups(v []AppDetailsAllOfCommonGroupsInner) {
 	o.CommonGroups = v
 }
 
 // GetHitChartData returns the HitChartData field value if set, zero value otherwise.
 func (o *AppDetails) GetHitChartData() []map[string]float32 {
-	if o == nil || o.HitChartData == nil {
+	if o == nil || IsNil(o.HitChartData) {
 		var ret []map[string]float32
 		return ret
 	}
@@ -503,7 +506,7 @@ func (o *AppDetails) GetHitChartData() []map[string]float32 {
 // GetHitChartDataOk returns a tuple with the HitChartData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetHitChartDataOk() ([]map[string]float32, bool) {
-	if o == nil || o.HitChartData == nil {
+	if o == nil || IsNil(o.HitChartData) {
 		return nil, false
 	}
 	return o.HitChartData, true
@@ -511,7 +514,7 @@ func (o *AppDetails) GetHitChartDataOk() ([]map[string]float32, bool) {
 
 // HasHitChartData returns a boolean if a field has been set.
 func (o *AppDetails) HasHitChartData() bool {
-	if o != nil && o.HitChartData != nil {
+	if o != nil && !IsNil(o.HitChartData) {
 		return true
 	}
 
@@ -525,7 +528,7 @@ func (o *AppDetails) SetHitChartData(v []map[string]float32) {
 
 // GetLastResetAt returns the LastResetAt field value if set, zero value otherwise.
 func (o *AppDetails) GetLastResetAt() time.Time {
-	if o == nil || o.LastResetAt == nil {
+	if o == nil || IsNil(o.LastResetAt) {
 		var ret time.Time
 		return ret
 	}
@@ -535,7 +538,7 @@ func (o *AppDetails) GetLastResetAt() time.Time {
 // GetLastResetAtOk returns a tuple with the LastResetAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetLastResetAtOk() (*time.Time, bool) {
-	if o == nil || o.LastResetAt == nil {
+	if o == nil || IsNil(o.LastResetAt) {
 		return nil, false
 	}
 	return o.LastResetAt, true
@@ -543,7 +546,7 @@ func (o *AppDetails) GetLastResetAtOk() (*time.Time, bool) {
 
 // HasLastResetAt returns a boolean if a field has been set.
 func (o *AppDetails) HasLastResetAt() bool {
-	if o != nil && o.LastResetAt != nil {
+	if o != nil && !IsNil(o.LastResetAt) {
 		return true
 	}
 
@@ -557,7 +560,7 @@ func (o *AppDetails) SetLastResetAt(v time.Time) {
 
 // GetLastAnalysisAt returns the LastAnalysisAt field value if set, zero value otherwise.
 func (o *AppDetails) GetLastAnalysisAt() time.Time {
-	if o == nil || o.LastAnalysisAt == nil {
+	if o == nil || IsNil(o.LastAnalysisAt) {
 		var ret time.Time
 		return ret
 	}
@@ -567,7 +570,7 @@ func (o *AppDetails) GetLastAnalysisAt() time.Time {
 // GetLastAnalysisAtOk returns a tuple with the LastAnalysisAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetLastAnalysisAtOk() (*time.Time, bool) {
-	if o == nil || o.LastAnalysisAt == nil {
+	if o == nil || IsNil(o.LastAnalysisAt) {
 		return nil, false
 	}
 	return o.LastAnalysisAt, true
@@ -575,7 +578,7 @@ func (o *AppDetails) GetLastAnalysisAtOk() (*time.Time, bool) {
 
 // HasLastAnalysisAt returns a boolean if a field has been set.
 func (o *AppDetails) HasLastAnalysisAt() bool {
-	if o != nil && o.LastAnalysisAt != nil {
+	if o != nil && !IsNil(o.LastAnalysisAt) {
 		return true
 	}
 
@@ -589,7 +592,7 @@ func (o *AppDetails) SetLastAnalysisAt(v time.Time) {
 
 // GetPolicyId returns the PolicyId field value if set, zero value otherwise.
 func (o *AppDetails) GetPolicyId() string {
-	if o == nil || o.PolicyId == nil {
+	if o == nil || IsNil(o.PolicyId) {
 		var ret string
 		return ret
 	}
@@ -599,7 +602,7 @@ func (o *AppDetails) GetPolicyId() string {
 // GetPolicyIdOk returns a tuple with the PolicyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetPolicyIdOk() (*string, bool) {
-	if o == nil || o.PolicyId == nil {
+	if o == nil || IsNil(o.PolicyId) {
 		return nil, false
 	}
 	return o.PolicyId, true
@@ -607,7 +610,7 @@ func (o *AppDetails) GetPolicyIdOk() (*string, bool) {
 
 // HasPolicyId returns a boolean if a field has been set.
 func (o *AppDetails) HasPolicyId() bool {
-	if o != nil && o.PolicyId != nil {
+	if o != nil && !IsNil(o.PolicyId) {
 		return true
 	}
 
@@ -621,7 +624,7 @@ func (o *AppDetails) SetPolicyId(v string) {
 
 // GetEntitlementId returns the EntitlementId field value if set, zero value otherwise.
 func (o *AppDetails) GetEntitlementId() string {
-	if o == nil || o.EntitlementId == nil {
+	if o == nil || IsNil(o.EntitlementId) {
 		var ret string
 		return ret
 	}
@@ -631,7 +634,7 @@ func (o *AppDetails) GetEntitlementId() string {
 // GetEntitlementIdOk returns a tuple with the EntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDetails) GetEntitlementIdOk() (*string, bool) {
-	if o == nil || o.EntitlementId == nil {
+	if o == nil || IsNil(o.EntitlementId) {
 		return nil, false
 	}
 	return o.EntitlementId, true
@@ -639,7 +642,7 @@ func (o *AppDetails) GetEntitlementIdOk() (*string, bool) {
 
 // HasEntitlementId returns a boolean if a field has been set.
 func (o *AppDetails) HasEntitlementId() bool {
-	if o != nil && o.EntitlementId != nil {
+	if o != nil && !IsNil(o.EntitlementId) {
 		return true
 	}
 
@@ -652,9 +655,9 @@ func (o *AppDetails) SetEntitlementId(v string) {
 }
 
 // GetHistory returns the History field value if set, zero value otherwise.
-func (o *AppDetails) GetHistory() []interface{} {
-	if o == nil || o.History == nil {
-		var ret []interface{}
+func (o *AppDetails) GetHistory() []AppDetailsAllOfHistoryInner {
+	if o == nil || IsNil(o.History) {
+		var ret []AppDetailsAllOfHistoryInner
 		return ret
 	}
 	return o.History
@@ -662,8 +665,8 @@ func (o *AppDetails) GetHistory() []interface{} {
 
 // GetHistoryOk returns a tuple with the History field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppDetails) GetHistoryOk() ([]interface{}, bool) {
-	if o == nil || o.History == nil {
+func (o *AppDetails) GetHistoryOk() ([]AppDetailsAllOfHistoryInner, bool) {
+	if o == nil || IsNil(o.History) {
 		return nil, false
 	}
 	return o.History, true
@@ -671,78 +674,86 @@ func (o *AppDetails) GetHistoryOk() ([]interface{}, bool) {
 
 // HasHistory returns a boolean if a field has been set.
 func (o *AppDetails) HasHistory() bool {
-	if o != nil && o.History != nil {
+	if o != nil && !IsNil(o.History) {
 		return true
 	}
 
 	return false
 }
 
-// SetHistory gets a reference to the given []interface{} and assigns it to the History field.
-func (o *AppDetails) SetHistory(v []interface{}) {
+// SetHistory gets a reference to the given []AppDetailsAllOfHistoryInner and assigns it to the History field.
+func (o *AppDetails) SetHistory(v []AppDetailsAllOfHistoryInner) {
 	o.History = v
 }
 
 func (o AppDetails) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Host != nil {
-		toSerialize["host"] = o.Host
-	}
-	if o.Port != nil {
-		toSerialize["port"] = o.Port
-	}
-	if o.UsersCount != nil {
-		toSerialize["usersCount"] = o.UsersCount
-	}
-	if o.LastAccessedAt != nil {
-		toSerialize["lastAccessedAt"] = o.LastAccessedAt
-	}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
-	}
-	if o.Alias != nil {
-		toSerialize["alias"] = o.Alias
-	}
-	if o.LastModified != nil {
-		toSerialize["lastModified"] = o.LastModified
-	}
-	if o.Rule != nil {
-		toSerialize["rule"] = o.Rule
-	}
-	if o.Protocol != nil {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if o.Direction != nil {
-		toSerialize["direction"] = o.Direction
-	}
-	if o.Users != nil {
-		toSerialize["users"] = o.Users
-	}
-	if o.CommonGroups != nil {
-		toSerialize["commonGroups"] = o.CommonGroups
-	}
-	if o.HitChartData != nil {
-		toSerialize["hitChartData"] = o.HitChartData
-	}
-	if o.LastResetAt != nil {
-		toSerialize["lastResetAt"] = o.LastResetAt
-	}
-	if o.LastAnalysisAt != nil {
-		toSerialize["lastAnalysisAt"] = o.LastAnalysisAt
-	}
-	if o.PolicyId != nil {
-		toSerialize["policyId"] = o.PolicyId
-	}
-	if o.EntitlementId != nil {
-		toSerialize["entitlementId"] = o.EntitlementId
-	}
-	if o.History != nil {
-		toSerialize["history"] = o.History
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDetails) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Host) {
+		toSerialize["host"] = o.Host
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
+	}
+	if !IsNil(o.UsersCount) {
+		toSerialize["usersCount"] = o.UsersCount
+	}
+	if !IsNil(o.LastAccessedAt) {
+		toSerialize["lastAccessedAt"] = o.LastAccessedAt
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Alias) {
+		toSerialize["alias"] = o.Alias
+	}
+	if !IsNil(o.LastModified) {
+		toSerialize["lastModified"] = o.LastModified
+	}
+	if !IsNil(o.Rule) {
+		toSerialize["rule"] = o.Rule
+	}
+	if !IsNil(o.Protocol) {
+		toSerialize["protocol"] = o.Protocol
+	}
+	if !IsNil(o.Direction) {
+		toSerialize["direction"] = o.Direction
+	}
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	if !IsNil(o.CommonGroups) {
+		toSerialize["commonGroups"] = o.CommonGroups
+	}
+	if !IsNil(o.HitChartData) {
+		toSerialize["hitChartData"] = o.HitChartData
+	}
+	if !IsNil(o.LastResetAt) {
+		toSerialize["lastResetAt"] = o.LastResetAt
+	}
+	if !IsNil(o.LastAnalysisAt) {
+		toSerialize["lastAnalysisAt"] = o.LastAnalysisAt
+	}
+	if !IsNil(o.PolicyId) {
+		toSerialize["policyId"] = o.PolicyId
+	}
+	if !IsNil(o.EntitlementId) {
+		toSerialize["entitlementId"] = o.EntitlementId
+	}
+	if !IsNil(o.History) {
+		toSerialize["history"] = o.History
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDetails struct {

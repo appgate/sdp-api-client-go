@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RingfenceRuleAllOfActions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RingfenceRuleAllOfActions{}
+
 // RingfenceRuleAllOfActions struct for RingfenceRuleAllOfActions
 type RingfenceRuleAllOfActions struct {
 	// Protocol of the ringfence action.
@@ -150,7 +153,7 @@ func (o *RingfenceRuleAllOfActions) SetHosts(v []string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *RingfenceRuleAllOfActions) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *RingfenceRuleAllOfActions) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RingfenceRuleAllOfActions) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -168,7 +171,7 @@ func (o *RingfenceRuleAllOfActions) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *RingfenceRuleAllOfActions) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *RingfenceRuleAllOfActions) SetPorts(v []string) {
 
 // GetTypes returns the Types field value if set, zero value otherwise.
 func (o *RingfenceRuleAllOfActions) GetTypes() []string {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		var ret []string
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *RingfenceRuleAllOfActions) GetTypes() []string {
 // GetTypesOk returns a tuple with the Types field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RingfenceRuleAllOfActions) GetTypesOk() ([]string, bool) {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		return nil, false
 	}
 	return o.Types, true
@@ -200,7 +203,7 @@ func (o *RingfenceRuleAllOfActions) GetTypesOk() ([]string, bool) {
 
 // HasTypes returns a boolean if a field has been set.
 func (o *RingfenceRuleAllOfActions) HasTypes() bool {
-	if o != nil && o.Types != nil {
+	if o != nil && !IsNil(o.Types) {
 		return true
 	}
 
@@ -213,26 +216,26 @@ func (o *RingfenceRuleAllOfActions) SetTypes(v []string) {
 }
 
 func (o RingfenceRuleAllOfActions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["protocol"] = o.Protocol
-	}
-	if true {
-		toSerialize["direction"] = o.Direction
-	}
-	if true {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Types != nil {
-		toSerialize["types"] = o.Types
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RingfenceRuleAllOfActions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["protocol"] = o.Protocol
+	toSerialize["direction"] = o.Direction
+	toSerialize["action"] = o.Action
+	toSerialize["hosts"] = o.Hosts
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Types) {
+		toSerialize["types"] = o.Types
+	}
+	return toSerialize, nil
 }
 
 type NullableRingfenceRuleAllOfActions struct {

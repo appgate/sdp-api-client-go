@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ApplianceAllOfConnector type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnector{}
 
 // ApplianceAllOfConnector Connector settings.
 type ApplianceAllOfConnector struct {
@@ -48,7 +51,7 @@ func NewApplianceAllOfConnectorWithDefaults() *ApplianceAllOfConnector {
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *ApplianceAllOfConnector) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -66,7 +69,7 @@ func (o *ApplianceAllOfConnector) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *ApplianceAllOfConnector) SetEnabled(v bool) {
 
 // GetExpressClients returns the ExpressClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetExpressClients() []ApplianceAllOfConnectorExpressClients {
-	if o == nil || o.ExpressClients == nil {
+	if o == nil || IsNil(o.ExpressClients) {
 		var ret []ApplianceAllOfConnectorExpressClients
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *ApplianceAllOfConnector) GetExpressClients() []ApplianceAllOfConnectorE
 // GetExpressClientsOk returns a tuple with the ExpressClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetExpressClientsOk() ([]ApplianceAllOfConnectorExpressClients, bool) {
-	if o == nil || o.ExpressClients == nil {
+	if o == nil || IsNil(o.ExpressClients) {
 		return nil, false
 	}
 	return o.ExpressClients, true
@@ -98,7 +101,7 @@ func (o *ApplianceAllOfConnector) GetExpressClientsOk() ([]ApplianceAllOfConnect
 
 // HasExpressClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasExpressClients() bool {
-	if o != nil && o.ExpressClients != nil {
+	if o != nil && !IsNil(o.ExpressClients) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *ApplianceAllOfConnector) SetExpressClients(v []ApplianceAllOfConnectorE
 
 // GetAdvancedClients returns the AdvancedClients field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnector) GetAdvancedClients() []ApplianceAllOfConnectorAdvancedClients {
-	if o == nil || o.AdvancedClients == nil {
+	if o == nil || IsNil(o.AdvancedClients) {
 		var ret []ApplianceAllOfConnectorAdvancedClients
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *ApplianceAllOfConnector) GetAdvancedClients() []ApplianceAllOfConnector
 // GetAdvancedClientsOk returns a tuple with the AdvancedClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnector) GetAdvancedClientsOk() ([]ApplianceAllOfConnectorAdvancedClients, bool) {
-	if o == nil || o.AdvancedClients == nil {
+	if o == nil || IsNil(o.AdvancedClients) {
 		return nil, false
 	}
 	return o.AdvancedClients, true
@@ -130,7 +133,7 @@ func (o *ApplianceAllOfConnector) GetAdvancedClientsOk() ([]ApplianceAllOfConnec
 
 // HasAdvancedClients returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnector) HasAdvancedClients() bool {
-	if o != nil && o.AdvancedClients != nil {
+	if o != nil && !IsNil(o.AdvancedClients) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *ApplianceAllOfConnector) SetAdvancedClients(v []ApplianceAllOfConnector
 }
 
 func (o ApplianceAllOfConnector) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.ExpressClients != nil {
-		toSerialize["expressClients"] = o.ExpressClients
-	}
-	if o.AdvancedClients != nil {
-		toSerialize["advancedClients"] = o.AdvancedClients
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnector) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.ExpressClients) {
+		toSerialize["expressClients"] = o.ExpressClients
+	}
+	if !IsNil(o.AdvancedClients) {
+		toSerialize["advancedClients"] = o.AdvancedClients
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnector struct {

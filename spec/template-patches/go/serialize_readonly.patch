@@ -1,0 +1,26 @@
+diff --git a/go/model_simple.mustache b/go/model_simple.mustache
+--- a/go/model_simple.mustache
++++ b/go/model_simple.mustache
+@@ -311,7 +311,10 @@
+ 	{{/isNullable}}
+ 	{{! if argument is not nullable, don't set it if it is nil}}
+ 	{{^isNullable}}
+-	{{^isReadOnly}}
++	{{! PATCH: openapi-generator v6.6 skips readOnly properties in ToMap, but}}
++	{{! sdpctl relies on readOnly fields (created/updated/activated/version/}}
++	{{! siteName ...) being present in JSON output and in HTTP test mocks, so}}
++	{{! keep serializing them like the pre-v6.6 (v6.0.0) client did.}}
+ 	{{#required}}
+ 	toSerialize["{{baseName}}"] = o.{{name}}
+ 	{{/required}}
+@@ -320,10 +323,6 @@
+ 		toSerialize["{{baseName}}"] = o.{{name}}
+ 	}
+ 	{{/required}}
+-	{{/isReadOnly}}
+-	{{#isReadOnly}}
+-	// skip: {{baseName}} is readOnly
+-	{{/isReadOnly}}
+ 	{{/isNullable}}
+ 	{{/vars}}
+ 	{{#isAdditionalPropertiesTrue}}

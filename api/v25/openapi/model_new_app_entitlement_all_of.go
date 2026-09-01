@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the NewAppEntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NewAppEntitlementAllOf{}
+
 // NewAppEntitlementAllOf Access will be granted by creating a new Entitlement.
 type NewAppEntitlementAllOf struct {
 	Action *string `json:"action,omitempty"`
@@ -50,7 +53,7 @@ func NewNewAppEntitlementAllOfWithDefaults() *NewAppEntitlementAllOf {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *NewAppEntitlementAllOf) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -60,7 +63,7 @@ func (o *NewAppEntitlementAllOf) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlementAllOf) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -68,7 +71,7 @@ func (o *NewAppEntitlementAllOf) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *NewAppEntitlementAllOf) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *NewAppEntitlementAllOf) SetName(v string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *NewAppEntitlementAllOf) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *NewAppEntitlementAllOf) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlementAllOf) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -124,7 +127,7 @@ func (o *NewAppEntitlementAllOf) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *NewAppEntitlementAllOf) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -138,7 +141,7 @@ func (o *NewAppEntitlementAllOf) SetDisabled(v bool) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *NewAppEntitlementAllOf) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -148,7 +151,7 @@ func (o *NewAppEntitlementAllOf) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *NewAppEntitlementAllOf) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -156,7 +159,7 @@ func (o *NewAppEntitlementAllOf) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *NewAppEntitlementAllOf) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -169,20 +172,26 @@ func (o *NewAppEntitlementAllOf) SetTags(v []string) {
 }
 
 func (o NewAppEntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NewAppEntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableNewAppEntitlementAllOf struct {

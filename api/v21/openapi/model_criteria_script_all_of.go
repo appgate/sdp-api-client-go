@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CriteriaScriptAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CriteriaScriptAllOf{}
+
 // CriteriaScriptAllOf Represents a Criteria Script.
 type CriteriaScriptAllOf struct {
 	// A JavaScript expression that returns boolean.
@@ -64,11 +67,17 @@ func (o *CriteriaScriptAllOf) SetExpression(v string) {
 }
 
 func (o CriteriaScriptAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["expression"] = o.Expression
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CriteriaScriptAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["expression"] = o.Expression
+	return toSerialize, nil
 }
 
 type NullableCriteriaScriptAllOf struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdministrativePrivilegeScope type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdministrativePrivilegeScope{}
+
 // AdministrativePrivilegeScope The scope of the Privilege. Only applicable to certain type-target combinations. Some types depend on the IdP/MFA type, such as GetUserAttributes. This field must be omitted if not applicable.
 type AdministrativePrivilegeScope struct {
 	// 'If \"true\", all objects are accessible. For example, \"type: Edit - target: Condition - scope.all: true\" means the administrator can edit all Conditions in the system.'
@@ -44,7 +47,7 @@ func NewAdministrativePrivilegeScopeWithDefaults() *AdministrativePrivilegeScope
 
 // GetAll returns the All field value if set, zero value otherwise.
 func (o *AdministrativePrivilegeScope) GetAll() bool {
-	if o == nil || o.All == nil {
+	if o == nil || IsNil(o.All) {
 		var ret bool
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *AdministrativePrivilegeScope) GetAll() bool {
 // GetAllOk returns a tuple with the All field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilegeScope) GetAllOk() (*bool, bool) {
-	if o == nil || o.All == nil {
+	if o == nil || IsNil(o.All) {
 		return nil, false
 	}
 	return o.All, true
@@ -62,7 +65,7 @@ func (o *AdministrativePrivilegeScope) GetAllOk() (*bool, bool) {
 
 // HasAll returns a boolean if a field has been set.
 func (o *AdministrativePrivilegeScope) HasAll() bool {
-	if o != nil && o.All != nil {
+	if o != nil && !IsNil(o.All) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *AdministrativePrivilegeScope) SetAll(v bool) {
 
 // GetIds returns the Ids field value if set, zero value otherwise.
 func (o *AdministrativePrivilegeScope) GetIds() []string {
-	if o == nil || o.Ids == nil {
+	if o == nil || IsNil(o.Ids) {
 		var ret []string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *AdministrativePrivilegeScope) GetIds() []string {
 // GetIdsOk returns a tuple with the Ids field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilegeScope) GetIdsOk() ([]string, bool) {
-	if o == nil || o.Ids == nil {
+	if o == nil || IsNil(o.Ids) {
 		return nil, false
 	}
 	return o.Ids, true
@@ -94,7 +97,7 @@ func (o *AdministrativePrivilegeScope) GetIdsOk() ([]string, bool) {
 
 // HasIds returns a boolean if a field has been set.
 func (o *AdministrativePrivilegeScope) HasIds() bool {
-	if o != nil && o.Ids != nil {
+	if o != nil && !IsNil(o.Ids) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *AdministrativePrivilegeScope) SetIds(v []string) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *AdministrativePrivilegeScope) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *AdministrativePrivilegeScope) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilegeScope) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -126,7 +129,7 @@ func (o *AdministrativePrivilegeScope) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *AdministrativePrivilegeScope) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *AdministrativePrivilegeScope) SetTags(v []string) {
 }
 
 func (o AdministrativePrivilegeScope) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.All != nil {
-		toSerialize["all"] = o.All
-	}
-	if o.Ids != nil {
-		toSerialize["ids"] = o.Ids
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdministrativePrivilegeScope) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.All) {
+		toSerialize["all"] = o.All
+	}
+	if !IsNil(o.Ids) {
+		toSerialize["ids"] = o.Ids
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	return toSerialize, nil
 }
 
 type NullableAdministrativePrivilegeScope struct {

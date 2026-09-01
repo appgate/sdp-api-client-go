@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AdminMessagesSummarizeDataInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdminMessagesSummarizeDataInner{}
+
 // AdminMessagesSummarizeDataInner struct for AdminMessagesSummarizeDataInner
 type AdminMessagesSummarizeDataInner struct {
 	// Randomly generated UUID.
@@ -56,7 +59,7 @@ func NewAdminMessagesSummarizeDataInnerWithDefaults() *AdminMessagesSummarizeDat
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *AdminMessagesSummarizeDataInner) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -74,7 +77,7 @@ func (o *AdminMessagesSummarizeDataInner) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *AdminMessagesSummarizeDataInner) SetId(v string) {
 
 // GetLevel returns the Level field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetLevel() string {
-	if o == nil || o.Level == nil {
+	if o == nil || IsNil(o.Level) {
 		var ret string
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *AdminMessagesSummarizeDataInner) GetLevel() string {
 // GetLevelOk returns a tuple with the Level field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetLevelOk() (*string, bool) {
-	if o == nil || o.Level == nil {
+	if o == nil || IsNil(o.Level) {
 		return nil, false
 	}
 	return o.Level, true
@@ -106,7 +109,7 @@ func (o *AdminMessagesSummarizeDataInner) GetLevelOk() (*string, bool) {
 
 // HasLevel returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasLevel() bool {
-	if o != nil && o.Level != nil {
+	if o != nil && !IsNil(o.Level) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *AdminMessagesSummarizeDataInner) SetLevel(v string) {
 
 // GetCategory returns the Category field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetCategory() string {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		var ret string
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCategory() string {
 // GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetCategoryOk() (*string, bool) {
-	if o == nil || o.Category == nil {
+	if o == nil || IsNil(o.Category) {
 		return nil, false
 	}
 	return o.Category, true
@@ -138,7 +141,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCategoryOk() (*string, bool) {
 
 // HasCategory returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasCategory() bool {
-	if o != nil && o.Category != nil {
+	if o != nil && !IsNil(o.Category) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *AdminMessagesSummarizeDataInner) SetCategory(v string) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *AdminMessagesSummarizeDataInner) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -170,7 +173,7 @@ func (o *AdminMessagesSummarizeDataInner) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -185,7 +188,7 @@ func (o *AdminMessagesSummarizeDataInner) SetMessage(v string) {
 // GetSource returns the Source field value if set, zero value otherwise.
 // Deprecated
 func (o *AdminMessagesSummarizeDataInner) GetSource() string {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		var ret string
 		return ret
 	}
@@ -196,7 +199,7 @@ func (o *AdminMessagesSummarizeDataInner) GetSource() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *AdminMessagesSummarizeDataInner) GetSourceOk() (*string, bool) {
-	if o == nil || o.Source == nil {
+	if o == nil || IsNil(o.Source) {
 		return nil, false
 	}
 	return o.Source, true
@@ -204,7 +207,7 @@ func (o *AdminMessagesSummarizeDataInner) GetSourceOk() (*string, bool) {
 
 // HasSource returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasSource() bool {
-	if o != nil && o.Source != nil {
+	if o != nil && !IsNil(o.Source) {
 		return true
 	}
 
@@ -219,7 +222,7 @@ func (o *AdminMessagesSummarizeDataInner) SetSource(v string) {
 
 // GetSources returns the Sources field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetSources() []string {
-	if o == nil || o.Sources == nil {
+	if o == nil || IsNil(o.Sources) {
 		var ret []string
 		return ret
 	}
@@ -229,7 +232,7 @@ func (o *AdminMessagesSummarizeDataInner) GetSources() []string {
 // GetSourcesOk returns a tuple with the Sources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetSourcesOk() ([]string, bool) {
-	if o == nil || o.Sources == nil {
+	if o == nil || IsNil(o.Sources) {
 		return nil, false
 	}
 	return o.Sources, true
@@ -237,7 +240,7 @@ func (o *AdminMessagesSummarizeDataInner) GetSourcesOk() ([]string, bool) {
 
 // HasSources returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasSources() bool {
-	if o != nil && o.Sources != nil {
+	if o != nil && !IsNil(o.Sources) {
 		return true
 	}
 
@@ -251,7 +254,7 @@ func (o *AdminMessagesSummarizeDataInner) SetSources(v []string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -261,7 +264,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -269,7 +272,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -283,7 +286,7 @@ func (o *AdminMessagesSummarizeDataInner) SetCreated(v time.Time) {
 
 // GetCount returns the Count field value if set, zero value otherwise.
 func (o *AdminMessagesSummarizeDataInner) GetCount() float32 {
-	if o == nil || o.Count == nil {
+	if o == nil || IsNil(o.Count) {
 		var ret float32
 		return ret
 	}
@@ -293,7 +296,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCount() float32 {
 // GetCountOk returns a tuple with the Count field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdminMessagesSummarizeDataInner) GetCountOk() (*float32, bool) {
-	if o == nil || o.Count == nil {
+	if o == nil || IsNil(o.Count) {
 		return nil, false
 	}
 	return o.Count, true
@@ -301,7 +304,7 @@ func (o *AdminMessagesSummarizeDataInner) GetCountOk() (*float32, bool) {
 
 // HasCount returns a boolean if a field has been set.
 func (o *AdminMessagesSummarizeDataInner) HasCount() bool {
-	if o != nil && o.Count != nil {
+	if o != nil && !IsNil(o.Count) {
 		return true
 	}
 
@@ -314,32 +317,40 @@ func (o *AdminMessagesSummarizeDataInner) SetCount(v float32) {
 }
 
 func (o AdminMessagesSummarizeDataInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Level != nil {
-		toSerialize["level"] = o.Level
-	}
-	if o.Category != nil {
-		toSerialize["category"] = o.Category
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Source != nil {
-		toSerialize["source"] = o.Source
-	}
-	if o.Sources != nil {
-		toSerialize["sources"] = o.Sources
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Count != nil {
-		toSerialize["count"] = o.Count
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdminMessagesSummarizeDataInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Level) {
+		toSerialize["level"] = o.Level
+	}
+	if !IsNil(o.Category) {
+		toSerialize["category"] = o.Category
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Source) {
+		toSerialize["source"] = o.Source
+	}
+	if !IsNil(o.Sources) {
+		toSerialize["sources"] = o.Sources
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Count) {
+		toSerialize["count"] = o.Count
+	}
+	return toSerialize, nil
 }
 
 type NullableAdminMessagesSummarizeDataInner struct {

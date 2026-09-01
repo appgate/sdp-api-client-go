@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SamlProviderAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SamlProviderAllOf{}
+
 // SamlProviderAllOf Represents a SAML Identity Provider.
 type SamlProviderAllOf struct {
 	// The URL to redirect the user browsers to authenticate against the SAML Server. Also known as Single Sign-on URL. AuthNRequest will be added automatically.
@@ -150,7 +153,7 @@ func (o *SamlProviderAllOf) SetProviderCertificate(v string) {
 
 // GetDecryptionKey returns the DecryptionKey field value if set, zero value otherwise.
 func (o *SamlProviderAllOf) GetDecryptionKey() string {
-	if o == nil || o.DecryptionKey == nil {
+	if o == nil || IsNil(o.DecryptionKey) {
 		var ret string
 		return ret
 	}
@@ -160,7 +163,7 @@ func (o *SamlProviderAllOf) GetDecryptionKey() string {
 // GetDecryptionKeyOk returns a tuple with the DecryptionKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProviderAllOf) GetDecryptionKeyOk() (*string, bool) {
-	if o == nil || o.DecryptionKey == nil {
+	if o == nil || IsNil(o.DecryptionKey) {
 		return nil, false
 	}
 	return o.DecryptionKey, true
@@ -168,7 +171,7 @@ func (o *SamlProviderAllOf) GetDecryptionKeyOk() (*string, bool) {
 
 // HasDecryptionKey returns a boolean if a field has been set.
 func (o *SamlProviderAllOf) HasDecryptionKey() bool {
-	if o != nil && o.DecryptionKey != nil {
+	if o != nil && !IsNil(o.DecryptionKey) {
 		return true
 	}
 
@@ -182,7 +185,7 @@ func (o *SamlProviderAllOf) SetDecryptionKey(v string) {
 
 // GetForceAuthn returns the ForceAuthn field value if set, zero value otherwise.
 func (o *SamlProviderAllOf) GetForceAuthn() bool {
-	if o == nil || o.ForceAuthn == nil {
+	if o == nil || IsNil(o.ForceAuthn) {
 		var ret bool
 		return ret
 	}
@@ -192,7 +195,7 @@ func (o *SamlProviderAllOf) GetForceAuthn() bool {
 // GetForceAuthnOk returns a tuple with the ForceAuthn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SamlProviderAllOf) GetForceAuthnOk() (*bool, bool) {
-	if o == nil || o.ForceAuthn == nil {
+	if o == nil || IsNil(o.ForceAuthn) {
 		return nil, false
 	}
 	return o.ForceAuthn, true
@@ -200,7 +203,7 @@ func (o *SamlProviderAllOf) GetForceAuthnOk() (*bool, bool) {
 
 // HasForceAuthn returns a boolean if a field has been set.
 func (o *SamlProviderAllOf) HasForceAuthn() bool {
-	if o != nil && o.ForceAuthn != nil {
+	if o != nil && !IsNil(o.ForceAuthn) {
 		return true
 	}
 
@@ -213,26 +216,26 @@ func (o *SamlProviderAllOf) SetForceAuthn(v bool) {
 }
 
 func (o SamlProviderAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["redirectUrl"] = o.RedirectUrl
-	}
-	if true {
-		toSerialize["issuer"] = o.Issuer
-	}
-	if true {
-		toSerialize["audience"] = o.Audience
-	}
-	if true {
-		toSerialize["providerCertificate"] = o.ProviderCertificate
-	}
-	if o.DecryptionKey != nil {
-		toSerialize["decryptionKey"] = o.DecryptionKey
-	}
-	if o.ForceAuthn != nil {
-		toSerialize["forceAuthn"] = o.ForceAuthn
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SamlProviderAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["redirectUrl"] = o.RedirectUrl
+	toSerialize["issuer"] = o.Issuer
+	toSerialize["audience"] = o.Audience
+	toSerialize["providerCertificate"] = o.ProviderCertificate
+	if !IsNil(o.DecryptionKey) {
+		toSerialize["decryptionKey"] = o.DecryptionKey
+	}
+	if !IsNil(o.ForceAuthn) {
+		toSerialize["forceAuthn"] = o.ForceAuthn
+	}
+	return toSerialize, nil
 }
 
 type NullableSamlProviderAllOf struct {

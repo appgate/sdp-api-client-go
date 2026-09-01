@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CommonGroupsCountRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CommonGroupsCountRequest{}
+
 // CommonGroupsCountRequest Request body for getting count of common user groups across discovered apps.
 type CommonGroupsCountRequest struct {
 	// List of group/IDP pairs to check for commonality across discovered apps.
@@ -64,11 +67,17 @@ func (o *CommonGroupsCountRequest) SetProviderGroups(v []CommonGroupsCountReques
 }
 
 func (o CommonGroupsCountRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["providerGroups"] = o.ProviderGroups
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CommonGroupsCountRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["providerGroups"] = o.ProviderGroups
+	return toSerialize, nil
 }
 
 type NullableCommonGroupsCountRequest struct {

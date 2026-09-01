@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AuthenticationPost401ResponseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthenticationPost401ResponseAllOf{}
+
 // AuthenticationPost401ResponseAllOf struct for AuthenticationPost401ResponseAllOf
 type AuthenticationPost401ResponseAllOf struct {
 	// The authentication failure reason.
@@ -40,7 +43,7 @@ func NewAuthenticationPost401ResponseAllOfWithDefaults() *AuthenticationPost401R
 
 // GetReason returns the Reason field value if set, zero value otherwise.
 func (o *AuthenticationPost401ResponseAllOf) GetReason() string {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *AuthenticationPost401ResponseAllOf) GetReason() string {
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AuthenticationPost401ResponseAllOf) GetReasonOk() (*string, bool) {
-	if o == nil || o.Reason == nil {
+	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
 	return o.Reason, true
@@ -58,7 +61,7 @@ func (o *AuthenticationPost401ResponseAllOf) GetReasonOk() (*string, bool) {
 
 // HasReason returns a boolean if a field has been set.
 func (o *AuthenticationPost401ResponseAllOf) HasReason() bool {
-	if o != nil && o.Reason != nil {
+	if o != nil && !IsNil(o.Reason) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *AuthenticationPost401ResponseAllOf) SetReason(v string) {
 }
 
 func (o AuthenticationPost401ResponseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Reason != nil {
-		toSerialize["reason"] = o.Reason
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AuthenticationPost401ResponseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
+	return toSerialize, nil
 }
 
 type NullableAuthenticationPost401ResponseAllOf struct {

@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the GlobalSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GlobalSettings{}
 
 // GlobalSettings struct for GlobalSettings
 type GlobalSettings struct {
@@ -175,7 +178,7 @@ func (o *GlobalSettings) SetVpnCertificateExpiration(v float32) {
 
 // GetRegisteredDeviceExpirationDays returns the RegisteredDeviceExpirationDays field value if set, zero value otherwise.
 func (o *GlobalSettings) GetRegisteredDeviceExpirationDays() float32 {
-	if o == nil || o.RegisteredDeviceExpirationDays == nil {
+	if o == nil || IsNil(o.RegisteredDeviceExpirationDays) {
 		var ret float32
 		return ret
 	}
@@ -185,7 +188,7 @@ func (o *GlobalSettings) GetRegisteredDeviceExpirationDays() float32 {
 // GetRegisteredDeviceExpirationDaysOk returns a tuple with the RegisteredDeviceExpirationDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetRegisteredDeviceExpirationDaysOk() (*float32, bool) {
-	if o == nil || o.RegisteredDeviceExpirationDays == nil {
+	if o == nil || IsNil(o.RegisteredDeviceExpirationDays) {
 		return nil, false
 	}
 	return o.RegisteredDeviceExpirationDays, true
@@ -193,7 +196,7 @@ func (o *GlobalSettings) GetRegisteredDeviceExpirationDaysOk() (*float32, bool) 
 
 // HasRegisteredDeviceExpirationDays returns a boolean if a field has been set.
 func (o *GlobalSettings) HasRegisteredDeviceExpirationDays() bool {
-	if o != nil && o.RegisteredDeviceExpirationDays != nil {
+	if o != nil && !IsNil(o.RegisteredDeviceExpirationDays) {
 		return true
 	}
 
@@ -207,7 +210,7 @@ func (o *GlobalSettings) SetRegisteredDeviceExpirationDays(v float32) {
 
 // GetSpaMode returns the SpaMode field value if set, zero value otherwise.
 func (o *GlobalSettings) GetSpaMode() string {
-	if o == nil || o.SpaMode == nil {
+	if o == nil || IsNil(o.SpaMode) {
 		var ret string
 		return ret
 	}
@@ -217,7 +220,7 @@ func (o *GlobalSettings) GetSpaMode() string {
 // GetSpaModeOk returns a tuple with the SpaMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetSpaModeOk() (*string, bool) {
-	if o == nil || o.SpaMode == nil {
+	if o == nil || IsNil(o.SpaMode) {
 		return nil, false
 	}
 	return o.SpaMode, true
@@ -225,7 +228,7 @@ func (o *GlobalSettings) GetSpaModeOk() (*string, bool) {
 
 // HasSpaMode returns a boolean if a field has been set.
 func (o *GlobalSettings) HasSpaMode() bool {
-	if o != nil && o.SpaMode != nil {
+	if o != nil && !IsNil(o.SpaMode) {
 		return true
 	}
 
@@ -239,7 +242,7 @@ func (o *GlobalSettings) SetSpaMode(v string) {
 
 // GetSpaTimeWindowSeconds returns the SpaTimeWindowSeconds field value if set, zero value otherwise.
 func (o *GlobalSettings) GetSpaTimeWindowSeconds() float32 {
-	if o == nil || o.SpaTimeWindowSeconds == nil {
+	if o == nil || IsNil(o.SpaTimeWindowSeconds) {
 		var ret float32
 		return ret
 	}
@@ -249,7 +252,7 @@ func (o *GlobalSettings) GetSpaTimeWindowSeconds() float32 {
 // GetSpaTimeWindowSecondsOk returns a tuple with the SpaTimeWindowSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetSpaTimeWindowSecondsOk() (*float32, bool) {
-	if o == nil || o.SpaTimeWindowSeconds == nil {
+	if o == nil || IsNil(o.SpaTimeWindowSeconds) {
 		return nil, false
 	}
 	return o.SpaTimeWindowSeconds, true
@@ -257,7 +260,7 @@ func (o *GlobalSettings) GetSpaTimeWindowSecondsOk() (*float32, bool) {
 
 // HasSpaTimeWindowSeconds returns a boolean if a field has been set.
 func (o *GlobalSettings) HasSpaTimeWindowSeconds() bool {
-	if o != nil && o.SpaTimeWindowSeconds != nil {
+	if o != nil && !IsNil(o.SpaTimeWindowSeconds) {
 		return true
 	}
 
@@ -271,7 +274,7 @@ func (o *GlobalSettings) SetSpaTimeWindowSeconds(v float32) {
 
 // GetLoginBannerMessage returns the LoginBannerMessage field value if set, zero value otherwise.
 func (o *GlobalSettings) GetLoginBannerMessage() string {
-	if o == nil || o.LoginBannerMessage == nil {
+	if o == nil || IsNil(o.LoginBannerMessage) {
 		var ret string
 		return ret
 	}
@@ -281,7 +284,7 @@ func (o *GlobalSettings) GetLoginBannerMessage() string {
 // GetLoginBannerMessageOk returns a tuple with the LoginBannerMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetLoginBannerMessageOk() (*string, bool) {
-	if o == nil || o.LoginBannerMessage == nil {
+	if o == nil || IsNil(o.LoginBannerMessage) {
 		return nil, false
 	}
 	return o.LoginBannerMessage, true
@@ -289,7 +292,7 @@ func (o *GlobalSettings) GetLoginBannerMessageOk() (*string, bool) {
 
 // HasLoginBannerMessage returns a boolean if a field has been set.
 func (o *GlobalSettings) HasLoginBannerMessage() bool {
-	if o != nil && o.LoginBannerMessage != nil {
+	if o != nil && !IsNil(o.LoginBannerMessage) {
 		return true
 	}
 
@@ -303,7 +306,7 @@ func (o *GlobalSettings) SetLoginBannerMessage(v string) {
 
 // GetMessageOfTheDay returns the MessageOfTheDay field value if set, zero value otherwise.
 func (o *GlobalSettings) GetMessageOfTheDay() string {
-	if o == nil || o.MessageOfTheDay == nil {
+	if o == nil || IsNil(o.MessageOfTheDay) {
 		var ret string
 		return ret
 	}
@@ -313,7 +316,7 @@ func (o *GlobalSettings) GetMessageOfTheDay() string {
 // GetMessageOfTheDayOk returns a tuple with the MessageOfTheDay field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetMessageOfTheDayOk() (*string, bool) {
-	if o == nil || o.MessageOfTheDay == nil {
+	if o == nil || IsNil(o.MessageOfTheDay) {
 		return nil, false
 	}
 	return o.MessageOfTheDay, true
@@ -321,7 +324,7 @@ func (o *GlobalSettings) GetMessageOfTheDayOk() (*string, bool) {
 
 // HasMessageOfTheDay returns a boolean if a field has been set.
 func (o *GlobalSettings) HasMessageOfTheDay() bool {
-	if o != nil && o.MessageOfTheDay != nil {
+	if o != nil && !IsNil(o.MessageOfTheDay) {
 		return true
 	}
 
@@ -335,7 +338,7 @@ func (o *GlobalSettings) SetMessageOfTheDay(v string) {
 
 // GetBackupApiEnabled returns the BackupApiEnabled field value if set, zero value otherwise.
 func (o *GlobalSettings) GetBackupApiEnabled() bool {
-	if o == nil || o.BackupApiEnabled == nil {
+	if o == nil || IsNil(o.BackupApiEnabled) {
 		var ret bool
 		return ret
 	}
@@ -345,7 +348,7 @@ func (o *GlobalSettings) GetBackupApiEnabled() bool {
 // GetBackupApiEnabledOk returns a tuple with the BackupApiEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetBackupApiEnabledOk() (*bool, bool) {
-	if o == nil || o.BackupApiEnabled == nil {
+	if o == nil || IsNil(o.BackupApiEnabled) {
 		return nil, false
 	}
 	return o.BackupApiEnabled, true
@@ -353,7 +356,7 @@ func (o *GlobalSettings) GetBackupApiEnabledOk() (*bool, bool) {
 
 // HasBackupApiEnabled returns a boolean if a field has been set.
 func (o *GlobalSettings) HasBackupApiEnabled() bool {
-	if o != nil && o.BackupApiEnabled != nil {
+	if o != nil && !IsNil(o.BackupApiEnabled) {
 		return true
 	}
 
@@ -367,7 +370,7 @@ func (o *GlobalSettings) SetBackupApiEnabled(v bool) {
 
 // GetBackupPassphrase returns the BackupPassphrase field value if set, zero value otherwise.
 func (o *GlobalSettings) GetBackupPassphrase() string {
-	if o == nil || o.BackupPassphrase == nil {
+	if o == nil || IsNil(o.BackupPassphrase) {
 		var ret string
 		return ret
 	}
@@ -377,7 +380,7 @@ func (o *GlobalSettings) GetBackupPassphrase() string {
 // GetBackupPassphraseOk returns a tuple with the BackupPassphrase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetBackupPassphraseOk() (*string, bool) {
-	if o == nil || o.BackupPassphrase == nil {
+	if o == nil || IsNil(o.BackupPassphrase) {
 		return nil, false
 	}
 	return o.BackupPassphrase, true
@@ -385,7 +388,7 @@ func (o *GlobalSettings) GetBackupPassphraseOk() (*string, bool) {
 
 // HasBackupPassphrase returns a boolean if a field has been set.
 func (o *GlobalSettings) HasBackupPassphrase() bool {
-	if o != nil && o.BackupPassphrase != nil {
+	if o != nil && !IsNil(o.BackupPassphrase) {
 		return true
 	}
 
@@ -399,7 +402,7 @@ func (o *GlobalSettings) SetBackupPassphrase(v string) {
 
 // GetGeoIpUpdates returns the GeoIpUpdates field value if set, zero value otherwise.
 func (o *GlobalSettings) GetGeoIpUpdates() bool {
-	if o == nil || o.GeoIpUpdates == nil {
+	if o == nil || IsNil(o.GeoIpUpdates) {
 		var ret bool
 		return ret
 	}
@@ -409,7 +412,7 @@ func (o *GlobalSettings) GetGeoIpUpdates() bool {
 // GetGeoIpUpdatesOk returns a tuple with the GeoIpUpdates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetGeoIpUpdatesOk() (*bool, bool) {
-	if o == nil || o.GeoIpUpdates == nil {
+	if o == nil || IsNil(o.GeoIpUpdates) {
 		return nil, false
 	}
 	return o.GeoIpUpdates, true
@@ -417,7 +420,7 @@ func (o *GlobalSettings) GetGeoIpUpdatesOk() (*bool, bool) {
 
 // HasGeoIpUpdates returns a boolean if a field has been set.
 func (o *GlobalSettings) HasGeoIpUpdates() bool {
-	if o != nil && o.GeoIpUpdates != nil {
+	if o != nil && !IsNil(o.GeoIpUpdates) {
 		return true
 	}
 
@@ -455,7 +458,7 @@ func (o *GlobalSettings) SetAuditLogPersistenceMode(v string) {
 
 // GetProfileHostname returns the ProfileHostname field value if set, zero value otherwise.
 func (o *GlobalSettings) GetProfileHostname() string {
-	if o == nil || o.ProfileHostname == nil {
+	if o == nil || IsNil(o.ProfileHostname) {
 		var ret string
 		return ret
 	}
@@ -465,7 +468,7 @@ func (o *GlobalSettings) GetProfileHostname() string {
 // GetProfileHostnameOk returns a tuple with the ProfileHostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetProfileHostnameOk() (*string, bool) {
-	if o == nil || o.ProfileHostname == nil {
+	if o == nil || IsNil(o.ProfileHostname) {
 		return nil, false
 	}
 	return o.ProfileHostname, true
@@ -473,7 +476,7 @@ func (o *GlobalSettings) GetProfileHostnameOk() (*string, bool) {
 
 // HasProfileHostname returns a boolean if a field has been set.
 func (o *GlobalSettings) HasProfileHostname() bool {
-	if o != nil && o.ProfileHostname != nil {
+	if o != nil && !IsNil(o.ProfileHostname) {
 		return true
 	}
 
@@ -487,7 +490,7 @@ func (o *GlobalSettings) SetProfileHostname(v string) {
 
 // GetCollectiveName returns the CollectiveName field value if set, zero value otherwise.
 func (o *GlobalSettings) GetCollectiveName() string {
-	if o == nil || o.CollectiveName == nil {
+	if o == nil || IsNil(o.CollectiveName) {
 		var ret string
 		return ret
 	}
@@ -497,7 +500,7 @@ func (o *GlobalSettings) GetCollectiveName() string {
 // GetCollectiveNameOk returns a tuple with the CollectiveName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetCollectiveNameOk() (*string, bool) {
-	if o == nil || o.CollectiveName == nil {
+	if o == nil || IsNil(o.CollectiveName) {
 		return nil, false
 	}
 	return o.CollectiveName, true
@@ -505,7 +508,7 @@ func (o *GlobalSettings) GetCollectiveNameOk() (*string, bool) {
 
 // HasCollectiveName returns a boolean if a field has been set.
 func (o *GlobalSettings) HasCollectiveName() bool {
-	if o != nil && o.CollectiveName != nil {
+	if o != nil && !IsNil(o.CollectiveName) {
 		return true
 	}
 
@@ -519,7 +522,7 @@ func (o *GlobalSettings) SetCollectiveName(v string) {
 
 // GetCollectiveId returns the CollectiveId field value if set, zero value otherwise.
 func (o *GlobalSettings) GetCollectiveId() string {
-	if o == nil || o.CollectiveId == nil {
+	if o == nil || IsNil(o.CollectiveId) {
 		var ret string
 		return ret
 	}
@@ -529,7 +532,7 @@ func (o *GlobalSettings) GetCollectiveId() string {
 // GetCollectiveIdOk returns a tuple with the CollectiveId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GlobalSettings) GetCollectiveIdOk() (*string, bool) {
-	if o == nil || o.CollectiveId == nil {
+	if o == nil || IsNil(o.CollectiveId) {
 		return nil, false
 	}
 	return o.CollectiveId, true
@@ -537,7 +540,7 @@ func (o *GlobalSettings) GetCollectiveIdOk() (*string, bool) {
 
 // HasCollectiveId returns a boolean if a field has been set.
 func (o *GlobalSettings) HasCollectiveId() bool {
-	if o != nil && o.CollectiveId != nil {
+	if o != nil && !IsNil(o.CollectiveId) {
 		return true
 	}
 
@@ -550,56 +553,54 @@ func (o *GlobalSettings) SetCollectiveId(v string) {
 }
 
 func (o GlobalSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["claimsTokenExpiration"] = o.ClaimsTokenExpiration
-	}
-	if true {
-		toSerialize["entitlementTokenExpiration"] = o.EntitlementTokenExpiration
-	}
-	if true {
-		toSerialize["administrationTokenExpiration"] = o.AdministrationTokenExpiration
-	}
-	if true {
-		toSerialize["vpnCertificateExpiration"] = o.VpnCertificateExpiration
-	}
-	if o.RegisteredDeviceExpirationDays != nil {
-		toSerialize["registeredDeviceExpirationDays"] = o.RegisteredDeviceExpirationDays
-	}
-	if o.SpaMode != nil {
-		toSerialize["spaMode"] = o.SpaMode
-	}
-	if o.SpaTimeWindowSeconds != nil {
-		toSerialize["spaTimeWindowSeconds"] = o.SpaTimeWindowSeconds
-	}
-	if o.LoginBannerMessage != nil {
-		toSerialize["loginBannerMessage"] = o.LoginBannerMessage
-	}
-	if o.MessageOfTheDay != nil {
-		toSerialize["messageOfTheDay"] = o.MessageOfTheDay
-	}
-	if o.BackupApiEnabled != nil {
-		toSerialize["backupApiEnabled"] = o.BackupApiEnabled
-	}
-	if o.BackupPassphrase != nil {
-		toSerialize["backupPassphrase"] = o.BackupPassphrase
-	}
-	if o.GeoIpUpdates != nil {
-		toSerialize["geoIpUpdates"] = o.GeoIpUpdates
-	}
-	if true {
-		toSerialize["auditLogPersistenceMode"] = o.AuditLogPersistenceMode
-	}
-	if o.ProfileHostname != nil {
-		toSerialize["profileHostname"] = o.ProfileHostname
-	}
-	if o.CollectiveName != nil {
-		toSerialize["collectiveName"] = o.CollectiveName
-	}
-	if o.CollectiveId != nil {
-		toSerialize["collectiveId"] = o.CollectiveId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GlobalSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["claimsTokenExpiration"] = o.ClaimsTokenExpiration
+	toSerialize["entitlementTokenExpiration"] = o.EntitlementTokenExpiration
+	toSerialize["administrationTokenExpiration"] = o.AdministrationTokenExpiration
+	toSerialize["vpnCertificateExpiration"] = o.VpnCertificateExpiration
+	if !IsNil(o.RegisteredDeviceExpirationDays) {
+		toSerialize["registeredDeviceExpirationDays"] = o.RegisteredDeviceExpirationDays
+	}
+	if !IsNil(o.SpaMode) {
+		toSerialize["spaMode"] = o.SpaMode
+	}
+	if !IsNil(o.SpaTimeWindowSeconds) {
+		toSerialize["spaTimeWindowSeconds"] = o.SpaTimeWindowSeconds
+	}
+	if !IsNil(o.LoginBannerMessage) {
+		toSerialize["loginBannerMessage"] = o.LoginBannerMessage
+	}
+	if !IsNil(o.MessageOfTheDay) {
+		toSerialize["messageOfTheDay"] = o.MessageOfTheDay
+	}
+	if !IsNil(o.BackupApiEnabled) {
+		toSerialize["backupApiEnabled"] = o.BackupApiEnabled
+	}
+	if !IsNil(o.BackupPassphrase) {
+		toSerialize["backupPassphrase"] = o.BackupPassphrase
+	}
+	if !IsNil(o.GeoIpUpdates) {
+		toSerialize["geoIpUpdates"] = o.GeoIpUpdates
+	}
+	toSerialize["auditLogPersistenceMode"] = o.AuditLogPersistenceMode
+	if !IsNil(o.ProfileHostname) {
+		toSerialize["profileHostname"] = o.ProfileHostname
+	}
+	if !IsNil(o.CollectiveName) {
+		toSerialize["collectiveName"] = o.CollectiveName
+	}
+	if !IsNil(o.CollectiveId) {
+		toSerialize["collectiveId"] = o.CollectiveId
+	}
+	return toSerialize, nil
 }
 
 type NullableGlobalSettings struct {

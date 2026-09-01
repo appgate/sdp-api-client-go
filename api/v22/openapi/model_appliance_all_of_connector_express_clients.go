@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ApplianceAllOfConnectorExpressClients type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfConnectorExpressClients{}
 
 // ApplianceAllOfConnectorExpressClients struct for ApplianceAllOfConnectorExpressClients
 type ApplianceAllOfConnectorExpressClients struct {
@@ -81,7 +84,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -99,7 +102,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDeviceIdOk() (*string, bool) 
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetDeviceId(v string) {
 
 // GetAllowResources returns the AllowResources field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetAllowResources() []AllowResourcesInner {
-	if o == nil || o.AllowResources == nil {
+	if o == nil || IsNil(o.AllowResources) {
 		var ret []AllowResourcesInner
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetAllowResources() []AllowResou
 // GetAllowResourcesOk returns a tuple with the AllowResources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetAllowResourcesOk() ([]AllowResourcesInner, bool) {
-	if o == nil || o.AllowResources == nil {
+	if o == nil || IsNil(o.AllowResources) {
 		return nil, false
 	}
 	return o.AllowResources, true
@@ -131,7 +134,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetAllowResourcesOk() ([]AllowRe
 
 // HasAllowResources returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasAllowResources() bool {
-	if o != nil && o.AllowResources != nil {
+	if o != nil && !IsNil(o.AllowResources) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetAllowResources(v []AllowResou
 
 // GetSnatToResources returns the SnatToResources field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResources() bool {
-	if o == nil || o.SnatToResources == nil {
+	if o == nil || IsNil(o.SnatToResources) {
 		var ret bool
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResources() bool {
 // GetSnatToResourcesOk returns a tuple with the SnatToResources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResourcesOk() (*bool, bool) {
-	if o == nil || o.SnatToResources == nil {
+	if o == nil || IsNil(o.SnatToResources) {
 		return nil, false
 	}
 	return o.SnatToResources, true
@@ -163,7 +166,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetSnatToResourcesOk() (*bool, b
 
 // HasSnatToResources returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasSnatToResources() bool {
-	if o != nil && o.SnatToResources != nil {
+	if o != nil && !IsNil(o.SnatToResources) {
 		return true
 	}
 
@@ -177,7 +180,7 @@ func (o *ApplianceAllOfConnectorExpressClients) SetSnatToResources(v bool) {
 
 // GetDnatToResource returns the DnatToResource field value if set, zero value otherwise.
 func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResource() bool {
-	if o == nil || o.DnatToResource == nil {
+	if o == nil || IsNil(o.DnatToResource) {
 		var ret bool
 		return ret
 	}
@@ -187,7 +190,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResource() bool {
 // GetDnatToResourceOk returns a tuple with the DnatToResource field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResourceOk() (*bool, bool) {
-	if o == nil || o.DnatToResource == nil {
+	if o == nil || IsNil(o.DnatToResource) {
 		return nil, false
 	}
 	return o.DnatToResource, true
@@ -195,7 +198,7 @@ func (o *ApplianceAllOfConnectorExpressClients) GetDnatToResourceOk() (*bool, bo
 
 // HasDnatToResource returns a boolean if a field has been set.
 func (o *ApplianceAllOfConnectorExpressClients) HasDnatToResource() bool {
-	if o != nil && o.DnatToResource != nil {
+	if o != nil && !IsNil(o.DnatToResource) {
 		return true
 	}
 
@@ -208,23 +211,29 @@ func (o *ApplianceAllOfConnectorExpressClients) SetDnatToResource(v bool) {
 }
 
 func (o ApplianceAllOfConnectorExpressClients) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.AllowResources != nil {
-		toSerialize["allowResources"] = o.AllowResources
-	}
-	if o.SnatToResources != nil {
-		toSerialize["snatToResources"] = o.SnatToResources
-	}
-	if o.DnatToResource != nil {
-		toSerialize["dnatToResource"] = o.DnatToResource
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfConnectorExpressClients) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.AllowResources) {
+		toSerialize["allowResources"] = o.AllowResources
+	}
+	if !IsNil(o.SnatToResources) {
+		toSerialize["snatToResources"] = o.SnatToResources
+	}
+	if !IsNil(o.DnatToResource) {
+		toSerialize["dnatToResource"] = o.DnatToResource
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfConnectorExpressClients struct {

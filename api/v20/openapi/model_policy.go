@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Policy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Policy{}
+
 // Policy struct for Policy
 type Policy struct {
 	// ID of the object.
@@ -95,7 +98,7 @@ func NewPolicyWithDefaults() *Policy {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *Policy) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -105,7 +108,7 @@ func (o *Policy) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -113,7 +116,7 @@ func (o *Policy) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *Policy) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -151,7 +154,7 @@ func (o *Policy) SetName(v string) {
 
 // GetNotes returns the Notes field value if set, zero value otherwise.
 func (o *Policy) GetNotes() string {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		var ret string
 		return ret
 	}
@@ -161,7 +164,7 @@ func (o *Policy) GetNotes() string {
 // GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetNotesOk() (*string, bool) {
-	if o == nil || o.Notes == nil {
+	if o == nil || IsNil(o.Notes) {
 		return nil, false
 	}
 	return o.Notes, true
@@ -169,7 +172,7 @@ func (o *Policy) GetNotesOk() (*string, bool) {
 
 // HasNotes returns a boolean if a field has been set.
 func (o *Policy) HasNotes() bool {
-	if o != nil && o.Notes != nil {
+	if o != nil && !IsNil(o.Notes) {
 		return true
 	}
 
@@ -183,7 +186,7 @@ func (o *Policy) SetNotes(v string) {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *Policy) GetCreated() time.Time {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret time.Time
 		return ret
 	}
@@ -193,7 +196,7 @@ func (o *Policy) GetCreated() time.Time {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetCreatedOk() (*time.Time, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -201,7 +204,7 @@ func (o *Policy) GetCreatedOk() (*time.Time, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *Policy) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -215,7 +218,7 @@ func (o *Policy) SetCreated(v time.Time) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *Policy) GetUpdated() time.Time {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret time.Time
 		return ret
 	}
@@ -225,7 +228,7 @@ func (o *Policy) GetUpdated() time.Time {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetUpdatedOk() (*time.Time, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -233,7 +236,7 @@ func (o *Policy) GetUpdatedOk() (*time.Time, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *Policy) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -247,7 +250,7 @@ func (o *Policy) SetUpdated(v time.Time) {
 
 // GetTags returns the Tags field value if set, zero value otherwise.
 func (o *Policy) GetTags() []string {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		var ret []string
 		return ret
 	}
@@ -257,7 +260,7 @@ func (o *Policy) GetTags() []string {
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetTagsOk() ([]string, bool) {
-	if o == nil || o.Tags == nil {
+	if o == nil || IsNil(o.Tags) {
 		return nil, false
 	}
 	return o.Tags, true
@@ -265,7 +268,7 @@ func (o *Policy) GetTagsOk() ([]string, bool) {
 
 // HasTags returns a boolean if a field has been set.
 func (o *Policy) HasTags() bool {
-	if o != nil && o.Tags != nil {
+	if o != nil && !IsNil(o.Tags) {
 		return true
 	}
 
@@ -279,7 +282,7 @@ func (o *Policy) SetTags(v []string) {
 
 // GetDisabled returns the Disabled field value if set, zero value otherwise.
 func (o *Policy) GetDisabled() bool {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		var ret bool
 		return ret
 	}
@@ -289,7 +292,7 @@ func (o *Policy) GetDisabled() bool {
 // GetDisabledOk returns a tuple with the Disabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetDisabledOk() (*bool, bool) {
-	if o == nil || o.Disabled == nil {
+	if o == nil || IsNil(o.Disabled) {
 		return nil, false
 	}
 	return o.Disabled, true
@@ -297,7 +300,7 @@ func (o *Policy) GetDisabledOk() (*bool, bool) {
 
 // HasDisabled returns a boolean if a field has been set.
 func (o *Policy) HasDisabled() bool {
-	if o != nil && o.Disabled != nil {
+	if o != nil && !IsNil(o.Disabled) {
 		return true
 	}
 
@@ -335,7 +338,7 @@ func (o *Policy) SetExpression(v string) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *Policy) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -345,7 +348,7 @@ func (o *Policy) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -353,7 +356,7 @@ func (o *Policy) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *Policy) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -367,7 +370,7 @@ func (o *Policy) SetType(v string) {
 
 // GetEntitlements returns the Entitlements field value if set, zero value otherwise.
 func (o *Policy) GetEntitlements() []string {
-	if o == nil || o.Entitlements == nil {
+	if o == nil || IsNil(o.Entitlements) {
 		var ret []string
 		return ret
 	}
@@ -377,7 +380,7 @@ func (o *Policy) GetEntitlements() []string {
 // GetEntitlementsOk returns a tuple with the Entitlements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetEntitlementsOk() ([]string, bool) {
-	if o == nil || o.Entitlements == nil {
+	if o == nil || IsNil(o.Entitlements) {
 		return nil, false
 	}
 	return o.Entitlements, true
@@ -385,7 +388,7 @@ func (o *Policy) GetEntitlementsOk() ([]string, bool) {
 
 // HasEntitlements returns a boolean if a field has been set.
 func (o *Policy) HasEntitlements() bool {
-	if o != nil && o.Entitlements != nil {
+	if o != nil && !IsNil(o.Entitlements) {
 		return true
 	}
 
@@ -399,7 +402,7 @@ func (o *Policy) SetEntitlements(v []string) {
 
 // GetEntitlementLinks returns the EntitlementLinks field value if set, zero value otherwise.
 func (o *Policy) GetEntitlementLinks() []string {
-	if o == nil || o.EntitlementLinks == nil {
+	if o == nil || IsNil(o.EntitlementLinks) {
 		var ret []string
 		return ret
 	}
@@ -409,7 +412,7 @@ func (o *Policy) GetEntitlementLinks() []string {
 // GetEntitlementLinksOk returns a tuple with the EntitlementLinks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetEntitlementLinksOk() ([]string, bool) {
-	if o == nil || o.EntitlementLinks == nil {
+	if o == nil || IsNil(o.EntitlementLinks) {
 		return nil, false
 	}
 	return o.EntitlementLinks, true
@@ -417,7 +420,7 @@ func (o *Policy) GetEntitlementLinksOk() ([]string, bool) {
 
 // HasEntitlementLinks returns a boolean if a field has been set.
 func (o *Policy) HasEntitlementLinks() bool {
-	if o != nil && o.EntitlementLinks != nil {
+	if o != nil && !IsNil(o.EntitlementLinks) {
 		return true
 	}
 
@@ -431,7 +434,7 @@ func (o *Policy) SetEntitlementLinks(v []string) {
 
 // GetRingfenceRules returns the RingfenceRules field value if set, zero value otherwise.
 func (o *Policy) GetRingfenceRules() []string {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		var ret []string
 		return ret
 	}
@@ -441,7 +444,7 @@ func (o *Policy) GetRingfenceRules() []string {
 // GetRingfenceRulesOk returns a tuple with the RingfenceRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetRingfenceRulesOk() ([]string, bool) {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		return nil, false
 	}
 	return o.RingfenceRules, true
@@ -449,7 +452,7 @@ func (o *Policy) GetRingfenceRulesOk() ([]string, bool) {
 
 // HasRingfenceRules returns a boolean if a field has been set.
 func (o *Policy) HasRingfenceRules() bool {
-	if o != nil && o.RingfenceRules != nil {
+	if o != nil && !IsNil(o.RingfenceRules) {
 		return true
 	}
 
@@ -463,7 +466,7 @@ func (o *Policy) SetRingfenceRules(v []string) {
 
 // GetRingfenceRuleLinks returns the RingfenceRuleLinks field value if set, zero value otherwise.
 func (o *Policy) GetRingfenceRuleLinks() []string {
-	if o == nil || o.RingfenceRuleLinks == nil {
+	if o == nil || IsNil(o.RingfenceRuleLinks) {
 		var ret []string
 		return ret
 	}
@@ -473,7 +476,7 @@ func (o *Policy) GetRingfenceRuleLinks() []string {
 // GetRingfenceRuleLinksOk returns a tuple with the RingfenceRuleLinks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetRingfenceRuleLinksOk() ([]string, bool) {
-	if o == nil || o.RingfenceRuleLinks == nil {
+	if o == nil || IsNil(o.RingfenceRuleLinks) {
 		return nil, false
 	}
 	return o.RingfenceRuleLinks, true
@@ -481,7 +484,7 @@ func (o *Policy) GetRingfenceRuleLinksOk() ([]string, bool) {
 
 // HasRingfenceRuleLinks returns a boolean if a field has been set.
 func (o *Policy) HasRingfenceRuleLinks() bool {
-	if o != nil && o.RingfenceRuleLinks != nil {
+	if o != nil && !IsNil(o.RingfenceRuleLinks) {
 		return true
 	}
 
@@ -495,7 +498,7 @@ func (o *Policy) SetRingfenceRuleLinks(v []string) {
 
 // GetTamperProofing returns the TamperProofing field value if set, zero value otherwise.
 func (o *Policy) GetTamperProofing() bool {
-	if o == nil || o.TamperProofing == nil {
+	if o == nil || IsNil(o.TamperProofing) {
 		var ret bool
 		return ret
 	}
@@ -505,7 +508,7 @@ func (o *Policy) GetTamperProofing() bool {
 // GetTamperProofingOk returns a tuple with the TamperProofing field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetTamperProofingOk() (*bool, bool) {
-	if o == nil || o.TamperProofing == nil {
+	if o == nil || IsNil(o.TamperProofing) {
 		return nil, false
 	}
 	return o.TamperProofing, true
@@ -513,7 +516,7 @@ func (o *Policy) GetTamperProofingOk() (*bool, bool) {
 
 // HasTamperProofing returns a boolean if a field has been set.
 func (o *Policy) HasTamperProofing() bool {
-	if o != nil && o.TamperProofing != nil {
+	if o != nil && !IsNil(o.TamperProofing) {
 		return true
 	}
 
@@ -527,7 +530,7 @@ func (o *Policy) SetTamperProofing(v bool) {
 
 // GetOverrideSite returns the OverrideSite field value if set, zero value otherwise.
 func (o *Policy) GetOverrideSite() string {
-	if o == nil || o.OverrideSite == nil {
+	if o == nil || IsNil(o.OverrideSite) {
 		var ret string
 		return ret
 	}
@@ -537,7 +540,7 @@ func (o *Policy) GetOverrideSite() string {
 // GetOverrideSiteOk returns a tuple with the OverrideSite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetOverrideSiteOk() (*string, bool) {
-	if o == nil || o.OverrideSite == nil {
+	if o == nil || IsNil(o.OverrideSite) {
 		return nil, false
 	}
 	return o.OverrideSite, true
@@ -545,7 +548,7 @@ func (o *Policy) GetOverrideSiteOk() (*string, bool) {
 
 // HasOverrideSite returns a boolean if a field has been set.
 func (o *Policy) HasOverrideSite() bool {
-	if o != nil && o.OverrideSite != nil {
+	if o != nil && !IsNil(o.OverrideSite) {
 		return true
 	}
 
@@ -559,7 +562,7 @@ func (o *Policy) SetOverrideSite(v string) {
 
 // GetOverrideSiteClaim returns the OverrideSiteClaim field value if set, zero value otherwise.
 func (o *Policy) GetOverrideSiteClaim() string {
-	if o == nil || o.OverrideSiteClaim == nil {
+	if o == nil || IsNil(o.OverrideSiteClaim) {
 		var ret string
 		return ret
 	}
@@ -569,7 +572,7 @@ func (o *Policy) GetOverrideSiteClaim() string {
 // GetOverrideSiteClaimOk returns a tuple with the OverrideSiteClaim field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetOverrideSiteClaimOk() (*string, bool) {
-	if o == nil || o.OverrideSiteClaim == nil {
+	if o == nil || IsNil(o.OverrideSiteClaim) {
 		return nil, false
 	}
 	return o.OverrideSiteClaim, true
@@ -577,7 +580,7 @@ func (o *Policy) GetOverrideSiteClaimOk() (*string, bool) {
 
 // HasOverrideSiteClaim returns a boolean if a field has been set.
 func (o *Policy) HasOverrideSiteClaim() bool {
-	if o != nil && o.OverrideSiteClaim != nil {
+	if o != nil && !IsNil(o.OverrideSiteClaim) {
 		return true
 	}
 
@@ -591,7 +594,7 @@ func (o *Policy) SetOverrideSiteClaim(v string) {
 
 // GetOverrideNearestSite returns the OverrideNearestSite field value if set, zero value otherwise.
 func (o *Policy) GetOverrideNearestSite() bool {
-	if o == nil || o.OverrideNearestSite == nil {
+	if o == nil || IsNil(o.OverrideNearestSite) {
 		var ret bool
 		return ret
 	}
@@ -601,7 +604,7 @@ func (o *Policy) GetOverrideNearestSite() bool {
 // GetOverrideNearestSiteOk returns a tuple with the OverrideNearestSite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetOverrideNearestSiteOk() (*bool, bool) {
-	if o == nil || o.OverrideNearestSite == nil {
+	if o == nil || IsNil(o.OverrideNearestSite) {
 		return nil, false
 	}
 	return o.OverrideNearestSite, true
@@ -609,7 +612,7 @@ func (o *Policy) GetOverrideNearestSiteOk() (*bool, bool) {
 
 // HasOverrideNearestSite returns a boolean if a field has been set.
 func (o *Policy) HasOverrideNearestSite() bool {
-	if o != nil && o.OverrideNearestSite != nil {
+	if o != nil && !IsNil(o.OverrideNearestSite) {
 		return true
 	}
 
@@ -623,7 +626,7 @@ func (o *Policy) SetOverrideNearestSite(v bool) {
 
 // GetApplyFallbackSite returns the ApplyFallbackSite field value if set, zero value otherwise.
 func (o *Policy) GetApplyFallbackSite() bool {
-	if o == nil || o.ApplyFallbackSite == nil {
+	if o == nil || IsNil(o.ApplyFallbackSite) {
 		var ret bool
 		return ret
 	}
@@ -633,7 +636,7 @@ func (o *Policy) GetApplyFallbackSite() bool {
 // GetApplyFallbackSiteOk returns a tuple with the ApplyFallbackSite field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetApplyFallbackSiteOk() (*bool, bool) {
-	if o == nil || o.ApplyFallbackSite == nil {
+	if o == nil || IsNil(o.ApplyFallbackSite) {
 		return nil, false
 	}
 	return o.ApplyFallbackSite, true
@@ -641,7 +644,7 @@ func (o *Policy) GetApplyFallbackSiteOk() (*bool, bool) {
 
 // HasApplyFallbackSite returns a boolean if a field has been set.
 func (o *Policy) HasApplyFallbackSite() bool {
-	if o != nil && o.ApplyFallbackSite != nil {
+	if o != nil && !IsNil(o.ApplyFallbackSite) {
 		return true
 	}
 
@@ -655,7 +658,7 @@ func (o *Policy) SetApplyFallbackSite(v bool) {
 
 // GetProxyAutoConfig returns the ProxyAutoConfig field value if set, zero value otherwise.
 func (o *Policy) GetProxyAutoConfig() PolicyAllOfProxyAutoConfig {
-	if o == nil || o.ProxyAutoConfig == nil {
+	if o == nil || IsNil(o.ProxyAutoConfig) {
 		var ret PolicyAllOfProxyAutoConfig
 		return ret
 	}
@@ -665,7 +668,7 @@ func (o *Policy) GetProxyAutoConfig() PolicyAllOfProxyAutoConfig {
 // GetProxyAutoConfigOk returns a tuple with the ProxyAutoConfig field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetProxyAutoConfigOk() (*PolicyAllOfProxyAutoConfig, bool) {
-	if o == nil || o.ProxyAutoConfig == nil {
+	if o == nil || IsNil(o.ProxyAutoConfig) {
 		return nil, false
 	}
 	return o.ProxyAutoConfig, true
@@ -673,7 +676,7 @@ func (o *Policy) GetProxyAutoConfigOk() (*PolicyAllOfProxyAutoConfig, bool) {
 
 // HasProxyAutoConfig returns a boolean if a field has been set.
 func (o *Policy) HasProxyAutoConfig() bool {
-	if o != nil && o.ProxyAutoConfig != nil {
+	if o != nil && !IsNil(o.ProxyAutoConfig) {
 		return true
 	}
 
@@ -687,7 +690,7 @@ func (o *Policy) SetProxyAutoConfig(v PolicyAllOfProxyAutoConfig) {
 
 // GetTrustedNetworkCheck returns the TrustedNetworkCheck field value if set, zero value otherwise.
 func (o *Policy) GetTrustedNetworkCheck() PolicyAllOfTrustedNetworkCheck {
-	if o == nil || o.TrustedNetworkCheck == nil {
+	if o == nil || IsNil(o.TrustedNetworkCheck) {
 		var ret PolicyAllOfTrustedNetworkCheck
 		return ret
 	}
@@ -697,7 +700,7 @@ func (o *Policy) GetTrustedNetworkCheck() PolicyAllOfTrustedNetworkCheck {
 // GetTrustedNetworkCheckOk returns a tuple with the TrustedNetworkCheck field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetTrustedNetworkCheckOk() (*PolicyAllOfTrustedNetworkCheck, bool) {
-	if o == nil || o.TrustedNetworkCheck == nil {
+	if o == nil || IsNil(o.TrustedNetworkCheck) {
 		return nil, false
 	}
 	return o.TrustedNetworkCheck, true
@@ -705,7 +708,7 @@ func (o *Policy) GetTrustedNetworkCheckOk() (*PolicyAllOfTrustedNetworkCheck, bo
 
 // HasTrustedNetworkCheck returns a boolean if a field has been set.
 func (o *Policy) HasTrustedNetworkCheck() bool {
-	if o != nil && o.TrustedNetworkCheck != nil {
+	if o != nil && !IsNil(o.TrustedNetworkCheck) {
 		return true
 	}
 
@@ -719,7 +722,7 @@ func (o *Policy) SetTrustedNetworkCheck(v PolicyAllOfTrustedNetworkCheck) {
 
 // GetDnsSettings returns the DnsSettings field value if set, zero value otherwise.
 func (o *Policy) GetDnsSettings() []PolicyAllOfDnsSettings {
-	if o == nil || o.DnsSettings == nil {
+	if o == nil || IsNil(o.DnsSettings) {
 		var ret []PolicyAllOfDnsSettings
 		return ret
 	}
@@ -729,7 +732,7 @@ func (o *Policy) GetDnsSettings() []PolicyAllOfDnsSettings {
 // GetDnsSettingsOk returns a tuple with the DnsSettings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetDnsSettingsOk() ([]PolicyAllOfDnsSettings, bool) {
-	if o == nil || o.DnsSettings == nil {
+	if o == nil || IsNil(o.DnsSettings) {
 		return nil, false
 	}
 	return o.DnsSettings, true
@@ -737,7 +740,7 @@ func (o *Policy) GetDnsSettingsOk() ([]PolicyAllOfDnsSettings, bool) {
 
 // HasDnsSettings returns a boolean if a field has been set.
 func (o *Policy) HasDnsSettings() bool {
-	if o != nil && o.DnsSettings != nil {
+	if o != nil && !IsNil(o.DnsSettings) {
 		return true
 	}
 
@@ -751,7 +754,7 @@ func (o *Policy) SetDnsSettings(v []PolicyAllOfDnsSettings) {
 
 // GetClientSettings returns the ClientSettings field value if set, zero value otherwise.
 func (o *Policy) GetClientSettings() PolicyAllOfClientSettings {
-	if o == nil || o.ClientSettings == nil {
+	if o == nil || IsNil(o.ClientSettings) {
 		var ret PolicyAllOfClientSettings
 		return ret
 	}
@@ -761,7 +764,7 @@ func (o *Policy) GetClientSettings() PolicyAllOfClientSettings {
 // GetClientSettingsOk returns a tuple with the ClientSettings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetClientSettingsOk() (*PolicyAllOfClientSettings, bool) {
-	if o == nil || o.ClientSettings == nil {
+	if o == nil || IsNil(o.ClientSettings) {
 		return nil, false
 	}
 	return o.ClientSettings, true
@@ -769,7 +772,7 @@ func (o *Policy) GetClientSettingsOk() (*PolicyAllOfClientSettings, bool) {
 
 // HasClientSettings returns a boolean if a field has been set.
 func (o *Policy) HasClientSettings() bool {
-	if o != nil && o.ClientSettings != nil {
+	if o != nil && !IsNil(o.ClientSettings) {
 		return true
 	}
 
@@ -783,7 +786,7 @@ func (o *Policy) SetClientSettings(v PolicyAllOfClientSettings) {
 
 // GetClientProfileSettings returns the ClientProfileSettings field value if set, zero value otherwise.
 func (o *Policy) GetClientProfileSettings() PolicyAllOfClientProfileSettings {
-	if o == nil || o.ClientProfileSettings == nil {
+	if o == nil || IsNil(o.ClientProfileSettings) {
 		var ret PolicyAllOfClientProfileSettings
 		return ret
 	}
@@ -793,7 +796,7 @@ func (o *Policy) GetClientProfileSettings() PolicyAllOfClientProfileSettings {
 // GetClientProfileSettingsOk returns a tuple with the ClientProfileSettings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetClientProfileSettingsOk() (*PolicyAllOfClientProfileSettings, bool) {
-	if o == nil || o.ClientProfileSettings == nil {
+	if o == nil || IsNil(o.ClientProfileSettings) {
 		return nil, false
 	}
 	return o.ClientProfileSettings, true
@@ -801,7 +804,7 @@ func (o *Policy) GetClientProfileSettingsOk() (*PolicyAllOfClientProfileSettings
 
 // HasClientProfileSettings returns a boolean if a field has been set.
 func (o *Policy) HasClientProfileSettings() bool {
-	if o != nil && o.ClientProfileSettings != nil {
+	if o != nil && !IsNil(o.ClientProfileSettings) {
 		return true
 	}
 
@@ -815,7 +818,7 @@ func (o *Policy) SetClientProfileSettings(v PolicyAllOfClientProfileSettings) {
 
 // GetCustomClientHelpUrl returns the CustomClientHelpUrl field value if set, zero value otherwise.
 func (o *Policy) GetCustomClientHelpUrl() string {
-	if o == nil || o.CustomClientHelpUrl == nil {
+	if o == nil || IsNil(o.CustomClientHelpUrl) {
 		var ret string
 		return ret
 	}
@@ -825,7 +828,7 @@ func (o *Policy) GetCustomClientHelpUrl() string {
 // GetCustomClientHelpUrlOk returns a tuple with the CustomClientHelpUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetCustomClientHelpUrlOk() (*string, bool) {
-	if o == nil || o.CustomClientHelpUrl == nil {
+	if o == nil || IsNil(o.CustomClientHelpUrl) {
 		return nil, false
 	}
 	return o.CustomClientHelpUrl, true
@@ -833,7 +836,7 @@ func (o *Policy) GetCustomClientHelpUrlOk() (*string, bool) {
 
 // HasCustomClientHelpUrl returns a boolean if a field has been set.
 func (o *Policy) HasCustomClientHelpUrl() bool {
-	if o != nil && o.CustomClientHelpUrl != nil {
+	if o != nil && !IsNil(o.CustomClientHelpUrl) {
 		return true
 	}
 
@@ -847,7 +850,7 @@ func (o *Policy) SetCustomClientHelpUrl(v string) {
 
 // GetAdministrativeRoles returns the AdministrativeRoles field value if set, zero value otherwise.
 func (o *Policy) GetAdministrativeRoles() []string {
-	if o == nil || o.AdministrativeRoles == nil {
+	if o == nil || IsNil(o.AdministrativeRoles) {
 		var ret []string
 		return ret
 	}
@@ -857,7 +860,7 @@ func (o *Policy) GetAdministrativeRoles() []string {
 // GetAdministrativeRolesOk returns a tuple with the AdministrativeRoles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Policy) GetAdministrativeRolesOk() ([]string, bool) {
-	if o == nil || o.AdministrativeRoles == nil {
+	if o == nil || IsNil(o.AdministrativeRoles) {
 		return nil, false
 	}
 	return o.AdministrativeRoles, true
@@ -865,7 +868,7 @@ func (o *Policy) GetAdministrativeRolesOk() ([]string, bool) {
 
 // HasAdministrativeRoles returns a boolean if a field has been set.
 func (o *Policy) HasAdministrativeRoles() bool {
-	if o != nil && o.AdministrativeRoles != nil {
+	if o != nil && !IsNil(o.AdministrativeRoles) {
 		return true
 	}
 
@@ -878,83 +881,87 @@ func (o *Policy) SetAdministrativeRoles(v []string) {
 }
 
 func (o Policy) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.Notes != nil {
-		toSerialize["notes"] = o.Notes
-	}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Tags != nil {
-		toSerialize["tags"] = o.Tags
-	}
-	if o.Disabled != nil {
-		toSerialize["disabled"] = o.Disabled
-	}
-	if true {
-		toSerialize["expression"] = o.Expression
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Entitlements != nil {
-		toSerialize["entitlements"] = o.Entitlements
-	}
-	if o.EntitlementLinks != nil {
-		toSerialize["entitlementLinks"] = o.EntitlementLinks
-	}
-	if o.RingfenceRules != nil {
-		toSerialize["ringfenceRules"] = o.RingfenceRules
-	}
-	if o.RingfenceRuleLinks != nil {
-		toSerialize["ringfenceRuleLinks"] = o.RingfenceRuleLinks
-	}
-	if o.TamperProofing != nil {
-		toSerialize["tamperProofing"] = o.TamperProofing
-	}
-	if o.OverrideSite != nil {
-		toSerialize["overrideSite"] = o.OverrideSite
-	}
-	if o.OverrideSiteClaim != nil {
-		toSerialize["overrideSiteClaim"] = o.OverrideSiteClaim
-	}
-	if o.OverrideNearestSite != nil {
-		toSerialize["overrideNearestSite"] = o.OverrideNearestSite
-	}
-	if o.ApplyFallbackSite != nil {
-		toSerialize["applyFallbackSite"] = o.ApplyFallbackSite
-	}
-	if o.ProxyAutoConfig != nil {
-		toSerialize["proxyAutoConfig"] = o.ProxyAutoConfig
-	}
-	if o.TrustedNetworkCheck != nil {
-		toSerialize["trustedNetworkCheck"] = o.TrustedNetworkCheck
-	}
-	if o.DnsSettings != nil {
-		toSerialize["dnsSettings"] = o.DnsSettings
-	}
-	if o.ClientSettings != nil {
-		toSerialize["clientSettings"] = o.ClientSettings
-	}
-	if o.ClientProfileSettings != nil {
-		toSerialize["clientProfileSettings"] = o.ClientProfileSettings
-	}
-	if o.CustomClientHelpUrl != nil {
-		toSerialize["customClientHelpUrl"] = o.CustomClientHelpUrl
-	}
-	if o.AdministrativeRoles != nil {
-		toSerialize["administrativeRoles"] = o.AdministrativeRoles
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Policy) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Disabled) {
+		toSerialize["disabled"] = o.Disabled
+	}
+	toSerialize["expression"] = o.Expression
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Entitlements) {
+		toSerialize["entitlements"] = o.Entitlements
+	}
+	if !IsNil(o.EntitlementLinks) {
+		toSerialize["entitlementLinks"] = o.EntitlementLinks
+	}
+	if !IsNil(o.RingfenceRules) {
+		toSerialize["ringfenceRules"] = o.RingfenceRules
+	}
+	if !IsNil(o.RingfenceRuleLinks) {
+		toSerialize["ringfenceRuleLinks"] = o.RingfenceRuleLinks
+	}
+	if !IsNil(o.TamperProofing) {
+		toSerialize["tamperProofing"] = o.TamperProofing
+	}
+	if !IsNil(o.OverrideSite) {
+		toSerialize["overrideSite"] = o.OverrideSite
+	}
+	if !IsNil(o.OverrideSiteClaim) {
+		toSerialize["overrideSiteClaim"] = o.OverrideSiteClaim
+	}
+	if !IsNil(o.OverrideNearestSite) {
+		toSerialize["overrideNearestSite"] = o.OverrideNearestSite
+	}
+	if !IsNil(o.ApplyFallbackSite) {
+		toSerialize["applyFallbackSite"] = o.ApplyFallbackSite
+	}
+	if !IsNil(o.ProxyAutoConfig) {
+		toSerialize["proxyAutoConfig"] = o.ProxyAutoConfig
+	}
+	if !IsNil(o.TrustedNetworkCheck) {
+		toSerialize["trustedNetworkCheck"] = o.TrustedNetworkCheck
+	}
+	if !IsNil(o.DnsSettings) {
+		toSerialize["dnsSettings"] = o.DnsSettings
+	}
+	if !IsNil(o.ClientSettings) {
+		toSerialize["clientSettings"] = o.ClientSettings
+	}
+	if !IsNil(o.ClientProfileSettings) {
+		toSerialize["clientProfileSettings"] = o.ClientProfileSettings
+	}
+	if !IsNil(o.CustomClientHelpUrl) {
+		toSerialize["customClientHelpUrl"] = o.CustomClientHelpUrl
+	}
+	if !IsNil(o.AdministrativeRoles) {
+		toSerialize["administrativeRoles"] = o.AdministrativeRoles
+	}
+	return toSerialize, nil
 }
 
 type NullablePolicy struct {

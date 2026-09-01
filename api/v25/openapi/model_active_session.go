@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ActiveSession type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ActiveSession{}
+
 // ActiveSession struct for ActiveSession
 type ActiveSession struct {
 	// Distinguished name of a user&device combination. Format: \"CN=,CN=,OU=\"
@@ -64,7 +67,7 @@ func NewActiveSessionWithDefaults() *ActiveSession {
 
 // GetDistinguishedName returns the DistinguishedName field value if set, zero value otherwise.
 func (o *ActiveSession) GetDistinguishedName() string {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -74,7 +77,7 @@ func (o *ActiveSession) GetDistinguishedName() string {
 // GetDistinguishedNameOk returns a tuple with the DistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.DistinguishedName == nil {
+	if o == nil || IsNil(o.DistinguishedName) {
 		return nil, false
 	}
 	return o.DistinguishedName, true
@@ -82,7 +85,7 @@ func (o *ActiveSession) GetDistinguishedNameOk() (*string, bool) {
 
 // HasDistinguishedName returns a boolean if a field has been set.
 func (o *ActiveSession) HasDistinguishedName() bool {
-	if o != nil && o.DistinguishedName != nil {
+	if o != nil && !IsNil(o.DistinguishedName) {
 		return true
 	}
 
@@ -96,7 +99,7 @@ func (o *ActiveSession) SetDistinguishedName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *ActiveSession) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -106,7 +109,7 @@ func (o *ActiveSession) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -114,7 +117,7 @@ func (o *ActiveSession) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *ActiveSession) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -128,7 +131,7 @@ func (o *ActiveSession) SetDeviceId(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *ActiveSession) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -138,7 +141,7 @@ func (o *ActiveSession) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -146,7 +149,7 @@ func (o *ActiveSession) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *ActiveSession) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -160,7 +163,7 @@ func (o *ActiveSession) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *ActiveSession) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -170,7 +173,7 @@ func (o *ActiveSession) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -178,7 +181,7 @@ func (o *ActiveSession) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *ActiveSession) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -192,7 +195,7 @@ func (o *ActiveSession) SetProviderName(v string) {
 
 // GetGeoIpLatitude returns the GeoIpLatitude field value if set, zero value otherwise.
 func (o *ActiveSession) GetGeoIpLatitude() float64 {
-	if o == nil || o.GeoIpLatitude == nil {
+	if o == nil || IsNil(o.GeoIpLatitude) {
 		var ret float64
 		return ret
 	}
@@ -202,7 +205,7 @@ func (o *ActiveSession) GetGeoIpLatitude() float64 {
 // GetGeoIpLatitudeOk returns a tuple with the GeoIpLatitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetGeoIpLatitudeOk() (*float64, bool) {
-	if o == nil || o.GeoIpLatitude == nil {
+	if o == nil || IsNil(o.GeoIpLatitude) {
 		return nil, false
 	}
 	return o.GeoIpLatitude, true
@@ -210,7 +213,7 @@ func (o *ActiveSession) GetGeoIpLatitudeOk() (*float64, bool) {
 
 // HasGeoIpLatitude returns a boolean if a field has been set.
 func (o *ActiveSession) HasGeoIpLatitude() bool {
-	if o != nil && o.GeoIpLatitude != nil {
+	if o != nil && !IsNil(o.GeoIpLatitude) {
 		return true
 	}
 
@@ -224,7 +227,7 @@ func (o *ActiveSession) SetGeoIpLatitude(v float64) {
 
 // GetGeoIpLongitude returns the GeoIpLongitude field value if set, zero value otherwise.
 func (o *ActiveSession) GetGeoIpLongitude() float64 {
-	if o == nil || o.GeoIpLongitude == nil {
+	if o == nil || IsNil(o.GeoIpLongitude) {
 		var ret float64
 		return ret
 	}
@@ -234,7 +237,7 @@ func (o *ActiveSession) GetGeoIpLongitude() float64 {
 // GetGeoIpLongitudeOk returns a tuple with the GeoIpLongitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetGeoIpLongitudeOk() (*float64, bool) {
-	if o == nil || o.GeoIpLongitude == nil {
+	if o == nil || IsNil(o.GeoIpLongitude) {
 		return nil, false
 	}
 	return o.GeoIpLongitude, true
@@ -242,7 +245,7 @@ func (o *ActiveSession) GetGeoIpLongitudeOk() (*float64, bool) {
 
 // HasGeoIpLongitude returns a boolean if a field has been set.
 func (o *ActiveSession) HasGeoIpLongitude() bool {
-	if o != nil && o.GeoIpLongitude != nil {
+	if o != nil && !IsNil(o.GeoIpLongitude) {
 		return true
 	}
 
@@ -256,7 +259,7 @@ func (o *ActiveSession) SetGeoIpLongitude(v float64) {
 
 // GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *ActiveSession) GetHostname() string {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
@@ -266,7 +269,7 @@ func (o *ActiveSession) GetHostname() string {
 // GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetHostnameOk() (*string, bool) {
-	if o == nil || o.Hostname == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
 	return o.Hostname, true
@@ -274,7 +277,7 @@ func (o *ActiveSession) GetHostnameOk() (*string, bool) {
 
 // HasHostname returns a boolean if a field has been set.
 func (o *ActiveSession) HasHostname() bool {
-	if o != nil && o.Hostname != nil {
+	if o != nil && !IsNil(o.Hostname) {
 		return true
 	}
 
@@ -288,7 +291,7 @@ func (o *ActiveSession) SetHostname(v string) {
 
 // GetOsFamily returns the OsFamily field value if set, zero value otherwise.
 func (o *ActiveSession) GetOsFamily() string {
-	if o == nil || o.OsFamily == nil {
+	if o == nil || IsNil(o.OsFamily) {
 		var ret string
 		return ret
 	}
@@ -298,7 +301,7 @@ func (o *ActiveSession) GetOsFamily() string {
 // GetOsFamilyOk returns a tuple with the OsFamily field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetOsFamilyOk() (*string, bool) {
-	if o == nil || o.OsFamily == nil {
+	if o == nil || IsNil(o.OsFamily) {
 		return nil, false
 	}
 	return o.OsFamily, true
@@ -306,7 +309,7 @@ func (o *ActiveSession) GetOsFamilyOk() (*string, bool) {
 
 // HasOsFamily returns a boolean if a field has been set.
 func (o *ActiveSession) HasOsFamily() bool {
-	if o != nil && o.OsFamily != nil {
+	if o != nil && !IsNil(o.OsFamily) {
 		return true
 	}
 
@@ -320,7 +323,7 @@ func (o *ActiveSession) SetOsFamily(v string) {
 
 // GetOsName returns the OsName field value if set, zero value otherwise.
 func (o *ActiveSession) GetOsName() string {
-	if o == nil || o.OsName == nil {
+	if o == nil || IsNil(o.OsName) {
 		var ret string
 		return ret
 	}
@@ -330,7 +333,7 @@ func (o *ActiveSession) GetOsName() string {
 // GetOsNameOk returns a tuple with the OsName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetOsNameOk() (*string, bool) {
-	if o == nil || o.OsName == nil {
+	if o == nil || IsNil(o.OsName) {
 		return nil, false
 	}
 	return o.OsName, true
@@ -338,7 +341,7 @@ func (o *ActiveSession) GetOsNameOk() (*string, bool) {
 
 // HasOsName returns a boolean if a field has been set.
 func (o *ActiveSession) HasOsName() bool {
-	if o != nil && o.OsName != nil {
+	if o != nil && !IsNil(o.OsName) {
 		return true
 	}
 
@@ -352,7 +355,7 @@ func (o *ActiveSession) SetOsName(v string) {
 
 // GetOsParent returns the OsParent field value if set, zero value otherwise.
 func (o *ActiveSession) GetOsParent() string {
-	if o == nil || o.OsParent == nil {
+	if o == nil || IsNil(o.OsParent) {
 		var ret string
 		return ret
 	}
@@ -362,7 +365,7 @@ func (o *ActiveSession) GetOsParent() string {
 // GetOsParentOk returns a tuple with the OsParent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetOsParentOk() (*string, bool) {
-	if o == nil || o.OsParent == nil {
+	if o == nil || IsNil(o.OsParent) {
 		return nil, false
 	}
 	return o.OsParent, true
@@ -370,7 +373,7 @@ func (o *ActiveSession) GetOsParentOk() (*string, bool) {
 
 // HasOsParent returns a boolean if a field has been set.
 func (o *ActiveSession) HasOsParent() bool {
-	if o != nil && o.OsParent != nil {
+	if o != nil && !IsNil(o.OsParent) {
 		return true
 	}
 
@@ -384,7 +387,7 @@ func (o *ActiveSession) SetOsParent(v string) {
 
 // GetClientVersion returns the ClientVersion field value if set, zero value otherwise.
 func (o *ActiveSession) GetClientVersion() string {
-	if o == nil || o.ClientVersion == nil {
+	if o == nil || IsNil(o.ClientVersion) {
 		var ret string
 		return ret
 	}
@@ -394,7 +397,7 @@ func (o *ActiveSession) GetClientVersion() string {
 // GetClientVersionOk returns a tuple with the ClientVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetClientVersionOk() (*string, bool) {
-	if o == nil || o.ClientVersion == nil {
+	if o == nil || IsNil(o.ClientVersion) {
 		return nil, false
 	}
 	return o.ClientVersion, true
@@ -402,7 +405,7 @@ func (o *ActiveSession) GetClientVersionOk() (*string, bool) {
 
 // HasClientVersion returns a boolean if a field has been set.
 func (o *ActiveSession) HasClientVersion() bool {
-	if o != nil && o.ClientVersion != nil {
+	if o != nil && !IsNil(o.ClientVersion) {
 		return true
 	}
 
@@ -416,7 +419,7 @@ func (o *ActiveSession) SetClientVersion(v string) {
 
 // GetClientType returns the ClientType field value if set, zero value otherwise.
 func (o *ActiveSession) GetClientType() string {
-	if o == nil || o.ClientType == nil {
+	if o == nil || IsNil(o.ClientType) {
 		var ret string
 		return ret
 	}
@@ -426,7 +429,7 @@ func (o *ActiveSession) GetClientType() string {
 // GetClientTypeOk returns a tuple with the ClientType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetClientTypeOk() (*string, bool) {
-	if o == nil || o.ClientType == nil {
+	if o == nil || IsNil(o.ClientType) {
 		return nil, false
 	}
 	return o.ClientType, true
@@ -434,7 +437,7 @@ func (o *ActiveSession) GetClientTypeOk() (*string, bool) {
 
 // HasClientType returns a boolean if a field has been set.
 func (o *ActiveSession) HasClientType() bool {
-	if o != nil && o.ClientType != nil {
+	if o != nil && !IsNil(o.ClientType) {
 		return true
 	}
 
@@ -448,7 +451,7 @@ func (o *ActiveSession) SetClientType(v string) {
 
 // GetClientSupport returns the ClientSupport field value if set, zero value otherwise.
 func (o *ActiveSession) GetClientSupport() string {
-	if o == nil || o.ClientSupport == nil {
+	if o == nil || IsNil(o.ClientSupport) {
 		var ret string
 		return ret
 	}
@@ -458,7 +461,7 @@ func (o *ActiveSession) GetClientSupport() string {
 // GetClientSupportOk returns a tuple with the ClientSupport field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActiveSession) GetClientSupportOk() (*string, bool) {
-	if o == nil || o.ClientSupport == nil {
+	if o == nil || IsNil(o.ClientSupport) {
 		return nil, false
 	}
 	return o.ClientSupport, true
@@ -466,7 +469,7 @@ func (o *ActiveSession) GetClientSupportOk() (*string, bool) {
 
 // HasClientSupport returns a boolean if a field has been set.
 func (o *ActiveSession) HasClientSupport() bool {
-	if o != nil && o.ClientSupport != nil {
+	if o != nil && !IsNil(o.ClientSupport) {
 		return true
 	}
 
@@ -479,47 +482,55 @@ func (o *ActiveSession) SetClientSupport(v string) {
 }
 
 func (o ActiveSession) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DistinguishedName != nil {
-		toSerialize["distinguishedName"] = o.DistinguishedName
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.GeoIpLatitude != nil {
-		toSerialize["geoIpLatitude"] = o.GeoIpLatitude
-	}
-	if o.GeoIpLongitude != nil {
-		toSerialize["geoIpLongitude"] = o.GeoIpLongitude
-	}
-	if o.Hostname != nil {
-		toSerialize["hostname"] = o.Hostname
-	}
-	if o.OsFamily != nil {
-		toSerialize["osFamily"] = o.OsFamily
-	}
-	if o.OsName != nil {
-		toSerialize["osName"] = o.OsName
-	}
-	if o.OsParent != nil {
-		toSerialize["osParent"] = o.OsParent
-	}
-	if o.ClientVersion != nil {
-		toSerialize["clientVersion"] = o.ClientVersion
-	}
-	if o.ClientType != nil {
-		toSerialize["clientType"] = o.ClientType
-	}
-	if o.ClientSupport != nil {
-		toSerialize["clientSupport"] = o.ClientSupport
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ActiveSession) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DistinguishedName) {
+		toSerialize["distinguishedName"] = o.DistinguishedName
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.GeoIpLatitude) {
+		toSerialize["geoIpLatitude"] = o.GeoIpLatitude
+	}
+	if !IsNil(o.GeoIpLongitude) {
+		toSerialize["geoIpLongitude"] = o.GeoIpLongitude
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.OsFamily) {
+		toSerialize["osFamily"] = o.OsFamily
+	}
+	if !IsNil(o.OsName) {
+		toSerialize["osName"] = o.OsName
+	}
+	if !IsNil(o.OsParent) {
+		toSerialize["osParent"] = o.OsParent
+	}
+	if !IsNil(o.ClientVersion) {
+		toSerialize["clientVersion"] = o.ClientVersion
+	}
+	if !IsNil(o.ClientType) {
+		toSerialize["clientType"] = o.ClientType
+	}
+	if !IsNil(o.ClientSupport) {
+		toSerialize["clientSupport"] = o.ClientSupport
+	}
+	return toSerialize, nil
 }
 
 type NullableActiveSession struct {

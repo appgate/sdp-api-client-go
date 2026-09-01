@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BulkUpsertReport type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BulkUpsertReport{}
+
 // BulkUpsertReport struct for BulkUpsertReport
 type BulkUpsertReport struct {
 	Created   []BulkUpsertEntityRef `json:"created,omitempty"`
@@ -44,7 +47,7 @@ func NewBulkUpsertReportWithDefaults() *BulkUpsertReport {
 
 // GetCreated returns the Created field value if set, zero value otherwise.
 func (o *BulkUpsertReport) GetCreated() []BulkUpsertEntityRef {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		var ret []BulkUpsertEntityRef
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *BulkUpsertReport) GetCreated() []BulkUpsertEntityRef {
 // GetCreatedOk returns a tuple with the Created field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertReport) GetCreatedOk() ([]BulkUpsertEntityRef, bool) {
-	if o == nil || o.Created == nil {
+	if o == nil || IsNil(o.Created) {
 		return nil, false
 	}
 	return o.Created, true
@@ -62,7 +65,7 @@ func (o *BulkUpsertReport) GetCreatedOk() ([]BulkUpsertEntityRef, bool) {
 
 // HasCreated returns a boolean if a field has been set.
 func (o *BulkUpsertReport) HasCreated() bool {
-	if o != nil && o.Created != nil {
+	if o != nil && !IsNil(o.Created) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *BulkUpsertReport) SetCreated(v []BulkUpsertEntityRef) {
 
 // GetUpdated returns the Updated field value if set, zero value otherwise.
 func (o *BulkUpsertReport) GetUpdated() []BulkUpsertEntityRef {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		var ret []BulkUpsertEntityRef
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *BulkUpsertReport) GetUpdated() []BulkUpsertEntityRef {
 // GetUpdatedOk returns a tuple with the Updated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertReport) GetUpdatedOk() ([]BulkUpsertEntityRef, bool) {
-	if o == nil || o.Updated == nil {
+	if o == nil || IsNil(o.Updated) {
 		return nil, false
 	}
 	return o.Updated, true
@@ -94,7 +97,7 @@ func (o *BulkUpsertReport) GetUpdatedOk() ([]BulkUpsertEntityRef, bool) {
 
 // HasUpdated returns a boolean if a field has been set.
 func (o *BulkUpsertReport) HasUpdated() bool {
-	if o != nil && o.Updated != nil {
+	if o != nil && !IsNil(o.Updated) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *BulkUpsertReport) SetUpdated(v []BulkUpsertEntityRef) {
 
 // GetUnchanged returns the Unchanged field value if set, zero value otherwise.
 func (o *BulkUpsertReport) GetUnchanged() []BulkUpsertEntityRef {
-	if o == nil || o.Unchanged == nil {
+	if o == nil || IsNil(o.Unchanged) {
 		var ret []BulkUpsertEntityRef
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *BulkUpsertReport) GetUnchanged() []BulkUpsertEntityRef {
 // GetUnchangedOk returns a tuple with the Unchanged field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertReport) GetUnchangedOk() ([]BulkUpsertEntityRef, bool) {
-	if o == nil || o.Unchanged == nil {
+	if o == nil || IsNil(o.Unchanged) {
 		return nil, false
 	}
 	return o.Unchanged, true
@@ -126,7 +129,7 @@ func (o *BulkUpsertReport) GetUnchangedOk() ([]BulkUpsertEntityRef, bool) {
 
 // HasUnchanged returns a boolean if a field has been set.
 func (o *BulkUpsertReport) HasUnchanged() bool {
-	if o != nil && o.Unchanged != nil {
+	if o != nil && !IsNil(o.Unchanged) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *BulkUpsertReport) SetUnchanged(v []BulkUpsertEntityRef) {
 
 // GetFailures returns the Failures field value if set, zero value otherwise.
 func (o *BulkUpsertReport) GetFailures() []BulkUpsertFailure {
-	if o == nil || o.Failures == nil {
+	if o == nil || IsNil(o.Failures) {
 		var ret []BulkUpsertFailure
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *BulkUpsertReport) GetFailures() []BulkUpsertFailure {
 // GetFailuresOk returns a tuple with the Failures field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertReport) GetFailuresOk() ([]BulkUpsertFailure, bool) {
-	if o == nil || o.Failures == nil {
+	if o == nil || IsNil(o.Failures) {
 		return nil, false
 	}
 	return o.Failures, true
@@ -158,7 +161,7 @@ func (o *BulkUpsertReport) GetFailuresOk() ([]BulkUpsertFailure, bool) {
 
 // HasFailures returns a boolean if a field has been set.
 func (o *BulkUpsertReport) HasFailures() bool {
-	if o != nil && o.Failures != nil {
+	if o != nil && !IsNil(o.Failures) {
 		return true
 	}
 
@@ -172,7 +175,7 @@ func (o *BulkUpsertReport) SetFailures(v []BulkUpsertFailure) {
 
 // GetDeleted returns the Deleted field value if set, zero value otherwise.
 func (o *BulkUpsertReport) GetDeleted() []BulkUpsertEntityRef {
-	if o == nil || o.Deleted == nil {
+	if o == nil || IsNil(o.Deleted) {
 		var ret []BulkUpsertEntityRef
 		return ret
 	}
@@ -182,7 +185,7 @@ func (o *BulkUpsertReport) GetDeleted() []BulkUpsertEntityRef {
 // GetDeletedOk returns a tuple with the Deleted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkUpsertReport) GetDeletedOk() ([]BulkUpsertEntityRef, bool) {
-	if o == nil || o.Deleted == nil {
+	if o == nil || IsNil(o.Deleted) {
 		return nil, false
 	}
 	return o.Deleted, true
@@ -190,7 +193,7 @@ func (o *BulkUpsertReport) GetDeletedOk() ([]BulkUpsertEntityRef, bool) {
 
 // HasDeleted returns a boolean if a field has been set.
 func (o *BulkUpsertReport) HasDeleted() bool {
-	if o != nil && o.Deleted != nil {
+	if o != nil && !IsNil(o.Deleted) {
 		return true
 	}
 
@@ -203,23 +206,31 @@ func (o *BulkUpsertReport) SetDeleted(v []BulkUpsertEntityRef) {
 }
 
 func (o BulkUpsertReport) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Created != nil {
-		toSerialize["created"] = o.Created
-	}
-	if o.Updated != nil {
-		toSerialize["updated"] = o.Updated
-	}
-	if o.Unchanged != nil {
-		toSerialize["unchanged"] = o.Unchanged
-	}
-	if o.Failures != nil {
-		toSerialize["failures"] = o.Failures
-	}
-	if o.Deleted != nil {
-		toSerialize["deleted"] = o.Deleted
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BulkUpsertReport) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Created) {
+		toSerialize["created"] = o.Created
+	}
+	if !IsNil(o.Updated) {
+		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.Unchanged) {
+		toSerialize["unchanged"] = o.Unchanged
+	}
+	if !IsNil(o.Failures) {
+		toSerialize["failures"] = o.Failures
+	}
+	if !IsNil(o.Deleted) {
+		toSerialize["deleted"] = o.Deleted
+	}
+	return toSerialize, nil
 }
 
 type NullableBulkUpsertReport struct {

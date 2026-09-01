@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CredentialsSecretAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CredentialsSecretAllOf{}
+
 // CredentialsSecretAllOf Represents a username/password credentials Secret.
 type CredentialsSecretAllOf struct {
 	// Username for the credentials.
@@ -67,7 +70,7 @@ func (o *CredentialsSecretAllOf) SetUsername(v string) {
 
 // GetPassword returns the Password field value if set, zero value otherwise.
 func (o *CredentialsSecretAllOf) GetPassword() string {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		var ret string
 		return ret
 	}
@@ -77,7 +80,7 @@ func (o *CredentialsSecretAllOf) GetPassword() string {
 // GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CredentialsSecretAllOf) GetPasswordOk() (*string, bool) {
-	if o == nil || o.Password == nil {
+	if o == nil || IsNil(o.Password) {
 		return nil, false
 	}
 	return o.Password, true
@@ -85,7 +88,7 @@ func (o *CredentialsSecretAllOf) GetPasswordOk() (*string, bool) {
 
 // HasPassword returns a boolean if a field has been set.
 func (o *CredentialsSecretAllOf) HasPassword() bool {
-	if o != nil && o.Password != nil {
+	if o != nil && !IsNil(o.Password) {
 		return true
 	}
 
@@ -98,14 +101,20 @@ func (o *CredentialsSecretAllOf) SetPassword(v string) {
 }
 
 func (o CredentialsSecretAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if o.Password != nil {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CredentialsSecretAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["username"] = o.Username
+	if !IsNil(o.Password) {
+		toSerialize["password"] = o.Password
+	}
+	return toSerialize, nil
 }
 
 type NullableCredentialsSecretAllOf struct {

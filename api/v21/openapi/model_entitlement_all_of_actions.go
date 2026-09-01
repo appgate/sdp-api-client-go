@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementAllOfActions type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementAllOfActions{}
+
 // EntitlementAllOfActions IP Access action.
 type EntitlementAllOfActions struct {
 	// Type of the IP Access action. Required unless the action is exclude.
@@ -53,7 +56,7 @@ func NewEntitlementAllOfActionsWithDefaults() *EntitlementAllOfActions {
 
 // GetSubtype returns the Subtype field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetSubtype() string {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		var ret string
 		return ret
 	}
@@ -63,7 +66,7 @@ func (o *EntitlementAllOfActions) GetSubtype() string {
 // GetSubtypeOk returns a tuple with the Subtype field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetSubtypeOk() (*string, bool) {
-	if o == nil || o.Subtype == nil {
+	if o == nil || IsNil(o.Subtype) {
 		return nil, false
 	}
 	return o.Subtype, true
@@ -71,7 +74,7 @@ func (o *EntitlementAllOfActions) GetSubtypeOk() (*string, bool) {
 
 // HasSubtype returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasSubtype() bool {
-	if o != nil && o.Subtype != nil {
+	if o != nil && !IsNil(o.Subtype) {
 		return true
 	}
 
@@ -133,7 +136,7 @@ func (o *EntitlementAllOfActions) SetHosts(v []string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -143,7 +146,7 @@ func (o *EntitlementAllOfActions) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -151,7 +154,7 @@ func (o *EntitlementAllOfActions) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -165,7 +168,7 @@ func (o *EntitlementAllOfActions) SetPorts(v []string) {
 
 // GetTypes returns the Types field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetTypes() []string {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		var ret []string
 		return ret
 	}
@@ -175,7 +178,7 @@ func (o *EntitlementAllOfActions) GetTypes() []string {
 // GetTypesOk returns a tuple with the Types field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetTypesOk() ([]string, bool) {
-	if o == nil || o.Types == nil {
+	if o == nil || IsNil(o.Types) {
 		return nil, false
 	}
 	return o.Types, true
@@ -183,7 +186,7 @@ func (o *EntitlementAllOfActions) GetTypesOk() ([]string, bool) {
 
 // HasTypes returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasTypes() bool {
-	if o != nil && o.Types != nil {
+	if o != nil && !IsNil(o.Types) {
 		return true
 	}
 
@@ -197,7 +200,7 @@ func (o *EntitlementAllOfActions) SetTypes(v []string) {
 
 // GetMethods returns the Methods field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetMethods() []string {
-	if o == nil || o.Methods == nil {
+	if o == nil || IsNil(o.Methods) {
 		var ret []string
 		return ret
 	}
@@ -207,7 +210,7 @@ func (o *EntitlementAllOfActions) GetMethods() []string {
 // GetMethodsOk returns a tuple with the Methods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetMethodsOk() ([]string, bool) {
-	if o == nil || o.Methods == nil {
+	if o == nil || IsNil(o.Methods) {
 		return nil, false
 	}
 	return o.Methods, true
@@ -215,7 +218,7 @@ func (o *EntitlementAllOfActions) GetMethodsOk() ([]string, bool) {
 
 // HasMethods returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasMethods() bool {
-	if o != nil && o.Methods != nil {
+	if o != nil && !IsNil(o.Methods) {
 		return true
 	}
 
@@ -229,7 +232,7 @@ func (o *EntitlementAllOfActions) SetMethods(v []string) {
 
 // GetMonitor returns the Monitor field value if set, zero value otherwise.
 func (o *EntitlementAllOfActions) GetMonitor() EntitlementAllOfMonitor {
-	if o == nil || o.Monitor == nil {
+	if o == nil || IsNil(o.Monitor) {
 		var ret EntitlementAllOfMonitor
 		return ret
 	}
@@ -239,7 +242,7 @@ func (o *EntitlementAllOfActions) GetMonitor() EntitlementAllOfMonitor {
 // GetMonitorOk returns a tuple with the Monitor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementAllOfActions) GetMonitorOk() (*EntitlementAllOfMonitor, bool) {
-	if o == nil || o.Monitor == nil {
+	if o == nil || IsNil(o.Monitor) {
 		return nil, false
 	}
 	return o.Monitor, true
@@ -247,7 +250,7 @@ func (o *EntitlementAllOfActions) GetMonitorOk() (*EntitlementAllOfMonitor, bool
 
 // HasMonitor returns a boolean if a field has been set.
 func (o *EntitlementAllOfActions) HasMonitor() bool {
-	if o != nil && o.Monitor != nil {
+	if o != nil && !IsNil(o.Monitor) {
 		return true
 	}
 
@@ -260,29 +263,33 @@ func (o *EntitlementAllOfActions) SetMonitor(v EntitlementAllOfMonitor) {
 }
 
 func (o EntitlementAllOfActions) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Subtype != nil {
-		toSerialize["subtype"] = o.Subtype
-	}
-	if true {
-		toSerialize["action"] = o.Action
-	}
-	if true {
-		toSerialize["hosts"] = o.Hosts
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Types != nil {
-		toSerialize["types"] = o.Types
-	}
-	if o.Methods != nil {
-		toSerialize["methods"] = o.Methods
-	}
-	if o.Monitor != nil {
-		toSerialize["monitor"] = o.Monitor
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementAllOfActions) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Subtype) {
+		toSerialize["subtype"] = o.Subtype
+	}
+	toSerialize["action"] = o.Action
+	toSerialize["hosts"] = o.Hosts
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Types) {
+		toSerialize["types"] = o.Types
+	}
+	if !IsNil(o.Methods) {
+		toSerialize["methods"] = o.Methods
+	}
+	if !IsNil(o.Monitor) {
+		toSerialize["monitor"] = o.Monitor
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementAllOfActions struct {

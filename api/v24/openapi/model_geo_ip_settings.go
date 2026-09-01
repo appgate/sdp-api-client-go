@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GeoIpSettings type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GeoIpSettings{}
+
 // GeoIpSettings GeoIP provider settings supporting multiple providers.
 type GeoIpSettings struct {
 	// Selected GeoIP provider when enabled.
@@ -47,7 +50,7 @@ func NewGeoIpSettingsWithDefaults() *GeoIpSettings {
 
 // GetUpdates returns the Updates field value if set, zero value otherwise.
 func (o *GeoIpSettings) GetUpdates() string {
-	if o == nil || o.Updates == nil {
+	if o == nil || IsNil(o.Updates) {
 		var ret string
 		return ret
 	}
@@ -57,7 +60,7 @@ func (o *GeoIpSettings) GetUpdates() string {
 // GetUpdatesOk returns a tuple with the Updates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettings) GetUpdatesOk() (*string, bool) {
-	if o == nil || o.Updates == nil {
+	if o == nil || IsNil(o.Updates) {
 		return nil, false
 	}
 	return o.Updates, true
@@ -65,7 +68,7 @@ func (o *GeoIpSettings) GetUpdatesOk() (*string, bool) {
 
 // HasUpdates returns a boolean if a field has been set.
 func (o *GeoIpSettings) HasUpdates() bool {
-	if o != nil && o.Updates != nil {
+	if o != nil && !IsNil(o.Updates) {
 		return true
 	}
 
@@ -79,7 +82,7 @@ func (o *GeoIpSettings) SetUpdates(v string) {
 
 // GetMaxmind returns the Maxmind field value if set, zero value otherwise.
 func (o *GeoIpSettings) GetMaxmind() GeoIpSettingsMaxmind {
-	if o == nil || o.Maxmind == nil {
+	if o == nil || IsNil(o.Maxmind) {
 		var ret GeoIpSettingsMaxmind
 		return ret
 	}
@@ -89,7 +92,7 @@ func (o *GeoIpSettings) GetMaxmind() GeoIpSettingsMaxmind {
 // GetMaxmindOk returns a tuple with the Maxmind field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettings) GetMaxmindOk() (*GeoIpSettingsMaxmind, bool) {
-	if o == nil || o.Maxmind == nil {
+	if o == nil || IsNil(o.Maxmind) {
 		return nil, false
 	}
 	return o.Maxmind, true
@@ -97,7 +100,7 @@ func (o *GeoIpSettings) GetMaxmindOk() (*GeoIpSettingsMaxmind, bool) {
 
 // HasMaxmind returns a boolean if a field has been set.
 func (o *GeoIpSettings) HasMaxmind() bool {
-	if o != nil && o.Maxmind != nil {
+	if o != nil && !IsNil(o.Maxmind) {
 		return true
 	}
 
@@ -111,7 +114,7 @@ func (o *GeoIpSettings) SetMaxmind(v GeoIpSettingsMaxmind) {
 
 // GetIpInfo returns the IpInfo field value if set, zero value otherwise.
 func (o *GeoIpSettings) GetIpInfo() GeoIpSettingsIpInfo {
-	if o == nil || o.IpInfo == nil {
+	if o == nil || IsNil(o.IpInfo) {
 		var ret GeoIpSettingsIpInfo
 		return ret
 	}
@@ -121,7 +124,7 @@ func (o *GeoIpSettings) GetIpInfo() GeoIpSettingsIpInfo {
 // GetIpInfoOk returns a tuple with the IpInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettings) GetIpInfoOk() (*GeoIpSettingsIpInfo, bool) {
-	if o == nil || o.IpInfo == nil {
+	if o == nil || IsNil(o.IpInfo) {
 		return nil, false
 	}
 	return o.IpInfo, true
@@ -129,7 +132,7 @@ func (o *GeoIpSettings) GetIpInfoOk() (*GeoIpSettingsIpInfo, bool) {
 
 // HasIpInfo returns a boolean if a field has been set.
 func (o *GeoIpSettings) HasIpInfo() bool {
-	if o != nil && o.IpInfo != nil {
+	if o != nil && !IsNil(o.IpInfo) {
 		return true
 	}
 
@@ -143,7 +146,7 @@ func (o *GeoIpSettings) SetIpInfo(v GeoIpSettingsIpInfo) {
 
 // GetCustom returns the Custom field value if set, zero value otherwise.
 func (o *GeoIpSettings) GetCustom() GeoIpSettingsCustom {
-	if o == nil || o.Custom == nil {
+	if o == nil || IsNil(o.Custom) {
 		var ret GeoIpSettingsCustom
 		return ret
 	}
@@ -153,7 +156,7 @@ func (o *GeoIpSettings) GetCustom() GeoIpSettingsCustom {
 // GetCustomOk returns a tuple with the Custom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GeoIpSettings) GetCustomOk() (*GeoIpSettingsCustom, bool) {
-	if o == nil || o.Custom == nil {
+	if o == nil || IsNil(o.Custom) {
 		return nil, false
 	}
 	return o.Custom, true
@@ -161,7 +164,7 @@ func (o *GeoIpSettings) GetCustomOk() (*GeoIpSettingsCustom, bool) {
 
 // HasCustom returns a boolean if a field has been set.
 func (o *GeoIpSettings) HasCustom() bool {
-	if o != nil && o.Custom != nil {
+	if o != nil && !IsNil(o.Custom) {
 		return true
 	}
 
@@ -174,20 +177,28 @@ func (o *GeoIpSettings) SetCustom(v GeoIpSettingsCustom) {
 }
 
 func (o GeoIpSettings) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Updates != nil {
-		toSerialize["updates"] = o.Updates
-	}
-	if o.Maxmind != nil {
-		toSerialize["maxmind"] = o.Maxmind
-	}
-	if o.IpInfo != nil {
-		toSerialize["ipInfo"] = o.IpInfo
-	}
-	if o.Custom != nil {
-		toSerialize["custom"] = o.Custom
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GeoIpSettings) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Updates) {
+		toSerialize["updates"] = o.Updates
+	}
+	if !IsNil(o.Maxmind) {
+		toSerialize["maxmind"] = o.Maxmind
+	}
+	if !IsNil(o.IpInfo) {
+		toSerialize["ipInfo"] = o.IpInfo
+	}
+	if !IsNil(o.Custom) {
+		toSerialize["custom"] = o.Custom
+	}
+	return toSerialize, nil
 }
 
 type NullableGeoIpSettings struct {

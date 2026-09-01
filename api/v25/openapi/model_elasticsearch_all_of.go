@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ElasticsearchAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ElasticsearchAllOf{}
+
 // ElasticsearchAllOf Elasticsearch endpoint configuration on AWS.
 type ElasticsearchAllOf struct {
 	// The URL of the elasticsearch server.
@@ -74,7 +77,7 @@ func (o *ElasticsearchAllOf) SetUrl(v string) {
 
 // GetRetentionDays returns the RetentionDays field value if set, zero value otherwise.
 func (o *ElasticsearchAllOf) GetRetentionDays() int32 {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		var ret int32
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *ElasticsearchAllOf) GetRetentionDays() int32 {
 // GetRetentionDaysOk returns a tuple with the RetentionDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ElasticsearchAllOf) GetRetentionDaysOk() (*int32, bool) {
-	if o == nil || o.RetentionDays == nil {
+	if o == nil || IsNil(o.RetentionDays) {
 		return nil, false
 	}
 	return o.RetentionDays, true
@@ -92,7 +95,7 @@ func (o *ElasticsearchAllOf) GetRetentionDaysOk() (*int32, bool) {
 
 // HasRetentionDays returns a boolean if a field has been set.
 func (o *ElasticsearchAllOf) HasRetentionDays() bool {
-	if o != nil && o.RetentionDays != nil {
+	if o != nil && !IsNil(o.RetentionDays) {
 		return true
 	}
 
@@ -106,7 +109,7 @@ func (o *ElasticsearchAllOf) SetRetentionDays(v int32) {
 
 // GetCompatibilityMode returns the CompatibilityMode field value if set, zero value otherwise.
 func (o *ElasticsearchAllOf) GetCompatibilityMode() int32 {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		var ret int32
 		return ret
 	}
@@ -116,7 +119,7 @@ func (o *ElasticsearchAllOf) GetCompatibilityMode() int32 {
 // GetCompatibilityModeOk returns a tuple with the CompatibilityMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ElasticsearchAllOf) GetCompatibilityModeOk() (*int32, bool) {
-	if o == nil || o.CompatibilityMode == nil {
+	if o == nil || IsNil(o.CompatibilityMode) {
 		return nil, false
 	}
 	return o.CompatibilityMode, true
@@ -124,7 +127,7 @@ func (o *ElasticsearchAllOf) GetCompatibilityModeOk() (*int32, bool) {
 
 // HasCompatibilityMode returns a boolean if a field has been set.
 func (o *ElasticsearchAllOf) HasCompatibilityMode() bool {
-	if o != nil && o.CompatibilityMode != nil {
+	if o != nil && !IsNil(o.CompatibilityMode) {
 		return true
 	}
 
@@ -138,7 +141,7 @@ func (o *ElasticsearchAllOf) SetCompatibilityMode(v int32) {
 
 // GetAuthentication returns the Authentication field value if set, zero value otherwise.
 func (o *ElasticsearchAllOf) GetAuthentication() ElasticsearchAllOfAuthentication {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		var ret ElasticsearchAllOfAuthentication
 		return ret
 	}
@@ -148,7 +151,7 @@ func (o *ElasticsearchAllOf) GetAuthentication() ElasticsearchAllOfAuthenticatio
 // GetAuthenticationOk returns a tuple with the Authentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ElasticsearchAllOf) GetAuthenticationOk() (*ElasticsearchAllOfAuthentication, bool) {
-	if o == nil || o.Authentication == nil {
+	if o == nil || IsNil(o.Authentication) {
 		return nil, false
 	}
 	return o.Authentication, true
@@ -156,7 +159,7 @@ func (o *ElasticsearchAllOf) GetAuthenticationOk() (*ElasticsearchAllOfAuthentic
 
 // HasAuthentication returns a boolean if a field has been set.
 func (o *ElasticsearchAllOf) HasAuthentication() bool {
-	if o != nil && o.Authentication != nil {
+	if o != nil && !IsNil(o.Authentication) {
 		return true
 	}
 
@@ -169,20 +172,26 @@ func (o *ElasticsearchAllOf) SetAuthentication(v ElasticsearchAllOfAuthenticatio
 }
 
 func (o ElasticsearchAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["url"] = o.Url
-	}
-	if o.RetentionDays != nil {
-		toSerialize["retentionDays"] = o.RetentionDays
-	}
-	if o.CompatibilityMode != nil {
-		toSerialize["compatibilityMode"] = o.CompatibilityMode
-	}
-	if o.Authentication != nil {
-		toSerialize["authentication"] = o.Authentication
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ElasticsearchAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["url"] = o.Url
+	if !IsNil(o.RetentionDays) {
+		toSerialize["retentionDays"] = o.RetentionDays
+	}
+	if !IsNil(o.CompatibilityMode) {
+		toSerialize["compatibilityMode"] = o.CompatibilityMode
+	}
+	if !IsNil(o.Authentication) {
+		toSerialize["authentication"] = o.Authentication
+	}
+	return toSerialize, nil
 }
 
 type NullableElasticsearchAllOf struct {

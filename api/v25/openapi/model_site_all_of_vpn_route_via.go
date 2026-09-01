@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfVpnRouteVia type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfVpnRouteVia{}
+
 // SiteAllOfVpnRouteVia Override routing for tunnel traffic.
 type SiteAllOfVpnRouteVia struct {
 	// IPv4 address for routing tunnel traffic.
@@ -42,7 +45,7 @@ func NewSiteAllOfVpnRouteViaWithDefaults() *SiteAllOfVpnRouteVia {
 
 // GetIpv4 returns the Ipv4 field value if set, zero value otherwise.
 func (o *SiteAllOfVpnRouteVia) GetIpv4() string {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		var ret string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *SiteAllOfVpnRouteVia) GetIpv4() string {
 // GetIpv4Ok returns a tuple with the Ipv4 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpnRouteVia) GetIpv4Ok() (*string, bool) {
-	if o == nil || o.Ipv4 == nil {
+	if o == nil || IsNil(o.Ipv4) {
 		return nil, false
 	}
 	return o.Ipv4, true
@@ -60,7 +63,7 @@ func (o *SiteAllOfVpnRouteVia) GetIpv4Ok() (*string, bool) {
 
 // HasIpv4 returns a boolean if a field has been set.
 func (o *SiteAllOfVpnRouteVia) HasIpv4() bool {
-	if o != nil && o.Ipv4 != nil {
+	if o != nil && !IsNil(o.Ipv4) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *SiteAllOfVpnRouteVia) SetIpv4(v string) {
 
 // GetIpv6 returns the Ipv6 field value if set, zero value otherwise.
 func (o *SiteAllOfVpnRouteVia) GetIpv6() string {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *SiteAllOfVpnRouteVia) GetIpv6() string {
 // GetIpv6Ok returns a tuple with the Ipv6 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfVpnRouteVia) GetIpv6Ok() (*string, bool) {
-	if o == nil || o.Ipv6 == nil {
+	if o == nil || IsNil(o.Ipv6) {
 		return nil, false
 	}
 	return o.Ipv6, true
@@ -92,7 +95,7 @@ func (o *SiteAllOfVpnRouteVia) GetIpv6Ok() (*string, bool) {
 
 // HasIpv6 returns a boolean if a field has been set.
 func (o *SiteAllOfVpnRouteVia) HasIpv6() bool {
-	if o != nil && o.Ipv6 != nil {
+	if o != nil && !IsNil(o.Ipv6) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *SiteAllOfVpnRouteVia) SetIpv6(v string) {
 }
 
 func (o SiteAllOfVpnRouteVia) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Ipv4 != nil {
-		toSerialize["ipv4"] = o.Ipv4
-	}
-	if o.Ipv6 != nil {
-		toSerialize["ipv6"] = o.Ipv6
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfVpnRouteVia) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Ipv4) {
+		toSerialize["ipv4"] = o.Ipv4
+	}
+	if !IsNil(o.Ipv6) {
+		toSerialize["ipv6"] = o.Ipv6
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfVpnRouteVia struct {

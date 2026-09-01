@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ExistingEntitlement type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ExistingEntitlement{}
+
 // ExistingEntitlement struct for ExistingEntitlement
 type ExistingEntitlement struct {
 	// Applied action to the app.
@@ -49,7 +52,7 @@ func NewExistingEntitlementWithDefaults() *ExistingEntitlement {
 
 // GetAccessAction returns the AccessAction field value if set, zero value otherwise.
 func (o *ExistingEntitlement) GetAccessAction() string {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		var ret string
 		return ret
 	}
@@ -59,7 +62,7 @@ func (o *ExistingEntitlement) GetAccessAction() string {
 // GetAccessActionOk returns a tuple with the AccessAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlement) GetAccessActionOk() (*string, bool) {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		return nil, false
 	}
 	return o.AccessAction, true
@@ -67,7 +70,7 @@ func (o *ExistingEntitlement) GetAccessActionOk() (*string, bool) {
 
 // HasAccessAction returns a boolean if a field has been set.
 func (o *ExistingEntitlement) HasAccessAction() bool {
-	if o != nil && o.AccessAction != nil {
+	if o != nil && !IsNil(o.AccessAction) {
 		return true
 	}
 
@@ -81,7 +84,7 @@ func (o *ExistingEntitlement) SetAccessAction(v string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *ExistingEntitlement) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -91,7 +94,7 @@ func (o *ExistingEntitlement) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlement) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -99,7 +102,7 @@ func (o *ExistingEntitlement) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *ExistingEntitlement) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -113,7 +116,7 @@ func (o *ExistingEntitlement) SetPorts(v []string) {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *ExistingEntitlement) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -123,7 +126,7 @@ func (o *ExistingEntitlement) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlement) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -131,7 +134,7 @@ func (o *ExistingEntitlement) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *ExistingEntitlement) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -145,7 +148,7 @@ func (o *ExistingEntitlement) SetAction(v string) {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ExistingEntitlement) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -155,7 +158,7 @@ func (o *ExistingEntitlement) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlement) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -163,7 +166,7 @@ func (o *ExistingEntitlement) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ExistingEntitlement) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -176,20 +179,28 @@ func (o *ExistingEntitlement) SetId(v string) {
 }
 
 func (o ExistingEntitlement) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccessAction != nil {
-		toSerialize["accessAction"] = o.AccessAction
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
-	}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ExistingEntitlement) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccessAction) {
+		toSerialize["accessAction"] = o.AccessAction
+	}
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	return toSerialize, nil
 }
 
 type NullableExistingEntitlement struct {

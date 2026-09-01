@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceCustomizationAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceCustomizationAllOf{}
+
 // ApplianceCustomizationAllOf Represents an Appliance Customization.
 type ApplianceCustomizationAllOf struct {
 	// The Appliance Customization binary in Base64 format.
@@ -44,7 +47,7 @@ func NewApplianceCustomizationAllOfWithDefaults() *ApplianceCustomizationAllOf {
 
 // GetFile returns the File field value if set, zero value otherwise.
 func (o *ApplianceCustomizationAllOf) GetFile() string {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ApplianceCustomizationAllOf) GetFile() string {
 // GetFileOk returns a tuple with the File field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomizationAllOf) GetFileOk() (*string, bool) {
-	if o == nil || o.File == nil {
+	if o == nil || IsNil(o.File) {
 		return nil, false
 	}
 	return o.File, true
@@ -62,7 +65,7 @@ func (o *ApplianceCustomizationAllOf) GetFileOk() (*string, bool) {
 
 // HasFile returns a boolean if a field has been set.
 func (o *ApplianceCustomizationAllOf) HasFile() bool {
-	if o != nil && o.File != nil {
+	if o != nil && !IsNil(o.File) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ApplianceCustomizationAllOf) SetFile(v string) {
 
 // GetChecksum returns the Checksum field value if set, zero value otherwise.
 func (o *ApplianceCustomizationAllOf) GetChecksum() string {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		var ret string
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ApplianceCustomizationAllOf) GetChecksum() string {
 // GetChecksumOk returns a tuple with the Checksum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomizationAllOf) GetChecksumOk() (*string, bool) {
-	if o == nil || o.Checksum == nil {
+	if o == nil || IsNil(o.Checksum) {
 		return nil, false
 	}
 	return o.Checksum, true
@@ -94,7 +97,7 @@ func (o *ApplianceCustomizationAllOf) GetChecksumOk() (*string, bool) {
 
 // HasChecksum returns a boolean if a field has been set.
 func (o *ApplianceCustomizationAllOf) HasChecksum() bool {
-	if o != nil && o.Checksum != nil {
+	if o != nil && !IsNil(o.Checksum) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ApplianceCustomizationAllOf) SetChecksum(v string) {
 
 // GetSize returns the Size field value if set, zero value otherwise.
 func (o *ApplianceCustomizationAllOf) GetSize() float32 {
-	if o == nil || o.Size == nil {
+	if o == nil || IsNil(o.Size) {
 		var ret float32
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ApplianceCustomizationAllOf) GetSize() float32 {
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceCustomizationAllOf) GetSizeOk() (*float32, bool) {
-	if o == nil || o.Size == nil {
+	if o == nil || IsNil(o.Size) {
 		return nil, false
 	}
 	return o.Size, true
@@ -126,7 +129,7 @@ func (o *ApplianceCustomizationAllOf) GetSizeOk() (*float32, bool) {
 
 // HasSize returns a boolean if a field has been set.
 func (o *ApplianceCustomizationAllOf) HasSize() bool {
-	if o != nil && o.Size != nil {
+	if o != nil && !IsNil(o.Size) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ApplianceCustomizationAllOf) SetSize(v float32) {
 }
 
 func (o ApplianceCustomizationAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.File != nil {
-		toSerialize["file"] = o.File
-	}
-	if o.Checksum != nil {
-		toSerialize["checksum"] = o.Checksum
-	}
-	if o.Size != nil {
-		toSerialize["size"] = o.Size
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceCustomizationAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.File) {
+		toSerialize["file"] = o.File
+	}
+	if !IsNil(o.Checksum) {
+		toSerialize["checksum"] = o.Checksum
+	}
+	if !IsNil(o.Size) {
+		toSerialize["size"] = o.Size
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceCustomizationAllOf struct {

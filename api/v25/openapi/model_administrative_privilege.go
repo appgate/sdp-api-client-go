@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AdministrativePrivilege type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AdministrativePrivilege{}
+
 // AdministrativePrivilege Administrative Privilege item. Use type-target-map API to get the details on which types are valid for which targets and their scopes.
 type AdministrativePrivilege struct {
 	// The type of the Privilege defines the possible administrator actions.
@@ -97,7 +100,7 @@ func (o *AdministrativePrivilege) SetTarget(v string) {
 
 // GetScope returns the Scope field value if set, zero value otherwise.
 func (o *AdministrativePrivilege) GetScope() AdministrativePrivilegeScope {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret AdministrativePrivilegeScope
 		return ret
 	}
@@ -107,7 +110,7 @@ func (o *AdministrativePrivilege) GetScope() AdministrativePrivilegeScope {
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilege) GetScopeOk() (*AdministrativePrivilegeScope, bool) {
-	if o == nil || o.Scope == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
 	return o.Scope, true
@@ -115,7 +118,7 @@ func (o *AdministrativePrivilege) GetScopeOk() (*AdministrativePrivilegeScope, b
 
 // HasScope returns a boolean if a field has been set.
 func (o *AdministrativePrivilege) HasScope() bool {
-	if o != nil && o.Scope != nil {
+	if o != nil && !IsNil(o.Scope) {
 		return true
 	}
 
@@ -129,7 +132,7 @@ func (o *AdministrativePrivilege) SetScope(v AdministrativePrivilegeScope) {
 
 // GetDefaultTags returns the DefaultTags field value if set, zero value otherwise.
 func (o *AdministrativePrivilege) GetDefaultTags() []string {
-	if o == nil || o.DefaultTags == nil {
+	if o == nil || IsNil(o.DefaultTags) {
 		var ret []string
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *AdministrativePrivilege) GetDefaultTags() []string {
 // GetDefaultTagsOk returns a tuple with the DefaultTags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilege) GetDefaultTagsOk() ([]string, bool) {
-	if o == nil || o.DefaultTags == nil {
+	if o == nil || IsNil(o.DefaultTags) {
 		return nil, false
 	}
 	return o.DefaultTags, true
@@ -147,7 +150,7 @@ func (o *AdministrativePrivilege) GetDefaultTagsOk() ([]string, bool) {
 
 // HasDefaultTags returns a boolean if a field has been set.
 func (o *AdministrativePrivilege) HasDefaultTags() bool {
-	if o != nil && o.DefaultTags != nil {
+	if o != nil && !IsNil(o.DefaultTags) {
 		return true
 	}
 
@@ -161,7 +164,7 @@ func (o *AdministrativePrivilege) SetDefaultTags(v []string) {
 
 // GetFunctions returns the Functions field value if set, zero value otherwise.
 func (o *AdministrativePrivilege) GetFunctions() []ApplianceFunction {
-	if o == nil || o.Functions == nil {
+	if o == nil || IsNil(o.Functions) {
 		var ret []ApplianceFunction
 		return ret
 	}
@@ -171,7 +174,7 @@ func (o *AdministrativePrivilege) GetFunctions() []ApplianceFunction {
 // GetFunctionsOk returns a tuple with the Functions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AdministrativePrivilege) GetFunctionsOk() ([]ApplianceFunction, bool) {
-	if o == nil || o.Functions == nil {
+	if o == nil || IsNil(o.Functions) {
 		return nil, false
 	}
 	return o.Functions, true
@@ -179,7 +182,7 @@ func (o *AdministrativePrivilege) GetFunctionsOk() ([]ApplianceFunction, bool) {
 
 // HasFunctions returns a boolean if a field has been set.
 func (o *AdministrativePrivilege) HasFunctions() bool {
-	if o != nil && o.Functions != nil {
+	if o != nil && !IsNil(o.Functions) {
 		return true
 	}
 
@@ -192,23 +195,27 @@ func (o *AdministrativePrivilege) SetFunctions(v []ApplianceFunction) {
 }
 
 func (o AdministrativePrivilege) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["target"] = o.Target
-	}
-	if o.Scope != nil {
-		toSerialize["scope"] = o.Scope
-	}
-	if o.DefaultTags != nil {
-		toSerialize["defaultTags"] = o.DefaultTags
-	}
-	if o.Functions != nil {
-		toSerialize["functions"] = o.Functions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AdministrativePrivilege) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["target"] = o.Target
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.DefaultTags) {
+		toSerialize["defaultTags"] = o.DefaultTags
+	}
+	if !IsNil(o.Functions) {
+		toSerialize["functions"] = o.Functions
+	}
+	return toSerialize, nil
 }
 
 type NullableAdministrativePrivilege struct {

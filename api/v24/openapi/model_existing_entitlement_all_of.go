@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ExistingEntitlementAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ExistingEntitlementAllOf{}
+
 // ExistingEntitlementAllOf Access will be granted by assigning the generated IP Access action to an existing Entitlement.
 type ExistingEntitlementAllOf struct {
 	Action *string `json:"action,omitempty"`
@@ -41,7 +44,7 @@ func NewExistingEntitlementAllOfWithDefaults() *ExistingEntitlementAllOf {
 
 // GetAction returns the Action field value if set, zero value otherwise.
 func (o *ExistingEntitlementAllOf) GetAction() string {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret string
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *ExistingEntitlementAllOf) GetAction() string {
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlementAllOf) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
 	return o.Action, true
@@ -59,7 +62,7 @@ func (o *ExistingEntitlementAllOf) GetActionOk() (*string, bool) {
 
 // HasAction returns a boolean if a field has been set.
 func (o *ExistingEntitlementAllOf) HasAction() bool {
-	if o != nil && o.Action != nil {
+	if o != nil && !IsNil(o.Action) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *ExistingEntitlementAllOf) SetAction(v string) {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *ExistingEntitlementAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *ExistingEntitlementAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ExistingEntitlementAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -91,7 +94,7 @@ func (o *ExistingEntitlementAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *ExistingEntitlementAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *ExistingEntitlementAllOf) SetId(v string) {
 }
 
 func (o ExistingEntitlementAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ExistingEntitlementAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	return toSerialize, nil
 }
 
 type NullableExistingEntitlementAllOf struct {

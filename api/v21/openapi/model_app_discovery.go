@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the AppDiscovery type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDiscovery{}
+
 // AppDiscovery struct for AppDiscovery
 type AppDiscovery struct {
 	// User-friendly name for the stats. Deprecated as of 6.4
@@ -58,7 +61,7 @@ func NewAppDiscoveryWithDefaults() *AppDiscovery {
 // GetName returns the Name field value if set, zero value otherwise.
 // Deprecated
 func (o *AppDiscovery) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -69,7 +72,7 @@ func (o *AppDiscovery) GetName() string {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *AppDiscovery) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -77,7 +80,7 @@ func (o *AppDiscovery) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *AppDiscovery) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -93,7 +96,7 @@ func (o *AppDiscovery) SetName(v string) {
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise.
 // Deprecated
 func (o *AppDiscovery) GetCreationDate() time.Time {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		var ret time.Time
 		return ret
 	}
@@ -104,7 +107,7 @@ func (o *AppDiscovery) GetCreationDate() time.Time {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *AppDiscovery) GetCreationDateOk() (*time.Time, bool) {
-	if o == nil || o.CreationDate == nil {
+	if o == nil || IsNil(o.CreationDate) {
 		return nil, false
 	}
 	return o.CreationDate, true
@@ -112,7 +115,7 @@ func (o *AppDiscovery) GetCreationDateOk() (*time.Time, bool) {
 
 // HasCreationDate returns a boolean if a field has been set.
 func (o *AppDiscovery) HasCreationDate() bool {
-	if o != nil && o.CreationDate != nil {
+	if o != nil && !IsNil(o.CreationDate) {
 		return true
 	}
 
@@ -128,7 +131,7 @@ func (o *AppDiscovery) SetCreationDate(v time.Time) {
 // GetRefreshInterval returns the RefreshInterval field value if set, zero value otherwise.
 // Deprecated
 func (o *AppDiscovery) GetRefreshInterval() float32 {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		var ret float32
 		return ret
 	}
@@ -139,7 +142,7 @@ func (o *AppDiscovery) GetRefreshInterval() float32 {
 // and a boolean to check if the value has been set.
 // Deprecated
 func (o *AppDiscovery) GetRefreshIntervalOk() (*float32, bool) {
-	if o == nil || o.RefreshInterval == nil {
+	if o == nil || IsNil(o.RefreshInterval) {
 		return nil, false
 	}
 	return o.RefreshInterval, true
@@ -147,7 +150,7 @@ func (o *AppDiscovery) GetRefreshIntervalOk() (*float32, bool) {
 
 // HasRefreshInterval returns a boolean if a field has been set.
 func (o *AppDiscovery) HasRefreshInterval() bool {
-	if o != nil && o.RefreshInterval != nil {
+	if o != nil && !IsNil(o.RefreshInterval) {
 		return true
 	}
 
@@ -162,7 +165,7 @@ func (o *AppDiscovery) SetRefreshInterval(v float32) {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *AppDiscovery) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -172,7 +175,7 @@ func (o *AppDiscovery) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscovery) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -180,7 +183,7 @@ func (o *AppDiscovery) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *AppDiscovery) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -194,7 +197,7 @@ func (o *AppDiscovery) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *AppDiscovery) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -204,7 +207,7 @@ func (o *AppDiscovery) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscovery) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -212,7 +215,7 @@ func (o *AppDiscovery) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *AppDiscovery) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -226,7 +229,7 @@ func (o *AppDiscovery) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *AppDiscovery) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -236,7 +239,7 @@ func (o *AppDiscovery) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscovery) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -244,7 +247,7 @@ func (o *AppDiscovery) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *AppDiscovery) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -258,7 +261,7 @@ func (o *AppDiscovery) SetDescending(v bool) {
 
 // GetDistinctAppCount returns the DistinctAppCount field value if set, zero value otherwise.
 func (o *AppDiscovery) GetDistinctAppCount() float32 {
-	if o == nil || o.DistinctAppCount == nil {
+	if o == nil || IsNil(o.DistinctAppCount) {
 		var ret float32
 		return ret
 	}
@@ -268,7 +271,7 @@ func (o *AppDiscovery) GetDistinctAppCount() float32 {
 // GetDistinctAppCountOk returns a tuple with the DistinctAppCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscovery) GetDistinctAppCountOk() (*float32, bool) {
-	if o == nil || o.DistinctAppCount == nil {
+	if o == nil || IsNil(o.DistinctAppCount) {
 		return nil, false
 	}
 	return o.DistinctAppCount, true
@@ -276,7 +279,7 @@ func (o *AppDiscovery) GetDistinctAppCountOk() (*float32, bool) {
 
 // HasDistinctAppCount returns a boolean if a field has been set.
 func (o *AppDiscovery) HasDistinctAppCount() bool {
-	if o != nil && o.DistinctAppCount != nil {
+	if o != nil && !IsNil(o.DistinctAppCount) {
 		return true
 	}
 
@@ -290,7 +293,7 @@ func (o *AppDiscovery) SetDistinctAppCount(v float32) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AppDiscovery) GetData() []AppDiscoveryAllOfData {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []AppDiscoveryAllOfData
 		return ret
 	}
@@ -300,7 +303,7 @@ func (o *AppDiscovery) GetData() []AppDiscoveryAllOfData {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscovery) GetDataOk() ([]AppDiscoveryAllOfData, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -308,7 +311,7 @@ func (o *AppDiscovery) GetDataOk() ([]AppDiscoveryAllOfData, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *AppDiscovery) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -321,32 +324,40 @@ func (o *AppDiscovery) SetData(v []AppDiscoveryAllOfData) {
 }
 
 func (o AppDiscovery) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.CreationDate != nil {
-		toSerialize["creationDate"] = o.CreationDate
-	}
-	if o.RefreshInterval != nil {
-		toSerialize["refreshInterval"] = o.RefreshInterval
-	}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.DistinctAppCount != nil {
-		toSerialize["distinctAppCount"] = o.DistinctAppCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDiscovery) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.CreationDate) {
+		toSerialize["creationDate"] = o.CreationDate
+	}
+	if !IsNil(o.RefreshInterval) {
+		toSerialize["refreshInterval"] = o.RefreshInterval
+	}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.DistinctAppCount) {
+		toSerialize["distinctAppCount"] = o.DistinctAppCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDiscovery struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppliancesIdTestResolverNamePost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppliancesIdTestResolverNamePost200Response{}
+
 // AppliancesIdTestResolverNamePost200Response The test result.
 type AppliancesIdTestResolverNamePost200Response struct {
 	// List of IPs resolved for the given name.
@@ -42,7 +45,7 @@ func NewAppliancesIdTestResolverNamePost200ResponseWithDefaults() *AppliancesIdT
 
 // GetIps returns the Ips field value if set, zero value otherwise.
 func (o *AppliancesIdTestResolverNamePost200Response) GetIps() []string {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		var ret []string
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *AppliancesIdTestResolverNamePost200Response) GetIps() []string {
 // GetIpsOk returns a tuple with the Ips field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdTestResolverNamePost200Response) GetIpsOk() ([]string, bool) {
-	if o == nil || o.Ips == nil {
+	if o == nil || IsNil(o.Ips) {
 		return nil, false
 	}
 	return o.Ips, true
@@ -60,7 +63,7 @@ func (o *AppliancesIdTestResolverNamePost200Response) GetIpsOk() ([]string, bool
 
 // HasIps returns a boolean if a field has been set.
 func (o *AppliancesIdTestResolverNamePost200Response) HasIps() bool {
-	if o != nil && o.Ips != nil {
+	if o != nil && !IsNil(o.Ips) {
 		return true
 	}
 
@@ -74,7 +77,7 @@ func (o *AppliancesIdTestResolverNamePost200Response) SetIps(v []string) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *AppliancesIdTestResolverNamePost200Response) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -84,7 +87,7 @@ func (o *AppliancesIdTestResolverNamePost200Response) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppliancesIdTestResolverNamePost200Response) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -92,7 +95,7 @@ func (o *AppliancesIdTestResolverNamePost200Response) GetErrorOk() (*string, boo
 
 // HasError returns a boolean if a field has been set.
 func (o *AppliancesIdTestResolverNamePost200Response) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -105,14 +108,22 @@ func (o *AppliancesIdTestResolverNamePost200Response) SetError(v string) {
 }
 
 func (o AppliancesIdTestResolverNamePost200Response) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Ips != nil {
-		toSerialize["ips"] = o.Ips
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppliancesIdTestResolverNamePost200Response) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Ips) {
+		toSerialize["ips"] = o.Ips
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	return toSerialize, nil
 }
 
 type NullableAppliancesIdTestResolverNamePost200Response struct {

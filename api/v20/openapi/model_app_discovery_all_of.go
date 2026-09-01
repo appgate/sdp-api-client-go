@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the AppDiscoveryAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AppDiscoveryAllOf{}
+
 // AppDiscoveryAllOf struct for AppDiscoveryAllOf
 type AppDiscoveryAllOf struct {
 	// The number of total distinct Discovered Apps.
@@ -41,7 +44,7 @@ func NewAppDiscoveryAllOfWithDefaults() *AppDiscoveryAllOf {
 
 // GetDistinctAppCount returns the DistinctAppCount field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOf) GetDistinctAppCount() float32 {
-	if o == nil || o.DistinctAppCount == nil {
+	if o == nil || IsNil(o.DistinctAppCount) {
 		var ret float32
 		return ret
 	}
@@ -51,7 +54,7 @@ func (o *AppDiscoveryAllOf) GetDistinctAppCount() float32 {
 // GetDistinctAppCountOk returns a tuple with the DistinctAppCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOf) GetDistinctAppCountOk() (*float32, bool) {
-	if o == nil || o.DistinctAppCount == nil {
+	if o == nil || IsNil(o.DistinctAppCount) {
 		return nil, false
 	}
 	return o.DistinctAppCount, true
@@ -59,7 +62,7 @@ func (o *AppDiscoveryAllOf) GetDistinctAppCountOk() (*float32, bool) {
 
 // HasDistinctAppCount returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOf) HasDistinctAppCount() bool {
-	if o != nil && o.DistinctAppCount != nil {
+	if o != nil && !IsNil(o.DistinctAppCount) {
 		return true
 	}
 
@@ -73,7 +76,7 @@ func (o *AppDiscoveryAllOf) SetDistinctAppCount(v float32) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *AppDiscoveryAllOf) GetData() []AppDiscoveryAllOfData {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []AppDiscoveryAllOfData
 		return ret
 	}
@@ -83,7 +86,7 @@ func (o *AppDiscoveryAllOf) GetData() []AppDiscoveryAllOfData {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AppDiscoveryAllOf) GetDataOk() ([]AppDiscoveryAllOfData, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -91,7 +94,7 @@ func (o *AppDiscoveryAllOf) GetDataOk() ([]AppDiscoveryAllOfData, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *AppDiscoveryAllOf) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -104,14 +107,22 @@ func (o *AppDiscoveryAllOf) SetData(v []AppDiscoveryAllOfData) {
 }
 
 func (o AppDiscoveryAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DistinctAppCount != nil {
-		toSerialize["distinctAppCount"] = o.DistinctAppCount
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o AppDiscoveryAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DistinctAppCount) {
+		toSerialize["distinctAppCount"] = o.DistinctAppCount
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	return toSerialize, nil
 }
 
 type NullableAppDiscoveryAllOf struct {

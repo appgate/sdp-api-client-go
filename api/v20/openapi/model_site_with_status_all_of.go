@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteWithStatusAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteWithStatusAllOf{}
+
 // SiteWithStatusAllOf Represents a Site with its health status.
 type SiteWithStatusAllOf struct {
 	// Health status of the Site. Depends on the status of the Appliances in this Site.
@@ -40,7 +43,7 @@ func NewSiteWithStatusAllOfWithDefaults() *SiteWithStatusAllOf {
 
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *SiteWithStatusAllOf) GetStatus() string {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *SiteWithStatusAllOf) GetStatus() string {
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteWithStatusAllOf) GetStatusOk() (*string, bool) {
-	if o == nil || o.Status == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
 	return o.Status, true
@@ -58,7 +61,7 @@ func (o *SiteWithStatusAllOf) GetStatusOk() (*string, bool) {
 
 // HasStatus returns a boolean if a field has been set.
 func (o *SiteWithStatusAllOf) HasStatus() bool {
-	if o != nil && o.Status != nil {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
@@ -71,11 +74,19 @@ func (o *SiteWithStatusAllOf) SetStatus(v string) {
 }
 
 func (o SiteWithStatusAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteWithStatusAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteWithStatusAllOf struct {

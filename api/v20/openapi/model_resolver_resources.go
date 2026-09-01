@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ResolverResources type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ResolverResources{}
+
 // ResolverResources struct for ResolverResources
 type ResolverResources struct {
 	// The range applied to the list. Format: -/. 3-5/8 means, out of 8 count (query affects the total), the items between (including) the 3rd and the 5th are returned.
@@ -56,7 +59,7 @@ func NewResolverResourcesWithDefaults() *ResolverResources {
 
 // GetRange returns the Range field value if set, zero value otherwise.
 func (o *ResolverResources) GetRange() string {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		var ret string
 		return ret
 	}
@@ -66,7 +69,7 @@ func (o *ResolverResources) GetRange() string {
 // GetRangeOk returns a tuple with the Range field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetRangeOk() (*string, bool) {
-	if o == nil || o.Range == nil {
+	if o == nil || IsNil(o.Range) {
 		return nil, false
 	}
 	return o.Range, true
@@ -74,7 +77,7 @@ func (o *ResolverResources) GetRangeOk() (*string, bool) {
 
 // HasRange returns a boolean if a field has been set.
 func (o *ResolverResources) HasRange() bool {
-	if o != nil && o.Range != nil {
+	if o != nil && !IsNil(o.Range) {
 		return true
 	}
 
@@ -88,7 +91,7 @@ func (o *ResolverResources) SetRange(v string) {
 
 // GetOrderBy returns the OrderBy field value if set, zero value otherwise.
 func (o *ResolverResources) GetOrderBy() string {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		var ret string
 		return ret
 	}
@@ -98,7 +101,7 @@ func (o *ResolverResources) GetOrderBy() string {
 // GetOrderByOk returns a tuple with the OrderBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetOrderByOk() (*string, bool) {
-	if o == nil || o.OrderBy == nil {
+	if o == nil || IsNil(o.OrderBy) {
 		return nil, false
 	}
 	return o.OrderBy, true
@@ -106,7 +109,7 @@ func (o *ResolverResources) GetOrderByOk() (*string, bool) {
 
 // HasOrderBy returns a boolean if a field has been set.
 func (o *ResolverResources) HasOrderBy() bool {
-	if o != nil && o.OrderBy != nil {
+	if o != nil && !IsNil(o.OrderBy) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *ResolverResources) SetOrderBy(v string) {
 
 // GetDescending returns the Descending field value if set, zero value otherwise.
 func (o *ResolverResources) GetDescending() bool {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		var ret bool
 		return ret
 	}
@@ -130,7 +133,7 @@ func (o *ResolverResources) GetDescending() bool {
 // GetDescendingOk returns a tuple with the Descending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetDescendingOk() (*bool, bool) {
-	if o == nil || o.Descending == nil {
+	if o == nil || IsNil(o.Descending) {
 		return nil, false
 	}
 	return o.Descending, true
@@ -138,7 +141,7 @@ func (o *ResolverResources) GetDescendingOk() (*bool, bool) {
 
 // HasDescending returns a boolean if a field has been set.
 func (o *ResolverResources) HasDescending() bool {
-	if o != nil && o.Descending != nil {
+	if o != nil && !IsNil(o.Descending) {
 		return true
 	}
 
@@ -152,7 +155,7 @@ func (o *ResolverResources) SetDescending(v bool) {
 
 // GetQueries returns the Queries field value if set, zero value otherwise.
 func (o *ResolverResources) GetQueries() []string {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		var ret []string
 		return ret
 	}
@@ -162,7 +165,7 @@ func (o *ResolverResources) GetQueries() []string {
 // GetQueriesOk returns a tuple with the Queries field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetQueriesOk() ([]string, bool) {
-	if o == nil || o.Queries == nil {
+	if o == nil || IsNil(o.Queries) {
 		return nil, false
 	}
 	return o.Queries, true
@@ -170,7 +173,7 @@ func (o *ResolverResources) GetQueriesOk() ([]string, bool) {
 
 // HasQueries returns a boolean if a field has been set.
 func (o *ResolverResources) HasQueries() bool {
-	if o != nil && o.Queries != nil {
+	if o != nil && !IsNil(o.Queries) {
 		return true
 	}
 
@@ -184,7 +187,7 @@ func (o *ResolverResources) SetQueries(v []string) {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *ResolverResources) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -194,7 +197,7 @@ func (o *ResolverResources) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -202,7 +205,7 @@ func (o *ResolverResources) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *ResolverResources) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -216,7 +219,7 @@ func (o *ResolverResources) SetTotalCount(v int32) {
 
 // GetFilterBy returns the FilterBy field value if set, zero value otherwise.
 func (o *ResolverResources) GetFilterBy() []FilterBy {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		var ret []FilterBy
 		return ret
 	}
@@ -226,7 +229,7 @@ func (o *ResolverResources) GetFilterBy() []FilterBy {
 // GetFilterByOk returns a tuple with the FilterBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetFilterByOk() ([]FilterBy, bool) {
-	if o == nil || o.FilterBy == nil {
+	if o == nil || IsNil(o.FilterBy) {
 		return nil, false
 	}
 	return o.FilterBy, true
@@ -234,7 +237,7 @@ func (o *ResolverResources) GetFilterByOk() ([]FilterBy, bool) {
 
 // HasFilterBy returns a boolean if a field has been set.
 func (o *ResolverResources) HasFilterBy() bool {
-	if o != nil && o.FilterBy != nil {
+	if o != nil && !IsNil(o.FilterBy) {
 		return true
 	}
 
@@ -248,7 +251,7 @@ func (o *ResolverResources) SetFilterBy(v []FilterBy) {
 
 // GetData returns the Data field value if set, zero value otherwise.
 func (o *ResolverResources) GetData() []string {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret []string
 		return ret
 	}
@@ -258,7 +261,7 @@ func (o *ResolverResources) GetData() []string {
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetDataOk() ([]string, bool) {
-	if o == nil || o.Data == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
 	return o.Data, true
@@ -266,7 +269,7 @@ func (o *ResolverResources) GetDataOk() ([]string, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *ResolverResources) HasData() bool {
-	if o != nil && o.Data != nil {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -280,7 +283,7 @@ func (o *ResolverResources) SetData(v []string) {
 
 // GetResolver returns the Resolver field value if set, zero value otherwise.
 func (o *ResolverResources) GetResolver() ResolverType {
-	if o == nil || o.Resolver == nil {
+	if o == nil || IsNil(o.Resolver) {
 		var ret ResolverType
 		return ret
 	}
@@ -290,7 +293,7 @@ func (o *ResolverResources) GetResolver() ResolverType {
 // GetResolverOk returns a tuple with the Resolver field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetResolverOk() (*ResolverType, bool) {
-	if o == nil || o.Resolver == nil {
+	if o == nil || IsNil(o.Resolver) {
 		return nil, false
 	}
 	return o.Resolver, true
@@ -298,7 +301,7 @@ func (o *ResolverResources) GetResolverOk() (*ResolverType, bool) {
 
 // HasResolver returns a boolean if a field has been set.
 func (o *ResolverResources) HasResolver() bool {
-	if o != nil && o.Resolver != nil {
+	if o != nil && !IsNil(o.Resolver) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *ResolverResources) SetResolver(v ResolverType) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ResolverResources) GetType() ResourceType {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret ResourceType
 		return ret
 	}
@@ -322,7 +325,7 @@ func (o *ResolverResources) GetType() ResourceType {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetTypeOk() (*ResourceType, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -330,7 +333,7 @@ func (o *ResolverResources) GetTypeOk() (*ResourceType, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ResolverResources) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -344,7 +347,7 @@ func (o *ResolverResources) SetType(v ResourceType) {
 
 // GetGatewayName returns the GatewayName field value if set, zero value otherwise.
 func (o *ResolverResources) GetGatewayName() string {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		var ret string
 		return ret
 	}
@@ -354,7 +357,7 @@ func (o *ResolverResources) GetGatewayName() string {
 // GetGatewayNameOk returns a tuple with the GatewayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ResolverResources) GetGatewayNameOk() (*string, bool) {
-	if o == nil || o.GatewayName == nil {
+	if o == nil || IsNil(o.GatewayName) {
 		return nil, false
 	}
 	return o.GatewayName, true
@@ -362,7 +365,7 @@ func (o *ResolverResources) GetGatewayNameOk() (*string, bool) {
 
 // HasGatewayName returns a boolean if a field has been set.
 func (o *ResolverResources) HasGatewayName() bool {
-	if o != nil && o.GatewayName != nil {
+	if o != nil && !IsNil(o.GatewayName) {
 		return true
 	}
 
@@ -375,38 +378,46 @@ func (o *ResolverResources) SetGatewayName(v string) {
 }
 
 func (o ResolverResources) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Range != nil {
-		toSerialize["range"] = o.Range
-	}
-	if o.OrderBy != nil {
-		toSerialize["orderBy"] = o.OrderBy
-	}
-	if o.Descending != nil {
-		toSerialize["descending"] = o.Descending
-	}
-	if o.Queries != nil {
-		toSerialize["queries"] = o.Queries
-	}
-	if o.TotalCount != nil {
-		toSerialize["totalCount"] = o.TotalCount
-	}
-	if o.FilterBy != nil {
-		toSerialize["filterBy"] = o.FilterBy
-	}
-	if o.Data != nil {
-		toSerialize["data"] = o.Data
-	}
-	if o.Resolver != nil {
-		toSerialize["resolver"] = o.Resolver
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.GatewayName != nil {
-		toSerialize["gatewayName"] = o.GatewayName
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ResolverResources) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Range) {
+		toSerialize["range"] = o.Range
+	}
+	if !IsNil(o.OrderBy) {
+		toSerialize["orderBy"] = o.OrderBy
+	}
+	if !IsNil(o.Descending) {
+		toSerialize["descending"] = o.Descending
+	}
+	if !IsNil(o.Queries) {
+		toSerialize["queries"] = o.Queries
+	}
+	if !IsNil(o.TotalCount) {
+		toSerialize["totalCount"] = o.TotalCount
+	}
+	if !IsNil(o.FilterBy) {
+		toSerialize["filterBy"] = o.FilterBy
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.Resolver) {
+		toSerialize["resolver"] = o.Resolver
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.GatewayName) {
+		toSerialize["gatewayName"] = o.GatewayName
+	}
+	return toSerialize, nil
 }
 
 type NullableResolverResources struct {

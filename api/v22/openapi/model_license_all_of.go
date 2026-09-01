@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the LicenseAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseAllOf{}
 
 // LicenseAllOf License details.
 type LicenseAllOf struct {
@@ -51,7 +54,7 @@ func NewLicenseAllOfWithDefaults() *LicenseAllOf {
 
 // GetId returns the Id field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetId() string {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *LicenseAllOf) GetId() string {
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetIdOk() (*string, bool) {
-	if o == nil || o.Id == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
 	return o.Id, true
@@ -69,7 +72,7 @@ func (o *LicenseAllOf) GetIdOk() (*string, bool) {
 
 // HasId returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasId() bool {
-	if o != nil && o.Id != nil {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *LicenseAllOf) SetId(v string) {
 
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetVersion() float32 {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret float32
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *LicenseAllOf) GetVersion() float32 {
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetVersionOk() (*float32, bool) {
-	if o == nil || o.Version == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
 	return o.Version, true
@@ -101,7 +104,7 @@ func (o *LicenseAllOf) GetVersionOk() (*float32, bool) {
 
 // HasVersion returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasVersion() bool {
-	if o != nil && o.Version != nil {
+	if o != nil && !IsNil(o.Version) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *LicenseAllOf) SetVersion(v float32) {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetType() float32 {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret float32
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *LicenseAllOf) GetType() float32 {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetTypeOk() (*float32, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -133,7 +136,7 @@ func (o *LicenseAllOf) GetTypeOk() (*float32, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *LicenseAllOf) SetType(v float32) {
 
 // GetRequest returns the Request field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetRequest() string {
-	if o == nil || o.Request == nil {
+	if o == nil || IsNil(o.Request) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *LicenseAllOf) GetRequest() string {
 // GetRequestOk returns a tuple with the Request field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetRequestOk() (*string, bool) {
-	if o == nil || o.Request == nil {
+	if o == nil || IsNil(o.Request) {
 		return nil, false
 	}
 	return o.Request, true
@@ -165,7 +168,7 @@ func (o *LicenseAllOf) GetRequestOk() (*string, bool) {
 
 // HasRequest returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasRequest() bool {
-	if o != nil && o.Request != nil {
+	if o != nil && !IsNil(o.Request) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *LicenseAllOf) SetRequest(v string) {
 
 // GetExpiration returns the Expiration field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetExpiration() time.Time {
-	if o == nil || o.Expiration == nil {
+	if o == nil || IsNil(o.Expiration) {
 		var ret time.Time
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *LicenseAllOf) GetExpiration() time.Time {
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetExpirationOk() (*time.Time, bool) {
-	if o == nil || o.Expiration == nil {
+	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
 	return o.Expiration, true
@@ -197,7 +200,7 @@ func (o *LicenseAllOf) GetExpirationOk() (*time.Time, bool) {
 
 // HasExpiration returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasExpiration() bool {
-	if o != nil && o.Expiration != nil {
+	if o != nil && !IsNil(o.Expiration) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *LicenseAllOf) SetExpiration(v time.Time) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *LicenseAllOf) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *LicenseAllOf) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseAllOf) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -229,7 +232,7 @@ func (o *LicenseAllOf) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *LicenseAllOf) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *LicenseAllOf) SetError(v string) {
 }
 
 func (o LicenseAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
-		toSerialize["id"] = o.Id
-	}
-	if o.Version != nil {
-		toSerialize["version"] = o.Version
-	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
-	}
-	if o.Request != nil {
-		toSerialize["request"] = o.Request
-	}
-	if o.Expiration != nil {
-		toSerialize["expiration"] = o.Expiration
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Request) {
+		toSerialize["request"] = o.Request
+	}
+	if !IsNil(o.Expiration) {
+		toSerialize["expiration"] = o.Expiration
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseAllOf struct {

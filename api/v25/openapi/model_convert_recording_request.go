@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ConvertRecordingRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ConvertRecordingRequest{}
+
 // ConvertRecordingRequest struct for ConvertRecordingRequest
 type ConvertRecordingRequest struct {
 	// The ID of the Gateway that owns the recording. Returned by the list API.
@@ -64,11 +67,17 @@ func (o *ConvertRecordingRequest) SetGatewayId(v string) {
 }
 
 func (o ConvertRecordingRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["gatewayId"] = o.GatewayId
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ConvertRecordingRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["gatewayId"] = o.GatewayId
+	return toSerialize, nil
 }
 
 type NullableConvertRecordingRequest struct {

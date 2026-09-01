@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -14,6 +14,9 @@ package openapi
 import (
 	"encoding/json"
 )
+
+// checks if the ClaimNamesList type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClaimNamesList{}
 
 // ClaimNamesList struct for ClaimNamesList
 type ClaimNamesList struct {
@@ -44,7 +47,7 @@ func NewClaimNamesListWithDefaults() *ClaimNamesList {
 
 // GetUser returns the User field value if set, zero value otherwise.
 func (o *ClaimNamesList) GetUser() []ClaimNamesInner {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		var ret []ClaimNamesInner
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ClaimNamesList) GetUser() []ClaimNamesInner {
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesList) GetUserOk() ([]ClaimNamesInner, bool) {
-	if o == nil || o.User == nil {
+	if o == nil || IsNil(o.User) {
 		return nil, false
 	}
 	return o.User, true
@@ -62,7 +65,7 @@ func (o *ClaimNamesList) GetUserOk() ([]ClaimNamesInner, bool) {
 
 // HasUser returns a boolean if a field has been set.
 func (o *ClaimNamesList) HasUser() bool {
-	if o != nil && o.User != nil {
+	if o != nil && !IsNil(o.User) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ClaimNamesList) SetUser(v []ClaimNamesInner) {
 
 // GetDevice returns the Device field value if set, zero value otherwise.
 func (o *ClaimNamesList) GetDevice() []ClaimNamesInner {
-	if o == nil || o.Device == nil {
+	if o == nil || IsNil(o.Device) {
 		var ret []ClaimNamesInner
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ClaimNamesList) GetDevice() []ClaimNamesInner {
 // GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesList) GetDeviceOk() ([]ClaimNamesInner, bool) {
-	if o == nil || o.Device == nil {
+	if o == nil || IsNil(o.Device) {
 		return nil, false
 	}
 	return o.Device, true
@@ -94,7 +97,7 @@ func (o *ClaimNamesList) GetDeviceOk() ([]ClaimNamesInner, bool) {
 
 // HasDevice returns a boolean if a field has been set.
 func (o *ClaimNamesList) HasDevice() bool {
-	if o != nil && o.Device != nil {
+	if o != nil && !IsNil(o.Device) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ClaimNamesList) SetDevice(v []ClaimNamesInner) {
 
 // GetSystem returns the System field value if set, zero value otherwise.
 func (o *ClaimNamesList) GetSystem() []ClaimNamesInner {
-	if o == nil || o.System == nil {
+	if o == nil || IsNil(o.System) {
 		var ret []ClaimNamesInner
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ClaimNamesList) GetSystem() []ClaimNamesInner {
 // GetSystemOk returns a tuple with the System field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesList) GetSystemOk() ([]ClaimNamesInner, bool) {
-	if o == nil || o.System == nil {
+	if o == nil || IsNil(o.System) {
 		return nil, false
 	}
 	return o.System, true
@@ -126,7 +129,7 @@ func (o *ClaimNamesList) GetSystemOk() ([]ClaimNamesInner, bool) {
 
 // HasSystem returns a boolean if a field has been set.
 func (o *ClaimNamesList) HasSystem() bool {
-	if o != nil && o.System != nil {
+	if o != nil && !IsNil(o.System) {
 		return true
 	}
 
@@ -140,7 +143,7 @@ func (o *ClaimNamesList) SetSystem(v []ClaimNamesInner) {
 
 // GetOnDemand returns the OnDemand field value if set, zero value otherwise.
 func (o *ClaimNamesList) GetOnDemand() []ClaimNamesInner {
-	if o == nil || o.OnDemand == nil {
+	if o == nil || IsNil(o.OnDemand) {
 		var ret []ClaimNamesInner
 		return ret
 	}
@@ -150,7 +153,7 @@ func (o *ClaimNamesList) GetOnDemand() []ClaimNamesInner {
 // GetOnDemandOk returns a tuple with the OnDemand field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesList) GetOnDemandOk() ([]ClaimNamesInner, bool) {
-	if o == nil || o.OnDemand == nil {
+	if o == nil || IsNil(o.OnDemand) {
 		return nil, false
 	}
 	return o.OnDemand, true
@@ -158,7 +161,7 @@ func (o *ClaimNamesList) GetOnDemandOk() ([]ClaimNamesInner, bool) {
 
 // HasOnDemand returns a boolean if a field has been set.
 func (o *ClaimNamesList) HasOnDemand() bool {
-	if o != nil && o.OnDemand != nil {
+	if o != nil && !IsNil(o.OnDemand) {
 		return true
 	}
 
@@ -172,7 +175,7 @@ func (o *ClaimNamesList) SetOnDemand(v []ClaimNamesInner) {
 
 // GetZtpRiskRules returns the ZtpRiskRules field value if set, zero value otherwise.
 func (o *ClaimNamesList) GetZtpRiskRules() []ClaimNamesListZtpRiskRulesInner {
-	if o == nil || o.ZtpRiskRules == nil {
+	if o == nil || IsNil(o.ZtpRiskRules) {
 		var ret []ClaimNamesListZtpRiskRulesInner
 		return ret
 	}
@@ -182,7 +185,7 @@ func (o *ClaimNamesList) GetZtpRiskRules() []ClaimNamesListZtpRiskRulesInner {
 // GetZtpRiskRulesOk returns a tuple with the ZtpRiskRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimNamesList) GetZtpRiskRulesOk() ([]ClaimNamesListZtpRiskRulesInner, bool) {
-	if o == nil || o.ZtpRiskRules == nil {
+	if o == nil || IsNil(o.ZtpRiskRules) {
 		return nil, false
 	}
 	return o.ZtpRiskRules, true
@@ -190,7 +193,7 @@ func (o *ClaimNamesList) GetZtpRiskRulesOk() ([]ClaimNamesListZtpRiskRulesInner,
 
 // HasZtpRiskRules returns a boolean if a field has been set.
 func (o *ClaimNamesList) HasZtpRiskRules() bool {
-	if o != nil && o.ZtpRiskRules != nil {
+	if o != nil && !IsNil(o.ZtpRiskRules) {
 		return true
 	}
 
@@ -203,23 +206,31 @@ func (o *ClaimNamesList) SetZtpRiskRules(v []ClaimNamesListZtpRiskRulesInner) {
 }
 
 func (o ClaimNamesList) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.User != nil {
-		toSerialize["user"] = o.User
-	}
-	if o.Device != nil {
-		toSerialize["device"] = o.Device
-	}
-	if o.System != nil {
-		toSerialize["system"] = o.System
-	}
-	if o.OnDemand != nil {
-		toSerialize["onDemand"] = o.OnDemand
-	}
-	if o.ZtpRiskRules != nil {
-		toSerialize["ztpRiskRules"] = o.ZtpRiskRules
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClaimNamesList) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.User) {
+		toSerialize["user"] = o.User
+	}
+	if !IsNil(o.Device) {
+		toSerialize["device"] = o.Device
+	}
+	if !IsNil(o.System) {
+		toSerialize["system"] = o.System
+	}
+	if !IsNil(o.OnDemand) {
+		toSerialize["onDemand"] = o.OnDemand
+	}
+	if !IsNil(o.ZtpRiskRules) {
+		toSerialize["ztpRiskRules"] = o.ZtpRiskRules
+	}
+	return toSerialize, nil
 }
 
 type NullableClaimNamesList struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ApplianceAllOfNetworkingIpv4Static type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ApplianceAllOfNetworkingIpv4Static{}
+
 // ApplianceAllOfNetworkingIpv4Static struct for ApplianceAllOfNetworkingIpv4Static
 type ApplianceAllOfNetworkingIpv4Static struct {
 	// IPv4 Address of the network interface.
@@ -44,7 +47,7 @@ func NewApplianceAllOfNetworkingIpv4StaticWithDefaults() *ApplianceAllOfNetworki
 
 // GetAddress returns the Address field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetAddress() string {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
@@ -54,7 +57,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetAddress() string {
 // GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetAddressOk() (*string, bool) {
-	if o == nil || o.Address == nil {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
 	return o.Address, true
@@ -62,7 +65,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetAddressOk() (*string, bool) {
 
 // HasAddress returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) HasAddress() bool {
-	if o != nil && o.Address != nil {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
@@ -76,7 +79,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) SetAddress(v string) {
 
 // GetNetmask returns the Netmask field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetNetmask() int32 {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		var ret int32
 		return ret
 	}
@@ -86,7 +89,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetNetmask() int32 {
 // GetNetmaskOk returns a tuple with the Netmask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetNetmaskOk() (*int32, bool) {
-	if o == nil || o.Netmask == nil {
+	if o == nil || IsNil(o.Netmask) {
 		return nil, false
 	}
 	return o.Netmask, true
@@ -94,7 +97,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetNetmaskOk() (*int32, bool) {
 
 // HasNetmask returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) HasNetmask() bool {
-	if o != nil && o.Netmask != nil {
+	if o != nil && !IsNil(o.Netmask) {
 		return true
 	}
 
@@ -108,7 +111,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) SetNetmask(v int32) {
 
 // GetSnat returns the Snat field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetSnat() bool {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		var ret bool
 		return ret
 	}
@@ -118,7 +121,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetSnat() bool {
 // GetSnatOk returns a tuple with the Snat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) GetSnatOk() (*bool, bool) {
-	if o == nil || o.Snat == nil {
+	if o == nil || IsNil(o.Snat) {
 		return nil, false
 	}
 	return o.Snat, true
@@ -126,7 +129,7 @@ func (o *ApplianceAllOfNetworkingIpv4Static) GetSnatOk() (*bool, bool) {
 
 // HasSnat returns a boolean if a field has been set.
 func (o *ApplianceAllOfNetworkingIpv4Static) HasSnat() bool {
-	if o != nil && o.Snat != nil {
+	if o != nil && !IsNil(o.Snat) {
 		return true
 	}
 
@@ -139,17 +142,25 @@ func (o *ApplianceAllOfNetworkingIpv4Static) SetSnat(v bool) {
 }
 
 func (o ApplianceAllOfNetworkingIpv4Static) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Address != nil {
-		toSerialize["address"] = o.Address
-	}
-	if o.Netmask != nil {
-		toSerialize["netmask"] = o.Netmask
-	}
-	if o.Snat != nil {
-		toSerialize["snat"] = o.Snat
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ApplianceAllOfNetworkingIpv4Static) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
+	}
+	if !IsNil(o.Netmask) {
+		toSerialize["netmask"] = o.Netmask
+	}
+	if !IsNil(o.Snat) {
+		toSerialize["snat"] = o.Snat
+	}
+	return toSerialize, nil
 }
 
 type NullableApplianceAllOfNetworkingIpv4Static struct {

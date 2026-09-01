@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EntitlementScriptTestResult type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EntitlementScriptTestResult{}
+
 // EntitlementScriptTestResult struct for EntitlementScriptTestResult
 type EntitlementScriptTestResult struct {
 	// What the evaluation returned as a list.
@@ -46,7 +49,7 @@ func NewEntitlementScriptTestResultWithDefaults() *EntitlementScriptTestResult {
 
 // GetResult returns the Result field value if set, zero value otherwise.
 func (o *EntitlementScriptTestResult) GetResult() []EntitlementScriptTestResultResultInner {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		var ret []EntitlementScriptTestResultResultInner
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *EntitlementScriptTestResult) GetResult() []EntitlementScriptTestResultR
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptTestResult) GetResultOk() ([]EntitlementScriptTestResultResultInner, bool) {
-	if o == nil || o.Result == nil {
+	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
 	return o.Result, true
@@ -64,7 +67,7 @@ func (o *EntitlementScriptTestResult) GetResultOk() ([]EntitlementScriptTestResu
 
 // HasResult returns a boolean if a field has been set.
 func (o *EntitlementScriptTestResult) HasResult() bool {
-	if o != nil && o.Result != nil {
+	if o != nil && !IsNil(o.Result) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *EntitlementScriptTestResult) SetResult(v []EntitlementScriptTestResultR
 
 // GetOutput returns the Output field value if set, zero value otherwise.
 func (o *EntitlementScriptTestResult) GetOutput() string {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		var ret string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *EntitlementScriptTestResult) GetOutput() string {
 // GetOutputOk returns a tuple with the Output field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptTestResult) GetOutputOk() (*string, bool) {
-	if o == nil || o.Output == nil {
+	if o == nil || IsNil(o.Output) {
 		return nil, false
 	}
 	return o.Output, true
@@ -96,7 +99,7 @@ func (o *EntitlementScriptTestResult) GetOutputOk() (*string, bool) {
 
 // HasOutput returns a boolean if a field has been set.
 func (o *EntitlementScriptTestResult) HasOutput() bool {
-	if o != nil && o.Output != nil {
+	if o != nil && !IsNil(o.Output) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *EntitlementScriptTestResult) SetOutput(v string) {
 
 // GetError returns the Error field value if set, zero value otherwise.
 func (o *EntitlementScriptTestResult) GetError() string {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *EntitlementScriptTestResult) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptTestResult) GetErrorOk() (*string, bool) {
-	if o == nil || o.Error == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
 	return o.Error, true
@@ -128,7 +131,7 @@ func (o *EntitlementScriptTestResult) GetErrorOk() (*string, bool) {
 
 // HasError returns a boolean if a field has been set.
 func (o *EntitlementScriptTestResult) HasError() bool {
-	if o != nil && o.Error != nil {
+	if o != nil && !IsNil(o.Error) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *EntitlementScriptTestResult) SetError(v string) {
 
 // GetExecutionMs returns the ExecutionMs field value if set, zero value otherwise.
 func (o *EntitlementScriptTestResult) GetExecutionMs() float32 {
-	if o == nil || o.ExecutionMs == nil {
+	if o == nil || IsNil(o.ExecutionMs) {
 		var ret float32
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *EntitlementScriptTestResult) GetExecutionMs() float32 {
 // GetExecutionMsOk returns a tuple with the ExecutionMs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EntitlementScriptTestResult) GetExecutionMsOk() (*float32, bool) {
-	if o == nil || o.ExecutionMs == nil {
+	if o == nil || IsNil(o.ExecutionMs) {
 		return nil, false
 	}
 	return o.ExecutionMs, true
@@ -160,7 +163,7 @@ func (o *EntitlementScriptTestResult) GetExecutionMsOk() (*float32, bool) {
 
 // HasExecutionMs returns a boolean if a field has been set.
 func (o *EntitlementScriptTestResult) HasExecutionMs() bool {
-	if o != nil && o.ExecutionMs != nil {
+	if o != nil && !IsNil(o.ExecutionMs) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *EntitlementScriptTestResult) SetExecutionMs(v float32) {
 }
 
 func (o EntitlementScriptTestResult) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Result != nil {
-		toSerialize["result"] = o.Result
-	}
-	if o.Output != nil {
-		toSerialize["output"] = o.Output
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
-	}
-	if o.ExecutionMs != nil {
-		toSerialize["executionMs"] = o.ExecutionMs
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EntitlementScriptTestResult) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.Output) {
+		toSerialize["output"] = o.Output
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	if !IsNil(o.ExecutionMs) {
+		toSerialize["executionMs"] = o.ExecutionMs
+	}
+	return toSerialize, nil
 }
 
 type NullableEntitlementScriptTestResult struct {

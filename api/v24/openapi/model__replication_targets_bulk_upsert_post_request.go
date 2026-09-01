@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ReplicationTargetsBulkUpsertPostRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ReplicationTargetsBulkUpsertPostRequest{}
+
 // ReplicationTargetsBulkUpsertPostRequest struct for ReplicationTargetsBulkUpsertPostRequest
 type ReplicationTargetsBulkUpsertPostRequest struct {
 	Data []ReplicationTarget `json:"data"`
@@ -63,11 +66,17 @@ func (o *ReplicationTargetsBulkUpsertPostRequest) SetData(v []ReplicationTarget)
 }
 
 func (o ReplicationTargetsBulkUpsertPostRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["data"] = o.Data
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ReplicationTargetsBulkUpsertPostRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["data"] = o.Data
+	return toSerialize, nil
 }
 
 type NullableReplicationTargetsBulkUpsertPostRequest struct {

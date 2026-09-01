@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LdapProviderAllOfPasswordWarning type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LdapProviderAllOfPasswordWarning{}
+
 // LdapProviderAllOfPasswordWarning Password warning configuration for Active Directory. If enabled, the client will display the configured message before the password expiration.
 type LdapProviderAllOfPasswordWarning struct {
 	// Whether to check and warn the users for password expiration.
@@ -48,7 +51,7 @@ func NewLdapProviderAllOfPasswordWarningWithDefaults() *LdapProviderAllOfPasswor
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *LdapProviderAllOfPasswordWarning) GetEnabled() bool {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
@@ -58,7 +61,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetEnabled() bool {
 // GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOfPasswordWarning) GetEnabledOk() (*bool, bool) {
-	if o == nil || o.Enabled == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
 	return o.Enabled, true
@@ -66,7 +69,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetEnabledOk() (*bool, bool) {
 
 // HasEnabled returns a boolean if a field has been set.
 func (o *LdapProviderAllOfPasswordWarning) HasEnabled() bool {
-	if o != nil && o.Enabled != nil {
+	if o != nil && !IsNil(o.Enabled) {
 		return true
 	}
 
@@ -80,7 +83,7 @@ func (o *LdapProviderAllOfPasswordWarning) SetEnabled(v bool) {
 
 // GetThresholdDays returns the ThresholdDays field value if set, zero value otherwise.
 func (o *LdapProviderAllOfPasswordWarning) GetThresholdDays() int32 {
-	if o == nil || o.ThresholdDays == nil {
+	if o == nil || IsNil(o.ThresholdDays) {
 		var ret int32
 		return ret
 	}
@@ -90,7 +93,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetThresholdDays() int32 {
 // GetThresholdDaysOk returns a tuple with the ThresholdDays field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOfPasswordWarning) GetThresholdDaysOk() (*int32, bool) {
-	if o == nil || o.ThresholdDays == nil {
+	if o == nil || IsNil(o.ThresholdDays) {
 		return nil, false
 	}
 	return o.ThresholdDays, true
@@ -98,7 +101,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetThresholdDaysOk() (*int32, bool) {
 
 // HasThresholdDays returns a boolean if a field has been set.
 func (o *LdapProviderAllOfPasswordWarning) HasThresholdDays() bool {
-	if o != nil && o.ThresholdDays != nil {
+	if o != nil && !IsNil(o.ThresholdDays) {
 		return true
 	}
 
@@ -112,7 +115,7 @@ func (o *LdapProviderAllOfPasswordWarning) SetThresholdDays(v int32) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *LdapProviderAllOfPasswordWarning) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -122,7 +125,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LdapProviderAllOfPasswordWarning) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -130,7 +133,7 @@ func (o *LdapProviderAllOfPasswordWarning) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *LdapProviderAllOfPasswordWarning) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -143,17 +146,25 @@ func (o *LdapProviderAllOfPasswordWarning) SetMessage(v string) {
 }
 
 func (o LdapProviderAllOfPasswordWarning) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Enabled != nil {
-		toSerialize["enabled"] = o.Enabled
-	}
-	if o.ThresholdDays != nil {
-		toSerialize["thresholdDays"] = o.ThresholdDays
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LdapProviderAllOfPasswordWarning) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.ThresholdDays) {
+		toSerialize["thresholdDays"] = o.ThresholdDays
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	return toSerialize, nil
 }
 
 type NullableLdapProviderAllOfPasswordWarning struct {

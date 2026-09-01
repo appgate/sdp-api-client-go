@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BaseEntitlementAccess type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BaseEntitlementAccess{}
+
 // BaseEntitlementAccess Entitlement access details.
 type BaseEntitlementAccess struct {
 	// Applied action to the app.
@@ -46,7 +49,7 @@ func NewBaseEntitlementAccessWithDefaults() *BaseEntitlementAccess {
 
 // GetAccessAction returns the AccessAction field value if set, zero value otherwise.
 func (o *BaseEntitlementAccess) GetAccessAction() string {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *BaseEntitlementAccess) GetAccessAction() string {
 // GetAccessActionOk returns a tuple with the AccessAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementAccess) GetAccessActionOk() (*string, bool) {
-	if o == nil || o.AccessAction == nil {
+	if o == nil || IsNil(o.AccessAction) {
 		return nil, false
 	}
 	return o.AccessAction, true
@@ -64,7 +67,7 @@ func (o *BaseEntitlementAccess) GetAccessActionOk() (*string, bool) {
 
 // HasAccessAction returns a boolean if a field has been set.
 func (o *BaseEntitlementAccess) HasAccessAction() bool {
-	if o != nil && o.AccessAction != nil {
+	if o != nil && !IsNil(o.AccessAction) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *BaseEntitlementAccess) SetAccessAction(v string) {
 
 // GetPorts returns the Ports field value if set, zero value otherwise.
 func (o *BaseEntitlementAccess) GetPorts() []string {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		var ret []string
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *BaseEntitlementAccess) GetPorts() []string {
 // GetPortsOk returns a tuple with the Ports field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BaseEntitlementAccess) GetPortsOk() ([]string, bool) {
-	if o == nil || o.Ports == nil {
+	if o == nil || IsNil(o.Ports) {
 		return nil, false
 	}
 	return o.Ports, true
@@ -96,7 +99,7 @@ func (o *BaseEntitlementAccess) GetPortsOk() ([]string, bool) {
 
 // HasPorts returns a boolean if a field has been set.
 func (o *BaseEntitlementAccess) HasPorts() bool {
-	if o != nil && o.Ports != nil {
+	if o != nil && !IsNil(o.Ports) {
 		return true
 	}
 
@@ -109,14 +112,22 @@ func (o *BaseEntitlementAccess) SetPorts(v []string) {
 }
 
 func (o BaseEntitlementAccess) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.AccessAction != nil {
-		toSerialize["accessAction"] = o.AccessAction
-	}
-	if o.Ports != nil {
-		toSerialize["ports"] = o.Ports
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o BaseEntitlementAccess) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AccessAction) {
+		toSerialize["accessAction"] = o.AccessAction
+	}
+	if !IsNil(o.Ports) {
+		toSerialize["ports"] = o.Ports
+	}
+	return toSerialize, nil
 }
 
 type NullableBaseEntitlementAccess struct {

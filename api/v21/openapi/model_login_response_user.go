@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LoginResponseUser type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LoginResponseUser{}
+
 // LoginResponseUser Information about logged in user, such as username and email address, if exists.
 type LoginResponseUser struct {
 	// Username.
@@ -46,7 +49,7 @@ func NewLoginResponseUserWithDefaults() *LoginResponseUser {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -56,7 +59,7 @@ func (o *LoginResponseUser) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
 	return o.Name, true
@@ -64,7 +67,7 @@ func (o *LoginResponseUser) GetNameOk() (*string, bool) {
 
 // HasName returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *LoginResponseUser) SetName(v string) {
 
 // GetNeedTwoFactorAuth returns the NeedTwoFactorAuth field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetNeedTwoFactorAuth() bool {
-	if o == nil || o.NeedTwoFactorAuth == nil {
+	if o == nil || IsNil(o.NeedTwoFactorAuth) {
 		var ret bool
 		return ret
 	}
@@ -88,7 +91,7 @@ func (o *LoginResponseUser) GetNeedTwoFactorAuth() bool {
 // GetNeedTwoFactorAuthOk returns a tuple with the NeedTwoFactorAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetNeedTwoFactorAuthOk() (*bool, bool) {
-	if o == nil || o.NeedTwoFactorAuth == nil {
+	if o == nil || IsNil(o.NeedTwoFactorAuth) {
 		return nil, false
 	}
 	return o.NeedTwoFactorAuth, true
@@ -96,7 +99,7 @@ func (o *LoginResponseUser) GetNeedTwoFactorAuthOk() (*bool, bool) {
 
 // HasNeedTwoFactorAuth returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasNeedTwoFactorAuth() bool {
-	if o != nil && o.NeedTwoFactorAuth != nil {
+	if o != nil && !IsNil(o.NeedTwoFactorAuth) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *LoginResponseUser) SetNeedTwoFactorAuth(v bool) {
 
 // GetCanAccessAuditLogs returns the CanAccessAuditLogs field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetCanAccessAuditLogs() bool {
-	if o == nil || o.CanAccessAuditLogs == nil {
+	if o == nil || IsNil(o.CanAccessAuditLogs) {
 		var ret bool
 		return ret
 	}
@@ -120,7 +123,7 @@ func (o *LoginResponseUser) GetCanAccessAuditLogs() bool {
 // GetCanAccessAuditLogsOk returns a tuple with the CanAccessAuditLogs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetCanAccessAuditLogsOk() (*bool, bool) {
-	if o == nil || o.CanAccessAuditLogs == nil {
+	if o == nil || IsNil(o.CanAccessAuditLogs) {
 		return nil, false
 	}
 	return o.CanAccessAuditLogs, true
@@ -128,7 +131,7 @@ func (o *LoginResponseUser) GetCanAccessAuditLogsOk() (*bool, bool) {
 
 // HasCanAccessAuditLogs returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasCanAccessAuditLogs() bool {
-	if o != nil && o.CanAccessAuditLogs != nil {
+	if o != nil && !IsNil(o.CanAccessAuditLogs) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *LoginResponseUser) SetCanAccessAuditLogs(v bool) {
 
 // GetPrivileges returns the Privileges field value if set, zero value otherwise.
 func (o *LoginResponseUser) GetPrivileges() []AdministrativePrivilege {
-	if o == nil || o.Privileges == nil {
+	if o == nil || IsNil(o.Privileges) {
 		var ret []AdministrativePrivilege
 		return ret
 	}
@@ -152,7 +155,7 @@ func (o *LoginResponseUser) GetPrivileges() []AdministrativePrivilege {
 // GetPrivilegesOk returns a tuple with the Privileges field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LoginResponseUser) GetPrivilegesOk() ([]AdministrativePrivilege, bool) {
-	if o == nil || o.Privileges == nil {
+	if o == nil || IsNil(o.Privileges) {
 		return nil, false
 	}
 	return o.Privileges, true
@@ -160,7 +163,7 @@ func (o *LoginResponseUser) GetPrivilegesOk() ([]AdministrativePrivilege, bool) 
 
 // HasPrivileges returns a boolean if a field has been set.
 func (o *LoginResponseUser) HasPrivileges() bool {
-	if o != nil && o.Privileges != nil {
+	if o != nil && !IsNil(o.Privileges) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *LoginResponseUser) SetPrivileges(v []AdministrativePrivilege) {
 }
 
 func (o LoginResponseUser) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.NeedTwoFactorAuth != nil {
-		toSerialize["needTwoFactorAuth"] = o.NeedTwoFactorAuth
-	}
-	if o.CanAccessAuditLogs != nil {
-		toSerialize["canAccessAuditLogs"] = o.CanAccessAuditLogs
-	}
-	if o.Privileges != nil {
-		toSerialize["privileges"] = o.Privileges
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LoginResponseUser) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NeedTwoFactorAuth) {
+		toSerialize["needTwoFactorAuth"] = o.NeedTwoFactorAuth
+	}
+	if !IsNil(o.CanAccessAuditLogs) {
+		toSerialize["canAccessAuditLogs"] = o.CanAccessAuditLogs
+	}
+	if !IsNil(o.Privileges) {
+		toSerialize["privileges"] = o.Privileges
+	}
+	return toSerialize, nil
 }
 
 type NullableLoginResponseUser struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ClaimMappingsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ClaimMappingsInner{}
+
 // ClaimMappingsInner struct for ClaimMappingsInner
 type ClaimMappingsInner struct {
 	// The name of the attribute coming from the Identity Provider.
@@ -104,7 +107,7 @@ func (o *ClaimMappingsInner) SetClaimName(v string) {
 
 // GetList returns the List field value if set, zero value otherwise.
 func (o *ClaimMappingsInner) GetList() bool {
-	if o == nil || o.List == nil {
+	if o == nil || IsNil(o.List) {
 		var ret bool
 		return ret
 	}
@@ -114,7 +117,7 @@ func (o *ClaimMappingsInner) GetList() bool {
 // GetListOk returns a tuple with the List field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimMappingsInner) GetListOk() (*bool, bool) {
-	if o == nil || o.List == nil {
+	if o == nil || IsNil(o.List) {
 		return nil, false
 	}
 	return o.List, true
@@ -122,7 +125,7 @@ func (o *ClaimMappingsInner) GetListOk() (*bool, bool) {
 
 // HasList returns a boolean if a field has been set.
 func (o *ClaimMappingsInner) HasList() bool {
-	if o != nil && o.List != nil {
+	if o != nil && !IsNil(o.List) {
 		return true
 	}
 
@@ -136,7 +139,7 @@ func (o *ClaimMappingsInner) SetList(v bool) {
 
 // GetEncrypt returns the Encrypt field value if set, zero value otherwise.
 func (o *ClaimMappingsInner) GetEncrypt() bool {
-	if o == nil || o.Encrypt == nil {
+	if o == nil || IsNil(o.Encrypt) {
 		var ret bool
 		return ret
 	}
@@ -146,7 +149,7 @@ func (o *ClaimMappingsInner) GetEncrypt() bool {
 // GetEncryptOk returns a tuple with the Encrypt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClaimMappingsInner) GetEncryptOk() (*bool, bool) {
-	if o == nil || o.Encrypt == nil {
+	if o == nil || IsNil(o.Encrypt) {
 		return nil, false
 	}
 	return o.Encrypt, true
@@ -154,7 +157,7 @@ func (o *ClaimMappingsInner) GetEncryptOk() (*bool, bool) {
 
 // HasEncrypt returns a boolean if a field has been set.
 func (o *ClaimMappingsInner) HasEncrypt() bool {
-	if o != nil && o.Encrypt != nil {
+	if o != nil && !IsNil(o.Encrypt) {
 		return true
 	}
 
@@ -167,20 +170,24 @@ func (o *ClaimMappingsInner) SetEncrypt(v bool) {
 }
 
 func (o ClaimMappingsInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["attributeName"] = o.AttributeName
-	}
-	if true {
-		toSerialize["claimName"] = o.ClaimName
-	}
-	if o.List != nil {
-		toSerialize["list"] = o.List
-	}
-	if o.Encrypt != nil {
-		toSerialize["encrypt"] = o.Encrypt
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ClaimMappingsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["attributeName"] = o.AttributeName
+	toSerialize["claimName"] = o.ClaimName
+	if !IsNil(o.List) {
+		toSerialize["list"] = o.List
+	}
+	if !IsNil(o.Encrypt) {
+		toSerialize["encrypt"] = o.Encrypt
+	}
+	return toSerialize, nil
 }
 
 type NullableClaimMappingsInner struct {

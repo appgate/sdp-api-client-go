@@ -3,7 +3,7 @@ Appgate SDP Controller REST API
 
 # About   This specification documents the REST API calls for the Appgate SDP Controller.    Please refer to the REST API chapter in the manual or contact Appgate support with any questions about   this functionality. # Getting Started   Requirements for API scripting:   - Access to the Admin/API TLS Connection (default port 8443) of a Controller appliance.     (https://sdphelp.appgate.com/adminguide/appliance-function-configure.html?anchor=admin-api)   - An API user with relevant permissions.     (https://sdphelp.appgate.com/adminguide/administrative-roles-configure.html)   - In order to use the simple login API, Admin MFA must be disabled or the API user must be excluded.     (https://sdphelp.appgate.com/adminguide/mfa-for-admins.html) # Base path   HTTPS requests must be sent to the Admin Interface hostname and port, with **_/admin** path.    For example: **https://appgate.company.com:8443/admin**    All requests must have the **Accept** header as:    **application/vnd.appgate.peer-v22+json**    An exception is made for the **_/admin/version** endpoint which instead expects an **application/json** Accept header. # API Conventions   API conventions are  important to understand and follow strictly.    - While updating objects (via PUT), entire object must be sent with all fields.     - For example, in order to add a remedy method to the condition below:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": []       }       ```     - send the entire object with updated and non-updated fields:       ```       {         \"id\": \"12699e27-b584-464a-81ee-5b4784b6d425\",         \"name\": \"Test\",         \"notes\": \"Making a point\",         \"tags\": [\"test\", \"tag\"],         \"expression\": \"return true;\",         \"remedyMethods\": [{\"type\": \"DisplayMessage\", \"message\": \"test message\"}]       }       ```    - In case Controller returns an error (non-2xx HTTP status code), response body is JSON.     The \"message\" field contains information about the error.     HTTP 422 \"Unprocessable Entity\" has extra `errors` field to list all the issues with specific fields.    - Empty string (\"\") is considered a different value than \"null\" or field being omitted from JSON.     Omitting the field is recommended if no value is intended.     Empty string (\"\") will be almost always rejected as invalid value.    - There are common pattern between many objects:     - **Configuration Objects**: There are many objects with common fields, namely \"id\", \"name\", \"notes\", \"created\"       and \"updated\". These entities are listed, queried, created, updated and deleted in a similar fashion.     - **Distinguished Name**: Users and Devices are identified with what is called Distinguished Names, as used in        LDAP. The distinguished format that identifies a device and a user combination is        \"CN=\\<Device ID\\>,CN=\\<username\\>,OU=\\<Identity Provider Name\\>\". Some objects have the        \"userDistinguishedName\" field, which does not include the CN for Device ID.        This identifies a user on every device.
 
-API version: API version 22.4
+API version: API version 22.5
 Contact: appgatesdp.support@appgate.com
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 	"time"
 )
+
+// checks if the Fido2DeviceAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Fido2DeviceAllOf{}
 
 // Fido2DeviceAllOf struct for Fido2DeviceAllOf
 type Fido2DeviceAllOf struct {
@@ -45,7 +48,7 @@ func NewFido2DeviceAllOfWithDefaults() *Fido2DeviceAllOf {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *Fido2DeviceAllOf) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -63,7 +66,7 @@ func (o *Fido2DeviceAllOf) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *Fido2DeviceAllOf) SetDeviceId(v string) {
 
 // GetDeviceName returns the DeviceName field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetDeviceName() string {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *Fido2DeviceAllOf) GetDeviceName() string {
 // GetDeviceNameOk returns a tuple with the DeviceName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetDeviceNameOk() (*string, bool) {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		return nil, false
 	}
 	return o.DeviceName, true
@@ -95,7 +98,7 @@ func (o *Fido2DeviceAllOf) GetDeviceNameOk() (*string, bool) {
 
 // HasDeviceName returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasDeviceName() bool {
-	if o != nil && o.DeviceName != nil {
+	if o != nil && !IsNil(o.DeviceName) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *Fido2DeviceAllOf) SetDeviceName(v string) {
 
 // GetRegistered returns the Registered field value if set, zero value otherwise.
 func (o *Fido2DeviceAllOf) GetRegistered() time.Time {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		var ret time.Time
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *Fido2DeviceAllOf) GetRegistered() time.Time {
 // GetRegisteredOk returns a tuple with the Registered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2DeviceAllOf) GetRegisteredOk() (*time.Time, bool) {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		return nil, false
 	}
 	return o.Registered, true
@@ -127,7 +130,7 @@ func (o *Fido2DeviceAllOf) GetRegisteredOk() (*time.Time, bool) {
 
 // HasRegistered returns a boolean if a field has been set.
 func (o *Fido2DeviceAllOf) HasRegistered() bool {
-	if o != nil && o.Registered != nil {
+	if o != nil && !IsNil(o.Registered) {
 		return true
 	}
 
@@ -140,17 +143,25 @@ func (o *Fido2DeviceAllOf) SetRegistered(v time.Time) {
 }
 
 func (o Fido2DeviceAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.DeviceName != nil {
-		toSerialize["deviceName"] = o.DeviceName
-	}
-	if o.Registered != nil {
-		toSerialize["registered"] = o.Registered
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Fido2DeviceAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.DeviceName) {
+		toSerialize["deviceName"] = o.DeviceName
+	}
+	if !IsNil(o.Registered) {
+		toSerialize["registered"] = o.Registered
+	}
+	return toSerialize, nil
 }
 
 type NullableFido2DeviceAllOf struct {

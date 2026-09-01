@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Fido2Device type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Fido2Device{}
+
 // Fido2Device struct for Fido2Device
 type Fido2Device struct {
 	// Distinguished name of a user. Format: \"CN=,OU=\"
@@ -51,7 +54,7 @@ func NewFido2DeviceWithDefaults() *Fido2Device {
 
 // GetUserDistinguishedName returns the UserDistinguishedName field value if set, zero value otherwise.
 func (o *Fido2Device) GetUserDistinguishedName() string {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		var ret string
 		return ret
 	}
@@ -61,7 +64,7 @@ func (o *Fido2Device) GetUserDistinguishedName() string {
 // GetUserDistinguishedNameOk returns a tuple with the UserDistinguishedName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetUserDistinguishedNameOk() (*string, bool) {
-	if o == nil || o.UserDistinguishedName == nil {
+	if o == nil || IsNil(o.UserDistinguishedName) {
 		return nil, false
 	}
 	return o.UserDistinguishedName, true
@@ -69,7 +72,7 @@ func (o *Fido2Device) GetUserDistinguishedNameOk() (*string, bool) {
 
 // HasUserDistinguishedName returns a boolean if a field has been set.
 func (o *Fido2Device) HasUserDistinguishedName() bool {
-	if o != nil && o.UserDistinguishedName != nil {
+	if o != nil && !IsNil(o.UserDistinguishedName) {
 		return true
 	}
 
@@ -83,7 +86,7 @@ func (o *Fido2Device) SetUserDistinguishedName(v string) {
 
 // GetUsername returns the Username field value if set, zero value otherwise.
 func (o *Fido2Device) GetUsername() string {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		var ret string
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *Fido2Device) GetUsername() string {
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetUsernameOk() (*string, bool) {
-	if o == nil || o.Username == nil {
+	if o == nil || IsNil(o.Username) {
 		return nil, false
 	}
 	return o.Username, true
@@ -101,7 +104,7 @@ func (o *Fido2Device) GetUsernameOk() (*string, bool) {
 
 // HasUsername returns a boolean if a field has been set.
 func (o *Fido2Device) HasUsername() bool {
-	if o != nil && o.Username != nil {
+	if o != nil && !IsNil(o.Username) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *Fido2Device) SetUsername(v string) {
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise.
 func (o *Fido2Device) GetProviderName() string {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		var ret string
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *Fido2Device) GetProviderName() string {
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetProviderNameOk() (*string, bool) {
-	if o == nil || o.ProviderName == nil {
+	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
 	return o.ProviderName, true
@@ -133,7 +136,7 @@ func (o *Fido2Device) GetProviderNameOk() (*string, bool) {
 
 // HasProviderName returns a boolean if a field has been set.
 func (o *Fido2Device) HasProviderName() bool {
-	if o != nil && o.ProviderName != nil {
+	if o != nil && !IsNil(o.ProviderName) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *Fido2Device) SetProviderName(v string) {
 
 // GetDeviceId returns the DeviceId field value if set, zero value otherwise.
 func (o *Fido2Device) GetDeviceId() string {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		var ret string
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *Fido2Device) GetDeviceId() string {
 // GetDeviceIdOk returns a tuple with the DeviceId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetDeviceIdOk() (*string, bool) {
-	if o == nil || o.DeviceId == nil {
+	if o == nil || IsNil(o.DeviceId) {
 		return nil, false
 	}
 	return o.DeviceId, true
@@ -165,7 +168,7 @@ func (o *Fido2Device) GetDeviceIdOk() (*string, bool) {
 
 // HasDeviceId returns a boolean if a field has been set.
 func (o *Fido2Device) HasDeviceId() bool {
-	if o != nil && o.DeviceId != nil {
+	if o != nil && !IsNil(o.DeviceId) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *Fido2Device) SetDeviceId(v string) {
 
 // GetDeviceName returns the DeviceName field value if set, zero value otherwise.
 func (o *Fido2Device) GetDeviceName() string {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		var ret string
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *Fido2Device) GetDeviceName() string {
 // GetDeviceNameOk returns a tuple with the DeviceName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetDeviceNameOk() (*string, bool) {
-	if o == nil || o.DeviceName == nil {
+	if o == nil || IsNil(o.DeviceName) {
 		return nil, false
 	}
 	return o.DeviceName, true
@@ -197,7 +200,7 @@ func (o *Fido2Device) GetDeviceNameOk() (*string, bool) {
 
 // HasDeviceName returns a boolean if a field has been set.
 func (o *Fido2Device) HasDeviceName() bool {
-	if o != nil && o.DeviceName != nil {
+	if o != nil && !IsNil(o.DeviceName) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *Fido2Device) SetDeviceName(v string) {
 
 // GetRegistered returns the Registered field value if set, zero value otherwise.
 func (o *Fido2Device) GetRegistered() time.Time {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		var ret time.Time
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *Fido2Device) GetRegistered() time.Time {
 // GetRegisteredOk returns a tuple with the Registered field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Fido2Device) GetRegisteredOk() (*time.Time, bool) {
-	if o == nil || o.Registered == nil {
+	if o == nil || IsNil(o.Registered) {
 		return nil, false
 	}
 	return o.Registered, true
@@ -229,7 +232,7 @@ func (o *Fido2Device) GetRegisteredOk() (*time.Time, bool) {
 
 // HasRegistered returns a boolean if a field has been set.
 func (o *Fido2Device) HasRegistered() bool {
-	if o != nil && o.Registered != nil {
+	if o != nil && !IsNil(o.Registered) {
 		return true
 	}
 
@@ -242,26 +245,34 @@ func (o *Fido2Device) SetRegistered(v time.Time) {
 }
 
 func (o Fido2Device) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.UserDistinguishedName != nil {
-		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
-	}
-	if o.Username != nil {
-		toSerialize["username"] = o.Username
-	}
-	if o.ProviderName != nil {
-		toSerialize["providerName"] = o.ProviderName
-	}
-	if o.DeviceId != nil {
-		toSerialize["deviceId"] = o.DeviceId
-	}
-	if o.DeviceName != nil {
-		toSerialize["deviceName"] = o.DeviceName
-	}
-	if o.Registered != nil {
-		toSerialize["registered"] = o.Registered
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Fido2Device) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.UserDistinguishedName) {
+		toSerialize["userDistinguishedName"] = o.UserDistinguishedName
+	}
+	if !IsNil(o.Username) {
+		toSerialize["username"] = o.Username
+	}
+	if !IsNil(o.ProviderName) {
+		toSerialize["providerName"] = o.ProviderName
+	}
+	if !IsNil(o.DeviceId) {
+		toSerialize["deviceId"] = o.DeviceId
+	}
+	if !IsNil(o.DeviceName) {
+		toSerialize["deviceName"] = o.DeviceName
+	}
+	if !IsNil(o.Registered) {
+		toSerialize["registered"] = o.Registered
+	}
+	return toSerialize, nil
 }
 
 type NullableFido2Device struct {

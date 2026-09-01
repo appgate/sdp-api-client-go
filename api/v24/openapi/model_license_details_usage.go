@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the LicenseDetailsUsage type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &LicenseDetailsUsage{}
+
 // LicenseDetailsUsage License usage information.
 type LicenseDetailsUsage struct {
 	// The amount of licensed users in the system at present.
@@ -83,7 +86,7 @@ func NewLicenseDetailsUsageWithDefaults() *LicenseDetailsUsage {
 
 // GetUsers returns the Users field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetUsers() float32 {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		var ret float32
 		return ret
 	}
@@ -93,7 +96,7 @@ func (o *LicenseDetailsUsage) GetUsers() float32 {
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetUsersOk() (*float32, bool) {
-	if o == nil || o.Users == nil {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
@@ -101,7 +104,7 @@ func (o *LicenseDetailsUsage) GetUsersOk() (*float32, bool) {
 
 // HasUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasUsers() bool {
-	if o != nil && o.Users != nil {
+	if o != nil && !IsNil(o.Users) {
 		return true
 	}
 
@@ -115,7 +118,7 @@ func (o *LicenseDetailsUsage) SetUsers(v float32) {
 
 // GetPortalUsers returns the PortalUsers field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetPortalUsers() float32 {
-	if o == nil || o.PortalUsers == nil {
+	if o == nil || IsNil(o.PortalUsers) {
 		var ret float32
 		return ret
 	}
@@ -125,7 +128,7 @@ func (o *LicenseDetailsUsage) GetPortalUsers() float32 {
 // GetPortalUsersOk returns a tuple with the PortalUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetPortalUsersOk() (*float32, bool) {
-	if o == nil || o.PortalUsers == nil {
+	if o == nil || IsNil(o.PortalUsers) {
 		return nil, false
 	}
 	return o.PortalUsers, true
@@ -133,7 +136,7 @@ func (o *LicenseDetailsUsage) GetPortalUsersOk() (*float32, bool) {
 
 // HasPortalUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasPortalUsers() bool {
-	if o != nil && o.PortalUsers != nil {
+	if o != nil && !IsNil(o.PortalUsers) {
 		return true
 	}
 
@@ -147,7 +150,7 @@ func (o *LicenseDetailsUsage) SetPortalUsers(v float32) {
 
 // GetServiceUsers returns the ServiceUsers field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetServiceUsers() float32 {
-	if o == nil || o.ServiceUsers == nil {
+	if o == nil || IsNil(o.ServiceUsers) {
 		var ret float32
 		return ret
 	}
@@ -157,7 +160,7 @@ func (o *LicenseDetailsUsage) GetServiceUsers() float32 {
 // GetServiceUsersOk returns a tuple with the ServiceUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetServiceUsersOk() (*float32, bool) {
-	if o == nil || o.ServiceUsers == nil {
+	if o == nil || IsNil(o.ServiceUsers) {
 		return nil, false
 	}
 	return o.ServiceUsers, true
@@ -165,7 +168,7 @@ func (o *LicenseDetailsUsage) GetServiceUsersOk() (*float32, bool) {
 
 // HasServiceUsers returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasServiceUsers() bool {
-	if o != nil && o.ServiceUsers != nil {
+	if o != nil && !IsNil(o.ServiceUsers) {
 		return true
 	}
 
@@ -179,7 +182,7 @@ func (o *LicenseDetailsUsage) SetServiceUsers(v float32) {
 
 // GetSites returns the Sites field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetSites() float32 {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		var ret float32
 		return ret
 	}
@@ -189,7 +192,7 @@ func (o *LicenseDetailsUsage) GetSites() float32 {
 // GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetSitesOk() (*float32, bool) {
-	if o == nil || o.Sites == nil {
+	if o == nil || IsNil(o.Sites) {
 		return nil, false
 	}
 	return o.Sites, true
@@ -197,7 +200,7 @@ func (o *LicenseDetailsUsage) GetSitesOk() (*float32, bool) {
 
 // HasSites returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasSites() bool {
-	if o != nil && o.Sites != nil {
+	if o != nil && !IsNil(o.Sites) {
 		return true
 	}
 
@@ -211,7 +214,7 @@ func (o *LicenseDetailsUsage) SetSites(v float32) {
 
 // GetConnectorGroups returns the ConnectorGroups field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetConnectorGroups() float32 {
-	if o == nil || o.ConnectorGroups == nil {
+	if o == nil || IsNil(o.ConnectorGroups) {
 		var ret float32
 		return ret
 	}
@@ -221,7 +224,7 @@ func (o *LicenseDetailsUsage) GetConnectorGroups() float32 {
 // GetConnectorGroupsOk returns a tuple with the ConnectorGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetConnectorGroupsOk() (*float32, bool) {
-	if o == nil || o.ConnectorGroups == nil {
+	if o == nil || IsNil(o.ConnectorGroups) {
 		return nil, false
 	}
 	return o.ConnectorGroups, true
@@ -229,7 +232,7 @@ func (o *LicenseDetailsUsage) GetConnectorGroupsOk() (*float32, bool) {
 
 // HasConnectorGroups returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasConnectorGroups() bool {
-	if o != nil && o.ConnectorGroups != nil {
+	if o != nil && !IsNil(o.ConnectorGroups) {
 		return true
 	}
 
@@ -243,7 +246,7 @@ func (o *LicenseDetailsUsage) SetConnectorGroups(v float32) {
 
 // GetClientTypes returns the ClientTypes field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetClientTypes() LicenseDetailsUsageClientTypes {
-	if o == nil || o.ClientTypes == nil {
+	if o == nil || IsNil(o.ClientTypes) {
 		var ret LicenseDetailsUsageClientTypes
 		return ret
 	}
@@ -253,7 +256,7 @@ func (o *LicenseDetailsUsage) GetClientTypes() LicenseDetailsUsageClientTypes {
 // GetClientTypesOk returns a tuple with the ClientTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetClientTypesOk() (*LicenseDetailsUsageClientTypes, bool) {
-	if o == nil || o.ClientTypes == nil {
+	if o == nil || IsNil(o.ClientTypes) {
 		return nil, false
 	}
 	return o.ClientTypes, true
@@ -261,7 +264,7 @@ func (o *LicenseDetailsUsage) GetClientTypesOk() (*LicenseDetailsUsageClientType
 
 // HasClientTypes returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasClientTypes() bool {
-	if o != nil && o.ClientTypes != nil {
+	if o != nil && !IsNil(o.ClientTypes) {
 		return true
 	}
 
@@ -275,7 +278,7 @@ func (o *LicenseDetailsUsage) SetClientTypes(v LicenseDetailsUsageClientTypes) {
 
 // GetMfaProviders returns the MfaProviders field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetMfaProviders() float32 {
-	if o == nil || o.MfaProviders == nil {
+	if o == nil || IsNil(o.MfaProviders) {
 		var ret float32
 		return ret
 	}
@@ -285,7 +288,7 @@ func (o *LicenseDetailsUsage) GetMfaProviders() float32 {
 // GetMfaProvidersOk returns a tuple with the MfaProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetMfaProvidersOk() (*float32, bool) {
-	if o == nil || o.MfaProviders == nil {
+	if o == nil || IsNil(o.MfaProviders) {
 		return nil, false
 	}
 	return o.MfaProviders, true
@@ -293,7 +296,7 @@ func (o *LicenseDetailsUsage) GetMfaProvidersOk() (*float32, bool) {
 
 // HasMfaProviders returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasMfaProviders() bool {
-	if o != nil && o.MfaProviders != nil {
+	if o != nil && !IsNil(o.MfaProviders) {
 		return true
 	}
 
@@ -307,7 +310,7 @@ func (o *LicenseDetailsUsage) SetMfaProviders(v float32) {
 
 // GetDeviceScripts returns the DeviceScripts field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetDeviceScripts() float32 {
-	if o == nil || o.DeviceScripts == nil {
+	if o == nil || IsNil(o.DeviceScripts) {
 		var ret float32
 		return ret
 	}
@@ -317,7 +320,7 @@ func (o *LicenseDetailsUsage) GetDeviceScripts() float32 {
 // GetDeviceScriptsOk returns a tuple with the DeviceScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetDeviceScriptsOk() (*float32, bool) {
-	if o == nil || o.DeviceScripts == nil {
+	if o == nil || IsNil(o.DeviceScripts) {
 		return nil, false
 	}
 	return o.DeviceScripts, true
@@ -325,7 +328,7 @@ func (o *LicenseDetailsUsage) GetDeviceScriptsOk() (*float32, bool) {
 
 // HasDeviceScripts returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasDeviceScripts() bool {
-	if o != nil && o.DeviceScripts != nil {
+	if o != nil && !IsNil(o.DeviceScripts) {
 		return true
 	}
 
@@ -339,7 +342,7 @@ func (o *LicenseDetailsUsage) SetDeviceScripts(v float32) {
 
 // GetCriteriaScripts returns the CriteriaScripts field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetCriteriaScripts() float32 {
-	if o == nil || o.CriteriaScripts == nil {
+	if o == nil || IsNil(o.CriteriaScripts) {
 		var ret float32
 		return ret
 	}
@@ -349,7 +352,7 @@ func (o *LicenseDetailsUsage) GetCriteriaScripts() float32 {
 // GetCriteriaScriptsOk returns a tuple with the CriteriaScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetCriteriaScriptsOk() (*float32, bool) {
-	if o == nil || o.CriteriaScripts == nil {
+	if o == nil || IsNil(o.CriteriaScripts) {
 		return nil, false
 	}
 	return o.CriteriaScripts, true
@@ -357,7 +360,7 @@ func (o *LicenseDetailsUsage) GetCriteriaScriptsOk() (*float32, bool) {
 
 // HasCriteriaScripts returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasCriteriaScripts() bool {
-	if o != nil && o.CriteriaScripts != nil {
+	if o != nil && !IsNil(o.CriteriaScripts) {
 		return true
 	}
 
@@ -371,7 +374,7 @@ func (o *LicenseDetailsUsage) SetCriteriaScripts(v float32) {
 
 // GetEntitlementScripts returns the EntitlementScripts field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetEntitlementScripts() float32 {
-	if o == nil || o.EntitlementScripts == nil {
+	if o == nil || IsNil(o.EntitlementScripts) {
 		var ret float32
 		return ret
 	}
@@ -381,7 +384,7 @@ func (o *LicenseDetailsUsage) GetEntitlementScripts() float32 {
 // GetEntitlementScriptsOk returns a tuple with the EntitlementScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetEntitlementScriptsOk() (*float32, bool) {
-	if o == nil || o.EntitlementScripts == nil {
+	if o == nil || IsNil(o.EntitlementScripts) {
 		return nil, false
 	}
 	return o.EntitlementScripts, true
@@ -389,7 +392,7 @@ func (o *LicenseDetailsUsage) GetEntitlementScriptsOk() (*float32, bool) {
 
 // HasEntitlementScripts returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasEntitlementScripts() bool {
-	if o != nil && o.EntitlementScripts != nil {
+	if o != nil && !IsNil(o.EntitlementScripts) {
 		return true
 	}
 
@@ -403,7 +406,7 @@ func (o *LicenseDetailsUsage) SetEntitlementScripts(v float32) {
 
 // GetUserScripts returns the UserScripts field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetUserScripts() float32 {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		var ret float32
 		return ret
 	}
@@ -413,7 +416,7 @@ func (o *LicenseDetailsUsage) GetUserScripts() float32 {
 // GetUserScriptsOk returns a tuple with the UserScripts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetUserScriptsOk() (*float32, bool) {
-	if o == nil || o.UserScripts == nil {
+	if o == nil || IsNil(o.UserScripts) {
 		return nil, false
 	}
 	return o.UserScripts, true
@@ -421,7 +424,7 @@ func (o *LicenseDetailsUsage) GetUserScriptsOk() (*float32, bool) {
 
 // HasUserScripts returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasUserScripts() bool {
-	if o != nil && o.UserScripts != nil {
+	if o != nil && !IsNil(o.UserScripts) {
 		return true
 	}
 
@@ -435,7 +438,7 @@ func (o *LicenseDetailsUsage) SetUserScripts(v float32) {
 
 // GetFallbackSites returns the FallbackSites field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetFallbackSites() float32 {
-	if o == nil || o.FallbackSites == nil {
+	if o == nil || IsNil(o.FallbackSites) {
 		var ret float32
 		return ret
 	}
@@ -445,7 +448,7 @@ func (o *LicenseDetailsUsage) GetFallbackSites() float32 {
 // GetFallbackSitesOk returns a tuple with the FallbackSites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetFallbackSitesOk() (*float32, bool) {
-	if o == nil || o.FallbackSites == nil {
+	if o == nil || IsNil(o.FallbackSites) {
 		return nil, false
 	}
 	return o.FallbackSites, true
@@ -453,7 +456,7 @@ func (o *LicenseDetailsUsage) GetFallbackSitesOk() (*float32, bool) {
 
 // HasFallbackSites returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasFallbackSites() bool {
-	if o != nil && o.FallbackSites != nil {
+	if o != nil && !IsNil(o.FallbackSites) {
 		return true
 	}
 
@@ -467,7 +470,7 @@ func (o *LicenseDetailsUsage) SetFallbackSites(v float32) {
 
 // GetNearestSites returns the NearestSites field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetNearestSites() float32 {
-	if o == nil || o.NearestSites == nil {
+	if o == nil || IsNil(o.NearestSites) {
 		var ret float32
 		return ret
 	}
@@ -477,7 +480,7 @@ func (o *LicenseDetailsUsage) GetNearestSites() float32 {
 // GetNearestSitesOk returns a tuple with the NearestSites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetNearestSitesOk() (*float32, bool) {
-	if o == nil || o.NearestSites == nil {
+	if o == nil || IsNil(o.NearestSites) {
 		return nil, false
 	}
 	return o.NearestSites, true
@@ -485,7 +488,7 @@ func (o *LicenseDetailsUsage) GetNearestSitesOk() (*float32, bool) {
 
 // HasNearestSites returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasNearestSites() bool {
-	if o != nil && o.NearestSites != nil {
+	if o != nil && !IsNil(o.NearestSites) {
 		return true
 	}
 
@@ -499,7 +502,7 @@ func (o *LicenseDetailsUsage) SetNearestSites(v float32) {
 
 // GetLocalSites returns the LocalSites field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetLocalSites() float32 {
-	if o == nil || o.LocalSites == nil {
+	if o == nil || IsNil(o.LocalSites) {
 		var ret float32
 		return ret
 	}
@@ -509,7 +512,7 @@ func (o *LicenseDetailsUsage) GetLocalSites() float32 {
 // GetLocalSitesOk returns a tuple with the LocalSites field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetLocalSitesOk() (*float32, bool) {
-	if o == nil || o.LocalSites == nil {
+	if o == nil || IsNil(o.LocalSites) {
 		return nil, false
 	}
 	return o.LocalSites, true
@@ -517,7 +520,7 @@ func (o *LicenseDetailsUsage) GetLocalSitesOk() (*float32, bool) {
 
 // HasLocalSites returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasLocalSites() bool {
-	if o != nil && o.LocalSites != nil {
+	if o != nil && !IsNil(o.LocalSites) {
 		return true
 	}
 
@@ -531,7 +534,7 @@ func (o *LicenseDetailsUsage) SetLocalSites(v float32) {
 
 // GetProfileGroups returns the ProfileGroups field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetProfileGroups() float32 {
-	if o == nil || o.ProfileGroups == nil {
+	if o == nil || IsNil(o.ProfileGroups) {
 		var ret float32
 		return ret
 	}
@@ -541,7 +544,7 @@ func (o *LicenseDetailsUsage) GetProfileGroups() float32 {
 // GetProfileGroupsOk returns a tuple with the ProfileGroups field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetProfileGroupsOk() (*float32, bool) {
-	if o == nil || o.ProfileGroups == nil {
+	if o == nil || IsNil(o.ProfileGroups) {
 		return nil, false
 	}
 	return o.ProfileGroups, true
@@ -549,7 +552,7 @@ func (o *LicenseDetailsUsage) GetProfileGroupsOk() (*float32, bool) {
 
 // HasProfileGroups returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasProfileGroups() bool {
-	if o != nil && o.ProfileGroups != nil {
+	if o != nil && !IsNil(o.ProfileGroups) {
 		return true
 	}
 
@@ -563,7 +566,7 @@ func (o *LicenseDetailsUsage) SetProfileGroups(v float32) {
 
 // GetApplianceCustomizations returns the ApplianceCustomizations field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetApplianceCustomizations() float32 {
-	if o == nil || o.ApplianceCustomizations == nil {
+	if o == nil || IsNil(o.ApplianceCustomizations) {
 		var ret float32
 		return ret
 	}
@@ -573,7 +576,7 @@ func (o *LicenseDetailsUsage) GetApplianceCustomizations() float32 {
 // GetApplianceCustomizationsOk returns a tuple with the ApplianceCustomizations field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetApplianceCustomizationsOk() (*float32, bool) {
-	if o == nil || o.ApplianceCustomizations == nil {
+	if o == nil || IsNil(o.ApplianceCustomizations) {
 		return nil, false
 	}
 	return o.ApplianceCustomizations, true
@@ -581,7 +584,7 @@ func (o *LicenseDetailsUsage) GetApplianceCustomizationsOk() (*float32, bool) {
 
 // HasApplianceCustomizations returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasApplianceCustomizations() bool {
-	if o != nil && o.ApplianceCustomizations != nil {
+	if o != nil && !IsNil(o.ApplianceCustomizations) {
 		return true
 	}
 
@@ -595,7 +598,7 @@ func (o *LicenseDetailsUsage) SetApplianceCustomizations(v float32) {
 
 // GetRingfenceRules returns the RingfenceRules field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetRingfenceRules() float32 {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		var ret float32
 		return ret
 	}
@@ -605,7 +608,7 @@ func (o *LicenseDetailsUsage) GetRingfenceRules() float32 {
 // GetRingfenceRulesOk returns a tuple with the RingfenceRules field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetRingfenceRulesOk() (*float32, bool) {
-	if o == nil || o.RingfenceRules == nil {
+	if o == nil || IsNil(o.RingfenceRules) {
 		return nil, false
 	}
 	return o.RingfenceRules, true
@@ -613,7 +616,7 @@ func (o *LicenseDetailsUsage) GetRingfenceRulesOk() (*float32, bool) {
 
 // HasRingfenceRules returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasRingfenceRules() bool {
-	if o != nil && o.RingfenceRules != nil {
+	if o != nil && !IsNil(o.RingfenceRules) {
 		return true
 	}
 
@@ -627,7 +630,7 @@ func (o *LicenseDetailsUsage) SetRingfenceRules(v float32) {
 
 // GetOtpSeeds returns the OtpSeeds field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetOtpSeeds() float32 {
-	if o == nil || o.OtpSeeds == nil {
+	if o == nil || IsNil(o.OtpSeeds) {
 		var ret float32
 		return ret
 	}
@@ -637,7 +640,7 @@ func (o *LicenseDetailsUsage) GetOtpSeeds() float32 {
 // GetOtpSeedsOk returns a tuple with the OtpSeeds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetOtpSeedsOk() (*float32, bool) {
-	if o == nil || o.OtpSeeds == nil {
+	if o == nil || IsNil(o.OtpSeeds) {
 		return nil, false
 	}
 	return o.OtpSeeds, true
@@ -645,7 +648,7 @@ func (o *LicenseDetailsUsage) GetOtpSeedsOk() (*float32, bool) {
 
 // HasOtpSeeds returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasOtpSeeds() bool {
-	if o != nil && o.OtpSeeds != nil {
+	if o != nil && !IsNil(o.OtpSeeds) {
 		return true
 	}
 
@@ -659,7 +662,7 @@ func (o *LicenseDetailsUsage) SetOtpSeeds(v float32) {
 
 // GetFido2Devices returns the Fido2Devices field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetFido2Devices() float32 {
-	if o == nil || o.Fido2Devices == nil {
+	if o == nil || IsNil(o.Fido2Devices) {
 		var ret float32
 		return ret
 	}
@@ -669,7 +672,7 @@ func (o *LicenseDetailsUsage) GetFido2Devices() float32 {
 // GetFido2DevicesOk returns a tuple with the Fido2Devices field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetFido2DevicesOk() (*float32, bool) {
-	if o == nil || o.Fido2Devices == nil {
+	if o == nil || IsNil(o.Fido2Devices) {
 		return nil, false
 	}
 	return o.Fido2Devices, true
@@ -677,7 +680,7 @@ func (o *LicenseDetailsUsage) GetFido2DevicesOk() (*float32, bool) {
 
 // HasFido2Devices returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasFido2Devices() bool {
-	if o != nil && o.Fido2Devices != nil {
+	if o != nil && !IsNil(o.Fido2Devices) {
 		return true
 	}
 
@@ -691,7 +694,7 @@ func (o *LicenseDetailsUsage) SetFido2Devices(v float32) {
 
 // GetSitesConnectedViaBroker returns the SitesConnectedViaBroker field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetSitesConnectedViaBroker() float32 {
-	if o == nil || o.SitesConnectedViaBroker == nil {
+	if o == nil || IsNil(o.SitesConnectedViaBroker) {
 		var ret float32
 		return ret
 	}
@@ -701,7 +704,7 @@ func (o *LicenseDetailsUsage) GetSitesConnectedViaBroker() float32 {
 // GetSitesConnectedViaBrokerOk returns a tuple with the SitesConnectedViaBroker field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetSitesConnectedViaBrokerOk() (*float32, bool) {
-	if o == nil || o.SitesConnectedViaBroker == nil {
+	if o == nil || IsNil(o.SitesConnectedViaBroker) {
 		return nil, false
 	}
 	return o.SitesConnectedViaBroker, true
@@ -709,7 +712,7 @@ func (o *LicenseDetailsUsage) GetSitesConnectedViaBrokerOk() (*float32, bool) {
 
 // HasSitesConnectedViaBroker returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasSitesConnectedViaBroker() bool {
-	if o != nil && o.SitesConnectedViaBroker != nil {
+	if o != nil && !IsNil(o.SitesConnectedViaBroker) {
 		return true
 	}
 
@@ -723,7 +726,7 @@ func (o *LicenseDetailsUsage) SetSitesConnectedViaBroker(v float32) {
 
 // GetIdentityProviders returns the IdentityProviders field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetIdentityProviders() LicenseDetailsUsageIdentityProviders {
-	if o == nil || o.IdentityProviders == nil {
+	if o == nil || IsNil(o.IdentityProviders) {
 		var ret LicenseDetailsUsageIdentityProviders
 		return ret
 	}
@@ -733,7 +736,7 @@ func (o *LicenseDetailsUsage) GetIdentityProviders() LicenseDetailsUsageIdentity
 // GetIdentityProvidersOk returns a tuple with the IdentityProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetIdentityProvidersOk() (*LicenseDetailsUsageIdentityProviders, bool) {
-	if o == nil || o.IdentityProviders == nil {
+	if o == nil || IsNil(o.IdentityProviders) {
 		return nil, false
 	}
 	return o.IdentityProviders, true
@@ -741,7 +744,7 @@ func (o *LicenseDetailsUsage) GetIdentityProvidersOk() (*LicenseDetailsUsageIden
 
 // HasIdentityProviders returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasIdentityProviders() bool {
-	if o != nil && o.IdentityProviders != nil {
+	if o != nil && !IsNil(o.IdentityProviders) {
 		return true
 	}
 
@@ -755,7 +758,7 @@ func (o *LicenseDetailsUsage) SetIdentityProviders(v LicenseDetailsUsageIdentity
 
 // GetPolicies returns the Policies field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetPolicies() LicenseDetailsUsagePolicies {
-	if o == nil || o.Policies == nil {
+	if o == nil || IsNil(o.Policies) {
 		var ret LicenseDetailsUsagePolicies
 		return ret
 	}
@@ -765,7 +768,7 @@ func (o *LicenseDetailsUsage) GetPolicies() LicenseDetailsUsagePolicies {
 // GetPoliciesOk returns a tuple with the Policies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetPoliciesOk() (*LicenseDetailsUsagePolicies, bool) {
-	if o == nil || o.Policies == nil {
+	if o == nil || IsNil(o.Policies) {
 		return nil, false
 	}
 	return o.Policies, true
@@ -773,7 +776,7 @@ func (o *LicenseDetailsUsage) GetPoliciesOk() (*LicenseDetailsUsagePolicies, boo
 
 // HasPolicies returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasPolicies() bool {
-	if o != nil && o.Policies != nil {
+	if o != nil && !IsNil(o.Policies) {
 		return true
 	}
 
@@ -787,7 +790,7 @@ func (o *LicenseDetailsUsage) SetPolicies(v LicenseDetailsUsagePolicies) {
 
 // GetRiskModel returns the RiskModel field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetRiskModel() bool {
-	if o == nil || o.RiskModel == nil {
+	if o == nil || IsNil(o.RiskModel) {
 		var ret bool
 		return ret
 	}
@@ -797,7 +800,7 @@ func (o *LicenseDetailsUsage) GetRiskModel() bool {
 // GetRiskModelOk returns a tuple with the RiskModel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetRiskModelOk() (*bool, bool) {
-	if o == nil || o.RiskModel == nil {
+	if o == nil || IsNil(o.RiskModel) {
 		return nil, false
 	}
 	return o.RiskModel, true
@@ -805,7 +808,7 @@ func (o *LicenseDetailsUsage) GetRiskModelOk() (*bool, bool) {
 
 // HasRiskModel returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasRiskModel() bool {
-	if o != nil && o.RiskModel != nil {
+	if o != nil && !IsNil(o.RiskModel) {
 		return true
 	}
 
@@ -819,7 +822,7 @@ func (o *LicenseDetailsUsage) SetRiskModel(v bool) {
 
 // GetGeoLocationUpdates returns the GeoLocationUpdates field value if set, zero value otherwise.
 func (o *LicenseDetailsUsage) GetGeoLocationUpdates() string {
-	if o == nil || o.GeoLocationUpdates == nil {
+	if o == nil || IsNil(o.GeoLocationUpdates) {
 		var ret string
 		return ret
 	}
@@ -829,7 +832,7 @@ func (o *LicenseDetailsUsage) GetGeoLocationUpdates() string {
 // GetGeoLocationUpdatesOk returns a tuple with the GeoLocationUpdates field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LicenseDetailsUsage) GetGeoLocationUpdatesOk() (*string, bool) {
-	if o == nil || o.GeoLocationUpdates == nil {
+	if o == nil || IsNil(o.GeoLocationUpdates) {
 		return nil, false
 	}
 	return o.GeoLocationUpdates, true
@@ -837,7 +840,7 @@ func (o *LicenseDetailsUsage) GetGeoLocationUpdatesOk() (*string, bool) {
 
 // HasGeoLocationUpdates returns a boolean if a field has been set.
 func (o *LicenseDetailsUsage) HasGeoLocationUpdates() bool {
-	if o != nil && o.GeoLocationUpdates != nil {
+	if o != nil && !IsNil(o.GeoLocationUpdates) {
 		return true
 	}
 
@@ -850,80 +853,88 @@ func (o *LicenseDetailsUsage) SetGeoLocationUpdates(v string) {
 }
 
 func (o LicenseDetailsUsage) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Users != nil {
-		toSerialize["users"] = o.Users
-	}
-	if o.PortalUsers != nil {
-		toSerialize["portalUsers"] = o.PortalUsers
-	}
-	if o.ServiceUsers != nil {
-		toSerialize["serviceUsers"] = o.ServiceUsers
-	}
-	if o.Sites != nil {
-		toSerialize["sites"] = o.Sites
-	}
-	if o.ConnectorGroups != nil {
-		toSerialize["connectorGroups"] = o.ConnectorGroups
-	}
-	if o.ClientTypes != nil {
-		toSerialize["clientTypes"] = o.ClientTypes
-	}
-	if o.MfaProviders != nil {
-		toSerialize["mfaProviders"] = o.MfaProviders
-	}
-	if o.DeviceScripts != nil {
-		toSerialize["deviceScripts"] = o.DeviceScripts
-	}
-	if o.CriteriaScripts != nil {
-		toSerialize["criteriaScripts"] = o.CriteriaScripts
-	}
-	if o.EntitlementScripts != nil {
-		toSerialize["entitlementScripts"] = o.EntitlementScripts
-	}
-	if o.UserScripts != nil {
-		toSerialize["userScripts"] = o.UserScripts
-	}
-	if o.FallbackSites != nil {
-		toSerialize["fallbackSites"] = o.FallbackSites
-	}
-	if o.NearestSites != nil {
-		toSerialize["nearestSites"] = o.NearestSites
-	}
-	if o.LocalSites != nil {
-		toSerialize["localSites"] = o.LocalSites
-	}
-	if o.ProfileGroups != nil {
-		toSerialize["profileGroups"] = o.ProfileGroups
-	}
-	if o.ApplianceCustomizations != nil {
-		toSerialize["applianceCustomizations"] = o.ApplianceCustomizations
-	}
-	if o.RingfenceRules != nil {
-		toSerialize["ringfenceRules"] = o.RingfenceRules
-	}
-	if o.OtpSeeds != nil {
-		toSerialize["otpSeeds"] = o.OtpSeeds
-	}
-	if o.Fido2Devices != nil {
-		toSerialize["fido2Devices"] = o.Fido2Devices
-	}
-	if o.SitesConnectedViaBroker != nil {
-		toSerialize["sitesConnectedViaBroker"] = o.SitesConnectedViaBroker
-	}
-	if o.IdentityProviders != nil {
-		toSerialize["identityProviders"] = o.IdentityProviders
-	}
-	if o.Policies != nil {
-		toSerialize["policies"] = o.Policies
-	}
-	if o.RiskModel != nil {
-		toSerialize["riskModel"] = o.RiskModel
-	}
-	if o.GeoLocationUpdates != nil {
-		toSerialize["geoLocationUpdates"] = o.GeoLocationUpdates
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o LicenseDetailsUsage) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	if !IsNil(o.PortalUsers) {
+		toSerialize["portalUsers"] = o.PortalUsers
+	}
+	if !IsNil(o.ServiceUsers) {
+		toSerialize["serviceUsers"] = o.ServiceUsers
+	}
+	if !IsNil(o.Sites) {
+		toSerialize["sites"] = o.Sites
+	}
+	if !IsNil(o.ConnectorGroups) {
+		toSerialize["connectorGroups"] = o.ConnectorGroups
+	}
+	if !IsNil(o.ClientTypes) {
+		toSerialize["clientTypes"] = o.ClientTypes
+	}
+	if !IsNil(o.MfaProviders) {
+		toSerialize["mfaProviders"] = o.MfaProviders
+	}
+	if !IsNil(o.DeviceScripts) {
+		toSerialize["deviceScripts"] = o.DeviceScripts
+	}
+	if !IsNil(o.CriteriaScripts) {
+		toSerialize["criteriaScripts"] = o.CriteriaScripts
+	}
+	if !IsNil(o.EntitlementScripts) {
+		toSerialize["entitlementScripts"] = o.EntitlementScripts
+	}
+	if !IsNil(o.UserScripts) {
+		toSerialize["userScripts"] = o.UserScripts
+	}
+	if !IsNil(o.FallbackSites) {
+		toSerialize["fallbackSites"] = o.FallbackSites
+	}
+	if !IsNil(o.NearestSites) {
+		toSerialize["nearestSites"] = o.NearestSites
+	}
+	if !IsNil(o.LocalSites) {
+		toSerialize["localSites"] = o.LocalSites
+	}
+	if !IsNil(o.ProfileGroups) {
+		toSerialize["profileGroups"] = o.ProfileGroups
+	}
+	if !IsNil(o.ApplianceCustomizations) {
+		toSerialize["applianceCustomizations"] = o.ApplianceCustomizations
+	}
+	if !IsNil(o.RingfenceRules) {
+		toSerialize["ringfenceRules"] = o.RingfenceRules
+	}
+	if !IsNil(o.OtpSeeds) {
+		toSerialize["otpSeeds"] = o.OtpSeeds
+	}
+	if !IsNil(o.Fido2Devices) {
+		toSerialize["fido2Devices"] = o.Fido2Devices
+	}
+	if !IsNil(o.SitesConnectedViaBroker) {
+		toSerialize["sitesConnectedViaBroker"] = o.SitesConnectedViaBroker
+	}
+	if !IsNil(o.IdentityProviders) {
+		toSerialize["identityProviders"] = o.IdentityProviders
+	}
+	if !IsNil(o.Policies) {
+		toSerialize["policies"] = o.Policies
+	}
+	if !IsNil(o.RiskModel) {
+		toSerialize["riskModel"] = o.RiskModel
+	}
+	if !IsNil(o.GeoLocationUpdates) {
+		toSerialize["geoLocationUpdates"] = o.GeoLocationUpdates
+	}
+	return toSerialize, nil
 }
 
 type NullableLicenseDetailsUsage struct {

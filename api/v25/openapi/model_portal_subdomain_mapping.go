@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PortalSubdomainMapping type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PortalSubdomainMapping{}
+
 // PortalSubdomainMapping Maps a short public subdomain alias to an internal app domain.
 type PortalSubdomainMapping struct {
 	// The leftmost DNS label of the public alias (e.g. 'crm'). Must be a valid DNS label: letters, digits, and hyphens only, no leading or trailing hyphen, maximum 63 characters.
@@ -91,14 +94,18 @@ func (o *PortalSubdomainMapping) SetAppDomain(v string) {
 }
 
 func (o PortalSubdomainMapping) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["subdomain"] = o.Subdomain
-	}
-	if true {
-		toSerialize["appDomain"] = o.AppDomain
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PortalSubdomainMapping) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["subdomain"] = o.Subdomain
+	toSerialize["appDomain"] = o.AppDomain
+	return toSerialize, nil
 }
 
 type NullablePortalSubdomainMapping struct {

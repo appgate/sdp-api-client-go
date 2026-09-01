@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CredentialsSecretCreateAllOf type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CredentialsSecretCreateAllOf{}
+
 // CredentialsSecretCreateAllOf Represents a username/password credentials Secret.
 type CredentialsSecretCreateAllOf struct {
 	// Username for the credentials.
@@ -91,14 +94,18 @@ func (o *CredentialsSecretCreateAllOf) SetPassword(v string) {
 }
 
 func (o CredentialsSecretCreateAllOf) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["username"] = o.Username
-	}
-	if true {
-		toSerialize["password"] = o.Password
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o CredentialsSecretCreateAllOf) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["username"] = o.Username
+	toSerialize["password"] = o.Password
+	return toSerialize, nil
 }
 
 type NullableCredentialsSecretCreateAllOf struct {

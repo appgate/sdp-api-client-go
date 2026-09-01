@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DashboardSessionsDto type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DashboardSessionsDto{}
+
 // DashboardSessionsDto struct for DashboardSessionsDto
 type DashboardSessionsDto struct {
 	// The total count of active sessions.
@@ -43,7 +46,7 @@ func NewDashboardSessionsDtoWithDefaults() *DashboardSessionsDto {
 
 // GetTotalCount returns the TotalCount field value if set, zero value otherwise.
 func (o *DashboardSessionsDto) GetTotalCount() int32 {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		var ret int32
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *DashboardSessionsDto) GetTotalCount() int32 {
 // GetTotalCountOk returns a tuple with the TotalCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DashboardSessionsDto) GetTotalCountOk() (*int32, bool) {
-	if o == nil || o.TotalCount == nil {
+	if o == nil || IsNil(o.TotalCount) {
 		return nil, false
 	}
 	return o.TotalCount, true
@@ -61,7 +64,7 @@ func (o *DashboardSessionsDto) GetTotalCountOk() (*int32, bool) {
 
 // HasTotalCount returns a boolean if a field has been set.
 func (o *DashboardSessionsDto) HasTotalCount() bool {
-	if o != nil && o.TotalCount != nil {
+	if o != nil && !IsNil(o.TotalCount) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *DashboardSessionsDto) SetTotalCount(v int32) {
 
 // GetGeoIpData returns the GeoIpData field value if set, zero value otherwise.
 func (o *DashboardSessionsDto) GetGeoIpData() []SessionGeoData {
-	if o == nil || o.GeoIpData == nil {
+	if o == nil || IsNil(o.GeoIpData) {
 		var ret []SessionGeoData
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *DashboardSessionsDto) GetGeoIpData() []SessionGeoData {
 // GetGeoIpDataOk returns a tuple with the GeoIpData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DashboardSessionsDto) GetGeoIpDataOk() ([]SessionGeoData, bool) {
-	if o == nil || o.GeoIpData == nil {
+	if o == nil || IsNil(o.GeoIpData) {
 		return nil, false
 	}
 	return o.GeoIpData, true
@@ -93,7 +96,7 @@ func (o *DashboardSessionsDto) GetGeoIpDataOk() ([]SessionGeoData, bool) {
 
 // HasGeoIpData returns a boolean if a field has been set.
 func (o *DashboardSessionsDto) HasGeoIpData() bool {
-	if o != nil && o.GeoIpData != nil {
+	if o != nil && !IsNil(o.GeoIpData) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *DashboardSessionsDto) SetGeoIpData(v []SessionGeoData) {
 
 // GetVersions returns the Versions field value if set, zero value otherwise.
 func (o *DashboardSessionsDto) GetVersions() map[string]ClientVersionSupport {
-	if o == nil || o.Versions == nil {
+	if o == nil || IsNil(o.Versions) {
 		var ret map[string]ClientVersionSupport
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *DashboardSessionsDto) GetVersions() map[string]ClientVersionSupport {
 // GetVersionsOk returns a tuple with the Versions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DashboardSessionsDto) GetVersionsOk() (*map[string]ClientVersionSupport, bool) {
-	if o == nil || o.Versions == nil {
+	if o == nil || IsNil(o.Versions) {
 		return nil, false
 	}
 	return o.Versions, true
@@ -125,7 +128,7 @@ func (o *DashboardSessionsDto) GetVersionsOk() (*map[string]ClientVersionSupport
 
 // HasVersions returns a boolean if a field has been set.
 func (o *DashboardSessionsDto) HasVersions() bool {
-	if o != nil && o.Versions != nil {
+	if o != nil && !IsNil(o.Versions) {
 		return true
 	}
 
@@ -138,17 +141,25 @@ func (o *DashboardSessionsDto) SetVersions(v map[string]ClientVersionSupport) {
 }
 
 func (o DashboardSessionsDto) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.TotalCount != nil {
-		toSerialize["totalCount"] = o.TotalCount
-	}
-	if o.GeoIpData != nil {
-		toSerialize["geoIpData"] = o.GeoIpData
-	}
-	if o.Versions != nil {
-		toSerialize["versions"] = o.Versions
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DashboardSessionsDto) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TotalCount) {
+		toSerialize["totalCount"] = o.TotalCount
+	}
+	if !IsNil(o.GeoIpData) {
+		toSerialize["geoIpData"] = o.GeoIpData
+	}
+	if !IsNil(o.Versions) {
+		toSerialize["versions"] = o.Versions
+	}
+	return toSerialize, nil
 }
 
 type NullableDashboardSessionsDto struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SiteAllOfNameResolutionAzureResolvers type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SiteAllOfNameResolutionAzureResolvers{}
+
 // SiteAllOfNameResolutionAzureResolvers struct for SiteAllOfNameResolutionAzureResolvers
 type SiteAllOfNameResolutionAzureResolvers struct {
 	// Identifier name. Has no functional effect.
@@ -87,7 +90,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetName(v string) {
 
 // GetUpdateInterval returns the UpdateInterval field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetUpdateInterval() int32 {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		var ret int32
 		return ret
 	}
@@ -97,7 +100,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetUpdateInterval() int32 {
 // GetUpdateIntervalOk returns a tuple with the UpdateInterval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetUpdateIntervalOk() (*int32, bool) {
-	if o == nil || o.UpdateInterval == nil {
+	if o == nil || IsNil(o.UpdateInterval) {
 		return nil, false
 	}
 	return o.UpdateInterval, true
@@ -105,7 +108,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetUpdateIntervalOk() (*int32, b
 
 // HasUpdateInterval returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasUpdateInterval() bool {
-	if o != nil && o.UpdateInterval != nil {
+	if o != nil && !IsNil(o.UpdateInterval) {
 		return true
 	}
 
@@ -119,7 +122,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetUpdateInterval(v int32) {
 
 // GetUseManagedIdentities returns the UseManagedIdentities field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetUseManagedIdentities() bool {
-	if o == nil || o.UseManagedIdentities == nil {
+	if o == nil || IsNil(o.UseManagedIdentities) {
 		var ret bool
 		return ret
 	}
@@ -129,7 +132,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetUseManagedIdentities() bool {
 // GetUseManagedIdentitiesOk returns a tuple with the UseManagedIdentities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetUseManagedIdentitiesOk() (*bool, bool) {
-	if o == nil || o.UseManagedIdentities == nil {
+	if o == nil || IsNil(o.UseManagedIdentities) {
 		return nil, false
 	}
 	return o.UseManagedIdentities, true
@@ -137,7 +140,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetUseManagedIdentitiesOk() (*bo
 
 // HasUseManagedIdentities returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasUseManagedIdentities() bool {
-	if o != nil && o.UseManagedIdentities != nil {
+	if o != nil && !IsNil(o.UseManagedIdentities) {
 		return true
 	}
 
@@ -151,7 +154,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetUseManagedIdentities(v bool) 
 
 // GetTenantId returns the TenantId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetTenantId() string {
-	if o == nil || o.TenantId == nil {
+	if o == nil || IsNil(o.TenantId) {
 		var ret string
 		return ret
 	}
@@ -161,7 +164,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetTenantId() string {
 // GetTenantIdOk returns a tuple with the TenantId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetTenantIdOk() (*string, bool) {
-	if o == nil || o.TenantId == nil {
+	if o == nil || IsNil(o.TenantId) {
 		return nil, false
 	}
 	return o.TenantId, true
@@ -169,7 +172,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetTenantIdOk() (*string, bool) 
 
 // HasTenantId returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasTenantId() bool {
-	if o != nil && o.TenantId != nil {
+	if o != nil && !IsNil(o.TenantId) {
 		return true
 	}
 
@@ -183,7 +186,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetTenantId(v string) {
 
 // GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetClientId() string {
-	if o == nil || o.ClientId == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
@@ -193,7 +196,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetClientId() string {
 // GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetClientIdOk() (*string, bool) {
-	if o == nil || o.ClientId == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
 	return o.ClientId, true
@@ -201,7 +204,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetClientIdOk() (*string, bool) 
 
 // HasClientId returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasClientId() bool {
-	if o != nil && o.ClientId != nil {
+	if o != nil && !IsNil(o.ClientId) {
 		return true
 	}
 
@@ -215,7 +218,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetClientId(v string) {
 
 // GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSecret() string {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		var ret string
 		return ret
 	}
@@ -225,7 +228,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSecret() string {
 // GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSecretOk() (*string, bool) {
-	if o == nil || o.Secret == nil {
+	if o == nil || IsNil(o.Secret) {
 		return nil, false
 	}
 	return o.Secret, true
@@ -233,7 +236,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSecretOk() (*string, bool) {
 
 // HasSecret returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasSecret() bool {
-	if o != nil && o.Secret != nil {
+	if o != nil && !IsNil(o.Secret) {
 		return true
 	}
 
@@ -247,7 +250,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetSecret(v string) {
 
 // GetSubscriptionIds returns the SubscriptionIds field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIds() []string {
-	if o == nil || o.SubscriptionIds == nil {
+	if o == nil || IsNil(o.SubscriptionIds) {
 		var ret []string
 		return ret
 	}
@@ -257,7 +260,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIds() []string {
 // GetSubscriptionIdsOk returns a tuple with the SubscriptionIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdsOk() ([]string, bool) {
-	if o == nil || o.SubscriptionIds == nil {
+	if o == nil || IsNil(o.SubscriptionIds) {
 		return nil, false
 	}
 	return o.SubscriptionIds, true
@@ -265,7 +268,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdsOk() ([]string
 
 // HasSubscriptionIds returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasSubscriptionIds() bool {
-	if o != nil && o.SubscriptionIds != nil {
+	if o != nil && !IsNil(o.SubscriptionIds) {
 		return true
 	}
 
@@ -279,7 +282,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetSubscriptionIds(v []string) {
 
 // GetSubscriptionIdAutoDiscovery returns the SubscriptionIdAutoDiscovery field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdAutoDiscovery() bool {
-	if o == nil || o.SubscriptionIdAutoDiscovery == nil {
+	if o == nil || IsNil(o.SubscriptionIdAutoDiscovery) {
 		var ret bool
 		return ret
 	}
@@ -289,7 +292,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdAutoDiscovery()
 // GetSubscriptionIdAutoDiscoveryOk returns a tuple with the SubscriptionIdAutoDiscovery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdAutoDiscoveryOk() (*bool, bool) {
-	if o == nil || o.SubscriptionIdAutoDiscovery == nil {
+	if o == nil || IsNil(o.SubscriptionIdAutoDiscovery) {
 		return nil, false
 	}
 	return o.SubscriptionIdAutoDiscovery, true
@@ -297,7 +300,7 @@ func (o *SiteAllOfNameResolutionAzureResolvers) GetSubscriptionIdAutoDiscoveryOk
 
 // HasSubscriptionIdAutoDiscovery returns a boolean if a field has been set.
 func (o *SiteAllOfNameResolutionAzureResolvers) HasSubscriptionIdAutoDiscovery() bool {
-	if o != nil && o.SubscriptionIdAutoDiscovery != nil {
+	if o != nil && !IsNil(o.SubscriptionIdAutoDiscovery) {
 		return true
 	}
 
@@ -310,32 +313,38 @@ func (o *SiteAllOfNameResolutionAzureResolvers) SetSubscriptionIdAutoDiscovery(v
 }
 
 func (o SiteAllOfNameResolutionAzureResolvers) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if o.UpdateInterval != nil {
-		toSerialize["updateInterval"] = o.UpdateInterval
-	}
-	if o.UseManagedIdentities != nil {
-		toSerialize["useManagedIdentities"] = o.UseManagedIdentities
-	}
-	if o.TenantId != nil {
-		toSerialize["tenantId"] = o.TenantId
-	}
-	if o.ClientId != nil {
-		toSerialize["clientId"] = o.ClientId
-	}
-	if o.Secret != nil {
-		toSerialize["secret"] = o.Secret
-	}
-	if o.SubscriptionIds != nil {
-		toSerialize["subscriptionIds"] = o.SubscriptionIds
-	}
-	if o.SubscriptionIdAutoDiscovery != nil {
-		toSerialize["subscriptionIdAutoDiscovery"] = o.SubscriptionIdAutoDiscovery
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SiteAllOfNameResolutionAzureResolvers) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	if !IsNil(o.UpdateInterval) {
+		toSerialize["updateInterval"] = o.UpdateInterval
+	}
+	if !IsNil(o.UseManagedIdentities) {
+		toSerialize["useManagedIdentities"] = o.UseManagedIdentities
+	}
+	if !IsNil(o.TenantId) {
+		toSerialize["tenantId"] = o.TenantId
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["clientId"] = o.ClientId
+	}
+	if !IsNil(o.Secret) {
+		toSerialize["secret"] = o.Secret
+	}
+	if !IsNil(o.SubscriptionIds) {
+		toSerialize["subscriptionIds"] = o.SubscriptionIds
+	}
+	if !IsNil(o.SubscriptionIdAutoDiscovery) {
+		toSerialize["subscriptionIdAutoDiscovery"] = o.SubscriptionIdAutoDiscovery
+	}
+	return toSerialize, nil
 }
 
 type NullableSiteAllOfNameResolutionAzureResolvers struct {
