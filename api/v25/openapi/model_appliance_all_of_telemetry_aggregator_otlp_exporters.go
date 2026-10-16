@@ -25,13 +25,7 @@ type ApplianceAllOfTelemetryAggregatorOtlpExporters struct {
 	// The OTLP endpoint to export telemetry to.
 	Endpoint string `json:"endpoint"`
 	// The OTLP transport protocol.
-	Protocol string `json:"protocol"`
-	// Whether to connect to the endpoint without transport security.
-	Insecure *bool `json:"insecure,omitempty"`
-	// Username for basic authentication against the OTLP endpoint.
-	Username *string `json:"username,omitempty"`
-	// Password for basic authentication against the OTLP endpoint.
-	Password *string `json:"password,omitempty"`
+	Protocol *string `json:"protocol,omitempty"`
 	// Additional HTTP headers to send with each OTLP request. Header names must be unique within an exporter.
 	Headers []ApplianceAllOfTelemetryAggregatorHeaders `json:"headers,omitempty"`
 	// Whether to enable compression on the OTLP transport.
@@ -44,13 +38,12 @@ type ApplianceAllOfTelemetryAggregatorOtlpExporters struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewApplianceAllOfTelemetryAggregatorOtlpExporters(name string, endpoint string, protocol string) *ApplianceAllOfTelemetryAggregatorOtlpExporters {
+func NewApplianceAllOfTelemetryAggregatorOtlpExporters(name string, endpoint string) *ApplianceAllOfTelemetryAggregatorOtlpExporters {
 	this := ApplianceAllOfTelemetryAggregatorOtlpExporters{}
 	this.Name = name
 	this.Endpoint = endpoint
-	this.Protocol = protocol
-	var insecure bool = false
-	this.Insecure = &insecure
+	var protocol string = "http"
+	this.Protocol = &protocol
 	var compression bool = true
 	this.Compression = &compression
 	var encoding string = "proto"
@@ -63,8 +56,8 @@ func NewApplianceAllOfTelemetryAggregatorOtlpExporters(name string, endpoint str
 // but it doesn't guarantee that properties required by API are set
 func NewApplianceAllOfTelemetryAggregatorOtlpExportersWithDefaults() *ApplianceAllOfTelemetryAggregatorOtlpExporters {
 	this := ApplianceAllOfTelemetryAggregatorOtlpExporters{}
-	var insecure bool = false
-	this.Insecure = &insecure
+	var protocol string = "http"
+	this.Protocol = &protocol
 	var compression bool = true
 	this.Compression = &compression
 	var encoding string = "proto"
@@ -120,124 +113,36 @@ func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetEndpoint(v string) {
 	o.Endpoint = v
 }
 
-// GetProtocol returns the Protocol field value
+// GetProtocol returns the Protocol field value if set, zero value otherwise.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetProtocol() string {
-	if o == nil {
+	if o == nil || IsNil(o.Protocol) {
 		var ret string
 		return ret
 	}
-
-	return o.Protocol
+	return *o.Protocol
 }
 
-// GetProtocolOk returns a tuple with the Protocol field value
+// GetProtocolOk returns a tuple with the Protocol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetProtocolOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Protocol) {
 		return nil, false
 	}
-	return &o.Protocol, true
+	return o.Protocol, true
 }
 
-// SetProtocol sets field value
+// HasProtocol returns a boolean if a field has been set.
+func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasProtocol() bool {
+	if o != nil && !IsNil(o.Protocol) {
+		return true
+	}
+
+	return false
+}
+
+// SetProtocol gets a reference to the given string and assigns it to the Protocol field.
 func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetProtocol(v string) {
-	o.Protocol = v
-}
-
-// GetInsecure returns the Insecure field value if set, zero value otherwise.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecure() bool {
-	if o == nil || IsNil(o.Insecure) {
-		var ret bool
-		return ret
-	}
-	return *o.Insecure
-}
-
-// GetInsecureOk returns a tuple with the Insecure field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetInsecureOk() (*bool, bool) {
-	if o == nil || IsNil(o.Insecure) {
-		return nil, false
-	}
-	return o.Insecure, true
-}
-
-// HasInsecure returns a boolean if a field has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasInsecure() bool {
-	if o != nil && !IsNil(o.Insecure) {
-		return true
-	}
-
-	return false
-}
-
-// SetInsecure gets a reference to the given bool and assigns it to the Insecure field.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetInsecure(v bool) {
-	o.Insecure = &v
-}
-
-// GetUsername returns the Username field value if set, zero value otherwise.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsername() string {
-	if o == nil || IsNil(o.Username) {
-		var ret string
-		return ret
-	}
-	return *o.Username
-}
-
-// GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetUsernameOk() (*string, bool) {
-	if o == nil || IsNil(o.Username) {
-		return nil, false
-	}
-	return o.Username, true
-}
-
-// HasUsername returns a boolean if a field has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasUsername() bool {
-	if o != nil && !IsNil(o.Username) {
-		return true
-	}
-
-	return false
-}
-
-// SetUsername gets a reference to the given string and assigns it to the Username field.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetUsername(v string) {
-	o.Username = &v
-}
-
-// GetPassword returns the Password field value if set, zero value otherwise.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPassword() string {
-	if o == nil || IsNil(o.Password) {
-		var ret string
-		return ret
-	}
-	return *o.Password
-}
-
-// GetPasswordOk returns a tuple with the Password field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) GetPasswordOk() (*string, bool) {
-	if o == nil || IsNil(o.Password) {
-		return nil, false
-	}
-	return o.Password, true
-}
-
-// HasPassword returns a boolean if a field has been set.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) HasPassword() bool {
-	if o != nil && !IsNil(o.Password) {
-		return true
-	}
-
-	return false
-}
-
-// SetPassword gets a reference to the given string and assigns it to the Password field.
-func (o *ApplianceAllOfTelemetryAggregatorOtlpExporters) SetPassword(v string) {
-	o.Password = &v
+	o.Protocol = &v
 }
 
 // GetHeaders returns the Headers field value if set, zero value otherwise.
@@ -348,15 +253,8 @@ func (o ApplianceAllOfTelemetryAggregatorOtlpExporters) ToMap() (map[string]inte
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["endpoint"] = o.Endpoint
-	toSerialize["protocol"] = o.Protocol
-	if !IsNil(o.Insecure) {
-		toSerialize["insecure"] = o.Insecure
-	}
-	if !IsNil(o.Username) {
-		toSerialize["username"] = o.Username
-	}
-	if !IsNil(o.Password) {
-		toSerialize["password"] = o.Password
+	if !IsNil(o.Protocol) {
+		toSerialize["protocol"] = o.Protocol
 	}
 	if !IsNil(o.Headers) {
 		toSerialize["headers"] = o.Headers

@@ -24,6 +24,8 @@ type PortalSubdomainMapping struct {
 	Subdomain string `json:"subdomain"`
 	// The fully-qualified internal app domain that traffic is proxied to. Does not need to be publicly resolvable. It is resolved through the client's VPN tunnel.
 	AppDomain string `json:"appDomain"`
+	// Whether to verify the app domain's TLS certificate when proxying. Set to false if the app server uses a self-signed or internally-signed certificate. Defaults to true.
+	VerifyUpstreamCertificate *bool `json:"verifyUpstreamCertificate,omitempty"`
 }
 
 // NewPortalSubdomainMapping instantiates a new PortalSubdomainMapping object
@@ -34,6 +36,8 @@ func NewPortalSubdomainMapping(subdomain string, appDomain string) *PortalSubdom
 	this := PortalSubdomainMapping{}
 	this.Subdomain = subdomain
 	this.AppDomain = appDomain
+	var verifyUpstreamCertificate bool = true
+	this.VerifyUpstreamCertificate = &verifyUpstreamCertificate
 	return &this
 }
 
@@ -42,6 +46,8 @@ func NewPortalSubdomainMapping(subdomain string, appDomain string) *PortalSubdom
 // but it doesn't guarantee that properties required by API are set
 func NewPortalSubdomainMappingWithDefaults() *PortalSubdomainMapping {
 	this := PortalSubdomainMapping{}
+	var verifyUpstreamCertificate bool = true
+	this.VerifyUpstreamCertificate = &verifyUpstreamCertificate
 	return &this
 }
 
@@ -93,6 +99,38 @@ func (o *PortalSubdomainMapping) SetAppDomain(v string) {
 	o.AppDomain = v
 }
 
+// GetVerifyUpstreamCertificate returns the VerifyUpstreamCertificate field value if set, zero value otherwise.
+func (o *PortalSubdomainMapping) GetVerifyUpstreamCertificate() bool {
+	if o == nil || IsNil(o.VerifyUpstreamCertificate) {
+		var ret bool
+		return ret
+	}
+	return *o.VerifyUpstreamCertificate
+}
+
+// GetVerifyUpstreamCertificateOk returns a tuple with the VerifyUpstreamCertificate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PortalSubdomainMapping) GetVerifyUpstreamCertificateOk() (*bool, bool) {
+	if o == nil || IsNil(o.VerifyUpstreamCertificate) {
+		return nil, false
+	}
+	return o.VerifyUpstreamCertificate, true
+}
+
+// HasVerifyUpstreamCertificate returns a boolean if a field has been set.
+func (o *PortalSubdomainMapping) HasVerifyUpstreamCertificate() bool {
+	if o != nil && !IsNil(o.VerifyUpstreamCertificate) {
+		return true
+	}
+
+	return false
+}
+
+// SetVerifyUpstreamCertificate gets a reference to the given bool and assigns it to the VerifyUpstreamCertificate field.
+func (o *PortalSubdomainMapping) SetVerifyUpstreamCertificate(v bool) {
+	o.VerifyUpstreamCertificate = &v
+}
+
 func (o PortalSubdomainMapping) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -105,6 +143,9 @@ func (o PortalSubdomainMapping) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["subdomain"] = o.Subdomain
 	toSerialize["appDomain"] = o.AppDomain
+	if !IsNil(o.VerifyUpstreamCertificate) {
+		toSerialize["verifyUpstreamCertificate"] = o.VerifyUpstreamCertificate
+	}
 	return toSerialize, nil
 }
 

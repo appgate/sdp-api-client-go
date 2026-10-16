@@ -24,6 +24,8 @@ type ApplianceAllOfNetworkingIpv6Dhcp struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// Whether to use DHCP for setting IPv6 DNS settings on the Appliance.
 	Dns *bool `json:"dns,omitempty"`
+	// Whether to use DHCP for setting IPv6 default gateway on the appliance.
+	Routers *bool `json:"routers,omitempty"`
 	// Whether to use DHCP for setting NTP on the appliance.
 	Ntp *bool `json:"ntp,omitempty"`
 	// Whether to use DHCP for setting MTU on the appliance.
@@ -111,6 +113,38 @@ func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetDns(v bool) {
 	o.Dns = &v
 }
 
+// GetRouters returns the Routers field value if set, zero value otherwise.
+func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetRouters() bool {
+	if o == nil || IsNil(o.Routers) {
+		var ret bool
+		return ret
+	}
+	return *o.Routers
+}
+
+// GetRoutersOk returns a tuple with the Routers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetRoutersOk() (*bool, bool) {
+	if o == nil || IsNil(o.Routers) {
+		return nil, false
+	}
+	return o.Routers, true
+}
+
+// HasRouters returns a boolean if a field has been set.
+func (o *ApplianceAllOfNetworkingIpv6Dhcp) HasRouters() bool {
+	if o != nil && !IsNil(o.Routers) {
+		return true
+	}
+
+	return false
+}
+
+// SetRouters gets a reference to the given bool and assigns it to the Routers field.
+func (o *ApplianceAllOfNetworkingIpv6Dhcp) SetRouters(v bool) {
+	o.Routers = &v
+}
+
 // GetNtp returns the Ntp field value if set, zero value otherwise.
 func (o *ApplianceAllOfNetworkingIpv6Dhcp) GetNtp() bool {
 	if o == nil || IsNil(o.Ntp) {
@@ -190,6 +224,9 @@ func (o ApplianceAllOfNetworkingIpv6Dhcp) ToMap() (map[string]interface{}, error
 	}
 	if !IsNil(o.Dns) {
 		toSerialize["dns"] = o.Dns
+	}
+	if !IsNil(o.Routers) {
+		toSerialize["routers"] = o.Routers
 	}
 	if !IsNil(o.Ntp) {
 		toSerialize["ntp"] = o.Ntp

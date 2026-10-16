@@ -46,6 +46,8 @@ Create or update multiple service users in a single request.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiServiceUsersBulkUpsertPostRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersBulkUpsertPost(ctx context.Context) ApiServiceUsersBulkUpsertPostRequest {
 	return ApiServiceUsersBulkUpsertPostRequest{
@@ -57,6 +59,8 @@ func (a *ServiceUsersApiService) ServiceUsersBulkUpsertPost(ctx context.Context)
 // Execute executes the request
 //
 //	@return BulkUpsertReport
+//
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersBulkUpsertPostExecute(r ApiServiceUsersBulkUpsertPostRequest) (*BulkUpsertReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -240,6 +244,8 @@ List all Service Users visible to current user.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiServiceUsersGetRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiServiceUsersGetRequest {
 	return ApiServiceUsersGetRequest{
@@ -251,6 +257,8 @@ func (a *ServiceUsersApiService) ServiceUsersGet(ctx context.Context) ApiService
 // Execute executes the request
 //
 //	@return ServiceUserList
+//
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersGetExecute(r ApiServiceUsersGetRequest) (*ServiceUserList, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -400,6 +408,8 @@ Delete a specific Service User.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
 	@return ApiServiceUsersIdDeleteRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx context.Context, id string) ApiServiceUsersIdDeleteRequest {
 	return ApiServiceUsersIdDeleteRequest{
@@ -410,6 +420,7 @@ func (a *ServiceUsersApiService) ServiceUsersIdDelete(ctx context.Context, id st
 }
 
 // Execute executes the request
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersIdDeleteExecute(r ApiServiceUsersIdDeleteRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
@@ -546,6 +557,8 @@ Get a specific Service User.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
 	@return ApiServiceUsersIdGetRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id string) ApiServiceUsersIdGetRequest {
 	return ApiServiceUsersIdGetRequest{
@@ -558,6 +571,8 @@ func (a *ServiceUsersApiService) ServiceUsersIdGet(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return ServiceUser
+//
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersIdGetExecute(r ApiServiceUsersIdGetRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
@@ -711,6 +726,8 @@ Update an existing Service User.
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param id ID of the object.
 	@return ApiServiceUsersIdPutRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id string) ApiServiceUsersIdPutRequest {
 	return ApiServiceUsersIdPutRequest{
@@ -723,6 +740,8 @@ func (a *ServiceUsersApiService) ServiceUsersIdPut(ctx context.Context, id strin
 // Execute executes the request
 //
 //	@return ServiceUser
+//
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersIdPutExecute(r ApiServiceUsersIdPutRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
@@ -901,6 +920,8 @@ Create a new Service User.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiServiceUsersPostRequest
+
+Deprecated
 */
 func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServiceUsersPostRequest {
 	return ApiServiceUsersPostRequest{
@@ -912,6 +933,8 @@ func (a *ServiceUsersApiService) ServiceUsersPost(ctx context.Context) ApiServic
 // Execute executes the request
 //
 //	@return ServiceUser
+//
+// Deprecated
 func (a *ServiceUsersApiService) ServiceUsersPostExecute(r ApiServiceUsersPostRequest) (*ServiceUser, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost

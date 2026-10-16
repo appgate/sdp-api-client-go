@@ -36,8 +36,6 @@ const (
 	GRE_UP      IpAccessSubtype = "gre_up"
 	GRE_DOWN    IpAccessSubtype = "gre_down"
 	HTTP_UP     IpAccessSubtype = "http_up"
-	SSH_UP      IpAccessSubtype = "ssh_up"
-	RDP_UP      IpAccessSubtype = "rdp_up"
 )
 
 // All allowed values of IpAccessSubtype enum
@@ -57,8 +55,6 @@ var AllowedIpAccessSubtypeEnumValues = []IpAccessSubtype{
 	"gre_up",
 	"gre_down",
 	"http_up",
-	"ssh_up",
-	"rdp_up",
 }
 
 func (v *IpAccessSubtype) UnmarshalJSON(src []byte) error {

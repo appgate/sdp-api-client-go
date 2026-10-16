@@ -25,13 +25,15 @@ type License struct {
 	MaxUsers *float32 `json:"maxUsers,omitempty"`
 	// The maximum Portal users allowed by the license.
 	MaxPortalUsers *float32 `json:"maxPortalUsers,omitempty"`
-	// The maximum Service users allowed by the license.
+	// The maximum Service users allowed by the license. Deprecated, use Local Users instead.
+	// Deprecated
 	MaxServiceUsers *float32 `json:"maxServiceUsers,omitempty"`
 	// Number of hours User Licenses will be reserved for users before they are reclaimable by others.
 	UsersLeaseTimeHours *float32 `json:"usersLeaseTimeHours,omitempty"`
 	// Number of hours User Licenses will be reserved for Portal users before they are reclaimable by others.
 	PortalUsersLeaseTimeHours *float32 `json:"portalUsersLeaseTimeHours,omitempty"`
-	// Number of hours User Licenses will be reserved for Service users before they are reclaimable by others.
+	// Number of hours User Licenses will be reserved for Service users before they are reclaimable by others. Deprecated, use Local Users instead.
+	// Deprecated
 	ServiceUsersLeaseTimeHours *float32 `json:"serviceUsersLeaseTimeHours,omitempty"`
 	// The maximum sites allowed by the license. If it's the usage details, then it's the amount of sites in the system at present.
 	MaxSites *float32 `json:"maxSites,omitempty"`
@@ -39,13 +41,33 @@ type License struct {
 	MaxConnectorGroups *float32 `json:"maxConnectorGroups,omitempty"`
 	// Whether the Risk Engine feature is enabled.
 	RiskEngine *bool `json:"riskEngine,omitempty"`
-	// Whether the Application Discovery feature is enabled.
+	// Whether the Optimizer features are enabled.
+	Optimizer *bool `json:"optimizer,omitempty"`
+	// The old license feature name for Optimizer, kept for backward compatibility. Deprecated as of 7.0.
+	// Deprecated
 	ApplicationDiscovery *bool `json:"applicationDiscovery,omitempty"`
-	// Whether the Digital Experience Monitoring feature is enabled.
+	// Whether the Observability features are enabled.
+	Observability *bool `json:"observability,omitempty"`
+	// The old license feature name for Observability, kept for backward compatibility. Deprecated as of 7.0.
+	// Deprecated
 	DigitalExperienceMonitoring *bool `json:"digitalExperienceMonitoring,omitempty"`
 	// Whether the Collective Replication feature is enabled.
-	CollectiveReplication *bool                               `json:"collectiveReplication,omitempty"`
-	VerifiedDnsNames      *LicenseEntitlementVerifiedDnsNames `json:"verifiedDnsNames,omitempty"`
+	CollectiveReplication *bool `json:"collectiveReplication,omitempty"`
+	// Whether the Operational Technology features are enabled.
+	OperationalTechnology *bool `json:"operationalTechnology,omitempty"`
+	// The maximum amount of brokered access allowed by the license.
+	MaxBrokeredAccess *float32 `json:"maxBrokeredAccess,omitempty"`
+	// Number of hours Brokered Access will be reserved for users before they are reclaimable by others.
+	BrokeredAccessLeaseTimeHours *float32 `json:"brokeredAccessLeaseTimeHours,omitempty"`
+	// The maximum amount of session governance allowed by the license.
+	MaxSessionGovernance *float32 `json:"maxSessionGovernance,omitempty"`
+	// Number of hours Session Governance will be reserved for users before they are reclaimable by others.
+	SessionGovernanceLeaseTimeHours *float32 `json:"sessionGovernanceLeaseTimeHours,omitempty"`
+	// The maximum Single Site client users allowed by the license.
+	MaxUsersSingleSite *float32 `json:"maxUsersSingleSite,omitempty"`
+	// Number of hours Single Site User Licenses will be reserved for users before they are reclaimable by others.
+	UsersSingleSiteLeaseTimeHours *float32                            `json:"usersSingleSiteLeaseTimeHours,omitempty"`
+	VerifiedDnsNames              *LicenseEntitlementVerifiedDnsNames `json:"verifiedDnsNames,omitempty"`
 	// Unique ID for the license.
 	Id *string `json:"id,omitempty"`
 	// License version.
@@ -142,6 +164,7 @@ func (o *License) SetMaxPortalUsers(v float32) {
 }
 
 // GetMaxServiceUsers returns the MaxServiceUsers field value if set, zero value otherwise.
+// Deprecated
 func (o *License) GetMaxServiceUsers() float32 {
 	if o == nil || IsNil(o.MaxServiceUsers) {
 		var ret float32
@@ -152,6 +175,7 @@ func (o *License) GetMaxServiceUsers() float32 {
 
 // GetMaxServiceUsersOk returns a tuple with the MaxServiceUsers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *License) GetMaxServiceUsersOk() (*float32, bool) {
 	if o == nil || IsNil(o.MaxServiceUsers) {
 		return nil, false
@@ -169,6 +193,7 @@ func (o *License) HasMaxServiceUsers() bool {
 }
 
 // SetMaxServiceUsers gets a reference to the given float32 and assigns it to the MaxServiceUsers field.
+// Deprecated
 func (o *License) SetMaxServiceUsers(v float32) {
 	o.MaxServiceUsers = &v
 }
@@ -238,6 +263,7 @@ func (o *License) SetPortalUsersLeaseTimeHours(v float32) {
 }
 
 // GetServiceUsersLeaseTimeHours returns the ServiceUsersLeaseTimeHours field value if set, zero value otherwise.
+// Deprecated
 func (o *License) GetServiceUsersLeaseTimeHours() float32 {
 	if o == nil || IsNil(o.ServiceUsersLeaseTimeHours) {
 		var ret float32
@@ -248,6 +274,7 @@ func (o *License) GetServiceUsersLeaseTimeHours() float32 {
 
 // GetServiceUsersLeaseTimeHoursOk returns a tuple with the ServiceUsersLeaseTimeHours field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *License) GetServiceUsersLeaseTimeHoursOk() (*float32, bool) {
 	if o == nil || IsNil(o.ServiceUsersLeaseTimeHours) {
 		return nil, false
@@ -265,6 +292,7 @@ func (o *License) HasServiceUsersLeaseTimeHours() bool {
 }
 
 // SetServiceUsersLeaseTimeHours gets a reference to the given float32 and assigns it to the ServiceUsersLeaseTimeHours field.
+// Deprecated
 func (o *License) SetServiceUsersLeaseTimeHours(v float32) {
 	o.ServiceUsersLeaseTimeHours = &v
 }
@@ -365,7 +393,40 @@ func (o *License) SetRiskEngine(v bool) {
 	o.RiskEngine = &v
 }
 
+// GetOptimizer returns the Optimizer field value if set, zero value otherwise.
+func (o *License) GetOptimizer() bool {
+	if o == nil || IsNil(o.Optimizer) {
+		var ret bool
+		return ret
+	}
+	return *o.Optimizer
+}
+
+// GetOptimizerOk returns a tuple with the Optimizer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetOptimizerOk() (*bool, bool) {
+	if o == nil || IsNil(o.Optimizer) {
+		return nil, false
+	}
+	return o.Optimizer, true
+}
+
+// HasOptimizer returns a boolean if a field has been set.
+func (o *License) HasOptimizer() bool {
+	if o != nil && !IsNil(o.Optimizer) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptimizer gets a reference to the given bool and assigns it to the Optimizer field.
+func (o *License) SetOptimizer(v bool) {
+	o.Optimizer = &v
+}
+
 // GetApplicationDiscovery returns the ApplicationDiscovery field value if set, zero value otherwise.
+// Deprecated
 func (o *License) GetApplicationDiscovery() bool {
 	if o == nil || IsNil(o.ApplicationDiscovery) {
 		var ret bool
@@ -376,6 +437,7 @@ func (o *License) GetApplicationDiscovery() bool {
 
 // GetApplicationDiscoveryOk returns a tuple with the ApplicationDiscovery field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *License) GetApplicationDiscoveryOk() (*bool, bool) {
 	if o == nil || IsNil(o.ApplicationDiscovery) {
 		return nil, false
@@ -393,11 +455,45 @@ func (o *License) HasApplicationDiscovery() bool {
 }
 
 // SetApplicationDiscovery gets a reference to the given bool and assigns it to the ApplicationDiscovery field.
+// Deprecated
 func (o *License) SetApplicationDiscovery(v bool) {
 	o.ApplicationDiscovery = &v
 }
 
+// GetObservability returns the Observability field value if set, zero value otherwise.
+func (o *License) GetObservability() bool {
+	if o == nil || IsNil(o.Observability) {
+		var ret bool
+		return ret
+	}
+	return *o.Observability
+}
+
+// GetObservabilityOk returns a tuple with the Observability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetObservabilityOk() (*bool, bool) {
+	if o == nil || IsNil(o.Observability) {
+		return nil, false
+	}
+	return o.Observability, true
+}
+
+// HasObservability returns a boolean if a field has been set.
+func (o *License) HasObservability() bool {
+	if o != nil && !IsNil(o.Observability) {
+		return true
+	}
+
+	return false
+}
+
+// SetObservability gets a reference to the given bool and assigns it to the Observability field.
+func (o *License) SetObservability(v bool) {
+	o.Observability = &v
+}
+
 // GetDigitalExperienceMonitoring returns the DigitalExperienceMonitoring field value if set, zero value otherwise.
+// Deprecated
 func (o *License) GetDigitalExperienceMonitoring() bool {
 	if o == nil || IsNil(o.DigitalExperienceMonitoring) {
 		var ret bool
@@ -408,6 +504,7 @@ func (o *License) GetDigitalExperienceMonitoring() bool {
 
 // GetDigitalExperienceMonitoringOk returns a tuple with the DigitalExperienceMonitoring field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *License) GetDigitalExperienceMonitoringOk() (*bool, bool) {
 	if o == nil || IsNil(o.DigitalExperienceMonitoring) {
 		return nil, false
@@ -425,6 +522,7 @@ func (o *License) HasDigitalExperienceMonitoring() bool {
 }
 
 // SetDigitalExperienceMonitoring gets a reference to the given bool and assigns it to the DigitalExperienceMonitoring field.
+// Deprecated
 func (o *License) SetDigitalExperienceMonitoring(v bool) {
 	o.DigitalExperienceMonitoring = &v
 }
@@ -459,6 +557,230 @@ func (o *License) HasCollectiveReplication() bool {
 // SetCollectiveReplication gets a reference to the given bool and assigns it to the CollectiveReplication field.
 func (o *License) SetCollectiveReplication(v bool) {
 	o.CollectiveReplication = &v
+}
+
+// GetOperationalTechnology returns the OperationalTechnology field value if set, zero value otherwise.
+func (o *License) GetOperationalTechnology() bool {
+	if o == nil || IsNil(o.OperationalTechnology) {
+		var ret bool
+		return ret
+	}
+	return *o.OperationalTechnology
+}
+
+// GetOperationalTechnologyOk returns a tuple with the OperationalTechnology field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetOperationalTechnologyOk() (*bool, bool) {
+	if o == nil || IsNil(o.OperationalTechnology) {
+		return nil, false
+	}
+	return o.OperationalTechnology, true
+}
+
+// HasOperationalTechnology returns a boolean if a field has been set.
+func (o *License) HasOperationalTechnology() bool {
+	if o != nil && !IsNil(o.OperationalTechnology) {
+		return true
+	}
+
+	return false
+}
+
+// SetOperationalTechnology gets a reference to the given bool and assigns it to the OperationalTechnology field.
+func (o *License) SetOperationalTechnology(v bool) {
+	o.OperationalTechnology = &v
+}
+
+// GetMaxBrokeredAccess returns the MaxBrokeredAccess field value if set, zero value otherwise.
+func (o *License) GetMaxBrokeredAccess() float32 {
+	if o == nil || IsNil(o.MaxBrokeredAccess) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxBrokeredAccess
+}
+
+// GetMaxBrokeredAccessOk returns a tuple with the MaxBrokeredAccess field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetMaxBrokeredAccessOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxBrokeredAccess) {
+		return nil, false
+	}
+	return o.MaxBrokeredAccess, true
+}
+
+// HasMaxBrokeredAccess returns a boolean if a field has been set.
+func (o *License) HasMaxBrokeredAccess() bool {
+	if o != nil && !IsNil(o.MaxBrokeredAccess) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxBrokeredAccess gets a reference to the given float32 and assigns it to the MaxBrokeredAccess field.
+func (o *License) SetMaxBrokeredAccess(v float32) {
+	o.MaxBrokeredAccess = &v
+}
+
+// GetBrokeredAccessLeaseTimeHours returns the BrokeredAccessLeaseTimeHours field value if set, zero value otherwise.
+func (o *License) GetBrokeredAccessLeaseTimeHours() float32 {
+	if o == nil || IsNil(o.BrokeredAccessLeaseTimeHours) {
+		var ret float32
+		return ret
+	}
+	return *o.BrokeredAccessLeaseTimeHours
+}
+
+// GetBrokeredAccessLeaseTimeHoursOk returns a tuple with the BrokeredAccessLeaseTimeHours field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetBrokeredAccessLeaseTimeHoursOk() (*float32, bool) {
+	if o == nil || IsNil(o.BrokeredAccessLeaseTimeHours) {
+		return nil, false
+	}
+	return o.BrokeredAccessLeaseTimeHours, true
+}
+
+// HasBrokeredAccessLeaseTimeHours returns a boolean if a field has been set.
+func (o *License) HasBrokeredAccessLeaseTimeHours() bool {
+	if o != nil && !IsNil(o.BrokeredAccessLeaseTimeHours) {
+		return true
+	}
+
+	return false
+}
+
+// SetBrokeredAccessLeaseTimeHours gets a reference to the given float32 and assigns it to the BrokeredAccessLeaseTimeHours field.
+func (o *License) SetBrokeredAccessLeaseTimeHours(v float32) {
+	o.BrokeredAccessLeaseTimeHours = &v
+}
+
+// GetMaxSessionGovernance returns the MaxSessionGovernance field value if set, zero value otherwise.
+func (o *License) GetMaxSessionGovernance() float32 {
+	if o == nil || IsNil(o.MaxSessionGovernance) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxSessionGovernance
+}
+
+// GetMaxSessionGovernanceOk returns a tuple with the MaxSessionGovernance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetMaxSessionGovernanceOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxSessionGovernance) {
+		return nil, false
+	}
+	return o.MaxSessionGovernance, true
+}
+
+// HasMaxSessionGovernance returns a boolean if a field has been set.
+func (o *License) HasMaxSessionGovernance() bool {
+	if o != nil && !IsNil(o.MaxSessionGovernance) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxSessionGovernance gets a reference to the given float32 and assigns it to the MaxSessionGovernance field.
+func (o *License) SetMaxSessionGovernance(v float32) {
+	o.MaxSessionGovernance = &v
+}
+
+// GetSessionGovernanceLeaseTimeHours returns the SessionGovernanceLeaseTimeHours field value if set, zero value otherwise.
+func (o *License) GetSessionGovernanceLeaseTimeHours() float32 {
+	if o == nil || IsNil(o.SessionGovernanceLeaseTimeHours) {
+		var ret float32
+		return ret
+	}
+	return *o.SessionGovernanceLeaseTimeHours
+}
+
+// GetSessionGovernanceLeaseTimeHoursOk returns a tuple with the SessionGovernanceLeaseTimeHours field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetSessionGovernanceLeaseTimeHoursOk() (*float32, bool) {
+	if o == nil || IsNil(o.SessionGovernanceLeaseTimeHours) {
+		return nil, false
+	}
+	return o.SessionGovernanceLeaseTimeHours, true
+}
+
+// HasSessionGovernanceLeaseTimeHours returns a boolean if a field has been set.
+func (o *License) HasSessionGovernanceLeaseTimeHours() bool {
+	if o != nil && !IsNil(o.SessionGovernanceLeaseTimeHours) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionGovernanceLeaseTimeHours gets a reference to the given float32 and assigns it to the SessionGovernanceLeaseTimeHours field.
+func (o *License) SetSessionGovernanceLeaseTimeHours(v float32) {
+	o.SessionGovernanceLeaseTimeHours = &v
+}
+
+// GetMaxUsersSingleSite returns the MaxUsersSingleSite field value if set, zero value otherwise.
+func (o *License) GetMaxUsersSingleSite() float32 {
+	if o == nil || IsNil(o.MaxUsersSingleSite) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxUsersSingleSite
+}
+
+// GetMaxUsersSingleSiteOk returns a tuple with the MaxUsersSingleSite field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetMaxUsersSingleSiteOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxUsersSingleSite) {
+		return nil, false
+	}
+	return o.MaxUsersSingleSite, true
+}
+
+// HasMaxUsersSingleSite returns a boolean if a field has been set.
+func (o *License) HasMaxUsersSingleSite() bool {
+	if o != nil && !IsNil(o.MaxUsersSingleSite) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxUsersSingleSite gets a reference to the given float32 and assigns it to the MaxUsersSingleSite field.
+func (o *License) SetMaxUsersSingleSite(v float32) {
+	o.MaxUsersSingleSite = &v
+}
+
+// GetUsersSingleSiteLeaseTimeHours returns the UsersSingleSiteLeaseTimeHours field value if set, zero value otherwise.
+func (o *License) GetUsersSingleSiteLeaseTimeHours() float32 {
+	if o == nil || IsNil(o.UsersSingleSiteLeaseTimeHours) {
+		var ret float32
+		return ret
+	}
+	return *o.UsersSingleSiteLeaseTimeHours
+}
+
+// GetUsersSingleSiteLeaseTimeHoursOk returns a tuple with the UsersSingleSiteLeaseTimeHours field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *License) GetUsersSingleSiteLeaseTimeHoursOk() (*float32, bool) {
+	if o == nil || IsNil(o.UsersSingleSiteLeaseTimeHours) {
+		return nil, false
+	}
+	return o.UsersSingleSiteLeaseTimeHours, true
+}
+
+// HasUsersSingleSiteLeaseTimeHours returns a boolean if a field has been set.
+func (o *License) HasUsersSingleSiteLeaseTimeHours() bool {
+	if o != nil && !IsNil(o.UsersSingleSiteLeaseTimeHours) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsersSingleSiteLeaseTimeHours gets a reference to the given float32 and assigns it to the UsersSingleSiteLeaseTimeHours field.
+func (o *License) SetUsersSingleSiteLeaseTimeHours(v float32) {
+	o.UsersSingleSiteLeaseTimeHours = &v
 }
 
 // GetVerifiedDnsNames returns the VerifiedDnsNames field value if set, zero value otherwise.
@@ -722,14 +1044,41 @@ func (o License) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RiskEngine) {
 		toSerialize["riskEngine"] = o.RiskEngine
 	}
+	if !IsNil(o.Optimizer) {
+		toSerialize["optimizer"] = o.Optimizer
+	}
 	if !IsNil(o.ApplicationDiscovery) {
 		toSerialize["applicationDiscovery"] = o.ApplicationDiscovery
+	}
+	if !IsNil(o.Observability) {
+		toSerialize["observability"] = o.Observability
 	}
 	if !IsNil(o.DigitalExperienceMonitoring) {
 		toSerialize["digitalExperienceMonitoring"] = o.DigitalExperienceMonitoring
 	}
 	if !IsNil(o.CollectiveReplication) {
 		toSerialize["collectiveReplication"] = o.CollectiveReplication
+	}
+	if !IsNil(o.OperationalTechnology) {
+		toSerialize["operationalTechnology"] = o.OperationalTechnology
+	}
+	if !IsNil(o.MaxBrokeredAccess) {
+		toSerialize["maxBrokeredAccess"] = o.MaxBrokeredAccess
+	}
+	if !IsNil(o.BrokeredAccessLeaseTimeHours) {
+		toSerialize["brokeredAccessLeaseTimeHours"] = o.BrokeredAccessLeaseTimeHours
+	}
+	if !IsNil(o.MaxSessionGovernance) {
+		toSerialize["maxSessionGovernance"] = o.MaxSessionGovernance
+	}
+	if !IsNil(o.SessionGovernanceLeaseTimeHours) {
+		toSerialize["sessionGovernanceLeaseTimeHours"] = o.SessionGovernanceLeaseTimeHours
+	}
+	if !IsNil(o.MaxUsersSingleSite) {
+		toSerialize["maxUsersSingleSite"] = o.MaxUsersSingleSite
+	}
+	if !IsNil(o.UsersSingleSiteLeaseTimeHours) {
+		toSerialize["usersSingleSiteLeaseTimeHours"] = o.UsersSingleSiteLeaseTimeHours
 	}
 	if !IsNil(o.VerifiedDnsNames) {
 		toSerialize["verifiedDnsNames"] = o.VerifiedDnsNames

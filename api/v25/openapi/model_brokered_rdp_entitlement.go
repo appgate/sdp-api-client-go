@@ -53,17 +53,26 @@ type BrokeredRdpEntitlement struct {
 	// Hostname or IP address of the target host.
 	Host string `json:"host"`
 	// Port number of the target host.
-	Port             int32             `json:"port"`
-	SessionRecording *SessionRecording `json:"sessionRecording,omitempty"`
-	// ID of the Credentials secret used for injection at session establishment. The secret must be of the Credentials or SSH Key type.
-	Credentials *string          `json:"credentials,omitempty"`
-	AppShortcut BrokeredShortcut `json:"appShortcut"`
+	Port int32 `json:"port"`
+	// Whether sessions to this entitlement are recorded.
+	RecordingEnabled *bool `json:"recordingEnabled,omitempty"`
+	// Whether sessions to this entitlement can be monitored live.
+	MonitoringEnabled *bool `json:"monitoringEnabled,omitempty"`
+	// Optional message shown to the user before the session starts. When set, the client requires the user to accept it before connecting.
+	DisclosureMessage *string `json:"disclosureMessage,omitempty"`
+	// Name of the Credentials secret used for injection at session establishment. The secret must be of the Credentials or SSH Key type.
+	CredentialsName *string          `json:"credentialsName,omitempty"`
+	AppShortcut     BrokeredShortcut `json:"appShortcut"`
 	// Whether clipboard sharing between Client and remote host is permitted for this Entitlement.
 	ClipboardSharing *bool `json:"clipboardSharing,omitempty"`
 	// Whether file transfers between Client and remote host are permitted for this Entitlement.
 	FileTransfer *bool `json:"fileTransfer,omitempty"`
 	// Idle-session timeout in minutes. The session is terminated after this many minutes without user activity.
 	IdleTimeoutMinutes *int32 `json:"idleTimeoutMinutes,omitempty"`
+	// Whether this Entitlement's host is exempt from Entitlement Optimization analysis. When true, traffic to the host is not considered when calculating the optimization score.
+	HostOptimizationExempted *bool `json:"hostOptimizationExempted,omitempty"`
+	// Whether this Entitlement's port is exempt from Entitlement Optimization analysis. When true, traffic on the port is not considered when calculating the optimization score.
+	PortOptimizationExempted *bool `json:"portOptimizationExempted,omitempty"`
 	// Screen resolution to negotiate with the RDP server for the session.
 	Resolution *string `json:"resolution,omitempty"`
 	// Color depth, in bits per pixel, to negotiate with the RDP server for the session.
@@ -93,6 +102,10 @@ func NewBrokeredRdpEntitlement(name string, site string, conditions []string, ho
 	this.Conditions = conditions
 	this.Host = host
 	this.Port = port
+	var recordingEnabled bool = false
+	this.RecordingEnabled = &recordingEnabled
+	var monitoringEnabled bool = false
+	this.MonitoringEnabled = &monitoringEnabled
 	this.AppShortcut = appShortcut
 	var clipboardSharing bool = false
 	this.ClipboardSharing = &clipboardSharing
@@ -100,11 +113,15 @@ func NewBrokeredRdpEntitlement(name string, site string, conditions []string, ho
 	this.FileTransfer = &fileTransfer
 	var idleTimeoutMinutes int32 = 30
 	this.IdleTimeoutMinutes = &idleTimeoutMinutes
+	var hostOptimizationExempted bool = false
+	this.HostOptimizationExempted = &hostOptimizationExempted
+	var portOptimizationExempted bool = false
+	this.PortOptimizationExempted = &portOptimizationExempted
 	var resolution string = "1280x720"
 	this.Resolution = &resolution
 	var colorDepth int32 = 16
 	this.ColorDepth = &colorDepth
-	var securityMode string = "nla"
+	var securityMode string = "any"
 	this.SecurityMode = &securityMode
 	var audioRedirection bool = false
 	this.AudioRedirection = &audioRedirection
@@ -120,17 +137,25 @@ func NewBrokeredRdpEntitlementWithDefaults() *BrokeredRdpEntitlement {
 	this.Disabled = &disabled
 	var conditionLogic string = "and"
 	this.ConditionLogic = &conditionLogic
+	var recordingEnabled bool = false
+	this.RecordingEnabled = &recordingEnabled
+	var monitoringEnabled bool = false
+	this.MonitoringEnabled = &monitoringEnabled
 	var clipboardSharing bool = false
 	this.ClipboardSharing = &clipboardSharing
 	var fileTransfer bool = false
 	this.FileTransfer = &fileTransfer
 	var idleTimeoutMinutes int32 = 30
 	this.IdleTimeoutMinutes = &idleTimeoutMinutes
+	var hostOptimizationExempted bool = false
+	this.HostOptimizationExempted = &hostOptimizationExempted
+	var portOptimizationExempted bool = false
+	this.PortOptimizationExempted = &portOptimizationExempted
 	var resolution string = "1280x720"
 	this.Resolution = &resolution
 	var colorDepth int32 = 16
 	this.ColorDepth = &colorDepth
-	var securityMode string = "nla"
+	var securityMode string = "any"
 	this.SecurityMode = &securityMode
 	var audioRedirection bool = false
 	this.AudioRedirection = &audioRedirection
@@ -641,68 +666,132 @@ func (o *BrokeredRdpEntitlement) SetPort(v int32) {
 	o.Port = v
 }
 
-// GetSessionRecording returns the SessionRecording field value if set, zero value otherwise.
-func (o *BrokeredRdpEntitlement) GetSessionRecording() SessionRecording {
-	if o == nil || IsNil(o.SessionRecording) {
-		var ret SessionRecording
+// GetRecordingEnabled returns the RecordingEnabled field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetRecordingEnabled() bool {
+	if o == nil || IsNil(o.RecordingEnabled) {
+		var ret bool
 		return ret
 	}
-	return *o.SessionRecording
+	return *o.RecordingEnabled
 }
 
-// GetSessionRecordingOk returns a tuple with the SessionRecording field value if set, nil otherwise
+// GetRecordingEnabledOk returns a tuple with the RecordingEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrokeredRdpEntitlement) GetSessionRecordingOk() (*SessionRecording, bool) {
-	if o == nil || IsNil(o.SessionRecording) {
+func (o *BrokeredRdpEntitlement) GetRecordingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.RecordingEnabled) {
 		return nil, false
 	}
-	return o.SessionRecording, true
+	return o.RecordingEnabled, true
 }
 
-// HasSessionRecording returns a boolean if a field has been set.
-func (o *BrokeredRdpEntitlement) HasSessionRecording() bool {
-	if o != nil && !IsNil(o.SessionRecording) {
+// HasRecordingEnabled returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasRecordingEnabled() bool {
+	if o != nil && !IsNil(o.RecordingEnabled) {
 		return true
 	}
 
 	return false
 }
 
-// SetSessionRecording gets a reference to the given SessionRecording and assigns it to the SessionRecording field.
-func (o *BrokeredRdpEntitlement) SetSessionRecording(v SessionRecording) {
-	o.SessionRecording = &v
+// SetRecordingEnabled gets a reference to the given bool and assigns it to the RecordingEnabled field.
+func (o *BrokeredRdpEntitlement) SetRecordingEnabled(v bool) {
+	o.RecordingEnabled = &v
 }
 
-// GetCredentials returns the Credentials field value if set, zero value otherwise.
-func (o *BrokeredRdpEntitlement) GetCredentials() string {
-	if o == nil || IsNil(o.Credentials) {
+// GetMonitoringEnabled returns the MonitoringEnabled field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetMonitoringEnabled() bool {
+	if o == nil || IsNil(o.MonitoringEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.MonitoringEnabled
+}
+
+// GetMonitoringEnabledOk returns a tuple with the MonitoringEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredRdpEntitlement) GetMonitoringEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.MonitoringEnabled) {
+		return nil, false
+	}
+	return o.MonitoringEnabled, true
+}
+
+// HasMonitoringEnabled returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasMonitoringEnabled() bool {
+	if o != nil && !IsNil(o.MonitoringEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetMonitoringEnabled gets a reference to the given bool and assigns it to the MonitoringEnabled field.
+func (o *BrokeredRdpEntitlement) SetMonitoringEnabled(v bool) {
+	o.MonitoringEnabled = &v
+}
+
+// GetDisclosureMessage returns the DisclosureMessage field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetDisclosureMessage() string {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		var ret string
 		return ret
 	}
-	return *o.Credentials
+	return *o.DisclosureMessage
 }
 
-// GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
+// GetDisclosureMessageOk returns a tuple with the DisclosureMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrokeredRdpEntitlement) GetCredentialsOk() (*string, bool) {
-	if o == nil || IsNil(o.Credentials) {
+func (o *BrokeredRdpEntitlement) GetDisclosureMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		return nil, false
 	}
-	return o.Credentials, true
+	return o.DisclosureMessage, true
 }
 
-// HasCredentials returns a boolean if a field has been set.
-func (o *BrokeredRdpEntitlement) HasCredentials() bool {
-	if o != nil && !IsNil(o.Credentials) {
+// HasDisclosureMessage returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasDisclosureMessage() bool {
+	if o != nil && !IsNil(o.DisclosureMessage) {
 		return true
 	}
 
 	return false
 }
 
-// SetCredentials gets a reference to the given string and assigns it to the Credentials field.
-func (o *BrokeredRdpEntitlement) SetCredentials(v string) {
-	o.Credentials = &v
+// SetDisclosureMessage gets a reference to the given string and assigns it to the DisclosureMessage field.
+func (o *BrokeredRdpEntitlement) SetDisclosureMessage(v string) {
+	o.DisclosureMessage = &v
+}
+
+// GetCredentialsName returns the CredentialsName field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetCredentialsName() string {
+	if o == nil || IsNil(o.CredentialsName) {
+		var ret string
+		return ret
+	}
+	return *o.CredentialsName
+}
+
+// GetCredentialsNameOk returns a tuple with the CredentialsName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredRdpEntitlement) GetCredentialsNameOk() (*string, bool) {
+	if o == nil || IsNil(o.CredentialsName) {
+		return nil, false
+	}
+	return o.CredentialsName, true
+}
+
+// HasCredentialsName returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasCredentialsName() bool {
+	if o != nil && !IsNil(o.CredentialsName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialsName gets a reference to the given string and assigns it to the CredentialsName field.
+func (o *BrokeredRdpEntitlement) SetCredentialsName(v string) {
+	o.CredentialsName = &v
 }
 
 // GetAppShortcut returns the AppShortcut field value
@@ -823,6 +912,70 @@ func (o *BrokeredRdpEntitlement) HasIdleTimeoutMinutes() bool {
 // SetIdleTimeoutMinutes gets a reference to the given int32 and assigns it to the IdleTimeoutMinutes field.
 func (o *BrokeredRdpEntitlement) SetIdleTimeoutMinutes(v int32) {
 	o.IdleTimeoutMinutes = &v
+}
+
+// GetHostOptimizationExempted returns the HostOptimizationExempted field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetHostOptimizationExempted() bool {
+	if o == nil || IsNil(o.HostOptimizationExempted) {
+		var ret bool
+		return ret
+	}
+	return *o.HostOptimizationExempted
+}
+
+// GetHostOptimizationExemptedOk returns a tuple with the HostOptimizationExempted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredRdpEntitlement) GetHostOptimizationExemptedOk() (*bool, bool) {
+	if o == nil || IsNil(o.HostOptimizationExempted) {
+		return nil, false
+	}
+	return o.HostOptimizationExempted, true
+}
+
+// HasHostOptimizationExempted returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasHostOptimizationExempted() bool {
+	if o != nil && !IsNil(o.HostOptimizationExempted) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostOptimizationExempted gets a reference to the given bool and assigns it to the HostOptimizationExempted field.
+func (o *BrokeredRdpEntitlement) SetHostOptimizationExempted(v bool) {
+	o.HostOptimizationExempted = &v
+}
+
+// GetPortOptimizationExempted returns the PortOptimizationExempted field value if set, zero value otherwise.
+func (o *BrokeredRdpEntitlement) GetPortOptimizationExempted() bool {
+	if o == nil || IsNil(o.PortOptimizationExempted) {
+		var ret bool
+		return ret
+	}
+	return *o.PortOptimizationExempted
+}
+
+// GetPortOptimizationExemptedOk returns a tuple with the PortOptimizationExempted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredRdpEntitlement) GetPortOptimizationExemptedOk() (*bool, bool) {
+	if o == nil || IsNil(o.PortOptimizationExempted) {
+		return nil, false
+	}
+	return o.PortOptimizationExempted, true
+}
+
+// HasPortOptimizationExempted returns a boolean if a field has been set.
+func (o *BrokeredRdpEntitlement) HasPortOptimizationExempted() bool {
+	if o != nil && !IsNil(o.PortOptimizationExempted) {
+		return true
+	}
+
+	return false
+}
+
+// SetPortOptimizationExempted gets a reference to the given bool and assigns it to the PortOptimizationExempted field.
+func (o *BrokeredRdpEntitlement) SetPortOptimizationExempted(v bool) {
+	o.PortOptimizationExempted = &v
 }
 
 // GetResolution returns the Resolution field value if set, zero value otherwise.
@@ -1068,11 +1221,17 @@ func (o BrokeredRdpEntitlement) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["host"] = o.Host
 	toSerialize["port"] = o.Port
-	if !IsNil(o.SessionRecording) {
-		toSerialize["sessionRecording"] = o.SessionRecording
+	if !IsNil(o.RecordingEnabled) {
+		toSerialize["recordingEnabled"] = o.RecordingEnabled
 	}
-	if !IsNil(o.Credentials) {
-		toSerialize["credentials"] = o.Credentials
+	if !IsNil(o.MonitoringEnabled) {
+		toSerialize["monitoringEnabled"] = o.MonitoringEnabled
+	}
+	if !IsNil(o.DisclosureMessage) {
+		toSerialize["disclosureMessage"] = o.DisclosureMessage
+	}
+	if !IsNil(o.CredentialsName) {
+		toSerialize["credentialsName"] = o.CredentialsName
 	}
 	toSerialize["appShortcut"] = o.AppShortcut
 	if !IsNil(o.ClipboardSharing) {
@@ -1083,6 +1242,12 @@ func (o BrokeredRdpEntitlement) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IdleTimeoutMinutes) {
 		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	}
+	if !IsNil(o.HostOptimizationExempted) {
+		toSerialize["hostOptimizationExempted"] = o.HostOptimizationExempted
+	}
+	if !IsNil(o.PortOptimizationExempted) {
+		toSerialize["portOptimizationExempted"] = o.PortOptimizationExempted
 	}
 	if !IsNil(o.Resolution) {
 		toSerialize["resolution"] = o.Resolution

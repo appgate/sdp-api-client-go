@@ -45,7 +45,7 @@ func NewBrokeredRdpEntitlementAllOf() *BrokeredRdpEntitlementAllOf {
 	this.Resolution = &resolution
 	var colorDepth int32 = 16
 	this.ColorDepth = &colorDepth
-	var securityMode string = "nla"
+	var securityMode string = "any"
 	this.SecurityMode = &securityMode
 	var audioRedirection bool = false
 	this.AudioRedirection = &audioRedirection
@@ -61,7 +61,7 @@ func NewBrokeredRdpEntitlementAllOfWithDefaults() *BrokeredRdpEntitlementAllOf {
 	this.Resolution = &resolution
 	var colorDepth int32 = 16
 	this.ColorDepth = &colorDepth
-	var securityMode string = "nla"
+	var securityMode string = "any"
 	this.SecurityMode = &securityMode
 	var audioRedirection bool = false
 	this.AudioRedirection = &audioRedirection

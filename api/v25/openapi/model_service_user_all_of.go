@@ -19,7 +19,7 @@ import (
 // checks if the ServiceUserAllOf type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ServiceUserAllOf{}
 
-// ServiceUserAllOf Represents a Service User.
+// ServiceUserAllOf Represents a Service User. Deprecated, use Local Users instead.
 type ServiceUserAllOf struct {
 	// Labels of the service. Will be used as claim.
 	Labels *map[string]string `json:"labels,omitempty"`

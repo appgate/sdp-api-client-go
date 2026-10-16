@@ -23,17 +23,26 @@ type BrokeredEntitlementBaseAllOf struct {
 	// Hostname or IP address of the target host.
 	Host string `json:"host"`
 	// Port number of the target host.
-	Port             int32             `json:"port"`
-	SessionRecording *SessionRecording `json:"sessionRecording,omitempty"`
-	// ID of the Credentials secret used for injection at session establishment. The secret must be of the Credentials or SSH Key type.
-	Credentials *string          `json:"credentials,omitempty"`
-	AppShortcut BrokeredShortcut `json:"appShortcut"`
+	Port int32 `json:"port"`
+	// Whether sessions to this entitlement are recorded.
+	RecordingEnabled *bool `json:"recordingEnabled,omitempty"`
+	// Whether sessions to this entitlement can be monitored live.
+	MonitoringEnabled *bool `json:"monitoringEnabled,omitempty"`
+	// Optional message shown to the user before the session starts. When set, the client requires the user to accept it before connecting.
+	DisclosureMessage *string `json:"disclosureMessage,omitempty"`
+	// Name of the Credentials secret used for injection at session establishment. The secret must be of the Credentials or SSH Key type.
+	CredentialsName *string          `json:"credentialsName,omitempty"`
+	AppShortcut     BrokeredShortcut `json:"appShortcut"`
 	// Whether clipboard sharing between Client and remote host is permitted for this Entitlement.
 	ClipboardSharing *bool `json:"clipboardSharing,omitempty"`
 	// Whether file transfers between Client and remote host are permitted for this Entitlement.
 	FileTransfer *bool `json:"fileTransfer,omitempty"`
 	// Idle-session timeout in minutes. The session is terminated after this many minutes without user activity.
 	IdleTimeoutMinutes *int32 `json:"idleTimeoutMinutes,omitempty"`
+	// Whether this Entitlement's host is exempt from Entitlement Optimization analysis. When true, traffic to the host is not considered when calculating the optimization score.
+	HostOptimizationExempted *bool `json:"hostOptimizationExempted,omitempty"`
+	// Whether this Entitlement's port is exempt from Entitlement Optimization analysis. When true, traffic on the port is not considered when calculating the optimization score.
+	PortOptimizationExempted *bool `json:"portOptimizationExempted,omitempty"`
 }
 
 // NewBrokeredEntitlementBaseAllOf instantiates a new BrokeredEntitlementBaseAllOf object
@@ -44,6 +53,10 @@ func NewBrokeredEntitlementBaseAllOf(host string, port int32, appShortcut Broker
 	this := BrokeredEntitlementBaseAllOf{}
 	this.Host = host
 	this.Port = port
+	var recordingEnabled bool = false
+	this.RecordingEnabled = &recordingEnabled
+	var monitoringEnabled bool = false
+	this.MonitoringEnabled = &monitoringEnabled
 	this.AppShortcut = appShortcut
 	var clipboardSharing bool = false
 	this.ClipboardSharing = &clipboardSharing
@@ -51,6 +64,10 @@ func NewBrokeredEntitlementBaseAllOf(host string, port int32, appShortcut Broker
 	this.FileTransfer = &fileTransfer
 	var idleTimeoutMinutes int32 = 30
 	this.IdleTimeoutMinutes = &idleTimeoutMinutes
+	var hostOptimizationExempted bool = false
+	this.HostOptimizationExempted = &hostOptimizationExempted
+	var portOptimizationExempted bool = false
+	this.PortOptimizationExempted = &portOptimizationExempted
 	return &this
 }
 
@@ -59,12 +76,20 @@ func NewBrokeredEntitlementBaseAllOf(host string, port int32, appShortcut Broker
 // but it doesn't guarantee that properties required by API are set
 func NewBrokeredEntitlementBaseAllOfWithDefaults() *BrokeredEntitlementBaseAllOf {
 	this := BrokeredEntitlementBaseAllOf{}
+	var recordingEnabled bool = false
+	this.RecordingEnabled = &recordingEnabled
+	var monitoringEnabled bool = false
+	this.MonitoringEnabled = &monitoringEnabled
 	var clipboardSharing bool = false
 	this.ClipboardSharing = &clipboardSharing
 	var fileTransfer bool = false
 	this.FileTransfer = &fileTransfer
 	var idleTimeoutMinutes int32 = 30
 	this.IdleTimeoutMinutes = &idleTimeoutMinutes
+	var hostOptimizationExempted bool = false
+	this.HostOptimizationExempted = &hostOptimizationExempted
+	var portOptimizationExempted bool = false
+	this.PortOptimizationExempted = &portOptimizationExempted
 	return &this
 }
 
@@ -116,68 +141,132 @@ func (o *BrokeredEntitlementBaseAllOf) SetPort(v int32) {
 	o.Port = v
 }
 
-// GetSessionRecording returns the SessionRecording field value if set, zero value otherwise.
-func (o *BrokeredEntitlementBaseAllOf) GetSessionRecording() SessionRecording {
-	if o == nil || IsNil(o.SessionRecording) {
-		var ret SessionRecording
+// GetRecordingEnabled returns the RecordingEnabled field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetRecordingEnabled() bool {
+	if o == nil || IsNil(o.RecordingEnabled) {
+		var ret bool
 		return ret
 	}
-	return *o.SessionRecording
+	return *o.RecordingEnabled
 }
 
-// GetSessionRecordingOk returns a tuple with the SessionRecording field value if set, nil otherwise
+// GetRecordingEnabledOk returns a tuple with the RecordingEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrokeredEntitlementBaseAllOf) GetSessionRecordingOk() (*SessionRecording, bool) {
-	if o == nil || IsNil(o.SessionRecording) {
+func (o *BrokeredEntitlementBaseAllOf) GetRecordingEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.RecordingEnabled) {
 		return nil, false
 	}
-	return o.SessionRecording, true
+	return o.RecordingEnabled, true
 }
 
-// HasSessionRecording returns a boolean if a field has been set.
-func (o *BrokeredEntitlementBaseAllOf) HasSessionRecording() bool {
-	if o != nil && !IsNil(o.SessionRecording) {
+// HasRecordingEnabled returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasRecordingEnabled() bool {
+	if o != nil && !IsNil(o.RecordingEnabled) {
 		return true
 	}
 
 	return false
 }
 
-// SetSessionRecording gets a reference to the given SessionRecording and assigns it to the SessionRecording field.
-func (o *BrokeredEntitlementBaseAllOf) SetSessionRecording(v SessionRecording) {
-	o.SessionRecording = &v
+// SetRecordingEnabled gets a reference to the given bool and assigns it to the RecordingEnabled field.
+func (o *BrokeredEntitlementBaseAllOf) SetRecordingEnabled(v bool) {
+	o.RecordingEnabled = &v
 }
 
-// GetCredentials returns the Credentials field value if set, zero value otherwise.
-func (o *BrokeredEntitlementBaseAllOf) GetCredentials() string {
-	if o == nil || IsNil(o.Credentials) {
+// GetMonitoringEnabled returns the MonitoringEnabled field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetMonitoringEnabled() bool {
+	if o == nil || IsNil(o.MonitoringEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.MonitoringEnabled
+}
+
+// GetMonitoringEnabledOk returns a tuple with the MonitoringEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredEntitlementBaseAllOf) GetMonitoringEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.MonitoringEnabled) {
+		return nil, false
+	}
+	return o.MonitoringEnabled, true
+}
+
+// HasMonitoringEnabled returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasMonitoringEnabled() bool {
+	if o != nil && !IsNil(o.MonitoringEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetMonitoringEnabled gets a reference to the given bool and assigns it to the MonitoringEnabled field.
+func (o *BrokeredEntitlementBaseAllOf) SetMonitoringEnabled(v bool) {
+	o.MonitoringEnabled = &v
+}
+
+// GetDisclosureMessage returns the DisclosureMessage field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetDisclosureMessage() string {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		var ret string
 		return ret
 	}
-	return *o.Credentials
+	return *o.DisclosureMessage
 }
 
-// GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
+// GetDisclosureMessageOk returns a tuple with the DisclosureMessage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BrokeredEntitlementBaseAllOf) GetCredentialsOk() (*string, bool) {
-	if o == nil || IsNil(o.Credentials) {
+func (o *BrokeredEntitlementBaseAllOf) GetDisclosureMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.DisclosureMessage) {
 		return nil, false
 	}
-	return o.Credentials, true
+	return o.DisclosureMessage, true
 }
 
-// HasCredentials returns a boolean if a field has been set.
-func (o *BrokeredEntitlementBaseAllOf) HasCredentials() bool {
-	if o != nil && !IsNil(o.Credentials) {
+// HasDisclosureMessage returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasDisclosureMessage() bool {
+	if o != nil && !IsNil(o.DisclosureMessage) {
 		return true
 	}
 
 	return false
 }
 
-// SetCredentials gets a reference to the given string and assigns it to the Credentials field.
-func (o *BrokeredEntitlementBaseAllOf) SetCredentials(v string) {
-	o.Credentials = &v
+// SetDisclosureMessage gets a reference to the given string and assigns it to the DisclosureMessage field.
+func (o *BrokeredEntitlementBaseAllOf) SetDisclosureMessage(v string) {
+	o.DisclosureMessage = &v
+}
+
+// GetCredentialsName returns the CredentialsName field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetCredentialsName() string {
+	if o == nil || IsNil(o.CredentialsName) {
+		var ret string
+		return ret
+	}
+	return *o.CredentialsName
+}
+
+// GetCredentialsNameOk returns a tuple with the CredentialsName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredEntitlementBaseAllOf) GetCredentialsNameOk() (*string, bool) {
+	if o == nil || IsNil(o.CredentialsName) {
+		return nil, false
+	}
+	return o.CredentialsName, true
+}
+
+// HasCredentialsName returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasCredentialsName() bool {
+	if o != nil && !IsNil(o.CredentialsName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialsName gets a reference to the given string and assigns it to the CredentialsName field.
+func (o *BrokeredEntitlementBaseAllOf) SetCredentialsName(v string) {
+	o.CredentialsName = &v
 }
 
 // GetAppShortcut returns the AppShortcut field value
@@ -300,6 +389,70 @@ func (o *BrokeredEntitlementBaseAllOf) SetIdleTimeoutMinutes(v int32) {
 	o.IdleTimeoutMinutes = &v
 }
 
+// GetHostOptimizationExempted returns the HostOptimizationExempted field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetHostOptimizationExempted() bool {
+	if o == nil || IsNil(o.HostOptimizationExempted) {
+		var ret bool
+		return ret
+	}
+	return *o.HostOptimizationExempted
+}
+
+// GetHostOptimizationExemptedOk returns a tuple with the HostOptimizationExempted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredEntitlementBaseAllOf) GetHostOptimizationExemptedOk() (*bool, bool) {
+	if o == nil || IsNil(o.HostOptimizationExempted) {
+		return nil, false
+	}
+	return o.HostOptimizationExempted, true
+}
+
+// HasHostOptimizationExempted returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasHostOptimizationExempted() bool {
+	if o != nil && !IsNil(o.HostOptimizationExempted) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostOptimizationExempted gets a reference to the given bool and assigns it to the HostOptimizationExempted field.
+func (o *BrokeredEntitlementBaseAllOf) SetHostOptimizationExempted(v bool) {
+	o.HostOptimizationExempted = &v
+}
+
+// GetPortOptimizationExempted returns the PortOptimizationExempted field value if set, zero value otherwise.
+func (o *BrokeredEntitlementBaseAllOf) GetPortOptimizationExempted() bool {
+	if o == nil || IsNil(o.PortOptimizationExempted) {
+		var ret bool
+		return ret
+	}
+	return *o.PortOptimizationExempted
+}
+
+// GetPortOptimizationExemptedOk returns a tuple with the PortOptimizationExempted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BrokeredEntitlementBaseAllOf) GetPortOptimizationExemptedOk() (*bool, bool) {
+	if o == nil || IsNil(o.PortOptimizationExempted) {
+		return nil, false
+	}
+	return o.PortOptimizationExempted, true
+}
+
+// HasPortOptimizationExempted returns a boolean if a field has been set.
+func (o *BrokeredEntitlementBaseAllOf) HasPortOptimizationExempted() bool {
+	if o != nil && !IsNil(o.PortOptimizationExempted) {
+		return true
+	}
+
+	return false
+}
+
+// SetPortOptimizationExempted gets a reference to the given bool and assigns it to the PortOptimizationExempted field.
+func (o *BrokeredEntitlementBaseAllOf) SetPortOptimizationExempted(v bool) {
+	o.PortOptimizationExempted = &v
+}
+
 func (o BrokeredEntitlementBaseAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -312,11 +465,17 @@ func (o BrokeredEntitlementBaseAllOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["host"] = o.Host
 	toSerialize["port"] = o.Port
-	if !IsNil(o.SessionRecording) {
-		toSerialize["sessionRecording"] = o.SessionRecording
+	if !IsNil(o.RecordingEnabled) {
+		toSerialize["recordingEnabled"] = o.RecordingEnabled
 	}
-	if !IsNil(o.Credentials) {
-		toSerialize["credentials"] = o.Credentials
+	if !IsNil(o.MonitoringEnabled) {
+		toSerialize["monitoringEnabled"] = o.MonitoringEnabled
+	}
+	if !IsNil(o.DisclosureMessage) {
+		toSerialize["disclosureMessage"] = o.DisclosureMessage
+	}
+	if !IsNil(o.CredentialsName) {
+		toSerialize["credentialsName"] = o.CredentialsName
 	}
 	toSerialize["appShortcut"] = o.AppShortcut
 	if !IsNil(o.ClipboardSharing) {
@@ -327,6 +486,12 @@ func (o BrokeredEntitlementBaseAllOf) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IdleTimeoutMinutes) {
 		toSerialize["idleTimeoutMinutes"] = o.IdleTimeoutMinutes
+	}
+	if !IsNil(o.HostOptimizationExempted) {
+		toSerialize["hostOptimizationExempted"] = o.HostOptimizationExempted
+	}
+	if !IsNil(o.PortOptimizationExempted) {
+		toSerialize["portOptimizationExempted"] = o.PortOptimizationExempted
 	}
 	return toSerialize, nil
 }

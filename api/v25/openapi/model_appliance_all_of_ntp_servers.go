@@ -28,6 +28,8 @@ type ApplianceAllOfNtpServers struct {
 	KeyNo *int32 `json:"keyNo,omitempty"`
 	// Key to use for secure NTP communication.
 	Key *string `json:"key,omitempty"`
+	// NTP protocol version to use for this server. When unset, chrony's default is used.
+	Version *int32 `json:"version,omitempty"`
 }
 
 // NewApplianceAllOfNtpServers instantiates a new ApplianceAllOfNtpServers object
@@ -168,6 +170,38 @@ func (o *ApplianceAllOfNtpServers) SetKey(v string) {
 	o.Key = &v
 }
 
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *ApplianceAllOfNtpServers) GetVersion() int32 {
+	if o == nil || IsNil(o.Version) {
+		var ret int32
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApplianceAllOfNtpServers) GetVersionOk() (*int32, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *ApplianceAllOfNtpServers) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given int32 and assigns it to the Version field.
+func (o *ApplianceAllOfNtpServers) SetVersion(v int32) {
+	o.Version = &v
+}
+
 func (o ApplianceAllOfNtpServers) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -187,6 +221,9 @@ func (o ApplianceAllOfNtpServers) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Key) {
 		toSerialize["key"] = o.Key
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

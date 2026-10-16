@@ -26,6 +26,7 @@ const (
 	GCP         ResolverType = "gcp"
 	ILLUMIO     ResolverType = "illumio"
 	COLORTOKENS ResolverType = "colortokens"
+	CLAROTY_CTD ResolverType = "clarotyCtd"
 	ESX         ResolverType = "esx"
 	DNS         ResolverType = "dns"
 )
@@ -37,6 +38,7 @@ var AllowedResolverTypeEnumValues = []ResolverType{
 	"gcp",
 	"illumio",
 	"colortokens",
+	"clarotyCtd",
 	"esx",
 	"dns",
 }

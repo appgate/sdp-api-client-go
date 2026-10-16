@@ -18,16 +18,14 @@ import (
 // checks if the ApplianceAllOfTelemetryAggregator type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApplianceAllOfTelemetryAggregator{}
 
-// ApplianceAllOfTelemetryAggregator TelemetryAggregator settings. It aggregates telemetry from the appliances in the given sites and exports it to the configured destinations.
+// ApplianceAllOfTelemetryAggregator TelemetryAggregator settings. It aggregates telemetry from all the appliances and exports it to the configured destinations.
 type ApplianceAllOfTelemetryAggregator struct {
-	// Whether TelemetryAggregator is enabled on this appliance or not.
+	// Whether TelemetryAggregator is enabled on this appliance or not. Enabling it requires the Observability license.
 	Enabled *bool `json:"enabled,omitempty"`
 	// Datadog exporters.
 	DatadogExporters []ApplianceAllOfTelemetryAggregatorDatadogExporters `json:"datadogExporters,omitempty"`
 	// Standard OTLP exporters.
 	OtlpExporters []ApplianceAllOfTelemetryAggregatorOtlpExporters `json:"otlpExporters,omitempty"`
-	// The sites to collect telemetry from.
-	Sites []string `json:"sites,omitempty"`
 }
 
 // NewApplianceAllOfTelemetryAggregator instantiates a new ApplianceAllOfTelemetryAggregator object
@@ -147,38 +145,6 @@ func (o *ApplianceAllOfTelemetryAggregator) SetOtlpExporters(v []ApplianceAllOfT
 	o.OtlpExporters = v
 }
 
-// GetSites returns the Sites field value if set, zero value otherwise.
-func (o *ApplianceAllOfTelemetryAggregator) GetSites() []string {
-	if o == nil || IsNil(o.Sites) {
-		var ret []string
-		return ret
-	}
-	return o.Sites
-}
-
-// GetSitesOk returns a tuple with the Sites field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApplianceAllOfTelemetryAggregator) GetSitesOk() ([]string, bool) {
-	if o == nil || IsNil(o.Sites) {
-		return nil, false
-	}
-	return o.Sites, true
-}
-
-// HasSites returns a boolean if a field has been set.
-func (o *ApplianceAllOfTelemetryAggregator) HasSites() bool {
-	if o != nil && !IsNil(o.Sites) {
-		return true
-	}
-
-	return false
-}
-
-// SetSites gets a reference to the given []string and assigns it to the Sites field.
-func (o *ApplianceAllOfTelemetryAggregator) SetSites(v []string) {
-	o.Sites = v
-}
-
 func (o ApplianceAllOfTelemetryAggregator) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -197,9 +163,6 @@ func (o ApplianceAllOfTelemetryAggregator) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.OtlpExporters) {
 		toSerialize["otlpExporters"] = o.OtlpExporters
-	}
-	if !IsNil(o.Sites) {
-		toSerialize["sites"] = o.Sites
 	}
 	return toSerialize, nil
 }

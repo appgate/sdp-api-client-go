@@ -22,7 +22,7 @@ var _ MappedNullable = &ApplianceAllOfConnectionBroker{}
 type ApplianceAllOfConnectionBroker struct {
 	// Whether the Connection Broker is enabled on this appliance or not.
 	Enabled *bool `json:"enabled,omitempty"`
-	// The sites to broker connections for.
+	// The sites to broker connections for. Must contain at least one entry when the Connection Broker is enabled.
 	Sites []string `json:"sites,omitempty"`
 }
 

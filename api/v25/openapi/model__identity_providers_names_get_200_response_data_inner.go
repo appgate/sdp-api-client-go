@@ -28,6 +28,8 @@ type IdentityProvidersNamesGet200ResponseDataInner struct {
 	RedirectUrl *string `json:"redirectUrl,omitempty"`
 	// The prioritization of which client certificate to use.
 	CertificatePriorities []map[string]interface{} `json:"certificatePriorities,omitempty"`
+	// The Subject Alternative Name type the client should filter offered certificates by.
+	CertificateSanType *string `json:"certificateSanType,omitempty"`
 	// Authorization endpoint URL for OIDC login.
 	AuthUrl *string `json:"authUrl,omitempty"`
 	// Token endpoint URL for OIDC login. Only present for public clients.
@@ -44,6 +46,8 @@ type IdentityProvidersNamesGet200ResponseDataInner struct {
 // will change when the set of required properties is changed
 func NewIdentityProvidersNamesGet200ResponseDataInner() *IdentityProvidersNamesGet200ResponseDataInner {
 	this := IdentityProvidersNamesGet200ResponseDataInner{}
+	var certificateSanType string = "Any"
+	this.CertificateSanType = &certificateSanType
 	return &this
 }
 
@@ -52,6 +56,8 @@ func NewIdentityProvidersNamesGet200ResponseDataInner() *IdentityProvidersNamesG
 // but it doesn't guarantee that properties required by API are set
 func NewIdentityProvidersNamesGet200ResponseDataInnerWithDefaults() *IdentityProvidersNamesGet200ResponseDataInner {
 	this := IdentityProvidersNamesGet200ResponseDataInner{}
+	var certificateSanType string = "Any"
+	this.CertificateSanType = &certificateSanType
 	return &this
 }
 
@@ -181,6 +187,38 @@ func (o *IdentityProvidersNamesGet200ResponseDataInner) HasCertificatePriorities
 // SetCertificatePriorities gets a reference to the given []map[string]interface{} and assigns it to the CertificatePriorities field.
 func (o *IdentityProvidersNamesGet200ResponseDataInner) SetCertificatePriorities(v []map[string]interface{}) {
 	o.CertificatePriorities = v
+}
+
+// GetCertificateSanType returns the CertificateSanType field value if set, zero value otherwise.
+func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificateSanType() string {
+	if o == nil || IsNil(o.CertificateSanType) {
+		var ret string
+		return ret
+	}
+	return *o.CertificateSanType
+}
+
+// GetCertificateSanTypeOk returns a tuple with the CertificateSanType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IdentityProvidersNamesGet200ResponseDataInner) GetCertificateSanTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CertificateSanType) {
+		return nil, false
+	}
+	return o.CertificateSanType, true
+}
+
+// HasCertificateSanType returns a boolean if a field has been set.
+func (o *IdentityProvidersNamesGet200ResponseDataInner) HasCertificateSanType() bool {
+	if o != nil && !IsNil(o.CertificateSanType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCertificateSanType gets a reference to the given string and assigns it to the CertificateSanType field.
+func (o *IdentityProvidersNamesGet200ResponseDataInner) SetCertificateSanType(v string) {
+	o.CertificateSanType = &v
 }
 
 // GetAuthUrl returns the AuthUrl field value if set, zero value otherwise.
@@ -332,6 +370,9 @@ func (o IdentityProvidersNamesGet200ResponseDataInner) ToMap() (map[string]inter
 	}
 	if !IsNil(o.CertificatePriorities) {
 		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	}
+	if !IsNil(o.CertificateSanType) {
+		toSerialize["certificateSanType"] = o.CertificateSanType
 	}
 	if !IsNil(o.AuthUrl) {
 		toSerialize["authUrl"] = o.AuthUrl
