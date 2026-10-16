@@ -28,6 +28,8 @@ type OptimizableValue struct {
 	Exempted *bool `json:"exempted,omitempty"`
 	// Whether this value is suggested to be removed based on usage analysis.
 	SuggestedForRemoval *bool `json:"suggestedForRemoval,omitempty"`
+	// Whether this value could not be analyzed (unsupported host, or a port in an action with an unsupported host).
+	NotAnalyzed *bool `json:"notAnalyzed,omitempty"`
 }
 
 // NewOptimizableValue instantiates a new OptimizableValue object
@@ -175,6 +177,38 @@ func (o *OptimizableValue) SetSuggestedForRemoval(v bool) {
 	o.SuggestedForRemoval = &v
 }
 
+// GetNotAnalyzed returns the NotAnalyzed field value if set, zero value otherwise.
+func (o *OptimizableValue) GetNotAnalyzed() bool {
+	if o == nil || IsNil(o.NotAnalyzed) {
+		var ret bool
+		return ret
+	}
+	return *o.NotAnalyzed
+}
+
+// GetNotAnalyzedOk returns a tuple with the NotAnalyzed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OptimizableValue) GetNotAnalyzedOk() (*bool, bool) {
+	if o == nil || IsNil(o.NotAnalyzed) {
+		return nil, false
+	}
+	return o.NotAnalyzed, true
+}
+
+// HasNotAnalyzed returns a boolean if a field has been set.
+func (o *OptimizableValue) HasNotAnalyzed() bool {
+	if o != nil && !IsNil(o.NotAnalyzed) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotAnalyzed gets a reference to the given bool and assigns it to the NotAnalyzed field.
+func (o *OptimizableValue) SetNotAnalyzed(v bool) {
+	o.NotAnalyzed = &v
+}
+
 func (o OptimizableValue) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -196,6 +230,9 @@ func (o OptimizableValue) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SuggestedForRemoval) {
 		toSerialize["suggestedForRemoval"] = o.SuggestedForRemoval
+	}
+	if !IsNil(o.NotAnalyzed) {
+		toSerialize["notAnalyzed"] = o.NotAnalyzed
 	}
 	return toSerialize, nil
 }

@@ -36,7 +36,9 @@ type SiteAllOfNameResolution struct {
 	IllumioResolvers []SiteAllOfNameResolutionIllumioResolvers `json:"illumioResolvers,omitempty"`
 	// Resolvers to resolve names by querying ColorTokens.
 	ColorTokensResolvers []SiteAllOfNameResolutionColorTokensResolvers `json:"colorTokensResolvers,omitempty"`
-	DnsForwarding        *SiteAllOfNameResolutionDnsForwarding         `json:"dnsForwarding,omitempty"`
+	// Resolvers to resolve names by querying a Claroty CTD server. Requires the Operational Technology licensed feature.
+	ClarotyCtdResolvers []SiteAllOfNameResolutionClarotyCtdResolvers `json:"clarotyCtdResolvers,omitempty"`
+	DnsForwarding       *SiteAllOfNameResolutionDnsForwarding        `json:"dnsForwarding,omitempty"`
 }
 
 // NewSiteAllOfNameResolution instantiates a new SiteAllOfNameResolution object
@@ -316,6 +318,38 @@ func (o *SiteAllOfNameResolution) SetColorTokensResolvers(v []SiteAllOfNameResol
 	o.ColorTokensResolvers = v
 }
 
+// GetClarotyCtdResolvers returns the ClarotyCtdResolvers field value if set, zero value otherwise.
+func (o *SiteAllOfNameResolution) GetClarotyCtdResolvers() []SiteAllOfNameResolutionClarotyCtdResolvers {
+	if o == nil || IsNil(o.ClarotyCtdResolvers) {
+		var ret []SiteAllOfNameResolutionClarotyCtdResolvers
+		return ret
+	}
+	return o.ClarotyCtdResolvers
+}
+
+// GetClarotyCtdResolversOk returns a tuple with the ClarotyCtdResolvers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SiteAllOfNameResolution) GetClarotyCtdResolversOk() ([]SiteAllOfNameResolutionClarotyCtdResolvers, bool) {
+	if o == nil || IsNil(o.ClarotyCtdResolvers) {
+		return nil, false
+	}
+	return o.ClarotyCtdResolvers, true
+}
+
+// HasClarotyCtdResolvers returns a boolean if a field has been set.
+func (o *SiteAllOfNameResolution) HasClarotyCtdResolvers() bool {
+	if o != nil && !IsNil(o.ClarotyCtdResolvers) {
+		return true
+	}
+
+	return false
+}
+
+// SetClarotyCtdResolvers gets a reference to the given []SiteAllOfNameResolutionClarotyCtdResolvers and assigns it to the ClarotyCtdResolvers field.
+func (o *SiteAllOfNameResolution) SetClarotyCtdResolvers(v []SiteAllOfNameResolutionClarotyCtdResolvers) {
+	o.ClarotyCtdResolvers = v
+}
+
 // GetDnsForwarding returns the DnsForwarding field value if set, zero value otherwise.
 func (o *SiteAllOfNameResolution) GetDnsForwarding() SiteAllOfNameResolutionDnsForwarding {
 	if o == nil || IsNil(o.DnsForwarding) {
@@ -381,6 +415,9 @@ func (o SiteAllOfNameResolution) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ColorTokensResolvers) {
 		toSerialize["colorTokensResolvers"] = o.ColorTokensResolvers
+	}
+	if !IsNil(o.ClarotyCtdResolvers) {
+		toSerialize["clarotyCtdResolvers"] = o.ClarotyCtdResolvers
 	}
 	if !IsNil(o.DnsForwarding) {
 		toSerialize["dnsForwarding"] = o.DnsForwarding

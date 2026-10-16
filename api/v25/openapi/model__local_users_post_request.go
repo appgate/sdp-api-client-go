@@ -35,6 +35,8 @@ type LocalUsersPostRequest struct {
 	ReadOnly *bool `json:"readOnly,omitempty"`
 	// Array of tags.
 	Tags []string `json:"tags,omitempty"`
+	// Labels of the user. Will be used as claim.
+	Labels *map[string]string `json:"labels,omitempty"`
 	// First name of the user. May be used as claim.
 	FirstName string `json:"firstName"`
 	// Last name of the user. May be used as claim.
@@ -288,6 +290,38 @@ func (o *LocalUsersPostRequest) HasTags() bool {
 // SetTags gets a reference to the given []string and assigns it to the Tags field.
 func (o *LocalUsersPostRequest) SetTags(v []string) {
 	o.Tags = v
+}
+
+// GetLabels returns the Labels field value if set, zero value otherwise.
+func (o *LocalUsersPostRequest) GetLabels() map[string]string {
+	if o == nil || IsNil(o.Labels) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.Labels
+}
+
+// GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LocalUsersPostRequest) GetLabelsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.Labels) {
+		return nil, false
+	}
+	return o.Labels, true
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *LocalUsersPostRequest) HasLabels() bool {
+	if o != nil && !IsNil(o.Labels) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabels gets a reference to the given map[string]string and assigns it to the Labels field.
+func (o *LocalUsersPostRequest) SetLabels(v map[string]string) {
+	o.Labels = &v
 }
 
 // GetFirstName returns the FirstName field value
@@ -550,6 +584,9 @@ func (o LocalUsersPostRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tags) {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
 	}
 	toSerialize["firstName"] = o.FirstName
 	toSerialize["lastName"] = o.LastName

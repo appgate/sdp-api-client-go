@@ -23,6 +23,8 @@ var _ MappedNullable = &UserLicenseAllOf{}
 type UserLicenseAllOf struct {
 	// Type of User License.
 	Type *string `json:"type,omitempty"`
+	// Indicates that the user is holding a supplemental Brokered Access or Governed Session slot on top of their client-user license. Absent when the user holds neither. GovernedSession is reported when both are held, since it is the higher tier.
+	BrokeredAccess *string `json:"brokeredAccess,omitempty"`
 	// The name of the Client Profile used by the Client.
 	ProfileName *string `json:"profileName,omitempty"`
 	// Creation date.
@@ -78,6 +80,38 @@ func (o *UserLicenseAllOf) HasType() bool {
 // SetType gets a reference to the given string and assigns it to the Type field.
 func (o *UserLicenseAllOf) SetType(v string) {
 	o.Type = &v
+}
+
+// GetBrokeredAccess returns the BrokeredAccess field value if set, zero value otherwise.
+func (o *UserLicenseAllOf) GetBrokeredAccess() string {
+	if o == nil || IsNil(o.BrokeredAccess) {
+		var ret string
+		return ret
+	}
+	return *o.BrokeredAccess
+}
+
+// GetBrokeredAccessOk returns a tuple with the BrokeredAccess field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UserLicenseAllOf) GetBrokeredAccessOk() (*string, bool) {
+	if o == nil || IsNil(o.BrokeredAccess) {
+		return nil, false
+	}
+	return o.BrokeredAccess, true
+}
+
+// HasBrokeredAccess returns a boolean if a field has been set.
+func (o *UserLicenseAllOf) HasBrokeredAccess() bool {
+	if o != nil && !IsNil(o.BrokeredAccess) {
+		return true
+	}
+
+	return false
+}
+
+// SetBrokeredAccess gets a reference to the given string and assigns it to the BrokeredAccess field.
+func (o *UserLicenseAllOf) SetBrokeredAccess(v string) {
+	o.BrokeredAccess = &v
 }
 
 // GetProfileName returns the ProfileName field value if set, zero value otherwise.
@@ -188,6 +222,9 @@ func (o UserLicenseAllOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.BrokeredAccess) {
+		toSerialize["brokeredAccess"] = o.BrokeredAccess
 	}
 	if !IsNil(o.ProfileName) {
 		toSerialize["profileName"] = o.ProfileName

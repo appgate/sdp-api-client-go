@@ -32,6 +32,8 @@ type EntitlementMigrationInfo struct {
 	OriginalHost *string `json:"originalHost,omitempty"`
 	// The value after being migrated. This can be the same as originalHost if problems were encountered while migrating the value.
 	UpdatedHost *string `json:"updatedHost,omitempty"`
+	// A list of new hosts added as a result of the migration
+	AdditionalHosts []string `json:"additionalHosts,omitempty"`
 	// A list of any error messages encountered while migrating this value.
 	MigrationErrors []string `json:"migrationErrors,omitempty"`
 }
@@ -245,6 +247,38 @@ func (o *EntitlementMigrationInfo) SetUpdatedHost(v string) {
 	o.UpdatedHost = &v
 }
 
+// GetAdditionalHosts returns the AdditionalHosts field value if set, zero value otherwise.
+func (o *EntitlementMigrationInfo) GetAdditionalHosts() []string {
+	if o == nil || IsNil(o.AdditionalHosts) {
+		var ret []string
+		return ret
+	}
+	return o.AdditionalHosts
+}
+
+// GetAdditionalHostsOk returns a tuple with the AdditionalHosts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EntitlementMigrationInfo) GetAdditionalHostsOk() ([]string, bool) {
+	if o == nil || IsNil(o.AdditionalHosts) {
+		return nil, false
+	}
+	return o.AdditionalHosts, true
+}
+
+// HasAdditionalHosts returns a boolean if a field has been set.
+func (o *EntitlementMigrationInfo) HasAdditionalHosts() bool {
+	if o != nil && !IsNil(o.AdditionalHosts) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdditionalHosts gets a reference to the given []string and assigns it to the AdditionalHosts field.
+func (o *EntitlementMigrationInfo) SetAdditionalHosts(v []string) {
+	o.AdditionalHosts = v
+}
+
 // GetMigrationErrors returns the MigrationErrors field value if set, zero value otherwise.
 func (o *EntitlementMigrationInfo) GetMigrationErrors() []string {
 	if o == nil || IsNil(o.MigrationErrors) {
@@ -304,6 +338,9 @@ func (o EntitlementMigrationInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UpdatedHost) {
 		toSerialize["updatedHost"] = o.UpdatedHost
+	}
+	if !IsNil(o.AdditionalHosts) {
+		toSerialize["additionalHosts"] = o.AdditionalHosts
 	}
 	if !IsNil(o.MigrationErrors) {
 		toSerialize["migrationErrors"] = o.MigrationErrors

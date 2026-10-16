@@ -36,6 +36,8 @@ type SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInne
 	Ports []string `json:"ports,omitempty"`
 	// The ICMP types the Firewall Rule applies to. Valid for ICMP.
 	Types []string `json:"types,omitempty"`
+	// The hostnames the Firewall Rule applies to for name-based Entitlements.
+	Hostnames []string `json:"hostnames,omitempty"`
 }
 
 // NewSessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner instantiates a new SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner object
@@ -311,6 +313,38 @@ func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRules
 	o.Types = v
 }
 
+// GetHostnames returns the Hostnames field value if set, zero value otherwise.
+func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner) GetHostnames() []string {
+	if o == nil || IsNil(o.Hostnames) {
+		var ret []string
+		return ret
+	}
+	return o.Hostnames
+}
+
+// GetHostnamesOk returns a tuple with the Hostnames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner) GetHostnamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.Hostnames) {
+		return nil, false
+	}
+	return o.Hostnames, true
+}
+
+// HasHostnames returns a boolean if a field has been set.
+func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner) HasHostnames() bool {
+	if o != nil && !IsNil(o.Hostnames) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostnames gets a reference to the given []string and assigns it to the Hostnames field.
+func (o *SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner) SetHostnames(v []string) {
+	o.Hostnames = v
+}
+
 func (o SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesInner) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -344,6 +378,9 @@ func (o SessionInfoDistinguishedNameDataValueEntitlementInfosValueFirewallRulesI
 	}
 	if !IsNil(o.Types) {
 		toSerialize["types"] = o.Types
+	}
+	if !IsNil(o.Hostnames) {
+		toSerialize["hostnames"] = o.Hostnames
 	}
 	return toSerialize, nil
 }

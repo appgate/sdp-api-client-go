@@ -29,7 +29,7 @@ type Portal struct {
 	HttpRedirect *bool `json:"httpRedirect,omitempty"`
 	// Ports that can be proxied via Portal.
 	ProxyPorts []int32 `json:"proxyPorts,omitempty"`
-	// P12 files for proxying traffic to HTTPS endpoints.
+	// P12 files for proxying traffic to HTTPS endpoints. Required when Portal is enabled and no subdomain mappings are configured.
 	ProxyP12s []Portal12 `json:"proxyP12s,omitempty"`
 	// Names of the profiles in this Collective to use in the Portal.
 	Profiles []string `json:"profiles,omitempty"`

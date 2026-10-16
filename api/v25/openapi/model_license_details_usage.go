@@ -26,6 +26,12 @@ type LicenseDetailsUsage struct {
 	PortalUsers *float32 `json:"portalUsers,omitempty"`
 	// The amount of licensed service users in the system at present.
 	ServiceUsers *float32 `json:"serviceUsers,omitempty"`
+	// The amount of Brokered Access slots in use at present.
+	BrokeredAccessSlots *float32 `json:"brokeredAccessSlots,omitempty"`
+	// The amount of Session Governance slots in use at present.
+	SessionGovernanceSlots *float32 `json:"sessionGovernanceSlots,omitempty"`
+	// The amount of licensed Single Site client users in the system at present.
+	SingleSiteUsers *float32 `json:"singleSiteUsers,omitempty"`
 	// The amount of Sites in the system at present.
 	Sites *float32 `json:"sites,omitempty"`
 	// The amount of grouped Connector clients in the system at present.
@@ -176,6 +182,102 @@ func (o *LicenseDetailsUsage) HasServiceUsers() bool {
 // SetServiceUsers gets a reference to the given float32 and assigns it to the ServiceUsers field.
 func (o *LicenseDetailsUsage) SetServiceUsers(v float32) {
 	o.ServiceUsers = &v
+}
+
+// GetBrokeredAccessSlots returns the BrokeredAccessSlots field value if set, zero value otherwise.
+func (o *LicenseDetailsUsage) GetBrokeredAccessSlots() float32 {
+	if o == nil || IsNil(o.BrokeredAccessSlots) {
+		var ret float32
+		return ret
+	}
+	return *o.BrokeredAccessSlots
+}
+
+// GetBrokeredAccessSlotsOk returns a tuple with the BrokeredAccessSlots field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LicenseDetailsUsage) GetBrokeredAccessSlotsOk() (*float32, bool) {
+	if o == nil || IsNil(o.BrokeredAccessSlots) {
+		return nil, false
+	}
+	return o.BrokeredAccessSlots, true
+}
+
+// HasBrokeredAccessSlots returns a boolean if a field has been set.
+func (o *LicenseDetailsUsage) HasBrokeredAccessSlots() bool {
+	if o != nil && !IsNil(o.BrokeredAccessSlots) {
+		return true
+	}
+
+	return false
+}
+
+// SetBrokeredAccessSlots gets a reference to the given float32 and assigns it to the BrokeredAccessSlots field.
+func (o *LicenseDetailsUsage) SetBrokeredAccessSlots(v float32) {
+	o.BrokeredAccessSlots = &v
+}
+
+// GetSessionGovernanceSlots returns the SessionGovernanceSlots field value if set, zero value otherwise.
+func (o *LicenseDetailsUsage) GetSessionGovernanceSlots() float32 {
+	if o == nil || IsNil(o.SessionGovernanceSlots) {
+		var ret float32
+		return ret
+	}
+	return *o.SessionGovernanceSlots
+}
+
+// GetSessionGovernanceSlotsOk returns a tuple with the SessionGovernanceSlots field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LicenseDetailsUsage) GetSessionGovernanceSlotsOk() (*float32, bool) {
+	if o == nil || IsNil(o.SessionGovernanceSlots) {
+		return nil, false
+	}
+	return o.SessionGovernanceSlots, true
+}
+
+// HasSessionGovernanceSlots returns a boolean if a field has been set.
+func (o *LicenseDetailsUsage) HasSessionGovernanceSlots() bool {
+	if o != nil && !IsNil(o.SessionGovernanceSlots) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionGovernanceSlots gets a reference to the given float32 and assigns it to the SessionGovernanceSlots field.
+func (o *LicenseDetailsUsage) SetSessionGovernanceSlots(v float32) {
+	o.SessionGovernanceSlots = &v
+}
+
+// GetSingleSiteUsers returns the SingleSiteUsers field value if set, zero value otherwise.
+func (o *LicenseDetailsUsage) GetSingleSiteUsers() float32 {
+	if o == nil || IsNil(o.SingleSiteUsers) {
+		var ret float32
+		return ret
+	}
+	return *o.SingleSiteUsers
+}
+
+// GetSingleSiteUsersOk returns a tuple with the SingleSiteUsers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LicenseDetailsUsage) GetSingleSiteUsersOk() (*float32, bool) {
+	if o == nil || IsNil(o.SingleSiteUsers) {
+		return nil, false
+	}
+	return o.SingleSiteUsers, true
+}
+
+// HasSingleSiteUsers returns a boolean if a field has been set.
+func (o *LicenseDetailsUsage) HasSingleSiteUsers() bool {
+	if o != nil && !IsNil(o.SingleSiteUsers) {
+		return true
+	}
+
+	return false
+}
+
+// SetSingleSiteUsers gets a reference to the given float32 and assigns it to the SingleSiteUsers field.
+func (o *LicenseDetailsUsage) SetSingleSiteUsers(v float32) {
+	o.SingleSiteUsers = &v
 }
 
 // GetSites returns the Sites field value if set, zero value otherwise.
@@ -836,6 +938,15 @@ func (o LicenseDetailsUsage) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ServiceUsers) {
 		toSerialize["serviceUsers"] = o.ServiceUsers
+	}
+	if !IsNil(o.BrokeredAccessSlots) {
+		toSerialize["brokeredAccessSlots"] = o.BrokeredAccessSlots
+	}
+	if !IsNil(o.SessionGovernanceSlots) {
+		toSerialize["sessionGovernanceSlots"] = o.SessionGovernanceSlots
+	}
+	if !IsNil(o.SingleSiteUsers) {
+		toSerialize["singleSiteUsers"] = o.SingleSiteUsers
 	}
 	if !IsNil(o.Sites) {
 		toSerialize["sites"] = o.Sites

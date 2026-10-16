@@ -87,10 +87,12 @@ type LdapCertificateProvider struct {
 	CertificateUserAttribute *string `json:"certificateUserAttribute,omitempty"`
 	// The LDAP attribute to compare the Client certificate binary. Leave it null to skip this comparison.
 	CertificateAttribute *string `json:"certificateAttribute,omitempty"`
-	// By default, Controller contacts the endpoints on the certificate extensions in order to verify revocation status and pull the intermediate CA certificates. Set this flag in order to skip them.
+	// By default, Controller contacts the endpoints listed in the client certificate's extensions: CRL Distribution Points and OCSP responders in Authority Information Access to verify revocation status, and CA Issuers in Authority Information Access to download intermediate CA certificates. Revocation status is checked only when the client certificate lists at least one CRL Distribution Point or OCSP responder; certificates without either are accepted without a revocation check. If such an endpoint is listed but the revocation status cannot be determined, authentication fails. Set this flag to skip all of these external checks.
 	SkipX509ExternalChecks *bool `json:"skipX509ExternalChecks,omitempty"`
 	// Client will order the available certificates according to the given priority list.
 	CertificatePriorities []LdapCertificateProviderAllOfCertificatePriorities `json:"certificatePriorities,omitempty"`
+	// Which Subject Alternative Name of the Client certificate to map to an LDAP user. Any, the default, accepts any otherName, rfc822Name or dNSName. UserPrincipalName matches only the otherName with OID 1.3.6.1.4.1.311.20.2.3.
+	CertificateSanType *string `json:"certificateSanType,omitempty"`
 }
 
 // NewLdapCertificateProvider instantiates a new LdapCertificateProvider object
@@ -121,6 +123,8 @@ func NewLdapCertificateProvider(name string, type_ string, hostnames []string, p
 	this.CaCertificates = caCertificates
 	var certificateUserAttribute string = "userPrincipalName"
 	this.CertificateUserAttribute = &certificateUserAttribute
+	var certificateSanType string = "Any"
+	this.CertificateSanType = &certificateSanType
 	return &this
 }
 
@@ -145,6 +149,8 @@ func NewLdapCertificateProviderWithDefaults() *LdapCertificateProvider {
 	this.MembershipFilter = &membershipFilter
 	var certificateUserAttribute string = "userPrincipalName"
 	this.CertificateUserAttribute = &certificateUserAttribute
+	var certificateSanType string = "Any"
+	this.CertificateSanType = &certificateSanType
 	return &this
 }
 
@@ -1252,6 +1258,38 @@ func (o *LdapCertificateProvider) SetCertificatePriorities(v []LdapCertificatePr
 	o.CertificatePriorities = v
 }
 
+// GetCertificateSanType returns the CertificateSanType field value if set, zero value otherwise.
+func (o *LdapCertificateProvider) GetCertificateSanType() string {
+	if o == nil || IsNil(o.CertificateSanType) {
+		var ret string
+		return ret
+	}
+	return *o.CertificateSanType
+}
+
+// GetCertificateSanTypeOk returns a tuple with the CertificateSanType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LdapCertificateProvider) GetCertificateSanTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CertificateSanType) {
+		return nil, false
+	}
+	return o.CertificateSanType, true
+}
+
+// HasCertificateSanType returns a boolean if a field has been set.
+func (o *LdapCertificateProvider) HasCertificateSanType() bool {
+	if o != nil && !IsNil(o.CertificateSanType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCertificateSanType gets a reference to the given string and assigns it to the CertificateSanType field.
+func (o *LdapCertificateProvider) SetCertificateSanType(v string) {
+	o.CertificateSanType = &v
+}
+
 func (o LdapCertificateProvider) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -1357,6 +1395,9 @@ func (o LdapCertificateProvider) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CertificatePriorities) {
 		toSerialize["certificatePriorities"] = o.CertificatePriorities
+	}
+	if !IsNil(o.CertificateSanType) {
+		toSerialize["certificateSanType"] = o.CertificateSanType
 	}
 	return toSerialize, nil
 }

@@ -20,8 +20,8 @@ var _ MappedNullable = &ZtpSettings{}
 
 // ZtpSettings struct for ZtpSettings
 type ZtpSettings struct {
-	RiskEngine           *ZtpSettingsRiskEngine           `json:"riskEngine,omitempty"`
-	ApplicationDiscovery *ZtpSettingsApplicationDiscovery `json:"applicationDiscovery,omitempty"`
+	RiskEngine *ZtpSettingsRiskEngine `json:"riskEngine,omitempty"`
+	Optimizer  *ZtpSettingsOptimizer  `json:"optimizer,omitempty"`
 }
 
 // NewZtpSettings instantiates a new ZtpSettings object
@@ -73,36 +73,36 @@ func (o *ZtpSettings) SetRiskEngine(v ZtpSettingsRiskEngine) {
 	o.RiskEngine = &v
 }
 
-// GetApplicationDiscovery returns the ApplicationDiscovery field value if set, zero value otherwise.
-func (o *ZtpSettings) GetApplicationDiscovery() ZtpSettingsApplicationDiscovery {
-	if o == nil || IsNil(o.ApplicationDiscovery) {
-		var ret ZtpSettingsApplicationDiscovery
+// GetOptimizer returns the Optimizer field value if set, zero value otherwise.
+func (o *ZtpSettings) GetOptimizer() ZtpSettingsOptimizer {
+	if o == nil || IsNil(o.Optimizer) {
+		var ret ZtpSettingsOptimizer
 		return ret
 	}
-	return *o.ApplicationDiscovery
+	return *o.Optimizer
 }
 
-// GetApplicationDiscoveryOk returns a tuple with the ApplicationDiscovery field value if set, nil otherwise
+// GetOptimizerOk returns a tuple with the Optimizer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ZtpSettings) GetApplicationDiscoveryOk() (*ZtpSettingsApplicationDiscovery, bool) {
-	if o == nil || IsNil(o.ApplicationDiscovery) {
+func (o *ZtpSettings) GetOptimizerOk() (*ZtpSettingsOptimizer, bool) {
+	if o == nil || IsNil(o.Optimizer) {
 		return nil, false
 	}
-	return o.ApplicationDiscovery, true
+	return o.Optimizer, true
 }
 
-// HasApplicationDiscovery returns a boolean if a field has been set.
-func (o *ZtpSettings) HasApplicationDiscovery() bool {
-	if o != nil && !IsNil(o.ApplicationDiscovery) {
+// HasOptimizer returns a boolean if a field has been set.
+func (o *ZtpSettings) HasOptimizer() bool {
+	if o != nil && !IsNil(o.Optimizer) {
 		return true
 	}
 
 	return false
 }
 
-// SetApplicationDiscovery gets a reference to the given ZtpSettingsApplicationDiscovery and assigns it to the ApplicationDiscovery field.
-func (o *ZtpSettings) SetApplicationDiscovery(v ZtpSettingsApplicationDiscovery) {
-	o.ApplicationDiscovery = &v
+// SetOptimizer gets a reference to the given ZtpSettingsOptimizer and assigns it to the Optimizer field.
+func (o *ZtpSettings) SetOptimizer(v ZtpSettingsOptimizer) {
+	o.Optimizer = &v
 }
 
 func (o ZtpSettings) MarshalJSON() ([]byte, error) {
@@ -118,8 +118,8 @@ func (o ZtpSettings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RiskEngine) {
 		toSerialize["riskEngine"] = o.RiskEngine
 	}
-	if !IsNil(o.ApplicationDiscovery) {
-		toSerialize["applicationDiscovery"] = o.ApplicationDiscovery
+	if !IsNil(o.Optimizer) {
+		toSerialize["optimizer"] = o.Optimizer
 	}
 	return toSerialize, nil
 }

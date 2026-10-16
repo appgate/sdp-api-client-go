@@ -71,6 +71,9 @@ const (
 	RDS_DB_INSTANCES_TAG_VALUES        ResourceType = "rds-db-instances-tag-values"
 	ASSETS_TAGS                        ResourceType = "assets-tags"
 	ASSETS_TAG_VALUES                  ResourceType = "assets-tag-values"
+	ASSETS                             ResourceType = "assets"
+	ASSETS_FIELDS                      ResourceType = "assets-fields"
+	ASSETS_FIELD_VALUES                ResourceType = "assets-field-values"
 )
 
 // All allowed values of ResourceType enum
@@ -125,6 +128,9 @@ var AllowedResourceTypeEnumValues = []ResourceType{
 	"rds-db-instances-tag-values",
 	"assets-tags",
 	"assets-tag-values",
+	"assets",
+	"assets-fields",
+	"assets-field-values",
 }
 
 func (v *ResourceType) UnmarshalJSON(src []byte) error {

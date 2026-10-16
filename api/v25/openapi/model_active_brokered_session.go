@@ -46,6 +46,10 @@ type ActiveBrokeredSession struct {
 	Host *string `json:"host,omitempty"`
 	// The duration of the session in seconds.
 	DurationSeconds *int64 `json:"durationSeconds,omitempty"`
+	// Whether the session is being recorded.
+	Recording *bool `json:"recording,omitempty"`
+	// Whether the session can be observed live.
+	Monitoring *bool `json:"monitoring,omitempty"`
 }
 
 // NewActiveBrokeredSession instantiates a new ActiveBrokeredSession object
@@ -481,6 +485,70 @@ func (o *ActiveBrokeredSession) SetDurationSeconds(v int64) {
 	o.DurationSeconds = &v
 }
 
+// GetRecording returns the Recording field value if set, zero value otherwise.
+func (o *ActiveBrokeredSession) GetRecording() bool {
+	if o == nil || IsNil(o.Recording) {
+		var ret bool
+		return ret
+	}
+	return *o.Recording
+}
+
+// GetRecordingOk returns a tuple with the Recording field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ActiveBrokeredSession) GetRecordingOk() (*bool, bool) {
+	if o == nil || IsNil(o.Recording) {
+		return nil, false
+	}
+	return o.Recording, true
+}
+
+// HasRecording returns a boolean if a field has been set.
+func (o *ActiveBrokeredSession) HasRecording() bool {
+	if o != nil && !IsNil(o.Recording) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecording gets a reference to the given bool and assigns it to the Recording field.
+func (o *ActiveBrokeredSession) SetRecording(v bool) {
+	o.Recording = &v
+}
+
+// GetMonitoring returns the Monitoring field value if set, zero value otherwise.
+func (o *ActiveBrokeredSession) GetMonitoring() bool {
+	if o == nil || IsNil(o.Monitoring) {
+		var ret bool
+		return ret
+	}
+	return *o.Monitoring
+}
+
+// GetMonitoringOk returns a tuple with the Monitoring field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ActiveBrokeredSession) GetMonitoringOk() (*bool, bool) {
+	if o == nil || IsNil(o.Monitoring) {
+		return nil, false
+	}
+	return o.Monitoring, true
+}
+
+// HasMonitoring returns a boolean if a field has been set.
+func (o *ActiveBrokeredSession) HasMonitoring() bool {
+	if o != nil && !IsNil(o.Monitoring) {
+		return true
+	}
+
+	return false
+}
+
+// SetMonitoring gets a reference to the given bool and assigns it to the Monitoring field.
+func (o *ActiveBrokeredSession) SetMonitoring(v bool) {
+	o.Monitoring = &v
+}
+
 func (o ActiveBrokeredSession) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -529,6 +597,12 @@ func (o ActiveBrokeredSession) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DurationSeconds) {
 		toSerialize["durationSeconds"] = o.DurationSeconds
+	}
+	if !IsNil(o.Recording) {
+		toSerialize["recording"] = o.Recording
+	}
+	if !IsNil(o.Monitoring) {
+		toSerialize["monitoring"] = o.Monitoring
 	}
 	return toSerialize, nil
 }
