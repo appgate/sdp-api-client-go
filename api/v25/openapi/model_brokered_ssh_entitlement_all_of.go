@@ -25,7 +25,7 @@ type BrokeredSshEntitlementAllOf struct {
 	TerminalType *string `json:"terminalType,omitempty"`
 	// Interval, in seconds, between SSH keep-alive messages sent to the target host. Must be `0` (disabled) or between `2` and `30`.
 	KeepAliveIntervalSeconds *int32 `json:"keepAliveIntervalSeconds,omitempty"`
-	// Host key verification policy applied when establishing the SSH session. `OFF` disables verification, `TOFU` (trust-on-first-use) records the host key on first connection and enforces it thereafter, `ENFORCED` requires a pre-known host key.
+	// Host key verification policy applied when establishing the SSH session. `OFF` disables verification, `TOFU` (trust-on-first-use) records the host key on first connection and enforces it thereafter, `ENFORCED` requires a pre-known host key. The Gateway does not verify host keys yet; the policy takes effect in a later release.
 	HostKeyVerificationPolicy *string `json:"hostKeyVerificationPolicy,omitempty"`
 }
 
@@ -39,7 +39,7 @@ func NewBrokeredSshEntitlementAllOf() *BrokeredSshEntitlementAllOf {
 	this.TerminalType = &terminalType
 	var keepAliveIntervalSeconds int32 = 30
 	this.KeepAliveIntervalSeconds = &keepAliveIntervalSeconds
-	var hostKeyVerificationPolicy string = "ENFORCED"
+	var hostKeyVerificationPolicy string = "TOFU"
 	this.HostKeyVerificationPolicy = &hostKeyVerificationPolicy
 	return &this
 }
@@ -53,7 +53,7 @@ func NewBrokeredSshEntitlementAllOfWithDefaults() *BrokeredSshEntitlementAllOf {
 	this.TerminalType = &terminalType
 	var keepAliveIntervalSeconds int32 = 30
 	this.KeepAliveIntervalSeconds = &keepAliveIntervalSeconds
-	var hostKeyVerificationPolicy string = "ENFORCED"
+	var hostKeyVerificationPolicy string = "TOFU"
 	this.HostKeyVerificationPolicy = &hostKeyVerificationPolicy
 	return &this
 }

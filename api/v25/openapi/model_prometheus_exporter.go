@@ -47,7 +47,7 @@ func NewPrometheusExporter() *PrometheusExporter {
 	this.Enabled = &enabled
 	var port int32 = 5556
 	this.Port = &port
-	var useHTTPS bool = false
+	var useHTTPS bool = true
 	this.UseHTTPS = &useHTTPS
 	var basicAuth bool = false
 	this.BasicAuth = &basicAuth
@@ -63,7 +63,7 @@ func NewPrometheusExporterWithDefaults() *PrometheusExporter {
 	this.Enabled = &enabled
 	var port int32 = 5556
 	this.Port = &port
-	var useHTTPS bool = false
+	var useHTTPS bool = true
 	this.UseHTTPS = &useHTTPS
 	var basicAuth bool = false
 	this.BasicAuth = &basicAuth
